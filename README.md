@@ -84,6 +84,18 @@ FinanceOverview(
 
 The block owns presentation composition. The caller owns value preparation, localization catalogs, navigation, state, persistence, scrolling, and container width
 
+## Sample app
+
+Open the universal iOS showcase to inspect both installed blocks on iPhone or iPad:
+
+```sh
+open Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace
+```
+
+Select the `SwiftUIRegistryShowcase` scheme and run. The app exposes finance and nutrition through native tabs and consumes the exact source installed under `Examples/Showcase/SwiftUIRegistryShowcasePackage/Sources/SwiftUIRegistryShowcaseFeature/Installed/`
+
+The sample also contains launch-driven empty, accessibility-size, and right-to-left states exercised by `SwiftUIRegistryShowcaseUITests.swift`
+
 ## Verify
 
 ```sh

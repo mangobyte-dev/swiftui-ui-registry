@@ -1,4 +1,4 @@
-# Showcase
+# Showcase sample app
 
 This universal iOS app is the compile, integration, and visual consumer for the registry proof
 

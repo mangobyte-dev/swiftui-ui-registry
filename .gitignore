@@ -1,5 +1,17 @@
+# Build artifacts
 .build/
-.DS_Store
+.swiftpm/
 __pycache__/
-xcode-skills/
-.impeccable/
+
+# macOS
+.DS_Store
+
+# Local AI and development tooling
+/AGENTS.md
+/CLAUDE.md
+/.agents/
+/.claude/
+/.impeccable/
+/.mcp.json
+/.xcodebuildmcp/
+/xcode-skills/

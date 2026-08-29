@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "switch",
+  "kind": "component",
+  "description": "Explicitly applies the platform switch treatment to a native Toggle while inheriting app tint and environment behavior.",
+  "files": [{ "source": "sources/components/RegistrySwitchToggleStyle.swift", "target": "RegistrySwitchToggleStyle.swift" }],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["switch", "toggle", "setting", "boolean", "style"],
+  "accessibility": [
+    "Retains native Toggle switch semantics and state announcements.",
+    "Requires a caller-supplied visible label unless the surrounding context supplies an accessibility label.",
+    "Inherits tint, enabled state, Dynamic Type, and layout direction.",
+    "Does not replace platform interaction or animation behavior."
+  ],
+  "preview": { "source": "sources/components/RegistrySwitchToggleStyle.swift", "name": "Switch" }
+}

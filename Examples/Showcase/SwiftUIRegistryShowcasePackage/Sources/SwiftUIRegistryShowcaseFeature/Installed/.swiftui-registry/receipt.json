@@ -28,6 +28,153 @@
       "sourceDigest": "sha256:11d13442bd0ae57a526486575ae233cd936660515c81a15762e3234b8286c703",
       "version": "0.1.0"
     },
+    "RegistryAspectRatioExamples.swift": {
+      "base": "bases/c7f5c0b448db316d8cc262874c7efaf1a85787f122b56814d6fdc03334bf4073.base",
+      "installedDigest": "sha256:06ded3a9b52261a661bcf63c406a5328e0530d93ef8654735365df0f0c72e673",
+      "item": "aspect-ratio",
+      "sourceDigest": "sha256:06ded3a9b52261a661bcf63c406a5328e0530d93ef8654735365df0f0c72e673",
+      "version": "0.1.0"
+    },
+    "RegistryBadge.swift": {
+      "base": "bases/d2c9ac15caa37b6a8d992908df2bae92cbf1f88a0a246a7122f2e7e198b5024d.base",
+      "installedDigest": "sha256:ca1d5834257eb43c4ce20a63b28c70a51cda32e57a6c3eb933746abdbb6ec164",
+      "item": "badge",
+      "sourceDigest": "sha256:ca1d5834257eb43c4ce20a63b28c70a51cda32e57a6c3eb933746abdbb6ec164",
+      "version": "0.1.0"
+    },
+    "RegistryButtonGroupStyle.swift": {
+      "base": "bases/db7fdc3c6784bc96f933530ea493c2024cac082f8e63aaf7cf8373dc2e7c22b5.base",
+      "installedDigest": "sha256:f4060ef6a42f6707467493742f3bb480579b0b7659b47fa166e0546ddebfc723",
+      "item": "button-group",
+      "sourceDigest": "sha256:f4060ef6a42f6707467493742f3bb480579b0b7659b47fa166e0546ddebfc723",
+      "version": "0.1.0"
+    },
+    "RegistryButtonStyle.swift": {
+      "base": "bases/a314683b53d284671d9132d9c92f6349d1d80fdc372a8fbb9636baec5da3c809.base",
+      "installedDigest": "sha256:3c7bee4086458b071823041525b1b311d09779943281b84b525b1e09e940e6c7",
+      "item": "button",
+      "sourceDigest": "sha256:3c7bee4086458b071823041525b1b311d09779943281b84b525b1e09e940e6c7",
+      "version": "0.1.0"
+    },
+    "RegistryCardStyle.swift": {
+      "base": "bases/d37825ac79fff2b2bf1402a97c8c621c6d5bf0b09ad1b1a623e4b269279cbcc6.base",
+      "installedDigest": "sha256:81cd02993afae28407c955a05609bae2ce0770da4dc55e56c2bb3c305214ffb1",
+      "item": "card",
+      "sourceDigest": "sha256:81cd02993afae28407c955a05609bae2ce0770da4dc55e56c2bb3c305214ffb1",
+      "version": "0.1.0"
+    },
+    "RegistryCheckboxToggleStyle.swift": {
+      "base": "bases/84ef61e84e290159ebfd98ceb45adbe2c83371f33abc11c357b1d2e38db16213.base",
+      "installedDigest": "sha256:441acb98497ff8fb81f68a47ba845511674e462614bf4bd352538d070fd4ef65",
+      "item": "checkbox",
+      "sourceDigest": "sha256:441acb98497ff8fb81f68a47ba845511674e462614bf4bd352538d070fd4ef65",
+      "version": "0.1.0"
+    },
+    "RegistryDirectionExamples.swift": {
+      "base": "bases/354a41777e65d3d2066386a973a7b843dcef390780ac7abbd5138605c7bfc082.base",
+      "installedDigest": "sha256:a3c0bfe6364027dc461ba6bd63f9fd2472c74b549f9c3afda2d6094ff68e3722",
+      "item": "direction",
+      "sourceDigest": "sha256:a3c0bfe6364027dc461ba6bd63f9fd2472c74b549f9c3afda2d6094ff68e3722",
+      "version": "0.1.0"
+    },
+    "RegistryInputStyle.swift": {
+      "base": "bases/66c24a2324bc206ee6b03a7ba2dfead5fe1cec8f6eb52595c4ddc2131308bad9.base",
+      "installedDigest": "sha256:fda9d3604c1b31f33f3bc3894a5f444c615376ce00e4b995db0c456c11a1a24e",
+      "item": "input",
+      "sourceDigest": "sha256:fda9d3604c1b31f33f3bc3894a5f444c615376ce00e4b995db0c456c11a1a24e",
+      "version": "0.1.0"
+    },
+    "RegistryLabelStyle.swift": {
+      "base": "bases/04739f973034fb8d715a72289080746b744a673da290b3b462fc035871996323.base",
+      "installedDigest": "sha256:d2ddf444d907b2df248d8e0e0765c906169eee1fb02690741fc84102da04b0f6",
+      "item": "label",
+      "sourceDigest": "sha256:d2ddf444d907b2df248d8e0e0765c906169eee1fb02690741fc84102da04b0f6",
+      "version": "0.1.0"
+    },
+    "RegistryNativeSelectModifier.swift": {
+      "base": "bases/8076135f928010aeeaabae9915c17d8cd8be955f28c87405cec3577416a4352f.base",
+      "installedDigest": "sha256:bd926d095851fc20001fe0ca492a9b3a6cd6a65fc87b3cdd4b4ebe653494a2e9",
+      "item": "native-select",
+      "sourceDigest": "sha256:bd926d095851fc20001fe0ca492a9b3a6cd6a65fc87b3cdd4b4ebe653494a2e9",
+      "version": "0.1.0"
+    },
+    "RegistryProgressViewStyle.swift": {
+      "base": "bases/7e913d7bc5cadc9661e485c4d840908f32942a4cbe3ff7fdafd0f4b017b7497e.base",
+      "installedDigest": "sha256:fc940696ea18e642006ca95246e572b48b589df2151597ce838beb8880438da3",
+      "item": "progress",
+      "sourceDigest": "sha256:fc940696ea18e642006ca95246e572b48b589df2151597ce838beb8880438da3",
+      "version": "0.1.0"
+    },
+    "RegistryRadioGroupModifier.swift": {
+      "base": "bases/963ec54664e8074e9a3c6ddba6832bb6d2fc892daa3ffa5bc9b6d95da00c10bd.base",
+      "installedDigest": "sha256:8c6d31cfdc2dc6f0e70ccfe816bbe7773bd5ad42255c1ea4fd642e01e8597708",
+      "item": "radio-group",
+      "sourceDigest": "sha256:8c6d31cfdc2dc6f0e70ccfe816bbe7773bd5ad42255c1ea4fd642e01e8597708",
+      "version": "0.1.0"
+    },
+    "RegistrySelectModifier.swift": {
+      "base": "bases/3a9217f76d6535c41e3f06af4707d99fe4556fec2ef7348663c62d87878353e3.base",
+      "installedDigest": "sha256:069d2e73f5a57be160043e0e55ffed24a7eb6a12c618abb638a650f2a3687231",
+      "item": "select",
+      "sourceDigest": "sha256:069d2e73f5a57be160043e0e55ffed24a7eb6a12c618abb638a650f2a3687231",
+      "version": "0.1.0"
+    },
+    "RegistrySeparatorModifier.swift": {
+      "base": "bases/bb9d9cd74969a7587102a28109791c2ca2b6c3bb70a7995c3bed3fec91467b25.base",
+      "installedDigest": "sha256:4f9e773ce35fc7bf29a6e73a684342844a09ac9e586326b99fe4cedb7f3cea0a",
+      "item": "separator",
+      "sourceDigest": "sha256:4f9e773ce35fc7bf29a6e73a684342844a09ac9e586326b99fe4cedb7f3cea0a",
+      "version": "0.1.0"
+    },
+    "RegistrySliderModifier.swift": {
+      "base": "bases/6ab432179efe78ea16ecda0990e4586589726db81ef69798e7b7f2ada2c82182.base",
+      "installedDigest": "sha256:919ca6042c01f41f7ab1af361016885e2fc77a5a614bff23aeffdbb79e537fde",
+      "item": "slider",
+      "sourceDigest": "sha256:919ca6042c01f41f7ab1af361016885e2fc77a5a614bff23aeffdbb79e537fde",
+      "version": "0.1.0"
+    },
+    "RegistrySpinnerStyle.swift": {
+      "base": "bases/93bb6a5df1f063298fae71049dc4a862310b163cd2563b177eabc9f7c71d55ed.base",
+      "installedDigest": "sha256:bb0a978cfd758a19928bec800e3579c286ea0811db90d80cf0597cf59f185545",
+      "item": "spinner",
+      "sourceDigest": "sha256:bb0a978cfd758a19928bec800e3579c286ea0811db90d80cf0597cf59f185545",
+      "version": "0.1.0"
+    },
+    "RegistrySwitchToggleStyle.swift": {
+      "base": "bases/4cb686532601a19d93e5c70279ab50dcec5b0fdcd5fcff5a912583818f438c9a.base",
+      "installedDigest": "sha256:40b5a0f3abdbc77544474fcb4bc15e16f087af3aeac26b94f7aaa3d16c6d76f7",
+      "item": "switch",
+      "sourceDigest": "sha256:40b5a0f3abdbc77544474fcb4bc15e16f087af3aeac26b94f7aaa3d16c6d76f7",
+      "version": "0.1.0"
+    },
+    "RegistryTabsModifier.swift": {
+      "base": "bases/110bdc9752c3f5bf13f4815eff96fe89d37455affec638ccfefa8ace1c667600.base",
+      "installedDigest": "sha256:269cbfb35749a92d5ba4ec2859615196b9651f9c6b4416921d7e020350f4c7bc",
+      "item": "tabs",
+      "sourceDigest": "sha256:269cbfb35749a92d5ba4ec2859615196b9651f9c6b4416921d7e020350f4c7bc",
+      "version": "0.1.0"
+    },
+    "RegistryTextAreaModifier.swift": {
+      "base": "bases/204aacd79f20901e9f35cd65a8270a4ad86eb648acf05c028f9ae12439e10a8a.base",
+      "installedDigest": "sha256:2b8406576950960de38cd452c04356e11e8aa1565f9c51282f936d3f9a43bba3",
+      "item": "textarea",
+      "sourceDigest": "sha256:2b8406576950960de38cd452c04356e11e8aa1565f9c51282f936d3f9a43bba3",
+      "version": "0.1.0"
+    },
+    "RegistryToggleGroupModifier.swift": {
+      "base": "bases/ca52356b91430d7163321866f41475fcbde3004f0fe8f57edf95b6084bf935d8.base",
+      "installedDigest": "sha256:73dc6bb3d6d0874839316f043963231f46e6172697d643d4e9f71a36907cb12e",
+      "item": "toggle-group",
+      "sourceDigest": "sha256:73dc6bb3d6d0874839316f043963231f46e6172697d643d4e9f71a36907cb12e",
+      "version": "0.1.0"
+    },
+    "RegistryToggleStyle.swift": {
+      "base": "bases/a5a7b22fa485766b95a43f6129a3750d9a48465143741dd98d5a6bdb47f4d5c9.base",
+      "installedDigest": "sha256:bb334eb26fb2ad703f0b01edf41886510bfba40856c16c963167895b1dc7eab5",
+      "item": "toggle",
+      "sourceDigest": "sha256:bb334eb26fb2ad703f0b01edf41886510bfba40856c16c963167895b1dc7eab5",
+      "version": "0.1.0"
+    },
     "TransactionRow.swift": {
       "base": "bases/bb175adeaac2e6443042b5ae547edcdaea4daec1487cb932a128b37b41cb221d.base",
       "installedDigest": "sha256:ee20595071896c5b1ca2e6c715ee70521bce07b1016344ef31658e80598a9672",
@@ -37,12 +184,50 @@
     }
   },
   "items": {
+    "aspect-ratio": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "badge": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "button": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "button-group": {
+      "registryDependencies": [
+        "button"
+      ],
+      "version": "0.1.0"
+    },
+    "card": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "checkbox": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "direction": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
     "finance-overview": {
       "registryDependencies": [
         "metric-card",
         "transaction-row"
       ],
       "version": "0.2.0"
+    },
+    "input": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "label": {
+      "registryDependencies": [],
+      "version": "0.1.0"
     },
     "macro-progress": {
       "registryDependencies": [],
@@ -52,10 +237,62 @@
       "registryDependencies": [],
       "version": "0.1.0"
     },
+    "native-select": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
     "nutrition-overview": {
       "registryDependencies": [
         "metric-card",
         "macro-progress"
+      ],
+      "version": "0.1.0"
+    },
+    "progress": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "radio-group": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "select": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "separator": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "slider": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "spinner": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "switch": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "tabs": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "textarea": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "toggle": {
+      "registryDependencies": [
+        "button"
+      ],
+      "version": "0.1.0"
+    },
+    "toggle-group": {
+      "registryDependencies": [
+        "toggle"
       ],
       "version": "0.1.0"
     },

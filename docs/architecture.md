@@ -22,7 +22,7 @@ This is a hypothesis exercised by finance and nutrition, not a claim of universa
 
 - `Sources/SwiftUIRegistryFoundations/`: stable package API
 - `Registry/items/`: machine-readable item declarations
-- `Registry/sources/components/`: canonical copied component source
+- `Registry/sources/components/`: canonical copied styles, focused modifiers, and reusable compositions
 - `Registry/sources/blocks/`: canonical copied block source
 - `Scripts/install.py`: dependency resolution, receipts, installation, and conflict-aware updates
 - `Scripts/search.py`: deterministic developer and agent discovery over registry metadata
@@ -31,7 +31,11 @@ This is a hypothesis exercised by finance and nutrition, not a claim of universa
 
 ## View boundaries
 
-Registry views use prepared display values. `Text` inputs preserve caller-selected format styles and localization context. IDs and action closures communicate selection without requiring a store, observable model, router, or persistence type
+Registry APIs use prepared display values, bindings for caller-controlled state, and action closures. `Text` inputs preserve caller-selected format styles and localization context. IDs and actions communicate selection without requiring a store, observable model, router, or persistence type
+
+A component may own transient `@State` when its interaction is self-contained. State remains external when another view, a block, restoration, persistence, or product logic must coordinate it
+
+Generic structural containers accept caller content with `@ViewBuilder`. Interactive appearance uses the matching SwiftUI style protocol. Independent optional behavior uses a focused `ViewModifier` instead of expanding the component initializer
 
 The composed block does not own a `ScrollView`, navigation container, or maximum width. Those are application composition decisions. The showcase demonstrates a readable iPad width at its call site
 
@@ -39,7 +43,7 @@ The composed block does not own a `ScrollView`, navigation container, or maximum
 
 `RegistryTheme` provides semantic surface, border, positive, and negative colors plus four layout metrics. It is injected through SwiftUI `EnvironmentValues` with `@Entry`. The app's native tint remains the source for interactive accent color
 
-This is deliberately smaller than a full token system. Finance and nutrition now reuse the same surface and spacing semantics without adding domain-specific foundation tokens. Add a token only after two real registry items need the exact same semantic value
+This is deliberately smaller than a full token system. Repeated colors and metrics use semantic tokens rather than hardcoded values, but a token enters foundations only after two real registry items need the exact same meaning. A style or modifier remains source-owned until two items use the exact same treatment
 
 ## Installation behavior
 
@@ -78,5 +82,5 @@ Dependencies only point down. Registry source cannot import application architec
 - One monolithic UI package: undermines source ownership and progressive adoption
 - Copy every foundation file with every item: creates duplicated theme contracts
 - A production CLI now: validates packaging polish before validating product UI
-- Generic Button, Toggle, Slider, List, or navigation replacements: competes with Apple primitives
+- Generic Button, Toggle, Slider, List, or navigation wrapper views: hide Apple primitives instead of styling them through native protocols and modifiers
 - Mandatory TCA, MVVM, Observation model, or persistence type: leaks application architecture into presentation

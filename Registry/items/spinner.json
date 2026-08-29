@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "spinner",
+  "kind": "component",
+  "description": "Styles a native indeterminate ProgressView with a compact circular indicator and optional label.",
+  "files": [{ "source": "sources/components/RegistrySpinnerStyle.swift", "target": "RegistrySpinnerStyle.swift" }],
+  "registryDependencies": [],
+  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["spinner", "progress-view", "circular", "loading", "style"],
+  "accessibility": [
+    "Retains native indeterminate ProgressView semantics.",
+    "Requires an accessibility label when no visible loading label is supplied.",
+    "Combines a visible label with the indicator in reading order.",
+    "Inherits Dynamic Type, tint, enabled state, and layout direction."
+  ],
+  "preview": { "source": "sources/components/RegistrySpinnerStyle.swift", "name": "Spinner" }
+}

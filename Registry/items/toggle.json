@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "toggle",
+  "kind": "component",
+  "description": "Applies registry button treatments to native Toggle state for compact selectable controls.",
+  "files": [{ "source": "sources/components/RegistryToggleStyle.swift", "target": "RegistryToggleStyle.swift" }],
+  "registryDependencies": ["button"],
+  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["toggle", "button", "selection", "formatting", "style"],
+  "accessibility": [
+    "Retains native Toggle state and activation behavior.",
+    "Requires caller-supplied labels for icon-only controls.",
+    "Uses opacity and native selected state in addition to color.",
+    "Inherits Dynamic Type, enabled state, control size, and layout direction."
+  ],
+  "preview": { "source": "sources/components/RegistryToggleStyle.swift", "name": "Toggle" }
+}

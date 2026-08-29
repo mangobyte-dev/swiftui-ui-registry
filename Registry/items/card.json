@@ -1,0 +1,36 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "card",
+  "kind": "component",
+  "description": "Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.",
+  "files": [
+    {
+      "source": "sources/components/RegistryCardStyle.swift",
+      "target": "RegistryCardStyle.swift"
+    }
+  ],
+  "registryDependencies": [],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x"
+    }
+  ],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
+  "tags": ["card", "group-box", "surface", "container", "style"],
+  "accessibility": [
+    "Preserves the native accessibility elements and reading order supplied by the GroupBox label and content.",
+    "Uses system text styles and allows content to grow vertically with Dynamic Type.",
+    "Uses semantic leading alignment that follows the environment layout direction.",
+    "Does not impose interaction or selection behavior on caller content."
+  ],
+  "preview": {
+    "source": "sources/components/RegistryCardStyle.swift",
+    "name": "Card"
+  }
+}

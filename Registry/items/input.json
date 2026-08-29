@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "input",
+  "kind": "component",
+  "description": "Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.",
+  "files": [{ "source": "sources/components/RegistryInputStyle.swift", "target": "RegistryInputStyle.swift" }],
+  "registryDependencies": [],
+  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["input", "text-field", "secure-field", "form", "style"],
+  "accessibility": [
+    "Preserves native TextField and SecureField editing, keyboard, and autofill behavior.",
+    "Uses focus and border width in addition to color for input states.",
+    "Requires callers to provide visible validation copy and an accessibility hint for invalid input.",
+    "Inherits Dynamic Type, layout direction, and enabled state."
+  ],
+  "preview": { "source": "sources/components/RegistryInputStyle.swift", "name": "Input States" }
+}

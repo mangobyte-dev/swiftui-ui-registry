@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "textarea",
+  "kind": "component",
+  "description": "Applies input-matching focus, disabled, and invalid chrome to a native TextEditor.",
+  "files": [{ "source": "sources/components/RegistryTextAreaModifier.swift", "target": "RegistryTextAreaModifier.swift" }],
+  "registryDependencies": [],
+  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["textarea", "text-editor", "multiline", "form", "modifier"],
+  "accessibility": [
+    "Retains native TextEditor editing, selection, keyboard, and scrolling behavior.",
+    "Requires an accessibility label because TextEditor has no prompt parameter.",
+    "Requires visible validation copy and an accessibility hint for invalid input.",
+    "Inherits Dynamic Type, enabled state, focus, and layout direction."
+  ],
+  "preview": { "source": "sources/components/RegistryTextAreaModifier.swift", "name": "Textarea States" }
+}

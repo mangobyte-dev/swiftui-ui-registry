@@ -15,9 +15,9 @@ No reviewed project yet establishes a dominant standard across all of those prop
 - Base UI and Radix solve low-level web behavior because the web platform often lacks sufficiently consistent, accessible primitives. SwiftUI's starting point is different because Apple already owns those controls and behaviors. Sources: [Base UI about](https://base-ui.com/react/overview/about), [Radix introduction](https://www.radix-ui.com/primitives/docs/overview/introduction)
 - 21st.dev extends source ownership into a multi-author registry, templates, themes, previews, and AI-ready prompts. This shows that distribution plus discovery and visual curation can become a marketplace layer. Source: [21st.dev](https://21st.dev)
 
-What transfers: source ownership, explicit dependency graphs, deterministic names, blocks above components, preview evidence, and agent-readable discovery
+What transfers: source ownership, explicit dependency graphs, deterministic names, blocks above components, SwiftUI style and modifier conventions, preview evidence, and agent-readable discovery
 
-What does not transfer: rebuilding native controls, web-style variant matrices, Tailwind token assumptions, DOM accessibility repairs, and framework-specific file placement
+What does not transfer: rebuilding native controls as wrapper views, literal CSS variant matrices, Tailwind token assumptions, DOM accessibility repairs, and framework-specific file placement
 
 ## Adjacent SwiftUI projects
 
@@ -86,9 +86,9 @@ The lesson is not to copy their APIs. It is to keep responsibilities narrow, mak
 2. **Does an existing project solve it?** ShipSwift, swiftcn, ComponentsKit Pro, Portal, Basics, and DockUI each solve meaningful subsets. None reviewed combines the full native-first registry contract
 3. **Why no dominant solution?** SwiftUI already supplies strong controls, product UI is domain-specific, source copying complicates updates, Xcode project integration is less uniform than web file systems, and visual taste is harder to standardize than control behavior
 4. **Which shadcn ideas fit?** Source ownership, registry dependencies, deterministic installation, blocks, visual examples, and agent discovery
-5. **Which do not fit?** Rebuilding controls, variant-heavy web APIs, DOM primitive layers, CSS variable assumptions, and line-for-line schema copying
+5. **Which do not fit?** Rebuilding controls as wrapper views, literal web APIs, DOM primitive layers, CSS variable assumptions, and line-for-line schema copying. Semantic variants implemented through SwiftUI style protocols do fit
 6. **What remains Apple's responsibility?** Controls, navigation, presentations, accessibility semantics, input behavior, platform adaptation, materials, animation primitives, localization mechanics, and OS visual evolution
-7. **What should this project own?** Semantic foundations, product components, blocks, flows, registry metadata, provenance, examples, and compile/visual conformance
+7. **What should this project own?** Semantic foundations, native-control styles, focused modifiers, reusable compositions, blocks, flows, registry metadata, provenance, examples, and compile/visual conformance
 8. **Is source copying appropriate?** Yes for product UI expected to change. No as a universal rule for stable shared mechanics
 9. **Should foundations remain a package?** Version 0 says yes, narrowly. The copied layer imports one stable foundation product
 10. **How do copied items receive tokens?** Through a small `RegistryTheme` environment value. Consumers may override it or edit their owned source
@@ -103,4 +103,4 @@ The lesson is not to copy their APIs. It is to keep responsibilities narrow, mak
 
 ## Decision carried into version 0
 
-Build a narrow package foundation plus copied product components and blocks. Prove installation and compilation before investing in CLI polish, remote hosting, MCP, Figma, premium catalogs, or broad component count
+Build a narrow package foundation plus copied styles, focused modifiers, reusable compositions, and blocks. Prove installation and compilation before investing in CLI polish, remote hosting, MCP, Figma, or premium catalogs

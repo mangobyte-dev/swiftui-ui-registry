@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "toggle-group",
+  "kind": "component",
+  "description": "Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.",
+  "files": [{ "source": "sources/components/RegistryToggleGroupModifier.swift", "target": "RegistryToggleGroupModifier.swift" }],
+  "registryDependencies": ["toggle"],
+  "packageDependencies": [],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["toggle-group", "toggle", "control-group", "multi-selection", "modifier"],
+  "accessibility": [
+    "Retains each native Toggle's independent state and activation behavior.",
+    "Keeps all selection bindings caller-owned.",
+    "Requires accessible labels for icon-only toggles.",
+    "Inherits Dynamic Type, enabled state, control size, and layout direction."
+  ],
+  "preview": { "source": "sources/components/RegistryToggleGroupModifier.swift", "name": "Toggle Group" }
+}

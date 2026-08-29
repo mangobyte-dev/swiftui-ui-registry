@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "tabs",
+  "kind": "component",
+  "description": "Presents a native local-selection Picker with the platform segmented style while leaving app navigation to TabView.",
+  "files": [{ "source": "sources/components/RegistryTabsModifier.swift", "target": "RegistryTabsModifier.swift" }],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["tabs", "picker", "segmented", "selection", "modifier"],
+  "accessibility": [
+    "Retains native Picker selection and segmented-control semantics.",
+    "Keeps local selection caller-owned and does not replace app-level TabView navigation.",
+    "Requires concise visible segment labels that remain distinguishable at large text sizes.",
+    "Inherits enabled state, tint, and layout direction."
+  ],
+  "preview": { "source": "sources/components/RegistryTabsModifier.swift", "name": "Tabs" }
+}

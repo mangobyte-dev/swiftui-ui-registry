@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "progress",
+  "kind": "component",
+  "description": "Styles native determinate and indeterminate ProgressView controls with linear accent, positive, and negative semantic tones.",
+  "files": [{ "source": "sources/components/RegistryProgressViewStyle.swift", "target": "RegistryProgressViewStyle.swift" }],
+  "registryDependencies": [],
+  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["progress", "progress-view", "linear", "loading", "style"],
+  "accessibility": [
+    "Retains native ProgressView progress semantics.",
+    "Combines the caller's label, progress value, and current-value label in reading order.",
+    "Uses caller-provided prepared value text and semantic tint.",
+    "Inherits Dynamic Type and layout direction."
+  ],
+  "preview": { "source": "sources/components/RegistryProgressViewStyle.swift", "name": "Progress" }
+}

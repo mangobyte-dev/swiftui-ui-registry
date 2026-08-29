@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "radio-group",
+  "kind": "component",
+  "description": "Presents a native bound Picker as an inline mutually exclusive option group.",
+  "files": [{ "source": "sources/components/RegistryRadioGroupModifier.swift", "target": "RegistryRadioGroupModifier.swift" }],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["radio-group", "picker", "selection", "options", "modifier"],
+  "accessibility": [
+    "Retains native Picker selection and option semantics.",
+    "Keeps selection caller-owned through the Picker binding.",
+    "Uses visible option labels and native selected-state indicators.",
+    "Inherits Dynamic Type, enabled state, and layout direction."
+  ],
+  "preview": { "source": "sources/components/RegistryRadioGroupModifier.swift", "name": "Radio Group" }
+}

@@ -7,6 +7,7 @@ Version 0 tests whether a professional team or coding agent can discover product
 ## What exists
 
 - `SwiftUIRegistryFoundations`: a small Swift package product for shared semantic surfaces and spacing
+- A complete 21-item Stage 1 catalog of native styles, focused modifiers, and usage guidance
 - `metric-card`, `transaction-row`, and `macro-progress`: source-owned product components
 - `finance-overview` and `nutrition-overview`: composed, architecture-neutral blocks
 - JSON metadata with versions, dependencies, platforms, accessibility notes, previews, and screenshots
@@ -15,9 +16,27 @@ Version 0 tests whether a professional team or coding agent can discover product
 - A universal iOS showcase compiled and tested at the iOS 18 deployment floor
 - Pinned visual contract checks for both composed blocks
 
-| Finance | Nutrition |
+## Showcase screenshots
+
+### Stage 1 component catalog
+
+![Stage 1 native SwiftUI component catalog on iPhone](docs/images/stage-one-components-phone.jpg)
+
+Launch this catalog with the `-stage-one` argument. The default launch remains the Finance and Nutrition block showcase
+
+### Product blocks
+
+| Finance on iPhone | Nutrition on iPhone |
 | --- | --- |
 | ![Finance overview on iPhone](docs/images/finance-overview-phone.jpg) | ![Nutrition overview on iPhone](docs/images/nutrition-overview-phone.jpg) |
+
+| Finance on iPad | Nutrition on iPad |
+| --- | --- |
+| ![Finance overview in dark appearance on iPad](docs/images/finance-overview-tablet.jpg) | ![Nutrition overview in dark appearance on iPad](docs/images/nutrition-overview-tablet.jpg) |
+
+### Accessibility Dynamic Type
+
+![Finance overview at an accessibility Dynamic Type size](docs/images/finance-overview-accessibility.jpg)
 
 ## Discover
 
@@ -122,6 +141,7 @@ The repository is currently verified with Xcode 27.0 and Swift 6.4. Registry sou
 
 - [Philosophy](docs/philosophy.md)
 - [Architecture](docs/architecture.md)
+- [Component roadmap](docs/component-roadmap.md)
 - [Research](docs/research.md)
 - [Registry specification](docs/registry-spec.md)
 - [Visual testing](docs/visual-testing.md)

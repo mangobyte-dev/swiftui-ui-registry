@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "label",
+  "kind": "component",
+  "description": "Controls native Label icon placement with semantic spacing and decorative icon accessibility behavior.",
+  "files": [{ "source": "sources/components/RegistryLabelStyle.swift", "target": "RegistryLabelStyle.swift" }],
+  "registryDependencies": [],
+  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["label", "icon", "text", "alignment", "style"],
+  "accessibility": [
+    "Keeps the native Label title as the accessible content.",
+    "Treats the paired icon as decorative to avoid repeating the title.",
+    "Uses semantic order so leading and trailing placements mirror in right-to-left layouts.",
+    "Inherits the caller's text style and Dynamic Type behavior."
+  ],
+  "preview": { "source": "sources/components/RegistryLabelStyle.swift", "name": "Label" }
+}

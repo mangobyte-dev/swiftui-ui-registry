@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import re
 import sys
 import tempfile
 import unittest
@@ -21,6 +22,152 @@ RegistryError = INSTALLER_MODULE.RegistryError
 class InstallerTests(unittest.TestCase):
     def setUp(self):
         self.installer = Installer(REPOSITORY_ROOT)
+
+    def test_button_installs_a_native_style_instead_of_a_wrapper_control(self):
+        self.assertEqual(self.installer.resolve("button"), ["button"])
+
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory)
+            installed = self.installer.install("button", destination)
+            source = (destination / "RegistryButtonStyle.swift").read_text()
+
+            self.assertEqual(len(installed), 1)
+            self.assertIn("public struct RegistryButtonStyle: ButtonStyle", source)
+            self.assertNotIn("struct RegistryButton: View", source)
+
+    def test_badge_installs_a_modifier_that_preserves_native_content(self):
+        self.assertEqual(self.installer.resolve("badge"), ["badge"])
+
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory)
+            installed = self.installer.install("badge", destination)
+            source = (destination / "RegistryBadge.swift").read_text()
+
+            self.assertEqual(len(installed), 1)
+            self.assertIn("func registryBadge(", source)
+            self.assertNotIn("struct RegistryBadge: View", source)
+
+    def test_button_group_installs_its_native_button_style_dependency_first(self):
+        self.assertEqual(
+            self.installer.resolve("button-group"),
+            ["button", "button-group"],
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory)
+            installed = self.installer.install("button-group", destination)
+            source = (destination / "RegistryButtonGroupStyle.swift").read_text()
+
+            self.assertEqual(len(installed), 2)
+            self.assertIn("public struct RegistryButtonGroupStyle: ControlGroupStyle", source)
+            self.assertIn("ControlGroup(configuration)", source)
+            self.assertNotIn("struct RegistryButtonGroup: View", source)
+
+    def test_card_installs_a_group_box_style_instead_of_a_wrapper_view(self):
+        self.assertEqual(self.installer.resolve("card"), ["card"])
+
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory)
+            installed = self.installer.install("card", destination)
+            source = (destination / "RegistryCardStyle.swift").read_text()
+
+            self.assertEqual(len(installed), 1)
+            self.assertIn("public struct RegistryCardStyle: GroupBoxStyle", source)
+            self.assertNotIn("struct RegistryCard: View", source)
+
+    def test_every_stage_one_roadmap_item_is_registered_with_its_native_seam(self):
+        roadmap = (REPOSITORY_ROOT / "docs" / "component-roadmap.md").read_text()
+        stage_one = roadmap.split("## Stage 1: Core styled primitives", 1)[1].split(
+            "### Stage 1 exit criteria", 1
+        )[0]
+        names = re.findall(r"\| `([^`]+)` \|", stage_one)
+        expected_markers = {
+            "aspect-ratio": ".aspectRatio(",
+            "badge": "func registryBadge(",
+            "button": "ButtonStyle",
+            "button-group": "ControlGroupStyle",
+            "card": "GroupBoxStyle",
+            "checkbox": "ToggleStyle",
+            "input": "TextFieldStyle",
+            "label": "LabelStyle",
+            "progress": "ProgressViewStyle",
+            "radio-group": ".pickerStyle(.inline)",
+            "select": ".pickerStyle(.menu)",
+            "separator": "func registrySeparator(",
+            "slider": "func registrySlider(",
+            "spinner": "ProgressViewStyle",
+            "switch": "ToggleStyle",
+            "tabs": ".pickerStyle(.segmented)",
+            "textarea": "func registryTextArea(",
+            "toggle": "ToggleStyle",
+            "toggle-group": "func registryToggleGroup(",
+            "native-select": ".pickerStyle(.menu)",
+            "direction": "layoutDirection",
+        }
+
+        self.assertEqual(set(names), set(expected_markers))
+        for name in names:
+            with self.subTest(item=name):
+                item = self.installer.items[name]
+                source = (
+                    REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+                ).read_text()
+                self.assertIn(expected_markers[name], source)
+                self.assertNotRegex(source, r"public struct \w+: View")
+
+    def test_every_stage_one_preview_covers_adaptive_environments(self):
+        roadmap = (REPOSITORY_ROOT / "docs" / "component-roadmap.md").read_text()
+        stage_one = roadmap.split("## Stage 1: Core styled primitives", 1)[1].split(
+            "### Stage 1 exit criteria", 1
+        )[0]
+        names = re.findall(r"\| `([^`]+)` \|", stage_one)
+
+        for name in names:
+            with self.subTest(item=name):
+                item = self.installer.items[name]
+                source = (
+                    REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+                ).read_text()
+                self.assertIn("preferredColorScheme(.dark)", source)
+                self.assertIn("layoutDirection", source)
+                self.assertIn("dynamicTypeSize(.accessibility", source)
+
+    def test_stage_one_interaction_states_are_explicit_and_cannot_regress_silently(self):
+        required_state_evidence = {
+            "enabled": ("button", "isEnabled"),
+            "pressed": ("button", "configuration.isPressed"),
+            "focused": ("input", "isFocused"),
+            "selected": ("checkbox", "isSelected"),
+            "disabled": ("button", ".disabled(true)"),
+            "invalid": ("input", "isInvalid"),
+        }
+
+        for state, (name, marker) in required_state_evidence.items():
+            with self.subTest(state=state, item=name):
+                item = self.installer.items[name]
+                source = (
+                    REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+                ).read_text()
+                self.assertIn(marker, source)
+
+    def test_showcase_installs_exact_canonical_sources_for_every_indexed_item(self):
+        destination = (
+            REPOSITORY_ROOT
+            / "Examples"
+            / "Showcase"
+            / "SwiftUIRegistryShowcasePackage"
+            / "Sources"
+            / "SwiftUIRegistryShowcaseFeature"
+            / "Installed"
+        )
+
+        for item in self.installer.items.values():
+            for file in item["files"]:
+                with self.subTest(item=item["name"], target=file["target"]):
+                    source = REPOSITORY_ROOT / "Registry" / file["source"]
+                    target = destination / file["target"]
+                    self.assertTrue(target.is_file())
+                    self.assertEqual(target.read_bytes(), source.read_bytes())
 
     def test_block_resolves_components_before_the_block(self):
         self.assertEqual(

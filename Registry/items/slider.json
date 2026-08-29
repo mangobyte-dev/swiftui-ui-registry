@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "slider",
+  "kind": "component",
+  "description": "Applies optional semantic tint and control sizing to a native Slider with caller-owned value and labels.",
+  "files": [{ "source": "sources/components/RegistrySliderModifier.swift", "target": "RegistrySliderModifier.swift" }],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "tags": ["slider", "value", "range", "control", "modifier"],
+  "accessibility": [
+    "Retains native Slider adjustable-control semantics and gestures.",
+    "Keeps the value, bounds, step, and editing callbacks caller-owned.",
+    "Requires a meaningful label and supports native minimum and maximum labels.",
+    "Inherits enabled state and layout direction."
+  ],
+  "preview": { "source": "sources/components/RegistrySliderModifier.swift", "name": "Slider" }
+}

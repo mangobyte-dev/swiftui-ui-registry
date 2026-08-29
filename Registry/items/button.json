@@ -1,0 +1,36 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "button",
+  "kind": "component",
+  "description": "Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.",
+  "files": [
+    {
+      "source": "sources/components/RegistryButtonStyle.swift",
+      "target": "RegistryButtonStyle.swift"
+    }
+  ],
+  "registryDependencies": [],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x"
+    }
+  ],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
+  "tags": ["button", "control", "action", "style", "shadcn"],
+  "accessibility": [
+    "Preserves native Button semantics and ButtonRole behavior.",
+    "Maintains a minimum 44 by 44 point interaction area across control sizes.",
+    "Uses system text styles and allows labels to grow vertically with Dynamic Type.",
+    "Reads the enabled state from the environment and does not rely on color alone for destructive actions."
+  ],
+  "preview": {
+    "source": "sources/components/RegistryButtonStyle.swift",
+    "name": "Button Variants"
+  }
+}

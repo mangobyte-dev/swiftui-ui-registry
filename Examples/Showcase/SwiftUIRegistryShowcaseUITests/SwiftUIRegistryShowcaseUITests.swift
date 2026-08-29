@@ -52,6 +52,26 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     }
 
     @MainActor
+    func testStageOneCatalogRendersInstalledNativeControlsInAdaptiveEnvironments() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-stage-one", "-accessibility-size", "-right-to-left"]
+        app.launch()
+
+        XCTAssertTrue(
+            app.staticTexts["Stage 1 Components"].waitForExistence(timeout: 5),
+            "The Stage 1 launch must render the installed catalog through the consumer target."
+        )
+        XCTAssertTrue(app.buttons["Primary action"].exists)
+        XCTAssertTrue(app.staticTexts["Ready"].exists)
+        XCTAssertTrue(app.staticTexts["Text entry"].exists)
+        XCTAssertTrue(app.textFields["Name"].exists)
+        XCTAssertFalse(
+            app.tabBars.firstMatch.exists,
+            "The dedicated Stage 1 launch must not depend on the product-block tab flow."
+        )
+    }
+
+    @MainActor
     func testAccessibilitySizeLaunchExpandsSystemTypography() {
         let app = XCUIApplication()
         app.launch()

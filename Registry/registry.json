@@ -1,0 +1,12 @@
+{
+  "$schema": "./schema.json",
+  "schemaVersion": 1,
+  "name": "SwiftUIRegistry",
+  "items": [
+    "items/metric-card.json",
+    "items/transaction-row.json",
+    "items/macro-progress.json",
+    "items/finance-overview.json",
+    "items/nutrition-overview.json"
+  ]
+}

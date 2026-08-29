@@ -1,0 +1,39 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "nutrition-overview",
+  "kind": "block",
+  "description": "Composes prepared energy and macronutrient values into an embeddable nutrition overview.",
+  "files": [
+    {
+      "source": "sources/blocks/NutritionOverview.swift",
+      "target": "NutritionOverview.swift"
+    }
+  ],
+  "registryDependencies": ["metric-card", "macro-progress"],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x"
+    }
+  ],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
+  "tags": ["nutrition", "health", "dashboard", "overview", "macronutrients"],
+  "accessibility": [
+    "Uses native Button and ProgressView semantics.",
+    "Uses system text styles and adaptive macro rows for Dynamic Type.",
+    "Accepts prepared values so callers retain localization and measurement-format control."
+  ],
+  "preview": {
+    "source": "sources/blocks/NutritionOverview.swift",
+    "name": "Nutrition Overview",
+    "screenshots": [
+      "docs/images/nutrition-overview-phone.jpg",
+      "docs/images/nutrition-overview-tablet.jpg"
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.2.0",
+  "name": "transaction-row",
+  "kind": "component",
+  "description": "Displays prepared transaction content while leaving selection to a native Button at the call site.",
+  "files": [
+    {
+      "source": "sources/components/TransactionRow.swift",
+      "target": "TransactionRow.swift"
+    }
+  ],
+  "registryDependencies": [],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x"
+    }
+  ],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
+  "tags": ["transaction", "row", "finance", "activity"],
+  "accessibility": [
+    "Uses ViewThatFits to preserve content at large Dynamic Type sizes.",
+    "Combines row text into one VoiceOver element.",
+    "Does not use color as the only carrier of transaction meaning."
+  ],
+  "preview": {
+    "source": "sources/components/TransactionRow.swift",
+    "name": "Transaction Row"
+  }
+}

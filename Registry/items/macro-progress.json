@@ -1,0 +1,35 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "macro-progress",
+  "kind": "component",
+  "description": "Displays prepared nutrition progress with a native progress view and adaptive value layout.",
+  "files": [
+    {
+      "source": "sources/components/MacroProgress.swift",
+      "target": "MacroProgress.swift"
+    }
+  ],
+  "registryDependencies": [],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x"
+    }
+  ],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
+  "tags": ["nutrition", "health", "progress", "macronutrients"],
+  "accessibility": [
+    "Uses native ProgressView semantics.",
+    "Uses ViewThatFits to move prepared values below the label when horizontal space is constrained.",
+    "Combines the label and prepared values without relying on tint to communicate meaning."
+  ],
+  "preview": {
+    "source": "sources/components/MacroProgress.swift",
+    "name": "Macro Progress"
+  }
+}

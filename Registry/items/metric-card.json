@@ -1,0 +1,35 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "metric-card",
+  "kind": "component",
+  "description": "Displays one prepared product metric using native text formatting and semantic styling.",
+  "files": [
+    {
+      "source": "sources/components/MetricCard.swift",
+      "target": "MetricCard.swift"
+    }
+  ],
+  "registryDependencies": [],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x"
+    }
+  ],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
+  "tags": ["metric", "finance", "health", "analytics"],
+  "accessibility": [
+    "Uses system text styles for Dynamic Type.",
+    "Combines title, value, and detail into one VoiceOver element.",
+    "Treats the SF Symbol as decorative."
+  ],
+  "preview": {
+    "source": "sources/components/MetricCard.swift",
+    "name": "Metric Card"
+  }
+}

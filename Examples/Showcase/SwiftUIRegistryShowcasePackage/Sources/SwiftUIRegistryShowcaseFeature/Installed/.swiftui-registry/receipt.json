@@ -1,0 +1,69 @@
+{
+  "files": {
+    "FinanceOverview.swift": {
+      "base": "bases/f9b286d5453416c4c440e65a4c2be76f47597245ad27cdad80314bf17053616c.base",
+      "installedDigest": "sha256:47bb6d092f07c313a3459b6d208b2c144af6e1f130c17a32207beb09a6e11e87",
+      "item": "finance-overview",
+      "sourceDigest": "sha256:47bb6d092f07c313a3459b6d208b2c144af6e1f130c17a32207beb09a6e11e87",
+      "version": "0.2.0"
+    },
+    "MacroProgress.swift": {
+      "base": "bases/061c048d9552b3eb5f519bbb2c6158fd60f407fa4a68b22ce277c9fad95ac8a9.base",
+      "installedDigest": "sha256:1a5b4104af31d4536ff0c8b459f16e97bda9e0b99f4a2dfcced3ca0aac94c9d8",
+      "item": "macro-progress",
+      "sourceDigest": "sha256:1a5b4104af31d4536ff0c8b459f16e97bda9e0b99f4a2dfcced3ca0aac94c9d8",
+      "version": "0.1.0"
+    },
+    "MetricCard.swift": {
+      "base": "bases/72e69e8c35a9ff94342e2eb0ca362ef1edd41c34a3587ae393844d00ca45e247.base",
+      "installedDigest": "sha256:4876c1d7275eb6d72faa048319efeea660e69398a7a33ae374c2480dd55a072d",
+      "item": "metric-card",
+      "sourceDigest": "sha256:4876c1d7275eb6d72faa048319efeea660e69398a7a33ae374c2480dd55a072d",
+      "version": "0.1.0"
+    },
+    "NutritionOverview.swift": {
+      "base": "bases/414b159906565ccf3c90122a903dd45568afc9c26393be31e864c15bed24c433.base",
+      "installedDigest": "sha256:11d13442bd0ae57a526486575ae233cd936660515c81a15762e3234b8286c703",
+      "item": "nutrition-overview",
+      "sourceDigest": "sha256:11d13442bd0ae57a526486575ae233cd936660515c81a15762e3234b8286c703",
+      "version": "0.1.0"
+    },
+    "TransactionRow.swift": {
+      "base": "bases/bb175adeaac2e6443042b5ae547edcdaea4daec1487cb932a128b37b41cb221d.base",
+      "installedDigest": "sha256:ee20595071896c5b1ca2e6c715ee70521bce07b1016344ef31658e80598a9672",
+      "item": "transaction-row",
+      "sourceDigest": "sha256:ee20595071896c5b1ca2e6c715ee70521bce07b1016344ef31658e80598a9672",
+      "version": "0.2.0"
+    }
+  },
+  "items": {
+    "finance-overview": {
+      "registryDependencies": [
+        "metric-card",
+        "transaction-row"
+      ],
+      "version": "0.2.0"
+    },
+    "macro-progress": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "metric-card": {
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "nutrition-overview": {
+      "registryDependencies": [
+        "metric-card",
+        "macro-progress"
+      ],
+      "version": "0.1.0"
+    },
+    "transaction-row": {
+      "registryDependencies": [],
+      "version": "0.2.0"
+    }
+  },
+  "registry": "SwiftUIRegistry",
+  "schemaVersion": 1
+}

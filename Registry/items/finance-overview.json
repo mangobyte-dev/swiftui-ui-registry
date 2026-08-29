@@ -1,0 +1,40 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.2.0",
+  "name": "finance-overview",
+  "kind": "block",
+  "description": "Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.",
+  "files": [
+    {
+      "source": "sources/blocks/FinanceOverview.swift",
+      "target": "FinanceOverview.swift"
+    }
+  ],
+  "registryDependencies": ["metric-card", "transaction-row"],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x"
+    }
+  ],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
+  "tags": ["finance", "dashboard", "overview", "transactions"],
+  "accessibility": [
+    "Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state.",
+    "Uses system text styles and ViewThatFits for Dynamic Type.",
+    "Uses leading and trailing alignment so layout follows right-to-left direction."
+  ],
+  "preview": {
+    "source": "sources/blocks/FinanceOverview.swift",
+    "name": "Finance Overview",
+    "screenshots": [
+      "docs/images/finance-overview-phone.jpg",
+      "docs/images/finance-overview-tablet.jpg",
+      "docs/images/finance-overview-accessibility.jpg"
+    ]
+  }
+}

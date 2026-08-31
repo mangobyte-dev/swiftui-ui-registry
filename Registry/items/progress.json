@@ -5,9 +5,18 @@
   "name": "progress",
   "kind": "component",
   "description": "Styles native determinate and indeterminate ProgressView controls with linear accent, positive, and negative semantic tones.",
+  "usage": "ProgressView(value: 0.68) {\n    Text(\"Uploading\")\n} currentValueLabel: {\n    Text(\"68 percent\")\n}\n.progressViewStyle(.registryLinear)\n\nProgressView(value: 1) {\n    Text(\"Import complete\")\n}\n.progressViewStyle(.registryLinearPositive)",
   "files": [{ "source": "sources/components/RegistryProgressViewStyle.swift", "target": "RegistryProgressViewStyle.swift" }],
   "registryDependencies": [],
-  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+    }
+  ],
   "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
   "tags": ["progress", "progress-view", "linear", "loading", "style"],
   "accessibility": [

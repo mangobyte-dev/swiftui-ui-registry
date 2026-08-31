@@ -5,6 +5,7 @@
   "name": "macro-progress",
   "kind": "component",
   "description": "Displays prepared nutrition progress with a native progress view and adaptive value layout.",
+  "usage": "MacroProgress(\n    \"Protein\",\n    value: Text(\"96 g\"),\n    target: Text(\"130 g\"),\n    progress: 96.0 / 130.0,\n    systemImage: \"fish.fill\",\n    tint: .indigo\n)",
   "files": [
     {
       "source": "sources/components/MacroProgress.swift",
@@ -16,7 +17,9 @@
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
-      "requirement": "0.x"
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
   "platforms": [

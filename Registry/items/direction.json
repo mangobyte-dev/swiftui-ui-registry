@@ -1,20 +1,22 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "direction",
-  "kind": "component",
-  "description": "Documents and previews native layoutDirection behavior and semantic leading/trailing layout without a replacement API.",
-  "files": [{ "source": "sources/components/RegistryDirectionExamples.swift", "target": "RegistryDirectionExamples.swift" }],
+  "kind": "recipe",
+  "description": "Native guidance for layoutDirection behavior and semantic leading/trailing layout without a replacement API.",
+  "usage": "@Environment(\\.layoutDirection) private var layoutDirection\n\nHStack {\n    Image(systemName: \"person.crop.circle\")\n        .accessibilityHidden(true)\n    Text(\"Account\")\n    Spacer()\n    Image(systemName: \"chevron.forward\")\n        .accessibilityHidden(true)\n}",
+  "docs": "Read `EnvironmentValues.layoutDirection` and use leading/trailing alignment instead of left/right geometry. No registry replacement is needed because SwiftUI propagates direction through the environment.\n\nUse direction-aware symbols such as `chevron.forward` so icons mirror automatically. Preview both directions with `.environment(\\.layoutDirection, .rightToLeft)`.",
+  "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
   "tags": ["direction", "layout-direction", "rtl", "localization", "guidance"],
   "accessibility": [
     "Uses semantic reading order and leading/trailing alignment.",
     "Treats illustrative symbols as decorative.",
-    "Relies on SwiftUI's environment propagation instead of duplicating locale state.",
-    "Demonstrates both left-to-right and right-to-left layouts."
-  ],
-  "preview": { "source": "sources/components/RegistryDirectionExamples.swift", "name": "Direction Left to Right" }
+    "Relies on SwiftUI's environment propagation instead of duplicating locale state."
+  ]
 }

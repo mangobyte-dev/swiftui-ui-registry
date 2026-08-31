@@ -5,9 +5,18 @@
   "name": "checkbox",
   "kind": "component",
   "description": "Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.",
+  "usage": "@State private var accepted = false\n\nToggle(\"Accept terms\", isOn: $accepted)\n    .toggleStyle(.registryCheckbox)",
   "files": [{ "source": "sources/components/RegistryCheckboxToggleStyle.swift", "target": "RegistryCheckboxToggleStyle.swift" }],
   "registryDependencies": [],
-  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+    }
+  ],
   "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
   "tags": ["checkbox", "toggle", "selection", "form", "style"],
   "accessibility": [

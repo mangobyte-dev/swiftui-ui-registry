@@ -5,9 +5,18 @@
   "name": "separator",
   "kind": "component",
   "description": "Applies semantic color, orientation, and caller-provided insets to a native Divider.",
+  "usage": "Divider()\n    .registrySeparator(insets: EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))\n\nDivider()\n    .registrySeparator(.vertical)",
   "files": [{ "source": "sources/components/RegistrySeparatorModifier.swift", "target": "RegistrySeparatorModifier.swift" }],
   "registryDependencies": [],
-  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+    }
+  ],
   "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
   "tags": ["separator", "divider", "layout", "inset", "modifier"],
   "accessibility": [

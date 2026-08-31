@@ -5,9 +5,18 @@
   "name": "toggle-group",
   "kind": "component",
   "description": "Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.",
+  "usage": "@State private var bold = false\n@State private var italic = false\n\nControlGroup {\n    Toggle(\"Bold\", systemImage: \"bold\", isOn: $bold)\n    Toggle(\"Italic\", systemImage: \"italic\", isOn: $italic)\n}\n.registryToggleGroup()",
   "files": [{ "source": "sources/components/RegistryToggleGroupModifier.swift", "target": "RegistryToggleGroupModifier.swift" }],
   "registryDependencies": ["toggle", "button"],
-  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+    }
+  ],
   "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
   "tags": ["toggle-group", "toggle", "control-group", "multi-selection", "modifier"],
   "accessibility": [

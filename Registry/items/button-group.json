@@ -5,6 +5,7 @@
   "name": "button-group",
   "kind": "component",
   "description": "Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.",
+  "usage": "ControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
   "files": [
     {
       "source": "sources/components/RegistryButtonGroupStyle.swift",
@@ -16,7 +17,9 @@
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
-      "requirement": "0.x"
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
   "platforms": [

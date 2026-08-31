@@ -5,9 +5,18 @@
   "name": "textarea",
   "kind": "component",
   "description": "Applies input-matching focus, disabled, and invalid chrome to a native TextEditor.",
+  "usage": "@State private var notes = \"\"\n\nTextEditor(text: $notes)\n    .registryTextArea(accessibilityLabel: Text(\"Delivery instructions\"))",
   "files": [{ "source": "sources/components/RegistryTextAreaModifier.swift", "target": "RegistryTextAreaModifier.swift" }],
   "registryDependencies": [],
-  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+    }
+  ],
   "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
   "tags": ["textarea", "text-editor", "multiline", "form", "modifier"],
   "accessibility": [

@@ -1,6 +1,7 @@
 import importlib.util
 import json
 import re
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -17,6 +18,17 @@ sys.modules[SPEC.name] = INSTALLER_MODULE
 SPEC.loader.exec_module(INSTALLER_MODULE)
 Installer = INSTALLER_MODULE.Installer
 RegistryError = INSTALLER_MODULE.RegistryError
+RecipeGuidance = INSTALLER_MODULE.RecipeGuidance
+
+RECIPE_NAMES = {
+    "aspect-ratio",
+    "direction",
+    "native-select",
+    "radio-group",
+    "slider",
+    "switch",
+    "tabs",
+}
 
 
 class InstallerTests(unittest.TestCase):
@@ -92,6 +104,8 @@ class InstallerTests(unittest.TestCase):
 
     def test_preview_metadata_resolves_to_declared_source_and_screenshots(self):
         for item in self.installer.items.values():
+            if item["kind"] == "recipe":
+                continue
             with self.subTest(item=item["name"]):
                 preview = item["preview"]
                 source = REPOSITORY_ROOT / "Registry" / preview["source"]
@@ -99,13 +113,13 @@ class InstallerTests(unittest.TestCase):
                     f'#Preview("{preview["name"]}")',
                     source.read_text(),
                 )
-                for screenshot in preview.get("screenshots", []):
-                    self.assertTrue((REPOSITORY_ROOT / screenshot).is_file())
+                # Screenshot and preview path existence is enforced on every
+                # load by the shared validator; see test_validation.py.
 
     def test_every_stage_one_roadmap_item_is_registered_with_its_native_seam(self):
         roadmap = (REPOSITORY_ROOT / "docs" / "component-roadmap.md").read_text()
-        stage_one = roadmap.split("## Stage 1: Core styled primitives", 1)[1].split(
-            "### Stage 1 exit criteria", 1
+        stage_one = roadmap.split("### Stage 1 mapping (built)", 1)[1].split(
+            "### Forms and data entry candidates", 1
         )[0]
         names = re.findall(r"\| `([^`]+)` \|", stage_one)
         expected_markers = {
@@ -121,9 +135,9 @@ class InstallerTests(unittest.TestCase):
             "radio-group": ".pickerStyle(.inline)",
             "select": ".pickerStyle(.menu)",
             "separator": "func registrySeparator(",
-            "slider": "func registrySlider(",
+            "slider": ".controlSize(",
             "spinner": "ProgressViewStyle",
-            "switch": "ToggleStyle",
+            "switch": ".toggleStyle(.switch)",
             "tabs": ".pickerStyle(.segmented)",
             "textarea": "func registryTextArea(",
             "toggle": "ToggleStyle",
@@ -136,11 +150,64 @@ class InstallerTests(unittest.TestCase):
         for name in names:
             with self.subTest(item=name):
                 item = self.installer.items[name]
-                source = (
-                    REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
-                ).read_text()
-                self.assertIn(expected_markers[name], source)
-                self.assertNotRegex(source, r"public struct \w+: View")
+                if item["kind"] == "recipe":
+                    # A recipe's guidance is the snippet plus the prose that
+                    # explains it, exactly what install.py prints and what the
+                    # catalog page shows; the snippet lives in `usage` only.
+                    evidence = f"{item['usage']}\n\n{item['docs']}"
+                else:
+                    evidence = (
+                        REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+                    ).read_text()
+                self.assertIn(expected_markers[name], evidence)
+                self.assertNotRegex(evidence, r"public struct \w+: View")
+
+    def test_item_value_gate_separates_recipes_from_installable_items(self):
+        kinds = {name: item["kind"] for name, item in self.installer.items.items()}
+
+        self.assertEqual(
+            {name for name, kind in kinds.items() if kind == "recipe"},
+            RECIPE_NAMES,
+        )
+        self.assertEqual(len([kind for kind in kinds.values() if kind == "component"]), 17)
+        self.assertEqual(len([kind for kind in kinds.values() if kind == "block"]), 2)
+        # The per-item gate (a recipe is docs-only guidance with no files; an
+        # installable item ships files plus a preview and never depends on a
+        # recipe) is enforced on every registry load by the shared validator;
+        # test_validation.py proves each violation is rejected.
+
+    def test_recipe_resolution_fails_loudly_with_its_guidance(self):
+        with self.assertRaises(RecipeGuidance) as caught:
+            self.installer.resolve("tabs")
+        self.assertIn(".pickerStyle(.segmented)", caught.exception.docs)
+
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(RecipeGuidance):
+                self.installer.install("tabs", Path(directory))
+            self.assertFalse(list(Path(directory).iterdir()))
+
+    def test_recipe_install_command_prints_guidance_and_exits_with_code_two(self):
+        with tempfile.TemporaryDirectory() as directory:
+            process = subprocess.run(
+                [
+                    sys.executable,
+                    str(REPOSITORY_ROOT / "Scripts" / "install.py"),
+                    "switch",
+                    "--destination",
+                    directory,
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(process.returncode, 2)
+            self.assertIn(".toggleStyle(.switch)", process.stdout)
+            self.assertIn(
+                "recipe items are native guidance; nothing to install",
+                process.stderr,
+            )
+            self.assertFalse(list(Path(directory).iterdir()))
 
     def test_textarea_requires_and_applies_its_accessibility_label(self):
         item = self.installer.items["textarea"]
@@ -151,26 +218,30 @@ class InstallerTests(unittest.TestCase):
         self.assertIn("accessibilityLabel: Text", source)
         self.assertIn(".accessibilityLabel(accessibilityLabel)", source)
 
-    def test_aspect_ratio_examples_label_media_and_hide_decorative_symbols(self):
-        item = self.installer.items["aspect-ratio"]
-        source = (
-            REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
-        ).read_text()
+    def test_aspect_ratio_guidance_labels_media_and_hides_decorative_symbols(self):
+        guidance = self._recipe_guidance("aspect-ratio")
 
-        self.assertEqual(source.count(".accessibilityHidden(true)"), 2)
-        self.assertIn('.accessibilityLabel("Video placeholder")', source)
-        self.assertIn('.accessibilityLabel("Avatar placeholder")', source)
+        self.assertIn(".accessibilityHidden(true)", guidance)
+        self.assertIn('.accessibilityLabel("Video placeholder")', guidance)
+        self.assertIn('.accessibilityLabel("Avatar placeholder")', guidance)
 
-    def test_slider_inherits_control_size_unless_caller_overrides_it(self):
-        item = self.installer.items["slider"]
-        source = (
-            REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
-        ).read_text()
+    def test_slider_guidance_keeps_native_control_and_hides_decorative_symbols(self):
+        guidance = self._recipe_guidance("slider")
 
-        self.assertIn("controlSize: ControlSize? = nil", source)
-        self.assertIn("@Environment(\\.controlSize)", source)
-        self.assertIn("controlSize ?? inheritedControlSize", source)
-        self.assertEqual(source.count(".accessibilityHidden(true)"), 2)
+        self.assertIn(".tint(_:)", guidance)
+        self.assertIn(".controlSize(_:)", guidance)
+        self.assertEqual(guidance.count(".accessibilityHidden(true)"), 2)
+        self.assertNotIn("registrySlider", guidance)
+
+    def _recipe_guidance(self, name: str) -> str:
+        """What a caller receives for a recipe: the snippet plus its prose.
+
+        The snippet is carried once, in `usage`; `docs` explains why the native
+        API is the whole treatment. install.py prints both and the catalog page
+        renders both, so both together are the guidance under test.
+        """
+        item = self.installer.items[name]
+        return f"{item['usage']}\n\n{item['docs']}"
 
     def test_invalid_previews_reuse_the_negative_theme_color(self):
         for name in ["input", "textarea"]:
@@ -249,14 +320,16 @@ class InstallerTests(unittest.TestCase):
 
     def test_every_stage_one_preview_covers_adaptive_environments(self):
         roadmap = (REPOSITORY_ROOT / "docs" / "component-roadmap.md").read_text()
-        stage_one = roadmap.split("## Stage 1: Core styled primitives", 1)[1].split(
-            "### Stage 1 exit criteria", 1
+        stage_one = roadmap.split("### Stage 1 mapping (built)", 1)[1].split(
+            "### Forms and data entry candidates", 1
         )[0]
         names = re.findall(r"\| `([^`]+)` \|", stage_one)
 
         for name in names:
+            item = self.installer.items[name]
+            if item["kind"] == "recipe":
+                continue
             with self.subTest(item=name):
-                item = self.installer.items[name]
                 source = (
                     REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
                 ).read_text()
@@ -327,12 +400,63 @@ class InstallerTests(unittest.TestCase):
             )
             self.assertEqual(receipt["schemaVersion"], 1)
             self.assertEqual(receipt["items"]["finance-overview"]["version"], "0.2.1")
+            self.assertEqual(
+                receipt["items"]["finance-overview"]["packageDependencies"],
+                [
+                    {
+                        "package": "SwiftUIRegistry",
+                        "product": "SwiftUIRegistryFoundations",
+                        "requirement": "0.x",
+                        "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+                        "swiftPM": {"kind": "upToNextMinor", "minimumVersion": "0.1.0"},
+                    }
+                ],
+            )
             self.assertEqual(set(receipt["files"]), {
                 "MetricCard.swift",
                 "TransactionRow.swift",
                 "FinanceOverview.swift",
             })
             self.assertFalse(list((destination / ".swiftui-registry").rglob("*.swift")))
+
+    def test_install_prints_the_actionable_package_instruction(self):
+        # The consumer must receive the package URL, resolvable requirement, and
+        # product, not only the prose requirement string.
+        with tempfile.TemporaryDirectory() as directory:
+            process = subprocess.run(
+                [
+                    sys.executable,
+                    str(REPOSITORY_ROOT / "Scripts" / "install.py"),
+                    "button",
+                    "--destination",
+                    directory,
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(process.returncode, 0)
+            self.assertIn(
+                "requires: add package "
+                "https://github.com/mangobyte-dev/swiftui-ui-registry.git "
+                "(from 0.1.0 up to the next minor version) "
+                "and link product SwiftUIRegistryFoundations",
+                process.stdout,
+            )
+
+    def test_receipt_never_invents_a_package_requirement(self):
+        # An item that declares no package dependencies must record an empty
+        # list, so a receipt audit distinguishes "none required" from "unknown".
+        with tempfile.TemporaryDirectory() as repository, tempfile.TemporaryDirectory() as output:
+            self.make_registry(Path(repository), "source\n")
+            destination = Path(output)
+            Installer(Path(repository)).install("example", destination)
+
+            receipt = json.loads(
+                (destination / ".swiftui-registry" / "receipt.json").read_text()
+            )
+            self.assertEqual(receipt["items"]["example"]["packageDependencies"], [])
 
     def test_repeated_install_is_safe_but_modified_owned_source_is_refused(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -447,17 +571,223 @@ class InstallerTests(unittest.TestCase):
             self.assertEqual(len(artifacts), 1)
             self.assertIn("<<<<<<< Example.swift", artifacts[0].read_text())
 
+    def test_plan_for_block_prints_closure_statuses_and_package_lines(self):
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory).resolve()
+            process = subprocess.run(
+                [
+                    sys.executable,
+                    str(REPOSITORY_ROOT / "Scripts" / "install.py"),
+                    "finance-overview",
+                    "--plan",
+                    "--destination",
+                    directory,
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(process.returncode, 0)
+            self.assertIn(
+                "closure:\n"
+                "  metric-card 0.1.1 (component)\n"
+                "  transaction-row 0.3.0 (component)\n"
+                "  finance-overview 0.2.1 (block)\n",
+                process.stdout,
+            )
+            self.assertIn(
+                "files:\n"
+                f"  new metric-card: {destination / 'MetricCard.swift'}\n"
+                f"  new transaction-row: {destination / 'TransactionRow.swift'}\n"
+                f"  new finance-overview: {destination / 'FinanceOverview.swift'}\n",
+                process.stdout,
+            )
+            self.assertIn(
+                "  requires: add package "
+                "https://github.com/mangobyte-dev/swiftui-ui-registry.git "
+                "(from 0.1.0 up to the next minor version) "
+                "and link product SwiftUIRegistryFoundations",
+                process.stdout,
+            )
+            self.assertIn("  ok: no collisions", process.stdout)
+            self.assertIn("next steps:", process.stdout)
+            self.assertIn("plan only: nothing was written", process.stdout)
+            self.assertFalse(list(Path(directory).iterdir()))
+
+    def test_plan_statuses_track_receipt_and_registry_state(self):
+        with tempfile.TemporaryDirectory() as repository, tempfile.TemporaryDirectory() as output:
+            source = self.make_registry(Path(repository), "base\n")
+            installer = Installer(Path(repository))
+            destination = Path(output)
+            installer.install("example", destination)
+
+            self.assertEqual(
+                [entry.status for entry in installer.inspect_plan("example", destination)],
+                ["up-to-date"],
+            )
+
+            (destination / "Example.swift").write_text("consumer\n")
+            self.assertEqual(
+                [entry.status for entry in installer.inspect_plan("example", destination)],
+                ["modified-would-require-force"],
+            )
+
+            (destination / "Example.swift").write_text("base\n")
+            source.write_text("registry\n")
+            self.assertEqual(
+                [entry.status for entry in installer.inspect_plan("example", destination)],
+                ["would-merge"],
+            )
+
+    def test_plan_for_recipe_prints_guidance_and_installs_nothing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            process = subprocess.run(
+                [
+                    sys.executable,
+                    str(REPOSITORY_ROOT / "Scripts" / "install.py"),
+                    "switch",
+                    "--plan",
+                    "--destination",
+                    directory,
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(process.returncode, 0)
+            self.assertIn(".toggleStyle(.switch)", process.stdout)
+            self.assertIn(
+                "plan: switch is a recipe; native guidance only; nothing installs",
+                process.stdout,
+            )
+            self.assertFalse(list(Path(directory).iterdir()))
+
+    def test_diff_exits_zero_when_installed_source_matches_canonical(self):
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory).resolve()
+            self.installer.install("metric-card", destination)
+
+            process = subprocess.run(
+                [
+                    sys.executable,
+                    str(REPOSITORY_ROOT / "Scripts" / "install.py"),
+                    "metric-card",
+                    "--diff",
+                    "--destination",
+                    directory,
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(process.returncode, 0)
+            self.assertIn(
+                f"identical metric-card: {destination / 'MetricCard.swift'}",
+                process.stdout,
+            )
+
+    def test_diff_reports_local_modification_with_the_changed_hunk(self):
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory).resolve()
+            self.installer.install("metric-card", destination)
+            owned = destination / "MetricCard.swift"
+            owned.write_text(owned.read_text() + "// consumer edit\n")
+
+            process = subprocess.run(
+                [
+                    sys.executable,
+                    str(REPOSITORY_ROOT / "Scripts" / "install.py"),
+                    "metric-card",
+                    "--diff",
+                    "--destination",
+                    directory,
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(process.returncode, 1)
+            self.assertIn("--- owned/MetricCard.swift", process.stdout)
+            self.assertIn(
+                "+++ incoming/sources/components/MetricCard.swift",
+                process.stdout,
+            )
+            self.assertIn("@@", process.stdout)
+            self.assertIn("-// consumer edit", process.stdout)
+
+    def test_diff_fails_loudly_without_an_installation_receipt(self):
+        with tempfile.TemporaryDirectory() as directory:
+            process = subprocess.run(
+                [
+                    sys.executable,
+                    str(REPOSITORY_ROOT / "Scripts" / "install.py"),
+                    "metric-card",
+                    "--diff",
+                    "--destination",
+                    directory,
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(process.returncode, 2)
+            self.assertIn("Installation receipt is missing", process.stderr)
+            self.assertFalse(list(Path(directory).iterdir()))
+
+    def test_plan_and_diff_write_nothing_to_an_installed_destination(self):
+        def snapshot(root: Path) -> dict:
+            return {
+                str(path.relative_to(root)): (
+                    path.read_bytes() if path.is_file() else "dir"
+                )
+                for path in sorted(root.rglob("*"))
+            }
+
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory).resolve()
+            self.installer.install("finance-overview", destination)
+            (destination / "MetricCard.swift").write_text("// consumer edit\n")
+            before = snapshot(destination)
+
+            for flag in ["--plan", "--diff"]:
+                subprocess.run(
+                    [
+                        sys.executable,
+                        str(REPOSITORY_ROOT / "Scripts" / "install.py"),
+                        "finance-overview",
+                        flag,
+                        "--destination",
+                        directory,
+                    ],
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+            self.installer.inspect_plan("finance-overview", destination)
+            self.installer.diff("finance-overview", destination)
+
+            self.assertEqual(snapshot(destination), before)
+
     @staticmethod
     def make_registry(repository: Path, source_content: str) -> Path:
         source = repository / "Registry" / "sources" / "Example.swift"
         source.parent.mkdir(parents=True)
         source.write_text(source_content)
+        (repository / "Registry" / "schema.json").write_text(
+            (REPOSITORY_ROOT / "Registry" / "schema.json").read_text()
+        )
         item = {
             "schemaVersion": 1,
             "version": "0.1.0",
             "name": "example",
             "kind": "component",
             "description": "Test item.",
+            "usage": "Example()",
             "files": [{"source": "sources/Example.swift", "target": "Example.swift"}],
             "registryDependencies": [],
             "packageDependencies": [],

@@ -45,11 +45,17 @@ The composed block does not own a `ScrollView`, navigation container, or maximum
 
 This is deliberately smaller than a full token system. Repeated colors and metrics use semantic tokens rather than hardcoded values, but a token enters foundations only after two real registry items need the exact same meaning. A style or modifier remains source-owned until two items use the exact same treatment
 
+## Compatibility policy
+
+Pre-1.0 foundations evolve by minor version: a patch release stays source compatible, a minor release may change the contract. Items therefore declare an `upToNextMinor` SwiftPM requirement from their known-good foundation floor, currently 0.1.0, the initial published contract (see `docs/registry-spec.md`). Copied source is verified against its declared platform floor and the recorded foundation range, and the install receipt records what was required at install time
+
 ## Installation behavior
 
-The installer reads `Registry/registry.json`, resolves item dependencies depth first, validates safe relative paths, preflights target collisions, and copies exact source. It records item versions, dependency declarations, target paths, source digests, installed digests, and non-Swift base snapshots under the destination's `.swiftui-registry/` directory
+The installer reads `Registry/registry.json`, resolves item dependencies depth first, validates safe relative paths, preflights target collisions, and copies exact source. It records item versions, registry and package dependency declarations, target paths, source digests, installed digests, and non-Swift base snapshots under the destination's `.swiftui-registry/` directory, and prints the actionable package instruction (source URL, SwiftPM requirement, and product) for the resolved closure
 
 A repeated install skips only exact receipt-backed source. An untracked or modified target fails unless `--force` is explicit. The installer does not edit `.xcodeproj`, infer target membership, or add package dependencies. Xcode buildable folders make copied source straightforward in the showcase, but that behavior is not assumed for every consumer
+
+Two read-only modes make installation inspectable. `--plan` runs the same resolution and preflight without writing: it prints the ordered dependency closure with versions and kinds, each target write with its status (`new`, `up-to-date`, `modified-would-require-force`, `would-merge`), the actionable package requirements, collisions, and the manual integration steps; a recipe prints its native guidance and installs nothing. `--diff` prints a `difflib` unified diff of each receipt-backed owned file against the canonical registry source and exits 0 on parity or 1 on differences, failing loudly when the receipt is missing. Both modes stay outside the installer's write path, so neither can mutate a destination
 
 ## Update policy
 

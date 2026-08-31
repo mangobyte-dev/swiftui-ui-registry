@@ -5,6 +5,7 @@
   "name": "finance-overview",
   "kind": "block",
   "description": "Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.",
+  "usage": "FinanceOverview(\n    \"Overview\",\n    balanceTitle: \"Available balance\",\n    balance: Text(12_480.32, format: .currency(code: \"USD\")),\n    changeTitle: \"Monthly change\",\n    change: Text(0.082, format: .percent),\n    sectionTitle: \"Recent activity\",\n    transactions: [\n        FinanceTransactionItem(\n            id: \"salary\",\n            title: Text(\"Salary\"),\n            subtitle: Text(\"Yesterday\"),\n            amount: Text(2_450, format: .currency(code: \"KWD\")),\n            systemImage: \"building.columns.fill\",\n            tone: .positive\n        )\n    ],\n    onSelect: { id in }\n)",
   "files": [
     {
       "source": "sources/blocks/FinanceOverview.swift",
@@ -16,7 +17,9 @@
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
-      "requirement": "0.x"
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
   "platforms": [

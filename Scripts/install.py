@@ -1,20 +1,43 @@
 #!/usr/bin/env python3
-"""Install and update source-owned SwiftUI registry items."""
+"""Install, update, and inspect source-owned SwiftUI registry items."""
 
 from __future__ import annotations
 
 import argparse
+import difflib
 import hashlib
 import json
 import shutil
 import subprocess
+import sys
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
+_SCRIPTS = Path(__file__).resolve().parent
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+
+from registry_validation import validate_registry
+
 
 class RegistryError(RuntimeError):
     pass
+
+
+class RecipeGuidance(RegistryError):
+    """A recipe item was requested; it carries native guidance instead of installable files."""
+
+    def __init__(self, name: str, docs: str, usage: str) -> None:
+        super().__init__(f"{name} is a recipe; recipe items are native guidance; nothing to install")
+        self.name = name
+        self.docs = docs
+        self.usage = usage
+
+    @property
+    def guidance(self) -> str:
+        """The snippet a caller copies, followed by why the native API is enough."""
+        return f"{self.usage}\n\n{self.docs}"
 
 
 @dataclass(frozen=True)
@@ -31,6 +54,18 @@ class UpdateResult:
 
 
 @dataclass(frozen=True)
+class PlanEntry:
+    file: PlannedFile
+    status: str
+
+
+@dataclass(frozen=True)
+class DiffEntry:
+    file: PlannedFile
+    diff: str
+
+
+@dataclass(frozen=True)
 class _UpdateDecision:
     file: PlannedFile
     target_content: bytes
@@ -44,21 +79,17 @@ class Installer:
     def __init__(self, repository_root: Path) -> None:
         self.repository_root = repository_root.resolve()
         self.registry_root = self.repository_root / "Registry"
-        index = self._read_json(self.registry_root / "registry.json")
-        if index.get("schemaVersion") != 1:
-            raise RegistryError("Unsupported registry schema version")
+        issues = validate_registry(self.repository_root)
+        if issues:
+            report = "\n".join(f"- {issue}" for issue in issues)
+            raise RegistryError(f"Registry validation failed:\n{report}")
 
+        index = self._read_json(self.registry_root / "registry.json")
         self.registry_name = index.get("name", "unknown")
         self.items: dict[str, dict] = {}
         for relative_path in index.get("items", []):
-            item_path = self._safe_join(self.registry_root, relative_path)
-            item = self._read_json(item_path)
-            self._validate_item(item, item_path)
-            self._validate_preview_files(item, item_path)
-            name = item["name"]
-            if name in self.items:
-                raise RegistryError(f"Duplicate registry item: {name}")
-            self.items[name] = item
+            item = self._read_json(self._safe_join(self.registry_root, relative_path))
+            self.items[item["name"]] = item
 
     def resolve(self, name: str) -> list[str]:
         ordered: list[str] = []
@@ -73,6 +104,8 @@ class Installer:
             item = self.items.get(current)
             if item is None:
                 raise RegistryError(f"Unknown registry item: {current}")
+            if item["kind"] == "recipe":
+                raise RecipeGuidance(current, item["docs"], item["usage"])
 
             visiting.add(current)
             for dependency in item["registryDependencies"]:
@@ -101,6 +134,64 @@ class Installer:
                 planned.append(PlannedFile(item_name, source, target))
 
         return planned
+
+    # Read-only inspection. inspect_plan and diff, and every helper they call
+    # (plan, _read_receipt, _matches_receipt, _plan_status, path and digest
+    # helpers), never write a file. Keep the install and update write paths
+    # out of this call graph so --plan and --diff cannot mutate a destination.
+
+    def inspect_plan(self, name: str, destination: Path) -> list[PlanEntry]:
+        """Resolve like a real install and classify every target without writing."""
+        destination = destination.resolve()
+        planned = self.plan(name, destination)
+        receipt = self._read_receipt(destination)
+        entries: list[PlanEntry] = []
+        for file in planned:
+            record = receipt["files"].get(self._target_key(file.target, destination))
+            entries.append(PlanEntry(file, self._plan_status(file, record, destination)))
+        return entries
+
+    def _plan_status(self, file: PlannedFile, record: dict | None, destination: Path) -> str:
+        if not file.target.exists():
+            return "new"
+        if self._matches_receipt(file, record, destination):
+            return "up-to-date"
+        if isinstance(record, dict):
+            base_value = record.get("base")
+            if isinstance(base_value, str):
+                base_path = self._safe_join(self._metadata_root(destination), base_value)
+                if base_path.is_file() and base_path.read_bytes() != file.source.read_bytes():
+                    return "would-merge"
+        return "modified-would-require-force"
+
+    def diff(self, name: str, destination: Path) -> list[DiffEntry]:
+        """Unified diff of owned installed source against canonical registry source."""
+        destination = destination.resolve()
+        receipt = self._read_receipt(destination, require_existing=True)
+        entries: list[DiffEntry] = []
+        for file in self.plan(name, destination):
+            target_key = self._target_key(file.target, destination)
+            record = receipt["files"].get(target_key)
+            if not isinstance(record, dict):
+                raise RegistryError(
+                    f"No receipt entry for {file.target}; install {file.item} first"
+                )
+            if not file.target.is_file():
+                raise RegistryError(f"Installed source is missing: {file.target}")
+            owned = file.target.read_bytes()
+            incoming = file.source.read_bytes()
+            if owned == incoming:
+                entries.append(DiffEntry(file, ""))
+                continue
+            source_key = file.source.relative_to(self.registry_root).as_posix()
+            diff_lines = difflib.unified_diff(
+                owned.decode("utf-8", errors="replace").splitlines(keepends=True),
+                incoming.decode("utf-8", errors="replace").splitlines(keepends=True),
+                fromfile=f"owned/{target_key}",
+                tofile=f"incoming/{source_key}",
+            )
+            entries.append(DiffEntry(file, "".join(diff_lines)))
+        return entries
 
     def install(self, name: str, destination: Path, force: bool = False) -> list[PlannedFile]:
         destination = destination.resolve()
@@ -226,12 +317,45 @@ class Installer:
             and base_path.read_bytes() == source
         )
 
+    def package_requirements(self, name: str) -> list[dict]:
+        """Deduplicated declared package dependencies across the resolved closure."""
+        ordered: list[dict] = []
+        seen: set[str] = set()
+        for item_name in self.resolve(name):
+            for dependency in self.items[item_name]["packageDependencies"]:
+                key = json.dumps(dependency, sort_keys=True)
+                if key not in seen:
+                    seen.add(key)
+                    ordered.append(dependency)
+        return ordered
+
+    @staticmethod
+    def dependency_instruction(dependency: dict) -> str:
+        """Render one declared package dependency as an actionable SwiftPM step."""
+        rule = dependency.get("swiftPM")
+        if isinstance(rule, dict):
+            kind = rule.get("kind")
+            minimum = rule.get("minimumVersion")
+            if kind == "exactVersion":
+                requirement = f"exact version {minimum}"
+            elif kind == "range":
+                requirement = f"from {minimum} up to {rule.get('maximumVersionExclusive')} exclusive"
+            elif kind == "upToNextMajor":
+                requirement = f"from {minimum} up to the next major version"
+            else:
+                requirement = f"from {minimum} up to the next minor version"
+        else:
+            requirement = dependency["requirement"]
+        source = dependency.get("sourceURL", dependency["package"])
+        return f"add package {source} ({requirement}) and link product {dependency['product']}"
+
     def _record_items(self, receipt: dict, requested_name: str) -> None:
         for item_name in self.resolve(requested_name):
             item = self.items[item_name]
             receipt["items"][item_name] = {
                 "version": item["version"],
                 "registryDependencies": item["registryDependencies"],
+                "packageDependencies": item["packageDependencies"],
             }
 
     def _record_file(
@@ -369,40 +493,58 @@ class Installer:
             raise RegistryError(f"Registry path escapes through a symbolic link: {value}") from error
         return candidate
 
-    def _validate_preview_files(self, item: dict, item_path: Path) -> None:
-        preview = item["preview"]
-        source = self._safe_join(self.registry_root, preview["source"])
-        if not source.is_file():
-            raise RegistryError(f"Missing preview source in {item_path}: {source}")
 
-        for screenshot in preview.get("screenshots", []):
-            path = self._safe_join(self.repository_root, screenshot)
-            if not path.is_file():
-                raise RegistryError(f"Missing preview screenshot in {item_path}: {path}")
+def _print_plan(installer: Installer, name: str, destination: Path) -> None:
+    entries = installer.inspect_plan(name, destination)
+    print(f"plan: {name}")
+    print(f"destination: {destination.resolve()}")
+    print("closure:")
+    for item_name in installer.resolve(name):
+        item = installer.items[item_name]
+        print(f"  {item_name} {item['version']} ({item['kind']})")
+    print("files:")
+    for entry in entries:
+        print(f"  {entry.status} {entry.file.item}: {entry.file.target}")
+    print("packages:")
+    requirements = installer.package_requirements(name)
+    for dependency in requirements:
+        print(f"  requires: {installer.dependency_instruction(dependency)}")
+    if not requirements:
+        print("  none")
+    blocked = [entry for entry in entries if entry.status == "modified-would-require-force"]
+    stale = [entry for entry in entries if entry.status == "would-merge"]
+    print("preflight:")
+    if not blocked and not stale:
+        print("  ok: no collisions; install writes new targets and skips up-to-date targets")
+    for entry in blocked:
+        print(
+            f"  collision: {entry.file.target} differs from its receipt;"
+            " install refuses without --force"
+        )
+    for entry in stale:
+        print(
+            f"  stale: registry source for {entry.file.target} changed since install;"
+            " run --update"
+        )
+    print("next steps:")
+    print(
+        "  1. Add each package requirement above to the consuming project;"
+        " the installer never edits project files"
+    )
+    print("  2. Ensure the destination folder is a member of the consuming build target")
+    print(f"  3. Run: python3 Scripts/install.py {name} --destination {destination}")
+    print("plan only: nothing was written")
 
-    @staticmethod
-    def _validate_item(item: dict, path: Path) -> None:
-        required = {
-            "schemaVersion",
-            "version",
-            "name",
-            "kind",
-            "description",
-            "files",
-            "registryDependencies",
-            "packageDependencies",
-            "platforms",
-            "tags",
-            "accessibility",
-            "preview",
-        }
-        missing = required - item.keys()
-        if missing:
-            raise RegistryError(f"{path} is missing: {', '.join(sorted(missing))}")
-        if item["schemaVersion"] != 1:
-            raise RegistryError(f"Unsupported item schema version in {path}")
-        if item["kind"] not in {"component", "block", "flow"}:
-            raise RegistryError(f"Unsupported item kind in {path}")
+
+def _print_diff(installer: Installer, name: str, destination: Path) -> bool:
+    has_differences = False
+    for entry in installer.diff(name, destination):
+        if entry.diff:
+            has_differences = True
+            sys.stdout.write(entry.diff)
+        else:
+            print(f"identical {entry.file.item}: {entry.file.target}")
+    return has_differences
 
 
 def main() -> int:
@@ -412,11 +554,33 @@ def main() -> int:
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--force", action="store_true")
     mode.add_argument("--update", action="store_true")
+    mode.add_argument(
+        "--plan",
+        action="store_true",
+        help="Print the resolved installation plan without writing anything",
+    )
+    mode.add_argument(
+        "--diff",
+        action="store_true",
+        help="Print unified diffs of owned installed source against canonical registry source",
+    )
     arguments = parser.parse_args()
 
     repository_root = Path(__file__).resolve().parents[1]
     installer = Installer(repository_root)
     try:
+        if arguments.plan:
+            try:
+                _print_plan(installer, arguments.item, arguments.destination)
+            except RecipeGuidance as guidance:
+                print(guidance.guidance)
+                print(
+                    f"plan: {guidance.name} is a recipe;"
+                    " native guidance only; nothing installs"
+                )
+            return 0
+        if arguments.diff:
+            return 1 if _print_diff(installer, arguments.item, arguments.destination) else 0
         if arguments.update:
             results = installer.update(arguments.item, arguments.destination)
             for result in results:
@@ -427,6 +591,15 @@ def main() -> int:
                 print(f"installed {file.item}: {file.target}")
             if not files:
                 print(f"up-to-date: {arguments.item}")
+            for dependency in installer.package_requirements(arguments.item):
+                print(f"requires: {installer.dependency_instruction(dependency)}")
+    except RecipeGuidance as guidance:
+        print(guidance.guidance)
+        print(
+            f"{guidance.name}: recipe items are native guidance; nothing to install",
+            file=sys.stderr,
+        )
+        return 2
     except RegistryError as error:
         parser.error(str(error))
     return 0

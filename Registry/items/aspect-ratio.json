@@ -1,20 +1,22 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "aspect-ratio",
-  "kind": "component",
-  "description": "Documents and previews SwiftUI's native aspectRatio modifier without introducing a replacement API.",
-  "files": [{ "source": "sources/components/RegistryAspectRatioExamples.swift", "target": "RegistryAspectRatioExamples.swift" }],
+  "kind": "recipe",
+  "description": "Native guidance for SwiftUI's aspectRatio modifier without introducing a replacement API.",
+  "usage": "Color.indigo\n    .overlay {\n        Image(systemName: \"play.fill\")\n            .foregroundStyle(.white)\n            .accessibilityHidden(true)\n    }\n    .aspectRatio(16.0 / 9.0, contentMode: .fit)\n    .accessibilityLabel(\"Video placeholder\")\n\nColor.teal\n    .aspectRatio(1, contentMode: .fit)\n    .frame(maxWidth: 160)\n    .accessibilityLabel(\"Avatar placeholder\")",
+  "docs": "Use SwiftUI's native `aspectRatio(_:contentMode:)` modifier at the call site. No registry wrapper is needed because the native modifier already preserves parent layout proposals.",
+  "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
   "tags": ["aspect-ratio", "layout", "media", "native", "guidance"],
   "accessibility": [
     "Does not change the accessibility semantics of caller content.",
     "Keeps meaningful image labels and decorative-image hiding with the caller.",
-    "Preserves parent layout proposals through the native aspectRatio modifier.",
-    "Includes Dynamic Type and right-to-left usage previews."
-  ],
-  "preview": { "source": "sources/components/RegistryAspectRatioExamples.swift", "name": "Aspect Ratio" }
+    "Preserves parent layout proposals through the native aspectRatio modifier."
+  ]
 }

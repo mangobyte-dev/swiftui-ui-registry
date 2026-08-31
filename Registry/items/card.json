@@ -5,6 +5,7 @@
   "name": "card",
   "kind": "component",
   "description": "Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.",
+  "usage": "GroupBox {\n    Text(\"Manage billing and renewal details from your account settings.\")\n} label: {\n    Label(\"Subscription\", systemImage: \"creditcard.fill\")\n}\n.groupBoxStyle(.registryCard)",
   "files": [
     {
       "source": "sources/components/RegistryCardStyle.swift",
@@ -16,7 +17,9 @@
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
-      "requirement": "0.x"
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
   "platforms": [

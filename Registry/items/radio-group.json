@@ -1,20 +1,23 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "radio-group",
-  "kind": "component",
-  "description": "Presents a native bound Picker as an inline mutually exclusive option group.",
-  "files": [{ "source": "sources/components/RegistryRadioGroupModifier.swift", "target": "RegistryRadioGroupModifier.swift" }],
+  "kind": "recipe",
+  "description": "Native guidance for presenting a bound Picker as an inline mutually exclusive option group.",
+  "usage": "@State private var selection = \"standard\"\n\nPicker(\"Delivery speed\", selection: $selection) {\n    Text(\"Standard\").tag(\"standard\")\n    Text(\"Express\").tag(\"express\")\n    Text(\"Same day\").tag(\"same-day\")\n}\n.pickerStyle(.inline)",
+  "docs": "Apply `.pickerStyle(.inline)` directly to a native `Picker` for a mutually exclusive option group. The registry adds no wrapper because the one-line native style is the entire treatment.",
+  "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
-  "tags": ["radio-group", "picker", "selection", "options", "modifier"],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
+  "tags": ["radio-group", "picker", "selection", "options", "guidance"],
   "accessibility": [
     "Retains native Picker selection and option semantics.",
     "Keeps selection caller-owned through the Picker binding.",
     "Uses visible option labels and native selected-state indicators.",
     "Inherits Dynamic Type, enabled state, and layout direction."
-  ],
-  "preview": { "source": "sources/components/RegistryRadioGroupModifier.swift", "name": "Radio Group" }
+  ]
 }

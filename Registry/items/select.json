@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "select",
   "kind": "component",
   "description": "Adds semantic field chrome to a native menu-style Picker without replacing its presentation or selection behavior.",
@@ -17,7 +17,7 @@
       "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
   "tags": ["select", "picker", "menu", "form", "modifier"],
   "accessibility": [
     "Retains native Picker menu, selection, and dismissal behavior.",

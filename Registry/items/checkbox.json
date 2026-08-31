@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "checkbox",
   "kind": "component",
   "description": "Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.",
@@ -17,7 +17,7 @@
       "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
   "tags": ["checkbox", "toggle", "selection", "form", "style"],
   "accessibility": [
     "Uses a native Toggle as its accessibility representation.",

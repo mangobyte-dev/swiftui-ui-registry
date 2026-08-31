@@ -8,7 +8,7 @@ ios
 
 ## Stack
 
-Swift 6.2 package sources compiled with the installed Xcode 27 toolchain, with iOS 18 as the deployment floor
+Swift 6.2 package sources compiled with the installed Xcode 27 toolchain, with iOS 26 as the deployment floor
 
 ## Users
 
@@ -33,7 +33,7 @@ The project owns product-level composition and distribution. It leaves controls,
 
 ## Evidence on Hand
 
-The finance and nutrition showcases, installer tests, search tests, iOS 18 UI tests, and current-runtime screenshots provide version-0 evidence. No brand assets, user research, or production app data were supplied, so examples use clearly illustrative content
+The finance and nutrition showcases, installer tests, search tests, UI tests on the iOS 27 runtime, and current-runtime screenshots provide version-0 evidence. iOS 26 runtime evidence is deferred until an iOS 26 simulator runtime or device is available; the floor is currently verified by compilation and the iOS 27 runtime. No brand assets, user research, or production app data were supplied, so examples use clearly illustrative content
 
 ## Product Principles
 

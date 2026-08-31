@@ -30,8 +30,8 @@ Use direction-aware symbols such as `chevron.forward` so icons mirror automatica
 ## Details
 
 - Kind: recipe
-- Version: 0.2.0
-- Platforms: iOS 18.0+
+- Version: 0.3.0
+- Platforms: iOS 26.0+
 - Accessibility contract:
   - Uses semantic reading order and leading/trailing alignment.
   - Treats illustrative symbols as decorative.

@@ -26,8 +26,8 @@ Apply `.pickerStyle(.segmented)` directly to a native `Picker` for local tab sel
 ## Details
 
 - Kind: recipe
-- Version: 0.2.0
-- Platforms: iOS 18.0+
+- Version: 0.3.0
+- Platforms: iOS 26.0+
 - Accessibility contract:
   - Retains native Picker selection and segmented-control semantics.
   - Keeps local selection caller-owned and does not replace app-level TabView navigation.

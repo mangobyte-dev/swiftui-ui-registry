@@ -210,7 +210,12 @@ class Installer:
 
         if conflicts:
             joined = "\n".join(str(path) for path in conflicts)
-            raise RegistryError(f"Refusing to overwrite owned source:\n{joined}")
+            raise RegistryError(
+                "Refusing to overwrite owned source:\n"
+                f"{joined}\n"
+                "Inspect local changes with --diff, merge registry changes with"
+                " --update, or replace the files with --force"
+            )
 
         installed: list[PlannedFile] = []
         for file in planned:
@@ -348,6 +353,63 @@ class Installer:
             requirement = dependency["requirement"]
         source = dependency.get("sourceURL", dependency["package"])
         return f"add package {source} ({requirement}) and link product {dependency['product']}"
+
+    @staticmethod
+    def _package_identity(source_url: str) -> str:
+        """SwiftPM package identity for a URL dependency: the last path component without .git.
+
+        Verified against SwiftPM itself: for the published registry URL, manifest
+        validation names 'swiftui-ui-registry' as the only valid value for the
+        .product(name:package:) package argument.
+        """
+        name = source_url.rstrip("/").rsplit("/", 1)[-1]
+        if name.endswith(".git"):
+            name = name[: -len(".git")]
+        return name
+
+    @staticmethod
+    def _swiftpm_requirement_argument(rule: dict) -> str:
+        """The .package(url:...) requirement argument in Package.swift syntax."""
+        kind = rule.get("kind")
+        minimum = rule.get("minimumVersion")
+        if kind == "exactVersion":
+            return f'exact: "{minimum}"'
+        if kind == "range":
+            return f'"{minimum}"..<"{rule.get("maximumVersionExclusive")}"'
+        if kind == "upToNextMajor":
+            return f'from: "{minimum}"'
+        return f'.upToNextMinor(from: "{minimum}")'
+
+    @classmethod
+    def dependency_manifest_snippet(cls, dependency: dict) -> list[str]:
+        """Copyable Package.swift lines for one declared package dependency.
+
+        Empty when the metadata lacks the source URL or SwiftPM rule needed to
+        render manifest syntax; dependency_instruction still describes those.
+        """
+        rule = dependency.get("swiftPM")
+        url = dependency.get("sourceURL")
+        if not isinstance(rule, dict) or not isinstance(url, str):
+            return []
+        return [
+            "// Package.swift",
+            "dependencies: [",
+            f'    .package(url: "{url}", {cls._swiftpm_requirement_argument(rule)})',
+            "]",
+            "",
+            "// In the consuming target's dependencies:",
+            f'.product(name: "{dependency["product"]}", package: "{cls._package_identity(url)}")',
+        ]
+
+    @staticmethod
+    def dependency_xcode_instruction(dependency: dict) -> str:
+        """The Xcode equivalent of the manifest snippet, for app-project consumers."""
+        source = dependency.get("sourceURL", dependency["package"])
+        return (
+            "In an Xcode app project instead, choose File > Add Package Dependency,"
+            f" enter {source} with the same version rule,"
+            f" and add the {dependency['product']} product to your app target"
+        )
 
     def _record_items(self, receipt: dict, requested_name: str) -> None:
         for item_name in self.resolve(requested_name):
@@ -593,6 +655,12 @@ def main() -> int:
                 print(f"up-to-date: {arguments.item}")
             for dependency in installer.package_requirements(arguments.item):
                 print(f"requires: {installer.dependency_instruction(dependency)}")
+                snippet = installer.dependency_manifest_snippet(dependency)
+                if snippet:
+                    print("copy into Package.swift:")
+                    for line in snippet:
+                        print(f"  {line}" if line else "")
+                    print(installer.dependency_xcode_instruction(dependency))
     except RecipeGuidance as guidance:
         print(guidance.guidance)
         print(
@@ -601,7 +669,10 @@ def main() -> int:
         )
         return 2
     except RegistryError as error:
-        parser.error(str(error))
+        # A registry refusal is a correct safety outcome, not a CLI syntax
+        # mistake; print it cleanly without the argparse usage block.
+        print(error, file=sys.stderr)
+        return 2
     return 0
 
 

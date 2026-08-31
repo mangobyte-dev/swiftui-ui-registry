@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "spinner",
   "kind": "component",
   "description": "Styles a native indeterminate ProgressView with a compact circular indicator and optional label.",
@@ -17,7 +17,7 @@
       "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
   "tags": ["spinner", "progress-view", "circular", "loading", "style"],
   "accessibility": [
     "Retains native indeterminate ProgressView semantics.",

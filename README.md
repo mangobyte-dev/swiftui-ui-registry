@@ -14,6 +14,8 @@ The value gate: an installable item must add a meaningful reusable treatment or 
 
 ## Use one item in minutes
 
+Clone this repository first; every `python3 Scripts/...` command below runs from the root of that clone, because there is no hosted registry yet
+
 Browse the generated catalog at [docs/catalog/index.md](docs/catalog/index.md). A component or block page leads with the preview, one install command, and a call-site snippet; a recipe page leads with the snippet because nothing installs. Everything else recedes into Details
 
 1. Find an item:
@@ -49,7 +51,7 @@ Version 0, an honest prototype:
 - `SwiftUIRegistryFoundations` is a small pre-1.0 package for shared semantic surfaces and spacing, evolving under the compatibility policy in `docs/registry-spec.md`
 - Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates
-- A universal iOS showcase compiles and tests every installable item at the iOS 18 floor, with pinned visual contract checks for both blocks
+- A universal iOS showcase compiles and tests every installable item at the iOS 26 floor, with pinned visual contract checks for both blocks
 - Not yet: hosted registry, MCP server, Xcode project mutation, platforms beyond iOS, or external adoption evidence; the first independent clean-room trial is the open gate before Stage 2 (`docs/component-roadmap.md`)
 
 ## Showcase screenshots
@@ -82,14 +84,26 @@ Search is local, deterministic, and JSON-first:
 python3 Scripts/search.py nutrition dashboard \
   --kind block \
   --platform iOS \
-  --target-version 18.0
+  --target-version 26.0
 ```
 
 Results include dependency closure inputs, package requirements, accessibility notes, preview paths, and compatibility metadata. Search does not require a model, MCP server, account, or hosted registry
 
 ## Install
 
-The consumer first adds the `SwiftUIRegistryFoundations` package product. Then run:
+The consumer first adds the `SwiftUIRegistryFoundations` package product. In a SwiftPM consumer, copy this into `Package.swift`:
+
+```swift
+// Package.swift
+dependencies: [
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+]
+
+// In the consuming target's dependencies:
+.product(name: "SwiftUIRegistryFoundations", package: "swiftui-ui-registry")
+```
+
+The `package:` argument is the SwiftPM package identity for the URL, its last path component without `.git`. In an Xcode app project instead, choose File > Add Package Dependency, enter the same URL with the Up to Next Minor Version rule from 0.1.0, and add the `SwiftUIRegistryFoundations` product to your app target. Then run:
 
 ```sh
 python3 Scripts/install.py finance-overview \
@@ -97,6 +111,8 @@ python3 Scripts/install.py finance-overview \
 ```
 
 The installer resolves `metric-card` and `transaction-row` before copying `finance-overview`. It writes `.swiftui-registry/receipt.json` and non-Swift base snapshots inside the destination. A repeated install is accepted only when the existing source still matches its receipt. `--force` is required to replace modified owned source
+
+Verify the install by building the consuming target for an iOS Simulator destination, for example `xcodebuild -scheme YourApp -destination 'generic/platform=iOS Simulator' build`
 
 Install another block into the same destination without duplicating shared dependencies:
 
@@ -179,7 +195,7 @@ python3 -m unittest discover Tests/RegistryTests
 xcodebuildmcp simulator test \
   --workspace-path Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace \
   --scheme SwiftUIRegistryShowcase \
-  --simulator-id YOUR_IOS_18_IPHONE_SIMULATOR_ID
+  --simulator-id YOUR_IOS_27_IPHONE_SIMULATOR_ID
 ```
 
 The simulator suite verifies finance rendering, nutrition navigation, the empty state, accessibility-size typography, right-to-left mirroring, combined transaction semantics, and approved visual references. Baseline policy is documented in `docs/visual-testing.md`
@@ -187,11 +203,12 @@ The simulator suite verifies finance rendering, nutrition navigation, the empty 
 ## Requirements
 
 - Swift tools 6.2 or newer
-- iOS 18 or newer
+- iOS 26 or newer
 - Xcode capable of building Swift 6.2 packages
+- Python 3.8 or newer for every `Scripts/` command; the newest interpreter feature the scripts use is `Path.unlink(missing_ok=)`, added in Python 3.8
 - Git when an update needs a three-way merge
 
-The repository is currently verified with Xcode 27.0 and Swift 6.4. Registry source intentionally avoids OS 26 or 27-only APIs so the adoption floor remains iOS 18
+The repository is currently verified with Xcode 27.0 and Swift 6.4. The registry targets iOS 26 and above: items inherit Liquid Glass natively, carry no pre-26 compatibility styling, and intentionally avoid 27-only APIs so the floor remains iOS 26
 
 ## Read next
 

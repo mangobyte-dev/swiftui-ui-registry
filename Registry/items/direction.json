@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "direction",
   "kind": "recipe",
   "description": "Native guidance for layoutDirection behavior and semantic leading/trailing layout without a replacement API.",
@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "packageDependencies": [],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "18.0" }
+    { "name": "iOS", "minimumVersion": "26.0" }
   ],
   "tags": ["direction", "layout-direction", "rtl", "localization", "guidance"],
   "accessibility": [

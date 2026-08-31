@@ -4,7 +4,7 @@
 
 The showcase UI tests compare the finance and nutrition screens with approved references under `Examples/Showcase/SwiftUIRegistryShowcaseUITests/ReferenceImages/`
 
-The contract is pinned to a light-mode iPhone 16 Pro running iOS 18.0. Native controls and tab presentation intentionally change across Apple platform versions, so a different runtime is visual review evidence rather than a valid baseline runner
+The contract is pinned to a light-mode iPhone 17 running iOS 27.0. Native controls and tab presentation intentionally change across Apple platform versions, so a different runtime is visual review evidence rather than a valid baseline runner
 
 ## Comparison
 
@@ -24,6 +24,8 @@ Semantic UI assertions remain separate. The image check protects layout, hierarc
 - `nutrition-light.png`
 
 GOLDEN-CHANGE: these initial references were approved after iPhone and iPad review of both domains, an iOS 18 deployment-floor run, and an accessibility-size run. Future reference changes require the same explicit note in the reviewing change
+
+GOLDEN-CHANGE: the deployment floor was raised to iOS 26, so a floor-26 app can no longer launch on the previous iPhone 16 Pro iOS 18.0 pin and the iOS 18 references became unrunnable rather than merely stale. Both references were recaptured on the light-mode iPhone 17 iOS 27.0 runtime, where system controls and presentations render Liquid Glass, most visibly the floating tab bar. Screen content, hierarchy, and copy are unchanged. Capture on an iOS 26 runtime is deferred until a 26 runtime or device is available; iOS 27.0 is the only installed runtime that can execute the app
 
 ## Updating a reference
 

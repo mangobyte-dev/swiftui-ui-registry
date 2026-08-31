@@ -7,14 +7,32 @@ Applies registry button treatments to native Toggle state for compact selectable
 ## Install
 
 ```sh
-python3 Scripts/install.py toggle --destination <your-target-dir>
+python3 Scripts/install.py toggle --destination Sources/YourFeature/Components
 ```
 
+Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
+
 Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+
+```swift
+// Package.swift
+dependencies: [
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+]
+
+// In the consuming target's dependencies:
+.product(name: "SwiftUIRegistryFoundations", package: "swiftui-ui-registry")
+```
+
+In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target
+
+Verify the install by building the consuming target for an iOS Simulator destination
 
 ## Usage
 
 ```swift
+// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.
+
 @State private var bold = false
 
 Toggle("Bold", systemImage: "bold", isOn: $bold)
@@ -24,9 +42,9 @@ Toggle("Bold", systemImage: "bold", isOn: $bold)
 ## Details
 
 - Kind: component
-- Version: 0.1.0
-- Platforms: iOS 18.0+
-- Installs in order: [button](button.md) 0.1.1, [toggle](toggle.md) 0.1.0
+- Version: 0.2.0
+- Platforms: iOS 26.0+
+- Installs in order: [button](button.md) 0.2.0, [toggle](toggle.md) 0.2.0
 - Accessibility contract:
   - Retains native Toggle state and activation behavior.
   - Requires caller-supplied labels for icon-only controls.

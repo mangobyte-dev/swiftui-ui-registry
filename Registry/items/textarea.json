@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "name": "textarea",
   "kind": "component",
   "description": "Applies input-matching focus, disabled, and invalid chrome to a native TextEditor.",
@@ -17,7 +17,7 @@
       "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
   "tags": ["textarea", "text-editor", "multiline", "form", "modifier"],
   "accessibility": [
     "Retains native TextEditor editing, selection, keyboard, and scrolling behavior.",

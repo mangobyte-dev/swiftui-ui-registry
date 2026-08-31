@@ -2,11 +2,13 @@
 
 # SwiftUIRegistry catalog
 
-26 items you copy into your app and own. Components and blocks install with one command:
+26 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
 
 ```sh
-python3 Scripts/install.py <name> --destination <your-target-dir>
+python3 Scripts/install.py <name> --destination Sources/YourFeature/Components
 ```
+
+Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
 ## Blocks (2)
 

@@ -335,7 +335,7 @@ class ValidationTests(unittest.TestCase):
             "files": [],
             "registryDependencies": [],
             "packageDependencies": [],
-            "platforms": [{"name": "iOS", "minimumVersion": "18.0"}],
+            "platforms": [{"name": "iOS", "minimumVersion": "26.0"}],
             "tags": ["guide"],
             "accessibility": [],
         })
@@ -367,7 +367,7 @@ class ValidationTests(unittest.TestCase):
             "files": [{"source": f"sources/{source}.swift", "target": f"{source}.swift"}],
             "registryDependencies": [],
             "packageDependencies": [],
-            "platforms": [{"name": "iOS", "minimumVersion": "18.0"}],
+            "platforms": [{"name": "iOS", "minimumVersion": "26.0"}],
             "tags": [name],
             "accessibility": [],
             "preview": {"source": f"sources/{source}.swift", "name": source},

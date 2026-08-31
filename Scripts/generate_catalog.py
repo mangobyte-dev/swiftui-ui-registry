@@ -27,6 +27,15 @@ _GENERATED_NOTE = (
     " Do not edit by hand; edit the item document and regenerate. -->"
 )
 
+# One sentence on choosing an install destination, shared by the index and
+# every installable item page. The example path is illustrative; what matters
+# is target membership.
+_DESTINATION_NOTE = (
+    "Point `--destination` at a folder inside the consuming target's sources,"
+    " such as `Sources/YourFeature/Components`, so the copied files are"
+    " members of that build target"
+)
+
 # Deterministic group order for the index: value-led, blocks first. Each group
 # carries the one line a scanner needs before clicking, above all whether the
 # kind installs anything.
@@ -64,12 +73,15 @@ def _index_page(installer: Installer) -> str:
         "",
         "# SwiftUIRegistry catalog",
         "",
-        f"{len(installer.items)} items you copy into your app and own. Components"
-        " and blocks install with one command:",
+        f"{len(installer.items)} items you copy into your app and own. Clone the"
+        " registry repository first; every command in these pages runs from the"
+        " root of that clone. Components and blocks install with one command:",
         "",
         "```sh",
-        "python3 Scripts/install.py <name> --destination <your-target-dir>",
+        "python3 Scripts/install.py <name> --destination Sources/YourFeature/Components",
         "```",
+        "",
+        _DESTINATION_NOTE,
         "",
     ]
     for kind, heading, summary in _KIND_GROUPS:
@@ -111,10 +123,19 @@ def _item_page(installer: Installer, name: str) -> str:
         lines.append("## Install")
         lines.append("")
         lines.append("```sh")
-        lines.append(f"python3 Scripts/install.py {name} --destination <your-target-dir>")
+        lines.append(
+            f"python3 Scripts/install.py {name} --destination Sources/YourFeature/Components"
+        )
         lines.append("```")
         lines.append("")
+        lines.append(_DESTINATION_NOTE)
+        lines.append("")
         lines.extend(_requirement_lines(installer.package_requirements(name)))
+        lines.append(
+            "Verify the install by building the consuming target for an iOS"
+            " Simulator destination"
+        )
+        lines.append("")
 
     lines.append("## Usage")
     lines.append("")
@@ -158,10 +179,21 @@ def _requirement_lines(requirements: list[dict]) -> list[str]:
     if not requirements:
         return ["Nothing else to add; this item has no package requirement", ""]
     if len(requirements) == 1:
-        return [f"Then {Installer.dependency_instruction(requirements[0])}", ""]
-    lines = ["Then add each package requirement to that target:", ""]
-    lines.extend(f"- {Installer.dependency_instruction(entry)}" for entry in requirements)
-    lines.append("")
+        lines = [f"Then {Installer.dependency_instruction(requirements[0])}", ""]
+    else:
+        lines = ["Then add each package requirement to that target:", ""]
+        lines.extend(f"- {Installer.dependency_instruction(entry)}" for entry in requirements)
+        lines.append("")
+    for entry in requirements:
+        snippet = Installer.dependency_manifest_snippet(entry)
+        if not snippet:
+            continue
+        lines.append("```swift")
+        lines.extend(snippet)
+        lines.append("```")
+        lines.append("")
+        lines.append(Installer.dependency_xcode_instruction(entry))
+        lines.append("")
     return lines
 
 

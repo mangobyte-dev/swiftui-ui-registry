@@ -30,8 +30,8 @@ Use the native `Slider` and apply `.tint(_:)` and `.controlSize(_:)` directly wh
 ## Details
 
 - Kind: recipe
-- Version: 0.2.0
-- Platforms: iOS 18.0+
+- Version: 0.3.0
+- Platforms: iOS 26.0+
 - Accessibility contract:
   - Retains native Slider adjustable-control semantics and gestures.
   - Keeps the value, bounds, step, and editing callbacks caller-owned.

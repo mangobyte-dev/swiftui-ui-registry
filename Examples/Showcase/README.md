@@ -14,4 +14,4 @@ python3 Scripts/install.py nutrition-overview --destination "$DEST"
 
 The destination also contains a receipt and non-Swift base snapshots under `.swiftui-registry/`. These files prove provenance and updates without adding declarations to the feature target
 
-Build with the shared `SwiftUIRegistryShowcase` scheme in `SwiftUIRegistryShowcase.xcworkspace`. Run the UI suite on an iPhone 16 Pro with iOS 18.0 for the pinned visual contract. Current iPhone and iPad runtimes remain manual adaptation checks
+Build with the shared `SwiftUIRegistryShowcase` scheme in `SwiftUIRegistryShowcase.xcworkspace`. Run the UI suite on an iPhone 17 with iOS 27.0 for the pinned visual contract. Current iPhone and iPad runtimes remain manual adaptation checks

@@ -7,10 +7,26 @@ Applies accent, positive, negative, secondary, and outline badge treatments to n
 ## Install
 
 ```sh
-python3 Scripts/install.py badge --destination <your-target-dir>
+python3 Scripts/install.py badge --destination Sources/YourFeature/Components
 ```
 
+Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
+
 Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+
+```swift
+// Package.swift
+dependencies: [
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+]
+
+// In the consuming target's dependencies:
+.product(name: "SwiftUIRegistryFoundations", package: "swiftui-ui-registry")
+```
+
+In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target
+
+Verify the install by building the consuming target for an iOS Simulator destination
 
 ## Usage
 
@@ -25,8 +41,8 @@ Label("Completed", systemImage: "checkmark.circle.fill")
 ## Details
 
 - Kind: component
-- Version: 0.1.1
-- Platforms: iOS 18.0+
+- Version: 0.2.0
+- Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Preserves the accessibility semantics and reading order of the modified Text or Label.

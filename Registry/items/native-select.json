@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "native-select",
   "kind": "recipe",
   "description": "Native guidance for the minimal menu treatment of a bound SwiftUI Picker.",
@@ -11,7 +11,7 @@
   "registryDependencies": [],
   "packageDependencies": [],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "18.0" }
+    { "name": "iOS", "minimumVersion": "26.0" }
   ],
   "tags": ["native-select", "picker", "menu", "selection", "guidance"],
   "accessibility": [

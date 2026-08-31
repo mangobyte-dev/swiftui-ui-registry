@@ -26,7 +26,7 @@ A component does not replace a native control. `Button`, `TextField`, `Toggle`, 
 
 **Status: Complete**
 
-The catalog holds 26 items: 17 installable components, 2 blocks, and 7 recipes. All 21 original Stage 1 rows are indexed: 14 are installable components, source-owned, installed into Showcase, and compiled at the iOS 18 platform floor; the remaining 7 rows (`aspect-ratio`, `direction`, `native-select`, `radio-group`, `tabs`, `switch`, `slider`) are recipes, native guidance carried in item `docs` with no installable files, per the item value gate in `docs/registry-spec.md`. The 3 block-driven components (`metric-card`, `transaction-row`, `macro-progress`) and the 2 proof blocks (`finance-overview`, `nutrition-overview`) complete the count. Launch Showcase with `-stage-one` to inspect the catalog
+The catalog holds 26 items: 17 installable components, 2 blocks, and 7 recipes. All 21 original Stage 1 rows are indexed: 14 are installable components, source-owned, installed into Showcase, and compiled at the iOS 26 platform floor; the remaining 7 rows (`aspect-ratio`, `direction`, `native-select`, `radio-group`, `tabs`, `switch`, `slider`) are recipes, native guidance carried in item `docs` with no installable files, per the item value gate in `docs/registry-spec.md`. The 3 block-driven components (`metric-card`, `transaction-row`, `macro-progress`) and the 2 proof blocks (`finance-overview`, `nutrition-overview`) complete the count. Launch Showcase with `-stage-one` to inspect the catalog
 
 Stage 1 exit criteria were met: every foundation token is used by at least two completed registry items with the same semantic meaning; enabled, pressed, focused, selected, disabled, and invalid states are demonstrated where applicable; the showcase proves light, dark, RTL, and accessibility text sizes. Runtime and compile evidence is recorded in `STAGE_ONE_VALIDATION.md`
 
@@ -54,7 +54,7 @@ Extract `field`, `input-group`, or form treatments only when the two slices prov
 
 ### Stage 2 exit criteria
 
-- Both blocks install, compile, and render from their resolved closures at the iOS 18 floor
+- Both blocks install, compile, and render from their resolved closures at the iOS 26 floor
 - Focus order, keyboard behavior, validation announcements, autofill, and disabled states are verified at the UI
 - Every composition accepts bindings and actions without owning validation, upload, or persistence logic
 - Any extracted shared treatment names its two proving usages

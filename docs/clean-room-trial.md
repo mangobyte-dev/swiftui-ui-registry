@@ -1,5 +1,7 @@
 # Clean-room adoption trial
 
+> Note (2026-08-31): this trial ran at the historical iOS 18 platform floor, before the floor was raised to iOS 26
+
 Date: 2026-08-31
 Role: an independent iOS developer who has never seen this repository, working only from README.md and the generated catalog in `docs/catalog/`
 Working area: a scratch directory outside the repository containing a minimal iOS SwiftPM package (`AdopterApp`, swift-tools-version 6.2, platforms iOS 18)
@@ -109,3 +111,16 @@ Friction:
 - The published GitHub URL and the `0.1.0` tag it advertises were not exercised; a local path dependency stood in as the trial mandated
 - `--update` three-way merge behavior was not exercised; the protocol covered plan, install, diff, and the no-force refusal only
 - Xcode-project (non-SwiftPM) consumer wiring and target membership were not exercised; the trial consumer was a SwiftPM library package
+
+## Fixes applied
+
+Date: 2026-08-31. All six defects above were fixed in this repository:
+
+1. Defect 2: `Scripts/install.py` now prints a copyable `Package.swift` snippet (dependency plus `.product` line) and the Xcode File > Add Package Dependency equivalent after the `requires:` line; the same snippet appears in README Install and in every generated catalog Install section via `Scripts/generate_catalog.py`. The `package:` identity for the published URL is `swiftui-ui-registry`, verified against SwiftPM itself: `swift package dump-package` on a scratch manifest rejects any other value and names that one
+2. Defect 1: the clone-and-run-from-root precondition is stated at the top of README "Use one item in minutes" and in the generated catalog index preamble
+3. Defect 4: a `RegistryError` from `Scripts/install.py` now prints cleanly to stderr with exit code 2, without the argparse usage block, and the ownership refusal names `--diff`, `--update`, and `--force` as recovery options; a new subprocess test (`test_ownership_refusal_is_clean_stderr_naming_recovery_flags`) asserts the shape
+4. Defect 3: README Requirements now lists Python 3.8 or newer; the floor was determined by scanning every script for interpreter features, and the newest is `Path.unlink(missing_ok=)`, added in Python 3.8 per the CPython pathlib documentation
+5. Defect 5: README Install and each catalog Install section now carry a one-line note to verify by building the consuming target for an iOS Simulator destination
+6. Defect 6: generated catalog pages replace `<your-target-dir>` with `Sources/YourFeature/Components` plus one sentence on build-target membership
+
+Verified after the fixes: `python3 Scripts/generate_catalog.py` regenerated the catalog, `python3 Scripts/validate.py` passed, the full Python suite passed (72 tests including catalog freshness), and a real `finance-overview --force` install into the showcase printed the new snippet output. Not re-run for this documentation change: Swift package tests, the showcase simulator build and UI tests

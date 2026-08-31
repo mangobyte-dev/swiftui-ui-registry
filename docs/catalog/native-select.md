@@ -26,8 +26,8 @@ Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no 
 ## Details
 
 - Kind: recipe
-- Version: 0.2.0
-- Platforms: iOS 18.0+
+- Version: 0.3.0
+- Platforms: iOS 26.0+
 - Accessibility contract:
   - Retains native Picker accessibility, menu, and selection behavior.
   - Requires caller-supplied labels and option text.

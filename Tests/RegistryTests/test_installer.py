@@ -399,7 +399,7 @@ class InstallerTests(unittest.TestCase):
                 (destination / ".swiftui-registry" / "receipt.json").read_text()
             )
             self.assertEqual(receipt["schemaVersion"], 1)
-            self.assertEqual(receipt["items"]["finance-overview"]["version"], "0.2.1")
+            self.assertEqual(receipt["items"]["finance-overview"]["version"], "0.3.0")
             self.assertEqual(
                 receipt["items"]["finance-overview"]["packageDependencies"],
                 [
@@ -467,6 +467,37 @@ class InstallerTests(unittest.TestCase):
 
             with self.assertRaisesRegex(RegistryError, "Refusing to overwrite owned source"):
                 self.installer.install("metric-card", destination)
+
+    def test_ownership_refusal_is_clean_stderr_naming_recovery_flags(self):
+        # The refusal is a correct safety outcome, not a CLI syntax mistake:
+        # it must not carry the argparse usage block, and it must name the
+        # three recovery flags so the consumer knows the next action.
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory).resolve()
+            self.installer.install("metric-card", destination)
+            (destination / "MetricCard.swift").write_text("// consumer edit\n")
+
+            process = subprocess.run(
+                [
+                    sys.executable,
+                    str(REPOSITORY_ROOT / "Scripts" / "install.py"),
+                    "metric-card",
+                    "--destination",
+                    directory,
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(process.returncode, 2)
+            self.assertIn("Refusing to overwrite owned source", process.stderr)
+            for flag in ["--diff", "--update", "--force"]:
+                self.assertIn(flag, process.stderr)
+            self.assertNotIn("usage:", process.stderr)
+            self.assertEqual(
+                (destination / "MetricCard.swift").read_text(), "// consumer edit\n"
+            )
 
     def test_install_rejects_target_that_escapes_through_symbolic_link(self):
         with tempfile.TemporaryDirectory() as repository, \
@@ -591,9 +622,9 @@ class InstallerTests(unittest.TestCase):
             self.assertEqual(process.returncode, 0)
             self.assertIn(
                 "closure:\n"
-                "  metric-card 0.1.1 (component)\n"
-                "  transaction-row 0.3.0 (component)\n"
-                "  finance-overview 0.2.1 (block)\n",
+                "  metric-card 0.2.0 (component)\n"
+                "  transaction-row 0.4.0 (component)\n"
+                "  finance-overview 0.3.0 (block)\n",
                 process.stdout,
             )
             self.assertIn(
@@ -791,7 +822,7 @@ class InstallerTests(unittest.TestCase):
             "files": [{"source": "sources/Example.swift", "target": "Example.swift"}],
             "registryDependencies": [],
             "packageDependencies": [],
-            "platforms": [{"name": "iOS", "minimumVersion": "18.0"}],
+            "platforms": [{"name": "iOS", "minimumVersion": "26.0"}],
             "tags": ["test"],
             "accessibility": [],
             "preview": {"source": "sources/Example.swift", "name": "Example"},

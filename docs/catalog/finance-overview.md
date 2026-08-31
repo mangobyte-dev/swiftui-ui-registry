@@ -11,10 +11,26 @@ More previews: [tablet](../images/finance-overview-tablet.jpg), [accessibility](
 ## Install
 
 ```sh
-python3 Scripts/install.py finance-overview --destination <your-target-dir>
+python3 Scripts/install.py finance-overview --destination Sources/YourFeature/Components
 ```
 
+Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
+
 Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+
+```swift
+// Package.swift
+dependencies: [
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+]
+
+// In the consuming target's dependencies:
+.product(name: "SwiftUIRegistryFoundations", package: "swiftui-ui-registry")
+```
+
+In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target
+
+Verify the install by building the consuming target for an iOS Simulator destination
 
 ## Usage
 
@@ -43,9 +59,9 @@ FinanceOverview(
 ## Details
 
 - Kind: block
-- Version: 0.2.1
-- Platforms: iOS 18.0+
-- Installs in order: [metric-card](metric-card.md) 0.1.1, [transaction-row](transaction-row.md) 0.3.0, [finance-overview](finance-overview.md) 0.2.1
+- Version: 0.3.0
+- Platforms: iOS 26.0+
+- Installs in order: [metric-card](metric-card.md) 0.2.0, [transaction-row](transaction-row.md) 0.4.0, [finance-overview](finance-overview.md) 0.3.0
 - Accessibility contract:
   - Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state.
   - Uses system text styles and ViewThatFits for Dynamic Type.

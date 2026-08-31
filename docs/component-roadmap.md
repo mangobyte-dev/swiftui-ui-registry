@@ -66,7 +66,7 @@ Establish the visual language and the APIs that later stages depend on
 
 ### Stage 1 exit criteria
 
-- Every foundation token is used by at least two completed Stage 1 items with the same semantic meaning
+- Every foundation token is used by at least two completed registry items with the same semantic meaning
 - Enabled, pressed, focused, selected, disabled, and invalid states are demonstrated where applicable
 - The showcase proves light, dark, RTL, and accessibility text sizes
 

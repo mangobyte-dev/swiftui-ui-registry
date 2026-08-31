@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "slider",
   "kind": "component",
   "description": "Applies optional semantic tint and control sizing to a native Slider with caller-owned value and labels.",
@@ -14,7 +14,7 @@
     "Retains native Slider adjustable-control semantics and gestures.",
     "Keeps the value, bounds, step, and editing callbacks caller-owned.",
     "Requires a meaningful label and supports native minimum and maximum labels.",
-    "Inherits enabled state and layout direction."
+    "Inherits control size, enabled state, and layout direction unless explicitly overridden."
   ],
   "preview": { "source": "sources/components/RegistrySliderModifier.swift", "name": "Slider" }
 }

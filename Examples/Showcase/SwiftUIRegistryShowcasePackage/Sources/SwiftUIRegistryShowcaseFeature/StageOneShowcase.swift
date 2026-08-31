@@ -44,8 +44,10 @@ struct StageOneShowcase: View {
                         TextField("Name", text: $name)
                             .textFieldStyle(.registryInput)
                         TextEditor(text: $notes)
-                            .registryTextArea(minimumHeight: 88)
-                            .accessibilityLabel("Notes")
+                            .registryTextArea(
+                                accessibilityLabel: Text("Notes"),
+                                minimumHeight: 88
+                            )
                     }
                 }
                 .groupBoxStyle(.registryCard)

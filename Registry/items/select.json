@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "select",
   "kind": "component",
   "description": "Adds semantic field chrome to a native menu-style Picker without replacing its presentation or selection behavior.",

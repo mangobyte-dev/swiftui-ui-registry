@@ -33,7 +33,10 @@ private struct RegistryBadgeModifier: ViewModifier {
             .padding(.vertical, theme.metrics.compactSpacing / 2)
             .background(backgroundStyle, in: shape)
             .overlay {
-                shape.stroke(borderStyle, lineWidth: variant == .outline ? 1 : 0)
+                shape.stroke(
+                    borderStyle,
+                    lineWidth: variant == .outline ? theme.metrics.borderWidth : 0
+                )
             }
             .fixedSize(horizontal: false, vertical: true)
     }

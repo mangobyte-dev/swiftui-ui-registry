@@ -41,7 +41,7 @@ The composed block does not own a `ScrollView`, navigation container, or maximum
 
 ## Foundations
 
-`RegistryTheme` provides semantic surface, border, positive, and negative colors plus four layout metrics. It is injected through SwiftUI `EnvironmentValues` with `@Entry`. The app's native tint remains the source for interactive accent color
+`RegistryTheme` provides semantic surface, border, positive, and negative colors, disabled-state opacity, and semantic metrics. It is injected through SwiftUI `EnvironmentValues` with `@Entry`. The app's native tint remains the source for interactive accent color
 
 This is deliberately smaller than a full token system. Repeated colors and metrics use semantic tokens rather than hardcoded values, but a token enters foundations only after two real registry items need the exact same meaning. A style or modifier remains source-owned until two items use the exact same treatment
 

@@ -50,6 +50,14 @@ private struct TransactionRowContent: View {
     let tone: TransactionRow.Tone
 
     var body: some View {
+        if let toneDescription {
+            row.accessibilityValue(toneDescription)
+        } else {
+            row
+        }
+    }
+
+    private var row: some View {
         ViewThatFits(in: .horizontal) {
             HStack(spacing: theme.metrics.standardSpacing) {
                 TransactionIcon(systemImage: systemImage, tone: tone)
@@ -69,6 +77,17 @@ private struct TransactionRowContent: View {
         }
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
+    }
+
+    private var toneDescription: Text? {
+        switch tone {
+        case .neutral:
+            nil
+        case .positive:
+            Text("Positive amount")
+        case .negative:
+            Text("Negative amount")
+        }
     }
 }
 
@@ -136,13 +155,42 @@ private func color(for tone: TransactionRow.Tone, theme: RegistryTheme) -> Color
     }
 }
 
+private struct TransactionRowPreview: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            TransactionRow(
+                title: Text("Mishmash Bakery"),
+                subtitle: Text("Today, 09:41"),
+                amount: Text(-8.75, format: .currency(code: "KWD")),
+                systemImage: "cup.and.saucer.fill",
+                tone: .negative
+            )
+            TransactionRow(
+                title: Text("Salary"),
+                subtitle: Text("Yesterday"),
+                amount: Text(2_450, format: .currency(code: "KWD")),
+                systemImage: "building.columns.fill",
+                tone: .positive
+            )
+            TransactionRow(
+                title: Text("Pending transfer"),
+                subtitle: Text("Yesterday"),
+                amount: Text(120, format: .currency(code: "KWD")),
+                systemImage: "arrow.left.arrow.right"
+            )
+        }
+        .padding()
+    }
+}
+
 #Preview("Transaction Row") {
-    TransactionRow(
-        title: Text("Mishmash Bakery"),
-        subtitle: Text("Today, 09:41"),
-        amount: Text(-8.75, format: .currency(code: "KWD")),
-        systemImage: "cup.and.saucer.fill",
-        tone: .negative
-    )
-    .padding()
+    TransactionRowPreview()
+}
+
+#Preview("Transaction Row Dark") {
+    TransactionRowPreview().preferredColorScheme(.dark)
+}
+
+#Preview("Transaction Row Accessibility Size") {
+    TransactionRowPreview().dynamicTypeSize(.accessibility3)
 }

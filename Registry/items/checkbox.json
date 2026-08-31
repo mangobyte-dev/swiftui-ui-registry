@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "checkbox",
   "kind": "component",
   "description": "Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.",

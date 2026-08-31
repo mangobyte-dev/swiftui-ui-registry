@@ -8,15 +8,25 @@ private struct RegistryAspectRatioExamples: View {
             Text("Video, 16:9")
                 .font(.headline)
             Color.indigo
-                .overlay { Image(systemName: "play.fill").foregroundStyle(.white) }
+                .overlay {
+                    Image(systemName: "play.fill")
+                        .foregroundStyle(.white)
+                        .accessibilityHidden(true)
+                }
                 .aspectRatio(16.0 / 9.0, contentMode: .fit)
+                .accessibilityLabel("Video placeholder")
 
             Text("Avatar, 1:1")
                 .font(.headline)
             Color.teal
-                .overlay { Image(systemName: "person.fill").foregroundStyle(.white) }
+                .overlay {
+                    Image(systemName: "person.fill")
+                        .foregroundStyle(.white)
+                        .accessibilityHidden(true)
+                }
                 .aspectRatio(1, contentMode: .fit)
                 .frame(maxWidth: 160)
+                .accessibilityLabel("Avatar placeholder")
         }
         .padding()
     }

@@ -4,24 +4,26 @@ public extension View {
     /// Applies optional semantic tint and control sizing to a native `Slider`.
     func registrySlider(
         tint: Color? = nil,
-        controlSize: ControlSize = .regular
+        controlSize: ControlSize? = nil
     ) -> some View {
         modifier(RegistrySliderModifier(tint: tint, controlSize: controlSize))
     }
 }
 
 private struct RegistrySliderModifier: ViewModifier {
+    @Environment(\.controlSize) private var inheritedControlSize
+
     let tint: Color?
-    let controlSize: ControlSize
+    let controlSize: ControlSize?
 
     @ViewBuilder
     func body(content: Content) -> some View {
         if let tint {
             content
                 .tint(tint)
-                .controlSize(controlSize)
+                .controlSize(controlSize ?? inheritedControlSize)
         } else {
-            content.controlSize(controlSize)
+            content.controlSize(controlSize ?? inheritedControlSize)
         }
     }
 }
@@ -42,10 +44,13 @@ private struct RegistrySliderModifierPreview: View {
                 Text("Volume")
             } minimumValueLabel: {
                 Image(systemName: "speaker.fill")
+                    .accessibilityHidden(true)
             } maximumValueLabel: {
                 Image(systemName: "speaker.wave.3.fill")
+                    .accessibilityHidden(true)
             }
             .registrySlider()
+            .controlSize(.large)
         }
         .padding()
     }

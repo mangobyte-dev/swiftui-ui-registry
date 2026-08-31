@@ -2,45 +2,45 @@
   "files": {
     "FinanceOverview.swift": {
       "base": "bases/f9b286d5453416c4c440e65a4c2be76f47597245ad27cdad80314bf17053616c.base",
-      "installedDigest": "sha256:47bb6d092f07c313a3459b6d208b2c144af6e1f130c17a32207beb09a6e11e87",
+      "installedDigest": "sha256:4ef0e3d0762ee4db6e59857cfaf7d185ad29159884ab008597231265eddc3dd8",
       "item": "finance-overview",
-      "sourceDigest": "sha256:47bb6d092f07c313a3459b6d208b2c144af6e1f130c17a32207beb09a6e11e87",
-      "version": "0.2.0"
+      "sourceDigest": "sha256:4ef0e3d0762ee4db6e59857cfaf7d185ad29159884ab008597231265eddc3dd8",
+      "version": "0.2.1"
     },
     "MacroProgress.swift": {
       "base": "bases/061c048d9552b3eb5f519bbb2c6158fd60f407fa4a68b22ce277c9fad95ac8a9.base",
-      "installedDigest": "sha256:1a5b4104af31d4536ff0c8b459f16e97bda9e0b99f4a2dfcced3ca0aac94c9d8",
+      "installedDigest": "sha256:cddb68e2f68baeefa7977ff8e3df685186631244be966739cbea9566eef116bf",
       "item": "macro-progress",
-      "sourceDigest": "sha256:1a5b4104af31d4536ff0c8b459f16e97bda9e0b99f4a2dfcced3ca0aac94c9d8",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:cddb68e2f68baeefa7977ff8e3df685186631244be966739cbea9566eef116bf",
+      "version": "0.1.1"
     },
     "MetricCard.swift": {
       "base": "bases/72e69e8c35a9ff94342e2eb0ca362ef1edd41c34a3587ae393844d00ca45e247.base",
-      "installedDigest": "sha256:4876c1d7275eb6d72faa048319efeea660e69398a7a33ae374c2480dd55a072d",
+      "installedDigest": "sha256:82f2bcf6c9302a1a8a81bc548ef32064e98f3f4ef3a29e47fe84d2e0a84f6796",
       "item": "metric-card",
-      "sourceDigest": "sha256:4876c1d7275eb6d72faa048319efeea660e69398a7a33ae374c2480dd55a072d",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:82f2bcf6c9302a1a8a81bc548ef32064e98f3f4ef3a29e47fe84d2e0a84f6796",
+      "version": "0.1.1"
     },
     "NutritionOverview.swift": {
       "base": "bases/414b159906565ccf3c90122a903dd45568afc9c26393be31e864c15bed24c433.base",
-      "installedDigest": "sha256:11d13442bd0ae57a526486575ae233cd936660515c81a15762e3234b8286c703",
+      "installedDigest": "sha256:cb70da6df322b18e8571d2e87bc19137fe5beea470f4ad250b971a46b85f1d83",
       "item": "nutrition-overview",
-      "sourceDigest": "sha256:11d13442bd0ae57a526486575ae233cd936660515c81a15762e3234b8286c703",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:cb70da6df322b18e8571d2e87bc19137fe5beea470f4ad250b971a46b85f1d83",
+      "version": "0.1.1"
     },
     "RegistryAspectRatioExamples.swift": {
       "base": "bases/c7f5c0b448db316d8cc262874c7efaf1a85787f122b56814d6fdc03334bf4073.base",
-      "installedDigest": "sha256:06ded3a9b52261a661bcf63c406a5328e0530d93ef8654735365df0f0c72e673",
+      "installedDigest": "sha256:cd375ba499ae8e73adb898ddd53db973ab6cc9979b88ce3a4de852c9a6e8418a",
       "item": "aspect-ratio",
-      "sourceDigest": "sha256:06ded3a9b52261a661bcf63c406a5328e0530d93ef8654735365df0f0c72e673",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:cd375ba499ae8e73adb898ddd53db973ab6cc9979b88ce3a4de852c9a6e8418a",
+      "version": "0.1.1"
     },
     "RegistryBadge.swift": {
       "base": "bases/d2c9ac15caa37b6a8d992908df2bae92cbf1f88a0a246a7122f2e7e198b5024d.base",
-      "installedDigest": "sha256:ca1d5834257eb43c4ce20a63b28c70a51cda32e57a6c3eb933746abdbb6ec164",
+      "installedDigest": "sha256:56694c9505522f4c8cab4d42226944dd307780383e9db09cb1eb1cbd9acab154",
       "item": "badge",
-      "sourceDigest": "sha256:ca1d5834257eb43c4ce20a63b28c70a51cda32e57a6c3eb933746abdbb6ec164",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:56694c9505522f4c8cab4d42226944dd307780383e9db09cb1eb1cbd9acab154",
+      "version": "0.1.1"
     },
     "RegistryButtonGroupStyle.swift": {
       "base": "bases/db7fdc3c6784bc96f933530ea493c2024cac082f8e63aaf7cf8373dc2e7c22b5.base",
@@ -51,10 +51,10 @@
     },
     "RegistryButtonStyle.swift": {
       "base": "bases/a314683b53d284671d9132d9c92f6349d1d80fdc372a8fbb9636baec5da3c809.base",
-      "installedDigest": "sha256:3c7bee4086458b071823041525b1b311d09779943281b84b525b1e09e940e6c7",
+      "installedDigest": "sha256:a6ef6cdf3b723226d4a68cd713cd72aec171203a3f15603fab2989da4b8dcfb2",
       "item": "button",
-      "sourceDigest": "sha256:3c7bee4086458b071823041525b1b311d09779943281b84b525b1e09e940e6c7",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:a6ef6cdf3b723226d4a68cd713cd72aec171203a3f15603fab2989da4b8dcfb2",
+      "version": "0.1.1"
     },
     "RegistryCardStyle.swift": {
       "base": "bases/d37825ac79fff2b2bf1402a97c8c621c6d5bf0b09ad1b1a623e4b269279cbcc6.base",
@@ -65,10 +65,10 @@
     },
     "RegistryCheckboxToggleStyle.swift": {
       "base": "bases/84ef61e84e290159ebfd98ceb45adbe2c83371f33abc11c357b1d2e38db16213.base",
-      "installedDigest": "sha256:441acb98497ff8fb81f68a47ba845511674e462614bf4bd352538d070fd4ef65",
+      "installedDigest": "sha256:0e2c930c24caeb8339853f0419edb859351c3e535ca9f72f66893d38fc70e9a5",
       "item": "checkbox",
-      "sourceDigest": "sha256:441acb98497ff8fb81f68a47ba845511674e462614bf4bd352538d070fd4ef65",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:0e2c930c24caeb8339853f0419edb859351c3e535ca9f72f66893d38fc70e9a5",
+      "version": "0.1.1"
     },
     "RegistryDirectionExamples.swift": {
       "base": "bases/354a41777e65d3d2066386a973a7b843dcef390780ac7abbd5138605c7bfc082.base",
@@ -79,10 +79,10 @@
     },
     "RegistryInputStyle.swift": {
       "base": "bases/66c24a2324bc206ee6b03a7ba2dfead5fe1cec8f6eb52595c4ddc2131308bad9.base",
-      "installedDigest": "sha256:fda9d3604c1b31f33f3bc3894a5f444c615376ce00e4b995db0c456c11a1a24e",
+      "installedDigest": "sha256:a4fb20b8787ffbfa3433554f7dfb37dbeb0500f37862d079212075789f16ade9",
       "item": "input",
-      "sourceDigest": "sha256:fda9d3604c1b31f33f3bc3894a5f444c615376ce00e4b995db0c456c11a1a24e",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:a4fb20b8787ffbfa3433554f7dfb37dbeb0500f37862d079212075789f16ade9",
+      "version": "0.2.0"
     },
     "RegistryLabelStyle.swift": {
       "base": "bases/04739f973034fb8d715a72289080746b744a673da290b3b462fc035871996323.base",
@@ -114,10 +114,10 @@
     },
     "RegistrySelectModifier.swift": {
       "base": "bases/3a9217f76d6535c41e3f06af4707d99fe4556fec2ef7348663c62d87878353e3.base",
-      "installedDigest": "sha256:069d2e73f5a57be160043e0e55ffed24a7eb6a12c618abb638a650f2a3687231",
+      "installedDigest": "sha256:7b9bb369dbe105622d94f0373cd83e26c110899fea696c00328ce831bee66f5b",
       "item": "select",
-      "sourceDigest": "sha256:069d2e73f5a57be160043e0e55ffed24a7eb6a12c618abb638a650f2a3687231",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:7b9bb369dbe105622d94f0373cd83e26c110899fea696c00328ce831bee66f5b",
+      "version": "0.1.1"
     },
     "RegistrySeparatorModifier.swift": {
       "base": "bases/bb9d9cd74969a7587102a28109791c2ca2b6c3bb70a7995c3bed3fec91467b25.base",
@@ -128,10 +128,10 @@
     },
     "RegistrySliderModifier.swift": {
       "base": "bases/6ab432179efe78ea16ecda0990e4586589726db81ef69798e7b7f2ada2c82182.base",
-      "installedDigest": "sha256:919ca6042c01f41f7ab1af361016885e2fc77a5a614bff23aeffdbb79e537fde",
+      "installedDigest": "sha256:f0b9b95435eaa20633a980412bc251e5686c97678a8a3bf893f0212a5b65f28e",
       "item": "slider",
-      "sourceDigest": "sha256:919ca6042c01f41f7ab1af361016885e2fc77a5a614bff23aeffdbb79e537fde",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:f0b9b95435eaa20633a980412bc251e5686c97678a8a3bf893f0212a5b65f28e",
+      "version": "0.1.1"
     },
     "RegistrySpinnerStyle.swift": {
       "base": "bases/93bb6a5df1f063298fae71049dc4a862310b163cd2563b177eabc9f7c71d55ed.base",
@@ -156,17 +156,17 @@
     },
     "RegistryTextAreaModifier.swift": {
       "base": "bases/204aacd79f20901e9f35cd65a8270a4ad86eb648acf05c028f9ae12439e10a8a.base",
-      "installedDigest": "sha256:2b8406576950960de38cd452c04356e11e8aa1565f9c51282f936d3f9a43bba3",
+      "installedDigest": "sha256:0238e7a5a79ace4a599c9148ec347c8e612119b144b72c047ceb40c2e10b4129",
       "item": "textarea",
-      "sourceDigest": "sha256:2b8406576950960de38cd452c04356e11e8aa1565f9c51282f936d3f9a43bba3",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:0238e7a5a79ace4a599c9148ec347c8e612119b144b72c047ceb40c2e10b4129",
+      "version": "0.3.0"
     },
     "RegistryToggleGroupModifier.swift": {
       "base": "bases/ca52356b91430d7163321866f41475fcbde3004f0fe8f57edf95b6084bf935d8.base",
       "installedDigest": "sha256:73dc6bb3d6d0874839316f043963231f46e6172697d643d4e9f71a36907cb12e",
       "item": "toggle-group",
       "sourceDigest": "sha256:73dc6bb3d6d0874839316f043963231f46e6172697d643d4e9f71a36907cb12e",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "RegistryToggleStyle.swift": {
       "base": "bases/a5a7b22fa485766b95a43f6129a3750d9a48465143741dd98d5a6bdb47f4d5c9.base",
@@ -177,24 +177,24 @@
     },
     "TransactionRow.swift": {
       "base": "bases/bb175adeaac2e6443042b5ae547edcdaea4daec1487cb932a128b37b41cb221d.base",
-      "installedDigest": "sha256:ee20595071896c5b1ca2e6c715ee70521bce07b1016344ef31658e80598a9672",
+      "installedDigest": "sha256:9a0e177c8420a08ee401576155ca0e5d6a8014683514eaf171cd74ef98eed2f9",
       "item": "transaction-row",
-      "sourceDigest": "sha256:ee20595071896c5b1ca2e6c715ee70521bce07b1016344ef31658e80598a9672",
-      "version": "0.2.0"
+      "sourceDigest": "sha256:9a0e177c8420a08ee401576155ca0e5d6a8014683514eaf171cd74ef98eed2f9",
+      "version": "0.3.0"
     }
   },
   "items": {
     "aspect-ratio": {
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "badge": {
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "button": {
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "button-group": {
       "registryDependencies": [
@@ -208,7 +208,7 @@
     },
     "checkbox": {
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "direction": {
       "registryDependencies": [],
@@ -219,11 +219,11 @@
         "metric-card",
         "transaction-row"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     "input": {
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     "label": {
       "registryDependencies": [],
@@ -231,11 +231,11 @@
     },
     "macro-progress": {
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "metric-card": {
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "native-select": {
       "registryDependencies": [],
@@ -246,7 +246,7 @@
         "metric-card",
         "macro-progress"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "progress": {
       "registryDependencies": [],
@@ -258,7 +258,7 @@
     },
     "select": {
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "separator": {
       "registryDependencies": [],
@@ -266,7 +266,7 @@
     },
     "slider": {
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "spinner": {
       "registryDependencies": [],
@@ -282,7 +282,7 @@
     },
     "textarea": {
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.3.0"
     },
     "toggle": {
       "registryDependencies": [
@@ -292,13 +292,14 @@
     },
     "toggle-group": {
       "registryDependencies": [
-        "toggle"
+        "toggle",
+        "button"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "transaction-row": {
       "registryDependencies": [],
-      "version": "0.2.0"
+      "version": "0.3.0"
     }
   },
   "registry": "SwiftUIRegistry",

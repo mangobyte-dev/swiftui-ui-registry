@@ -70,14 +70,28 @@ private struct MacroValue: View {
     }
 }
 
+private struct MacroProgressPreview: View {
+    var body: some View {
+        MacroProgress(
+            "Protein",
+            value: Text(96, format: .number),
+            target: Text(130, format: .number),
+            progress: 96.0 / 130.0,
+            systemImage: "fish.fill",
+            tint: .indigo
+        )
+        .padding()
+    }
+}
+
 #Preview("Macro Progress") {
-    MacroProgress(
-        "Protein",
-        value: Text(96, format: .number),
-        target: Text(130, format: .number),
-        progress: 96.0 / 130.0,
-        systemImage: "fish.fill",
-        tint: .indigo
-    )
-    .padding()
+    MacroProgressPreview()
+}
+
+#Preview("Macro Progress Dark") {
+    MacroProgressPreview().preferredColorScheme(.dark)
+}
+
+#Preview("Macro Progress Accessibility Size") {
+    MacroProgressPreview().dynamicTypeSize(.accessibility3)
 }

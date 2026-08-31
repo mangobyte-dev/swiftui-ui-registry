@@ -110,46 +110,60 @@ public struct NutritionOverview<ID: Hashable>: View {
     }
 }
 
-#Preview("Nutrition Overview") {
-    ScrollView {
-        NutritionOverview(
-            "Today",
-            energyTitle: "Energy",
-            energy: Text("1,640 kcal"),
-            energyDetail: Text("360 kcal remaining"),
-            sectionTitle: "Macronutrients",
-            macros: [
-                NutritionMacroItem(
-                    id: "protein",
-                    name: "Protein",
-                    value: Text("96 g"),
-                    target: Text("130 g"),
-                    progress: 96.0 / 130.0,
-                    systemImage: "fish.fill",
-                    tint: .indigo
-                ),
-                NutritionMacroItem(
-                    id: "carbs",
-                    name: "Carbohydrates",
-                    value: Text("182 g"),
-                    target: Text("240 g"),
-                    progress: 182.0 / 240.0,
-                    systemImage: "leaf.fill",
-                    tint: .green
-                ),
-                NutritionMacroItem(
-                    id: "fat",
-                    name: "Fat",
-                    value: Text("48 g"),
-                    target: Text("65 g"),
-                    progress: 48.0 / 65.0,
-                    systemImage: "drop.fill",
-                    tint: .orange
-                )
-            ],
-            actionTitle: "Log food",
-            onLogFood: {}
-        )
-        .padding()
+private struct NutritionOverviewPreview: View {
+    var body: some View {
+        ScrollView {
+            NutritionOverview(
+                "Today",
+                energyTitle: "Energy",
+                energy: Text("1,640 kcal"),
+                energyDetail: Text("360 kcal remaining"),
+                sectionTitle: "Macronutrients",
+                macros: [
+                    NutritionMacroItem(
+                        id: "protein",
+                        name: "Protein",
+                        value: Text("96 g"),
+                        target: Text("130 g"),
+                        progress: 96.0 / 130.0,
+                        systemImage: "fish.fill",
+                        tint: .indigo
+                    ),
+                    NutritionMacroItem(
+                        id: "carbs",
+                        name: "Carbohydrates",
+                        value: Text("182 g"),
+                        target: Text("240 g"),
+                        progress: 182.0 / 240.0,
+                        systemImage: "leaf.fill",
+                        tint: .green
+                    ),
+                    NutritionMacroItem(
+                        id: "fat",
+                        name: "Fat",
+                        value: Text("48 g"),
+                        target: Text("65 g"),
+                        progress: 48.0 / 65.0,
+                        systemImage: "drop.fill",
+                        tint: .orange
+                    )
+                ],
+                actionTitle: "Log food",
+                onLogFood: {}
+            )
+            .padding()
+        }
     }
+}
+
+#Preview("Nutrition Overview") {
+    NutritionOverviewPreview()
+}
+
+#Preview("Nutrition Overview Dark") {
+    NutritionOverviewPreview().preferredColorScheme(.dark)
+}
+
+#Preview("Nutrition Overview Accessibility Size") {
+    NutritionOverviewPreview().dynamicTypeSize(.accessibility3)
 }

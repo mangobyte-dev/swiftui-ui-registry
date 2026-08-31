@@ -13,16 +13,16 @@ private struct RegistrySelectModifier: ViewModifier {
     @Environment(\.registryTheme) private var theme
 
     func body(content: Content) -> some View {
-        let shape = RoundedRectangle(cornerRadius: 8, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)
 
         content
             .pickerStyle(.menu)
-            .padding(.horizontal, 12)
+            .padding(.horizontal, theme.metrics.controlHorizontalPadding)
             .padding(.vertical, 6)
-            .frame(minHeight: 44)
+            .frame(minHeight: RegistryMetrics.minimumHitSize)
             .background(theme.surface, in: shape)
-            .overlay { shape.stroke(theme.border, lineWidth: 1) }
-            .opacity(isEnabled ? 1 : 0.5)
+            .overlay { shape.stroke(theme.border, lineWidth: theme.metrics.borderWidth) }
+            .opacity(isEnabled ? 1 : theme.disabledOpacity)
     }
 }
 

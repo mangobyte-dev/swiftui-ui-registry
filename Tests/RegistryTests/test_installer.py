@@ -75,6 +75,33 @@ class InstallerTests(unittest.TestCase):
             self.assertIn("public struct RegistryCardStyle: GroupBoxStyle", source)
             self.assertNotIn("struct RegistryCard: View", source)
 
+    def test_schema_declares_every_top_level_item_field(self):
+        schema = json.loads(
+            (REPOSITORY_ROOT / "Registry" / "schema.json").read_text()
+        )
+        declared_fields = set(schema["properties"])
+
+        for item_path in (REPOSITORY_ROOT / "Registry" / "items").glob("*.json"):
+            with self.subTest(item=item_path.name):
+                item_fields = set(json.loads(item_path.read_text()))
+                self.assertEqual(
+                    item_fields - declared_fields,
+                    set(),
+                    "The canonical schema forbids undeclared item fields.",
+                )
+
+    def test_preview_metadata_resolves_to_declared_source_and_screenshots(self):
+        for item in self.installer.items.values():
+            with self.subTest(item=item["name"]):
+                preview = item["preview"]
+                source = REPOSITORY_ROOT / "Registry" / preview["source"]
+                self.assertIn(
+                    f'#Preview("{preview["name"]}")',
+                    source.read_text(),
+                )
+                for screenshot in preview.get("screenshots", []):
+                    self.assertTrue((REPOSITORY_ROOT / screenshot).is_file())
+
     def test_every_stage_one_roadmap_item_is_registered_with_its_native_seam(self):
         roadmap = (REPOSITORY_ROOT / "docs" / "component-roadmap.md").read_text()
         stage_one = roadmap.split("## Stage 1: Core styled primitives", 1)[1].split(
@@ -114,6 +141,111 @@ class InstallerTests(unittest.TestCase):
                 ).read_text()
                 self.assertIn(expected_markers[name], source)
                 self.assertNotRegex(source, r"public struct \w+: View")
+
+    def test_textarea_requires_and_applies_its_accessibility_label(self):
+        item = self.installer.items["textarea"]
+        source = (
+            REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+        ).read_text()
+
+        self.assertIn("accessibilityLabel: Text", source)
+        self.assertIn(".accessibilityLabel(accessibilityLabel)", source)
+
+    def test_aspect_ratio_examples_label_media_and_hide_decorative_symbols(self):
+        item = self.installer.items["aspect-ratio"]
+        source = (
+            REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+        ).read_text()
+
+        self.assertEqual(source.count(".accessibilityHidden(true)"), 2)
+        self.assertIn('.accessibilityLabel("Video placeholder")', source)
+        self.assertIn('.accessibilityLabel("Avatar placeholder")', source)
+
+    def test_slider_inherits_control_size_unless_caller_overrides_it(self):
+        item = self.installer.items["slider"]
+        source = (
+            REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+        ).read_text()
+
+        self.assertIn("controlSize: ControlSize? = nil", source)
+        self.assertIn("@Environment(\\.controlSize)", source)
+        self.assertIn("controlSize ?? inheritedControlSize", source)
+        self.assertEqual(source.count(".accessibilityHidden(true)"), 2)
+
+    def test_invalid_previews_reuse_the_negative_theme_color(self):
+        for name in ["input", "textarea"]:
+            with self.subTest(item=name):
+                item = self.installer.items[name]
+                source = (
+                    REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+                ).read_text()
+                self.assertIn(".foregroundStyle(theme.negative)", source)
+                self.assertNotIn(".foregroundStyle(.red)", source)
+
+    def test_every_foundation_token_has_two_semantic_registry_consumers(self):
+        consumer_contract = {
+            "surface": ("theme.surface", ["badge", "input"]),
+            "border": ("theme.border", ["badge", "separator"]),
+            "positive": ("theme.positive", ["badge", "progress"]),
+            "negative": ("theme.negative", ["badge", "button"]),
+            "disabledOpacity": (
+                "theme.disabledOpacity",
+                ["button", "checkbox", "input", "select", "textarea"],
+            ),
+            "compactSpacing": (
+                "theme.metrics.compactSpacing",
+                ["badge", "label"],
+            ),
+            "standardSpacing": (
+                "theme.metrics.standardSpacing",
+                ["card", "metric-card"],
+            ),
+            "sectionSpacing": (
+                "theme.metrics.sectionSpacing",
+                ["finance-overview", "nutrition-overview"],
+            ),
+            "controlHorizontalPadding": (
+                "theme.metrics.controlHorizontalPadding",
+                ["input", "select"],
+            ),
+            "borderWidth": (
+                "theme.metrics.borderWidth",
+                ["badge", "button", "checkbox", "input", "select", "textarea"],
+            ),
+            "emphasizedBorderWidth": (
+                "theme.metrics.emphasizedBorderWidth",
+                ["input", "textarea"],
+            ),
+            "controlRadius": (
+                "theme.metrics.controlRadius",
+                ["button", "input", "select", "textarea"],
+            ),
+            "cardRadius": (".registrySurface()", ["card", "metric-card"]),
+            "minimumHitSize": (
+                "RegistryMetrics.minimumHitSize",
+                ["button", "checkbox", "select"],
+            ),
+        }
+        foundations = (
+            REPOSITORY_ROOT
+            / "Sources"
+            / "SwiftUIRegistryFoundations"
+            / "RegistryTheme.swift"
+        ).read_text()
+        foundation_tokens = set(
+            re.findall(r"public (?:var|static let) (\w+):", foundations)
+        ) - {"metrics"}
+
+        self.assertEqual(set(consumer_contract), foundation_tokens)
+        for token, (marker, names) in consumer_contract.items():
+            self.assertGreaterEqual(len(names), 2)
+            for name in names:
+                with self.subTest(token=token, item=name):
+                    item = self.installer.items[name]
+                    source = (
+                        REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+                    ).read_text()
+                    self.assertIn(marker, source)
 
     def test_every_stage_one_preview_covers_adaptive_environments(self):
         roadmap = (REPOSITORY_ROOT / "docs" / "component-roadmap.md").read_text()
@@ -194,7 +326,7 @@ class InstallerTests(unittest.TestCase):
                 (destination / ".swiftui-registry" / "receipt.json").read_text()
             )
             self.assertEqual(receipt["schemaVersion"], 1)
-            self.assertEqual(receipt["items"]["finance-overview"]["version"], "0.2.0")
+            self.assertEqual(receipt["items"]["finance-overview"]["version"], "0.2.1")
             self.assertEqual(set(receipt["files"]), {
                 "MetricCard.swift",
                 "TransactionRow.swift",

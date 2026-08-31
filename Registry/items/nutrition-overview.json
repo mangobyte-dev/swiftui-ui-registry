@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "nutrition-overview",
   "kind": "block",
   "description": "Composes prepared energy and macronutrient values into an embeddable nutrition overview.",
@@ -23,7 +23,7 @@
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "18.0" }
+    { "name": "iOS", "minimumVersion": "26.0" }
   ],
   "tags": ["nutrition", "health", "dashboard", "overview", "macronutrients"],
   "accessibility": [

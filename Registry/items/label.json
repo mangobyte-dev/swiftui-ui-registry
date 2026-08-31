@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "label",
   "kind": "component",
   "description": "Controls native Label icon placement with semantic spacing and decorative icon accessibility behavior.",
@@ -17,7 +17,7 @@
       "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
   "tags": ["label", "icon", "text", "alignment", "style"],
   "accessibility": [
     "Keeps the native Label title as the accessible content.",

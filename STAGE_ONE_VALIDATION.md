@@ -1,5 +1,7 @@
 # Stage 1 validation plan
 
+> Note (2026-08-31): the platform floor was raised from iOS 18 to iOS 26 after Stage 1 closed. The iOS 18 references below are historical evidence and are intentionally unchanged
+
 ## Mission
 
 Audit commit `2424b018db10f1b5b772b160585d0346a60f37c6` against its parent `54a4e0b0f86d90c859c9e30d7482b06d654a9005`, correct every verified Stage 1 defect, and finish only when architecture, metadata, installation, compilation, tests, and adaptive behavior are supported by repository evidence

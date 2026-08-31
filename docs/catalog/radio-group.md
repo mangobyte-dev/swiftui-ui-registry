@@ -26,8 +26,8 @@ Apply `.pickerStyle(.inline)` directly to a native `Picker` for a mutually exclu
 ## Details
 
 - Kind: recipe
-- Version: 0.2.0
-- Platforms: iOS 18.0+
+- Version: 0.3.0
+- Platforms: iOS 26.0+
 - Accessibility contract:
   - Retains native Picker selection and option semantics.
   - Keeps selection caller-owned through the Picker binding.

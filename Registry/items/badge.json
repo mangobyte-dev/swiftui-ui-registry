@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "badge",
   "kind": "component",
   "description": "Applies accent, positive, negative, secondary, and outline badge treatments to native Text and Label content.",
@@ -23,7 +23,7 @@
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "18.0" }
+    { "name": "iOS", "minimumVersion": "26.0" }
   ],
   "tags": ["badge", "label", "status", "category", "modifier"],
   "accessibility": [

@@ -22,8 +22,8 @@ Apply `.toggleStyle(.switch)` directly to a native `Toggle`. The registry adds n
 ## Details
 
 - Kind: recipe
-- Version: 0.2.0
-- Platforms: iOS 18.0+
+- Version: 0.3.0
+- Platforms: iOS 26.0+
 - Accessibility contract:
   - Retains native Toggle switch semantics and state announcements.
   - Requires a caller-supplied visible label unless the surrounding context supplies an accessibility label.

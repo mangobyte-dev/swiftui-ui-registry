@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "progress",
   "kind": "component",
   "description": "Styles native determinate and indeterminate ProgressView controls with linear accent, positive, and negative semantic tones.",
@@ -17,7 +17,7 @@
       "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
   "tags": ["progress", "progress-view", "linear", "loading", "style"],
   "accessibility": [
     "Retains native ProgressView progress semantics.",

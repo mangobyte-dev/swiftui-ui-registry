@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "card",
   "kind": "component",
   "description": "Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.",
@@ -23,7 +23,7 @@
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "18.0" }
+    { "name": "iOS", "minimumVersion": "26.0" }
   ],
   "tags": ["card", "group-box", "surface", "container", "style"],
   "accessibility": [

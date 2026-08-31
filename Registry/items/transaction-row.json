@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "name": "transaction-row",
   "kind": "component",
   "description": "Displays prepared transaction content while leaving selection to a native Button at the call site.",
@@ -23,7 +23,7 @@
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "18.0" }
+    { "name": "iOS", "minimumVersion": "26.0" }
   ],
   "tags": ["transaction", "row", "finance", "activity"],
   "accessibility": [

@@ -1,11 +1,11 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "button",
   "kind": "component",
   "description": "Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.",
-  "usage": "Button(\"Save changes\") {}\n    .buttonStyle(.registry)\n\nButton(\"Cancel\") {}\n    .buttonStyle(.registryOutline)\n\nButton(\"Delete\", role: .destructive) {}\n    .buttonStyle(.registry)",
+  "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nButton(\"Save changes\") {}\n    .buttonStyle(.registry)\n\nButton(\"Cancel\") {}\n    .buttonStyle(.registryOutline)\n\nButton(\"Delete\", role: .destructive) {}\n    .buttonStyle(.registry)",
   "files": [
     {
       "source": "sources/components/RegistryButtonStyle.swift",
@@ -23,7 +23,7 @@
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "18.0" }
+    { "name": "iOS", "minimumVersion": "26.0" }
   ],
   "tags": ["button", "control", "action", "style", "shadcn"],
   "accessibility": [

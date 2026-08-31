@@ -1,11 +1,11 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "toggle-group",
   "kind": "component",
   "description": "Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.",
-  "usage": "@State private var bold = false\n@State private var italic = false\n\nControlGroup {\n    Toggle(\"Bold\", systemImage: \"bold\", isOn: $bold)\n    Toggle(\"Italic\", systemImage: \"italic\", isOn: $italic)\n}\n.registryToggleGroup()",
+  "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\n@State private var bold = false\n@State private var italic = false\n\nControlGroup {\n    Toggle(\"Bold\", systemImage: \"bold\", isOn: $bold)\n    Toggle(\"Italic\", systemImage: \"italic\", isOn: $italic)\n}\n.registryToggleGroup()",
   "files": [{ "source": "sources/components/RegistryToggleGroupModifier.swift", "target": "RegistryToggleGroupModifier.swift" }],
   "registryDependencies": ["toggle", "button"],
   "packageDependencies": [
@@ -17,7 +17,7 @@
       "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
+  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
   "tags": ["toggle-group", "toggle", "control-group", "multi-selection", "modifier"],
   "accessibility": [
     "Retains each native Toggle's independent state and activation behavior.",

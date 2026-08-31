@@ -44,4 +44,8 @@ A registry item is publishable only when its dependency closure installs into a 
 
 Do not imitate a new platform treatment. Recompile with the current SDK, remove competing custom chrome, and let native primitives adopt platform changes before adding compatibility code
 
+### Liquid Glass boundaries
+
+Registry styles and the `registrySurface` and theme tokens are content-layer treatments. Never apply them to toolbars, tab bars, or floating chrome, where the system supplies Liquid Glass on its own. When a functional button is promoted into floating or bar chrome, use `.buttonStyle(.glass)`, or `.buttonStyle(.glassProminent)` for a single primary action, instead of `.registry` styles
+
 The reusable-component rules above are grounded in [SwiftQA, “How do you design reusable SwiftUI components?”](https://swiftqa.cc/reusable-swiftui-components)

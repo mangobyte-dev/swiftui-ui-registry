@@ -37,7 +37,7 @@ class SearchTests(unittest.TestCase):
             self.installer,
             "finance-overview",
             platform="iOS",
-            target_version="18",
+            target_version="26",
         )
 
         self.assertEqual(matches[0]["name"], "finance-overview")
@@ -47,7 +47,7 @@ class SearchTests(unittest.TestCase):
             self.installer,
             "finance",
             platform="iOS",
-            target_version="17.0",
+            target_version="25.0",
         )
 
         self.assertEqual(matches, [])

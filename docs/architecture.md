@@ -73,7 +73,7 @@ Search remains a local script because the current catalog does not justify netwo
 
 ## Platform decision
 
-Version 0 targets iOS 18 and iPadOS through the iOS SDK. This keeps `@Entry`, modern previews, and current SwiftUI composition while avoiding an OS 26 or 27 requirement before the registry proves value. macOS, watchOS, tvOS, and visionOS are not declared by registry items yet
+Version 0 originally targeted iOS 18 and iPadOS through the iOS SDK to avoid an OS 26 requirement before the registry proved value. As of 2026-08-31 the owner reversed that decision: the registry targets iOS 26 and above. Items inherit Liquid Glass natively from the system, carry no pre-26 compatibility styling, and avoid 27-only APIs so the floor remains iOS 26. Runtime evidence currently comes from the iOS 27 simulator only; the machine carries no iOS 26 runtime, so floor-26 behavior is verified at compile time and 27-runtime execution. macOS, watchOS, tvOS, and visionOS are not declared by registry items yet
 
 ## Dependency direction
 

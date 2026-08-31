@@ -31,8 +31,8 @@ Use SwiftUI's native `aspectRatio(_:contentMode:)` modifier at the call site. No
 ## Details
 
 - Kind: recipe
-- Version: 0.2.0
-- Platforms: iOS 18.0+
+- Version: 0.3.0
+- Platforms: iOS 26.0+
 - Accessibility contract:
   - Does not change the accessibility semantics of caller content.
   - Keeps meaningful image labels and decorative-image hiding with the caller.

@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "aspect-ratio",
   "kind": "component",
   "description": "Documents and previews SwiftUI's native aspectRatio modifier without introducing a replacement API.",

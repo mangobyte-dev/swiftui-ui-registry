@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "metric-card",
   "kind": "component",
   "description": "Displays one prepared product metric using native text formatting and semantic styling.",

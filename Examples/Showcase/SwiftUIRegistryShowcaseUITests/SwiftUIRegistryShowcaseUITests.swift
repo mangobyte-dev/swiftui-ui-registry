@@ -61,13 +61,123 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
             app.staticTexts["Stage 1 Components"].waitForExistence(timeout: 5),
             "The Stage 1 launch must render the installed catalog through the consumer target."
         )
-        XCTAssertTrue(app.buttons["Primary action"].exists)
+        let primaryAction = app.buttons["Primary action"]
+        XCTAssertTrue(
+            primaryAction.exists,
+            "The native primary button must render through its installed style."
+        )
+        XCTAssertGreaterThanOrEqual(
+            primaryAction.frame.height,
+            44,
+            "Registry button styling must preserve the minimum interaction height."
+        )
+        let saveButton = app.buttons["Save"]
+        XCTAssertTrue(
+            saveButton.exists,
+            "Icon-only button-group controls must retain their native initializer labels."
+        )
+        XCTAssertTrue(
+            app.buttons["Share"].exists,
+            "Button-group styling must preserve each native button accessibility label."
+        )
         XCTAssertTrue(app.staticTexts["Ready"].exists)
         XCTAssertTrue(app.staticTexts["Text entry"].exists)
         XCTAssertTrue(app.textFields["Name"].exists)
+        XCTAssertTrue(
+            app.textViews["Notes"].exists,
+            "The textarea modifier must apply its required caller-supplied accessibility label."
+        )
+        let acceptTerms = app.switches["Accept terms"]
+        XCTAssertTrue(
+            acceptTerms.exists,
+            "Checkbox styling must retain native Toggle accessibility semantics."
+        )
+        XCTAssertGreaterThanOrEqual(
+            acceptTerms.frame.height,
+            44,
+            "Checkbox styling must preserve the minimum interaction height."
+        )
+        let initialAcceptTermsValue = acceptTerms.value as? String
+        acceptTerms.tap()
+        XCTAssertNotEqual(
+            acceptTerms.value as? String,
+            initialAcceptTermsValue,
+            "Checkbox activation must write through the caller-owned binding."
+        )
+        XCTAssertTrue(
+            app.switches["Notifications"].exists,
+            "Switch styling must retain native Toggle accessibility semantics."
+        )
+        let boldToggle = app.buttons["Bold"]
+        XCTAssertTrue(
+            boldToggle.exists,
+            "Icon-only button toggles must retain their native initializer labels."
+        )
+        XCTAssertTrue(
+            app.buttons["Italic"].exists,
+            "Toggle-group styling must preserve each native Toggle accessibility label."
+        )
         XCTAssertFalse(
             app.tabBars.firstMatch.exists,
             "The dedicated Stage 1 launch must not depend on the product-block tab flow."
+        )
+
+        let scrollView = app.scrollViews.firstMatch
+        XCTAssertTrue(
+            scrollView.exists,
+            "The catalog must remain scrollable when accessibility text expands its content."
+        )
+
+        let selectionSection = app.staticTexts["Selection"]
+        scroll(scrollView, until: selectionSection)
+        XCTAssertTrue(
+            selectionSection.exists,
+            "The installed selection styles must remain reachable at accessibility sizes."
+        )
+        let segmentedTabs = app.segmentedControls.firstMatch
+        XCTAssertTrue(
+            segmentedTabs.exists,
+            "Local tabs must retain native segmented-picker semantics."
+        )
+        XCTAssertEqual(
+            segmentedTabs.buttons.count,
+            2,
+            "The caller-supplied local tab options must remain visible to accessibility."
+        )
+
+        let progressSection = app.staticTexts["Progress and value"]
+        scroll(scrollView, until: progressSection)
+        XCTAssertTrue(
+            progressSection.exists,
+            "The installed progress and value styles must remain reachable."
+        )
+        XCTAssertTrue(
+            app.progressIndicators.firstMatch.exists,
+            "Progress styles must retain native progress-indicator semantics."
+        )
+        let volumeSlider = app.sliders["Volume"]
+        XCTAssertTrue(
+            volumeSlider.exists,
+            "Slider treatment must retain the caller-supplied native adjustable control."
+        )
+        for _ in 0..<4 {
+            if volumeSlider.isHittable { break }
+            scrollView.swipeUp()
+        }
+        XCTAssertTrue(
+            volumeSlider.isHittable,
+            "The native slider must remain reachable at accessibility text sizes."
+        )
+
+        let nativeLayoutSection = app.staticTexts["Native layout"]
+        scroll(scrollView, until: nativeLayoutSection)
+        XCTAssertTrue(
+            nativeLayoutSection.exists,
+            "Native-only aspect-ratio and direction guidance must remain in the catalog."
+        )
+        XCTAssertTrue(
+            app.staticTexts["Leading content mirrors automatically"].exists,
+            "Direction guidance must render under the right-to-left environment."
         )
     }
 
@@ -133,6 +243,14 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
             mirroredAmount.frame.minX,
             "Leading and trailing composition must mirror without a separate RTL implementation."
         )
+    }
+
+    @MainActor
+    private func scroll(_ scrollView: XCUIElement, until element: XCUIElement) {
+        for _ in 0..<8 {
+            if element.exists { return }
+            scrollView.swipeUp()
+        }
     }
 
     @MainActor

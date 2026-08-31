@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.3.0",
   "name": "textarea",
   "kind": "component",
   "description": "Applies input-matching focus, disabled, and invalid chrome to a native TextEditor.",
@@ -12,7 +12,7 @@
   "tags": ["textarea", "text-editor", "multiline", "form", "modifier"],
   "accessibility": [
     "Retains native TextEditor editing, selection, keyboard, and scrolling behavior.",
-    "Requires an accessibility label because TextEditor has no prompt parameter.",
+    "Requires a caller-supplied Text accessibility label because TextEditor has no prompt parameter.",
     "Requires visible validation copy and an accessibility hint for invalid input.",
     "Inherits Dynamic Type, enabled state, focus, and layout direction."
   ],

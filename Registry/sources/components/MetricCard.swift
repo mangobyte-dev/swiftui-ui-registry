@@ -79,12 +79,33 @@ private struct MetricCardContent: View {
     }
 }
 
+private struct MetricCardPreview: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            MetricCard(
+                "Available balance",
+                value: Text(12_480.32, format: .currency(code: "USD")),
+                detail: Text("Up 8.2% this month"),
+                systemImage: "creditcard.fill"
+            )
+            MetricCard(
+                "Monthly change",
+                value: Text(0.082, format: .percent.precision(.fractionLength(1))),
+                systemImage: "chart.line.uptrend.xyaxis"
+            )
+        }
+        .padding()
+    }
+}
+
 #Preview("Metric Card") {
-    MetricCard(
-        "Available balance",
-        value: Text(12_480.32, format: .currency(code: "USD")),
-        detail: Text("Up 8.2% this month"),
-        systemImage: "creditcard.fill"
-    )
-    .padding()
+    MetricCardPreview()
+}
+
+#Preview("Metric Card Dark") {
+    MetricCardPreview().preferredColorScheme(.dark)
+}
+
+#Preview("Metric Card Accessibility Size") {
+    MetricCardPreview().dynamicTypeSize(.accessibility3)
 }

@@ -240,4 +240,14 @@ private struct FinanceOverviewPreview: View {
     FinanceOverviewPreview(isEmpty: false)
         .environment(\.dynamicTypeSize, .accessibility3)
 }
+
+#Preview("Finance Overview Dark") {
+    FinanceOverviewPreview(isEmpty: false)
+        .preferredColorScheme(.dark)
+}
+
+#Preview("Finance Overview Right to Left") {
+    FinanceOverviewPreview(isEmpty: false)
+        .environment(\.layoutDirection, .rightToLeft)
+}
 #endif

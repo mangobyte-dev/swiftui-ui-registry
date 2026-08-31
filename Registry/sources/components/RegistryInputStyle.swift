@@ -4,8 +4,8 @@ import SwiftUIRegistryFoundations
 /// A bordered input treatment for native `TextField` and `SecureField` controls.
 public struct RegistryInputStyle: TextFieldStyle {
     @Environment(\.isEnabled) private var isEnabled
-    @Environment(\.isFocused) private var isFocused
     @Environment(\.registryTheme) private var theme
+    @FocusState private var isFocused: Bool
 
     private let isInvalid: Bool
 
@@ -14,16 +14,22 @@ public struct RegistryInputStyle: TextFieldStyle {
     }
 
     public func _body(configuration: TextField<Self._Label>) -> some View {
-        let shape = RoundedRectangle(cornerRadius: 8, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)
 
         configuration
-            .padding(.horizontal, 12)
+            .focused($isFocused)
+            .padding(.horizontal, theme.metrics.controlHorizontalPadding)
             .padding(.vertical, 10)
             .background(theme.surface, in: shape)
             .overlay {
-                shape.stroke(borderStyle, lineWidth: isFocused || isInvalid ? 2 : 1)
+                shape.stroke(
+                    borderStyle,
+                    lineWidth: isFocused || isInvalid
+                        ? theme.metrics.emphasizedBorderWidth
+                        : theme.metrics.borderWidth
+                )
             }
-            .opacity(isEnabled ? 1 : 0.5)
+            .opacity(isEnabled ? 1 : theme.disabledOpacity)
     }
 
     private var borderStyle: AnyShapeStyle {
@@ -42,6 +48,7 @@ public extension TextFieldStyle where Self == RegistryInputStyle {
 }
 
 private struct RegistryInputStylePreview: View {
+    @Environment(\.registryTheme) private var theme
     @State private var name = ""
     @State private var email = "not-an-email"
     @State private var password = ""
@@ -66,7 +73,7 @@ private struct RegistryInputStylePreview: View {
                     .accessibilityHint("Enter a valid email address")
                 Text("Enter a valid email address")
                     .font(.footnote)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(theme.negative)
             }
 
             TextField("Disabled", text: .constant("Unavailable"))

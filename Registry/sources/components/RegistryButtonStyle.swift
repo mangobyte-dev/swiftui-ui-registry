@@ -24,7 +24,7 @@ public struct RegistryButtonStyle: ButtonStyle {
 
     public func makeBody(configuration: Configuration) -> some View {
         let variant = resolvedVariant(for: configuration)
-        let shape = RoundedRectangle(cornerRadius: 8, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)
 
         configuration.label
             .font(font)
@@ -35,11 +35,17 @@ public struct RegistryButtonStyle: ButtonStyle {
             .foregroundStyle(foregroundStyle(for: variant))
             .background(backgroundStyle(for: variant, isPressed: configuration.isPressed), in: shape)
             .overlay {
-                shape.stroke(borderStyle(for: variant), lineWidth: variant == .outline ? 1 : 0)
+                shape.stroke(
+                    borderStyle(for: variant),
+                    lineWidth: variant == .outline ? theme.metrics.borderWidth : 0
+                )
             }
             .underline(variant == .link)
             .opacity(opacity(isPressed: configuration.isPressed))
-            .frame(minWidth: 44, minHeight: 44)
+            .frame(
+                minWidth: RegistryMetrics.minimumHitSize,
+                minHeight: RegistryMetrics.minimumHitSize
+            )
             .contentShape(Rectangle())
     }
 }
@@ -158,7 +164,7 @@ private extension RegistryButtonStyle {
     }
 
     func opacity(isPressed: Bool) -> Double {
-        guard isEnabled else { return 0.5 }
+        guard isEnabled else { return theme.disabledOpacity }
         return isPressed ? 0.82 : 1
     }
 }

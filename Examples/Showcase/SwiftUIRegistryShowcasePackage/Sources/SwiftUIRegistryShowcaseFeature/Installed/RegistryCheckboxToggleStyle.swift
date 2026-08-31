@@ -18,10 +18,10 @@ public struct RegistryCheckboxToggleStyle: ToggleStyle {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .contentShape(Rectangle())
-            .frame(minHeight: 44)
+            .frame(minHeight: RegistryMetrics.minimumHitSize)
         }
         .buttonStyle(.plain)
-        .opacity(isEnabled ? 1 : 0.5)
+        .opacity(isEnabled ? 1 : theme.disabledOpacity)
         .accessibilityRepresentation {
             Toggle(configuration)
                 .toggleStyle(.switch)
@@ -46,7 +46,7 @@ public struct RegistryCheckboxToggleStyle: ToggleStyle {
             .overlay {
                 shape.stroke(
                     isSelected ? AnyShapeStyle(TintShapeStyle()) : AnyShapeStyle(theme.border),
-                    lineWidth: 1
+                    lineWidth: theme.metrics.borderWidth
                 )
             }
             .accessibilityHidden(true)

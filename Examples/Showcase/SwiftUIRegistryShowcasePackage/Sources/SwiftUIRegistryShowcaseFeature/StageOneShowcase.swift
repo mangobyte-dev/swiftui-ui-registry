@@ -57,7 +57,7 @@ struct StageOneShowcase: View {
                         Toggle("Accept terms", isOn: $accepted)
                             .toggleStyle(.registryCheckbox)
                         Toggle("Notifications", isOn: $notifications)
-                            .toggleStyle(.registrySwitch)
+                            .toggleStyle(.switch)
                         ControlGroup("Formatting") {
                             Toggle("Bold", systemImage: "bold", isOn: $bold)
                             Toggle("Italic", systemImage: "italic", isOn: $italic)
@@ -74,7 +74,7 @@ struct StageOneShowcase: View {
                             Text("Controls").tag("controls")
                             Text("Layout").tag("layout")
                         }
-                        .registryTabs()
+                        .pickerStyle(.segmented)
 
                         Picker("Plan", selection: $plan) {
                             Text("Basic").tag("basic")
@@ -86,13 +86,13 @@ struct StageOneShowcase: View {
                             Text("Most recent").tag("recent")
                             Text("Oldest").tag("oldest")
                         }
-                        .registryNativeSelect()
+                        .pickerStyle(.menu)
 
                         Picker("Delivery", selection: $delivery) {
                             Text("Standard").tag("standard")
                             Text("Express").tag("express")
                         }
-                        .registryRadioGroup()
+                        .pickerStyle(.inline)
                     }
                 }
                 .groupBoxStyle(.registryCard)
@@ -119,7 +119,6 @@ struct StageOneShowcase: View {
                         Slider(value: $volume) {
                             Text("Volume")
                         }
-                        .registrySlider()
                     }
                 }
                 .groupBoxStyle(.registryCard)

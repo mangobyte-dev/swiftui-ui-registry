@@ -28,13 +28,6 @@
       "sourceDigest": "sha256:cb70da6df322b18e8571d2e87bc19137fe5beea470f4ad250b971a46b85f1d83",
       "version": "0.1.1"
     },
-    "RegistryAspectRatioExamples.swift": {
-      "base": "bases/c7f5c0b448db316d8cc262874c7efaf1a85787f122b56814d6fdc03334bf4073.base",
-      "installedDigest": "sha256:cd375ba499ae8e73adb898ddd53db973ab6cc9979b88ce3a4de852c9a6e8418a",
-      "item": "aspect-ratio",
-      "sourceDigest": "sha256:cd375ba499ae8e73adb898ddd53db973ab6cc9979b88ce3a4de852c9a6e8418a",
-      "version": "0.1.1"
-    },
     "RegistryBadge.swift": {
       "base": "bases/d2c9ac15caa37b6a8d992908df2bae92cbf1f88a0a246a7122f2e7e198b5024d.base",
       "installedDigest": "sha256:56694c9505522f4c8cab4d42226944dd307780383e9db09cb1eb1cbd9acab154",
@@ -70,13 +63,6 @@
       "sourceDigest": "sha256:0e2c930c24caeb8339853f0419edb859351c3e535ca9f72f66893d38fc70e9a5",
       "version": "0.1.1"
     },
-    "RegistryDirectionExamples.swift": {
-      "base": "bases/354a41777e65d3d2066386a973a7b843dcef390780ac7abbd5138605c7bfc082.base",
-      "installedDigest": "sha256:a3c0bfe6364027dc461ba6bd63f9fd2472c74b549f9c3afda2d6094ff68e3722",
-      "item": "direction",
-      "sourceDigest": "sha256:a3c0bfe6364027dc461ba6bd63f9fd2472c74b549f9c3afda2d6094ff68e3722",
-      "version": "0.1.0"
-    },
     "RegistryInputStyle.swift": {
       "base": "bases/66c24a2324bc206ee6b03a7ba2dfead5fe1cec8f6eb52595c4ddc2131308bad9.base",
       "installedDigest": "sha256:a4fb20b8787ffbfa3433554f7dfb37dbeb0500f37862d079212075789f16ade9",
@@ -91,25 +77,11 @@
       "sourceDigest": "sha256:d2ddf444d907b2df248d8e0e0765c906169eee1fb02690741fc84102da04b0f6",
       "version": "0.1.0"
     },
-    "RegistryNativeSelectModifier.swift": {
-      "base": "bases/8076135f928010aeeaabae9915c17d8cd8be955f28c87405cec3577416a4352f.base",
-      "installedDigest": "sha256:bd926d095851fc20001fe0ca492a9b3a6cd6a65fc87b3cdd4b4ebe653494a2e9",
-      "item": "native-select",
-      "sourceDigest": "sha256:bd926d095851fc20001fe0ca492a9b3a6cd6a65fc87b3cdd4b4ebe653494a2e9",
-      "version": "0.1.0"
-    },
     "RegistryProgressViewStyle.swift": {
       "base": "bases/7e913d7bc5cadc9661e485c4d840908f32942a4cbe3ff7fdafd0f4b017b7497e.base",
       "installedDigest": "sha256:fc940696ea18e642006ca95246e572b48b589df2151597ce838beb8880438da3",
       "item": "progress",
       "sourceDigest": "sha256:fc940696ea18e642006ca95246e572b48b589df2151597ce838beb8880438da3",
-      "version": "0.1.0"
-    },
-    "RegistryRadioGroupModifier.swift": {
-      "base": "bases/963ec54664e8074e9a3c6ddba6832bb6d2fc892daa3ffa5bc9b6d95da00c10bd.base",
-      "installedDigest": "sha256:8c6d31cfdc2dc6f0e70ccfe816bbe7773bd5ad42255c1ea4fd642e01e8597708",
-      "item": "radio-group",
-      "sourceDigest": "sha256:8c6d31cfdc2dc6f0e70ccfe816bbe7773bd5ad42255c1ea4fd642e01e8597708",
       "version": "0.1.0"
     },
     "RegistrySelectModifier.swift": {
@@ -126,32 +98,11 @@
       "sourceDigest": "sha256:4f9e773ce35fc7bf29a6e73a684342844a09ac9e586326b99fe4cedb7f3cea0a",
       "version": "0.1.0"
     },
-    "RegistrySliderModifier.swift": {
-      "base": "bases/6ab432179efe78ea16ecda0990e4586589726db81ef69798e7b7f2ada2c82182.base",
-      "installedDigest": "sha256:f0b9b95435eaa20633a980412bc251e5686c97678a8a3bf893f0212a5b65f28e",
-      "item": "slider",
-      "sourceDigest": "sha256:f0b9b95435eaa20633a980412bc251e5686c97678a8a3bf893f0212a5b65f28e",
-      "version": "0.1.1"
-    },
     "RegistrySpinnerStyle.swift": {
       "base": "bases/93bb6a5df1f063298fae71049dc4a862310b163cd2563b177eabc9f7c71d55ed.base",
       "installedDigest": "sha256:bb0a978cfd758a19928bec800e3579c286ea0811db90d80cf0597cf59f185545",
       "item": "spinner",
       "sourceDigest": "sha256:bb0a978cfd758a19928bec800e3579c286ea0811db90d80cf0597cf59f185545",
-      "version": "0.1.0"
-    },
-    "RegistrySwitchToggleStyle.swift": {
-      "base": "bases/4cb686532601a19d93e5c70279ab50dcec5b0fdcd5fcff5a912583818f438c9a.base",
-      "installedDigest": "sha256:40b5a0f3abdbc77544474fcb4bc15e16f087af3aeac26b94f7aaa3d16c6d76f7",
-      "item": "switch",
-      "sourceDigest": "sha256:40b5a0f3abdbc77544474fcb4bc15e16f087af3aeac26b94f7aaa3d16c6d76f7",
-      "version": "0.1.0"
-    },
-    "RegistryTabsModifier.swift": {
-      "base": "bases/110bdc9752c3f5bf13f4815eff96fe89d37455affec638ccfefa8ace1c667600.base",
-      "installedDigest": "sha256:269cbfb35749a92d5ba4ec2859615196b9651f9c6b4416921d7e020350f4c7bc",
-      "item": "tabs",
-      "sourceDigest": "sha256:269cbfb35749a92d5ba4ec2859615196b9651f9c6b4416921d7e020350f4c7bc",
       "version": "0.1.0"
     },
     "RegistryTextAreaModifier.swift": {
@@ -184,37 +135,101 @@
     }
   },
   "items": {
-    "aspect-ratio": {
-      "registryDependencies": [],
-      "version": "0.1.1"
-    },
     "badge": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.1"
     },
     "button": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.1"
     },
     "button-group": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [
         "button"
       ],
       "version": "0.1.0"
     },
     "card": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.0"
     },
     "checkbox": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.1"
     },
-    "direction": {
-      "registryDependencies": [],
-      "version": "0.1.0"
-    },
     "finance-overview": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [
         "metric-card",
         "transaction-row"
@@ -222,26 +237,82 @@
       "version": "0.2.1"
     },
     "input": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.2.0"
     },
     "label": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.0"
     },
     "macro-progress": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.1"
     },
     "metric-card": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.1"
     },
-    "native-select": {
-      "registryDependencies": [],
-      "version": "0.1.0"
-    },
     "nutrition-overview": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [
         "metric-card",
         "macro-progress"
@@ -249,48 +320,116 @@
       "version": "0.1.1"
     },
     "progress": {
-      "registryDependencies": [],
-      "version": "0.1.0"
-    },
-    "radio-group": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.0"
     },
     "select": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.1"
     },
     "separator": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.0"
-    },
-    "slider": {
-      "registryDependencies": [],
-      "version": "0.1.1"
     },
     "spinner": {
-      "registryDependencies": [],
-      "version": "0.1.0"
-    },
-    "switch": {
-      "registryDependencies": [],
-      "version": "0.1.0"
-    },
-    "tabs": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.1.0"
     },
     "textarea": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.3.0"
     },
     "toggle": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [
         "button"
       ],
       "version": "0.1.0"
     },
     "toggle-group": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [
         "toggle",
         "button"
@@ -298,6 +437,18 @@
       "version": "0.1.1"
     },
     "transaction-row": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
       "registryDependencies": [],
       "version": "0.3.0"
     }

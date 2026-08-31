@@ -5,9 +5,18 @@
   "name": "label",
   "kind": "component",
   "description": "Controls native Label icon placement with semantic spacing and decorative icon accessibility behavior.",
+  "usage": "Label(\"Account settings\", systemImage: \"person.crop.circle\")\n    .labelStyle(.registry)\n\nLabel(\"Continue\", systemImage: \"chevron.forward\")\n    .labelStyle(.registryTrailingIcon)",
   "files": [{ "source": "sources/components/RegistryLabelStyle.swift", "target": "RegistryLabelStyle.swift" }],
   "registryDependencies": [],
-  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+    }
+  ],
   "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
   "tags": ["label", "icon", "text", "alignment", "style"],
   "accessibility": [

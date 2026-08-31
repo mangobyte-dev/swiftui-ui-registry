@@ -1,20 +1,23 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "native-select",
-  "kind": "component",
-  "description": "Retains the minimal native menu treatment for a bound SwiftUI Picker.",
-  "files": [{ "source": "sources/components/RegistryNativeSelectModifier.swift", "target": "RegistryNativeSelectModifier.swift" }],
+  "kind": "recipe",
+  "description": "Native guidance for the minimal menu treatment of a bound SwiftUI Picker.",
+  "usage": "@State private var sort = \"recent\"\n\nPicker(\"Sort\", selection: $sort) {\n    Text(\"Most recent\").tag(\"recent\")\n    Text(\"Oldest\").tag(\"oldest\")\n    Text(\"Amount\").tag(\"amount\")\n}\n.pickerStyle(.menu)",
+  "docs": "Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no wrapper because the one-line native style is the entire treatment.",
+  "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
-  "tags": ["native-select", "picker", "menu", "selection", "modifier"],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
+  "tags": ["native-select", "picker", "menu", "selection", "guidance"],
   "accessibility": [
     "Retains native Picker accessibility, menu, and selection behavior.",
     "Requires caller-supplied labels and option text.",
     "Keeps selection state external through the Picker binding.",
     "Inherits Dynamic Type, enabled state, tint, and layout direction."
-  ],
-  "preview": { "source": "sources/components/RegistryNativeSelectModifier.swift", "name": "Native Select" }
+  ]
 }

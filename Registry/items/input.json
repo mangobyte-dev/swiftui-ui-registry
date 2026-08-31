@@ -5,9 +5,18 @@
   "name": "input",
   "kind": "component",
   "description": "Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.",
+  "usage": "@State private var email = \"\"\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(.registryInput)\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(RegistryInputStyle(isInvalid: true))",
   "files": [{ "source": "sources/components/RegistryInputStyle.swift", "target": "RegistryInputStyle.swift" }],
   "registryDependencies": [],
-  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+    }
+  ],
   "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
   "tags": ["input", "text-field", "secure-field", "form", "style"],
   "accessibility": [

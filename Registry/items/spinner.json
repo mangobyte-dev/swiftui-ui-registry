@@ -5,9 +5,18 @@
   "name": "spinner",
   "kind": "component",
   "description": "Styles a native indeterminate ProgressView with a compact circular indicator and optional label.",
+  "usage": "ProgressView(\"Loading results\")\n    .progressViewStyle(.registrySpinner)",
   "files": [{ "source": "sources/components/RegistrySpinnerStyle.swift", "target": "RegistrySpinnerStyle.swift" }],
   "registryDependencies": [],
-  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+    }
+  ],
   "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
   "tags": ["spinner", "progress-view", "circular", "loading", "style"],
   "accessibility": [

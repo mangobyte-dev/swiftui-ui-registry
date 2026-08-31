@@ -5,6 +5,7 @@
   "name": "metric-card",
   "kind": "component",
   "description": "Displays one prepared product metric using native text formatting and semantic styling.",
+  "usage": "MetricCard(\n    \"Available balance\",\n    value: Text(12_480.32, format: .currency(code: \"USD\")),\n    detail: Text(\"Up 8.2% this month\"),\n    systemImage: \"creditcard.fill\"\n)",
   "files": [
     {
       "source": "sources/components/MetricCard.swift",
@@ -16,7 +17,9 @@
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
-      "requirement": "0.x"
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
   "platforms": [

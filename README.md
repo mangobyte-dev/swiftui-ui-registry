@@ -1,20 +1,56 @@
 # SwiftUIRegistry
 
-An experimental, native-first composition registry for source-owned SwiftUI product UI
+A native-first registry of SwiftUI product UI that you copy into your app and own, in the spirit of shadcn/ui. The unit of distribution is understandable Swift source plus machine-readable metadata, not a framework: search a local catalog, inspect the install plan, copy the code, customize it, and audit updates later through a receipt-backed three-way merge. Apple controls stay visible at the call site
 
-Version 0 tests whether a professional team or coding agent can discover product composition, resolve its dependencies, copy understandable Swift source into an app, customize it, and keep using native SwiftUI architecture
+## Taxonomy
 
-## What exists
+Three item kinds, enforced by a single validator:
 
-- `SwiftUIRegistryFoundations`: a small Swift package product for shared semantic surfaces and spacing
-- A complete 21-item Stage 1 catalog of native styles, focused modifiers, and usage guidance
-- `metric-card`, `transaction-row`, and `macro-progress`: source-owned product components
-- `finance-overview` and `nutrition-overview`: composed, architecture-neutral blocks
-- JSON metadata with versions, dependencies, platforms, accessibility notes, previews, and screenshots
-- A deterministic metadata search command for developers and agents
-- An installer with exact-content receipts, safe repeated installation, and conflict-aware three-way updates
-- A universal iOS showcase compiled and tested at the iOS 18 deployment floor
-- Pinned visual contract checks for both composed blocks
+- `component`: an installable style or focused modifier that adds a meaningful reusable treatment to a native control, such as `button`, `input`, or `card`
+- `block`: an installable, architecture-neutral composition of components, such as `finance-overview`
+- `recipe`: native guidance where a one-line Apple API is the entire treatment, such as `switch` or `tabs`; nothing installs
+
+The value gate: an installable item must add a meaningful reusable treatment or composition beyond a native API. A wrapper that merely renames an Apple control ships as a recipe instead (`docs/registry-spec.md`)
+
+## Use one item in minutes
+
+Browse the generated catalog at [docs/catalog/index.md](docs/catalog/index.md). A component or block page leads with the preview, one install command, and a call-site snippet; a recipe page leads with the snippet because nothing installs. Everything else recedes into Details
+
+1. Find an item:
+
+   ```sh
+   python3 Scripts/search.py finance --kind block --format names
+   ```
+
+2. Inspect the plan; this is read-only and writes nothing:
+
+   ```sh
+   python3 Scripts/install.py finance-overview \
+     --destination path/to/YourTarget/Components \
+     --plan
+   ```
+
+3. Install the item and its dependency closure:
+
+   ```sh
+   python3 Scripts/install.py finance-overview \
+     --destination path/to/YourTarget/Components
+   ```
+
+4. Add the printed package requirement (the `SwiftUIRegistryFoundations` product with its SwiftPM rule) to your project and make the destination folder a member of your build target; the installer never edits project files
+
+5. Compose through the item's public API; the exact snippet is on its [catalog page](docs/catalog/finance-overview.md) and in the Compose section below
+
+## Status
+
+Version 0, an honest prototype:
+
+- 26 items: 17 installable components, 2 blocks, and 7 recipes, generated into `docs/catalog/`
+- `SwiftUIRegistryFoundations` is a small pre-1.0 package for shared semantic surfaces and spacing, evolving under the compatibility policy in `docs/registry-spec.md`
+- Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, and a usage snippet, all checked by one validator
+- The installer writes exact-content receipts and performs conflict-aware three-way updates
+- A universal iOS showcase compiles and tests every installable item at the iOS 18 floor, with pinned visual contract checks for both blocks
+- Not yet: hosted registry, MCP server, Xcode project mutation, platforms beyond iOS, or external adoption evidence; the first independent clean-room trial is the open gate before Stage 2 (`docs/component-roadmap.md`)
 
 ## Showcase screenshots
 
@@ -86,6 +122,26 @@ Update behavior is content-based:
 
 The updater never silently resolves a conflict or replaces a customized file
 
+## Agent workflow
+
+Both inspection flags are read-only and write nothing, so an agent can preview and audit an installation before touching the destination:
+
+```sh
+python3 Scripts/install.py finance-overview \
+  --destination path/to/YourTarget/Components \
+  --plan
+```
+
+`--plan` resolves the item like a real install and prints the ordered dependency closure with versions and kinds, every target write with its status (`new`, `up-to-date`, `modified-would-require-force`, `would-merge`), the actionable package requirements, preflight collisions, and the manual integration steps (add the package dependency, ensure target membership). For a recipe it prints the native guidance and states nothing installs
+
+```sh
+python3 Scripts/install.py finance-overview \
+  --destination path/to/YourTarget/Components \
+  --diff
+```
+
+`--diff` prints a unified diff of each receipt-backed owned file against the canonical registry source. It exits 0 when every file is identical and 1 when differences exist, and it requires an existing installation receipt. Run it before `--update` to see exactly what local customization is at stake
+
 ## Compose
 
 ```swift
@@ -139,6 +195,7 @@ The repository is currently verified with Xcode 27.0 and Swift 6.4. Registry sou
 
 ## Read next
 
+- [Item catalog](docs/catalog/index.md)
 - [Philosophy](docs/philosophy.md)
 - [Architecture](docs/architecture.md)
 - [Component roadmap](docs/component-roadmap.md)

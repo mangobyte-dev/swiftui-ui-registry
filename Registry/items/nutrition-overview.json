@@ -5,6 +5,7 @@
   "name": "nutrition-overview",
   "kind": "block",
   "description": "Composes prepared energy and macronutrient values into an embeddable nutrition overview.",
+  "usage": "NutritionOverview(\n    \"Today\",\n    energyTitle: \"Energy\",\n    energy: Text(\"1,640 kcal\"),\n    energyDetail: Text(\"360 kcal remaining\"),\n    sectionTitle: \"Macronutrients\",\n    macros: [\n        NutritionMacroItem(\n            id: \"protein\",\n            name: \"Protein\",\n            value: Text(\"96 g\"),\n            target: Text(\"130 g\"),\n            progress: 96.0 / 130.0,\n            systemImage: \"fish.fill\",\n            tint: .indigo\n        )\n    ],\n    actionTitle: \"Log food\",\n    onLogFood: {}\n)",
   "files": [
     {
       "source": "sources/blocks/NutritionOverview.swift",
@@ -16,7 +17,9 @@
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
-      "requirement": "0.x"
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
     }
   ],
   "platforms": [

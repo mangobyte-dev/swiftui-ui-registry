@@ -5,9 +5,18 @@
   "name": "select",
   "kind": "component",
   "description": "Adds semantic field chrome to a native menu-style Picker without replacing its presentation or selection behavior.",
+  "usage": "@State private var currency = \"KWD\"\n\nPicker(\"Currency\", selection: $currency) {\n    Text(\"Kuwaiti dinar\").tag(\"KWD\")\n    Text(\"US dollar\").tag(\"USD\")\n}\n.registrySelect()",
   "files": [{ "source": "sources/components/RegistrySelectModifier.swift", "target": "RegistrySelectModifier.swift" }],
   "registryDependencies": [],
-  "packageDependencies": [{ "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations", "requirement": "0.x" }],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+    }
+  ],
   "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
   "tags": ["select", "picker", "menu", "form", "modifier"],
   "accessibility": [

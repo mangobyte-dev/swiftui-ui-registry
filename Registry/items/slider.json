@@ -1,20 +1,23 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "slider",
-  "kind": "component",
-  "description": "Applies optional semantic tint and control sizing to a native Slider with caller-owned value and labels.",
-  "files": [{ "source": "sources/components/RegistrySliderModifier.swift", "target": "RegistrySliderModifier.swift" }],
+  "kind": "recipe",
+  "description": "Native guidance for a Slider with semantic tint, control sizing, and caller-owned value and labels.",
+  "usage": "@State private var volume = 64.0\n\nSlider(value: $volume, in: 0...100, step: 1) {\n    Text(\"Volume\")\n} minimumValueLabel: {\n    Image(systemName: \"speaker.fill\")\n        .accessibilityHidden(true)\n} maximumValueLabel: {\n    Image(systemName: \"speaker.wave.3.fill\")\n        .accessibilityHidden(true)\n}\n.controlSize(.large)",
+  "docs": "Use the native `Slider` and apply `.tint(_:)` and `.controlSize(_:)` directly where the design needs them. The registry adds no wrapper because those modifiers only forward environment values the native control already respects.",
+  "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
-  "platforms": [{ "name": "iOS", "minimumVersion": "18.0" }],
-  "tags": ["slider", "value", "range", "control", "modifier"],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "18.0" }
+  ],
+  "tags": ["slider", "value", "range", "control", "guidance"],
   "accessibility": [
     "Retains native Slider adjustable-control semantics and gestures.",
     "Keeps the value, bounds, step, and editing callbacks caller-owned.",
     "Requires a meaningful label and supports native minimum and maximum labels.",
     "Inherits control size, enabled state, and layout direction unless explicitly overridden."
-  ],
-  "preview": { "source": "sources/components/RegistrySliderModifier.swift", "name": "Slider" }
+  ]
 }

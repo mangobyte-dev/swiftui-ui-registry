@@ -54,7 +54,8 @@ def search_items(
             "platforms": compatible_platforms,
             "tags": item["tags"],
             "accessibility": item["accessibility"],
-            "preview": item["preview"],
+            "preview": item.get("preview"),
+            "docs": item.get("docs"),
         })
 
     return sorted(matches, key=lambda result: (-result["score"], result["name"]))
@@ -92,7 +93,7 @@ def _version(value: str) -> tuple[int, ...]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("query", nargs="*", help="Terms that must all match metadata")
-    parser.add_argument("--kind", choices=["component", "block", "flow"])
+    parser.add_argument("--kind", choices=["component", "block", "flow", "recipe"])
     parser.add_argument("--platform")
     parser.add_argument("--target-version")
     parser.add_argument("--format", choices=["json", "names"], default="json")

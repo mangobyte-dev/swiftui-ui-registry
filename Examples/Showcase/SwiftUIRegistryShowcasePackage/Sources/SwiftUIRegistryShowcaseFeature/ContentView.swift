@@ -67,6 +67,18 @@ public struct ContentView: View {
                         )
                     }
                 }
+
+                Tab("Authentication", systemImage: "person.badge.key") {
+                    ShowcaseScreen {
+                        AuthenticationDemo()
+                    }
+                }
+
+                Tab("Settings", systemImage: "gearshape") {
+                    ShowcaseScreen {
+                        SettingsDemo()
+                    }
+                }
             }
             .tint(.indigo)
         }
@@ -105,6 +117,112 @@ private extension ContentView {
                 tone: .negative
             )
         ]
+    }
+}
+
+/// Harness state for the installed auth block: local validation and a fake
+/// submit that flips `isSubmitting` and then reports a form error, so UI tests
+/// can exercise validation and disabled states deterministically without
+/// networking.
+private struct AuthenticationDemo: View {
+    @State private var email = ""
+    @State private var password = ""
+    @State private var emailError: LocalizedStringResource?
+    @State private var passwordError: LocalizedStringResource?
+    @State private var formError: LocalizedStringResource?
+    @State private var isSubmitting = false
+
+    var body: some View {
+        AuthForm(
+            "Welcome back",
+            identity: $email,
+            identityError: emailError,
+            password: $password,
+            passwordError: passwordError,
+            formError: formError,
+            isSubmitting: isSubmitting,
+            secondaryActionTitle: "Forgot password?",
+            onSecondaryAction: {},
+            onSubmit: submit
+        )
+    }
+
+    private func submit() {
+        emailError = email.contains("@") ? nil : "Enter a valid email address"
+        passwordError = password.isEmpty ? "Enter your password" : nil
+        guard emailError == nil, passwordError == nil else { return }
+        formError = nil
+        isSubmitting = true
+        Task {
+            // Two seconds keeps the submitting window long enough for the UI
+            // tests to observe the disabled controls deterministically.
+            try? await Task.sleep(for: .seconds(2))
+            isSubmitting = false
+            formError = "We could not sign you in. Try again."
+        }
+    }
+}
+
+/// Harness state for the installed settings block: caller-owned toggle and
+/// selection bindings, one organization-managed disabled row, and a
+/// destructive sign-out action. The captions under the section mirror the
+/// bindings so UI tests can prove control writes flow through caller state.
+private struct SettingsDemo: View {
+    @State private var alertsEnabled = true
+    @State private var summaryEnabled = false
+    @State private var marketingEnabled = false
+    @State private var currency = "KWD"
+    @State private var didSignOut = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            SettingsSection(
+                "Notifications",
+                footer: Text("Quiet hours apply to every channel.")
+            ) {
+                Toggle("Transaction alerts", isOn: $alertsEnabled)
+                    .settingsRowDescription(
+                        Text("A push notification for every card transaction.")
+                    )
+
+                Toggle("Weekly summary", isOn: $summaryEnabled)
+
+                Toggle("Marketing messages", isOn: $marketingEnabled)
+                    .settingsRowDisabled(
+                        explanation: Text("Managed by your organization's privacy policy.")
+                    )
+
+                LabeledContent("Currency") {
+                    Picker("Currency", selection: $currency) {
+                        Text("Kuwaiti dinar").tag("KWD")
+                        Text("US dollar").tag("USD")
+                    }
+                    .registrySelect()
+                }
+
+                Button(role: .destructive) {
+                    didSignOut = true
+                } label: {
+                    Text("Sign out")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.registry)
+            }
+
+            Text(
+                alertsEnabled
+                    ? "Transaction alerts are on."
+                    : "Transaction alerts are off."
+            )
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+
+            if didSignOut {
+                Text("Signed out.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+        }
     }
 }
 

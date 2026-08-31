@@ -1,0 +1,41 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "auth-form",
+  "kind": "block",
+  "description": "Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.",
+  "usage": "AuthForm(\n    \"Welcome back\",\n    identity: $email,\n    identityError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Forgot password?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
+  "files": [
+    {
+      "source": "sources/blocks/AuthForm.swift",
+      "target": "AuthForm.swift"
+    }
+  ],
+  "registryDependencies": ["input", "button", "card"],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+    }
+  ],
+  "platforms": [
+    { "name": "iOS", "minimumVersion": "26.0" }
+  ],
+  "tags": ["authentication", "sign-in", "form", "validation", "autofill"],
+  "accessibility": [
+    "Both fields use label-plus-prompt initializers so the field titles are real accessibility labels, not placeholder-only text.",
+    "Focus order is identity then password: the identity field submits with a Next return key that moves focus to the password field, and the password return key submits the form.",
+    "Invalid fields are never color-alone: the input border width increases, a visible footnote message renders under the field, and the message is attached as the field's accessibility hint.",
+    "Field and form error messages post an AccessibilityNotification.Announcement when they appear or change; VoiceOver announcement timing has not been verified on device.",
+    "Autofill content types are fixed: the identity field is .username (for both email and username sign-in) and the password field is .password. Autofill is verifiable only manually with a saved credential.",
+    "While isSubmitting is true every control is disabled through the environment, the composed styles apply the shared disabled opacity, and the submit button keeps its title as its accessibility label while showing a progress spinner."
+  ],
+  "preview": {
+    "source": "sources/blocks/AuthForm.swift",
+    "name": "Auth Form"
+  }
+}

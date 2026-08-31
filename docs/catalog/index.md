@@ -2,7 +2,7 @@
 
 # SwiftUIRegistry catalog
 
-26 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
+28 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
 
 ```sh
 python3 Scripts/install.py <name> --destination Sources/YourFeature/Components
@@ -10,12 +10,14 @@ python3 Scripts/install.py <name> --destination Sources/YourFeature/Components
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-## Blocks (2)
+## Blocks (4)
 
 Compositions of components. Installing one installs its whole closure
 
+- [auth-form](auth-form.md): Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.
 - [finance-overview](finance-overview.md): Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.
 - [nutrition-overview](nutrition-overview.md): Composes prepared energy and macronutrient values into an embeddable nutrition overview.
+- [settings-section](settings-section.md): Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
 
 ## Components (17)
 

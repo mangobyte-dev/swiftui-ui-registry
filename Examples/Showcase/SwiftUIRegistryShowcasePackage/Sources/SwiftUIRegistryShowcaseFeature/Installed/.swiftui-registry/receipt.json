@@ -1,5 +1,12 @@
 {
   "files": {
+    "AuthForm.swift": {
+      "base": "bases/b808915e7c307350d015763d2cb828270f25868f16345bd7122b187337a9d83f.base",
+      "installedDigest": "sha256:f994b47a9b23c0da80b66cb2366dc1c70492ed86c2925723eb841b3eba32f061",
+      "item": "auth-form",
+      "sourceDigest": "sha256:f994b47a9b23c0da80b66cb2366dc1c70492ed86c2925723eb841b3eba32f061",
+      "version": "0.1.0"
+    },
     "FinanceOverview.swift": {
       "base": "bases/f9b286d5453416c4c440e65a4c2be76f47597245ad27cdad80314bf17053616c.base",
       "installedDigest": "sha256:4ef0e3d0762ee4db6e59857cfaf7d185ad29159884ab008597231265eddc3dd8",
@@ -126,6 +133,13 @@
       "sourceDigest": "sha256:bb334eb26fb2ad703f0b01edf41886510bfba40856c16c963167895b1dc7eab5",
       "version": "0.2.0"
     },
+    "SettingsSection.swift": {
+      "base": "bases/f0cbe660f369434a96a11528c9670cfa91024028aba99117143a5034582ee972.base",
+      "installedDigest": "sha256:681fafa2bf2144dd354ca8d7f8b1e484351d9d4aa2212f991d19df019f7aac0e",
+      "item": "settings-section",
+      "sourceDigest": "sha256:681fafa2bf2144dd354ca8d7f8b1e484351d9d4aa2212f991d19df019f7aac0e",
+      "version": "0.1.0"
+    },
     "TransactionRow.swift": {
       "base": "bases/bb175adeaac2e6443042b5ae547edcdaea4daec1487cb932a128b37b41cb221d.base",
       "installedDigest": "sha256:9a0e177c8420a08ee401576155ca0e5d6a8014683514eaf171cd74ef98eed2f9",
@@ -135,6 +149,26 @@
     }
   },
   "items": {
+    "auth-form": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "input",
+        "button",
+        "card"
+      ],
+      "version": "0.1.0"
+    },
     "badge": {
       "packageDependencies": [
         {
@@ -366,6 +400,26 @@
       ],
       "registryDependencies": [],
       "version": "0.2.0"
+    },
+    "settings-section": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "select",
+        "separator",
+        "button"
+      ],
+      "version": "0.1.0"
     },
     "spinner": {
       "packageDependencies": [

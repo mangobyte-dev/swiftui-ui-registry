@@ -52,12 +52,35 @@ Build two complete product workflows as dependency-closed blocks, then extract s
 
 Extract `field`, `input-group`, or form treatments only when the two slices prove the same seam. Do not pre-build a forms catalog
 
+### Stage 2 seam extraction decision (2026-09-01)
+
+`Registry/sources/blocks/AuthForm.swift` and `Registry/sources/blocks/SettingsSection.swift` were compared side by side for every shared seam candidate. No candidate met the same-treatment bar, so nothing was extracted and both blocks keep their treatments source-owned (Evidence before extraction, docs/philosophy.md):
+
+- Field-with-message column: KEEP LOCAL. AuthForm renders footnote messages in `theme.negative` with an `accessibilityHint` and an announcement on change (validation errors); SettingsSection renders footnotes in `.secondary` with no hint and no announcement (descriptions, disabled explanations, footer). Same rough shape, different semantics and styling
+- Footnote message treatment: KEEP LOCAL. The only identical fragment is `.font(.footnote)`; foreground styles differ (`theme.negative` versus `.secondary`) because error and description are distinct roles
+- Announce-on-change helper: KEEP LOCAL. One consumer (AuthForm). SettingsSection deliberately relies on native disabled semantics plus visible text and posts no announcements
+- Busy-button treatment: KEEP LOCAL. One consumer (the AuthForm submit button)
+- Section chrome: KEEP LOCAL. AuthForm titles through `GroupBox` with `.registryCard`; SettingsSection uses a header-trait headline above `registrySurface()` with an optional footnote footer. Different structures, and the card treatment is already shared via `RegistryCardStyle`
+- Disabled treatment: KEEP LOCAL. AuthForm disables the whole form during submit; SettingsSection disables per row while keeping the explanation outside the disabled subtree
+- Separator-interleaved rows: KEEP LOCAL. Only SettingsSection uses separators between these two blocks. The bare `Divider()` in FinanceOverview and NutritionOverview versus `registrySeparator()` here stays a flagged cleanup candidate, not an extraction with two proving usages in this pair
+
 ### Stage 2 exit criteria
 
 - Both blocks install, compile, and render from their resolved closures at the iOS 26 floor
 - Focus order, keyboard behavior, validation announcements, autofill, and disabled states are verified at the UI
 - Every composition accepts bindings and actions without owning validation, upload, or persistence logic
 - Any extracted shared treatment names its two proving usages
+
+### Stage 2 exit-criteria evidence (2026-09-01)
+
+Verified on the pinned light-mode iPhone 17 iOS 27.0 simulator by `SwiftUIRegistryShowcaseUITests`:
+
+- Focus order and keyboard behavior: `testAuthReturnKeyMovesFocusFromIdentityToPasswordAndSubmits` proves the Next return key moves typing from the identity field to the password field and the Go return key runs the caller's submit
+- Disabled states: `testAuthSubmitDisablesFieldsAndSubmitControlWhileSubmitting` proves both fields and the submit control report isEnabled false while the harness isSubmitting is true and re-enable after; `testSettingsRowsWriteThroughCallerBindingsAndReportDisabledState` proves the organization-managed row reports isEnabled false with its explanation legible
+- Validation feedback: `testAuthValidationSurfacesFieldAndFormErrorCopy` proves field and form error copy appears as accessibility elements and clears on correction. XCUITest cannot observe VoiceOver announcement delivery or read accessibilityHint, so the announcement, hint, and autofill content types (`.textContentType(.username)` / `.password`) are pinned structurally by `test_auth_block_keeps_credential_autofill_and_error_announcements` in `Tests/RegistryTests/test_installer.py`; autofill UI itself is verifiable only manually with a saved credential
+- Bindings and actions without owned logic: `testSettingsRowsWriteThroughCallerBindingsAndReportDisabledState` proves toggle writes flow through caller state and the destructive action runs caller code; validation and the fake submission live in the Showcase harness, not the blocks
+- Adaptive rendering: `testStageTwoScreensAdaptToAccessibilitySizeAndRightToLeft` proves both screens scale with accessibility type and mirror leading-aligned content under right to left
+- Visual contract: `auth-light.png` and `settings-light.png` were added per `docs/visual-testing.md`, with the GOLDEN-CHANGE note recorded there
 
 ## Stage 3: Content and feedback driven by one real screen
 

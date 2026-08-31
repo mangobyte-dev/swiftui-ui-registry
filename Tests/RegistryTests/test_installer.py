@@ -170,7 +170,7 @@ class InstallerTests(unittest.TestCase):
             RECIPE_NAMES,
         )
         self.assertEqual(len([kind for kind in kinds.values() if kind == "component"]), 17)
-        self.assertEqual(len([kind for kind in kinds.values() if kind == "block"]), 2)
+        self.assertEqual(len([kind for kind in kinds.values() if kind == "block"]), 4)
         # The per-item gate (a recipe is docs-only guidance with no files; an
         # installable item ships files plus a preview and never depends on a
         # recipe) is enforced on every registry load by the shared validator;
@@ -385,6 +385,62 @@ class InstallerTests(unittest.TestCase):
             self.installer.resolve("nutrition-overview"),
             ["metric-card", "macro-progress", "nutrition-overview"],
         )
+
+    def test_auth_block_resolves_stage_one_form_treatments_before_the_block(self):
+        self.assertEqual(
+            self.installer.resolve("auth-form"),
+            ["input", "button", "card", "auth-form"],
+        )
+
+    def test_auth_block_keeps_credential_autofill_and_error_announcements(self):
+        """The Stage 2 sign-in contract: a copy that drops autofill content
+        types, the error announcement, or the submit guard would still render
+        but silently lose the behavior the block exists to standardize."""
+        item = self.installer.items["auth-form"]
+        source = (
+            REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+        ).read_text()
+
+        self.assertIn(".textContentType(.username)", source)
+        self.assertIn(".textContentType(.password)", source)
+        self.assertIn("AccessibilityNotification.Announcement", source)
+        self.assertIn(".submitLabel(.next)", source)
+        self.assertIn(".submitLabel(.go)", source)
+        self.assertIn("RegistryInputStyle(isInvalid:", source)
+        self.assertIn(".foregroundStyle(theme.negative)", source)
+        # Negative case: the password return key must not fire onSubmit while
+        # a submission is in flight.
+        self.assertIn("if !isSubmitting", source)
+        self.assertNotIn(".foregroundStyle(.red)", source)
+
+    def test_settings_block_resolves_stage_one_section_treatments_before_the_block(self):
+        self.assertEqual(
+            self.installer.resolve("settings-section"),
+            ["select", "separator", "button", "settings-section"],
+        )
+
+    def test_settings_block_keeps_rows_native_and_disabled_rows_legible(self):
+        """The Stage 2 settings contract: a copy that drops the container-wide
+        switch default, the header trait, or the disabled-explanation clearing
+        would still render but silently lose the behavior the block exists to
+        standardize."""
+        item = self.installer.items["settings-section"]
+        source = (
+            REPOSITORY_ROOT / "Registry" / item["preview"]["source"]
+        ).read_text()
+
+        self.assertIn(".toggleStyle(.switch)", source)
+        self.assertIn(".accessibilityAddTraits(.isHeader)", source)
+        self.assertIn("Group(subviews: content)", source)
+        self.assertIn("Divider().registrySeparator()", source)
+        self.assertIn("@Entry var settingsRowDescription", source)
+        # Negative case: an enabled row must clear its explanation, so a copy
+        # that always forwards the explanation would fail this exact guard.
+        self.assertIn("isDisabled ? explanation : nil", source)
+        # The explanation is visible text, never a hint that double-announces,
+        # and the block declares no state of its own.
+        self.assertNotIn("accessibilityHint", source)
+        self.assertNotIn("@State private", source.split("#if DEBUG")[0])
 
     def test_install_copies_sources_and_records_exact_provenance(self):
         with tempfile.TemporaryDirectory() as directory:

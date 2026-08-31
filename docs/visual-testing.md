@@ -2,7 +2,7 @@
 
 ## Contract
 
-The showcase UI tests compare the finance and nutrition screens with approved references under `Examples/Showcase/SwiftUIRegistryShowcaseUITests/ReferenceImages/`
+The showcase UI tests compare the finance, nutrition, authentication, and settings screens with approved references under `Examples/Showcase/SwiftUIRegistryShowcaseUITests/ReferenceImages/`
 
 The contract is pinned to a light-mode iPhone 17 running iOS 27.0. Native controls and tab presentation intentionally change across Apple platform versions, so a different runtime is visual review evidence rather than a valid baseline runner
 
@@ -22,10 +22,14 @@ Semantic UI assertions remain separate. The image check protects layout, hierarc
 
 - `finance-light.png`
 - `nutrition-light.png`
+- `auth-light.png`
+- `settings-light.png`
 
 GOLDEN-CHANGE: these initial references were approved after iPhone and iPad review of both domains, an iOS 18 deployment-floor run, and an accessibility-size run. Future reference changes require the same explicit note in the reviewing change
 
 GOLDEN-CHANGE: the deployment floor was raised to iOS 26, so a floor-26 app can no longer launch on the previous iPhone 16 Pro iOS 18.0 pin and the iOS 18 references became unrunnable rather than merely stale. Both references were recaptured on the light-mode iPhone 17 iOS 27.0 runtime, where system controls and presentations render Liquid Glass, most visibly the floating tab bar. Screen content, hierarchy, and copy are unchanged. Capture on an iOS 26 runtime is deferred until a 26 runtime or device is available; iOS 27.0 is the only installed runtime that can execute the app
+
+GOLDEN-CHANGE (2026-09-01): `auth-light.png` and `settings-light.png` were added for the two Stage 2 blocks. Each shows the pristine light-mode screen on the pinned iPhone 17 iOS 27.0 runtime: the auth screen with the Welcome back card, empty Email and Password fields, Sign in button, and Forgot password? link; the settings screen with the Notifications header, five rows with separators, the dimmed organization-managed Marketing messages row with its explanation, the Currency select, the destructive Sign out button, the footer, and the binding caption. Both images were captured through the suite's kept attachments, exported with `xcrun xcresulttool export attachments`, and reviewed directly before approval. The existing finance and nutrition references are untouched
 
 ## Updating a reference
 

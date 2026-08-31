@@ -28,6 +28,8 @@
     "items/transaction-row.json",
     "items/macro-progress.json",
     "items/finance-overview.json",
-    "items/nutrition-overview.json"
+    "items/nutrition-overview.json",
+    "items/auth-form.json",
+    "items/settings-section.json"
   ]
 }

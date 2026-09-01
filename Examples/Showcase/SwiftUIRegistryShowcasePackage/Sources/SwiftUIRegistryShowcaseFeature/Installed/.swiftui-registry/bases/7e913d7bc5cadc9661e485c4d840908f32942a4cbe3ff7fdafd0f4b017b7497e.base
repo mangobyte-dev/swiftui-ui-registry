@@ -24,13 +24,9 @@ public struct RegistryProgressViewStyle: ProgressViewStyle {
             }
 
             if let fraction = configuration.fractionCompleted {
-                ProgressView(value: fraction)
-                    .progressViewStyle(.linear)
-                    .tint(tintStyle)
+                tinted(ProgressView(value: fraction).progressViewStyle(.linear))
             } else {
-                ProgressView()
-                    .progressViewStyle(.linear)
-                    .tint(tintStyle)
+                tinted(ProgressView().progressViewStyle(.linear))
             }
 
             if let currentValueLabel = configuration.currentValueLabel {
@@ -42,14 +38,20 @@ public struct RegistryProgressViewStyle: ProgressViewStyle {
         .accessibilityElement(children: .combine)
     }
 
-    private var tintStyle: AnyShapeStyle {
+    /// Applies an explicit tint only for the positive/negative tones. The
+    /// accent tone deliberately leaves `.tint` untouched: re-declaring it as
+    /// `TintShapeStyle()` (i.e. "tint equals the ambient tint") is a
+    /// self-referential `ShapeStyle` that recurses without terminating when
+    /// SwiftUI resolves it.
+    @ViewBuilder
+    private func tinted<V: View>(_ view: V) -> some View {
         switch tone {
         case .accent:
-            AnyShapeStyle(TintShapeStyle())
+            view
         case .positive:
-            AnyShapeStyle(theme.positive)
+            view.tint(theme.positive)
         case .negative:
-            AnyShapeStyle(theme.negative)
+            view.tint(theme.negative)
         }
     }
 }

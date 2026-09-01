@@ -79,6 +79,10 @@ public struct ContentView: View {
                         SettingsDemo()
                     }
                 }
+
+                Tab("Components", systemImage: "square.grid.2x2") {
+                    ComponentsGallery()
+                }
             }
             .tint(.indigo)
         }

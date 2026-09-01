@@ -17,8 +17,8 @@ public struct RegistryCheckboxToggleStyle: ToggleStyle {
                 configuration.label
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .contentShape(Rectangle())
             .frame(minHeight: RegistryMetrics.minimumHitSize)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .opacity(isEnabled ? 1 : theme.disabledOpacity)

@@ -102,6 +102,21 @@ class InstallerTests(unittest.TestCase):
                     "The canonical schema forbids undeclared item fields.",
                 )
 
+    def test_recipe_conditional_requires_kind_before_matching(self):
+        # Without "required": ["kind"], a kind-less document vacuously matches
+        # the recipe branch under JSON Schema 2020-12, so external validators of
+        # this canonical schema report recipe-only errors on non-recipe drafts.
+        schema = json.loads(
+            (REPOSITORY_ROOT / "Registry" / "schema.json").read_text()
+        )
+        recipe_conditional = schema["allOf"][0]["if"]
+        self.assertIn(
+            "kind",
+            recipe_conditional.get("required", []),
+            "The recipe 'if' clause must gate on kind being present.",
+        )
+        self.assertEqual(recipe_conditional["properties"]["kind"]["const"], "recipe")
+
     def test_preview_metadata_resolves_to_declared_source_and_screenshots(self):
         for item in self.installer.items.values():
             if item["kind"] == "recipe":
@@ -657,6 +672,76 @@ class InstallerTests(unittest.TestCase):
             )
             self.assertEqual(len(artifacts), 1)
             self.assertIn("<<<<<<< Example.swift", artifacts[0].read_text())
+
+    def test_force_install_removes_stale_conflict_artifact(self):
+        # A conflicted update writes a .merge artifact; resolving the conflict by
+        # taking the registry side with --force must clean that artifact up, the
+        # same way a later successful --update would.
+        with tempfile.TemporaryDirectory() as repository, tempfile.TemporaryDirectory() as output:
+            source = self.make_registry(Path(repository), "value = base\n")
+            installer = Installer(Path(repository))
+            destination = Path(output)
+            installer.install("example", destination)
+            owned = destination / "Example.swift"
+            owned.write_text("value = consumer\n")
+            source.write_text("value = registry\n")
+
+            with self.assertRaisesRegex(RegistryError, "owned source was not changed"):
+                installer.update("example", destination)
+
+            conflict_root = destination / ".swiftui-registry" / "conflicts"
+            self.assertEqual(len(list(conflict_root.glob("*.merge"))), 1)
+
+            installer.install("example", destination, force=True)
+
+            self.assertEqual(
+                list(conflict_root.glob("*.merge")),
+                [],
+                "install --force must clear the resolved conflict artifact.",
+            )
+            self.assertEqual(owned.read_text(), "value = registry\n")
+
+    def test_plain_install_preserves_locally_modified_receipt_from_update(self):
+        # Exact sequence: install -> local edit -> --update -> plain install.
+        # A plain install writes nothing for an unchanged closure, so it must not
+        # reset the receipt's installedDigest (recorded as locally-modified by
+        # --update) to the source digest for content that is not on disk, which
+        # would make the next identical install falsely refuse as an overwrite.
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory)
+            self.installer.install("badge", destination)
+            target = destination / "RegistryBadge.swift"
+            local = target.read_bytes() + b"// local edit\n"
+            target.write_bytes(local)
+
+            update_results = self.installer.update("badge", destination)
+            self.assertEqual(update_results[0].status, "locally-modified")
+
+            def receipt_record() -> dict:
+                receipt = json.loads(
+                    (destination / ".swiftui-registry" / "receipt.json").read_text()
+                )
+                return receipt["files"]["RegistryBadge.swift"]
+
+            after_update = receipt_record()
+            self.assertEqual(after_update["installedDigest"], Installer._digest(local))
+            self.assertNotEqual(
+                after_update["installedDigest"], after_update["sourceDigest"]
+            )
+
+            # Plain install: no-op on disk; receipt must survive unchanged.
+            self.assertEqual(self.installer.install("badge", destination), [])
+            self.assertEqual(target.read_bytes(), local)
+            after_install = receipt_record()
+            self.assertEqual(after_install["installedDigest"], Installer._digest(local))
+            self.assertNotEqual(
+                after_install["installedDigest"], after_install["sourceDigest"]
+            )
+
+            # The next identical plain install must remain a safe no-op, not a
+            # refusal caused by a corrupted receipt.
+            self.assertEqual(self.installer.install("badge", destination), [])
+            self.assertEqual(target.read_bytes(), local)
 
     def test_plan_for_block_prints_closure_statuses_and_package_lines(self):
         with tempfile.TemporaryDirectory() as directory:

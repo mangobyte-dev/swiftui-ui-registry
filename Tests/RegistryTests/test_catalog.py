@@ -7,6 +7,7 @@ hand-edited page, or a stale orphan page fails loudly.
 """
 
 import importlib.util
+import json
 import sys
 import tempfile
 import unittest
@@ -22,6 +23,39 @@ assert SPEC.loader is not None
 sys.modules[SPEC.name] = CATALOG_MODULE
 SPEC.loader.exec_module(CATALOG_MODULE)
 generate = CATALOG_MODULE.generate
+
+
+def _write_single_item_registry(repository: Path, item_name: str) -> None:
+    """A minimal valid registry holding one installable component."""
+    source = repository / "Registry" / "sources" / "Item.swift"
+    source.parent.mkdir(parents=True)
+    source.write_text("source\n")
+    (repository / "Registry" / "schema.json").write_text(
+        (REPOSITORY_ROOT / "Registry" / "schema.json").read_text()
+    )
+    item = {
+        "schemaVersion": 1,
+        "version": "0.1.0",
+        "name": item_name,
+        "kind": "component",
+        "description": "Test item.",
+        "usage": "Item()",
+        "files": [{"source": "sources/Item.swift", "target": "Item.swift"}],
+        "registryDependencies": [],
+        "packageDependencies": [],
+        "platforms": [{"name": "iOS", "minimumVersion": "26.0"}],
+        "tags": ["test"],
+        "accessibility": [],
+        "preview": {"source": "sources/Item.swift", "name": "Item"},
+    }
+    items = repository / "Registry" / "items"
+    items.mkdir()
+    (items / f"{item_name}.json").write_text(json.dumps(item))
+    (repository / "Registry" / "registry.json").write_text(json.dumps({
+        "schemaVersion": 1,
+        "name": "TestRegistry",
+        "items": [f"items/{item_name}.json"],
+    }))
 
 
 class CatalogFreshnessTests(unittest.TestCase):
@@ -45,6 +79,15 @@ class CatalogFreshnessTests(unittest.TestCase):
                     f"docs/catalog/{name} is stale;"
                     " run python3 Scripts/generate_catalog.py",
                 )
+
+    def test_item_named_index_is_rejected_before_overwriting_the_catalog_index(self):
+        # An item validly named 'index' would have its page written to index.md,
+        # then silently clobbered by the catalog index at the same path. The
+        # generator must refuse it instead of losing the item's documentation.
+        with tempfile.TemporaryDirectory() as repository, tempfile.TemporaryDirectory() as output:
+            _write_single_item_registry(Path(repository), "index")
+            with self.assertRaises(CATALOG_MODULE.RegistryError):
+                generate(Path(repository), Path(output) / "catalog")
 
     def test_generation_is_deterministic(self):
         # Byte-stable output is what makes the freshness gate meaningful.

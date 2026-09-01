@@ -50,6 +50,11 @@ _KIND_GROUPS = [
 def generate(repository_root: Path, output: Path) -> list[str]:
     """Write index.md plus one page per item; return the written file names."""
     installer = Installer(repository_root)
+    if "index" in installer.items:
+        raise RegistryError(
+            "An item named 'index' would collide with the catalog index page;"
+            " rename the item"
+        )
     output.mkdir(parents=True, exist_ok=True)
 
     written: list[str] = []

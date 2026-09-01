@@ -182,6 +182,37 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     }
 
     @MainActor
+    func testStageOneControlsMeetMinimumHitTargetAtDefaultTextSize() {
+        // The adaptive test launches at accessibility3, where the label's own
+        // grown text already exceeds 44pt, so its height assertions cannot catch
+        // the removal of the min-hit-size styling. This launch fixes the type
+        // size at the system default, where only the guarded
+        // RegistryMetrics.minimumHitSize frame keeps the controls at 44pt.
+        let app = XCUIApplication()
+        app.launchArguments = ["-stage-one"]
+        app.launch()
+
+        XCTAssertTrue(
+            app.staticTexts["Stage 1 Components"].waitForExistence(timeout: 5),
+            "The Stage 1 launch must render the installed catalog through the consumer target."
+        )
+        let primaryAction = app.buttons["Primary action"]
+        XCTAssertTrue(primaryAction.exists)
+        XCTAssertGreaterThanOrEqual(
+            primaryAction.frame.height,
+            44,
+            "Registry button styling must preserve the minimum interaction height at the default text size."
+        )
+        let acceptTerms = app.switches["Accept terms"]
+        XCTAssertTrue(acceptTerms.exists)
+        XCTAssertGreaterThanOrEqual(
+            acceptTerms.frame.height,
+            44,
+            "Checkbox styling must preserve the minimum interaction height at the default text size."
+        )
+    }
+
+    @MainActor
     func testAccessibilitySizeLaunchExpandsSystemTypography() {
         let app = XCUIApplication()
         app.launch()

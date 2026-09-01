@@ -17,7 +17,7 @@
   ],
   "allOf": [
     {
-      "if": { "properties": { "kind": { "const": "recipe" } } },
+      "if": { "required": ["kind"], "properties": { "kind": { "const": "recipe" } } },
       "then": {
         "required": ["docs"],
         "properties": { "files": { "maxItems": 0 } }

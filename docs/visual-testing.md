@@ -31,6 +31,8 @@ GOLDEN-CHANGE: the deployment floor was raised to iOS 26, so a floor-26 app can 
 
 GOLDEN-CHANGE (2026-09-01): `auth-light.png` and `settings-light.png` were added for the two Stage 2 blocks. Each shows the pristine light-mode screen on the pinned iPhone 17 iOS 27.0 runtime: the auth screen with the Welcome back card, empty Email and Password fields, Sign in button, and Forgot password? link; the settings screen with the Notifications header, five rows with separators, the dimmed organization-managed Marketing messages row with its explanation, the Currency select, the destructive Sign out button, the footer, and the binding caption. Both images were captured through the suite's kept attachments, exported with `xcrun xcresulttool export attachments`, and reviewed directly before approval. The existing finance and nutrition references are untouched
 
+GOLDEN-CHANGE (2026-09-01): `finance-light.png` and `nutrition-light.png` were recaptured on the same light-mode iPhone 17 iOS 27.0 pin. The prior references were approved before the Authentication and Settings tabs existed and showed a stale two-tab bar; Stage 2 grew the tab bar from two to four tabs (Finance, Nutrition, Authentication, Settings), a difference the 2 percent tolerance silently absorbed. The recapture updates the references to the intended current product state. Screen content, hierarchy, and copy are unchanged; the visual difference is the four-tab Liquid Glass tab bar only. Both images were captured through the suite's kept attachments, exported with `xcrun xcresulttool export attachments`, and reviewed directly before approval
+
 ## Updating a reference
 
 Do not regenerate a reference merely because a test failed

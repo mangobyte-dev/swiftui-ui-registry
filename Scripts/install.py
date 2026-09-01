@@ -224,7 +224,20 @@ class Installer:
                 file.target.parent.mkdir(parents=True, exist_ok=True)
                 file.target.write_bytes(content)
                 installed.append(file)
-            self._record_file(receipt, file, destination, content, content)
+                self._record_file(receipt, file, destination, content, content)
+            else:
+                # The target was left as the consumer owns it; record its
+                # actual bytes so a receipt written by --update (a locally
+                # modified installedDigest) is preserved, not overwritten with
+                # the source digest for content that is not on disk.
+                self._record_file(
+                    receipt, file, destination, content, file.target.read_bytes()
+                )
+            target_key = self._target_key(file.target, destination)
+            conflict = self._metadata_root(destination) / "conflicts" / (
+                f"{self._target_identifier(target_key)}.merge"
+            )
+            conflict.unlink(missing_ok=True)
 
         self._record_items(receipt, name)
         self._write_receipt(destination, receipt)

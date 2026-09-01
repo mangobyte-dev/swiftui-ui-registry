@@ -47,11 +47,11 @@ Browse the generated catalog at [docs/catalog/index.md](docs/catalog/index.md). 
 
 Version 0, an honest prototype:
 
-- 26 items: 17 installable components, 2 blocks, and 7 recipes, generated into `docs/catalog/`
+- 28 items: 17 installable components, 4 blocks, and 7 recipes, generated into `docs/catalog/`
 - `SwiftUIRegistryFoundations` is a small pre-1.0 package for shared semantic surfaces and spacing, evolving under the compatibility policy in `docs/registry-spec.md`
 - Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates
-- A universal iOS showcase compiles and tests every installable item at the iOS 26 floor, with pinned visual contract checks for both blocks
+- A universal iOS showcase compiles and tests every installable item at the iOS 26 floor, with pinned visual contract checks for all four blocks
 - Not yet: hosted registry, MCP server, Xcode project mutation, platforms beyond iOS, or external adoption evidence; the first independent clean-room trial is the open gate before Stage 2 (`docs/component-roadmap.md`)
 
 ## Showcase screenshots
@@ -177,7 +177,7 @@ The block owns presentation composition. The caller owns value preparation, loca
 
 ## Sample app
 
-Open the universal iOS showcase to inspect both installed blocks on iPhone or iPad:
+Open the universal iOS showcase to inspect the installed blocks on iPhone or iPad:
 
 ```sh
 open Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace

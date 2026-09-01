@@ -150,8 +150,8 @@ private struct AuthenticationDemo: View {
     private func submit() {
         emailError = email.contains("@") ? nil : "Enter a valid email address"
         passwordError = password.isEmpty ? "Enter your password" : nil
-        guard emailError == nil, passwordError == nil else { return }
         formError = nil
+        guard emailError == nil, passwordError == nil else { return }
         isSubmitting = true
         Task {
             // Two seconds keeps the submitting window long enough for the UI

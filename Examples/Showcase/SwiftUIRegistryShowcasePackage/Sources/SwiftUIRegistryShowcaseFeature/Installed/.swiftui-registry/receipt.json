@@ -86,9 +86,9 @@
     },
     "RegistryProgressViewStyle.swift": {
       "base": "bases/7e913d7bc5cadc9661e485c4d840908f32942a4cbe3ff7fdafd0f4b017b7497e.base",
-      "installedDigest": "sha256:fc940696ea18e642006ca95246e572b48b589df2151597ce838beb8880438da3",
+      "installedDigest": "sha256:f38bff047d1b9bedcf600ac3a0047378b99a8e7161e47331a3e66276bd226427",
       "item": "progress",
-      "sourceDigest": "sha256:fc940696ea18e642006ca95246e572b48b589df2151597ce838beb8880438da3",
+      "sourceDigest": "sha256:f38bff047d1b9bedcf600ac3a0047378b99a8e7161e47331a3e66276bd226427",
       "version": "0.2.0"
     },
     "RegistrySelectModifier.swift": {

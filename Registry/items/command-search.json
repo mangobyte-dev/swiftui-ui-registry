@@ -1,0 +1,63 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "command-search",
+  "kind": "block",
+  "description": "Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.",
+  "usage": "@State private var query = \"\"\n\nCommandSearch(\n    \"Search\",\n    query: $query,\n    prompt: \"Search actions and activity\",\n    sections: sections,\n    emptyDescription: Text(\"Try a payee, a card, or an action.\"),\n    shortcuts: [\n        CommandShortcutHint(\"Open search\", keys: \"⌘K\", keysLabel: Text(\"Command K\"))\n    ],\n    onSelect: { id in }\n)",
+  "files": [
+    {
+      "source": "sources/blocks/CommandSearch.swift",
+      "target": "CommandSearch.swift"
+    }
+  ],
+  "registryDependencies": [
+    "command",
+    "kbd"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "search",
+    "command",
+    "palette",
+    "shortcuts",
+    "screen"
+  ],
+  "aliases": [
+    "spotlight",
+    "quick-actions",
+    "global-search"
+  ],
+  "accessibility": [
+    "The search field is labeled with its prompt; commands are native Buttons with combined labels; section titles are headers.",
+    "No results is a native ContentUnavailableView with caller copy, never a blank surface.",
+    "Each legend line combines its action and spoken shortcut into one element; keycaps are hidden unless labeled.",
+    "Selection, filtering, and the query stay caller-owned, so the screen never triggers an action on its own."
+  ],
+  "preview": {
+    "source": "sources/blocks/CommandSearch.swift",
+    "name": "Command Search",
+    "screenshots": [
+      "docs/images/items/command-search-light.png",
+      "docs/images/items/command-search-dark.png"
+    ]
+  }
+}

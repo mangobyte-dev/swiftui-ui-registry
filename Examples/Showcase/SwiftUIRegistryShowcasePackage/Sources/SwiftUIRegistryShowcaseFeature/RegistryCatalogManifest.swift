@@ -143,6 +143,24 @@ enum RegistryCatalogManifest {
             tags: ["collapsible", "disclosure", "expand", "toggle", "guidance"]
         ),
         CatalogEntry(
+            name: "command",
+            kind: "component",
+            version: "0.1.0",
+            description: "Composes the registry input group, item rows, keycaps, and empty state into a search field over caller-filtered command sections.",
+            usage: "@State private var query = \"\"\n\nCommandPalette(\n    query: $query,\n    prompt: \"Search actions\",\n    sections: [\n        CommandSection(id: \"actions\", title: \"Actions\", entries: [\n            CommandEntry(id: \"transfer\", title: Text(\"New transfer\"), systemImage: \"arrow.up.right\", shortcut: \"⌘T\", shortcutLabel: Text(\"Command T\"))\n        ])\n    ],\n    onSelect: { id in }\n)",
+            dependencies: ["input-group", "item", "kbd", "empty", "separator", "button"],
+            tags: ["command", "palette", "search", "spotlight", "shadcn"]
+        ),
+        CatalogEntry(
+            name: "command-search",
+            kind: "block",
+            version: "0.1.0",
+            description: "Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.",
+            usage: "@State private var query = \"\"\n\nCommandSearch(\n    \"Search\",\n    query: $query,\n    prompt: \"Search actions and activity\",\n    sections: sections,\n    emptyDescription: Text(\"Try a payee, a card, or an action.\"),\n    shortcuts: [\n        CommandShortcutHint(\"Open search\", keys: \"⌘K\", keysLabel: Text(\"Command K\"))\n    ],\n    onSelect: { id in }\n)",
+            dependencies: ["command", "kbd"],
+            tags: ["search", "command", "palette", "shortcuts", "screen"]
+        ),
+        CatalogEntry(
             name: "context-menu",
             kind: "recipe",
             version: "0.1.0",
@@ -215,6 +233,15 @@ enum RegistryCatalogManifest {
             tags: ["input", "text-field", "secure-field", "form", "style"]
         ),
         CatalogEntry(
+            name: "input-group",
+            kind: "component",
+            version: "0.1.0",
+            description: "Wraps a native text field with registry input chrome and caller-provided leading and trailing accessories, such as a search symbol and a clear button.",
+            usage: "@State private var query = \"\"\n\nInputGroup {\n    Image(systemName: \"magnifyingglass\")\n        .accessibilityHidden(true)\n} content: {\n    TextField(\"Search transactions\", text: $query)\n        .accessibilityLabel(\"Search transactions\")\n} trailing: {\n    if !query.isEmpty {\n        Button(\"Clear\", systemImage: \"xmark.circle.fill\") { query = \"\" }\n            .labelStyle(.iconOnly)\n            .buttonStyle(.registryGhost)\n            .controlSize(.small)\n    }\n}",
+            dependencies: ["button"],
+            tags: ["input", "group", "search", "accessory", "text-field", "shadcn"]
+        ),
+        CatalogEntry(
             name: "item",
             kind: "component",
             version: "0.1.1",
@@ -222,6 +249,15 @@ enum RegistryCatalogManifest {
             usage: "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
             dependencies: ["separator", "badge"],
             tags: ["item", "row", "list", "cell", "media", "shadcn"]
+        ),
+        CatalogEntry(
+            name: "kbd",
+            kind: "component",
+            version: "0.1.0",
+            description: "Draws text as a keycap for keyboard shortcut hints, hidden from accessibility unless a spoken label is supplied.",
+            usage: "Text(\"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(\"esc\")\n    .registryKeycap()",
+            dependencies: [],
+            tags: ["keyboard", "shortcut", "keycap", "hint", "shadcn"]
         ),
         CatalogEntry(
             name: "label",

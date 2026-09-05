@@ -32,12 +32,16 @@ enum ItemDemos {
         case "empty": AnyView(EmptyDemo())
         case "accordion": AnyView(AccordionDemo())
         case "item": AnyView(ItemDemo())
+        case "input-group": AnyView(InputGroupDemo())
+        case "kbd": AnyView(KeycapDemo())
+        case "command": AnyView(CommandPaletteDemo())
         // Blocks
         case "finance-overview": AnyView(FinanceDemo())
         case "nutrition-overview": AnyView(NutritionDemo())
         case "auth-form": AnyView(AuthenticationDemo())
         case "settings-section": AnyView(SettingsDemo())
         case "activity-feed": AnyView(ActivityFeedDemo())
+        case "command-search": AnyView(CommandSearchDemo())
         // Recipes
         case "aspect-ratio": AnyView(AspectRatioRecipe())
         case "direction": AnyView(DirectionRecipe())

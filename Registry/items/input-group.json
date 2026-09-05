@@ -1,0 +1,65 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "input-group",
+  "kind": "component",
+  "description": "Wraps a native text field with registry input chrome and caller-provided leading and trailing accessories, such as a search symbol and a clear button.",
+  "usage": "@State private var query = \"\"\n\nInputGroup {\n    Image(systemName: \"magnifyingglass\")\n        .accessibilityHidden(true)\n} content: {\n    TextField(\"Search transactions\", text: $query)\n        .accessibilityLabel(\"Search transactions\")\n} trailing: {\n    if !query.isEmpty {\n        Button(\"Clear\", systemImage: \"xmark.circle.fill\") { query = \"\" }\n            .labelStyle(.iconOnly)\n            .buttonStyle(.registryGhost)\n            .controlSize(.small)\n    }\n}",
+  "files": [
+    {
+      "source": "sources/components/InputGroup.swift",
+      "target": "InputGroup.swift"
+    }
+  ],
+  "registryDependencies": [
+    "button"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "input",
+    "group",
+    "search",
+    "accessory",
+    "text-field",
+    "shadcn"
+  ],
+  "aliases": [
+    "search-field",
+    "searchbar",
+    "input-addon",
+    "prefix",
+    "suffix"
+  ],
+  "accessibility": [
+    "The field stays a native TextField or SecureField; give it an explicit accessibilityLabel because the title is placeholder text only.",
+    "Leading accessories are decorative by default and should be hidden; a trailing button keeps its own label and 44 point hit area.",
+    "Focus draws the accent ring and the invalid state draws the negative border at the emphasized width, never color alone because the caller pairs it with a message.",
+    "Keeps the 44 point minimum height and applies the shared disabled opacity."
+  ],
+  "preview": {
+    "source": "sources/components/InputGroup.swift",
+    "name": "Input Group",
+    "screenshots": [
+      "docs/images/items/input-group-light.png",
+      "docs/images/items/input-group-dark.png"
+    ]
+  }
+}

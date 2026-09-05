@@ -538,6 +538,43 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         )
     }
 
+    // MARK: - Stage 4 block
+
+    @MainActor
+    func testCommandSearchFiltersEmptiesAndRunsCallerCommands() {
+        let app = launchCatalog()
+        openBlock(app, "command-search")
+
+        let field = app.textFields["Search actions and activity"]
+        XCTAssertTrue(field.waitForExistence(timeout: 5), "The search field must be labeled with its prompt.")
+        let transfer = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "New transfer")).firstMatch
+        XCTAssertTrue(transfer.exists)
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Mishmash Bakery")).firstMatch.exists)
+
+        // Filtering is the caller's: typing narrows to matching commands only.
+        field.tap()
+        field.typeText("freeze")
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Freeze card")).firstMatch.waitForExistence(timeout: 2))
+        XCTAssertFalse(transfer.exists, "Non-matching commands must leave the list.")
+
+        // Nothing matching shows the native empty state, never a blank surface.
+        field.typeText("zzz")
+        XCTAssertTrue(app.staticTexts["No results"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Try a payee, a card, or an action."].exists)
+
+        // Clearing restores the sections; selecting runs caller code.
+        app.buttons["Clear search"].tap()
+        XCTAssertTrue(transfer.waitForExistence(timeout: 2))
+        transfer.tap()
+        XCTAssertTrue(app.staticTexts["Ran transfer."].waitForExistence(timeout: 2))
+
+        // The legend speaks its shortcuts; keycaps are not bare glyphs.
+        let legend = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Command K")).firstMatch
+        let scrollView = app.scrollViews.firstMatch
+        scroll(scrollView, until: legend)
+        XCTAssertTrue(legend.exists, "The shortcut legend must expose the spoken shortcut, not the glyph alone.")
+    }
+
     // MARK: - Tuning panel
 
     @MainActor

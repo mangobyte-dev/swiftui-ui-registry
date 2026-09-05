@@ -578,3 +578,119 @@ struct ItemDemo: View {
         .registrySurface()
     }
 }
+
+struct InputGroupDemo: View {
+    @State private var query = ""
+    @State private var amount = "120"
+
+    var body: some View {
+        DemoSurface {
+            InputGroup {
+                Image(systemName: "magnifyingglass")
+                    .accessibilityHidden(true)
+            } content: {
+                TextField("Search transactions", text: $query)
+                    .accessibilityLabel("Search transactions")
+            } trailing: {
+                if !query.isEmpty {
+                    Button("Clear", systemImage: "xmark.circle.fill") { query = "" }
+                        .labelStyle(.iconOnly)
+                        .buttonStyle(.registryGhost)
+                        .controlSize(.small)
+                }
+            }
+
+            InputGroup(isInvalid: true) {
+                Text("KWD")
+                    .font(.subheadline.weight(.medium))
+            } content: {
+                TextField("Amount", text: $amount)
+                    .keyboardType(.decimalPad)
+                    .accessibilityLabel("Amount")
+                    .accessibilityHint("Enter an amount below your daily limit")
+            }
+            Text("Enter an amount below your daily limit")
+                .font(.footnote)
+                .foregroundStyle(.red)
+        }
+    }
+}
+
+struct KeycapDemo: View {
+    var body: some View {
+        DemoSurface {
+            HStack {
+                Text("Open search")
+                Spacer()
+                Text("⌘K").registryKeycap(accessibilityLabel: Text("Command K"))
+            }
+            HStack {
+                Text("Run the highlighted command")
+                Spacer()
+                Text("↩").registryKeycap(accessibilityLabel: Text("Return"))
+            }
+            HStack {
+                Text("Dismiss")
+                Spacer()
+                Text("esc").registryKeycap(accessibilityLabel: Text("Escape"))
+            }
+        }
+    }
+}
+
+struct CommandPaletteDemo: View {
+    @State private var query = ""
+
+    var body: some View {
+        CommandPalette(
+            query: $query,
+            prompt: "Search actions and activity",
+            sections: DemoCommands.sections(matching: query),
+            emptyDescription: Text("Try a payee, a card, or an action."),
+            onSelect: { _ in }
+        )
+    }
+}
+
+/// Caller-owned command data and filtering shared by the palette and block demos.
+enum DemoCommands {
+    struct Command {
+        let id: String
+        let name: String
+        let detail: String?
+        let symbol: String
+        let shortcut: String?
+        let shortcutLabel: String?
+        let section: String
+    }
+
+    static let all: [Command] = [
+        Command(id: "transfer", name: "New transfer", detail: "Send money to a saved payee", symbol: "arrow.up.right", shortcut: "⌘T", shortcutLabel: "Command T", section: "Actions"),
+        Command(id: "freeze", name: "Freeze card", detail: nil, symbol: "snowflake", shortcut: nil, shortcutLabel: nil, section: "Actions"),
+        Command(id: "statement", name: "Download statement", detail: "August 2026", symbol: "doc.text", shortcut: nil, shortcutLabel: nil, section: "Actions"),
+        Command(id: "bakery", name: "Mishmash Bakery", detail: "KWD 8.750, today", symbol: "cup.and.saucer.fill", shortcut: nil, shortcutLabel: nil, section: "Recent"),
+        Command(id: "salary", name: "Salary", detail: "KWD 2,450.000, yesterday", symbol: "building.columns.fill", shortcut: nil, shortcutLabel: nil, section: "Recent"),
+    ]
+
+    static func sections(matching query: String) -> [CommandSection<String>] {
+        ["Actions", "Recent"].map { name in
+            CommandSection(
+                id: name,
+                title: LocalizedStringResource(stringLiteral: name),
+                entries: all
+                    .filter { $0.section == name }
+                    .filter { query.isEmpty || $0.name.localizedCaseInsensitiveContains(query) }
+                    .map {
+                        CommandEntry(
+                            id: $0.id,
+                            title: Text($0.name),
+                            detail: $0.detail.map { Text($0) },
+                            systemImage: $0.symbol,
+                            shortcut: $0.shortcut,
+                            shortcutLabel: $0.shortcutLabel.map { Text($0) }
+                        )
+                    }
+            )
+        }
+    }
+}

@@ -195,8 +195,8 @@ class InstallerTests(unittest.TestCase):
             {name for name, kind in kinds.items() if kind == "recipe"},
             RECIPE_NAMES,
         )
-        self.assertEqual(len([kind for kind in kinds.values() if kind == "component"]), 23)
-        self.assertEqual(len([kind for kind in kinds.values() if kind == "block"]), 5)
+        self.assertEqual(len([kind for kind in kinds.values() if kind == "component"]), 26)
+        self.assertEqual(len([kind for kind in kinds.values() if kind == "block"]), 6)
         # The per-item gate (a recipe is docs-only guidance with no files; an
         # installable item ships files plus a preview and never depends on a
         # recipe) is enforced on every registry load by the shared validator;

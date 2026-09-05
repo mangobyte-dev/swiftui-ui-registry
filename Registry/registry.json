@@ -54,6 +54,7 @@
     "items/command.json",
     "items/command-search.json",
     "items/field.json",
-    "items/table.json"
+    "items/table.json",
+    "items/breadcrumb.json"
   ]
 }

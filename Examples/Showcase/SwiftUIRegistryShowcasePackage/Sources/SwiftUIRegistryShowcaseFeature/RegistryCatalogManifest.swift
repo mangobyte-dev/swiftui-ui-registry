@@ -89,6 +89,15 @@ enum RegistryCatalogManifest {
             tags: ["badge", "label", "status", "category", "modifier"]
         ),
         CatalogEntry(
+            name: "breadcrumb",
+            kind: "component",
+            version: "0.1.0",
+            description: "A horizontal navigation trail of links with chevron separators and a current page, collapsing middle crumbs into an overflow menu when they do not fit; a component because iOS has no native breadcrumb control.",
+            usage: "Breadcrumb([\n    BreadcrumbItem(Text(\"Home\"), action: { path = NavigationPath() }),\n    BreadcrumbItem(Text(\"Library\"), action: { path.removeLast() }),\n    BreadcrumbItem(Text(\"Payments\"))\n])",
+            dependencies: [],
+            tags: ["breadcrumb", "navigation", "trail", "hierarchy", "path", "shadcn"]
+        ),
+        CatalogEntry(
             name: "button",
             kind: "component",
             version: "0.5.0",

@@ -795,3 +795,24 @@ struct TableDemo: View {
         }
     }
 }
+
+struct BreadcrumbDemo: View {
+    var body: some View {
+        DemoSurface {
+            Breadcrumb([
+                BreadcrumbItem(Text("Home"), action: {}),
+                BreadcrumbItem(Text("Library"), action: {}),
+                BreadcrumbItem(Text("Payments")),
+            ])
+
+            Breadcrumb([
+                BreadcrumbItem(Text("Home"), action: {}),
+                BreadcrumbItem(Text("Accounts"), action: {}),
+                BreadcrumbItem(Text("Cards"), action: {}),
+                BreadcrumbItem(Text("Statements"), action: {}),
+                BreadcrumbItem(Text("August 2026")),
+            ])
+            .frame(width: 240, alignment: .leading)
+        }
+    }
+}

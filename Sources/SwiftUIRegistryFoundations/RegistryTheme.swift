@@ -19,7 +19,8 @@ public struct RegistryTheme: Sendable {
     public var border: Color
     /// Success and completion semantics.
     public var positive: Color
-    /// Error and destructive semantics.
+    /// Error and destructive semantics. Registry buttons draw a white label
+    /// on this fill, so keep it dark enough for white text.
     public var negative: Color
     /// Opacity applied to disabled registry controls.
     public var disabledOpacity: Double
@@ -159,6 +160,13 @@ public extension View {
     /// Applies registry foundations to this subtree: the tokens through the
     /// environment and, when the theme declares an accent, the tint as well.
     /// Apply once at the scene root for a set-up-once design system.
+    ///
+    /// The tint is applied only when an accent exists, because `tint(nil)`
+    /// resets the tint instead of inheriting it and SwiftUI exposes no way to
+    /// read the tint already in place. A theme whose accent changes between
+    /// `nil` and a value at runtime therefore replaces the subtree and resets
+    /// the state below it. Keep the accent's presence stable, or pass
+    /// `Color.accentColor` instead of `nil`.
     func registryTheme(_ theme: RegistryTheme) -> some View {
         modifier(RegistryThemeModifier(theme: theme))
     }

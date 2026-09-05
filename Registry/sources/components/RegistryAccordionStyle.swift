@@ -3,7 +3,8 @@ import SwiftUIRegistryFoundations
 
 /// A row-like treatment for native `DisclosureGroup`: a full-width header that
 /// toggles expansion, a trailing chevron, and content revealed beneath a
-/// hairline. Stack several groups with separators for an accordion.
+/// hairline. The content keeps the caller's own styling. Stack several groups
+/// with separators for an accordion.
 public struct RegistryAccordionStyle: DisclosureGroupStyle {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.registryTheme) private var theme
@@ -36,13 +37,14 @@ public struct RegistryAccordionStyle: DisclosureGroupStyle {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .accessibilityAddTraits(configuration.isExpanded ? [.isSelected] : [])
-            .accessibilityValue(configuration.isExpanded ? Text("Expanded") : Text("Collapsed"))
+            .accessibilityValue(
+                configuration.isExpanded
+                    ? Text("Expanded", comment: "VoiceOver value of an open accordion header; never drawn on screen")
+                    : Text("Collapsed", comment: "VoiceOver value of a closed accordion header; never drawn on screen")
+            )
 
             if configuration.isExpanded {
                 configuration.content
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom, theme.metrics.standardSpacing)
             }
@@ -63,12 +65,16 @@ private struct RegistryAccordionStylePreview: View {
         VStack(spacing: 0) {
             DisclosureGroup("Is my card contactless?", isExpanded: $isFirstExpanded) {
                 Text("Yes. Hold it near the terminal until it confirms the payment.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
 
             Divider().registrySeparator()
 
             DisclosureGroup("How do I freeze my card?", isExpanded: $isSecondExpanded) {
                 Text("Open the card, then choose Freeze. Unfreeze the same way.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
         }
         .disclosureGroupStyle(.registryAccordion)

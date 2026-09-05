@@ -19,8 +19,8 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "accordion",
             kind: "component",
-            version: "0.1.0",
-            description: "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, for stacked expandable sections.",
+            version: "0.2.0",
+            description: "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.",
             usage: "@State private var isExpanded = false\n\nDisclosureGroup(\"How do I freeze my card?\", isExpanded: $isExpanded) {\n    Text(\"Open the card, then choose Freeze.\")\n}\n.disclosureGroupStyle(.registryAccordion)",
             dependencies: ["separator"],
             tags: ["accordion", "disclosure", "collapsible", "expand", "faq", "shadcn"]

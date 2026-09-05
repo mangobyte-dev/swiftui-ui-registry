@@ -86,10 +86,10 @@
     },
     "RegistryAccordionStyle.swift": {
       "base": "bases/41a84c6783a403ca9cf897c8da81322317ac76ec19288b7ffb112dd4d85023a2.base",
-      "installedDigest": "sha256:d63aee67883912f9807fcc28f4cc3fa6dbfd1d79c68e7cfd8b8ff59f28d8620f",
+      "installedDigest": "sha256:0aa25e6fbc47b4812a7a434009028a66875c1a6668c7614df88ac8beed3a02e1",
       "item": "accordion",
-      "sourceDigest": "sha256:d63aee67883912f9807fcc28f4cc3fa6dbfd1d79c68e7cfd8b8ff59f28d8620f",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:0aa25e6fbc47b4812a7a434009028a66875c1a6668c7614df88ac8beed3a02e1",
+      "version": "0.2.0"
     },
     "RegistryBadge.swift": {
       "base": "bases/d2c9ac15caa37b6a8d992908df2bae92cbf1f88a0a246a7122f2e7e198b5024d.base",
@@ -242,7 +242,7 @@
       "registryDependencies": [
         "separator"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     "activity-feed": {
       "packageDependencies": [

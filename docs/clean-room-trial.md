@@ -43,7 +43,7 @@ Friction:
 Outcome: pass. Install copied the three files in dependency order and printed the package requirement line again. Wiring the dependency required writing this by hand in `Package.swift`:
 
 ```swift
-.package(path: "/Users/developer/Projects/swiftui-cn")
+.package(path: "/path/to/swiftui-cn")
 // stand-in for: .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
 .product(name: "SwiftUIRegistryFoundations", package: "swiftui-cn")
 ```

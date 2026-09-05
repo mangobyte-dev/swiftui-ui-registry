@@ -75,7 +75,7 @@ enum RegistryCatalogManifest {
             kind: "component",
             version: "0.1.0",
             description: "Displays a circular identity image with initials or symbol fallback, sized by the environment control size, with a required accessibility label.",
-            usage: "Avatar(Image(\"mo\"), accessibilityLabel: Text(\"Mohammed K.\"))\n\nAvatar(initials: \"MK\", accessibilityLabel: Text(\"Mohammed K.\"))\n    .controlSize(.large)\n\nAvatar(accessibilityLabel: Text(\"Unknown sender\"))",
+            usage: "Avatar(Image(\"maya\"), accessibilityLabel: Text(\"Maya Khalid\"))\n\nAvatar(initials: \"MK\", accessibilityLabel: Text(\"Maya Khalid\"))\n    .controlSize(.large)\n\nAvatar(accessibilityLabel: Text(\"Unknown sender\"))",
             dependencies: [],
             tags: ["avatar", "profile", "identity", "image", "initials", "shadcn"]
         ),

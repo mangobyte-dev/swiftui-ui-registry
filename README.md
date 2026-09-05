@@ -206,6 +206,10 @@ The repository is currently verified with Xcode 27.0 and Swift 6.4. The registry
 
 Version 0 does not edit Xcode projects, add package dependencies, host registry content, or expose an MCP server. It also does not claim macOS, watchOS, tvOS, visionOS, or physical-device verification. Those boundaries keep the experiment focused on product composition, source ownership, deterministic discovery, and safe updates
 
+## Security and conduct
+
+Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md); never in a public issue. Participation follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). CI runs the registry gate, the website build with a production dependency audit, and a secret scan on every push and pull request
+
 ## License
 
 MIT

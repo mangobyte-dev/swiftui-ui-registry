@@ -1,6 +1,6 @@
 # Contributing
 
-Start with `docs/philosophy.md` and `docs/architecture.md`
+Start with `docs/philosophy.md` and `docs/architecture.md`. Participation follows `CODE_OF_CONDUCT.md`; report vulnerabilities as described in `SECURITY.md`, never in a public issue
 
 For a registry item:
 

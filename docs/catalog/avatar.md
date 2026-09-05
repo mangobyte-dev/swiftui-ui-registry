@@ -35,9 +35,9 @@ Verify the install by building the consuming target for an iOS Simulator destina
 ## Usage
 
 ```swift
-Avatar(Image("mo"), accessibilityLabel: Text("Mohammed K."))
+Avatar(Image("maya"), accessibilityLabel: Text("Maya Khalid"))
 
-Avatar(initials: "MK", accessibilityLabel: Text("Mohammed K."))
+Avatar(initials: "MK", accessibilityLabel: Text("Maya Khalid"))
     .controlSize(.large)
 
 Avatar(accessibilityLabel: Text("Unknown sender"))

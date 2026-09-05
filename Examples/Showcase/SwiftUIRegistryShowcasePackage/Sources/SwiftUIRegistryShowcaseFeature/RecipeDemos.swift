@@ -198,7 +198,7 @@ struct DialogRecipe: View {
 }
 
 private struct ProfileEditor: View {
-    @State private var name = "Mohammed K."
+    @State private var name = "Maya Khalid"
 
     var body: some View {
         Form {

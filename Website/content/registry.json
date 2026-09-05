@@ -3,7 +3,7 @@
   "repositoryURL": "https://github.com/mangobyte-dev/swiftui-ui-registry",
   "counts": {
     "component": 31,
-    "block": 6,
+    "block": 7,
     "recipe": 18
   },
   "items": [
@@ -2147,6 +2147,98 @@
         "dark": null
       },
       "requirements": []
+    },
+    {
+      "name": "preview",
+      "kind": "block",
+      "version": "0.1.0",
+      "description": "The theme preview wall from shadcn's create page: an adaptive grid of realistic product cards built from registry components and native controls, so a theme can be judged against a screen of real UI.",
+      "usage": "PreviewWall()",
+      "docs": null,
+      "tags": [
+        "preview",
+        "theme",
+        "showcase",
+        "cards",
+        "create",
+        "shadcn",
+        "dashboard"
+      ],
+      "aliases": [
+        "theme-preview",
+        "create",
+        "wall",
+        "gallery"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "card",
+        "item",
+        "alert",
+        "badge",
+        "button"
+      ],
+      "installOrder": [
+        {
+          "name": "card",
+          "version": "0.2.0"
+        },
+        {
+          "name": "avatar",
+          "version": "0.2.0"
+        },
+        {
+          "name": "separator",
+          "version": "0.2.0"
+        },
+        {
+          "name": "badge",
+          "version": "0.3.1"
+        },
+        {
+          "name": "item",
+          "version": "0.2.0"
+        },
+        {
+          "name": "button",
+          "version": "0.5.0"
+        },
+        {
+          "name": "alert",
+          "version": "0.1.1"
+        },
+        {
+          "name": "preview",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "Every interactive control carries an accessibility label and every decorative SF Symbol is hidden, so the capture-route audit finds no unlabeled button, image, switch, text field, or slider on any card.",
+        "Avatars read the person or account name as their label, never the drawn initials.",
+        "Actions that open a dialog use a native alert or sheet, so the decision keeps the system's modal semantics and focus handling.",
+        "Each card is a native GroupBox on the shared card surface and composes native controls, so Dynamic Type, color scheme, and layout direction are respected without per-card handling."
+      ],
+      "sourcePath": "Registry/sources/blocks/Preview/PreviewWall.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/Preview/PreviewWall.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// The theme preview wall: shadcn's create-page preview recreated as a wall of\n/// realistic product cards, so a theme can be judged against a screen of real\n/// UI rather than one strip. The cards are a single ordered list in one place;\n/// later slices append to it. The wall lays out one column on a compact width\n/// and an adaptive, top-aligned grid on a regular width. It owns no\n/// `ScrollView`, navigation container, or maximum width: the app decides those.\npublic struct PreviewWall: View {\n    @Environment(\\.horizontalSizeClass) private var sizeClass\n    @Environment(\\.registryTheme) private var theme\n\n    public init() {}\n\n    public var body: some View {\n        LazyVGrid(columns: columns, alignment: .leading, spacing: theme.metrics.standardSpacing) {\n            ActivateAgentDialog()\n        }\n    }\n\n    private var columns: [GridItem] {\n        if sizeClass == .regular {\n            return [GridItem(.adaptive(minimum: 340, maximum: 460), spacing: theme.metrics.standardSpacing, alignment: .top)]\n        }\n        return [GridItem(.flexible(), alignment: .top)]\n    }\n}\n\n#if DEBUG\nprivate struct PreviewWallPreview: View {\n    var body: some View {\n        ScrollView { PreviewWall().padding() }\n    }\n}\n\n#Preview(\"Preview Wall\") {\n    PreviewWallPreview().registryTheme(.indigo)\n}\n\n#Preview(\"Preview Wall Dark\") {\n    PreviewWallPreview().registryTheme(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Preview Wall Right to Left\") {\n    PreviewWallPreview().registryTheme(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Preview Wall Accessibility Size\") {\n    PreviewWallPreview().registryTheme(.indigo).dynamicTypeSize(.accessibility3)\n}\n#endif\n",
+      "previewName": "Preview Wall",
+      "screenshots": {
+        "light": "/images/items/preview-light.png",
+        "dark": "/images/items/preview-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
     },
     {
       "name": "progress",

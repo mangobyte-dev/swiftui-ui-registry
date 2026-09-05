@@ -745,3 +745,53 @@ struct FieldDemo: View {
         }
     }
 }
+
+private struct DemoInvoiceLine: Identifiable {
+    let id = UUID()
+    let item: String
+    let quantity: Int
+    let unitPrice: Decimal
+}
+
+struct TableDemo: View {
+    private let lines = [
+        DemoInvoiceLine(item: "Design system license", quantity: 1, unitPrice: 499),
+        DemoInvoiceLine(item: "Priority support", quantity: 12, unitPrice: 99),
+        DemoInvoiceLine(item: "Custom components", quantity: 3, unitPrice: 250),
+    ]
+
+    private var subtotal: Decimal {
+        lines.reduce(0) { $0 + Decimal($1.quantity) * $1.unitPrice }
+    }
+
+    var body: some View {
+        DemoSurface {
+            DataTable(
+                lines,
+                columns: [
+                    DataTableColumn(Text("Item")) { line in
+                        Text(line.item)
+                    },
+                    DataTableColumn(Text("Qty"), alignment: .trailing) { line in
+                        Text(line.quantity, format: .number)
+                    },
+                    DataTableColumn(Text("Rate"), alignment: .trailing) { line in
+                        Text(line.unitPrice, format: .currency(code: "USD"))
+                    },
+                    DataTableColumn(Text("Amount"), alignment: .trailing) { line in
+                        Text(Decimal(line.quantity) * line.unitPrice, format: .currency(code: "USD"))
+                    },
+                ],
+                footer: [
+                    DataTableFooterRow(label: Text("Subtotal"), value: Text(subtotal, format: .currency(code: "USD"))),
+                    DataTableFooterRow(label: Text("Tax"), value: Text(0, format: .currency(code: "USD"))),
+                    DataTableFooterRow(
+                        label: Text("Total due"),
+                        value: Text(subtotal, format: .currency(code: "USD")),
+                        isEmphasized: true
+                    ),
+                ]
+            )
+        }
+    }
+}

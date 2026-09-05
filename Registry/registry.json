@@ -53,6 +53,7 @@
     "items/kbd.json",
     "items/command.json",
     "items/command-search.json",
-    "items/field.json"
+    "items/field.json",
+    "items/table.json"
   ]
 }

@@ -422,6 +422,15 @@ enum RegistryCatalogManifest {
             tags: ["switch", "toggle", "setting", "boolean", "guidance"]
         ),
         CatalogEntry(
+            name: "table",
+            kind: "component",
+            version: "0.1.0",
+            description: "Lays out Identifiable rows in aligned columns on a native Grid, with numeric columns in monospaced digits, optional summary rows, and theme hairline separators.",
+            usage: "DataTable(\n    lines,\n    columns: [\n        DataTableColumn(Text(\"Item\")) { Text($0.item) },\n        DataTableColumn(Text(\"Qty\"), alignment: .trailing) { Text($0.quantity, format: .number) },\n        DataTableColumn(Text(\"Amount\"), alignment: .trailing) { Text($0.amount, format: .currency(code: \"USD\")) }\n    ],\n    footer: [\n        DataTableFooterRow(label: Text(\"Total due\"), value: Text(total, format: .currency(code: \"USD\")), isEmphasized: true)\n    ]\n)",
+            dependencies: ["separator"],
+            tags: ["table", "grid", "data", "rows", "columns", "shadcn"]
+        ),
+        CatalogEntry(
             name: "tabs",
             kind: "recipe",
             version: "0.3.0",

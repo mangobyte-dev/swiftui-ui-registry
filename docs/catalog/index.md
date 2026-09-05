@@ -2,7 +2,7 @@
 
 # SwiftUIRegistry catalog
 
-51 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
+52 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
 
 ```sh
 python3 Scripts/install.py <name> --destination Sources/YourFeature/Components
@@ -21,7 +21,7 @@ Compositions of components. Installing one installs its whole closure
 - [nutrition-overview](nutrition-overview.md): Composes prepared energy and macronutrient values into an embeddable nutrition overview.
 - [settings-section](settings-section.md): Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
 
-## Components (27)
+## Components (28)
 
 One installable style, modifier, or view each
 
@@ -48,6 +48,7 @@ One installable style, modifier, or view each
 - [separator](separator.md): Applies semantic color, orientation, and caller-provided insets to a native Divider.
 - [skeleton](skeleton.md): Turns any view into a loading placeholder with native redaction, disabled interaction, one loading accessibility element, and a pulse that stops under Reduce Motion.
 - [spinner](spinner.md): Styles a native indeterminate ProgressView with a compact circular indicator and optional label.
+- [table](table.md): Lays out Identifiable rows in aligned columns on a native Grid, with numeric columns in monospaced digits, optional summary rows, and theme hairline separators.
 - [textarea](textarea.md): Applies input-matching focus, disabled, and invalid chrome to a native TextEditor.
 - [toggle](toggle.md): Applies registry button treatments to native Toggle state for compact selectable controls.
 - [toggle-group](toggle-group.md): Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.

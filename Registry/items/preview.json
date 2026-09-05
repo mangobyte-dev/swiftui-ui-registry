@@ -26,6 +26,10 @@
     {
       "source": "sources/blocks/Preview/AssignIssue.swift",
       "target": "Preview/AssignIssue.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/BarChartCard.swift",
+      "target": "Preview/BarChartCard.swift"
     }
   ],
   "registryDependencies": [
@@ -37,7 +41,8 @@
     "chart",
     "empty",
     "avatar",
-    "combobox"
+    "combobox",
+    "separator"
   ],
   "packageDependencies": [
     {

@@ -19,6 +19,7 @@ public struct PreviewWall: View {
             AnalyticsCard()
             AnomalyAlert()
             AssignIssue()
+            BarChartCard()
         }
     }
 

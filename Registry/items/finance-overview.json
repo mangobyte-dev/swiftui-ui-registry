@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.4.0",
+  "version": "0.4.1",
   "name": "finance-overview",
   "kind": "block",
   "description": "Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.",
@@ -47,7 +47,7 @@
     "balance"
   ],
   "accessibility": [
-    "Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state.",
+    "Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state; the screen and section titles carry the header trait, and Voice Control can address a row by its title alone.",
     "Uses system text styles and ViewThatFits for Dynamic Type.",
     "Uses leading and trailing alignment so layout follows right-to-left direction."
   ],

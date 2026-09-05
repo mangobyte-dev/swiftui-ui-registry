@@ -47,11 +47,12 @@ TransactionRow(
 ## Details
 
 - Kind: component
-- Version: 0.4.0
+- Version: 0.4.1
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Uses ViewThatFits to preserve content at large Dynamic Type sizes.
   - Combines row text into one VoiceOver element.
   - Announces positive and negative tone as a VoiceOver value; visible meaning relies on caller-formatted amounts, with tone color as a redundant accent.
+  - The tone symbol's circle scales with the body text style.
 - Source: [sources/components/TransactionRow.swift](../../Registry/sources/components/TransactionRow.swift), with the `Transaction Row` Xcode preview

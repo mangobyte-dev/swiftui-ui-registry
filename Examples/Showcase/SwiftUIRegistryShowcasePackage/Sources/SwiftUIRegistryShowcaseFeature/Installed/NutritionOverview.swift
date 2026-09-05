@@ -68,6 +68,7 @@ public struct NutritionOverview<ID: Hashable>: View {
         VStack(alignment: .leading, spacing: theme.metrics.sectionSpacing) {
             Text(title)
                 .font(.largeTitle.bold())
+                .accessibilityAddTraits(.isHeader)
 
             MetricCard(
                 energyTitle,
@@ -79,6 +80,7 @@ public struct NutritionOverview<ID: Hashable>: View {
             VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {
                 Text(sectionTitle)
                     .font(.headline)
+                    .accessibilityAddTraits(.isHeader)
 
                 VStack(spacing: theme.metrics.standardSpacing) {
                     ForEach(macros) { macro in

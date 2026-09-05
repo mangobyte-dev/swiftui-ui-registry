@@ -37,10 +37,10 @@
     },
     "FinanceOverview.swift": {
       "base": "bases/f9b286d5453416c4c440e65a4c2be76f47597245ad27cdad80314bf17053616c.base",
-      "installedDigest": "sha256:d90a219c17d6b7b46718022dbce95e60537f8232da0e4d93501fef4a3041e27d",
+      "installedDigest": "sha256:587b0bac63abe439bb2235780d6953534567e8407318b8c2f437b97101477a88",
       "item": "finance-overview",
-      "sourceDigest": "sha256:d90a219c17d6b7b46718022dbce95e60537f8232da0e4d93501fef4a3041e27d",
-      "version": "0.4.0"
+      "sourceDigest": "sha256:587b0bac63abe439bb2235780d6953534567e8407318b8c2f437b97101477a88",
+      "version": "0.4.1"
     },
     "InlineAlert.swift": {
       "base": "bases/ea8c868eda9aec86e5cd2571ffc9a41b5baccc19ce3f9847eb287a16dc368901.base",
@@ -72,17 +72,17 @@
     },
     "MetricCard.swift": {
       "base": "bases/72e69e8c35a9ff94342e2eb0ca362ef1edd41c34a3587ae393844d00ca45e247.base",
-      "installedDigest": "sha256:82f2bcf6c9302a1a8a81bc548ef32064e98f3f4ef3a29e47fe84d2e0a84f6796",
+      "installedDigest": "sha256:db0e6514c6b58eb7400336f092e58e90261e176948d4088b439754f0b745c56d",
       "item": "metric-card",
-      "sourceDigest": "sha256:82f2bcf6c9302a1a8a81bc548ef32064e98f3f4ef3a29e47fe84d2e0a84f6796",
-      "version": "0.2.0"
+      "sourceDigest": "sha256:db0e6514c6b58eb7400336f092e58e90261e176948d4088b439754f0b745c56d",
+      "version": "0.2.1"
     },
     "NutritionOverview.swift": {
       "base": "bases/414b159906565ccf3c90122a903dd45568afc9c26393be31e864c15bed24c433.base",
-      "installedDigest": "sha256:cb70da6df322b18e8571d2e87bc19137fe5beea470f4ad250b971a46b85f1d83",
+      "installedDigest": "sha256:ffca84bba61f5b658f0fb7bd840232aa11f3048725f84bf24df4c3431abf79ee",
       "item": "nutrition-overview",
-      "sourceDigest": "sha256:cb70da6df322b18e8571d2e87bc19137fe5beea470f4ad250b971a46b85f1d83",
-      "version": "0.2.0"
+      "sourceDigest": "sha256:ffca84bba61f5b658f0fb7bd840232aa11f3048725f84bf24df4c3431abf79ee",
+      "version": "0.2.1"
     },
     "RegistryAccordionStyle.swift": {
       "base": "bases/41a84c6783a403ca9cf897c8da81322317ac76ec19288b7ffb112dd4d85023a2.base",
@@ -215,14 +215,14 @@
       "installedDigest": "sha256:681fafa2bf2144dd354ca8d7f8b1e484351d9d4aa2212f991d19df019f7aac0e",
       "item": "settings-section",
       "sourceDigest": "sha256:681fafa2bf2144dd354ca8d7f8b1e484351d9d4aa2212f991d19df019f7aac0e",
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "TransactionRow.swift": {
       "base": "bases/bb175adeaac2e6443042b5ae547edcdaea4daec1487cb932a128b37b41cb221d.base",
-      "installedDigest": "sha256:9a0e177c8420a08ee401576155ca0e5d6a8014683514eaf171cd74ef98eed2f9",
+      "installedDigest": "sha256:3c2812b80a76af17f7e05658166a54102db7471c17774ff8197101a5234bfcfe",
       "item": "transaction-row",
-      "sourceDigest": "sha256:9a0e177c8420a08ee401576155ca0e5d6a8014683514eaf171cd74ef98eed2f9",
-      "version": "0.4.0"
+      "sourceDigest": "sha256:3c2812b80a76af17f7e05658166a54102db7471c17774ff8197101a5234bfcfe",
+      "version": "0.4.1"
     }
   },
   "items": {
@@ -481,7 +481,7 @@
         "transaction-row",
         "empty"
       ],
-      "version": "0.4.0"
+      "version": "0.4.1"
     },
     "input": {
       "packageDependencies": [
@@ -599,7 +599,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     "nutrition-overview": {
       "packageDependencies": [
@@ -618,7 +618,7 @@
         "metric-card",
         "macro-progress"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     "progress": {
       "packageDependencies": [
@@ -686,7 +686,7 @@
         "separator",
         "button"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "skeleton": {
       "packageDependencies": [
@@ -787,7 +787,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.4.0"
+      "version": "0.4.1"
     }
   },
   "registry": "SwiftUIRegistry",

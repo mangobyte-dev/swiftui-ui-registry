@@ -99,6 +99,7 @@ private struct FinanceOverviewContent<ID: Hashable>: View {
         VStack(alignment: .leading, spacing: theme.metrics.sectionSpacing) {
             Text(title)
                 .font(.largeTitle.bold())
+                .accessibilityAddTraits(.isHeader)
 
             FinanceSummary(
                 balanceTitle: balanceTitle,
@@ -110,6 +111,7 @@ private struct FinanceOverviewContent<ID: Hashable>: View {
             VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {
                 Text(sectionTitle)
                     .font(.headline)
+                    .accessibilityAddTraits(.isHeader)
 
                 if transactions.isEmpty {
                     ContentUnavailableView(
@@ -134,6 +136,8 @@ private struct FinanceOverviewContent<ID: Hashable>: View {
                                 .padding(.vertical, theme.metrics.standardSpacing)
                             }
                             .buttonStyle(.plain)
+                            // Voice Control can name the row by its title alone.
+                            .accessibilityInputLabels([transaction.title])
 
                             if transaction.id != transactions.last?.id {
                                 Divider()

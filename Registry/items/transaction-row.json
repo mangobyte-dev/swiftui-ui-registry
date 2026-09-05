@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.4.0",
+  "version": "0.4.1",
   "name": "transaction-row",
   "kind": "component",
   "description": "Displays prepared transaction content while leaving selection to a native Button at the call site.",
@@ -40,7 +40,8 @@
   "accessibility": [
     "Uses ViewThatFits to preserve content at large Dynamic Type sizes.",
     "Combines row text into one VoiceOver element.",
-    "Announces positive and negative tone as a VoiceOver value; visible meaning relies on caller-formatted amounts, with tone color as a redundant accent."
+    "Announces positive and negative tone as a VoiceOver value; visible meaning relies on caller-formatted amounts, with tone color as a redundant accent.",
+    "The tone symbol's circle scales with the body text style."
   ],
   "preview": {
     "source": "sources/components/TransactionRow.swift",

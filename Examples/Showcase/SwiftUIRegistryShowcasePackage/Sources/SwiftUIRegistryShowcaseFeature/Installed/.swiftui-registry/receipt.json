@@ -177,10 +177,10 @@
     },
     "RegistrySkeletonModifier.swift": {
       "base": "bases/fbcf3e3bd66128acb7b24ae44ee3aa58843ac5c47a53574c6f2d9735a9e5eb62.base",
-      "installedDigest": "sha256:645f88b5afcc732b63896dc80fce30aa60ba13ae22c58ea354c77e19b151ed58",
+      "installedDigest": "sha256:da8ff8761b07c343d0b54454e6f592f5827ce482711eba296ef6a80911fa446c",
       "item": "skeleton",
-      "sourceDigest": "sha256:645f88b5afcc732b63896dc80fce30aa60ba13ae22c58ea354c77e19b151ed58",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:da8ff8761b07c343d0b54454e6f592f5827ce482711eba296ef6a80911fa446c",
+      "version": "0.2.0"
     },
     "RegistrySpinnerStyle.swift": {
       "base": "bases/93bb6a5df1f063298fae71049dc4a862310b163cd2563b177eabc9f7c71d55ed.base",
@@ -701,7 +701,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     "spinner": {
       "packageDependencies": [

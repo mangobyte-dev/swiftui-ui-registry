@@ -32,6 +32,7 @@ public struct PreviewWall: View {
             IconPreviewGrid()
             InviteTeam()
             Invoice()
+            LiveWaveform()
         }
     }
 

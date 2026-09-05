@@ -20,6 +20,7 @@ public struct RegistryInputStyle: TextFieldStyle {
             .focused($isFocused)
             .padding(.horizontal, theme.metrics.controlHorizontalPadding)
             .padding(.vertical, 10)
+            .frame(minHeight: RegistryMetrics.minimumHitSize)
             .background(theme.surface, in: shape)
             .overlay {
                 shape.stroke(

@@ -51,10 +51,10 @@
     },
     "InputGroup.swift": {
       "base": "bases/39bb43f0f12caa8503b581f1bad9025c5e1b4ec0920f535456e88ab3b8b99abe.base",
-      "installedDigest": "sha256:267e599c08a66df9613b186cb018f10f75f0c9d4a2d0762582b0db39140c3361",
+      "installedDigest": "sha256:3458400071fd6a19d6422a198014b91022336979e11aa419d6f0954b69c71d68",
       "item": "input-group",
-      "sourceDigest": "sha256:267e599c08a66df9613b186cb018f10f75f0c9d4a2d0762582b0db39140c3361",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:3458400071fd6a19d6422a198014b91022336979e11aa419d6f0954b69c71d68",
+      "version": "0.2.0"
     },
     "ItemRow.swift": {
       "base": "bases/bc855952cda7fd950cb49608a75fbc629e03015cdf44548d2113a3abc74b87ba.base",
@@ -135,10 +135,10 @@
     },
     "RegistryInputStyle.swift": {
       "base": "bases/66c24a2324bc206ee6b03a7ba2dfead5fe1cec8f6eb52595c4ddc2131308bad9.base",
-      "installedDigest": "sha256:2b00d1e38d8ded497cb3383df1e7b8128661b8fbc7d519b32b5655cac46d3789",
+      "installedDigest": "sha256:b37a707c2aff4a896e67d19fc096e5d7c4d0e516deb419cbcc81f5c3575e3a0e",
       "item": "input",
-      "sourceDigest": "sha256:2b00d1e38d8ded497cb3383df1e7b8128661b8fbc7d519b32b5655cac46d3789",
-      "version": "0.4.0"
+      "sourceDigest": "sha256:b37a707c2aff4a896e67d19fc096e5d7c4d0e516deb419cbcc81f5c3575e3a0e",
+      "version": "0.5.0"
     },
     "RegistryKeycapModifier.swift": {
       "base": "bases/27d4e89f7b1eea1cb61637ba4d7925f3c287418f60a0a6d0b31fa5abc8b7b7ba.base",
@@ -497,7 +497,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.4.0"
+      "version": "0.5.0"
     },
     "input-group": {
       "packageDependencies": [
@@ -515,7 +515,7 @@
       "registryDependencies": [
         "button"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     "item": {
       "packageDependencies": [

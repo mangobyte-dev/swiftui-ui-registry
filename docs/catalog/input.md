@@ -57,13 +57,14 @@ TextField("Email", text: $email)
 ## Details
 
 - Kind: component
-- Version: 0.4.0
+- Version: 0.5.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Give every field an explicit accessibilityLabel matching its visible title. Measured on iOS 27: neither the title initializer nor the label-plus-prompt initializer exposes a label (the title is the placeholder value only), so a field with typed content is otherwise unnamed to VoiceOver; the Showcase demo audit rejects an unlabeled field.
   - Preserves native TextField and SecureField editing, keyboard, and autofill behavior.
-  - Uses focus and border width in addition to color for input states.
+  - Focus draws the accent ring at the emphasized width; the invalid state draws the negative border at the same width and wins over focus, so the caller pairs it with a message.
   - Requires callers to provide visible validation copy and an accessibility hint for invalid input.
   - Inherits Dynamic Type, layout direction, and enabled state.
+  - Keeps the 44 point minimum height, so an empty field is a full tap target at every text size.
 - Source: [sources/components/RegistryInputStyle.swift](../../Registry/sources/components/RegistryInputStyle.swift), with the `Input States` Xcode preview

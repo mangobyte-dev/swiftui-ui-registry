@@ -1,11 +1,11 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "input-group",
   "kind": "component",
   "description": "Wraps a native text field with registry input chrome and caller-provided leading and trailing accessories, such as a search symbol and a clear button.",
-  "usage": "@State private var query = \"\"\n\nInputGroup {\n    Image(systemName: \"magnifyingglass\")\n        .accessibilityHidden(true)\n} content: {\n    TextField(\"Search transactions\", text: $query)\n        .accessibilityLabel(\"Search transactions\")\n} trailing: {\n    if !query.isEmpty {\n        Button(\"Clear\", systemImage: \"xmark.circle.fill\") { query = \"\" }\n            .labelStyle(.iconOnly)\n            .buttonStyle(.registryGhost)\n            .controlSize(.small)\n    }\n}",
+  "usage": "@State private var query = \"\"\n\nInputGroup {\n    Image(systemName: \"magnifyingglass\")\n        .accessibilityHidden(true)\n} content: {\n    TextField(\"Search transactions\", text: $query)\n        .accessibilityLabel(\"Search transactions\")\n} trailing: {\n    if !query.isEmpty {\n        Button(\"Clear search\", systemImage: \"xmark.circle.fill\") { query = \"\" }\n            .labelStyle(.iconOnly)\n            .buttonStyle(.registryGhost)\n            .controlSize(.small)\n    }\n}",
   "files": [
     {
       "source": "sources/components/InputGroup.swift",
@@ -50,8 +50,8 @@
   ],
   "accessibility": [
     "The field stays a native TextField or SecureField; give it an explicit accessibilityLabel because the title is placeholder text only.",
-    "Leading accessories are decorative by default and should be hidden; a trailing button keeps its own label and 44 point hit area.",
-    "Focus draws the accent ring and the invalid state draws the negative border at the emphasized width, never color alone because the caller pairs it with a message.",
+    "Hide a decorative leading accessory with accessibilityHidden(true); an informational prefix stays visible and the field's accessibilityLabel carries its meaning. A trailing registry button keeps its own label and 44 point hit area.",
+    "Focus draws the accent ring; the invalid state draws the negative border at the same emphasized width and wins over focus, so the caller pairs it with a message.",
     "Keeps the 44 point minimum height and applies the shared disabled opacity."
   ],
   "preview": {

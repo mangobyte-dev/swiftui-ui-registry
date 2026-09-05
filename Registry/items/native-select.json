@@ -11,13 +11,28 @@
   "registryDependencies": [],
   "packageDependencies": [],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["native-select", "picker", "menu", "selection", "guidance"],
+  "tags": [
+    "native-select",
+    "picker",
+    "menu",
+    "selection",
+    "guidance"
+  ],
   "accessibility": [
     "Retains native Picker accessibility, menu, and selection behavior.",
     "Requires caller-supplied labels and option text.",
     "Keeps selection state external through the Picker binding.",
     "Inherits Dynamic Type, enabled state, tint, and layout direction."
-  ]
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/native-select-light.png",
+      "docs/images/items/native-select-dark.png"
+    ]
+  }
 }

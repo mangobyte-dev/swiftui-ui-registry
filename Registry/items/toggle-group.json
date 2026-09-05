@@ -6,24 +6,53 @@
   "kind": "component",
   "description": "Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.",
   "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\n@State private var bold = false\n@State private var italic = false\n\nControlGroup {\n    Toggle(\"Bold\", systemImage: \"bold\", isOn: $bold)\n    Toggle(\"Italic\", systemImage: \"italic\", isOn: $italic)\n}\n.registryToggleGroup()",
-  "files": [{ "source": "sources/components/RegistryToggleGroupModifier.swift", "target": "RegistryToggleGroupModifier.swift" }],
-  "registryDependencies": ["toggle", "button"],
+  "files": [
+    {
+      "source": "sources/components/RegistryToggleGroupModifier.swift",
+      "target": "RegistryToggleGroupModifier.swift"
+    }
+  ],
+  "registryDependencies": [
+    "toggle",
+    "button"
+  ],
   "packageDependencies": [
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
-  "tags": ["toggle-group", "toggle", "control-group", "multi-selection", "modifier"],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "toggle-group",
+    "toggle",
+    "control-group",
+    "multi-selection",
+    "modifier"
+  ],
   "accessibility": [
     "Retains each native Toggle's independent state and activation behavior.",
     "Keeps all selection bindings caller-owned.",
     "Requires accessible labels for icon-only toggles.",
     "Inherits Dynamic Type, enabled state, control size, and layout direction."
   ],
-  "preview": { "source": "sources/components/RegistryToggleGroupModifier.swift", "name": "Toggle Group" }
+  "preview": {
+    "source": "sources/components/RegistryToggleGroupModifier.swift",
+    "name": "Toggle Group",
+    "screenshots": [
+      "docs/images/items/toggle-group-light.png",
+      "docs/images/items/toggle-group-dark.png"
+    ]
+  }
 }

@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "auth-form",
   "kind": "block",
   "description": "Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.",
@@ -12,20 +12,36 @@
       "target": "AuthForm.swift"
     }
   ],
-  "registryDependencies": ["input", "button", "card"],
+  "registryDependencies": [
+    "input",
+    "button",
+    "card"
+  ],
   "packageDependencies": [
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["authentication", "sign-in", "form", "validation", "autofill"],
+  "tags": [
+    "authentication",
+    "sign-in",
+    "form",
+    "validation",
+    "autofill"
+  ],
   "accessibility": [
     "Both fields use label-plus-prompt initializers so the field titles are real accessibility labels, not placeholder-only text.",
     "Focus order is identity then password: the identity field submits with a Next return key that moves focus to the password field, and the password return key submits the form.",
@@ -36,6 +52,10 @@
   ],
   "preview": {
     "source": "sources/blocks/AuthForm.swift",
-    "name": "Auth Form"
+    "name": "Auth Form",
+    "screenshots": [
+      "docs/images/items/auth-form-light.png",
+      "docs/images/items/auth-form-dark.png"
+    ]
   }
 }

@@ -30,7 +30,7 @@ public struct RegistryCheckboxToggleStyle: ToggleStyle {
 
     private func checkbox(configuration: Configuration) -> some View {
         let isSelected = configuration.isOn || configuration.isMixed
-        let shape = RoundedRectangle(cornerRadius: 5, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: theme.metrics.compactRadius, style: .continuous)
 
         return Image(systemName: configuration.isMixed ? "minus" : "checkmark")
             .font(.caption2.weight(.bold))

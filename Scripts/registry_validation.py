@@ -184,15 +184,28 @@ def _check_shape(item: dict, schema: dict, location: str, issues: list[Validatio
     _check_string_array(item, "accessibility", location, issues, unique=False)
     _check_preview_shape(item, properties["preview"], location, issues)
 
+    preview = item.get("preview")
     if kind == "recipe":
         docs = item.get("docs")
         if not isinstance(docs, str) or not docs.strip():
             issues.append(ValidationIssue(location, "recipe items require non-empty docs"))
         if item.get("files"):
             issues.append(ValidationIssue(location, "recipe items must declare empty files"))
+        # A recipe has no source of its own, so its preview may carry
+        # screenshots only; a source or name would point at nothing.
+        if isinstance(preview, dict) and ("source" in preview or "name" in preview):
+            issues.append(ValidationIssue(
+                location, "recipe previews carry screenshots only, never a source or name"
+            ))
     elif kind in kinds:
         if "preview" not in item:
             issues.append(ValidationIssue(location, "installable items require a preview"))
+        elif isinstance(preview, dict):
+            for key in ("source", "name"):
+                if not isinstance(preview.get(key), str) or not preview.get(key):
+                    issues.append(ValidationIssue(
+                        location, f"installable previews require a non-empty {key}"
+                    ))
         files = item.get("files")
         if isinstance(files, list) and not files:
             issues.append(ValidationIssue(location, "installable items require at least one entry in files"))

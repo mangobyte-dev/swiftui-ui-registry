@@ -19,13 +19,24 @@
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["metric", "finance", "health", "analytics"],
+  "tags": [
+    "metric",
+    "finance",
+    "health",
+    "analytics"
+  ],
   "accessibility": [
     "Uses system text styles for Dynamic Type.",
     "Combines title, value, and detail into one VoiceOver element.",
@@ -33,6 +44,10 @@
   ],
   "preview": {
     "source": "sources/components/MetricCard.swift",
-    "name": "Metric Card"
+    "name": "Metric Card",
+    "screenshots": [
+      "docs/images/items/metric-card-light.png",
+      "docs/images/items/metric-card-dark.png"
+    ]
   }
 }

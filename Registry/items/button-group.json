@@ -12,20 +12,34 @@
       "target": "RegistryButtonGroupStyle.swift"
     }
   ],
-  "registryDependencies": ["button"],
+  "registryDependencies": [
+    "button"
+  ],
   "packageDependencies": [
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["button", "control-group", "action", "style", "toolbar"],
+  "tags": [
+    "button",
+    "control-group",
+    "action",
+    "style",
+    "toolbar"
+  ],
   "accessibility": [
     "Retains native Button controls and the ControlGroup container supplied by the caller.",
     "Keeps each button's visible or derived accessibility label and role.",
@@ -34,6 +48,10 @@
   ],
   "preview": {
     "source": "sources/components/RegistryButtonGroupStyle.swift",
-    "name": "Button Group"
+    "name": "Button Group",
+    "screenshots": [
+      "docs/images/items/button-group-light.png",
+      "docs/images/items/button-group-dark.png"
+    ]
   }
 }

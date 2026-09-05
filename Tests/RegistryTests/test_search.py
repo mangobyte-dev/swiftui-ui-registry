@@ -72,7 +72,7 @@ class SearchTests(unittest.TestCase):
         self.assertEqual([match["name"] for match in matches], ["finance-overview"])
         self.assertEqual(
             matches[0]["registryDependencies"],
-            ["metric-card", "transaction-row"],
+            ["metric-card", "transaction-row", "empty"],
         )
         self.assertTrue(matches[0]["accessibility"])
 

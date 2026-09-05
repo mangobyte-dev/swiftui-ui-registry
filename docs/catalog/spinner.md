@@ -4,6 +4,10 @@
 
 Styles a native indeterminate ProgressView with a compact circular indicator and optional label.
 
+![spinner preview](../images/items/spinner-light.png)
+
+More previews: [dark](../images/items/spinner-dark.png)
+
 ## Install
 
 ```sh

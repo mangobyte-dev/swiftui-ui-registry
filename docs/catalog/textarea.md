@@ -4,6 +4,10 @@
 
 Applies input-matching focus, disabled, and invalid chrome to a native TextEditor.
 
+![textarea preview](../images/items/textarea-light.png)
+
+More previews: [dark](../images/items/textarea-dark.png)
+
 ## Install
 
 ```sh

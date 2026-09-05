@@ -4,6 +4,10 @@
 
 Native guidance for SwiftUI's aspectRatio modifier without introducing a replacement API.
 
+![aspect-ratio preview](../images/items/aspect-ratio-light.png)
+
+More previews: [dark](../images/items/aspect-ratio-dark.png)
+
 Nothing to install. Copy the snippet below
 
 ## Usage

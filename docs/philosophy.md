@@ -26,7 +26,7 @@ System text styles, semantic color, VoiceOver semantics, right-to-left alignment
 
 ## Constrained customization
 
-Expose a small semantic foundation and ordinary Swift source. Use semantic tokens instead of repeated hardcoded values, but add a token only after two real items need the same meaning. Prefer a focused modifier over expanding a component initializer with unrelated options. Avoid a universal styling abstraction. Consumers can override the foundation subtree or edit copied code
+Expose a small semantic foundation and ordinary Swift source. Use semantic tokens instead of repeated hardcoded values, but add a token only after two real items need the same meaning. Prefer a focused modifier over expanding a component initializer with unrelated options. Avoid a universal styling abstraction. Consumers set the foundation once at a scene root, tune it live in the Showcase and paste the result, override the subtree where a screen differs, or edit copied code
 
 ## Evidence before extraction
 

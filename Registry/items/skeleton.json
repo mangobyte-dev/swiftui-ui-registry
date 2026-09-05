@@ -1,0 +1,56 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "skeleton",
+  "kind": "component",
+  "description": "Turns any view into a loading placeholder with native redaction, disabled interaction, one loading accessibility element, and a pulse that stops under Reduce Motion.",
+  "usage": "@State private var isLoading = true\n\nActivityRows()\n    .registrySkeleton(isLoading)\n\n// Pass false to render the real content unchanged.",
+  "files": [
+    {
+      "source": "sources/components/RegistrySkeletonModifier.swift",
+      "target": "RegistrySkeletonModifier.swift"
+    }
+  ],
+  "registryDependencies": [],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "skeleton",
+    "loading",
+    "placeholder",
+    "redacted",
+    "shimmer",
+    "shadcn"
+  ],
+  "accessibility": [
+    "Placeholder content is disabled and excluded from hit testing, so a placeholder can never trigger a product action.",
+    "The whole placeholder is one accessibility element with a caller-adjustable loading label instead of exposing meaningless redacted text.",
+    "The opacity pulse is replaced by a static dimmed state when Reduce Motion is on.",
+    "Uses native .redacted(reason: .placeholder), so the real content's layout is preserved and nothing is re-implemented."
+  ],
+  "preview": {
+    "source": "sources/components/RegistrySkeletonModifier.swift",
+    "name": "Skeleton",
+    "screenshots": [
+      "docs/images/items/skeleton-light.png",
+      "docs/images/items/skeleton-dark.png"
+    ]
+  }
+}

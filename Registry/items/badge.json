@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "badge",
   "kind": "component",
   "description": "Applies accent, positive, negative, secondary, and outline badge treatments to native Text and Label content.",
@@ -19,21 +19,38 @@
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["badge", "label", "status", "category", "modifier"],
+  "tags": [
+    "badge",
+    "label",
+    "status",
+    "category",
+    "modifier"
+  ],
   "accessibility": [
+    "Keeps its text on one line at its intrinsic width; a badge never wraps or breaks its label.",
     "Preserves the accessibility semantics and reading order of the modified Text or Label.",
-    "Uses a system text style and allows multiline growth at accessibility Dynamic Type sizes.",
+    "Uses a system text style, so the single line still grows with Dynamic Type.",
     "Inherits layout direction so Label content follows the caller's locale.",
     "Uses fill and border treatments in addition to semantic color variants."
   ],
   "preview": {
     "source": "sources/components/RegistryBadge.swift",
-    "name": "Badge Variants"
+    "name": "Badge Variants",
+    "screenshots": [
+      "docs/images/items/badge-light.png",
+      "docs/images/items/badge-dark.png"
+    ]
   }
 }

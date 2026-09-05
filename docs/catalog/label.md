@@ -4,6 +4,10 @@
 
 Controls native Label icon placement with semantic spacing and decorative icon accessibility behavior.
 
+![label preview](../images/items/label-light.png)
+
+More previews: [dark](../images/items/label-dark.png)
+
 ## Install
 
 ```sh

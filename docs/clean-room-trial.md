@@ -1,5 +1,7 @@
 # Clean-room adoption trial
 
+> Closed record: the trial ran and all six recorded defects were fixed on 2026-08-31 (see Fixes applied). The Deferrals below remain open and are tracked in `docs/component-roadmap.md`, Current state
+
 > Note (2026-08-31): this trial ran at the historical iOS 18 platform floor, before the floor was raised to iOS 26
 
 Date: 2026-08-31

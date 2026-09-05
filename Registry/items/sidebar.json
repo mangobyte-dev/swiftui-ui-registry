@@ -1,0 +1,37 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "sidebar",
+  "kind": "recipe",
+  "description": "Native guidance for a sidebar layout with NavigationSplitView and a selection-bound List on iPad.",
+  "usage": "@State private var selection: String? = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n} detail: {\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}",
+  "docs": "Use `NavigationSplitView` with a selection-bound `List` for the sidebar; the system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack.",
+  "files": [],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "sidebar",
+    "navigation",
+    "split-view",
+    "ipad",
+    "guidance"
+  ],
+  "accessibility": [
+    "Sidebar rows are native list cells with selection semantics.",
+    "The column toggle button is system-provided and labeled.",
+    "Selection state stays caller-owned through the binding."
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/sidebar-light.png",
+      "docs/images/items/sidebar-dark.png"
+    ]
+  }
+}

@@ -4,6 +4,10 @@
 
 Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.
 
+![input preview](../images/items/input-light.png)
+
+More previews: [dark](../images/items/input-dark.png)
+
 ## Install
 
 ```sh

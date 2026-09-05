@@ -1,0 +1,37 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "drawer",
+  "kind": "recipe",
+  "description": "Native guidance for a bottom drawer using .sheet with presentation detents and a visible drag indicator.",
+  "usage": "@State private var isShowingFilters = false\n\nButton(\"Filters\") { isShowingFilters = true }\n    .sheet(isPresented: $isShowingFilters) {\n        FilterOptions()\n            .presentationDetents([.medium, .large])\n            .presentationDragIndicator(.visible)\n    }",
+  "docs": "A drawer is a native sheet with `.presentationDetents` and a visible drag indicator. The system handles the resize gesture, the dimming, and dismissal; do not recreate a bottom panel with an offset overlay.",
+  "files": [],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "drawer",
+    "bottom-sheet",
+    "detents",
+    "sheet",
+    "guidance"
+  ],
+  "accessibility": [
+    "Detent changes are announced and adjustable through VoiceOver.",
+    "The drag indicator gives a visible affordance; keep a button-based dismissal too.",
+    "Content must remain reachable at the medium detent or be scrollable."
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/drawer-light.png",
+      "docs/images/items/drawer-dark.png"
+    ]
+  }
+}

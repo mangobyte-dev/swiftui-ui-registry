@@ -4,6 +4,10 @@
 
 Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.
 
+![card preview](../images/items/card-light.png)
+
+More previews: [dark](../images/items/card-dark.png)
+
 ## Install
 
 ```sh

@@ -1,0 +1,37 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "dialog",
+  "kind": "recipe",
+  "description": "Native guidance for modal content with .sheet, leaving detents, drag dismissal, and focus to the system.",
+  "usage": "@State private var isEditing = false\n\nButton(\"Edit profile\") { isEditing = true }\n    .sheet(isPresented: $isEditing) {\n        NavigationStack {\n            ProfileEditor()\n                .navigationTitle(\"Edit profile\")\n                .toolbar {\n                    ToolbarItem(placement: .confirmationAction) {\n                        Button(\"Done\") { isEditing = false }\n                    }\n                }\n        }\n    }",
+  "docs": "Present editing or detail content with the native `.sheet` modifier wrapped in a `NavigationStack` so the title and confirmation action land in system chrome. Liquid Glass, the grabber, swipe-to-dismiss, and keyboard avoidance come from the system; the registry adds no wrapper.",
+  "files": [],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "dialog",
+    "sheet",
+    "modal",
+    "presentation",
+    "guidance"
+  ],
+  "accessibility": [
+    "Sheets present as modal to VoiceOver and support swipe-to-dismiss and the escape gesture.",
+    "Toolbar placements give Done and Cancel their system position and semantics.",
+    "Content inside the sheet uses registry items like any other screen."
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/dialog-light.png",
+      "docs/images/items/dialog-dark.png"
+    ]
+  }
+}

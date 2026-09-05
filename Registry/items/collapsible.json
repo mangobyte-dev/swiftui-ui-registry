@@ -1,0 +1,36 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "collapsible",
+  "kind": "recipe",
+  "description": "Native guidance for a single expandable region with the default DisclosureGroup, distinct from the styled accordion.",
+  "usage": "@State private var isShowingDetails = false\n\nDisclosureGroup(\"Fee breakdown\", isExpanded: $isShowingDetails) {\n    LabeledContent(\"Transfer fee\", value: \"KWD 1.000\")\n    LabeledContent(\"Exchange margin\", value: \"KWD 0.450\")\n}",
+  "docs": "One expandable region is the default `DisclosureGroup`. Reach for the `accordion` item only when several groups stack as a list; a single collapsible region needs no extra treatment.",
+  "files": [],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "collapsible",
+    "disclosure",
+    "expand",
+    "toggle",
+    "guidance"
+  ],
+  "accessibility": [
+    "The native disclosure announces expanded and collapsed states.",
+    "Keep the label meaningful when collapsed, because that is all VoiceOver reads."
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/collapsible-light.png",
+      "docs/images/items/collapsible-dark.png"
+    ]
+  }
+}

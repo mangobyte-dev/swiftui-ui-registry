@@ -11,13 +11,28 @@
   "registryDependencies": [],
   "packageDependencies": [],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["slider", "value", "range", "control", "guidance"],
+  "tags": [
+    "slider",
+    "value",
+    "range",
+    "control",
+    "guidance"
+  ],
   "accessibility": [
     "Retains native Slider adjustable-control semantics and gestures.",
     "Keeps the value, bounds, step, and editing callbacks caller-owned.",
     "Requires a meaningful label and supports native minimum and maximum labels.",
     "Inherits control size, enabled state, and layout direction unless explicitly overridden."
-  ]
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/slider-light.png",
+      "docs/images/items/slider-dark.png"
+    ]
+  }
 }

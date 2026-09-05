@@ -25,7 +25,7 @@ The canonical schema is `Registry/schema.json`. JSON is used because it is inspe
 - `platforms`: declared Apple platform and minimum version
 - `tags`: discovery terms, not API behavior
 - `accessibility`: concrete behavior and known requirements
-- `preview`: source preview name and optional screenshot paths; required for every kind except `recipe`
+- `preview`: for an installable item, the source file, the Xcode preview name, and optional screenshot paths, all required except the screenshots; a `recipe` may carry a `preview` with `screenshots` only, never a source or name, because it has no source of its own
 
 ## Item value gate
 
@@ -46,6 +46,10 @@ Every consumer runs the same module: the installer validates the full registry b
 ## Generated catalog
 
 `docs/catalog/` is a build product of `python3 Scripts/generate_catalog.py`, which loads the registry through the validated installer path and writes one deterministic page per item plus an index grouped by kind. Each page leads with what a consumer sees and copies: description, the lead screenshot with links to any alternates, one install command followed by its package requirement (or, on a recipe, the line "Nothing to install. Copy the snippet below" and no Install heading at all), then the `usage` snippet, and on a recipe the "Why native is enough" guidance from `docs`. Everything else recedes into a closing Details list: kind, version, platforms, registry dependencies or install order, the accessibility contract, and the source link carrying its Xcode preview name. Output carries no timestamps, so regeneration is byte-stable; `Tests/RegistryTests/test_catalog.py` regenerates into a temporary directory and asserts byte equality, which means the catalog can never drift from metadata. Never edit `docs/catalog/` by hand; edit the item document and regenerate
+
+## Generated website data and Showcase manifest
+
+`Website/content/registry.json` (with the captures copied to `Website/public/images/`) is a build product of `python3 Scripts/generate_site_data.py`, and `RegistryCatalogManifest.swift` plus the UI suite's `RegistryItemNames.swift` are a build product of `python3 Scripts/generate_showcase_manifest.py`. Both load the registry through the validated installer path, both are deterministic, and `Tests/RegistryTests/test_site_data.py` and `test_showcase_manifest.py` assert byte equality with the checked-in files. The Next.js site under `Website/` reads only that JSON; a page leads with the captured preview, then one install command, then the `usage` snippet, and keeps the full source and the accessibility contract on the same page. Screenshots referenced by `preview.screenshots` are produced by `python3 Scripts/capture_previews.py`
 
 ## File ownership
 

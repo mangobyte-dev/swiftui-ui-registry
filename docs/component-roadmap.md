@@ -6,6 +6,33 @@ Deliver valuable native SwiftUI product workflows as source-owned blocks, then e
 
 A component does not replace a native control. `Button`, `TextField`, `Toggle`, `Picker`, `Menu`, `ProgressView`, `ScrollView`, `NavigationStack`, and system presentations remain visible at the call site. The registry standardizes them with SwiftUI style protocols, focused `ViewModifier`s, semantic theme values, and small compositions where one primitive is insufficient
 
+## Current state
+
+Updated 2026-09-05. This section and the per-stage Status lines are the only home of stage status; status text in any other file is a pointer here
+
+- Stage 1: complete, closed 2026-08-31 with findings F-001 through F-024 resolved (`STAGE_ONE_VALIDATION.md`)
+- Stage 1.5: complete. The clean-room trial ran 2026-08-31 and all six recorded defects were fixed the same day (`docs/clean-room-trial.md`)
+- Stage 2: complete 2026-09-01, exit evidence recorded in its section below; the seam extraction verdict was 0 of 7, nothing shared
+- Stage 3: complete 2026-09-05. The activity feed is the one coherent screen; it named alert, avatar, skeleton, empty, accordion, and item, and the finance block adopted the empty-state treatment as its second consumer. Eleven presentation and navigation recipes landed alongside. Exit evidence is recorded in its section below
+- Foundations grew on 2026-09-05 into the set-up-once contract: `accent` and `onAccent` tokens, `compactRadius`, six presets, and a root `registryTheme(_:)` that also applies the tint. No tag exists yet, so `0.1.0` remains the first published contract and now means this shape
+- Showcase is a browsable catalog (Components, Blocks, Recipes, Tune) with a generated manifest, a demo per item, a capture launch route, and the theme tuning panel with Swift export
+- The website is a Next.js static site built with shadcn/ui under `Website/`, fed by generated `content/registry.json`, with a page per item and a Themes page, deployed 2026-09-05 to Cloudflare Workers at https://swiftui-registry.mangobytekw.workers.dev; `docs/images/items/` and `docs/images/themes/` hold the light and dark captures
+- Next: Stage 4 has not been chosen. Candidates are the block candidates 3 to 6 below, each gated on a named adopter screen
+- First consumer outside `Examples/Showcase`: the seeFood app installed settings-section, select, separator, button, and input on 2026-09-01 through a local path dependency, with the receipt in its destination; the published URL remains unexercised because no tag exists
+- Current catalog counts and per-item pages live in the generated `docs/catalog/index.md` and the website, not in prose here
+
+### Open deferrals
+
+Standing debt already on record. A done-claim that touches one of these areas names it
+
+- iOS 26 runtime evidence: no iOS 26 simulator runtime is installed, so the floor is verified by compilation and the iOS 27 runtime only
+- No published tag: `git tag -l` is empty; the first tag must be `0.1.0` so declared floors resolve (`docs/registry-spec.md`). The site has no custom domain yet; `.github/workflows/pages.yml` remains as an alternative deploy path
+- `--update` three-way merge is unexercised by any consumer outside this repository's tests (`docs/clean-room-trial.md`, Deferrals)
+- The clean-room trial predates the iOS 26 floor and used a SwiftPM library consumer; an Xcode-project consumer is unexercised
+- Visual threshold coarseness: the 2 percent tolerance at 96 by 192 absorbed a whole tab-bar change once (`docs/visual-testing.md`, GOLDEN-CHANGE 2026-09-01)
+- seeFood's theme bridge compiles unchanged against the 2026-09-05 foundations (every new initializer argument has a default) but does not yet set `accent` or `onAccent`; adopting them is that app's decision
+- Reduce Motion, VoiceOver announcement timing, and the accordion's rotation are verified structurally and on the simulator, not on a device
+
 ## Implementation rules
 
 1. Keep the Apple primitive visible at the call site. Prefer `.buttonStyle(...)`, `.toggleStyle(...)`, `.textFieldStyle(...)`, `.labelStyle(...)`, `.progressViewStyle(...)`, and focused view modifiers
@@ -26,13 +53,13 @@ A component does not replace a native control. `Button`, `TextField`, `Toggle`, 
 
 **Status: Complete**
 
-The catalog holds 26 items: 17 installable components, 2 blocks, and 7 recipes. All 21 original Stage 1 rows are indexed: 14 are installable components, source-owned, installed into Showcase, and compiled at the iOS 26 platform floor; the remaining 7 rows (`aspect-ratio`, `direction`, `native-select`, `radio-group`, `tabs`, `switch`, `slider`) are recipes, native guidance carried in item `docs` with no installable files, per the item value gate in `docs/registry-spec.md`. The 3 block-driven components (`metric-card`, `transaction-row`, `macro-progress`) and the 2 proof blocks (`finance-overview`, `nutrition-overview`) complete the count. Launch Showcase with `-stage-one` to inspect the catalog
+At Stage 1 close the catalog held 26 items: 17 installable components, 2 blocks, and 7 recipes. All 21 original Stage 1 rows are indexed: 14 are installable components, source-owned, installed into Showcase, and compiled at the iOS 26 platform floor; the remaining 7 rows (`aspect-ratio`, `direction`, `native-select`, `radio-group`, `tabs`, `switch`, `slider`) are recipes, native guidance carried in item `docs` with no installable files, per the item value gate in `docs/registry-spec.md`. The 3 block-driven components (`metric-card`, `transaction-row`, `macro-progress`) and the 2 proof blocks (`finance-overview`, `nutrition-overview`) complete the count. Launch Showcase with `-stage-one` to inspect the catalog
 
 Stage 1 exit criteria were met: every foundation token is used by at least two completed registry items with the same semantic meaning; enabled, pressed, focused, selected, disabled, and invalid states are demonstrated where applicable; the showcase proves light, dark, RTL, and accessibility text sizes. Runtime and compile evidence is recorded in `STAGE_ONE_VALIDATION.md`
 
 ## Stage 1.5: Adoption contract
 
-**Status: Delivered except the clean-room trial**
+**Status: Complete**
 
 This stage makes one external install/customize/update workflow excellent before adding breadth. What is in place:
 
@@ -41,9 +68,11 @@ This stage makes one external install/customize/update workflow excellent before
 - Inspectable install: `Scripts/install.py --plan` prints the ordered closure, per-target statuses, package requirements, collisions, and manual integration steps without writing; `--diff` audits owned source against canonical registry source
 - Actionable package metadata: every version requirement carries a `sourceURL` and a machine-resolvable `swiftPM` rule, with the compatibility policy in `docs/registry-spec.md`
 - Generated per-item documentation: `docs/catalog/` is generated from metadata by `Scripts/generate_catalog.py`, each page leading with preview, install command, and a `usage` snippet, with recipes leading with the snippet because nothing installs; a freshness test keeps it byte-identical to the metadata
-- Clean-room trial: **open**. An independent developer or coding agent must discover, inspect, install, compile, customize, and update one block in an app outside `Examples/Showcase`, with time, manual steps, and failure points recorded. This is the missing go-to-product evidence and the remaining gate before Stage 2
+- Clean-room trial: **complete**. The independent-adopter protocol ran on 2026-08-31 against a scratch SwiftPM package outside this repository, working from README and the generated catalog alone. Discover, inspect, install, compile, customize, and update-safety all passed; six defects were recorded and all six were fixed the same day (`docs/clean-room-trial.md`). Its remaining deferrals (published URL and tag, `--update` merge, Xcode-project consumer) are tracked under Current state
 
 ## Stage 2: Two block-led workflows
+
+**Status: Complete**
 
 Build two complete product workflows as dependency-closed blocks, then extract shared treatments only from proven repetition
 
@@ -84,13 +113,33 @@ Verified on the pinned light-mode iPhone 17 iOS 27.0 simulator by `SwiftUIRegist
 
 ## Stage 3: Content and feedback driven by one real screen
 
-Choose one coherent real screen and add only the empty, loading, inline-alert, and row treatments it actually requires. Candidates from the research appendix (accordion, avatar, skeleton, kbd, and the rest) stay unbuilt until that screen names them
+**Status: Complete**
+
+The screen is a banking activity feed (`activity-feed`): a notice above recent activity, avatar-led rows with unread state, a loading placeholder, an empty state, and an Earlier section that expands. It named exactly these treatments, each shipped as a source-owned component with the feed as its first consumer:
+
+- `alert` (`InlineAlert`): informational, positive, and destructive variants pairing a symbol with a color, with optional caller-owned actions
+- `avatar` (`Avatar`): image, initials, or symbol fallback sized by control size, with a required accessibility label
+- `skeleton` (`registrySkeleton`): native redaction, no interaction, one loading element, pulse off under Reduce Motion
+- `empty` (`registryEmptyState`): a native `ContentUnavailableView` on the registry surface; the finance block is its second consumer
+- `accordion` (`RegistryAccordionStyle`): a `DisclosureGroupStyle` with a full-width header and chevron
+- `item` (`ItemRow`): media, title, description, accessory, with selection left to the call site
+
+Presentation and navigation candidates shipped as recipes, not wrappers: `alert-dialog`, `dialog`, `drawer`, `popover`, `context-menu`, `dropdown-menu`, `tooltip`, `calendar`, `collapsible`, `scroll-area`, and `sidebar`. Each snippet compiles in the Showcase's recipe demos
 
 ### Stage 3 exit criteria
 
 - Feedback is distinguishable without color alone
 - Decorative imagery is hidden from accessibility and meaningful media has caller-provided labels
 - Placeholder states do not trigger product actions or effects
+
+### Stage 3 exit-criteria evidence (2026-09-05)
+
+Verified on the pinned light-mode iPhone 17 iOS 27.0 simulator by `testActivityFeedStatesAreDistinguishableAndPlaceholdersNeverAct` in `SwiftUIRegistryShowcaseUITests`:
+
+- Not color alone: the unread row reports the accessibility value Unread alongside its dot and heavier title; the notice pairs a symbol with its variant color; the accordion header reports Collapsed and Expanded
+- Decorative imagery: the alert symbol, the unread dot, and the accordion chevron are hidden; every avatar carries the caller's sender name, and the row buttons expose title, detail, and timestamp in one label
+- Placeholders never act: in the loading state the rows are gone from the button tree, one element labeled Loading activity stands in, and tapping it produces no selection; the empty state shows the caller's copy; the loaded state selects, expands Earlier, and dismisses the notice through caller code
+- Visual contract: `activity-light.png` was added per `docs/visual-testing.md`
 
 ## Later
 

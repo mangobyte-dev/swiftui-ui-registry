@@ -6,10 +6,98 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         continueAfterFailure = false
     }
 
+    // MARK: - Launch and navigation helpers
+
+    /// Every catalog launch resets the persisted tuning so a slider moved by a
+    /// person on this simulator cannot change what the suite measures.
+    @MainActor
+    private func launchCatalog(_ arguments: [String] = []) -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments = ["-default-tuning"] + arguments
+        app.launch()
+        return app
+    }
+
+    @MainActor
+    private func relaunchCatalog(_ app: XCUIApplication, _ arguments: [String]) {
+        app.terminate()
+        app.launchArguments = ["-default-tuning"] + arguments
+        app.launch()
+    }
+
+    /// Opens one item's detail from its kind tab. Rows carry the
+    /// `catalog.item.<name>` identifier, so the lookup does not depend on the
+    /// row's combined label.
+    @MainActor
+    private func openItem(_ app: XCUIApplication, tab: String, name: String) {
+        let tabButton = app.tabBars.buttons[tab]
+        XCTAssertTrue(tabButton.waitForExistence(timeout: 5), "The \(tab) tab must exist.")
+        tabButton.tap()
+        let row = app.descendants(matching: .any)
+            .matching(identifier: "catalog.item.\(name)")
+            .firstMatch
+        for _ in 0..<10 where !row.exists {
+            app.swipeUp()
+        }
+        XCTAssertTrue(row.waitForExistence(timeout: 3), "The \(name) row must be listed under \(tab).")
+        row.tap()
+        XCTAssertTrue(
+            app.navigationBars[name].waitForExistence(timeout: 5),
+            "Opening \(name) must push its detail screen."
+        )
+    }
+
+    @MainActor
+    private func openBlock(_ app: XCUIApplication, _ name: String) {
+        openItem(app, tab: "Blocks", name: name)
+    }
+
+    // MARK: - Catalog
+
+    @MainActor
+    func testEveryRegistryItemHasADemoInTheCaptureRoute() {
+        // The `-item` route is what the screenshot pipeline and the website
+        // depend on; an item without a demo renders the loud placeholder.
+        let app = XCUIApplication()
+        for name in RegistryItemNames.all {
+            app.launchArguments = ["-item", name]
+            app.launch()
+            XCTAssertFalse(
+                app.staticTexts["No demo for \(name)"].waitForExistence(timeout: 1),
+                "\(name) must have a registered demo."
+            )
+            app.terminate()
+        }
+    }
+
+    @MainActor
+    func testCatalogSearchFiltersComponentsByTag() {
+        let app = launchCatalog()
+        let componentsTab = app.tabBars.buttons["Components"]
+        XCTAssertTrue(componentsTab.waitForExistence(timeout: 5))
+        let badgeRow = app.descendants(matching: .any).matching(identifier: "catalog.item.badge").firstMatch
+        XCTAssertTrue(badgeRow.waitForExistence(timeout: 3))
+
+        app.swipeDown()
+        let searchField = app.searchFields.firstMatch
+        XCTAssertTrue(searchField.waitForExistence(timeout: 3), "The catalog list must be searchable.")
+        searchField.tap()
+        searchField.typeText("shimmer")
+
+        let skeletonRow = app.descendants(matching: .any).matching(identifier: "catalog.item.skeleton").firstMatch
+        XCTAssertTrue(
+            skeletonRow.waitForExistence(timeout: 3),
+            "A tag-only query must still find the item that declares it."
+        )
+        XCTAssertFalse(badgeRow.exists, "Rows that match neither name, description, nor tag must drop out.")
+    }
+
+    // MARK: - Finance and nutrition blocks
+
     @MainActor
     func testInstalledFinanceBlockRendersInConsumerApp() {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchCatalog()
+        openBlock(app, "finance-overview")
 
         XCTAssertTrue(
             app.staticTexts["Overview"].waitForExistence(timeout: 5),
@@ -23,7 +111,6 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertTrue(firstTransaction.exists)
         XCTAssertTrue(firstTransaction.label.contains("Today, 09:41"))
         XCTAssertTrue(firstTransaction.label.contains("8.750"))
-        XCTAssertTrue(app.tabBars.buttons["Nutrition"].exists)
         attachSnapshot(named: "finance-light", app: app)
         assertVisualSnapshot(named: "finance-light", app: app)
         XCTAssertFalse(
@@ -33,13 +120,9 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     }
 
     @MainActor
-    func testInstalledNutritionBlockRendersThroughNativeTabNavigation() {
-        let app = XCUIApplication()
-        app.launch()
-
-        let nutritionTab = app.tabBars.buttons["Nutrition"]
-        XCTAssertTrue(nutritionTab.waitForExistence(timeout: 5))
-        nutritionTab.tap()
+    func testInstalledNutritionBlockRendersThroughNativeNavigation() {
+        let app = launchCatalog()
+        openBlock(app, "nutrition-overview")
 
         XCTAssertTrue(
             app.staticTexts["Macronutrients"].waitForExistence(timeout: 5),
@@ -52,177 +135,15 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     }
 
     @MainActor
-    func testStageOneCatalogRendersInstalledNativeControlsInAdaptiveEnvironments() {
-        let app = XCUIApplication()
-        app.launchArguments = ["-stage-one", "-accessibility-size", "-right-to-left"]
-        app.launch()
-
-        XCTAssertTrue(
-            app.staticTexts["Stage 1 Components"].waitForExistence(timeout: 5),
-            "The Stage 1 launch must render the installed catalog through the consumer target."
-        )
-        let primaryAction = app.buttons["Primary action"]
-        XCTAssertTrue(
-            primaryAction.exists,
-            "The native primary button must render through its installed style."
-        )
-        XCTAssertGreaterThanOrEqual(
-            primaryAction.frame.height,
-            44,
-            "Registry button styling must preserve the minimum interaction height."
-        )
-        let saveButton = app.buttons["Save"]
-        XCTAssertTrue(
-            saveButton.exists,
-            "Icon-only button-group controls must retain their native initializer labels."
-        )
-        XCTAssertTrue(
-            app.buttons["Share"].exists,
-            "Button-group styling must preserve each native button accessibility label."
-        )
-        XCTAssertTrue(app.staticTexts["Ready"].exists)
-        XCTAssertTrue(app.staticTexts["Text entry"].exists)
-        XCTAssertTrue(app.textFields["Name"].exists)
-        XCTAssertTrue(
-            app.textViews["Notes"].exists,
-            "The textarea modifier must apply its required caller-supplied accessibility label."
-        )
-        let acceptTerms = app.switches["Accept terms"]
-        XCTAssertTrue(
-            acceptTerms.exists,
-            "Checkbox styling must retain native Toggle accessibility semantics."
-        )
-        XCTAssertGreaterThanOrEqual(
-            acceptTerms.frame.height,
-            44,
-            "Checkbox styling must preserve the minimum interaction height."
-        )
-        let initialAcceptTermsValue = acceptTerms.value as? String
-        acceptTerms.tap()
-        XCTAssertNotEqual(
-            acceptTerms.value as? String,
-            initialAcceptTermsValue,
-            "Checkbox activation must write through the caller-owned binding."
-        )
-        XCTAssertTrue(
-            app.switches["Notifications"].exists,
-            "Switch styling must retain native Toggle accessibility semantics."
-        )
-        let boldToggle = app.buttons["Bold"]
-        XCTAssertTrue(
-            boldToggle.exists,
-            "Icon-only button toggles must retain their native initializer labels."
-        )
-        XCTAssertTrue(
-            app.buttons["Italic"].exists,
-            "Toggle-group styling must preserve each native Toggle accessibility label."
-        )
-        XCTAssertFalse(
-            app.tabBars.firstMatch.exists,
-            "The dedicated Stage 1 launch must not depend on the product-block tab flow."
-        )
-
-        let scrollView = app.scrollViews.firstMatch
-        XCTAssertTrue(
-            scrollView.exists,
-            "The catalog must remain scrollable when accessibility text expands its content."
-        )
-
-        let selectionSection = app.staticTexts["Selection"]
-        scroll(scrollView, until: selectionSection)
-        XCTAssertTrue(
-            selectionSection.exists,
-            "The installed selection styles must remain reachable at accessibility sizes."
-        )
-        let segmentedTabs = app.segmentedControls.firstMatch
-        XCTAssertTrue(
-            segmentedTabs.exists,
-            "Local tabs must retain native segmented-picker semantics."
-        )
-        XCTAssertEqual(
-            segmentedTabs.buttons.count,
-            2,
-            "The caller-supplied local tab options must remain visible to accessibility."
-        )
-
-        let progressSection = app.staticTexts["Progress and value"]
-        scroll(scrollView, until: progressSection)
-        XCTAssertTrue(
-            progressSection.exists,
-            "The installed progress and value styles must remain reachable."
-        )
-        XCTAssertTrue(
-            app.progressIndicators.firstMatch.exists,
-            "Progress styles must retain native progress-indicator semantics."
-        )
-        let volumeSlider = app.sliders["Volume"]
-        XCTAssertTrue(
-            volumeSlider.exists,
-            "Slider treatment must retain the caller-supplied native adjustable control."
-        )
-        for _ in 0..<4 {
-            if volumeSlider.isHittable { break }
-            scrollView.swipeUp()
-        }
-        XCTAssertTrue(
-            volumeSlider.isHittable,
-            "The native slider must remain reachable at accessibility text sizes."
-        )
-
-        let nativeLayoutSection = app.staticTexts["Native layout"]
-        scroll(scrollView, until: nativeLayoutSection)
-        XCTAssertTrue(
-            nativeLayoutSection.exists,
-            "Native-only aspect-ratio and direction guidance must remain in the catalog."
-        )
-        XCTAssertTrue(
-            app.staticTexts["Leading content mirrors automatically"].exists,
-            "Direction guidance must render under the right-to-left environment."
-        )
-    }
-
-    @MainActor
-    func testStageOneControlsMeetMinimumHitTargetAtDefaultTextSize() {
-        // The adaptive test launches at accessibility3, where the label's own
-        // grown text already exceeds 44pt, so its height assertions cannot catch
-        // the removal of the min-hit-size styling. This launch fixes the type
-        // size at the system default, where only the guarded
-        // RegistryMetrics.minimumHitSize frame keeps the controls at 44pt.
-        let app = XCUIApplication()
-        app.launchArguments = ["-stage-one"]
-        app.launch()
-
-        XCTAssertTrue(
-            app.staticTexts["Stage 1 Components"].waitForExistence(timeout: 5),
-            "The Stage 1 launch must render the installed catalog through the consumer target."
-        )
-        let primaryAction = app.buttons["Primary action"]
-        XCTAssertTrue(primaryAction.exists)
-        XCTAssertGreaterThanOrEqual(
-            primaryAction.frame.height,
-            44,
-            "Registry button styling must preserve the minimum interaction height at the default text size."
-        )
-        let acceptTerms = app.switches["Accept terms"]
-        XCTAssertTrue(acceptTerms.exists)
-        XCTAssertGreaterThanOrEqual(
-            acceptTerms.frame.height,
-            44,
-            "Checkbox styling must preserve the minimum interaction height at the default text size."
-        )
-    }
-
-    @MainActor
     func testAccessibilitySizeLaunchExpandsSystemTypography() {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchCatalog()
+        openBlock(app, "finance-overview")
         let regularTitle = app.staticTexts["Overview"]
         XCTAssertTrue(regularTitle.waitForExistence(timeout: 5))
         let regularHeight = regularTitle.frame.height
-        app.terminate()
 
-        app.launchArguments = ["-accessibility-size"]
-        app.launch()
+        relaunchCatalog(app, ["-accessibility-size"])
+        openBlock(app, "finance-overview")
         let accessibilityTitle = app.staticTexts["Overview"]
         XCTAssertTrue(accessibilityTitle.waitForExistence(timeout: 5))
 
@@ -235,9 +156,8 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
     @MainActor
     func testEmptyFinanceStateExplainsWhereFutureActivityAppears() {
-        let app = XCUIApplication()
-        app.launchArguments = ["-empty-finance"]
-        app.launch()
+        let app = launchCatalog(["-empty-finance"])
+        openBlock(app, "finance-overview")
 
         XCTAssertTrue(app.staticTexts["No recent activity"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["New transactions will appear here."].exists)
@@ -249,8 +169,8 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
     @MainActor
     func testRightToLeftLaunchMirrorsTransactionReadingOrder() {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchCatalog()
+        openBlock(app, "finance-overview")
         let regularTitle = app.staticTexts["Mishmash Bakery"]
         let regularAmount = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS %@", "8.750")
@@ -258,10 +178,9 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertTrue(regularTitle.waitForExistence(timeout: 5))
         XCTAssertTrue(regularAmount.exists)
         XCTAssertLessThan(regularTitle.frame.minX, regularAmount.frame.minX)
-        app.terminate()
 
-        app.launchArguments = ["-right-to-left"]
-        app.launch()
+        relaunchCatalog(app, ["-right-to-left"])
+        openBlock(app, "finance-overview")
         let mirroredTitle = app.staticTexts["Mishmash Bakery"]
         let mirroredAmount = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS %@", "8.750")
@@ -276,14 +195,99 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         )
     }
 
+    // MARK: - Stage 1 fixture
+
     @MainActor
-    func testAuthReturnKeyMovesFocusFromIdentityToPasswordAndSubmits() {
+    func testStageOneCatalogRendersInstalledNativeControlsInAdaptiveEnvironments() {
         let app = XCUIApplication()
+        app.launchArguments = ["-stage-one", "-accessibility-size", "-right-to-left"]
         app.launch()
 
-        let authTab = app.tabBars.buttons["Authentication"]
-        XCTAssertTrue(authTab.waitForExistence(timeout: 5))
-        authTab.tap()
+        XCTAssertTrue(
+            app.staticTexts["Stage 1 Components"].waitForExistence(timeout: 5),
+            "The Stage 1 launch must render the installed catalog through the consumer target."
+        )
+        let primaryAction = app.buttons["Primary action"]
+        XCTAssertTrue(primaryAction.exists)
+        XCTAssertGreaterThanOrEqual(primaryAction.frame.height, 44)
+        XCTAssertTrue(app.buttons["Save"].exists)
+        XCTAssertTrue(app.buttons["Share"].exists)
+        XCTAssertTrue(app.staticTexts["Ready"].exists)
+        XCTAssertTrue(app.staticTexts["Text entry"].exists)
+        XCTAssertTrue(app.textFields["Name"].exists)
+        XCTAssertTrue(app.textViews["Notes"].exists)
+        let acceptTerms = app.switches["Accept terms"]
+        XCTAssertTrue(acceptTerms.exists)
+        XCTAssertGreaterThanOrEqual(acceptTerms.frame.height, 44)
+        let initialAcceptTermsValue = acceptTerms.value as? String
+        acceptTerms.tap()
+        XCTAssertNotEqual(
+            acceptTerms.value as? String,
+            initialAcceptTermsValue,
+            "Checkbox activation must write through the caller-owned binding."
+        )
+        XCTAssertTrue(app.switches["Notifications"].exists)
+        XCTAssertTrue(app.buttons["Bold"].exists)
+        XCTAssertTrue(app.buttons["Italic"].exists)
+        XCTAssertFalse(
+            app.tabBars.firstMatch.exists,
+            "The dedicated Stage 1 launch must not depend on the catalog tab flow."
+        )
+
+        let scrollView = app.scrollViews.firstMatch
+        XCTAssertTrue(scrollView.exists)
+
+        let selectionSection = app.staticTexts["Selection"]
+        scroll(scrollView, until: selectionSection)
+        XCTAssertTrue(selectionSection.exists)
+        let segmentedTabs = app.segmentedControls.firstMatch
+        XCTAssertTrue(segmentedTabs.exists)
+        XCTAssertEqual(segmentedTabs.buttons.count, 2)
+
+        let progressSection = app.staticTexts["Progress and value"]
+        scroll(scrollView, until: progressSection)
+        XCTAssertTrue(progressSection.exists)
+        XCTAssertTrue(app.progressIndicators.firstMatch.exists)
+        let volumeSlider = app.sliders["Volume"]
+        XCTAssertTrue(volumeSlider.exists)
+        for _ in 0..<4 {
+            if volumeSlider.isHittable { break }
+            scrollView.swipeUp()
+        }
+        XCTAssertTrue(volumeSlider.isHittable)
+
+        let nativeLayoutSection = app.staticTexts["Native layout"]
+        scroll(scrollView, until: nativeLayoutSection)
+        XCTAssertTrue(nativeLayoutSection.exists)
+        XCTAssertTrue(app.staticTexts["Leading content mirrors automatically"].exists)
+    }
+
+    @MainActor
+    func testStageOneControlsMeetMinimumHitTargetAtDefaultTextSize() {
+        // The adaptive test launches at accessibility3, where the label's own
+        // grown text already exceeds 44pt, so its height assertions cannot catch
+        // the removal of the min-hit-size styling. This launch fixes the type
+        // size at the system default, where only the guarded
+        // RegistryMetrics.minimumHitSize frame keeps the controls at 44pt.
+        let app = XCUIApplication()
+        app.launchArguments = ["-stage-one"]
+        app.launch()
+
+        XCTAssertTrue(app.staticTexts["Stage 1 Components"].waitForExistence(timeout: 5))
+        let primaryAction = app.buttons["Primary action"]
+        XCTAssertTrue(primaryAction.exists)
+        XCTAssertGreaterThanOrEqual(primaryAction.frame.height, 44)
+        let acceptTerms = app.switches["Accept terms"]
+        XCTAssertTrue(acceptTerms.exists)
+        XCTAssertGreaterThanOrEqual(acceptTerms.frame.height, 44)
+    }
+
+    // MARK: - Stage 2 blocks
+
+    @MainActor
+    func testAuthReturnKeyMovesFocusFromIdentityToPasswordAndSubmits() {
+        let app = launchCatalog()
+        openBlock(app, "auth-form")
 
         let identityField = app.textFields["Email"]
         XCTAssertTrue(
@@ -295,28 +299,15 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
         // Keyboard focus is not directly readable through public XCUITest API,
         // so the proof is where subsequently typed characters land: after the
-        // Next return key they may only reach the secure password field. A
-        // copy that drops .submitLabel(.next)/.onSubmit focus chaining leaves
-        // focus in the identity field and fails both assertions below.
+        // Next return key they may only reach the secure password field.
         app.typeText("\n")
         app.typeText("correct horse")
 
-        XCTAssertEqual(
-            identityField.value as? String,
-            "mo@example.com",
-            "Return in the identity field must move focus onward, not keep collecting characters."
-        )
+        XCTAssertEqual(identityField.value as? String, "mo@example.com")
         let passwordField = app.secureTextFields["Password"]
         XCTAssertTrue(passwordField.exists)
-        XCTAssertNotEqual(
-            passwordField.value as? String,
-            "Password",
-            "Characters typed after the identity return key must land in the password field."
-        )
+        XCTAssertNotEqual(passwordField.value as? String, "Password")
 
-        // The Go return key in the password field must run the caller's
-        // onSubmit: the harness flips isSubmitting and then reports a form
-        // error, which is the observable submit evidence.
         app.typeText("\n")
         XCTAssertTrue(
             app.staticTexts["We could not sign you in. Try again."].waitForExistence(timeout: 5),
@@ -326,12 +317,8 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
     @MainActor
     func testAuthSubmitDisablesFieldsAndSubmitControlWhileSubmitting() {
-        let app = XCUIApplication()
-        app.launch()
-
-        let authTab = app.tabBars.buttons["Authentication"]
-        XCTAssertTrue(authTab.waitForExistence(timeout: 5))
-        authTab.tap()
+        let app = launchCatalog()
+        openBlock(app, "auth-form")
 
         let identityField = app.textFields["Email"]
         XCTAssertTrue(identityField.waitForExistence(timeout: 5))
@@ -342,70 +329,32 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         passwordField.typeText("correct horse")
         app.typeText("\n")
 
-        // The harness holds isSubmitting for two seconds. A copy that ignores
-        // isSubmitting keeps every control enabled and fails these checks.
         let submitButton = app.buttons["Sign in"]
-        XCTAssertTrue(
-            submitButton.waitForExistence(timeout: 2),
-            "The submit control must keep its title as its accessibility label while showing progress."
-        )
-        XCTAssertFalse(
-            submitButton.isEnabled,
-            "The submit control must be disabled while a submission is in flight."
-        )
-        XCTAssertFalse(
-            identityField.isEnabled,
-            "The identity field must be disabled while a submission is in flight."
-        )
-        XCTAssertFalse(
-            passwordField.isEnabled,
-            "The password field must be disabled while a submission is in flight."
-        )
+        XCTAssertTrue(submitButton.waitForExistence(timeout: 2))
+        XCTAssertFalse(submitButton.isEnabled, "The submit control must be disabled while a submission is in flight.")
+        XCTAssertFalse(identityField.isEnabled)
+        XCTAssertFalse(passwordField.isEnabled)
 
-        XCTAssertTrue(
-            app.staticTexts["We could not sign you in. Try again."].waitForExistence(timeout: 5),
-            "The harness submit must complete with its observable form error."
-        )
-        XCTAssertTrue(
-            submitButton.isEnabled,
-            "Controls must re-enable when the caller clears isSubmitting."
-        )
+        XCTAssertTrue(app.staticTexts["We could not sign you in. Try again."].waitForExistence(timeout: 5))
+        XCTAssertTrue(submitButton.isEnabled, "Controls must re-enable when the caller clears isSubmitting.")
     }
 
     @MainActor
     func testAuthValidationSurfacesFieldAndFormErrorCopy() {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchCatalog()
+        openBlock(app, "auth-form")
 
-        let authTab = app.tabBars.buttons["Authentication"]
-        XCTAssertTrue(authTab.waitForExistence(timeout: 5))
-        authTab.tap()
-
-        XCTAssertTrue(
-            app.staticTexts["Welcome back"].waitForExistence(timeout: 5),
-            "The installed auth block must render through the consumer target."
-        )
+        XCTAssertTrue(app.staticTexts["Welcome back"].waitForExistence(timeout: 5))
         attachSnapshot(named: "auth-light", app: app)
         assertVisualSnapshot(named: "auth-light", app: app)
 
         app.buttons["Sign in"].tap()
 
-        // The block's documented accessibility mechanism for invalid fields is
-        // a visible footnote message plus the same message as the field's
-        // accessibility hint and an AccessibilityNotification.Announcement.
-        // XCUITest cannot read accessibilityHint or observe announcement
-        // delivery, so the strongest observable proxy is the error copy being
-        // real accessibility elements; the hint and announcement source lines
-        // are pinned structurally by
-        // test_auth_block_keeps_credential_autofill_and_error_announcements.
         XCTAssertTrue(
             app.staticTexts["Enter a valid email address"].waitForExistence(timeout: 2),
             "An invalid identity must surface its error copy to accessibility, never color alone."
         )
-        XCTAssertTrue(
-            app.staticTexts["Enter your password"].exists,
-            "An empty password must surface its error copy to accessibility."
-        )
+        XCTAssertTrue(app.staticTexts["Enter your password"].exists)
 
         let identityField = app.textFields["Email"]
         identityField.tap()
@@ -415,10 +364,7 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         passwordField.typeText("correct horse")
         app.typeText("\n")
 
-        XCTAssertTrue(
-            app.staticTexts["We could not sign you in. Try again."].waitForExistence(timeout: 5),
-            "A failed submission must surface the caller-provided form error copy."
-        )
+        XCTAssertTrue(app.staticTexts["We could not sign you in. Try again."].waitForExistence(timeout: 5))
         XCTAssertFalse(
             app.staticTexts["Enter a valid email address"].exists,
             "Corrected fields must drop stale error copy rather than accumulate it."
@@ -427,22 +373,13 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
     @MainActor
     func testSettingsRowsWriteThroughCallerBindingsAndReportDisabledState() {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchCatalog()
+        openBlock(app, "settings-section")
 
-        let settingsTab = app.tabBars.buttons["Settings"]
-        XCTAssertTrue(settingsTab.waitForExistence(timeout: 5))
-        settingsTab.tap()
-
-        XCTAssertTrue(
-            app.staticTexts["Notifications"].waitForExistence(timeout: 5),
-            "The installed settings block must render through the consumer target."
-        )
+        XCTAssertTrue(app.staticTexts["Notifications"].waitForExistence(timeout: 5))
         attachSnapshot(named: "settings-light", app: app)
         assertVisualSnapshot(named: "settings-light", app: app)
 
-        // The caption under the section mirrors the caller-owned binding, so a
-        // toggle that renders but does not write through the binding fails here.
         let alertsToggle = app.switches["Transaction alerts"]
         XCTAssertTrue(alertsToggle.exists)
         XCTAssertTrue(app.staticTexts["Transaction alerts are on."].exists)
@@ -454,14 +391,8 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
         let marketingToggle = app.switches["Marketing messages"]
         XCTAssertTrue(marketingToggle.exists)
-        XCTAssertFalse(
-            marketingToggle.isEnabled,
-            "The organization-managed row must report isEnabled false to accessibility."
-        )
-        XCTAssertTrue(
-            app.staticTexts["Managed by your organization's privacy policy."].exists,
-            "A disabled row must keep its visible explanation outside the disabled subtree."
-        )
+        XCTAssertFalse(marketingToggle.isEnabled)
+        XCTAssertTrue(app.staticTexts["Managed by your organization's privacy policy."].exists)
 
         let scrollView = app.scrollViews.firstMatch
         let signOutButton = app.buttons["Sign out"]
@@ -471,75 +402,140 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
             scrollView.swipeUp()
         }
         signOutButton.tap()
-        XCTAssertTrue(
-            app.staticTexts["Signed out."].waitForExistence(timeout: 2),
-            "Activating the destructive row must run the caller-owned action."
-        )
+        XCTAssertTrue(app.staticTexts["Signed out."].waitForExistence(timeout: 2))
     }
 
     @MainActor
     func testStageTwoScreensAdaptToAccessibilitySizeAndRightToLeft() {
-        let app = XCUIApplication()
-        app.launch()
-        let authTab = app.tabBars.buttons["Authentication"]
-        XCTAssertTrue(authTab.waitForExistence(timeout: 5))
-        authTab.tap()
+        let app = launchCatalog()
+        openBlock(app, "auth-form")
         let regularTitle = app.staticTexts["Welcome back"]
         XCTAssertTrue(regularTitle.waitForExistence(timeout: 5))
         let regularTitleHeight = regularTitle.frame.height
         let regularSecondary = app.buttons["Forgot password?"]
         XCTAssertTrue(regularSecondary.exists)
         let regularSecondaryMinX = regularSecondary.frame.minX
-        app.tabBars.buttons["Settings"].tap()
+        app.navigationBars.buttons.firstMatch.tap()
+        openBlock(app, "settings-section")
         let regularFooter = app.staticTexts["Quiet hours apply to every channel."]
         XCTAssertTrue(regularFooter.waitForExistence(timeout: 5))
         let regularFooterMinX = regularFooter.frame.minX
-        app.terminate()
 
-        app.launchArguments = ["-accessibility-size", "-right-to-left"]
-        app.launch()
-        let mirroredAuthTab = app.tabBars.buttons["Authentication"]
-        XCTAssertTrue(mirroredAuthTab.waitForExistence(timeout: 5))
-        mirroredAuthTab.tap()
+        relaunchCatalog(app, ["-accessibility-size", "-right-to-left"])
+        openBlock(app, "auth-form")
 
         let accessibilityTitle = app.staticTexts["Welcome back"]
         XCTAssertTrue(accessibilityTitle.waitForExistence(timeout: 5))
-        XCTAssertGreaterThan(
-            accessibilityTitle.frame.height,
-            regularTitleHeight,
-            "The auth block must scale with system typography rather than hardcode a size."
-        )
+        XCTAssertGreaterThan(accessibilityTitle.frame.height, regularTitleHeight)
         XCTAssertTrue(app.textFields["Email"].exists)
         XCTAssertTrue(app.secureTextFields["Password"].exists)
         let scrollView = app.scrollViews.firstMatch
         let submitButton = app.buttons["Sign in"]
         scroll(scrollView, until: submitButton)
-        XCTAssertTrue(
-            submitButton.exists,
-            "The submit control must remain reachable at accessibility text sizes."
-        )
+        XCTAssertTrue(submitButton.exists)
         let mirroredSecondary = app.buttons["Forgot password?"]
         XCTAssertTrue(mirroredSecondary.exists)
-        XCTAssertGreaterThan(
-            mirroredSecondary.frame.minX,
-            regularSecondaryMinX,
-            "Leading-aligned auth content must mirror without a separate RTL implementation."
-        )
+        XCTAssertGreaterThan(mirroredSecondary.frame.minX, regularSecondaryMinX)
 
-        app.tabBars.buttons["Settings"].tap()
-        XCTAssertTrue(
-            app.staticTexts["Notifications"].waitForExistence(timeout: 5),
-            "The settings block must render under accessibility size and right-to-left together."
-        )
+        app.navigationBars.buttons.firstMatch.tap()
+        openBlock(app, "settings-section")
+        XCTAssertTrue(app.staticTexts["Notifications"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.switches["Transaction alerts"].exists)
         let mirroredFooter = app.staticTexts["Quiet hours apply to every channel."]
         XCTAssertTrue(mirroredFooter.exists)
-        XCTAssertGreaterThan(
-            mirroredFooter.frame.minX,
-            regularFooterMinX,
-            "Leading-aligned settings content must mirror without a separate RTL implementation."
+        XCTAssertGreaterThan(mirroredFooter.frame.minX, regularFooterMinX)
+    }
+
+    // MARK: - Stage 3 block
+
+    @MainActor
+    func testActivityFeedStatesAreDistinguishableAndPlaceholdersNeverAct() {
+        let app = launchCatalog()
+        openBlock(app, "activity-feed")
+
+        XCTAssertTrue(app.staticTexts["Activity"].waitForExistence(timeout: 5))
+        attachSnapshot(named: "activity-light", app: app)
+        assertVisualSnapshot(named: "activity-light", app: app)
+
+        // Loaded: an unread row states its unread value, not only a dot.
+        let unreadRow = app.buttons.matching(
+            NSPredicate(format: "label CONTAINS %@", "Mishmash Bakery")
+        ).firstMatch
+        XCTAssertTrue(unreadRow.exists)
+        XCTAssertEqual(unreadRow.value as? String, "Unread", "Unread state must be spoken, never color alone.")
+
+        // Loading: the placeholder is one labeled element and cannot select.
+        let statePicker = app.segmentedControls["activity.state"]
+        XCTAssertTrue(statePicker.exists)
+        statePicker.buttons["Loading"].tap()
+        let placeholder = app.otherElements["Loading activity"]
+        XCTAssertTrue(placeholder.waitForExistence(timeout: 2), "The skeleton must expose one loading element.")
+        XCTAssertFalse(unreadRow.exists, "Placeholder rows must not remain reachable as buttons.")
+        placeholder.tap()
+        XCTAssertFalse(
+            app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Selected")).firstMatch.exists,
+            "Tapping a placeholder must never trigger the caller's selection."
+        )
+
+        // Empty: native ContentUnavailableView copy replaces the rows.
+        statePicker.buttons["Empty"].tap()
+        XCTAssertTrue(app.staticTexts["You're all caught up"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["New activity will appear here."].exists)
+
+        // Loaded again: selection, the accordion, and the notice dismissal all
+        // run caller code.
+        statePicker.buttons["Loaded"].tap()
+        XCTAssertTrue(unreadRow.waitForExistence(timeout: 2))
+        unreadRow.tap()
+        XCTAssertTrue(app.staticTexts["Selected bakery."].waitForExistence(timeout: 2))
+
+        let scrollView = app.scrollViews.firstMatch
+        let earlier = app.buttons["Earlier"]
+        scroll(scrollView, until: earlier)
+        XCTAssertEqual(earlier.value as? String, "Collapsed")
+        earlier.tap()
+        XCTAssertTrue(app.staticTexts["Mobile service"].waitForExistence(timeout: 2))
+        XCTAssertEqual(earlier.value as? String, "Expanded")
+
+        scrollView.swipeDown()
+        let dismiss = app.buttons["Dismiss"]
+        XCTAssertTrue(dismiss.waitForExistence(timeout: 2))
+        dismiss.tap()
+        XCTAssertFalse(
+            app.staticTexts["Card delivery delayed"].waitForExistence(timeout: 1),
+            "Dismissing the notice must run the caller's handler and remove the alert."
         )
     }
+
+    // MARK: - Tuning panel
+
+    @MainActor
+    func testTuningPanelExportsTheSelectedPresetAsSwift() {
+        let app = launchCatalog()
+        let tuneTab = app.tabBars.buttons["Tune"]
+        XCTAssertTrue(tuneTab.waitForExistence(timeout: 5))
+        tuneTab.tap()
+
+        let graphite = app.buttons["Graphite"]
+        XCTAssertTrue(graphite.waitForExistence(timeout: 5), "Foundation presets must be one tap away.")
+        graphite.tap()
+
+        // Reading UIPasteboard from the test process raises the simulator's
+        // paste-permission prompt and hangs the suite, so the proof is the
+        // Swift section the panel renders from the same export string.
+        XCTAssertTrue(app.buttons["Copy Swift"].exists)
+        let swiftRow = app.buttons["Swift"]
+        XCTAssertTrue(swiftRow.waitForExistence(timeout: 3), "The export must sit one tap below the presets.")
+        swiftRow.tap()
+        let export = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "accent: .primary")
+        ).firstMatch
+        XCTAssertTrue(export.waitForExistence(timeout: 3), "The Graphite preset must export its primary accent.")
+        XCTAssertTrue(export.label.contains("RegistryTheme("), "The export must be the foundation initializer.")
+        XCTAssertTrue(export.label.contains(".registryTheme(theme)"), "The export must show the one-line root setup.")
+    }
+
+    // MARK: - Helpers
 
     @MainActor
     private func scroll(_ scrollView: XCUIElement, until element: XCUIElement) {

@@ -19,13 +19,24 @@
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["nutrition", "health", "progress", "macronutrients"],
+  "tags": [
+    "nutrition",
+    "health",
+    "progress",
+    "macronutrients"
+  ],
   "accessibility": [
     "Uses native ProgressView semantics.",
     "Uses ViewThatFits to move prepared values below the label when horizontal space is constrained.",
@@ -33,6 +44,10 @@
   ],
   "preview": {
     "source": "sources/components/MacroProgress.swift",
-    "name": "Macro Progress"
+    "name": "Macro Progress",
+    "screenshots": [
+      "docs/images/items/macro-progress-light.png",
+      "docs/images/items/macro-progress-dark.png"
+    ]
   }
 }

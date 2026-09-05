@@ -4,6 +4,10 @@
 
 Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.
 
+![button preview](../images/items/button-light.png)
+
+More previews: [dark](../images/items/button-dark.png)
+
 ## Install
 
 ```sh
@@ -46,12 +50,12 @@ Button("Delete", role: .destructive) {}
 ## Details
 
 - Kind: component
-- Version: 0.2.0
+- Version: 0.4.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Preserves native Button semantics and ButtonRole behavior.
   - Maintains a minimum 44 by 44 point interaction area across control sizes.
-  - Uses system text styles and allows labels to grow vertically with Dynamic Type.
+  - Uses system text styles and keeps the label on one line: it never wraps or breaks, scaling down slightly before truncating, so the call site provides room with a full-width frame or a stacked layout at large text sizes.
   - Reads the enabled state from the environment and does not rely on color alone for destructive actions.
 - Source: [sources/components/RegistryButtonStyle.swift](../../Registry/sources/components/RegistryButtonStyle.swift), with the `Button Variants` Xcode preview

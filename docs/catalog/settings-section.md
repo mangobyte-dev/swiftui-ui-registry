@@ -4,6 +4,10 @@
 
 Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
 
+![settings-section preview](../images/items/settings-section-light.png)
+
+More previews: [dark](../images/items/settings-section-dark.png)
+
 ## Install
 
 ```sh
@@ -62,7 +66,7 @@ SettingsSection(
 - Kind: block
 - Version: 0.1.0
 - Platforms: iOS 26.0+
-- Installs in order: [select](select.md) 0.2.0, [separator](separator.md) 0.2.0, [button](button.md) 0.2.0, [settings-section](settings-section.md) 0.1.0
+- Installs in order: [select](select.md) 0.2.0, [separator](separator.md) 0.2.0, [button](button.md) 0.4.0, [settings-section](settings-section.md) 0.1.0
 - Accessibility contract:
   - The section title renders with the header accessibility trait so the VoiceOver rotor can jump between settings sections.
   - Rows keep native control semantics: the block never hides or renames a control, and every control's accessibility name comes from its visible label. Callers who hide a label (.labelsHidden()) must supply their own accessibility label.

@@ -11,12 +11,27 @@
   "registryDependencies": [],
   "packageDependencies": [],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["direction", "layout-direction", "rtl", "localization", "guidance"],
+  "tags": [
+    "direction",
+    "layout-direction",
+    "rtl",
+    "localization",
+    "guidance"
+  ],
   "accessibility": [
     "Uses semantic reading order and leading/trailing alignment.",
     "Treats illustrative symbols as decorative.",
     "Relies on SwiftUI's environment propagation instead of duplicating locale state."
-  ]
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/direction-light.png",
+      "docs/images/items/direction-dark.png"
+    ]
+  }
 }

@@ -4,6 +4,10 @@
 
 Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.
 
+![checkbox preview](../images/items/checkbox-light.png)
+
+More previews: [dark](../images/items/checkbox-dark.png)
+
 ## Install
 
 ```sh
@@ -40,7 +44,7 @@ Toggle("Accept terms", isOn: $accepted)
 ## Details
 
 - Kind: component
-- Version: 0.2.1
+- Version: 0.2.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:

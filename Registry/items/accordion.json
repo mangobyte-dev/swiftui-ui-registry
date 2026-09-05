@@ -1,0 +1,58 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "accordion",
+  "kind": "component",
+  "description": "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, for stacked expandable sections.",
+  "usage": "@State private var isExpanded = false\n\nDisclosureGroup(\"How do I freeze my card?\", isExpanded: $isExpanded) {\n    Text(\"Open the card, then choose Freeze.\")\n}\n.disclosureGroupStyle(.registryAccordion)",
+  "files": [
+    {
+      "source": "sources/components/RegistryAccordionStyle.swift",
+      "target": "RegistryAccordionStyle.swift"
+    }
+  ],
+  "registryDependencies": [
+    "separator"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "accordion",
+    "disclosure",
+    "collapsible",
+    "expand",
+    "faq",
+    "shadcn"
+  ],
+  "accessibility": [
+    "Preserves the native DisclosureGroup binding; the header is a plain Button that toggles isExpanded.",
+    "Reports Expanded or Collapsed as the header's accessibility value and adds the selected trait while expanded.",
+    "The chevron is decorative and hidden; the header keeps the 44 point minimum height.",
+    "Expansion animates with the snappy curve and switches to an immediate change under Reduce Motion."
+  ],
+  "preview": {
+    "source": "sources/components/RegistryAccordionStyle.swift",
+    "name": "Accordion",
+    "screenshots": [
+      "docs/images/items/accordion-light.png",
+      "docs/images/items/accordion-dark.png"
+    ]
+  }
+}

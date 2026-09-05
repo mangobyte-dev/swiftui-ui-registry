@@ -4,6 +4,10 @@
 
 Applies semantic color, orientation, and caller-provided insets to a native Divider.
 
+![separator preview](../images/items/separator-light.png)
+
+More previews: [dark](../images/items/separator-dark.png)
+
 ## Install
 
 ```sh

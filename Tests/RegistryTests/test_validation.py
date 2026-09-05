@@ -123,6 +123,32 @@ class ValidationTests(unittest.TestCase):
 
         self.assert_rejects("installable items require a preview")
 
+    def test_installable_preview_without_source_or_name_is_rejected(self):
+        # Relaxing the schema so recipes can carry screenshots must not let an
+        # installable item drop the Xcode preview it promises.
+        item = self.load_item("example")
+        del item["preview"]["name"]
+        self.save_item("example", item)
+        self.assert_rejects("installable previews require a non-empty name")
+
+        item["preview"]["name"] = "Example"
+        item["preview"]["source"] = ""
+        self.save_item("example", item)
+        self.assert_rejects("installable previews require a non-empty source")
+
+    def test_recipe_preview_may_carry_screenshots_but_never_a_source(self):
+        guide = self.load_item("guide")
+        screenshot = self.repository / "docs" / "guide.png"
+        screenshot.parent.mkdir(parents=True, exist_ok=True)
+        screenshot.write_bytes(b"png")
+        guide["preview"] = {"screenshots": ["docs/guide.png"]}
+        self.save_item("guide", guide)
+        self.assertEqual(validate_registry(self.repository), [])
+
+        guide["preview"]["source"] = "sources/Example.swift"
+        self.save_item("guide", guide)
+        self.assert_rejects("recipe previews carry screenshots only, never a source or name")
+
     def test_installable_item_with_empty_files_is_rejected(self):
         item = self.load_item("example")
         item["files"] = []

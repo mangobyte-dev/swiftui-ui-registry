@@ -6,7 +6,12 @@
   "kind": "component",
   "description": "Adds semantic field chrome to a native menu-style Picker without replacing its presentation or selection behavior.",
   "usage": "@State private var currency = \"KWD\"\n\nPicker(\"Currency\", selection: $currency) {\n    Text(\"Kuwaiti dinar\").tag(\"KWD\")\n    Text(\"US dollar\").tag(\"USD\")\n}\n.registrySelect()",
-  "files": [{ "source": "sources/components/RegistrySelectModifier.swift", "target": "RegistrySelectModifier.swift" }],
+  "files": [
+    {
+      "source": "sources/components/RegistrySelectModifier.swift",
+      "target": "RegistrySelectModifier.swift"
+    }
+  ],
   "registryDependencies": [],
   "packageDependencies": [
     {
@@ -14,16 +19,37 @@
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
-  "tags": ["select", "picker", "menu", "form", "modifier"],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "select",
+    "picker",
+    "menu",
+    "form",
+    "modifier"
+  ],
   "accessibility": [
     "Retains native Picker menu, selection, and dismissal behavior.",
     "Keeps option labels and selection caller-owned.",
     "Provides a 44-point minimum control height and visible disabled treatment.",
     "Inherits Dynamic Type and layout direction."
   ],
-  "preview": { "source": "sources/components/RegistrySelectModifier.swift", "name": "Select" }
+  "preview": {
+    "source": "sources/components/RegistrySelectModifier.swift",
+    "name": "Select",
+    "screenshots": [
+      "docs/images/items/select-light.png",
+      "docs/images/items/select-dark.png"
+    ]
+  }
 }

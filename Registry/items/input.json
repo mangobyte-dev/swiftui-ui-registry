@@ -6,7 +6,12 @@
   "kind": "component",
   "description": "Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.",
   "usage": "@State private var email = \"\"\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(.registryInput)\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(RegistryInputStyle(isInvalid: true))",
-  "files": [{ "source": "sources/components/RegistryInputStyle.swift", "target": "RegistryInputStyle.swift" }],
+  "files": [
+    {
+      "source": "sources/components/RegistryInputStyle.swift",
+      "target": "RegistryInputStyle.swift"
+    }
+  ],
   "registryDependencies": [],
   "packageDependencies": [
     {
@@ -14,16 +19,37 @@
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
-  "tags": ["input", "text-field", "secure-field", "form", "style"],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "input",
+    "text-field",
+    "secure-field",
+    "form",
+    "style"
+  ],
   "accessibility": [
     "Preserves native TextField and SecureField editing, keyboard, and autofill behavior.",
     "Uses focus and border width in addition to color for input states.",
     "Requires callers to provide visible validation copy and an accessibility hint for invalid input.",
     "Inherits Dynamic Type, layout direction, and enabled state."
   ],
-  "preview": { "source": "sources/components/RegistryInputStyle.swift", "name": "Input States" }
+  "preview": {
+    "source": "sources/components/RegistryInputStyle.swift",
+    "name": "Input States",
+    "screenshots": [
+      "docs/images/items/input-light.png",
+      "docs/images/items/input-dark.png"
+    ]
+  }
 }

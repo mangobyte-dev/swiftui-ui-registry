@@ -4,6 +4,10 @@
 
 Native guidance for applying the platform switch treatment to a Toggle while inheriting app tint and environment behavior.
 
+![switch preview](../images/items/switch-light.png)
+
+More previews: [dark](../images/items/switch-dark.png)
+
 Nothing to install. Copy the snippet below
 
 ## Usage

@@ -6,24 +6,52 @@
   "kind": "component",
   "description": "Applies registry button treatments to native Toggle state for compact selectable controls.",
   "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\n@State private var bold = false\n\nToggle(\"Bold\", systemImage: \"bold\", isOn: $bold)\n    .toggleStyle(.registryToggle)",
-  "files": [{ "source": "sources/components/RegistryToggleStyle.swift", "target": "RegistryToggleStyle.swift" }],
-  "registryDependencies": ["button"],
+  "files": [
+    {
+      "source": "sources/components/RegistryToggleStyle.swift",
+      "target": "RegistryToggleStyle.swift"
+    }
+  ],
+  "registryDependencies": [
+    "button"
+  ],
   "packageDependencies": [
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
-  "tags": ["toggle", "button", "selection", "formatting", "style"],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "toggle",
+    "button",
+    "selection",
+    "formatting",
+    "style"
+  ],
   "accessibility": [
     "Retains native Toggle state and activation behavior.",
     "Requires caller-supplied labels for icon-only controls.",
     "Uses opacity and native selected state in addition to color.",
     "Inherits Dynamic Type, enabled state, control size, and layout direction."
   ],
-  "preview": { "source": "sources/components/RegistryToggleStyle.swift", "name": "Toggle" }
+  "preview": {
+    "source": "sources/components/RegistryToggleStyle.swift",
+    "name": "Toggle",
+    "screenshots": [
+      "docs/images/items/toggle-light.png",
+      "docs/images/items/toggle-dark.png"
+    ]
+  }
 }

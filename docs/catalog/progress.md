@@ -4,6 +4,10 @@
 
 Styles native determinate and indeterminate ProgressView controls with linear accent, positive, and negative semantic tones.
 
+![progress preview](../images/items/progress-light.png)
+
+More previews: [dark](../images/items/progress-dark.png)
+
 ## Install
 
 ```sh

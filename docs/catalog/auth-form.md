@@ -4,6 +4,10 @@
 
 Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.
 
+![auth-form preview](../images/items/auth-form-light.png)
+
+More previews: [dark](../images/items/auth-form-dark.png)
+
 ## Install
 
 ```sh
@@ -48,9 +52,9 @@ AuthForm(
 ## Details
 
 - Kind: block
-- Version: 0.1.0
+- Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [input](input.md) 0.3.0, [button](button.md) 0.2.0, [card](card.md) 0.2.0, [auth-form](auth-form.md) 0.1.0
+- Installs in order: [input](input.md) 0.3.0, [button](button.md) 0.4.0, [card](card.md) 0.2.0, [auth-form](auth-form.md) 0.2.0
 - Accessibility contract:
   - Both fields use label-plus-prompt initializers so the field titles are real accessibility labels, not placeholder-only text.
   - Focus order is identity then password: the identity field submits with a Next return key that moves focus to the password field, and the password return key submits the form.

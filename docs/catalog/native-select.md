@@ -4,6 +4,10 @@
 
 Native guidance for the minimal menu treatment of a bound SwiftUI Picker.
 
+![native-select preview](../images/items/native-select-light.png)
+
+More previews: [dark](../images/items/native-select-dark.png)
+
 Nothing to install. Copy the snippet below
 
 ## Usage

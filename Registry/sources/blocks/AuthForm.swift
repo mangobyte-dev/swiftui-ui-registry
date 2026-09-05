@@ -126,11 +126,11 @@ public struct AuthForm: View {
                         Text(submitTitle)
                             .opacity(isSubmitting ? 0 : 1)
                         if isSubmitting {
-                            // Explicit tint: the registry primary button
-                            // foreground is white, and an untinted spinner is
-                            // low-contrast on the tinted background.
+                            // Explicit tint: the spinner sits on the accent
+                            // fill, so it uses the same foreground as the
+                            // primary button label.
                             ProgressView()
-                                .tint(.white)
+                                .tint(theme.onAccent)
                         }
                     }
                     .frame(maxWidth: .infinity)

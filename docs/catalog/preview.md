@@ -43,7 +43,7 @@ PreviewWall()
 - Kind: block
 - Version: 0.1.0
 - Platforms: iOS 26.0+
-- Installs in order: [card](card.md) 0.2.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [button](button.md) 0.5.0, [alert](alert.md) 0.1.1, [chart](chart.md) 0.1.1, [empty](empty.md) 0.1.0, [input-group](input-group.md) 0.2.0, [combobox](combobox.md) 0.1.0, [preview](preview.md) 0.1.0
+- Installs in order: [card](card.md) 0.2.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [button](button.md) 0.5.0, [alert](alert.md) 0.1.1, [chart](chart.md) 0.1.1, [empty](empty.md) 0.1.0, [input-group](input-group.md) 0.2.0, [combobox](combobox.md) 0.1.0, [input](input.md) 0.5.0, [field](field.md) 0.1.0, [preview](preview.md) 0.1.0
 - Accessibility contract:
   - Every interactive control carries an accessibility label and every decorative SF Symbol is hidden, so the capture-route audit finds no unlabeled button, image, switch, text field, or slider on any card.
   - Avatars read the person or account name as their label, never the drawn initials.
@@ -57,3 +57,4 @@ PreviewWall()
   - [sources/blocks/Preview/AssignIssue.swift](../../Registry/sources/blocks/Preview/AssignIssue.swift)
   - [sources/blocks/Preview/BarChartCard.swift](../../Registry/sources/blocks/Preview/BarChartCard.swift)
   - [sources/blocks/Preview/BarVisualizer.swift](../../Registry/sources/blocks/Preview/BarVisualizer.swift)
+  - [sources/blocks/Preview/BookAppointment.swift](../../Registry/sources/blocks/Preview/BookAppointment.swift)

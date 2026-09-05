@@ -34,6 +34,10 @@
     {
       "source": "sources/blocks/Preview/BarVisualizer.swift",
       "target": "Preview/BarVisualizer.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/BookAppointment.swift",
+      "target": "Preview/BookAppointment.swift"
     }
   ],
   "registryDependencies": [
@@ -46,7 +50,8 @@
     "empty",
     "avatar",
     "combobox",
-    "separator"
+    "separator",
+    "field"
   ],
   "packageDependencies": [
     {

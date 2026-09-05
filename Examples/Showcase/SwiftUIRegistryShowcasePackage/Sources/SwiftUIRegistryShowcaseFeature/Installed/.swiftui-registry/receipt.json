@@ -119,11 +119,18 @@
       "sourceDigest": "sha256:e5e4a57a473b1585a51d4dca2f07328d558b0c7ef010df66d35784f09185f7bb",
       "version": "0.1.0"
     },
+    "Preview/AnalyticsCard.swift": {
+      "base": "bases/82222386f7ac5608aab2d42a63f5e21325998bd30c355f1de975b3010fde8205.base",
+      "installedDigest": "sha256:2bd994cb5e36de17c1cd896a262ae681e8f194e4ec6015d660c0e1a6ee525e44",
+      "item": "preview",
+      "sourceDigest": "sha256:2bd994cb5e36de17c1cd896a262ae681e8f194e4ec6015d660c0e1a6ee525e44",
+      "version": "0.1.0"
+    },
     "Preview/PreviewWall.swift": {
       "base": "bases/21fd264667c3047604e99c4cd51cebe0e88f8f9a1fbe7b826a5a2fc9c9d602d4.base",
-      "installedDigest": "sha256:755aef221263d085fb35f0e6a9b00dbd2c59ae44a9b9c81f53a7b22d270dd577",
+      "installedDigest": "sha256:0d8df95fbea1ce37a91024f8dd2cfae4b19fc6fc756239ed8042f359e0ab3d1b",
       "item": "preview",
-      "sourceDigest": "sha256:755aef221263d085fb35f0e6a9b00dbd2c59ae44a9b9c81f53a7b22d270dd577",
+      "sourceDigest": "sha256:0d8df95fbea1ce37a91024f8dd2cfae4b19fc6fc756239ed8042f359e0ab3d1b",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -759,7 +766,8 @@
         "item",
         "alert",
         "badge",
-        "button"
+        "button",
+        "chart"
       ],
       "version": "0.1.0"
     },

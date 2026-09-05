@@ -50,7 +50,7 @@ Chart(data) { row in
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:

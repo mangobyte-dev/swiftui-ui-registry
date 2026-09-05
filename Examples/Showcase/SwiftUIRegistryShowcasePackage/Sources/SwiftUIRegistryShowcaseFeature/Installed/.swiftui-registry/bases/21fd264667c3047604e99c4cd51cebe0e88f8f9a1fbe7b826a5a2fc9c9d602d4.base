@@ -35,6 +35,7 @@ public struct PreviewWall: View {
             LiveWaveform()
             NoTeamMembers()
             NotFound()
+            ObservabilityCard()
         }
     }
 

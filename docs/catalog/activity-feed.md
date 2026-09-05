@@ -61,7 +61,7 @@ ActivityFeed(
 - Kind: block
 - Version: 0.1.1
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [alert](alert.md) 0.1.1, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.1.1, [skeleton](skeleton.md) 0.2.0, [empty](empty.md) 0.1.0, [accordion](accordion.md) 0.1.0, [activity-feed](activity-feed.md) 0.1.1
+- Installs in order: [button](button.md) 0.5.0, [alert](alert.md) 0.1.1, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.1.1, [skeleton](skeleton.md) 0.2.0, [empty](empty.md) 0.1.0, [accordion](accordion.md) 0.2.0, [activity-feed](activity-feed.md) 0.1.1
 - Accessibility contract:
   - Feedback is never color alone: unread rows use a heavier title, a dot, and an Unread accessibility value; the notice variant pairs a symbol with its color.
   - Loading placeholders are one disabled accessibility element labeled Loading activity and cannot trigger selection.

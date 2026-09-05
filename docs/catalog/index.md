@@ -25,7 +25,7 @@ Compositions of components. Installing one installs its whole closure
 
 One installable style, modifier, or view each
 
-- [accordion](accordion.md): Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, for stacked expandable sections.
+- [accordion](accordion.md): Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.
 - [alert](alert.md): Composes an inline, non-modal status message with informational, positive, and destructive variants and optional caller-owned actions.
 - [avatar](avatar.md): Displays a circular identity image with initials or symbol fallback, sized by the environment control size, with a required accessibility label.
 - [badge](badge.md): Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.

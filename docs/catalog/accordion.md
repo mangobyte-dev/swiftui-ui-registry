@@ -2,7 +2,7 @@
 
 # accordion
 
-Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, for stacked expandable sections.
+Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.
 
 ![accordion preview](../images/items/accordion-light.png)
 
@@ -46,12 +46,12 @@ DisclosureGroup("How do I freeze my card?", isExpanded: $isExpanded) {
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [separator](separator.md) 0.2.0, [accordion](accordion.md) 0.1.0
+- Installs in order: [separator](separator.md) 0.2.0, [accordion](accordion.md) 0.2.0
 - Accessibility contract:
   - Preserves the native DisclosureGroup binding; the header is a plain Button that toggles isExpanded.
-  - Reports Expanded or Collapsed as the header's accessibility value and adds the selected trait while expanded.
+  - Reports Expanded or Collapsed as the header's accessibility value; no selection trait is added, so VoiceOver speaks one state word.
   - The chevron is decorative and hidden; the header keeps the 44 point minimum height.
-  - Expansion animates with the snappy curve and switches to an immediate change under Reduce Motion.
+  - Tapping the header animates expansion with the snappy curve and switches to an immediate change under Reduce Motion; a caller that changes isExpanded programmatically chooses its own animation.
 - Source: [sources/components/RegistryAccordionStyle.swift](../../Registry/sources/components/RegistryAccordionStyle.swift), with the `Accordion` Xcode preview

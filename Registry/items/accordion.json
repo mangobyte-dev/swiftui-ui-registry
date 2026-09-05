@@ -1,10 +1,10 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "accordion",
   "kind": "component",
-  "description": "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, for stacked expandable sections.",
+  "description": "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.",
   "usage": "@State private var isExpanded = false\n\nDisclosureGroup(\"How do I freeze my card?\", isExpanded: $isExpanded) {\n    Text(\"Open the card, then choose Freeze.\")\n}\n.disclosureGroupStyle(.registryAccordion)",
   "files": [
     {
@@ -48,9 +48,9 @@
   ],
   "accessibility": [
     "Preserves the native DisclosureGroup binding; the header is a plain Button that toggles isExpanded.",
-    "Reports Expanded or Collapsed as the header's accessibility value and adds the selected trait while expanded.",
+    "Reports Expanded or Collapsed as the header's accessibility value; no selection trait is added, so VoiceOver speaks one state word.",
     "The chevron is decorative and hidden; the header keeps the 44 point minimum height.",
-    "Expansion animates with the snappy curve and switches to an immediate change under Reduce Motion."
+    "Tapping the header animates expansion with the snappy curve and switches to an immediate change under Reduce Motion; a caller that changes isExpanded programmatically chooses its own animation."
   ],
   "preview": {
     "source": "sources/components/RegistryAccordionStyle.swift",

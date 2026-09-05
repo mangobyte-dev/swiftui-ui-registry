@@ -31,6 +31,7 @@ public struct PreviewWall: View {
             DeveloperProfile()
             IconPreviewGrid()
             InviteTeam()
+            Invoice()
         }
     }
 

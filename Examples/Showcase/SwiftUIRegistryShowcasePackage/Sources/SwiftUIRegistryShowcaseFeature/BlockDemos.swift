@@ -120,6 +120,20 @@ struct AuthenticationDemo: View {
             onSecondaryAction: {},
             onSubmit: submit
         )
+        // The fake submission is a task tied to the view, so it is cancelled
+        // if the screen goes away mid-flight instead of writing into it.
+        .task(id: isSubmitting) {
+            guard isSubmitting else { return }
+            // Two seconds keeps the submitting window long enough for the UI
+            // tests to observe the disabled controls deterministically.
+            do {
+                try await Task.sleep(for: .seconds(2))
+            } catch {
+                return
+            }
+            isSubmitting = false
+            formError = "We could not sign you in. Try again."
+        }
     }
 
     private func submit() {
@@ -128,13 +142,6 @@ struct AuthenticationDemo: View {
         formError = nil
         guard emailError == nil, passwordError == nil else { return }
         isSubmitting = true
-        Task {
-            // Two seconds keeps the submitting window long enough for the UI
-            // tests to observe the disabled controls deterministically.
-            try? await Task.sleep(for: .seconds(2))
-            isSubmitting = false
-            formError = "We could not sign you in. Try again."
-        }
     }
 }
 
@@ -264,7 +271,7 @@ struct ActivityFeedDemo: View {
                 title: Text("Salary received"),
                 detail: Text("KWD 2,450.000 from Harbor Bank"),
                 timestamp: Text("Yesterday"),
-                initials: "WB",
+                initials: "HB",
                 senderName: Text("Harbor Bank")
             ),
             ActivityItem(

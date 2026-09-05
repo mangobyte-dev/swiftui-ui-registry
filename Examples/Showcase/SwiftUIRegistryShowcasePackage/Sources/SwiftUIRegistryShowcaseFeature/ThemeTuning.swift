@@ -33,7 +33,11 @@ struct ThemeTuning: Codable, Equatable {
 
         func color(custom: RGB, dark: RGB? = nil) -> Color? {
             switch self {
-            case .system: nil
+            // The app accent rather than nil: registryTheme(_:) can only apply
+            // the tint conditionally, so a theme that flips between nil and a
+            // value replaces the whole subtree and throws the panel off its
+            // tab. The export still omits the accent for System.
+            case .system: Color.accentColor
             case .ink: .primary
             case .blue: .blue
             case .indigo: .indigo
@@ -133,6 +137,35 @@ struct ThemeTuning: Codable, Equatable {
     var rightToLeft = false
 
     static let `default` = ThemeTuning()
+
+    // MARK: Projections for the panel's controls
+
+    /// The custom accent as a color; setting it also selects the custom accent.
+    var customAccentColor: Color {
+        get { customAccent.color }
+        set {
+            customAccent = RGB(newValue)
+            accent = .custom
+        }
+    }
+
+    /// Whether dark appearance uses its own custom accent.
+    var hasSeparateDarkAccent: Bool {
+        get { customAccentDark != nil }
+        set {
+            customAccentDark = newValue ? customAccent : nil
+            if newValue { accent = .custom }
+        }
+    }
+
+    /// The dark custom accent as a color; setting it also selects the custom accent.
+    var customAccentDarkColor: Color {
+        get { (customAccentDark ?? customAccent).color }
+        set {
+            customAccentDark = RGB(newValue)
+            accent = .custom
+        }
+    }
 
     // MARK: Derived
 

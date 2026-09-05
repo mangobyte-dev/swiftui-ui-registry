@@ -32,6 +32,15 @@ struct TuningPanel: View {
                 }
             }
             .navigationTitle("Tune")
+            .task(id: didCopy) {
+                guard didCopy else { return }
+                do {
+                    try await Task.sleep(for: .seconds(1.5))
+                } catch {
+                    return
+                }
+                didCopy = false
+            }
             .sheet(isPresented: $isImporting) {
                 ImportThemeSheet(text: $importText, failed: $importFailed) {
                     if let parsed = ThemeTuning.parse(importText, into: tuning) {
@@ -59,10 +68,6 @@ struct TuningPanel: View {
                     Button(didCopy ? "Copied" : "Copy Swift", systemImage: didCopy ? "checkmark" : "doc.on.doc") {
                         UIPasteboard.general.string = tuning.swiftSource
                         didCopy = true
-                        Task {
-                            try? await Task.sleep(for: .seconds(1.5))
-                            didCopy = false
-                        }
                     }
                 }
             }
@@ -118,39 +123,10 @@ struct TuningPanel: View {
                 }
                 .padding(.vertical, 4)
 
-                ColorPicker(
-                    "Custom accent",
-                    selection: Binding(
-                        get: { tuning.customAccent.color },
-                        set: { color in
-                            tuning.customAccent = ThemeTuning.RGB(color)
-                            tuning.accent = .custom
-                        }
-                    ),
-                    supportsOpacity: false
-                )
-                Toggle(
-                    "Separate dark accent",
-                    isOn: Binding(
-                        get: { tuning.customAccentDark != nil },
-                        set: { enabled in
-                            tuning.customAccentDark = enabled ? tuning.customAccent : nil
-                            if enabled { tuning.accent = .custom }
-                        }
-                    )
-                )
-                if let dark = tuning.customAccentDark {
-                    ColorPicker(
-                        "Custom accent in dark",
-                        selection: Binding(
-                            get: { dark.color },
-                            set: { color in
-                                tuning.customAccentDark = ThemeTuning.RGB(color)
-                                tuning.accent = .custom
-                            }
-                        ),
-                        supportsOpacity: false
-                    )
+                ColorPicker("Custom accent", selection: $tuning.customAccentColor, supportsOpacity: false)
+                Toggle("Separate dark accent", isOn: $tuning.hasSeparateDarkAccent)
+                if tuning.customAccentDark != nil {
+                    ColorPicker("Custom accent in dark", selection: $tuning.customAccentDarkColor, supportsOpacity: false)
                 }
                 Toggle("Dark label on accent", isOn: $tuning.darkLabelOnAccent)
                     .disabled(tuning.accent == .ink)

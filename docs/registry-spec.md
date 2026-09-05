@@ -92,3 +92,5 @@ An agent should:
 6. Compose through the public initializer rather than rewriting the item from memory
 7. Compile the consumer at its deployment floor
 8. Before `--update`, audit owned source against the canonical registry with `Scripts/install.py <item> --diff --destination <path>`, which requires the installation receipt and exits 0 on parity or 1 with unified diffs
+
+The same steps are available as MCP tools from `Scripts/mcp_server.py` (`search_items`, `describe_item`, `plan_install`, `diff_item`, `install_item`) over the stdio transport; `Tests/RegistryTests/test_mcp_server.py` drives the real subprocess and pins the wire shape

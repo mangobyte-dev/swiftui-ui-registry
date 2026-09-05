@@ -80,7 +80,7 @@ Three derived surfaces present the same metadata, and none is hand-edited: the m
 
 `Scripts/search.py` is a deterministic adapter over the existing JSON. It filters kind and platform compatibility, requires every query term to match indexed metadata, and emits stable JSON results with the information an agent needs before installation
 
-Search remains a local script because the current catalog does not justify network hosting or an MCP seam. A hosted adapter becomes useful only when distribution, authentication, or catalog scale varies independently from local metadata
+Search remains a local script; `Scripts/mcp_server.py` is a thin stdio adapter over the same code so an agent inside a consuming app can search, plan, and install without leaving its editor. A hosted adapter becomes useful only when distribution, authentication, or catalog scale varies independently from local metadata
 
 ## Platform decision
 

@@ -140,6 +140,23 @@ python3 Scripts/install.py finance-overview \
 
 `--diff` prints a unified diff of each receipt-backed owned file against the canonical registry source. It exits 0 when every file is identical and 1 when differences exist, and it requires an existing installation receipt. Run it before `--update` to see exactly what local customization is at stake
 
+### MCP server
+
+`Scripts/mcp_server.py` exposes the same operations (search, describe, plan, diff, install) as MCP tools over stdio with no dependencies beyond Python. Register it in your MCP client, for example Claude Code's `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "swiftui-registry": {
+      "command": "python3",
+      "args": ["/path/to/swiftui-cn/Scripts/mcp_server.py"]
+    }
+  }
+}
+```
+
+The read-only tools carry `readOnlyHint`; `install_item` carries `destructiveHint` so clients prompt before it writes. Recipes report native guidance and install nothing
+
 ## Compose
 
 ```swift

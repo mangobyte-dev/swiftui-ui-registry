@@ -30,6 +30,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import zlib
 from pathlib import Path
 
 _SCRIPTS = Path(__file__).resolve().parent
@@ -82,6 +83,40 @@ def boot(udid: str) -> None:
     run(["xcrun", "simctl", "bootstatus", udid, "-b"])
 
 
+def first_pixel(path: Path) -> tuple[int, int, int]:
+    """The top-left pixel of a PNG, decoded without an image library."""
+    data = path.read_bytes()
+    position = 8
+    width = 0
+    channels = 3
+    compressed = b""
+    while position < len(data):
+        length = int.from_bytes(data[position:position + 4], "big")
+        kind = data[position + 4:position + 8]
+        body = data[position + 8:position + 8 + length]
+        if kind == b"IHDR":
+            width = int.from_bytes(body[0:4], "big")
+            channels = 4 if body[9] == 6 else 3
+        elif kind == b"IDAT":
+            compressed += body
+        elif kind == b"IEND":
+            break
+        position += 12 + length
+    # The first byte of the row is its filter; every filter leaves the very
+    # first pixel unchanged, so no reconstruction is needed for it.
+    row = zlib.decompressobj().decompress(compressed, 1 + width * channels)
+    return (row[1], row[2], row[3])
+
+
+def shows_app_background(path: Path, appearance: str) -> bool:
+    """Whether a screenshot starts with the app's own background: white in
+    light appearance, black in dark. The home screen wallpaper is neither."""
+    red, green, blue = first_pixel(path)
+    if appearance == "dark":
+        return max(red, green, blue) <= 8
+    return min(red, green, blue) >= 245
+
+
 def capture(
     udid: str,
     name: str,
@@ -111,7 +146,19 @@ def capture(
         raise RuntimeError(f"{name} ({appearance}) never reported its frame; is the demo registered?")
     # Let the first layout pass, symbol effects, and the tab-less window settle.
     time.sleep(0.9)
-    run(["xcrun", "simctl", "io", udid, "screenshot", "--type=png", str(raw_path)])
+    # The frame arrives at first layout, which on a cold launch (the first
+    # after an install) can precede the app reaching the screen; a screenshot
+    # taken then is the home screen. Accept a capture only when its top-left
+    # pixel is the app's own background for the requested appearance.
+    for _ in range(12):
+        run(["xcrun", "simctl", "io", udid, "screenshot", "--type=png", str(raw_path)])
+        if shows_app_background(raw_path, appearance):
+            break
+        time.sleep(0.5)
+    else:
+        raise RuntimeError(
+            f"{name} ({appearance}) never reached the foreground; the screenshot is not the app"
+        )
 
     info = json.loads(info_path.read_text())
     scale = info["scale"]

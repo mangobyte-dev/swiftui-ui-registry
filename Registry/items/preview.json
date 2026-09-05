@@ -78,6 +78,10 @@
     {
       "source": "sources/blocks/Preview/Invoice.swift",
       "target": "Preview/Invoice.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/LiveWaveform.swift",
+      "target": "Preview/LiveWaveform.swift"
     }
   ],
   "registryDependencies": [

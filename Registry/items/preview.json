@@ -42,6 +42,10 @@
     {
       "source": "sources/blocks/Preview/CodespacesCard.swift",
       "target": "Preview/CodespacesCard.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/ContributionsActivity.swift",
+      "target": "Preview/ContributionsActivity.swift"
     }
   ],
   "registryDependencies": [
@@ -57,7 +61,8 @@
     "separator",
     "field",
     "input-group",
-    "spinner"
+    "spinner",
+    "checkbox"
   ],
   "packageDependencies": [
     {

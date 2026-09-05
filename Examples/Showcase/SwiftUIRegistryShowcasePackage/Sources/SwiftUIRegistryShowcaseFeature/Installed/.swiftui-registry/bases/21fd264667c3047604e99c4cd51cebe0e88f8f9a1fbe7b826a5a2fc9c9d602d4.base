@@ -23,6 +23,7 @@ public struct PreviewWall: View {
             BarVisualizer()
             BookAppointment()
             CodespacesCard()
+            ContributionsActivity()
         }
     }
 

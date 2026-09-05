@@ -186,10 +186,6 @@ struct CodeBlock: View {
             Button {
                 UIPasteboard.general.string = code
                 didCopy = true
-                Task {
-                    try? await Task.sleep(for: .seconds(1.5))
-                    didCopy = false
-                }
             } label: {
                 Image(systemName: didCopy ? "checkmark" : "doc.on.doc")
                     .contentTransition(.symbolEffect(.replace))
@@ -199,6 +195,15 @@ struct CodeBlock: View {
             .background(.regularMaterial, in: Circle())
             .padding(theme.metrics.compactSpacing / 2)
             .accessibilityLabel(didCopy ? "Copied" : "Copy code")
+        }
+        .task(id: didCopy) {
+            guard didCopy else { return }
+            do {
+                try await Task.sleep(for: .seconds(1.5))
+            } catch {
+                return
+            }
+            didCopy = false
         }
     }
 }

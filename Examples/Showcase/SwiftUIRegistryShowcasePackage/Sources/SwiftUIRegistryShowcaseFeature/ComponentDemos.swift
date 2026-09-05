@@ -413,11 +413,19 @@ struct AlertDemo: View {
                 message: Text("The card on file was declined."),
                 variant: .destructive
             ) {
-                HStack {
-                    Button("Retry") {}
-                        .buttonStyle(.registry)
-                    Button("Change card") {}
-                        .buttonStyle(.registryOutline)
+                ViewThatFits(in: .horizontal) {
+                    HStack {
+                        Button("Retry") {}
+                            .buttonStyle(.registry)
+                        Button("Change card") {}
+                            .buttonStyle(.registryOutline)
+                    }
+                    VStack(alignment: .leading) {
+                        Button("Retry") {}
+                            .buttonStyle(.registry)
+                        Button("Change card") {}
+                            .buttonStyle(.registryOutline)
+                    }
                 }
             }
         }
@@ -430,9 +438,9 @@ struct AvatarDemo: View {
             HStack(spacing: 12) {
                 Avatar(
                     Image(systemName: "person.crop.circle.fill"),
-                    accessibilityLabel: Text("Mishmash Bakery")
+                    accessibilityLabel: Text(verbatim: "Mishmash Bakery")
                 )
-                Avatar(initials: "MK", accessibilityLabel: Text("Maya Khalid"))
+                Avatar(initials: "MK", accessibilityLabel: Text(verbatim: "Maya Khalid"))
                 Avatar(accessibilityLabel: Text("Unknown sender"))
             }
             HStack(alignment: .bottom, spacing: 12) {
@@ -511,14 +519,20 @@ struct AccordionDemo: View {
         VStack(spacing: 0) {
             DisclosureGroup("Is my card contactless?", isExpanded: $isFirstExpanded) {
                 Text("Yes. Hold it near the terminal until it confirms the payment.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
             Divider().registrySeparator()
             DisclosureGroup("How do I freeze my card?", isExpanded: $isSecondExpanded) {
                 Text("Open the card, then choose Freeze. Unfreeze the same way.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
             Divider().registrySeparator()
             DisclosureGroup("Can I change my PIN?", isExpanded: $isThirdExpanded) {
                 Text("Yes, from the card's settings or at any of our ATMs.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
         }
         .disclosureGroupStyle(.registryAccordion)
@@ -562,16 +576,15 @@ struct ItemDemo: View {
 
             Divider().registrySeparator()
 
-            ItemRow(
-                title: Text("Spending limit"),
-                description: Text("Applies to online purchases."),
-                accessory: {
-                    // labelsHidden also drops the accessibility label; restore it.
-                    Toggle("Spending limit", isOn: $limitEnabled)
-                        .labelsHidden()
-                        .accessibilityLabel("Spending limit")
-                }
-            )
+            // A switch row: the row is the toggle's label, so its words are
+            // part of the control and are spoken once.
+            Toggle(isOn: $limitEnabled) {
+                ItemRow(
+                    title: Text("Spending limit"),
+                    description: Text("Applies to online purchases.")
+                )
+            }
+            .toggleStyle(.switch)
             .padding(.vertical, theme.metrics.standardSpacing)
         }
         .padding(.horizontal, theme.metrics.standardSpacing)
@@ -581,7 +594,7 @@ struct ItemDemo: View {
 
 struct InputGroupDemo: View {
     @State private var query = ""
-    @State private var amount = "120"
+    @State private var amount = 120.0
 
     var body: some View {
         DemoSurface {
@@ -593,7 +606,7 @@ struct InputGroupDemo: View {
                     .accessibilityLabel("Search transactions")
             } trailing: {
                 if !query.isEmpty {
-                    Button("Clear", systemImage: "xmark.circle.fill") { query = "" }
+                    Button("Clear search", systemImage: "xmark.circle.fill") { query = "" }
                         .labelStyle(.iconOnly)
                         .buttonStyle(.registryGhost)
                         .controlSize(.small)
@@ -604,9 +617,9 @@ struct InputGroupDemo: View {
                 Text("KWD")
                     .font(.subheadline.weight(.medium))
             } content: {
-                TextField("Amount", text: $amount)
+                TextField("Amount", value: $amount, format: .number)
                     .keyboardType(.decimalPad)
-                    .accessibilityLabel("Amount")
+                    .accessibilityLabel("Amount in KWD")
                     .accessibilityHint("Enter an amount below your daily limit")
             }
             Text("Enter an amount below your daily limit")
@@ -673,13 +686,18 @@ enum DemoCommands {
     ]
 
     static func sections(matching query: String) -> [CommandSection<String>] {
-        ["Actions", "Recent"].map { name in
+        // Section titles stay literals so a string catalog can extract them.
+        let groups: [(id: String, title: LocalizedStringResource)] = [
+            ("Actions", "Actions"),
+            ("Recent", "Recent")
+        ]
+        return groups.map { group in
             CommandSection(
-                id: name,
-                title: LocalizedStringResource(stringLiteral: name),
+                id: group.id,
+                title: group.title,
                 entries: all
-                    .filter { $0.section == name }
-                    .filter { query.isEmpty || $0.name.localizedCaseInsensitiveContains(query) }
+                    .filter { $0.section == group.id }
+                    .filter { query.isEmpty || $0.name.localizedStandardContains(query) }
                     .map {
                         CommandEntry(
                             id: $0.id,

@@ -41,6 +41,11 @@
     "overview",
     "macronutrients"
   ],
+  "aliases": [
+    "macros",
+    "diet",
+    "calories"
+  ],
   "accessibility": [
     "Uses native Button and ProgressView semantics.",
     "Uses system text styles and adaptive macro rows for Dynamic Type.",

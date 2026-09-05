@@ -42,6 +42,12 @@
     "validation",
     "autofill"
   ],
+  "aliases": [
+    "login",
+    "sign-in",
+    "signin",
+    "password-form"
+  ],
   "accessibility": [
     "Both fields use label-plus-prompt initializers so the field titles are real accessibility labels, not placeholder-only text.",
     "Focus order is identity then password: the identity field submits with a Next return key that moves focus to the password field, and the password return key submits the form.",

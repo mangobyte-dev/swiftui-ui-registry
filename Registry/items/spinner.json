@@ -38,6 +38,11 @@
     "loading",
     "style"
   ],
+  "aliases": [
+    "loading",
+    "activity-indicator",
+    "progress-circular"
+  ],
   "accessibility": [
     "Retains native indeterminate ProgressView semantics.",
     "Requires an accessibility label when no visible loading label is supplied.",

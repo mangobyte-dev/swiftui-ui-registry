@@ -23,6 +23,10 @@
     "date-picker",
     "guidance"
   ],
+  "aliases": [
+    "date-picker",
+    "datepicker"
+  ],
   "accessibility": [
     "Native date pickers expose adjustable day cells and month navigation to VoiceOver.",
     "Locale, first weekday, and right-to-left month order come from the environment.",

@@ -38,6 +38,10 @@
     "form",
     "modifier"
   ],
+  "aliases": [
+    "text-editor",
+    "multiline"
+  ],
   "accessibility": [
     "Retains native TextEditor editing, selection, keyboard, and scrolling behavior.",
     "Requires a caller-supplied Text accessibility label because TextEditor has no prompt parameter.",

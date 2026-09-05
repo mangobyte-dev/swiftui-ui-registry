@@ -38,6 +38,10 @@
     "style",
     "shadcn"
   ],
+  "aliases": [
+    "cta",
+    "action-button"
+  ],
   "accessibility": [
     "Preserves native Button semantics and ButtonRole behavior.",
     "Maintains a minimum 44 by 44 point interaction area across control sizes.",

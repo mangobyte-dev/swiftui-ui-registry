@@ -24,6 +24,7 @@ The canonical schema is `Registry/schema.json`. JSON is used because it is inspe
 - `packageDependencies`: Swift package, product, and version requirement the consumer must provide; entries may add the package `sourceURL` and must pair any version requirement with a machine-resolvable `swiftPM` rule
 - `platforms`: declared Apple platform and minimum version
 - `tags`: discovery terms, not API behavior
+- `aliases`: optional kebab-case words people searched for and did not find (`dropdown`, `modal`, `loading`); search ranks an alias hit between a name hit and a tag hit. Add an alias from an observed miss, not from a thesaurus
 - `accessibility`: concrete behavior and known requirements
 - `preview`: for an installable item, the source file, the Xcode preview name, and optional screenshot paths, all required except the screenshots; a `recipe` may carry a `preview` with `screenshots` only, never a source or name, because it has no source of its own
 

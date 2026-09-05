@@ -23,6 +23,10 @@
     "hover",
     "guidance"
   ],
+  "aliases": [
+    "help",
+    "hint"
+  ],
   "accessibility": [
     "The hint is read after the label by VoiceOver.",
     "help text appears on pointer hover on iPad and macOS-style environments.",

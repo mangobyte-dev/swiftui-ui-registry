@@ -38,6 +38,10 @@
     "loading",
     "style"
   ],
+  "aliases": [
+    "progress-bar",
+    "linear-progress"
+  ],
   "accessibility": [
     "Retains native ProgressView progress semantics.",
     "Combines the caller's label, progress value, and current-value label in reading order.",

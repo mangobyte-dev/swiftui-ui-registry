@@ -39,6 +39,11 @@
     "shimmer",
     "shadcn"
   ],
+  "aliases": [
+    "loading",
+    "placeholder",
+    "shimmer"
+  ],
   "accessibility": [
     "Placeholder content is disabled and excluded from hit testing, so a placeholder can never trigger a product action.",
     "The whole placeholder is one accessibility element with a caller-adjustable loading label instead of exposing meaningless redacted text.",

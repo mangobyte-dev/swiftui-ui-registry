@@ -40,6 +40,10 @@
     "style",
     "toolbar"
   ],
+  "aliases": [
+    "control-group",
+    "segmented-buttons"
+  ],
   "accessibility": [
     "Retains native Button controls and the ControlGroup container supplied by the caller.",
     "Keeps each button's visible or derived accessibility label and role.",

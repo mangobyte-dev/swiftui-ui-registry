@@ -23,6 +23,10 @@
     "presentation",
     "guidance"
   ],
+  "aliases": [
+    "modal",
+    "sheet"
+  ],
   "accessibility": [
     "Sheets present as modal to VoiceOver and support swipe-to-dismiss and the escape gesture.",
     "Toolbar placements give Done and Cancel their system position and semantics.",

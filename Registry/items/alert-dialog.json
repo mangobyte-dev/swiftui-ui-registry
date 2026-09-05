@@ -24,6 +24,11 @@
     "modal",
     "guidance"
   ],
+  "aliases": [
+    "confirm",
+    "confirmation",
+    "modal"
+  ],
   "accessibility": [
     "Native alerts move VoiceOver focus into the dialog and restore it on dismissal.",
     "Button roles drive the destructive tint and the cancel position without custom styling.",

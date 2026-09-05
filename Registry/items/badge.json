@@ -38,6 +38,11 @@
     "category",
     "modifier"
   ],
+  "aliases": [
+    "chip",
+    "tag",
+    "pill"
+  ],
   "accessibility": [
     "Keeps its text on one line at its intrinsic width; a badge never wraps or breaks its label.",
     "Preserves the accessibility semantics and reading order of the modified Text or Label.",

@@ -23,6 +23,10 @@
     "ipad",
     "guidance"
   ],
+  "aliases": [
+    "split-view",
+    "navigation-split-view"
+  ],
   "accessibility": [
     "Sidebar rows are native list cells with selection semantics.",
     "The column toggle button is system-provided and labeled.",

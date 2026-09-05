@@ -22,6 +22,11 @@
         "faq",
         "shadcn"
       ],
+      "aliases": [
+        "disclosure",
+        "expandable",
+        "faq"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -74,6 +79,12 @@
         "notifications",
         "timeline",
         "loading"
+      ],
+      "aliases": [
+        "inbox",
+        "notifications",
+        "timeline",
+        "feed"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -168,6 +179,12 @@
         "status",
         "shadcn"
       ],
+      "aliases": [
+        "banner",
+        "notice",
+        "callout",
+        "inline-alert"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -221,6 +238,11 @@
         "modal",
         "guidance"
       ],
+      "aliases": [
+        "confirm",
+        "confirmation",
+        "modal"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -255,6 +277,7 @@
         "native",
         "guidance"
       ],
+      "aliases": [],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -288,6 +311,12 @@
         "form",
         "validation",
         "autofill"
+      ],
+      "aliases": [
+        "login",
+        "sign-in",
+        "signin",
+        "password-form"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -354,6 +383,11 @@
         "initials",
         "shadcn"
       ],
+      "aliases": [
+        "profile-image",
+        "initials",
+        "monogram"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -399,6 +433,11 @@
         "status",
         "category",
         "modifier"
+      ],
+      "aliases": [
+        "chip",
+        "tag",
+        "pill"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -447,6 +486,10 @@
         "style",
         "shadcn"
       ],
+      "aliases": [
+        "cta",
+        "action-button"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -492,6 +535,10 @@
         "action",
         "style",
         "toolbar"
+      ],
+      "aliases": [
+        "control-group",
+        "segmented-buttons"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -545,6 +592,10 @@
         "date-picker",
         "guidance"
       ],
+      "aliases": [
+        "date-picker",
+        "datepicker"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -578,6 +629,11 @@
         "surface",
         "container",
         "style"
+      ],
+      "aliases": [
+        "group-box",
+        "surface",
+        "panel"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -625,6 +681,9 @@
         "form",
         "style"
       ],
+      "aliases": [
+        "check"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -671,6 +730,10 @@
         "toggle",
         "guidance"
       ],
+      "aliases": [
+        "disclosure",
+        "expand"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -703,6 +766,10 @@
         "actions",
         "menu",
         "guidance"
+      ],
+      "aliases": [
+        "long-press",
+        "menu"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -738,6 +805,10 @@
         "presentation",
         "guidance"
       ],
+      "aliases": [
+        "modal",
+        "sheet"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -772,6 +843,7 @@
         "localization",
         "guidance"
       ],
+      "aliases": [],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -805,6 +877,11 @@
         "detents",
         "sheet",
         "guidance"
+      ],
+      "aliases": [
+        "bottom-sheet",
+        "sheet",
+        "detents"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -840,6 +917,10 @@
         "picker",
         "guidance"
       ],
+      "aliases": [
+        "dropdown",
+        "menu"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -873,6 +954,11 @@
         "content-unavailable",
         "state",
         "shadcn"
+      ],
+      "aliases": [
+        "empty-state",
+        "no-data",
+        "content-unavailable"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -917,6 +1003,11 @@
         "dashboard",
         "overview",
         "transactions"
+      ],
+      "aliases": [
+        "dashboard",
+        "wallet",
+        "balance"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -979,6 +1070,11 @@
         "form",
         "style"
       ],
+      "aliases": [
+        "text-field",
+        "textfield",
+        "secure-field"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1025,6 +1121,11 @@
         "cell",
         "media",
         "shadcn"
+      ],
+      "aliases": [
+        "row",
+        "list-item",
+        "cell"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1083,6 +1184,9 @@
         "alignment",
         "style"
       ],
+      "aliases": [
+        "icon-label"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1128,6 +1232,7 @@
         "progress",
         "macronutrients"
       ],
+      "aliases": [],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1172,6 +1277,7 @@
         "health",
         "analytics"
       ],
+      "aliases": [],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1217,6 +1323,10 @@
         "selection",
         "guidance"
       ],
+      "aliases": [
+        "picker",
+        "menu-picker"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1251,6 +1361,11 @@
         "dashboard",
         "overview",
         "macronutrients"
+      ],
+      "aliases": [
+        "macros",
+        "diet",
+        "calories"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1308,6 +1423,10 @@
         "anchored",
         "guidance"
       ],
+      "aliases": [
+        "hover-card",
+        "tooltip-popover"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1340,6 +1459,10 @@
         "linear",
         "loading",
         "style"
+      ],
+      "aliases": [
+        "progress-bar",
+        "linear-progress"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1387,6 +1510,7 @@
         "options",
         "guidance"
       ],
+      "aliases": [],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1422,6 +1546,10 @@
         "indicators",
         "guidance"
       ],
+      "aliases": [
+        "scroll-view",
+        "scrollview"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1454,6 +1582,10 @@
         "menu",
         "form",
         "modifier"
+      ],
+      "aliases": [
+        "picker",
+        "dropdown"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1501,6 +1633,10 @@
         "inset",
         "modifier"
       ],
+      "aliases": [
+        "divider",
+        "hairline"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1546,6 +1682,10 @@
         "section",
         "toggle",
         "form"
+      ],
+      "aliases": [
+        "preferences",
+        "settings-list"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1611,6 +1751,10 @@
         "ipad",
         "guidance"
       ],
+      "aliases": [
+        "split-view",
+        "navigation-split-view"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1645,6 +1789,11 @@
         "redacted",
         "shimmer",
         "shadcn"
+      ],
+      "aliases": [
+        "loading",
+        "placeholder",
+        "shimmer"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1692,6 +1841,7 @@
         "control",
         "guidance"
       ],
+      "aliases": [],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1726,6 +1876,11 @@
         "circular",
         "loading",
         "style"
+      ],
+      "aliases": [
+        "loading",
+        "activity-indicator",
+        "progress-circular"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1773,6 +1928,9 @@
         "boolean",
         "guidance"
       ],
+      "aliases": [
+        "toggle-switch"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1808,6 +1966,10 @@
         "selection",
         "guidance"
       ],
+      "aliases": [
+        "segmented",
+        "segmented-control"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -1842,6 +2004,10 @@
         "multiline",
         "form",
         "modifier"
+      ],
+      "aliases": [
+        "text-editor",
+        "multiline"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1888,6 +2054,9 @@
         "selection",
         "formatting",
         "style"
+      ],
+      "aliases": [
+        "toggle-button"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1940,6 +2109,10 @@
         "control-group",
         "multi-selection",
         "modifier"
+      ],
+      "aliases": [
+        "control-group",
+        "multi-select"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1998,6 +2171,10 @@
         "hover",
         "guidance"
       ],
+      "aliases": [
+        "help",
+        "hint"
+      ],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -2031,6 +2208,7 @@
         "finance",
         "activity"
       ],
+      "aliases": [],
       "platforms": [
         "iOS 26.0+"
       ],

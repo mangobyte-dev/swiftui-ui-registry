@@ -23,6 +23,10 @@
     "anchored",
     "guidance"
   ],
+  "aliases": [
+    "hover-card",
+    "tooltip-popover"
+  ],
   "accessibility": [
     "Popover content is reachable by VoiceOver and dismissed with the escape gesture.",
     "Never place information only in a popover; keep the trigger label meaningful on its own."

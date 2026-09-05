@@ -42,6 +42,10 @@
     "toggle",
     "form"
   ],
+  "aliases": [
+    "preferences",
+    "settings-list"
+  ],
   "accessibility": [
     "The section title renders with the header accessibility trait so the VoiceOver rotor can jump between settings sections.",
     "Rows keep native control semantics: the block never hides or renames a control, and every control's accessibility name comes from its visible label. Callers who hide a label (.labelsHidden()) must supply their own accessibility label.",

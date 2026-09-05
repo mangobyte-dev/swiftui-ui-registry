@@ -55,6 +55,7 @@ def render(repository_root: Path) -> dict:
             "usage": item["usage"],
             "docs": item.get("docs"),
             "tags": item["tags"],
+            "aliases": item.get("aliases", []),
             "platforms": [f'{p["name"]} {p["minimumVersion"]}+' for p in item["platforms"]],
             "dependencies": item["registryDependencies"],
             "installOrder": [] if is_recipe else [

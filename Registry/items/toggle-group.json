@@ -41,6 +41,10 @@
     "multi-selection",
     "modifier"
   ],
+  "aliases": [
+    "control-group",
+    "multi-select"
+  ],
   "accessibility": [
     "Retains each native Toggle's independent state and activation behavior.",
     "Keeps all selection bindings caller-owned.",

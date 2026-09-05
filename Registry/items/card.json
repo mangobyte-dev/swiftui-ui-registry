@@ -38,6 +38,11 @@
     "container",
     "style"
   ],
+  "aliases": [
+    "group-box",
+    "surface",
+    "panel"
+  ],
   "accessibility": [
     "Preserves the native accessibility elements and reading order supplied by the GroupBox label and content.",
     "Uses system text styles and allows content to grow vertically with Dynamic Type.",

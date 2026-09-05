@@ -25,7 +25,7 @@ On conflict: state beats archives, the more recent dated record wins between arc
 - `Registry/sources/components/` contains source-owned styles, focused modifiers, and reusable compositions
 - `Registry/sources/blocks/` contains source-owned compositions of components
 - `Registry/items/` is machine-readable metadata and the dependency graph
-- `Examples/Showcase/` proves installation, integration, and visual contracts. It is a browsable catalog (Components, Blocks, Recipes, Tune) whose item list and usage snippets come from the generated manifest; every item has a demo registered in `ItemDemos.swift`, and the `-item <name>` launch renders that demo alone for capture
+- `Examples/Showcase/` proves installation, integration, and visual contracts. It is a browsable catalog (Components, Blocks, Recipes) with the tuning panel beside it, whose item list and usage snippets come from the generated manifest; every item has a demo registered in `ItemDemos.swift`, and the `-item <name>` launch renders that demo alone for capture
 
 ## Rules
 

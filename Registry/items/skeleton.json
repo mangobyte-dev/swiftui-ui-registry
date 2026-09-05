@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "skeleton",
   "kind": "component",
   "description": "Turns any view into a loading placeholder with native redaction, disabled interaction, one loading accessibility element, and a pulse that stops under Reduce Motion.",
@@ -48,7 +48,7 @@
     "Placeholder content is disabled and excluded from hit testing, so a placeholder can never trigger a product action.",
     "The whole placeholder is one accessibility element with a caller-adjustable loading label instead of exposing meaningless redacted text.",
     "The opacity pulse is replaced by a static dimmed state when Reduce Motion is on.",
-    "Uses native .redacted(reason: .placeholder), so the real content's layout is preserved and nothing is re-implemented."
+    "Uses native .redacted(reason: .placeholder) and applies every treatment in both states, so the wrapped content keeps its identity, state, and layout when loading starts or ends."
   ],
   "preview": {
     "source": "sources/components/RegistrySkeletonModifier.swift",

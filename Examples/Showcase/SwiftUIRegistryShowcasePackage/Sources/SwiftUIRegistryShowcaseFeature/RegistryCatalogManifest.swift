@@ -379,7 +379,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "skeleton",
             kind: "component",
-            version: "0.1.0",
+            version: "0.2.0",
             description: "Turns any view into a loading placeholder with native redaction, disabled interaction, one loading accessibility element, and a pulse that stops under Reduce Motion.",
             usage: "@State private var isLoading = true\n\nActivityRows()\n    .registrySkeleton(isLoading)\n\n// Pass false to render the real content unchanged.",
             dependencies: [],

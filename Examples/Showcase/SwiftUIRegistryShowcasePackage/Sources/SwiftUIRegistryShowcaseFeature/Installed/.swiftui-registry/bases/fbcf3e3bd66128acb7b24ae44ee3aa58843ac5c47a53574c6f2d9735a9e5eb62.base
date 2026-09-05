@@ -22,35 +22,43 @@ public extension View {
 
 private struct RegistrySkeletonModifier: ViewModifier {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var isDimmed = false
 
     let isActive: Bool
     let accessibilityLabel: LocalizedStringResource
 
-    @ViewBuilder
+    // Every modifier applies in both states so the content keeps one
+    // structural identity: flipping isActive never resets the state, focus,
+    // or scroll position of the view it wraps.
     func body(content: Content) -> some View {
-        if isActive {
-            placeholder(content)
-                .disabled(true)
-                .allowsHitTesting(false)
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(Text(accessibilityLabel))
-        } else {
-            content
-        }
+        content
+            .redacted(reason: isActive ? .placeholder : [])
+            .opacity(opacity)
+            .animation(pulse, value: isDimmed)
+            .disabled(isActive)
+            .allowsHitTesting(!isActive)
+            .accessibilityHidden(isActive)
+            .overlay {
+                if isActive {
+                    Color.clear
+                        .accessibilityElement()
+                        .accessibilityLabel(Text(accessibilityLabel))
+                }
+            }
+            .task(id: isActive) {
+                isDimmed = isActive && !reduceMotion
+            }
     }
 
-    @ViewBuilder
-    private func placeholder(_ content: Content) -> some View {
-        let redacted = content.redacted(reason: .placeholder)
-        if reduceMotion {
-            redacted.opacity(0.7)
-        } else {
-            redacted.phaseAnimator([1.0, 0.45]) { view, phase in
-                view.opacity(phase)
-            } animation: { _ in
-                .easeInOut(duration: 0.9)
-            }
-        }
+    private var opacity: Double {
+        guard isActive else { return 1 }
+        if reduceMotion { return 0.7 }
+        return isDimmed ? 0.45 : 1
+    }
+
+    private var pulse: Animation? {
+        guard isActive, !reduceMotion else { return nil }
+        return .easeInOut(duration: 0.9).repeatForever(autoreverses: true)
     }
 }
 

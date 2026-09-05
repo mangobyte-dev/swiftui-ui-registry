@@ -46,12 +46,12 @@ ActivityRows()
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.2.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Placeholder content is disabled and excluded from hit testing, so a placeholder can never trigger a product action.
   - The whole placeholder is one accessibility element with a caller-adjustable loading label instead of exposing meaningless redacted text.
   - The opacity pulse is replaced by a static dimmed state when Reduce Motion is on.
-  - Uses native .redacted(reason: .placeholder), so the real content's layout is preserved and nothing is re-implemented.
+  - Uses native .redacted(reason: .placeholder) and applies every treatment in both states, so the wrapped content keeps its identity, state, and layout when loading starts or ends.
 - Source: [sources/components/RegistrySkeletonModifier.swift](../../Registry/sources/components/RegistrySkeletonModifier.swift), with the `Skeleton` Xcode preview

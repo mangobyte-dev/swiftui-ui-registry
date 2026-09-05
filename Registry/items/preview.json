@@ -90,6 +90,10 @@
     {
       "source": "sources/blocks/Preview/NotFound.swift",
       "target": "Preview/NotFound.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/ObservabilityCard.swift",
+      "target": "Preview/ObservabilityCard.swift"
     }
   ],
   "registryDependencies": [

@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "checkbox",
   "kind": "component",
   "description": "Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.",
@@ -45,7 +45,7 @@
     "Uses a native Toggle as its accessibility representation.",
     "Requires the caller's visible Toggle label and preserves the enabled state.",
     "Provides a 44-point minimum row height and does not communicate selection by color alone.",
-    "Inherits Dynamic Type and layout direction."
+    "Inherits Dynamic Type for the label, the glyph, and the box, which scales with the body text style, and inherits layout direction."
   ],
   "preview": {
     "source": "sources/components/RegistryCheckboxToggleStyle.swift",

@@ -127,7 +127,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "checkbox",
             kind: "component",
-            version: "0.2.0",
+            version: "0.3.0",
             description: "Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.",
             usage: "@State private var accepted = false\n\nToggle(\"Accept terms\", isOn: $accepted)\n    .toggleStyle(.registryCheckbox)",
             dependencies: [],

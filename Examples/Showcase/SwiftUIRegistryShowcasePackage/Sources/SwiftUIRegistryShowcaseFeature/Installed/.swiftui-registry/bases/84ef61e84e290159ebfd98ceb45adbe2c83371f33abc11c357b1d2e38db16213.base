@@ -5,6 +5,8 @@ import SwiftUIRegistryFoundations
 public struct RegistryCheckboxToggleStyle: ToggleStyle {
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.registryTheme) private var theme
+    // The box scales with the label's text so it never shrinks beside large type.
+    @ScaledMetric(relativeTo: .body) private var boxSize: CGFloat = 22
 
     public init() {}
 
@@ -36,13 +38,8 @@ public struct RegistryCheckboxToggleStyle: ToggleStyle {
             .font(.caption2.weight(.bold))
             .foregroundStyle(.tint)
             .opacity(isSelected ? 1 : 0)
-            .frame(width: 22, height: 22)
-            .background(
-                isSelected
-                    ? AnyShapeStyle(TintShapeStyle().opacity(0.16))
-                    : AnyShapeStyle(Color.clear),
-                in: shape
-            )
+            .frame(width: boxSize, height: boxSize)
+            .background(TintShapeStyle().opacity(isSelected ? 0.16 : 0), in: shape)
             .overlay {
                 shape.stroke(
                     isSelected ? AnyShapeStyle(TintShapeStyle()) : AnyShapeStyle(theme.border),
@@ -58,13 +55,26 @@ public extension ToggleStyle where Self == RegistryCheckboxToggleStyle {
 }
 
 private struct RegistryCheckboxToggleStylePreview: View {
+    private struct Channel: Identifiable {
+        let id: String
+        var isOn: Bool
+    }
+
     @State private var accepted = true
     @State private var updates = false
+    @State private var channels = [
+        Channel(id: "push", isOn: true),
+        Channel(id: "email", isOn: false)
+    ]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Toggle("Accept terms", isOn: $accepted)
             Toggle("Product updates", isOn: $updates)
+            // Mixed state: a select-all row over channels that disagree.
+            Toggle(sources: $channels, isOn: \.isOn) {
+                Text("All channels")
+            }
             Toggle("Unavailable option", isOn: .constant(false))
                 .disabled(true)
         }

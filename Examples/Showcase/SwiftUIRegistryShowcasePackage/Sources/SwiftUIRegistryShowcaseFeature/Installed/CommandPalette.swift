@@ -50,6 +50,8 @@ public struct CommandSection<ID: Hashable>: Identifiable {
 /// the caller through the query binding and the selection closure.
 public struct CommandPalette<ID: Hashable>: View {
     @Environment(\.registryTheme) private var theme
+    // The symbol column scales with the body text the symbols are drawn in.
+    @ScaledMetric(relativeTo: .body) private var symbolWidth: CGFloat = 28
 
     @Binding private var query: String
     private let prompt: LocalizedStringResource
@@ -60,7 +62,7 @@ public struct CommandPalette<ID: Hashable>: View {
 
     public init(
         query: Binding<String>,
-        prompt: LocalizedStringResource = "Search",
+        prompt: LocalizedStringResource = LocalizedStringResource("Search", comment: "Placeholder inside the command search field"),
         sections: [CommandSection<ID>],
         emptyTitle: LocalizedStringResource = "No results",
         emptyDescription: Text? = nil,
@@ -140,7 +142,7 @@ public struct CommandPalette<ID: Hashable>: View {
                 Image(systemName: entry.systemImage)
                     .font(.body.weight(.medium))
                     .foregroundStyle(.tint)
-                    .frame(width: 28)
+                    .frame(width: symbolWidth)
                     .accessibilityHidden(true)
             } accessory: {
                 if let shortcut = entry.shortcut {
@@ -151,6 +153,8 @@ public struct CommandPalette<ID: Hashable>: View {
             .padding(.vertical, theme.metrics.compactSpacing)
         }
         .buttonStyle(.plain)
+        // Voice Control can name the row by its title alone.
+        .accessibilityInputLabels([entry.title])
     }
 }
 
@@ -165,13 +169,19 @@ private struct CommandPalettePreview: View {
         ("bakery", "Mishmash Bakery", "KWD 8.750, today", "cup.and.saucer.fill", nil, "Recent"),
     ]
 
+    // Section titles stay literals so a string catalog can extract them.
+    private let groups: [(id: String, title: LocalizedStringResource)] = [
+        ("Actions", "Actions"),
+        ("Recent", "Recent")
+    ]
+
     private var sections: [CommandSection<String>] {
-        ["Actions", "Recent"].map { name in
+        groups.map { group in
             CommandSection(
-                id: name,
-                title: LocalizedStringResource(stringLiteral: name),
+                id: group.id,
+                title: group.title,
                 entries: commands
-                    .filter { $0.section == name && (query.isEmpty || $0.name.localizedCaseInsensitiveContains(query)) }
+                    .filter { $0.section == group.id && (query.isEmpty || $0.name.localizedStandardContains(query)) }
                     .map {
                         CommandEntry(
                             id: $0.id,

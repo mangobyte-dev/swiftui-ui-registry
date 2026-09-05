@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "command-search",
   "kind": "block",
   "description": "Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.",
@@ -47,7 +47,7 @@
     "global-search"
   ],
   "accessibility": [
-    "The search field is labeled with its prompt; commands are native Buttons with combined labels; section titles are headers.",
+    "The search field is labeled with its prompt; commands are native Buttons with combined labels; the screen title and section titles are headers.",
     "No results is a native ContentUnavailableView with caller copy, never a blank surface.",
     "Each legend line combines its action and spoken shortcut into one element; keycaps are hidden unless labeled.",
     "Selection, filtering, and the query stay caller-owned, so the screen never triggers an action on its own."

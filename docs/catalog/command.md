@@ -52,12 +52,12 @@ CommandPalette(
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [input-group](input-group.md) 0.2.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [kbd](kbd.md) 0.1.1, [empty](empty.md) 0.1.0, [command](command.md) 0.1.0
+- Installs in order: [button](button.md) 0.5.0, [input-group](input-group.md) 0.2.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [kbd](kbd.md) 0.1.1, [empty](empty.md) 0.1.0, [command](command.md) 0.2.0
 - Accessibility contract:
   - The search field carries its prompt as an explicit accessibility label and uses the search return key.
-  - Section titles are headers; each command is a native Button whose label combines title and detail.
+  - Section titles are headers; each command is a native Button whose label combines title and detail, and Voice Control can address a command by its title alone.
   - Shortcut keycaps speak the caller's shortcutLabel or stay hidden; the command symbol is decorative.
   - No results renders a native ContentUnavailableView with caller copy; filtering and ranking stay with the caller through the query binding.
 - Source: [sources/components/CommandPalette.swift](../../Registry/sources/components/CommandPalette.swift), with the `Command Palette` Xcode preview

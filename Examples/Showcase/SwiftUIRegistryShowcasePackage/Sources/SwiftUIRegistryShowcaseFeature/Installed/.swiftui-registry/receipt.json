@@ -23,17 +23,17 @@
     },
     "CommandPalette.swift": {
       "base": "bases/b44cc9fe32bbb74237996e0556b041a7dcc5972d193b83b1d3ef1412cee5040b.base",
-      "installedDigest": "sha256:e0483a266955fddd04e24ac1842120e4cc19dd6cb7ca92c1df7a117cabed379e",
+      "installedDigest": "sha256:0c596aaf59a76dfd6a4348b76e85802087d3f2a6dc549bc76703b8631e14049d",
       "item": "command",
-      "sourceDigest": "sha256:e0483a266955fddd04e24ac1842120e4cc19dd6cb7ca92c1df7a117cabed379e",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:0c596aaf59a76dfd6a4348b76e85802087d3f2a6dc549bc76703b8631e14049d",
+      "version": "0.2.0"
     },
     "CommandSearch.swift": {
       "base": "bases/ea8812f099cbdc82a8f23dd8c062de39931e3f1b74d27416cf85d990e4140eef.base",
-      "installedDigest": "sha256:880abd76538062447ec592e5f8af0e5d802c9b45027eb9ede7476b2ace9ba564",
+      "installedDigest": "sha256:b1360c4c528432b440e5b7a7420df9157e5ae60dd4096dd5d3c122c060a68af5",
       "item": "command-search",
-      "sourceDigest": "sha256:880abd76538062447ec592e5f8af0e5d802c9b45027eb9ede7476b2ace9ba564",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:b1360c4c528432b440e5b7a7420df9157e5ae60dd4096dd5d3c122c060a68af5",
+      "version": "0.2.0"
     },
     "FinanceOverview.swift": {
       "base": "bases/f9b286d5453416c4c440e65a4c2be76f47597245ad27cdad80314bf17053616c.base",
@@ -426,7 +426,7 @@
         "separator",
         "button"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     "command-search": {
       "packageDependencies": [
@@ -445,7 +445,7 @@
         "command",
         "kbd"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     "empty": {
       "packageDependencies": [

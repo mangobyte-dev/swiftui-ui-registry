@@ -45,6 +45,16 @@
                ReferencedContainer = "container:SwiftUIRegistryShowcase.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftUIRegistryShowcaseFeatureTests"
+               BuildableName = "SwiftUIRegistryShowcaseFeatureTests"
+               BlueprintName = "SwiftUIRegistryShowcaseFeatureTests"
+               ReferencedContainer = "container:SwiftUIRegistryShowcasePackage">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

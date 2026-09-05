@@ -25,6 +25,10 @@ let package = Package(
                     package: "SwiftUIRegistry"
                 )
             ]
+        ),
+        .testTarget(
+            name: "SwiftUIRegistryShowcaseFeatureTests",
+            dependencies: ["SwiftUIRegistryShowcaseFeature"]
         )
     ]
 )

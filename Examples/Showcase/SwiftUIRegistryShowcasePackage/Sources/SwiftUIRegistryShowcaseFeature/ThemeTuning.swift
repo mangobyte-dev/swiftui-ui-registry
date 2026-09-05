@@ -12,6 +12,9 @@ struct ThemeTuning: Codable, Equatable {
 
         var id: String { rawValue }
 
+        /// Every accent a swatch can show; the custom color has its own picker.
+        static let named: [Accent] = allCases.filter { $0 != .custom }
+
         var title: String {
             switch self {
             case .system: "System"
@@ -260,11 +263,16 @@ struct ThemeTuning: Codable, Equatable {
 
     // MARK: Import
 
-    /// Reads a `RegistryTheme(...)` initializer, in the exact shape ``swiftSource``
-    /// writes or any subset of its labeled arguments, into the knobs. Unknown or
-    /// malformed arguments are ignored; nothing is imported when no `RegistryTheme(`
-    /// call is present. Environment switches are never part of a theme.
+    /// Reads a preset code, with or without its `--preset` flag, or a
+    /// `RegistryTheme(...)` initializer in the exact shape ``swiftSource`` writes
+    /// or any subset of its labeled arguments, into the knobs. Unknown or
+    /// malformed arguments are ignored; nothing is imported when neither a code
+    /// nor a `RegistryTheme(` call is present. Environment switches are never
+    /// part of a theme.
     static func parse(_ swift: String, into base: ThemeTuning = .default) -> ThemeTuning? {
+        if let code = presetCode(in: swift) {
+            return ThemeTuning(presetCode: code, base: base)
+        }
         guard swift.contains("RegistryTheme(") else { return nil }
         var tuning = base
         let text = swift.replacingOccurrences(of: "\n", with: " ")
@@ -300,11 +308,15 @@ struct ThemeTuning: Codable, Equatable {
             return RGB(red: parts[0], green: parts[1], blue: parts[2])
         }
 
-        if text.contains("accent: Color(uiColor: UIColor {"), let light = rgb(after: ":"), let dark = rgb(after: "?") {
-            // The dual form lists the dark color after `?` and the light one after `:`.
+        let colors = text.matches(of: #/(?:UI)?Color\(red:\s*([0-9.]+),\s*green:\s*([0-9.]+),\s*blue:\s*([0-9.]+)/#).compactMap { match -> RGB? in
+            guard let red = Double(match.1), let green = Double(match.2), let blue = Double(match.3) else { return nil }
+            return RGB(red: red, green: green, blue: blue)
+        }
+        if text.contains("accent: Color(uiColor: UIColor {"), colors.count >= 2 {
+            // The dual form lists the dark color after `?`, then the light one after `:`.
             tuning.accent = .custom
-            tuning.customAccent = light
-            tuning.customAccentDark = dark
+            tuning.customAccentDark = colors[0]
+            tuning.customAccent = colors[1]
         } else if let range = text.range(of: "accent:\\s*\\.([a-z]+)", options: .regularExpression) {
             let word = text[range].split(separator: ".").last.map(String.init) ?? ""
             let presetNames: [String: Accent] = ["primary": .ink, "rose": .pink, "emerald": .green, "amber": .yellow, "graphite": .ink, "system": .system]
@@ -359,6 +371,16 @@ struct ThemeTuning: Codable, Equatable {
     // MARK: Persistence
 
     private static let storageKey = "showcase.tuning"
+
+    /// The knobs a catalog launch starts from: a `-preset` code wins,
+    /// `-default-tuning` resets them for the UI suite, and otherwise the last
+    /// persisted tuning returns.
+    static func initial(for arguments: LaunchArguments) -> ThemeTuning {
+        if let code = arguments.value(after: "-preset"), let tuned = ThemeTuning(presetCode: code) {
+            return tuned
+        }
+        return arguments.contains("-default-tuning") ? .default : restored()
+    }
 
     static func restored() -> ThemeTuning {
         guard let data = UserDefaults.standard.data(forKey: storageKey),

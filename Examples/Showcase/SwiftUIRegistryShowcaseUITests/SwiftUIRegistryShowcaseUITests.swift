@@ -579,12 +579,20 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
     // MARK: - Tuning panel
 
+    /// The panel opens from the strip above the tab bar and stays up as a
+    /// sheet the catalog remains interactive under.
+    @MainActor
+    private func openTuning(_ app: XCUIApplication) {
+        let tune = app.buttons["Tune"]
+        XCTAssertTrue(tune.waitForExistence(timeout: 5), "The tuning strip must be on screen from launch.")
+        tune.tap()
+        XCTAssertTrue(app.buttons["Copy Swift"].waitForExistence(timeout: 5), "The Tune button must present the panel.")
+    }
+
     @MainActor
     func testTuningPanelExportsTheSelectedPresetAsSwift() {
         let app = launchCatalog()
-        let tuneTab = app.tabBars.buttons["Tune"]
-        XCTAssertTrue(tuneTab.waitForExistence(timeout: 5))
-        tuneTab.tap()
+        openTuning(app)
 
         let graphite = app.buttons["Graphite"]
         XCTAssertTrue(graphite.waitForExistence(timeout: 5), "Foundation presets must be one tap away.")
@@ -608,12 +616,10 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     @MainActor
     func testTuningPanelImportsAPastedThemeIntoTheKnobs() {
         let app = launchCatalog()
-        let tuneTab = app.tabBars.buttons["Tune"]
-        XCTAssertTrue(tuneTab.waitForExistence(timeout: 5))
-        tuneTab.tap()
+        openTuning(app)
 
         app.buttons["Import"].tap()
-        let editor = app.textViews["Theme Swift"]
+        let editor = app.textViews["Preset code or Swift"]
         XCTAssertTrue(editor.waitForExistence(timeout: 3), "The import sheet must offer a labeled editor.")
         editor.tap()
         // A subset of arguments is enough: only the named knobs change.
@@ -631,14 +637,47 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertTrue(export.label.contains("disabledOpacity: 0.300"))
         XCTAssertTrue(export.label.contains("standardSpacing: 16"), "Knobs the paste does not name must keep their values.")
 
-        // Text without an initializer is refused, and the knobs stay put.
+        // Text without a code or an initializer is refused, and the knobs stay put.
         app.buttons["Import"].tap()
-        let editorAgain = app.textViews["Theme Swift"]
+        let editorAgain = app.textViews["Preset code or Swift"]
         XCTAssertTrue(editorAgain.waitForExistence(timeout: 3))
         editorAgain.tap()
         editorAgain.typeText("nothing here")
         app.buttons["Apply"].tap()
-        XCTAssertTrue(app.staticTexts["No RegistryTheme( initializer found in the pasted text."].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["No preset code or RegistryTheme( initializer found in the pasted text."].waitForExistence(timeout: 2))
+    }
+
+    /// Codes from `Tests/RegistryTests/preset_vectors.json`: Amber (yellow
+    /// accent, dark label) and Graphite (primary accent).
+    @MainActor
+    func testTuningStaysUpWhileBrowsingAndSpeaksPresetCodes() {
+        let app = launchCatalog(["-preset", "a13GkaOXWwIa"])
+        openTuning(app)
+        XCTAssertTrue(app.staticTexts["a13GkaOXWwIa"].waitForExistence(timeout: 3), "The panel must show the code it was launched with.")
+
+        // The catalog behind the panel keeps working: a row pushes its detail
+        // while the panel stays up, which is what makes live tuning possible.
+        let row = app.descendants(matching: .any).matching(identifier: "catalog.item.accordion").firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 3), "The list must remain reachable under the panel.")
+        row.tap()
+        XCTAssertTrue(app.navigationBars["accordion"].waitForExistence(timeout: 5), "The tuning panel must not block navigation.")
+        XCTAssertTrue(app.buttons["Copy Swift"].exists, "The panel must still be up after navigating.")
+
+        app.buttons["Import"].tap()
+        let editor = app.textViews["Preset code or Swift"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 3))
+        editor.tap()
+        editor.typeText("--preset a13GkaOXWxLl")
+        app.buttons["Apply"].tap()
+        XCTAssertTrue(app.staticTexts["a13GkaOXWxLl"].waitForExistence(timeout: 3), "An imported code must become the current code.")
+        let swiftRow = app.buttons["Swift"]
+        XCTAssertTrue(swiftRow.waitForExistence(timeout: 3))
+        swiftRow.tap()
+        let export = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "accent: .primary")
+        ).firstMatch
+        XCTAssertTrue(export.waitForExistence(timeout: 3), "The Graphite code must decode to the primary accent.")
+        XCTAssertTrue(export.label.contains("surface: .primary.opacity(0.050)"), "The code must carry every knob, not only the accent.")
     }
 
     // MARK: - Helpers

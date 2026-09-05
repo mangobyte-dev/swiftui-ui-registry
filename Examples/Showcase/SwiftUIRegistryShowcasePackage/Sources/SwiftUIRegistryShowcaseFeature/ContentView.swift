@@ -4,9 +4,11 @@ import SwiftUIRegistryFoundations
 
 /// The Showcase root. Three launch modes:
 ///
-/// - default: the browsable catalog (Components, Blocks, Recipes, Tune)
+/// - default: the browsable catalog (Components, Blocks, Recipes) with the
+///   tuning panel beside it; `-preset <code>` starts from that theme
 /// - `-item <name>`: one item's demo alone, for screenshot capture; honors
-///   `-appearance dark`, `-theme <preset>`, and `-capture-info <path>`
+///   `-appearance dark`, `-preset <code>` or `-theme <preset name>`, and
+///   `-capture-info <path>`
 /// - `-stage-one`: the Stage 1 test fixture screen
 public struct ContentView: View {
     public init() {}

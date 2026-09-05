@@ -69,7 +69,7 @@ A dependency entry is actionable, not only prose. `sourceURL` names the package 
 
 Pre-1.0 foundations evolve by minor version: within `0.minor.patch`, a patch release stays source compatible and a minor release may change the contract, so items pin `upToNextMinor` from their known-good floor. Copied source is verified against its declared platform floor and the recorded foundation range. The receipt records what each item required at install time, so a consumer can audit an installation against a later registry state
 
-`SwiftUIRegistryFoundations` 0.1.0 is the initial published contract. It is declared here because the repository carries no version tag yet (`git tag -l` is empty as of 2026-08-31); the first published tag must be `0.1.0` so declared floors resolve
+`SwiftUIRegistryFoundations` 0.1.0 is the initial published contract. The `0.1.0` tag was created on 2026-09-05 at the commit that introduced the accent and onAccent tokens; it resolves for consumers once pushed
 
 ## Evolution rules
 

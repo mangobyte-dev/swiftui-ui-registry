@@ -26,12 +26,32 @@ Updated 2026-09-05. This section and the per-stage Status lines are the only hom
 Standing debt already on record. A done-claim that touches one of these areas names it
 
 - iOS 26 runtime evidence: no iOS 26 simulator runtime is installed, so the floor is verified by compilation and the iOS 27 runtime only
-- No published tag: `git tag -l` is empty; the first tag must be `0.1.0` so declared floors resolve (`docs/registry-spec.md`). The site has no custom domain yet; `.github/workflows/pages.yml` remains as an alternative deploy path
+- The `0.1.0` tag exists locally (2026-09-05) and is not pushed, so the published URL still resolves nothing until the owner pushes it (`docs/registry-spec.md`). The site has no custom domain yet; `.github/workflows/pages.yml` remains as an alternative deploy path
 - `--update` three-way merge is unexercised by any consumer outside this repository's tests (`docs/clean-room-trial.md`, Deferrals)
 - The clean-room trial predates the iOS 26 floor and used a SwiftPM library consumer; an Xcode-project consumer is unexercised
 - Visual threshold coarseness: the 2 percent tolerance at 96 by 192 absorbed a whole tab-bar change once (`docs/visual-testing.md`, GOLDEN-CHANGE 2026-09-01)
 - seeFood's theme bridge compiles unchanged against the 2026-09-05 foundations (every new initializer argument has a default) but does not yet set `accent` or `onAccent`; adopting them is that app's decision
 - Reduce Motion, VoiceOver announcement timing, and the accordion's rotation are verified structurally and on the simulator, not on a device
+
+## Backlog (2026-09-05)
+
+The honest list of what would bite the first outside adopter and what was left thin, in the order it is being worked. Each line carries its status; a done line names its evidence
+
+1. Tag `0.1.0` so declared floors resolve. Status: local annotated tag created; pushing it is the owner's call
+2. Track `AGENTS.md` and `CLAUDE.md` so contributors see the verification list. Status: done 2026-09-05, both removed from `.gitignore` and committed
+3. Remove the stale pre-catalog images under `docs/images/` and mark installer `.base` snapshots as generated in `.gitattributes`. Status: done 2026-09-05
+4. Search aliases from observed misses (toast, dropdown, sheet, modal, loading). Status: open
+5. Demo walk audits accessibility per item: every button, switch, and image element exposes a label. Status: open
+6. Visual contract tolerance: compare at a larger normalized size so a tab-bar change cannot hide. Status: open
+7. Tuning panel imports a pasted `RegistryTheme` and supports a light and dark custom accent. Status: open
+8. Xcode-project clean-room trial: install a block into a scratch Xcode app, build, customize, update. Status: open
+9. Website blocks story: iPad captures and a full-width block page. Status: open
+10. MCP adapter over the registry JSON (search, plan, install) for agents inside consuming apps. Status: open
+11. A Swift CLI or SwiftPM plugin so adopters do not need Python. Status: open
+12. Usage-snippet compile proof for installable items independent of the Showcase demos. Status: open
+13. iOS 26 simulator runtime for floor evidence. Status: open, needs a multi-gigabyte download on the owner's machine
+14. Custom domain for the Worker plus `X-Robots-Tag: noindex` on the workers.dev host. Status: open, needs the owner's domain
+15. Stage 4: a command and search screen naming `command`, `kbd`, and `input-group`. Status: open, last
 
 ## Implementation rules
 

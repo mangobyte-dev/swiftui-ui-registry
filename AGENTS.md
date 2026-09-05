@@ -1,0 +1,77 @@
+# SwiftUIRegistry agent guide
+
+## Purpose
+
+Validate a native-first, source-owned, registry-driven SwiftUI composition layer. Version 0 is intentionally small
+
+The whole system is one loop: edit canonical source in `Registry/sources/` and metadata in `Registry/items/`, validate, regenerate `docs/catalog/`, reinstall into Showcase, compile, and verify visually. Everything downstream of metadata is derived, never hand-edited
+
+## Document map
+
+Each kind of fact lives in exactly one place. Four document classes:
+
+- Contracts, which rules come from: this file, `docs/philosophy.md` (why), `docs/architecture.md` (how), `docs/registry-spec.md` (data and installer contract), `docs/visual-testing.md` (visual evidence rules)
+- State, the only home of stage status, open deferrals, and plans: `docs/component-roadmap.md`. A status claim in any other file is a pointer, not a second source
+- Generated, never hand-edited: `docs/catalog/` (markdown catalog), `Website/content/registry.json` and `Website/public/images/` (the website's data and captures; the site itself is Next.js with shadcn/ui under `Website/`), `Examples/Showcase/.../RegistryCatalogManifest.swift` and `Examples/Showcase/SwiftUIRegistryShowcaseUITests/RegistryItemNames.swift` (the Showcase manifest), and `docs/images/items/` and `docs/images/themes/` (captures). Current item counts and per-item pages live there, not in prose
+- Archives, closed dated records kept as evidence, not updated: `STAGE_ONE_VALIDATION.md`, `GENERAL_DIRECTION_REVIEW.md`, `docs/clean-room-trial.md`, `docs/research.md`, `tasks/`
+
+On conflict: state beats archives, the more recent dated record wins between archives, and contracts govern rules regardless. Surface the conflict, then fix the stale text rather than averaging
+
+`docs/registry-spec.md` "Agent usage" addresses an agent consuming the registry from another app. This file addresses an agent developing the registry
+
+## Boundaries
+
+- `Sources/SwiftUIRegistryFoundations/` is the stable package interface for design foundations only
+- `Registry/sources/components/` contains source-owned styles, focused modifiers, and reusable compositions
+- `Registry/sources/blocks/` contains source-owned compositions of components
+- `Registry/items/` is machine-readable metadata and the dependency graph
+- `Examples/Showcase/` proves installation, integration, and visual contracts. It is a browsable catalog (Components, Blocks, Recipes, Tune) whose item list and usage snippets come from the generated manifest; every item has a demo registered in `ItemDemos.swift`, and the `-item <name>` launch renders that demo alone for capture
+
+## Rules
+
+- Keep raw SwiftUI controls and containers visible at the call site. Standardize interactive appearance with SwiftUI style protocols and optional behavior with focused `ViewModifier`s. Do not add a wrapper only to rename an Apple control
+- Configure reusable views with prepared values, bindings, actions, and sensible defaults. Use `@ViewBuilder` when a container provides structure or chrome around arbitrary caller content
+- Prefer modifiers over adding parameters for independent optional decorations or behavior
+- Keep controlled state with the caller through bindings. A component may own transient `@State` only when the interaction is genuinely self-contained and no caller must coordinate it
+- Registry source does not import app architecture, networking, or persistence libraries
+- Keep copied items understandable in isolation and list every source dependency in registry metadata
+- Use semantic foundation tokens instead of repeated hardcoded colors or metrics. Add a token only when at least two real registry items need the same semantic value
+- Keep a style or modifier source-owned until at least two registry items use the exact same treatment; only then consider moving the shared treatment into foundations
+- Respect environment values and layout proposals. Support Dynamic Type, color scheme, layout direction, enabled state, and flexible parent sizing rather than hardcoding one context
+- Require accessibility input when it cannot be derived from visible content. Do not make labels for icon-only controls optional
+- Preview every meaningful variant, including dark appearance and an accessibility Dynamic Type size
+- Do not create an extra reusable abstraction without two concrete consumers or named roadmap usages
+- Every installable item (component or block) needs a version, preview, accessibility notes, supported platform metadata, and a compile path. A `recipe` item is non-installing native guidance: empty `files`, non-empty `docs`, no preview requirement, and no installable item may depend on it (see the value gate in `docs/registry-spec.md`)
+- Every item of any kind needs a non-empty `usage` snippet: a minimal call-site example quoted from the item's real public API as declared in its canonical source, never written from memory. Recipes reuse the native snippet from their `docs`
+- `docs/catalog/` is generated by `python3 Scripts/generate_catalog.py`, the website's data by `python3 Scripts/generate_site_data.py`, and the Showcase manifest by `python3 Scripts/generate_showcase_manifest.py`; never edit any of them by hand. Regenerate all three after any metadata or registry source change; `Tests/RegistryTests/test_catalog.py`, `test_site_data.py`, and `test_showcase_manifest.py` reject drift byte for byte. The site's pages under `Website/app` are hand-written React and read only that JSON; `npm run build` in `Website/` exports it statically
+- Item screenshots come from `python3 Scripts/capture_previews.py` on the pinned simulator, never from hand-made images; recapture an item after a visible change to it and regenerate the catalog and site
+- Never regenerate visual references merely to pass a test; follow `docs/visual-testing.md`
+- Add dependencies only when a vertical slice proves they are necessary
+- `Scripts/registry_validation.py` is the only place registry structure is enforced; add or change structural checks there, never as ad hoc checks in scripts or tests (see Validation in `docs/registry-spec.md`)
+
+## Environment pins
+
+- Visual contract and UI tests run on the light-mode iPhone 17, iOS 27.0 simulator; on this machine its UDID is `1807166B-C557-4F6B-B177-D5F3F701CBD7` (`docs/visual-testing.md`)
+- Toolchain: Xcode 27.0, Swift 6.4. No iOS 26 simulator runtime is installed, so floor-26 claims rest on compilation plus iOS 27 runtime evidence
+- Package identity for consumers: `swiftui-ui-registry` at github.com/mangobyte-dev/swiftui-ui-registry. No tag is published yet; the first must be `0.1.0` so declared floors resolve (`docs/registry-spec.md`)
+
+## Verification
+
+Run from the repository root, cheapest first, so a defect fails the run before expensive steps:
+
+```sh
+python3 Scripts/validate.py
+python3 Scripts/generate_catalog.py
+python3 Scripts/generate_showcase_manifest.py
+python3 Scripts/generate_site_data.py
+python3 -m unittest discover Tests/RegistryTests
+python3 Scripts/search.py nutrition dashboard --kind block --platform iOS --target-version 26.0
+python3 Scripts/install.py finance-overview --destination Examples/Showcase/SwiftUIRegistryShowcasePackage/Sources/SwiftUIRegistryShowcaseFeature/Installed --force
+python3 Scripts/install.py nutrition-overview --destination Examples/Showcase/SwiftUIRegistryShowcasePackage/Sources/SwiftUIRegistryShowcaseFeature/Installed
+xcodebuildmcp swift-package test --package-path .
+xcodebuildmcp simulator build --workspace-path Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace --scheme SwiftUIRegistryShowcase --simulator-name 'iPhone 17'
+xcodebuildmcp simulator test --workspace-path Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace --scheme SwiftUIRegistryShowcase --simulator-id 1807166B-C557-4F6B-B177-D5F3F701CBD7
+(cd Website && npm ci && npm run typecheck && npm run build)
+```
+
+Scope the run to the change: a metadata-only change stops after the Python steps, a registry source change needs the install and compile steps, and only a visible UI change needs the simulator test. A visible change to an item also needs `python3 Scripts/capture_previews.py <item>` followed by the catalog, manifest, and site-data generators. A change under `Website/` needs the typecheck and build. A change is incomplete if generated consumer sources differ from registry sources or any executed command fails; a skipped step is named in the done-claim

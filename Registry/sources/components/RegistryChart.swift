@@ -80,7 +80,7 @@ private struct RegistryChartModifier: ViewModifier {
                     AxisTick().foregroundStyle(theme.border)
                     AxisValueLabel()
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
             .chartYAxis {
@@ -89,7 +89,7 @@ private struct RegistryChartModifier: ViewModifier {
                     AxisTick().foregroundStyle(theme.border)
                     AxisValueLabel()
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                 }
             }
             .chartLegend(position: .bottom, spacing: theme.metrics.standardSpacing)

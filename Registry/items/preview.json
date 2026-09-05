@@ -22,6 +22,10 @@
     {
       "source": "sources/blocks/Preview/AnomalyAlert.swift",
       "target": "Preview/AnomalyAlert.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/AssignIssue.swift",
+      "target": "Preview/AssignIssue.swift"
     }
   ],
   "registryDependencies": [
@@ -31,7 +35,9 @@
     "badge",
     "button",
     "chart",
-    "empty"
+    "empty",
+    "avatar",
+    "combobox"
   ],
   "packageDependencies": [
     {

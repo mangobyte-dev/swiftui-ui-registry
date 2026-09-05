@@ -862,7 +862,7 @@
         },
         {
           "name": "kbd",
-          "version": "0.1.0"
+          "version": "0.1.1"
         },
         {
           "name": "empty",
@@ -948,7 +948,7 @@
         },
         {
           "name": "kbd",
-          "version": "0.1.0"
+          "version": "0.1.1"
         },
         {
           "name": "empty",
@@ -1512,9 +1512,9 @@
     {
       "name": "kbd",
       "kind": "component",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Draws text as a keycap for keyboard shortcut hints, hidden from accessibility unless a spoken label is supplied.",
-      "usage": "Text(\"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(\"esc\")\n    .registryKeycap()",
+      "usage": "Text(verbatim: \"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(verbatim: \"esc\")\n    .registryKeycap()",
       "docs": null,
       "tags": [
         "keyboard",
@@ -1535,17 +1535,17 @@
       "installOrder": [
         {
           "name": "kbd",
-          "version": "0.1.0"
+          "version": "0.1.1"
         }
       ],
       "accessibility": [
         "Hidden from accessibility by default because symbols such as the command glyph read poorly; pass accessibilityLabel to speak the shortcut.",
         "One line at its intrinsic size; a keycap never wraps.",
-        "Uses the compact radius, surface, and border tokens so it matches badges."
+        "Uses the compact radius, surface, border, and spacing tokens so it matches badges."
       ],
       "sourcePath": "Registry/sources/components/RegistryKeycapModifier.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryKeycapModifier.swift",
-      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\npublic extension View {\n    /// Draws the receiver as a keycap: monospaced, bordered, one line. For\n    /// keyboard shortcut hints next to commands; hidden from accessibility\n    /// unless the caller supplies a spoken label, because \"⌘K\" reads poorly.\n    func registryKeycap(accessibilityLabel: Text? = nil) -> some View {\n        modifier(RegistryKeycapModifier(accessibilityLabel: accessibilityLabel))\n    }\n}\n\nprivate struct RegistryKeycapModifier: ViewModifier {\n    @Environment(\\.registryTheme) private var theme\n\n    let accessibilityLabel: Text?\n\n    func body(content: Content) -> some View {\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.compactRadius, style: .continuous)\n\n        content\n            .font(.caption.monospaced().weight(.medium))\n            .lineLimit(1)\n            .fixedSize()\n            .foregroundStyle(.secondary)\n            .padding(.horizontal, theme.metrics.compactSpacing / 2 + 2)\n            .padding(.vertical, 2)\n            .background(theme.surface, in: shape)\n            .overlay {\n                shape.stroke(theme.border, lineWidth: theme.metrics.borderWidth)\n            }\n            .modifier(KeycapAccessibility(label: accessibilityLabel))\n    }\n}\n\nprivate struct KeycapAccessibility: ViewModifier {\n    let label: Text?\n\n    @ViewBuilder\n    func body(content: Content) -> some View {\n        if let label {\n            content\n                .accessibilityElement(children: .ignore)\n                .accessibilityLabel(label)\n        } else {\n            content.accessibilityHidden(true)\n        }\n    }\n}\n\nprivate struct RegistryKeycapModifierPreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            HStack {\n                Text(\"Open search\")\n                Spacer()\n                Text(\"⌘K\").registryKeycap(accessibilityLabel: Text(\"Command K\"))\n            }\n            HStack {\n                Text(\"Select\")\n                Spacer()\n                Text(\"↩\").registryKeycap(accessibilityLabel: Text(\"Return\"))\n            }\n            HStack {\n                Text(\"Dismiss\")\n                Spacer()\n                Text(\"esc\").registryKeycap(accessibilityLabel: Text(\"Escape\"))\n            }\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Keycap\") {\n    RegistryKeycapModifierPreview()\n}\n\n#Preview(\"Keycap Dark\") {\n    RegistryKeycapModifierPreview().preferredColorScheme(.dark)\n}\n\n#Preview(\"Keycap Accessibility Size\") {\n    RegistryKeycapModifierPreview().dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\npublic extension View {\n    /// Draws the receiver as a keycap: monospaced, bordered, one line. For\n    /// keyboard shortcut hints next to commands; hidden from accessibility\n    /// unless the caller supplies a spoken label, because \"⌘K\" reads poorly.\n    func registryKeycap(accessibilityLabel: Text? = nil) -> some View {\n        modifier(RegistryKeycapModifier(accessibilityLabel: accessibilityLabel))\n    }\n}\n\nprivate struct RegistryKeycapModifier: ViewModifier {\n    @Environment(\\.registryTheme) private var theme\n\n    let accessibilityLabel: Text?\n\n    func body(content: Content) -> some View {\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.compactRadius, style: .continuous)\n\n        content\n            .font(.caption.monospaced().weight(.medium))\n            .lineLimit(1)\n            .fixedSize()\n            .foregroundStyle(.secondary)\n            .padding(.horizontal, theme.metrics.compactSpacing * 0.75)\n            .padding(.vertical, theme.metrics.compactSpacing / 4)\n            .background(theme.surface, in: shape)\n            .overlay {\n                shape.stroke(theme.border, lineWidth: theme.metrics.borderWidth)\n            }\n            // One identity for both states: the label applies only when given,\n            // and the keycap hides itself when it has nothing to say.\n            .accessibilityElement(children: .ignore)\n            .accessibilityLabel(accessibilityLabel ?? Text(verbatim: \"\"), isEnabled: accessibilityLabel != nil)\n            .accessibilityHidden(accessibilityLabel == nil)\n    }\n}\n\nprivate struct RegistryKeycapModifierPreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            HStack {\n                Text(\"Open search\")\n                Spacer()\n                Text(verbatim: \"⌘K\").registryKeycap(accessibilityLabel: Text(\"Command K\"))\n            }\n            HStack {\n                Text(\"Select\")\n                Spacer()\n                Text(verbatim: \"↩\").registryKeycap(accessibilityLabel: Text(\"Return\"))\n            }\n            HStack {\n                Text(\"Dismiss\")\n                Spacer()\n                Text(verbatim: \"esc\").registryKeycap(accessibilityLabel: Text(\"Escape\"))\n            }\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Keycap\") {\n    RegistryKeycapModifierPreview()\n}\n\n#Preview(\"Keycap Dark\") {\n    RegistryKeycapModifierPreview().preferredColorScheme(.dark)\n}\n\n#Preview(\"Keycap Accessibility Size\") {\n    RegistryKeycapModifierPreview().dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Keycap",
       "screenshots": {
         "light": "/images/items/kbd-light.png",

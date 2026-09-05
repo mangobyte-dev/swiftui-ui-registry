@@ -48,6 +48,10 @@
     "items/calendar.json",
     "items/collapsible.json",
     "items/scroll-area.json",
-    "items/sidebar.json"
+    "items/sidebar.json",
+    "items/input-group.json",
+    "items/kbd.json",
+    "items/command.json",
+    "items/command-search.json"
   ]
 }

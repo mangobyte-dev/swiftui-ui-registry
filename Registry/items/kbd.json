@@ -1,0 +1,59 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "kbd",
+  "kind": "component",
+  "description": "Draws text as a keycap for keyboard shortcut hints, hidden from accessibility unless a spoken label is supplied.",
+  "usage": "Text(\"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(\"esc\")\n    .registryKeycap()",
+  "files": [
+    {
+      "source": "sources/components/RegistryKeycapModifier.swift",
+      "target": "RegistryKeycapModifier.swift"
+    }
+  ],
+  "registryDependencies": [],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "keyboard",
+    "shortcut",
+    "keycap",
+    "hint",
+    "shadcn"
+  ],
+  "aliases": [
+    "keycap",
+    "shortcut-hint",
+    "hotkey"
+  ],
+  "accessibility": [
+    "Hidden from accessibility by default because symbols such as the command glyph read poorly; pass accessibilityLabel to speak the shortcut.",
+    "One line at its intrinsic size; a keycap never wraps.",
+    "Uses the compact radius, surface, and border tokens so it matches badges."
+  ],
+  "preview": {
+    "source": "sources/components/RegistryKeycapModifier.swift",
+    "name": "Keycap",
+    "screenshots": [
+      "docs/images/items/kbd-light.png",
+      "docs/images/items/kbd-dark.png"
+    ]
+  }
+}

@@ -291,3 +291,33 @@ struct ActivityFeedDemo: View {
         ]
     }
 }
+
+/// Caller-owned query and filtering for the command-search block; the caption
+/// under the screen reports the selection so UI tests can prove it.
+struct CommandSearchDemo: View {
+    @State private var query = ""
+    @State private var selected: String?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            CommandSearch(
+                "Search",
+                query: $query,
+                prompt: "Search actions and activity",
+                sections: DemoCommands.sections(matching: query),
+                emptyDescription: Text("Try a payee, a card, or an action."),
+                shortcuts: [
+                    CommandShortcutHint("Open search", keys: "⌘K", keysLabel: Text("Command K")),
+                    CommandShortcutHint("Run the highlighted command", keys: "↩", keysLabel: Text("Return")),
+                ],
+                onSelect: { selected = $0 }
+            )
+
+            if let selected {
+                Text("Ran \(selected).")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+}

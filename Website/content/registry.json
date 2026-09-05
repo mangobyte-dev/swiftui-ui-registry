@@ -2,8 +2,8 @@
   "name": "SwiftUIRegistry",
   "repositoryURL": "https://github.com/mangobyte-dev/swiftui-ui-registry",
   "counts": {
-    "component": 23,
-    "block": 5,
+    "component": 26,
+    "block": 6,
     "recipe": 18
   },
   "items": [
@@ -810,6 +810,187 @@
       "requirements": []
     },
     {
+      "name": "command",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "Composes the registry input group, item rows, keycaps, and empty state into a search field over caller-filtered command sections.",
+      "usage": "@State private var query = \"\"\n\nCommandPalette(\n    query: $query,\n    prompt: \"Search actions\",\n    sections: [\n        CommandSection(id: \"actions\", title: \"Actions\", entries: [\n            CommandEntry(id: \"transfer\", title: Text(\"New transfer\"), systemImage: \"arrow.up.right\", shortcut: \"⌘T\", shortcutLabel: Text(\"Command T\"))\n        ])\n    ],\n    onSelect: { id in }\n)",
+      "docs": null,
+      "tags": [
+        "command",
+        "palette",
+        "search",
+        "spotlight",
+        "shadcn"
+      ],
+      "aliases": [
+        "command-palette",
+        "spotlight",
+        "quick-actions",
+        "omnibar"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "input-group",
+        "item",
+        "kbd",
+        "empty",
+        "separator",
+        "button"
+      ],
+      "installOrder": [
+        {
+          "name": "button",
+          "version": "0.4.0"
+        },
+        {
+          "name": "input-group",
+          "version": "0.1.0"
+        },
+        {
+          "name": "separator",
+          "version": "0.2.0"
+        },
+        {
+          "name": "badge",
+          "version": "0.3.0"
+        },
+        {
+          "name": "item",
+          "version": "0.1.1"
+        },
+        {
+          "name": "kbd",
+          "version": "0.1.0"
+        },
+        {
+          "name": "empty",
+          "version": "0.1.0"
+        },
+        {
+          "name": "command",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "The search field carries its prompt as an explicit accessibility label and uses the search return key.",
+        "Section titles are headers; each command is a native Button whose label combines title and detail.",
+        "Shortcut keycaps speak the caller's shortcutLabel or stay hidden; the command symbol is decorative.",
+        "No results renders a native ContentUnavailableView with caller copy; filtering and ranking stay with the caller through the query binding."
+      ],
+      "sourcePath": "Registry/sources/components/CommandPalette.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/CommandPalette.swift",
+      "source": "import Foundation\nimport SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// One selectable command in a ``CommandPalette`` section.\npublic struct CommandEntry<ID: Hashable>: Identifiable {\n    public let id: ID\n    public let title: Text\n    public let detail: Text?\n    public let systemImage: String\n    /// A visible shortcut hint such as \"⌘K\", rendered as a keycap.\n    public let shortcut: String?\n    /// The spoken form of the shortcut, such as \"Command K\".\n    public let shortcutLabel: Text?\n\n    public init(\n        id: ID,\n        title: Text,\n        detail: Text? = nil,\n        systemImage: String,\n        shortcut: String? = nil,\n        shortcutLabel: Text? = nil\n    ) {\n        self.id = id\n        self.title = title\n        self.detail = detail\n        self.systemImage = systemImage\n        self.shortcut = shortcut\n        self.shortcutLabel = shortcutLabel\n    }\n}\n\n/// A titled group of commands. The caller filters and orders entries; the\n/// palette only renders what it is given.\npublic struct CommandSection<ID: Hashable>: Identifiable {\n    public let id: String\n    public let title: LocalizedStringResource\n    public let entries: [CommandEntry<ID>]\n\n    public init(id: String, title: LocalizedStringResource, entries: [CommandEntry<ID>]) {\n        self.id = id\n        self.title = title\n        self.entries = entries\n    }\n}\n\n/// A search field over caller-prepared command sections: the registry input\n/// group on top, sectioned rows beneath, and the native empty state when no\n/// section has entries. Filtering, ranking, and what a command does stay with\n/// the caller through the query binding and the selection closure.\npublic struct CommandPalette<ID: Hashable>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    @Binding private var query: String\n    private let prompt: LocalizedStringResource\n    private let sections: [CommandSection<ID>]\n    private let emptyTitle: LocalizedStringResource\n    private let emptyDescription: Text?\n    private let onSelect: (ID) -> Void\n\n    public init(\n        query: Binding<String>,\n        prompt: LocalizedStringResource = \"Search\",\n        sections: [CommandSection<ID>],\n        emptyTitle: LocalizedStringResource = \"No results\",\n        emptyDescription: Text? = nil,\n        onSelect: @escaping (ID) -> Void\n    ) {\n        self._query = query\n        self.prompt = prompt\n        self.sections = sections\n        self.emptyTitle = emptyTitle\n        self.emptyDescription = emptyDescription\n        self.onSelect = onSelect\n    }\n\n    public var body: some View {\n        VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {\n            InputGroup {\n                Image(systemName: \"magnifyingglass\")\n                    .accessibilityHidden(true)\n            } content: {\n                TextField(text: $query, prompt: Text(prompt)) {\n                    Text(prompt)\n                }\n                .accessibilityLabel(Text(prompt))\n                .autocorrectionDisabled()\n                .textInputAutocapitalization(.never)\n                .submitLabel(.search)\n            } trailing: {\n                if !query.isEmpty {\n                    Button(\"Clear search\", systemImage: \"xmark.circle.fill\") {\n                        query = \"\"\n                    }\n                    .labelStyle(.iconOnly)\n                    .buttonStyle(.registryGhost)\n                    .controlSize(.small)\n                }\n            }\n\n            let visible = sections.filter { !$0.entries.isEmpty }\n            if visible.isEmpty {\n                ContentUnavailableView(\n                    emptyTitle,\n                    systemImage: \"magnifyingglass\",\n                    description: emptyDescription\n                )\n                .registryEmptyState()\n            } else {\n                VStack(spacing: 0) {\n                    ForEach(visible) { section in\n                        Text(section.title)\n                            .font(.footnote.weight(.semibold))\n                            .foregroundStyle(.secondary)\n                            .frame(maxWidth: .infinity, alignment: .leading)\n                            .padding(.top, theme.metrics.standardSpacing)\n                            .padding(.bottom, theme.metrics.compactSpacing / 2)\n                            .accessibilityAddTraits(.isHeader)\n\n                        ForEach(section.entries) { entry in\n                            row(entry)\n                            if entry.id != section.entries.last?.id {\n                                Divider().registrySeparator()\n                            }\n                        }\n                    }\n                }\n                .padding(.horizontal, theme.metrics.standardSpacing)\n                .padding(.bottom, theme.metrics.compactSpacing)\n                .registrySurface()\n            }\n        }\n    }\n\n    private func row(_ entry: CommandEntry<ID>) -> some View {\n        Button {\n            onSelect(entry.id)\n        } label: {\n            ItemRow(title: entry.title, description: entry.detail) {\n                Image(systemName: entry.systemImage)\n                    .font(.body.weight(.medium))\n                    .foregroundStyle(.tint)\n                    .frame(width: 28)\n                    .accessibilityHidden(true)\n            } accessory: {\n                if let shortcut = entry.shortcut {\n                    Text(shortcut)\n                        .registryKeycap(accessibilityLabel: entry.shortcutLabel)\n                }\n            }\n            .padding(.vertical, theme.metrics.compactSpacing)\n        }\n        .buttonStyle(.plain)\n    }\n}\n\n#if DEBUG\nprivate struct CommandPalettePreview: View {\n    @State private var query = \"\"\n\n    // The caller owns filtering: keep a plain name to match against.\n    private let commands: [(id: String, name: String, detail: String?, symbol: String, shortcut: String?, section: String)] = [\n        (\"transfer\", \"New transfer\", \"Send money to a saved payee\", \"arrow.up.right\", \"⌘T\", \"Actions\"),\n        (\"freeze\", \"Freeze card\", nil, \"snowflake\", nil, \"Actions\"),\n        (\"bakery\", \"Mishmash Bakery\", \"KWD 8.750, today\", \"cup.and.saucer.fill\", nil, \"Recent\"),\n    ]\n\n    private var sections: [CommandSection<String>] {\n        [\"Actions\", \"Recent\"].map { name in\n            CommandSection(\n                id: name,\n                title: LocalizedStringResource(stringLiteral: name),\n                entries: commands\n                    .filter { $0.section == name && (query.isEmpty || $0.name.localizedCaseInsensitiveContains(query)) }\n                    .map {\n                        CommandEntry(\n                            id: $0.id,\n                            title: Text($0.name),\n                            detail: $0.detail.map { Text($0) },\n                            systemImage: $0.symbol,\n                            shortcut: $0.shortcut,\n                            shortcutLabel: $0.shortcut == nil ? nil : Text(\"Command T\")\n                        )\n                    }\n            )\n        }\n    }\n\n    var body: some View {\n        CommandPalette(\n            query: $query,\n            prompt: \"Search actions and activity\",\n            sections: sections,\n            emptyDescription: Text(\"Try a payee, a card, or an action.\"),\n            onSelect: { _ in }\n        )\n        .padding()\n    }\n}\n\n#Preview(\"Command Palette\") {\n    CommandPalettePreview().tint(.indigo)\n}\n\n#Preview(\"Command Palette Dark\") {\n    CommandPalettePreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Command Palette Right to Left\") {\n    CommandPalettePreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Command Palette Accessibility Size\") {\n    CommandPalettePreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n#endif\n",
+      "previewName": "Command Palette",
+      "screenshots": {
+        "light": "/images/items/command-light.png",
+        "dark": "/images/items/command-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
+      "name": "command-search",
+      "kind": "block",
+      "version": "0.1.0",
+      "description": "Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.",
+      "usage": "@State private var query = \"\"\n\nCommandSearch(\n    \"Search\",\n    query: $query,\n    prompt: \"Search actions and activity\",\n    sections: sections,\n    emptyDescription: Text(\"Try a payee, a card, or an action.\"),\n    shortcuts: [\n        CommandShortcutHint(\"Open search\", keys: \"⌘K\", keysLabel: Text(\"Command K\"))\n    ],\n    onSelect: { id in }\n)",
+      "docs": null,
+      "tags": [
+        "search",
+        "command",
+        "palette",
+        "shortcuts",
+        "screen"
+      ],
+      "aliases": [
+        "spotlight",
+        "quick-actions",
+        "global-search"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "command",
+        "kbd"
+      ],
+      "installOrder": [
+        {
+          "name": "button",
+          "version": "0.4.0"
+        },
+        {
+          "name": "input-group",
+          "version": "0.1.0"
+        },
+        {
+          "name": "separator",
+          "version": "0.2.0"
+        },
+        {
+          "name": "badge",
+          "version": "0.3.0"
+        },
+        {
+          "name": "item",
+          "version": "0.1.1"
+        },
+        {
+          "name": "kbd",
+          "version": "0.1.0"
+        },
+        {
+          "name": "empty",
+          "version": "0.1.0"
+        },
+        {
+          "name": "command",
+          "version": "0.1.0"
+        },
+        {
+          "name": "command-search",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "The search field is labeled with its prompt; commands are native Buttons with combined labels; section titles are headers.",
+        "No results is a native ContentUnavailableView with caller copy, never a blank surface.",
+        "Each legend line combines its action and spoken shortcut into one element; keycaps are hidden unless labeled.",
+        "Selection, filtering, and the query stay caller-owned, so the screen never triggers an action on its own."
+      ],
+      "sourcePath": "Registry/sources/blocks/CommandSearch.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/CommandSearch.swift",
+      "source": "import Foundation\nimport SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A source-owned search screen: a title, the command palette over\n/// caller-filtered sections, and a legend of keyboard shortcuts drawn as\n/// keycaps for hardware-keyboard and iPad users. The caller owns the query,\n/// the filtering, the sections, and what a selection does. The block does\n/// not own a `ScrollView`, navigation container, or maximum width.\npublic struct CommandSearch<ID: Hashable>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let title: LocalizedStringResource\n    @Binding private var query: String\n    private let prompt: LocalizedStringResource\n    private let sections: [CommandSection<ID>]\n    private let emptyTitle: LocalizedStringResource\n    private let emptyDescription: Text?\n    private let shortcuts: [CommandShortcutHint]\n    private let onSelect: (ID) -> Void\n\n    public init(\n        _ title: LocalizedStringResource,\n        query: Binding<String>,\n        prompt: LocalizedStringResource = \"Search\",\n        sections: [CommandSection<ID>],\n        emptyTitle: LocalizedStringResource = \"No results\",\n        emptyDescription: Text? = nil,\n        shortcuts: [CommandShortcutHint] = [],\n        onSelect: @escaping (ID) -> Void\n    ) {\n        self.title = title\n        self._query = query\n        self.prompt = prompt\n        self.sections = sections\n        self.emptyTitle = emptyTitle\n        self.emptyDescription = emptyDescription\n        self.shortcuts = shortcuts\n        self.onSelect = onSelect\n    }\n\n    public var body: some View {\n        VStack(alignment: .leading, spacing: theme.metrics.sectionSpacing) {\n            Text(title)\n                .font(.largeTitle.bold())\n\n            CommandPalette(\n                query: $query,\n                prompt: prompt,\n                sections: sections,\n                emptyTitle: emptyTitle,\n                emptyDescription: emptyDescription,\n                onSelect: onSelect\n            )\n\n            if !shortcuts.isEmpty {\n                VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n                    ForEach(shortcuts) { hint in\n                        HStack {\n                            Text(hint.action)\n                                .font(.footnote)\n                                .foregroundStyle(.secondary)\n                            Spacer()\n                            Text(hint.keys)\n                                .registryKeycap(accessibilityLabel: hint.keysLabel)\n                        }\n                        .accessibilityElement(children: .combine)\n                    }\n                }\n            }\n        }\n    }\n}\n\n/// One line of the shortcut legend under ``CommandSearch``.\npublic struct CommandShortcutHint: Identifiable {\n    public var id: String { keys }\n    public let action: LocalizedStringResource\n    public let keys: String\n    public let keysLabel: Text\n\n    /// - Parameters:\n    ///   - action: What the shortcut does, in the caller's words.\n    ///   - keys: The visible keycap text, such as \"⌘K\".\n    ///   - keysLabel: The spoken form, such as \"Command K\".\n    public init(_ action: LocalizedStringResource, keys: String, keysLabel: Text) {\n        self.action = action\n        self.keys = keys\n        self.keysLabel = keysLabel\n    }\n}\n\n#if DEBUG\nprivate struct CommandSearchPreview: View {\n    var initialQuery = \"\"\n    @State private var query: String\n\n    init(initialQuery: String = \"\") {\n        self.initialQuery = initialQuery\n        _query = State(initialValue: initialQuery)\n    }\n\n    private struct Command {\n        let id: String\n        let name: String\n        let detail: String?\n        let symbol: String\n        let shortcut: String?\n        let shortcutLabel: String?\n        let section: String\n    }\n\n    private let commands: [Command] = [\n        Command(id: \"transfer\", name: \"New transfer\", detail: \"Send money to a saved payee\", symbol: \"arrow.up.right\", shortcut: \"⌘T\", shortcutLabel: \"Command T\", section: \"Actions\"),\n        Command(id: \"freeze\", name: \"Freeze card\", detail: nil, symbol: \"snowflake\", shortcut: nil, shortcutLabel: nil, section: \"Actions\"),\n        Command(id: \"statement\", name: \"Download statement\", detail: \"August 2026\", symbol: \"doc.text\", shortcut: nil, shortcutLabel: nil, section: \"Actions\"),\n        Command(id: \"bakery\", name: \"Mishmash Bakery\", detail: \"KWD 8.750, today\", symbol: \"cup.and.saucer.fill\", shortcut: nil, shortcutLabel: nil, section: \"Recent\"),\n        Command(id: \"salary\", name: \"Salary\", detail: \"KWD 2,450.000, yesterday\", symbol: \"building.columns.fill\", shortcut: nil, shortcutLabel: nil, section: \"Recent\"),\n    ]\n\n    private var sections: [CommandSection<String>] {\n        [\"Actions\", \"Recent\"].map { name in\n            CommandSection(\n                id: name,\n                title: LocalizedStringResource(stringLiteral: name),\n                entries: commands\n                    .filter { $0.section == name }\n                    .filter { query.isEmpty || $0.name.localizedCaseInsensitiveContains(query) }\n                    .map {\n                        CommandEntry(\n                            id: $0.id,\n                            title: Text($0.name),\n                            detail: $0.detail.map { Text($0) },\n                            systemImage: $0.symbol,\n                            shortcut: $0.shortcut,\n                            shortcutLabel: $0.shortcutLabel.map { Text($0) }\n                        )\n                    }\n            )\n        }\n    }\n\n    var body: some View {\n        ScrollView {\n            CommandSearch(\n                \"Search\",\n                query: $query,\n                prompt: \"Search actions and activity\",\n                sections: sections,\n                emptyDescription: Text(\"Try a payee, a card, or an action.\"),\n                shortcuts: [\n                    CommandShortcutHint(\"Open search\", keys: \"⌘K\", keysLabel: Text(\"Command K\")),\n                    CommandShortcutHint(\"Run the highlighted command\", keys: \"↩\", keysLabel: Text(\"Return\")),\n                ],\n                onSelect: { _ in }\n            )\n            .padding()\n        }\n    }\n}\n\n#Preview(\"Command Search\") {\n    CommandSearchPreview()\n}\n\n#Preview(\"Command Search Empty\") {\n    CommandSearchPreview(initialQuery: \"zzz\")\n}\n\n#Preview(\"Command Search Dark\") {\n    CommandSearchPreview().preferredColorScheme(.dark)\n}\n\n#Preview(\"Command Search Right to Left\") {\n    CommandSearchPreview().environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Command Search Accessibility Size\") {\n    CommandSearchPreview().environment(\\.dynamicTypeSize, .accessibility3)\n}\n#endif\n",
+      "previewName": "Command Search",
+      "screenshots": {
+        "light": "/images/items/command-search-light.png",
+        "dark": "/images/items/command-search-dark.png"
+      },
+      "wideScreenshots": {
+        "light": "/images/blocks/command-search-ipad-light.png",
+        "dark": "/images/blocks/command-search-ipad-dark.png"
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
       "name": "context-menu",
       "kind": "recipe",
       "version": "0.1.0",
@@ -1197,6 +1378,70 @@
       ]
     },
     {
+      "name": "input-group",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "Wraps a native text field with registry input chrome and caller-provided leading and trailing accessories, such as a search symbol and a clear button.",
+      "usage": "@State private var query = \"\"\n\nInputGroup {\n    Image(systemName: \"magnifyingglass\")\n        .accessibilityHidden(true)\n} content: {\n    TextField(\"Search transactions\", text: $query)\n        .accessibilityLabel(\"Search transactions\")\n} trailing: {\n    if !query.isEmpty {\n        Button(\"Clear\", systemImage: \"xmark.circle.fill\") { query = \"\" }\n            .labelStyle(.iconOnly)\n            .buttonStyle(.registryGhost)\n            .controlSize(.small)\n    }\n}",
+      "docs": null,
+      "tags": [
+        "input",
+        "group",
+        "search",
+        "accessory",
+        "text-field",
+        "shadcn"
+      ],
+      "aliases": [
+        "search-field",
+        "searchbar",
+        "input-addon",
+        "prefix",
+        "suffix"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "button"
+      ],
+      "installOrder": [
+        {
+          "name": "button",
+          "version": "0.4.0"
+        },
+        {
+          "name": "input-group",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "The field stays a native TextField or SecureField; give it an explicit accessibilityLabel because the title is placeholder text only.",
+        "Leading accessories are decorative by default and should be hidden; a trailing button keeps its own label and 44 point hit area.",
+        "Focus draws the accent ring and the invalid state draws the negative border at the emphasized width, never color alone because the caller pairs it with a message.",
+        "Keeps the 44 point minimum height and applies the shared disabled opacity."
+      ],
+      "sourcePath": "Registry/sources/components/InputGroup.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/InputGroup.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// Registry input chrome around a native text field plus caller-provided\n/// leading and trailing accessories, such as a search symbol and a clear\n/// button. The field stays a plain `TextField` or `SecureField` at the call\n/// site; the group owns the surface, border, focus ring, and spacing.\npublic struct InputGroup<Leading: View, Content: View, Trailing: View>: View {\n    @Environment(\\.isEnabled) private var isEnabled\n    @Environment(\\.registryTheme) private var theme\n    @FocusState private var isFocused: Bool\n\n    private let isInvalid: Bool\n    private let leading: Leading\n    private let content: Content\n    private let trailing: Trailing\n\n    /// - Parameters:\n    ///   - isInvalid: Draws the negative border and the emphasized width.\n    ///   - leading: Decorative or interactive content before the field.\n    ///   - content: The native field; the group applies `.plain` style and focus.\n    ///   - trailing: Content after the field, typically a button.\n    public init(\n        isInvalid: Bool = false,\n        @ViewBuilder leading: () -> Leading,\n        @ViewBuilder content: () -> Content,\n        @ViewBuilder trailing: () -> Trailing\n    ) {\n        self.isInvalid = isInvalid\n        self.leading = leading()\n        self.content = content()\n        self.trailing = trailing()\n    }\n\n    public var body: some View {\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)\n\n        HStack(spacing: theme.metrics.compactSpacing) {\n            leading\n                .foregroundStyle(.secondary)\n            content\n                .textFieldStyle(.plain)\n                .focused($isFocused)\n                .frame(maxWidth: .infinity)\n            trailing\n        }\n        .padding(.horizontal, theme.metrics.controlHorizontalPadding)\n        .frame(minHeight: RegistryMetrics.minimumHitSize)\n        .background(theme.surface, in: shape)\n        .overlay {\n            shape.stroke(\n                borderStyle,\n                lineWidth: isFocused || isInvalid\n                    ? theme.metrics.emphasizedBorderWidth\n                    : theme.metrics.borderWidth\n            )\n        }\n        .opacity(isEnabled ? 1 : theme.disabledOpacity)\n    }\n\n    private var borderStyle: AnyShapeStyle {\n        if isInvalid {\n            AnyShapeStyle(theme.negative)\n        } else if isFocused {\n            AnyShapeStyle(TintShapeStyle())\n        } else {\n            AnyShapeStyle(theme.border)\n        }\n    }\n}\n\npublic extension InputGroup where Leading == EmptyView {\n    init(\n        isInvalid: Bool = false,\n        @ViewBuilder content: () -> Content,\n        @ViewBuilder trailing: () -> Trailing\n    ) {\n        self.init(isInvalid: isInvalid, leading: { EmptyView() }, content: content, trailing: trailing)\n    }\n}\n\npublic extension InputGroup where Trailing == EmptyView {\n    init(\n        isInvalid: Bool = false,\n        @ViewBuilder leading: () -> Leading,\n        @ViewBuilder content: () -> Content\n    ) {\n        self.init(isInvalid: isInvalid, leading: leading, content: content, trailing: { EmptyView() })\n    }\n}\n\nprivate struct InputGroupPreview: View {\n    @State private var query = \"\"\n    @State private var amount = \"120\"\n\n    var body: some View {\n        VStack(spacing: 16) {\n            InputGroup {\n                Image(systemName: \"magnifyingglass\")\n                    .accessibilityHidden(true)\n            } content: {\n                TextField(\"Search transactions\", text: $query)\n                    .accessibilityLabel(\"Search transactions\")\n            } trailing: {\n                if !query.isEmpty {\n                    Button(\"Clear\", systemImage: \"xmark.circle.fill\") { query = \"\" }\n                        .labelStyle(.iconOnly)\n                        .buttonStyle(.registryGhost)\n                        .controlSize(.small)\n                }\n            }\n\n            InputGroup(isInvalid: true) {\n                Text(\"KWD\")\n                    .font(.subheadline.weight(.medium))\n            } content: {\n                TextField(\"Amount\", text: $amount)\n                    .keyboardType(.decimalPad)\n                    .accessibilityLabel(\"Amount\")\n                    .accessibilityHint(\"Enter an amount below your daily limit\")\n            }\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Input Group\") {\n    InputGroupPreview().tint(.indigo)\n}\n\n#Preview(\"Input Group Dark\") {\n    InputGroupPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Input Group Right to Left\") {\n    InputGroupPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Input Group Accessibility Size\") {\n    InputGroupPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Input Group",
+      "screenshots": {
+        "light": "/images/items/input-group-light.png",
+        "dark": "/images/items/input-group-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
       "name": "item",
       "kind": "component",
       "version": "0.1.1",
@@ -1251,6 +1496,60 @@
       "screenshots": {
         "light": "/images/items/item-light.png",
         "dark": "/images/items/item-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "Draws text as a keycap for keyboard shortcut hints, hidden from accessibility unless a spoken label is supplied.",
+      "usage": "Text(\"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(\"esc\")\n    .registryKeycap()",
+      "docs": null,
+      "tags": [
+        "keyboard",
+        "shortcut",
+        "keycap",
+        "hint",
+        "shadcn"
+      ],
+      "aliases": [
+        "keycap",
+        "shortcut-hint",
+        "hotkey"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [],
+      "installOrder": [
+        {
+          "name": "kbd",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "Hidden from accessibility by default because symbols such as the command glyph read poorly; pass accessibilityLabel to speak the shortcut.",
+        "One line at its intrinsic size; a keycap never wraps.",
+        "Uses the compact radius, surface, and border tokens so it matches badges."
+      ],
+      "sourcePath": "Registry/sources/components/RegistryKeycapModifier.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryKeycapModifier.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\npublic extension View {\n    /// Draws the receiver as a keycap: monospaced, bordered, one line. For\n    /// keyboard shortcut hints next to commands; hidden from accessibility\n    /// unless the caller supplies a spoken label, because \"⌘K\" reads poorly.\n    func registryKeycap(accessibilityLabel: Text? = nil) -> some View {\n        modifier(RegistryKeycapModifier(accessibilityLabel: accessibilityLabel))\n    }\n}\n\nprivate struct RegistryKeycapModifier: ViewModifier {\n    @Environment(\\.registryTheme) private var theme\n\n    let accessibilityLabel: Text?\n\n    func body(content: Content) -> some View {\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.compactRadius, style: .continuous)\n\n        content\n            .font(.caption.monospaced().weight(.medium))\n            .lineLimit(1)\n            .fixedSize()\n            .foregroundStyle(.secondary)\n            .padding(.horizontal, theme.metrics.compactSpacing / 2 + 2)\n            .padding(.vertical, 2)\n            .background(theme.surface, in: shape)\n            .overlay {\n                shape.stroke(theme.border, lineWidth: theme.metrics.borderWidth)\n            }\n            .modifier(KeycapAccessibility(label: accessibilityLabel))\n    }\n}\n\nprivate struct KeycapAccessibility: ViewModifier {\n    let label: Text?\n\n    @ViewBuilder\n    func body(content: Content) -> some View {\n        if let label {\n            content\n                .accessibilityElement(children: .ignore)\n                .accessibilityLabel(label)\n        } else {\n            content.accessibilityHidden(true)\n        }\n    }\n}\n\nprivate struct RegistryKeycapModifierPreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            HStack {\n                Text(\"Open search\")\n                Spacer()\n                Text(\"⌘K\").registryKeycap(accessibilityLabel: Text(\"Command K\"))\n            }\n            HStack {\n                Text(\"Select\")\n                Spacer()\n                Text(\"↩\").registryKeycap(accessibilityLabel: Text(\"Return\"))\n            }\n            HStack {\n                Text(\"Dismiss\")\n                Spacer()\n                Text(\"esc\").registryKeycap(accessibilityLabel: Text(\"Escape\"))\n            }\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Keycap\") {\n    RegistryKeycapModifierPreview()\n}\n\n#Preview(\"Keycap Dark\") {\n    RegistryKeycapModifierPreview().preferredColorScheme(.dark)\n}\n\n#Preview(\"Keycap Accessibility Size\") {\n    RegistryKeycapModifierPreview().dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Keycap",
+      "screenshots": {
+        "light": "/images/items/kbd-light.png",
+        "dark": "/images/items/kbd-dark.png"
       },
       "wideScreenshots": {
         "light": null,

@@ -46,11 +46,11 @@ The value gate: an installable item must add a meaningful reusable treatment or 
 
 Version 0, an honest prototype:
 
-- 46 items: 23 installable components, 5 blocks, and 18 recipes, generated into `docs/catalog/` and the website's data file
+- 50 items: 26 installable components, 6 blocks, and 18 recipes, generated into `docs/catalog/` and the website's data file
 - `SwiftUIRegistryFoundations` is a small pre-1.0 package: accent, on-accent, surface, border, positive, negative, disabled opacity, and metrics, with six presets and one root modifier
 - Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, captured screenshots, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates
-- The Showcase compiles every installable item and every recipe snippet at the iOS 26 floor, with pinned visual contract checks for all five blocks and a demo walk over all 46 items
+- The Showcase compiles every installable item and every recipe snippet at the iOS 26 floor, with pinned visual contract checks for the blocks and an accessibility-audited demo walk over all 50 items
 - Not yet: hosted registry, MCP server, Xcode project mutation, platforms beyond iOS, or a published version tag. Stage status and open deferrals live in one place, `docs/component-roadmap.md`, Current state
 
 ## Showcase screenshots

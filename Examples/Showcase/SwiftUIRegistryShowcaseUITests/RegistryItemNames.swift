@@ -3,8 +3,8 @@
 
 /// Every registry item name by kind, for the UI suite's demo walk.
 enum RegistryItemNames {
-    static let components: [String] = ["accordion", "alert", "avatar", "badge", "button", "button-group", "card", "checkbox", "empty", "input", "item", "label", "macro-progress", "metric-card", "progress", "select", "separator", "skeleton", "spinner", "textarea", "toggle", "toggle-group", "transaction-row"]
-    static let blocks: [String] = ["activity-feed", "auth-form", "finance-overview", "nutrition-overview", "settings-section"]
+    static let components: [String] = ["accordion", "alert", "avatar", "badge", "button", "button-group", "card", "checkbox", "command", "empty", "input", "input-group", "item", "kbd", "label", "macro-progress", "metric-card", "progress", "select", "separator", "skeleton", "spinner", "textarea", "toggle", "toggle-group", "transaction-row"]
+    static let blocks: [String] = ["activity-feed", "auth-form", "command-search", "finance-overview", "nutrition-overview", "settings-section"]
     static let recipes: [String] = ["alert-dialog", "aspect-ratio", "calendar", "collapsible", "context-menu", "dialog", "direction", "drawer", "dropdown-menu", "native-select", "popover", "radio-group", "scroll-area", "sidebar", "slider", "switch", "tabs", "tooltip"]
 
     static var all: [String] { components + blocks + recipes }

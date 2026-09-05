@@ -2,7 +2,7 @@
 
 # SwiftUIRegistry catalog
 
-46 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
+50 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
 
 ```sh
 python3 Scripts/install.py <name> --destination Sources/YourFeature/Components
@@ -10,17 +10,18 @@ python3 Scripts/install.py <name> --destination Sources/YourFeature/Components
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-## Blocks (5)
+## Blocks (6)
 
 Compositions of components. Installing one installs its whole closure
 
 - [activity-feed](activity-feed.md): Composes inline alert, avatar, item row, skeleton, empty state, and accordion treatments into an activity feed with caller-owned loading, items, notice, and selection.
 - [auth-form](auth-form.md): Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.
+- [command-search](command-search.md): Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.
 - [finance-overview](finance-overview.md): Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.
 - [nutrition-overview](nutrition-overview.md): Composes prepared energy and macronutrient values into an embeddable nutrition overview.
 - [settings-section](settings-section.md): Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
 
-## Components (23)
+## Components (26)
 
 One installable style, modifier, or view each
 
@@ -32,9 +33,12 @@ One installable style, modifier, or view each
 - [button-group](button-group.md): Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.
 - [card](card.md): Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.
 - [checkbox](checkbox.md): Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.
+- [command](command.md): Composes the registry input group, item rows, keycaps, and empty state into a search field over caller-filtered command sections.
 - [empty](empty.md): Places a native ContentUnavailableView on the registry content surface so an empty section sits where its rows would.
 - [input](input.md): Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.
+- [input-group](input-group.md): Wraps a native text field with registry input chrome and caller-provided leading and trailing accessories, such as a search symbol and a clear button.
 - [item](item.md): Composes a generic content row with leading media, a title and optional description, and a trailing accessory while leaving selection to the call site.
+- [kbd](kbd.md): Draws text as a keycap for keyboard shortcut hints, hidden from accessibility unless a spoken label is supplied.
 - [label](label.md): Controls native Label icon placement with semantic spacing and decorative icon accessibility behavior.
 - [macro-progress](macro-progress.md): Displays prepared nutrition progress with a native progress view and adaptive value layout.
 - [metric-card](metric-card.md): Displays one prepared product metric using native text formatting and semantic styling.

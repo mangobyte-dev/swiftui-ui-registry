@@ -17,7 +17,7 @@ Updated 2026-09-05. This section and the per-stage Status lines are the only hom
 - Foundations grew on 2026-09-05 into the set-up-once contract: `accent` and `onAccent` tokens, `compactRadius`, six presets, and a root `registryTheme(_:)` that also applies the tint. No tag exists yet, so `0.1.0` remains the first published contract and now means this shape
 - Showcase is a browsable catalog (Components, Blocks, Recipes, Tune) with a generated manifest, a demo per item, a capture launch route, and the theme tuning panel with Swift export
 - The website is a Next.js static site built with shadcn/ui under `Website/`, fed by generated `content/registry.json`, with a page per item and a Themes page, deployed 2026-09-05 to Cloudflare Workers at https://swiftui-registry.mangobytekw.workers.dev; `docs/images/items/` and `docs/images/themes/` hold the light and dark captures
-- Next: Stage 4 has not been chosen. Candidates are the block candidates 3 to 6 below, each gated on a named adopter screen
+- Stage 4 (2026-09-05): the command and search screen, `command-search`, named `input-group`, `kbd`, and `command`; status and evidence in its section below
 - First consumer outside `Examples/Showcase`: the seeFood app installed settings-section, select, separator, button, and input on 2026-09-01 through a local path dependency, with the receipt in its destination; the published URL remains unexercised because no tag exists
 - Current catalog counts and per-item pages live in the generated `docs/catalog/index.md` and the website, not in prose here
 
@@ -49,7 +49,7 @@ The honest list of what would bite the first outside adopter and what was left t
 12. Usage-snippet compile proof for installable items independent of the Showcase demos. Status: closed 2026-09-05: snippets reference caller state (`$email`, `rows`, `onSelect`) that a generic wrapper cannot supply without per-item fixtures, which would duplicate the demos; the demos remain the compile proof and the walk proves each exists
 13. iOS 26 simulator runtime for floor evidence. Status: open, needs a multi-gigabyte download on the owner's machine
 14. Custom domain for the Worker plus `X-Robots-Tag: noindex` on the workers.dev host. Status: open, needs the owner's domain
-15. Stage 4: a command and search screen naming `command`, `kbd`, and `input-group`. Status: open, last
+15. Stage 4: a command and search screen naming `command`, `kbd`, and `input-group`. Status: done 2026-09-05; evidence in the Stage 4 section
 
 ## Implementation rules
 
@@ -158,6 +158,27 @@ Verified on the pinned light-mode iPhone 17 iOS 27.0 simulator by `testActivityF
 - Decorative imagery: the alert symbol, the unread dot, and the accordion chevron are hidden; every avatar carries the caller's sender name, and the row buttons expose title, detail, and timestamp in one label
 - Placeholders never act: in the loading state the rows are gone from the button tree, one element labeled Loading activity stands in, and tapping it produces no selection; the empty state shows the caller's copy; the loaded state selects, expands Earlier, and dismisses the notice through caller code
 - Visual contract: `activity-light.png` was added per `docs/visual-testing.md`
+
+## Stage 4: Command and search driven by one real screen
+
+**Status: Complete**
+
+The screen is a global search (`command-search`): a search field with a leading symbol and a clear button, caller-filtered sections of commands with optional shortcut hints, the native empty state for no results, and a shortcut legend for keyboard users. It named exactly these treatments:
+
+- `input-group` (`InputGroup`): registry input chrome around a native field with leading and trailing accessories
+- `kbd` (`registryKeycap`): a keycap for shortcut hints, hidden from accessibility unless a spoken label is given
+- `command` (`CommandPalette`): the input group over sectioned item rows, keycaps, and the empty state, with the query and the filtering left to the caller
+
+### Stage 4 exit criteria
+
+- Filtering, ranking, and what a command does stay with the caller; the palette never triggers an action on its own
+- No results renders the native empty state with caller copy
+- Shortcut hints are never bare glyphs to assistive technology: either spoken or hidden
+- The search field is a labeled native text field with the search return key
+
+### Stage 4 exit-criteria evidence (2026-09-05)
+
+Verified on the pinned light-mode iPhone 17 iOS 27.0 simulator by `testCommandSearchFiltersEmptiesAndRunsCallerCommands`: typing narrows the list through the caller's filter and non-matching commands leave it; a query with no matches shows the native No results state with the caller's copy; Clear search restores the sections; selecting a command runs caller code (the harness caption reports it); the shortcut legend exposes the spoken shortcut. The 50-item demo walk with the accessibility audit passes, so every new control and image carries a label. Light and dark captures exist for the three components and the block, plus the block on iPad
 
 ## Later
 

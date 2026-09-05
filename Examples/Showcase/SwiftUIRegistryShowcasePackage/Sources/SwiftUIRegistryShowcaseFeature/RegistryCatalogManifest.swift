@@ -91,7 +91,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "button",
             kind: "component",
-            version: "0.4.0",
+            version: "0.5.0",
             description: "Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nButton(\"Save changes\") {}\n    .buttonStyle(.registry)\n\nButton(\"Cancel\") {}\n    .buttonStyle(.registryOutline)\n\nButton(\"Delete\", role: .destructive) {}\n    .buttonStyle(.registry)",
             dependencies: [],
@@ -100,11 +100,11 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "button-group",
             kind: "component",
-            version: "0.2.0",
+            version: "0.2.1",
             description: "Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
             dependencies: ["button"],
-            tags: ["button", "control-group", "action", "style", "toolbar"]
+            tags: ["button", "control-group", "action", "style"]
         ),
         CatalogEntry(
             name: "calendar",

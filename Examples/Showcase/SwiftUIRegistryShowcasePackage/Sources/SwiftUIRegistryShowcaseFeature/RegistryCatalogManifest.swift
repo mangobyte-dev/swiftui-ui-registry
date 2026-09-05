@@ -82,8 +82,8 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "badge",
             kind: "component",
-            version: "0.3.0",
-            description: "Applies accent, positive, negative, secondary, and outline badge treatments to native Text and Label content.",
+            version: "0.3.1",
+            description: "Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.",
             usage: "Text(\"New\")\n    .registryBadge()\n\nLabel(\"Completed\", systemImage: \"checkmark.circle.fill\")\n    .registryBadge(.positive)",
             dependencies: [],
             tags: ["badge", "label", "status", "category", "modifier"]

@@ -70,8 +70,8 @@ private struct RegistryBadgeModifier: ViewModifier {
         }
     }
 
-    private var borderStyle: AnyShapeStyle {
-        AnyShapeStyle(variant == .outline ? theme.border : Color.clear)
+    private var borderStyle: Color {
+        variant == .outline ? theme.border : .clear
     }
 }
 

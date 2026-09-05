@@ -2,7 +2,7 @@
 
 # badge
 
-Applies accent, positive, negative, secondary, and outline badge treatments to native Text and Label content.
+Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.
 
 ![badge preview](../images/items/badge-light.png)
 
@@ -45,7 +45,7 @@ Label("Completed", systemImage: "checkmark.circle.fill")
 ## Details
 
 - Kind: component
-- Version: 0.3.0
+- Version: 0.3.1
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
@@ -53,5 +53,5 @@ Label("Completed", systemImage: "checkmark.circle.fill")
   - Preserves the accessibility semantics and reading order of the modified Text or Label.
   - Uses a system text style, so the single line still grows with Dynamic Type.
   - Inherits layout direction so Label content follows the caller's locale.
-  - Uses fill and border treatments in addition to semantic color variants.
+  - Positive and destructive share one fill treatment and differ by hue; pair them with a Label symbol when meaning must not rest on color alone.
 - Source: [sources/components/RegistryBadge.swift](../../Registry/sources/components/RegistryBadge.swift), with the `Badge Variants` Xcode preview

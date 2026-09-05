@@ -93,10 +93,10 @@
     },
     "RegistryBadge.swift": {
       "base": "bases/d2c9ac15caa37b6a8d992908df2bae92cbf1f88a0a246a7122f2e7e198b5024d.base",
-      "installedDigest": "sha256:6de5435d63ec560287ff58b72a7eb3d384665ab42d31c0db2aab59404860dd60",
+      "installedDigest": "sha256:803efa01ff74b6b56135263296cf9940a7dac32e53d7ba0a563a02991b6630f5",
       "item": "badge",
-      "sourceDigest": "sha256:6de5435d63ec560287ff58b72a7eb3d384665ab42d31c0db2aab59404860dd60",
-      "version": "0.3.0"
+      "sourceDigest": "sha256:803efa01ff74b6b56135263296cf9940a7dac32e53d7ba0a563a02991b6630f5",
+      "version": "0.3.1"
     },
     "RegistryButtonGroupStyle.swift": {
       "base": "bases/db7fdc3c6784bc96f933530ea493c2024cac082f8e63aaf7cf8373dc2e7c22b5.base",
@@ -337,7 +337,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.3.0"
+      "version": "0.3.1"
     },
     "button": {
       "packageDependencies": [

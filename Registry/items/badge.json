@@ -1,10 +1,10 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.3.0",
+  "version": "0.3.1",
   "name": "badge",
   "kind": "component",
-  "description": "Applies accent, positive, negative, secondary, and outline badge treatments to native Text and Label content.",
+  "description": "Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.",
   "usage": "Text(\"New\")\n    .registryBadge()\n\nLabel(\"Completed\", systemImage: \"checkmark.circle.fill\")\n    .registryBadge(.positive)",
   "files": [
     {
@@ -48,7 +48,7 @@
     "Preserves the accessibility semantics and reading order of the modified Text or Label.",
     "Uses a system text style, so the single line still grows with Dynamic Type.",
     "Inherits layout direction so Label content follows the caller's locale.",
-    "Uses fill and border treatments in addition to semantic color variants."
+    "Positive and destructive share one fill treatment and differ by hue; pair them with a Label symbol when meaning must not rest on color alone."
   ],
   "preview": {
     "source": "sources/components/RegistryBadge.swift",

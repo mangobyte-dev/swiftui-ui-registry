@@ -64,7 +64,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "auth-form",
             kind: "block",
-            version: "0.2.0",
+            version: "0.3.0",
             description: "Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.",
             usage: "AuthForm(\n    \"Welcome back\",\n    identity: $email,\n    identityError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Forgot password?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
             dependencies: ["input", "button", "card"],
@@ -208,16 +208,16 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "input",
             kind: "component",
-            version: "0.3.0",
+            version: "0.4.0",
             description: "Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.",
-            usage: "@State private var email = \"\"\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(.registryInput)\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(RegistryInputStyle(isInvalid: true))",
+            usage: "@State private var email = \"\"\n@State private var password = \"\"\n\n// The title is placeholder text to VoiceOver; the explicit label names\n// the field once it holds text.\nTextField(\"Email\", text: $email)\n    .textFieldStyle(.registryInput)\n    .accessibilityLabel(\"Email\")\n\nSecureField(\"Password\", text: $password)\n    .textFieldStyle(.registryInput)\n    .accessibilityLabel(\"Password\")\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(RegistryInputStyle(isInvalid: true))\n    .accessibilityLabel(\"Email\")\n    .accessibilityHint(\"Enter a valid email address\")",
             dependencies: [],
             tags: ["input", "text-field", "secure-field", "form", "style"]
         ),
         CatalogEntry(
             name: "item",
             kind: "component",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Composes a generic content row with leading media, a title and optional description, and a trailing accessory while leaving selection to the call site.",
             usage: "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
             dependencies: ["separator", "badge"],

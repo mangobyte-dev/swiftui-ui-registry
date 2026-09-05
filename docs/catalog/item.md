@@ -48,12 +48,13 @@ ItemRow(
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
-- Installs in order: [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.0, [item](item.md) 0.1.0
+- Installs in order: [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.0, [item](item.md) 0.1.1
 - Accessibility contract:
   - Combines the title and description into one accessibility element; media and accessory remain separate so an interactive accessory stays activatable.
   - Selection belongs to a native Button or NavigationLink at the call site, which combines the row into its own label.
   - Keeps the 44 point minimum row height and a rectangular content shape.
   - Uses system text styles and the semantic spacing tokens; the description wraps rather than truncates.
+  - A control placed in the accessory with labelsHidden must restore its label with accessibilityLabel; hiding the visual label also removes the spoken one.
 - Source: [sources/components/ItemRow.swift](../../Registry/sources/components/ItemRow.swift), with the `Item Row` Xcode preview

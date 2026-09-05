@@ -12,9 +12,9 @@ The contract is pinned to a light-mode iPhone 17 running iOS 27.0. Native contro
 
 1. Captures the app through `XCUIApplication.screenshot()`
 2. Removes the top 7 percent containing volatile status-bar content
-3. Normalizes both images to 96 by 192 RGBA pixels
+3. Normalizes both images to 192 by 384 RGBA pixels
 4. Computes mean absolute channel difference
-5. Fails when the normalized difference exceeds 2 percent
+5. Fails when the normalized difference exceeds 1.5 percent
 
 Semantic UI assertions remain separate. The image check protects layout, hierarchy, surfaces, color distribution, and major typography without treating the changing clock as product output
 
@@ -39,6 +39,8 @@ GOLDEN-CHANGE (2026-09-05): all four existing references were recaptured and `ac
 ## Item captures
 
 Per-item light and dark images under `docs/images/items/` and the preset images under `docs/images/themes/` are documentation captures produced by `Scripts/capture_previews.py` from the Showcase's `-item` launch on the same pinned simulator. They feed the catalog and the website (copied into `Website/public/images/` by the site-data generator) and are human review evidence, not test baselines
+
+GOLDEN-CHANGE (2026-09-05, threshold): the comparison moved from 96 by 192 at 2 percent to 192 by 384 at 1.5 percent so a whole tab bar or navigation bar can no longer hide inside the tolerance. All five references passed at the new setting without recapture
 
 ## Updating a reference
 

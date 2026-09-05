@@ -52,11 +52,11 @@ AuthForm(
 ## Details
 
 - Kind: block
-- Version: 0.2.0
+- Version: 0.3.0
 - Platforms: iOS 26.0+
-- Installs in order: [input](input.md) 0.3.0, [button](button.md) 0.4.0, [card](card.md) 0.2.0, [auth-form](auth-form.md) 0.2.0
+- Installs in order: [input](input.md) 0.4.0, [button](button.md) 0.4.0, [card](card.md) 0.2.0, [auth-form](auth-form.md) 0.3.0
 - Accessibility contract:
-  - Both fields use label-plus-prompt initializers so the field titles are real accessibility labels, not placeholder-only text.
+  - Both fields carry an explicit accessibilityLabel equal to their visible titles. Measured on iOS 27: the label-plus-prompt initializer alone exposes the title as placeholder text only, so a field with typed content would be unnamed without it.
   - Focus order is identity then password: the identity field submits with a Next return key that moves focus to the password field, and the password return key submits the form.
   - Invalid fields are never color-alone: the input border width increases, a visible footnote message renders under the field, and the message is attached as the field's accessibility hint.
   - Field and form error messages post an AccessibilityNotification.Announcement when they appear or change; VoiceOver announcement timing has not been verified on device.

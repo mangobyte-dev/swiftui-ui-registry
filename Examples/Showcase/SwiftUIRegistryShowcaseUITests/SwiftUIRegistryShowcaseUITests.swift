@@ -70,6 +70,16 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
             // Accessibility audit per demo: every interactive control and
             // every exposed image must carry a label. Decorative symbols are
             // hidden by the items, so an unlabeled image here is a defect.
+            // Two kinds of unlabeled node are a control's own rendering,
+            // not a defect, and are skipped: zero-area nodes, and a node
+            // enclosed by a labeled element (the native switch inside a
+            // labeled Toggle, the chevron inside a labeled disclosure
+            // header). VoiceOver reads the enclosing element.
+            let labeledFrames = app.descendants(matching: .any)
+                .matching(NSPredicate(format: "label != ''"))
+                .allElementsBoundByIndex
+                .map(\.frame)
+                .filter { $0.width > 0 && $0.height > 0 && $0.height < 200 }
             for (kind, query) in [
                 ("button", app.buttons),
                 ("switch", app.switches),
@@ -77,10 +87,14 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
                 ("text field", app.textFields),
                 ("slider", app.sliders),
             ] {
-                XCTAssertEqual(
-                    query.matching(unlabeled).count,
-                    0,
-                    "\(name) exposes a \(kind) without an accessibility label."
+                let offenders = query.matching(unlabeled).allElementsBoundByIndex.filter { element in
+                    let frame = element.frame
+                    guard frame.width > 0, frame.height > 0 else { return false }
+                    return !labeledFrames.contains { $0.insetBy(dx: -2, dy: -2).contains(frame) }
+                }
+                XCTAssertTrue(
+                    offenders.isEmpty,
+                    "\(name) exposes a \(kind) without an accessibility label at \(offenders.map { $0.frame })."
                 )
             }
             app.terminate()
@@ -552,6 +566,42 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertTrue(export.label.contains(".registryTheme(theme)"), "The export must show the one-line root setup.")
     }
 
+    @MainActor
+    func testTuningPanelImportsAPastedThemeIntoTheKnobs() {
+        let app = launchCatalog()
+        let tuneTab = app.tabBars.buttons["Tune"]
+        XCTAssertTrue(tuneTab.waitForExistence(timeout: 5))
+        tuneTab.tap()
+
+        app.buttons["Import"].tap()
+        let editor = app.textViews["Theme Swift"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 3), "The import sheet must offer a labeled editor.")
+        editor.tap()
+        // A subset of arguments is enough: only the named knobs change.
+        editor.typeText("RegistryTheme(accent: .rose, disabledOpacity: 0.3, metrics: RegistryMetrics(cardRadius: 20))")
+        app.buttons["Apply"].tap()
+
+        let swiftRow = app.buttons["Swift"]
+        XCTAssertTrue(swiftRow.waitForExistence(timeout: 3))
+        swiftRow.tap()
+        let export = app.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "cardRadius: 20")
+        ).firstMatch
+        XCTAssertTrue(export.waitForExistence(timeout: 3), "The imported card radius must round-trip into the export.")
+        XCTAssertTrue(export.label.contains("accent: .pink"), "The rose preset name must map to its pink accent.")
+        XCTAssertTrue(export.label.contains("disabledOpacity: 0.300"))
+        XCTAssertTrue(export.label.contains("standardSpacing: 16"), "Knobs the paste does not name must keep their values.")
+
+        // Text without an initializer is refused, and the knobs stay put.
+        app.buttons["Import"].tap()
+        let editorAgain = app.textViews["Theme Swift"]
+        XCTAssertTrue(editorAgain.waitForExistence(timeout: 3))
+        editorAgain.tap()
+        editorAgain.typeText("nothing here")
+        app.buttons["Apply"].tap()
+        XCTAssertTrue(app.staticTexts["No RegistryTheme( initializer found in the pasted text."].waitForExistence(timeout: 2))
+    }
+
     // MARK: - Helpers
 
     @MainActor
@@ -635,3 +685,5 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         return created ? pixels : nil
     }
 }
+
+

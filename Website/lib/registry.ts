@@ -20,6 +20,7 @@ export type RegistryItem = {
   source: string | null
   previewName: string | null
   screenshots: { light: string | null; dark: string | null }
+  wideScreenshots: { light: string | null; dark: string | null }
   requirements: { instruction: string; manifest: string; xcode: string }[]
 }
 

@@ -81,11 +81,12 @@ public struct AuthForm: View {
         GroupBox {
             VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {
                 VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {
-                    // Label+prompt init form so the title is a real
-                    // accessibility label, not placeholder-only text.
+                    // The title is placeholder text to VoiceOver; the explicit
+                    // label keeps the field named once it holds text.
                     TextField(text: $identity, prompt: Text(identityTitle)) {
                         Text(identityTitle)
                     }
+                    .accessibilityLabel(Text(identityTitle))
                     .textFieldStyle(RegistryInputStyle(isInvalid: identityError != nil))
                     .textContentType(.username)
                     .keyboardType(identityKind == .email ? .emailAddress : .asciiCapable)
@@ -103,6 +104,7 @@ public struct AuthForm: View {
                     SecureField(text: $password, prompt: Text(passwordTitle)) {
                         Text(passwordTitle)
                     }
+                    .accessibilityLabel(Text(passwordTitle))
                     .textFieldStyle(RegistryInputStyle(isInvalid: passwordError != nil))
                     .textContentType(.password)
                     .submitLabel(.go)

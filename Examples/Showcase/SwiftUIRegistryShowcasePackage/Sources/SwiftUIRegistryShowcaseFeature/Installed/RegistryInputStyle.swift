@@ -60,16 +60,22 @@ private struct RegistryInputStylePreview: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            // An explicit accessibility label: on iOS the field's title and
+            // prompt are exposed as placeholder text only, so a field with
+            // typed content would otherwise be unnamed to VoiceOver.
             TextField("Full name", text: $name)
                 .textFieldStyle(.registryInput)
+                .accessibilityLabel("Full name")
                 .focused($focusedField, equals: .name)
 
             SecureField("Password", text: $password)
                 .textFieldStyle(.registryInput)
+                .accessibilityLabel("Password")
 
             VStack(alignment: .leading, spacing: 4) {
                 TextField("Email", text: $email)
                     .textFieldStyle(RegistryInputStyle(isInvalid: true))
+                    .accessibilityLabel("Email")
                     .accessibilityHint("Enter a valid email address")
                 Text("Enter a valid email address")
                     .font(.footnote)
@@ -78,6 +84,7 @@ private struct RegistryInputStylePreview: View {
 
             TextField("Disabled", text: .constant("Unavailable"))
                 .textFieldStyle(.registryInput)
+                .accessibilityLabel("Disabled")
                 .disabled(true)
         }
         .padding()

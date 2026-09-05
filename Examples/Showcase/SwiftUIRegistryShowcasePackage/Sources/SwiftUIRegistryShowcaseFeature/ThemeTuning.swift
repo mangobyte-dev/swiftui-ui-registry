@@ -31,7 +31,7 @@ struct ThemeTuning: Codable, Equatable {
             }
         }
 
-        func color(custom: RGB) -> Color? {
+        func color(custom: RGB, dark: RGB? = nil) -> Color? {
             switch self {
             case .system: nil
             case .ink: .primary
@@ -47,7 +47,14 @@ struct ThemeTuning: Codable, Equatable {
             case .teal: .teal
             case .cyan: .cyan
             case .brown: .brown
-            case .custom: custom.color
+            case .custom:
+                if let dark {
+                    Color(uiColor: UIColor { traits in
+                        traits.userInterfaceStyle == .dark ? dark.uiColor : custom.uiColor
+                    })
+                } else {
+                    custom.color
+                }
             }
         }
     }
@@ -58,9 +65,14 @@ struct ThemeTuning: Codable, Equatable {
         var blue: Double
 
         var color: Color { Color(red: red, green: green, blue: blue) }
+        var uiColor: UIColor { UIColor(red: red, green: green, blue: blue, alpha: 1) }
 
         var source: String {
             "Color(red: \(RGB.format(red)), green: \(RGB.format(green)), blue: \(RGB.format(blue)))"
+        }
+
+        var uiSource: String {
+            "UIColor(red: \(RGB.format(red)), green: \(RGB.format(green)), blue: \(RGB.format(blue)), alpha: 1)"
         }
 
         static func format(_ value: Double) -> String {
@@ -101,6 +113,8 @@ struct ThemeTuning: Codable, Equatable {
 
     var accent: Accent = .indigo
     var customAccent = RGB(red: 0.35, green: 0.34, blue: 0.84)
+    /// A separate custom accent for dark appearance; `nil` reuses `customAccent`.
+    var customAccentDark: RGB? = nil
     var darkLabelOnAccent = false
     var surfaceOpacity = 0.055
     var borderOpacity = 0.08
@@ -124,7 +138,7 @@ struct ThemeTuning: Codable, Equatable {
 
     var theme: RegistryTheme {
         RegistryTheme(
-            accent: accent.color(custom: customAccent),
+            accent: accent.color(custom: customAccent, dark: customAccentDark),
             onAccent: onAccent,
             surface: .primary.opacity(surfaceOpacity),
             border: .primary.opacity(borderOpacity),
@@ -173,7 +187,13 @@ struct ThemeTuning: Codable, Equatable {
     /// what the panel shows.
     var swiftSource: String {
         var lines = ["let theme = RegistryTheme("]
-        if accent == .custom {
+        if accent == .custom, let dark = customAccentDark {
+            lines.append("    accent: Color(uiColor: UIColor { traits in")
+            lines.append("        traits.userInterfaceStyle == .dark")
+            lines.append("            ? \(dark.uiSource)")
+            lines.append("            : \(customAccent.uiSource)")
+            lines.append("    }),")
+        } else if accent == .custom {
             lines.append("    accent: \(customAccent.source),")
         } else if let source = accent.source {
             lines.append("    accent: \(source),")
@@ -203,6 +223,88 @@ struct ThemeTuning: Codable, Equatable {
 
     private static func points(_ value: Double) -> String {
         value == value.rounded() ? String(Int(value)) : String(format: "%.1f", value)
+    }
+
+    // MARK: Import
+
+    /// Reads a `RegistryTheme(...)` initializer, in the exact shape ``swiftSource``
+    /// writes or any subset of its labeled arguments, into the knobs. Unknown or
+    /// malformed arguments are ignored; nothing is imported when no `RegistryTheme(`
+    /// call is present. Environment switches are never part of a theme.
+    static func parse(_ swift: String, into base: ThemeTuning = .default) -> ThemeTuning? {
+        guard swift.contains("RegistryTheme(") else { return nil }
+        var tuning = base
+        let text = swift.replacingOccurrences(of: "\n", with: " ")
+
+        func number(_ label: String) -> Double? {
+            guard let range = text.range(of: "\\b\(label):\\s*([0-9]+(?:\\.[0-9]+)?)", options: .regularExpression) else {
+                return nil
+            }
+            let match = text[range]
+            let digits = match.split(separator: ":").last.map { $0.trimmingCharacters(in: .whitespaces) } ?? ""
+            return Double(digits)
+        }
+
+        func opacity(_ label: String) -> Double? {
+            guard let range = text.range(of: "\(label):\\s*\\.primary\\.opacity\\(([0-9.]+)\\)", options: .regularExpression) else {
+                return nil
+            }
+            let match = text[range]
+            guard let open = match.lastIndex(of: "("), let close = match.lastIndex(of: ")") else { return nil }
+            return Double(match[match.index(after: open)..<close])
+        }
+
+        func rgb(after anchor: String) -> RGB? {
+            guard let anchorRange = text.range(of: anchor) else { return nil }
+            let tail = text[anchorRange.upperBound...]
+            guard let range = tail.range(of: "(?:UI)?Color\\(red:\\s*([0-9.]+),\\s*green:\\s*([0-9.]+),\\s*blue:\\s*([0-9.]+)", options: .regularExpression) else {
+                return nil
+            }
+            let parts = tail[range].split(separator: ",").compactMap { part -> Double? in
+                Double(part.split(separator: ":").last?.trimmingCharacters(in: .whitespaces) ?? "")
+            }
+            guard parts.count == 3 else { return nil }
+            return RGB(red: parts[0], green: parts[1], blue: parts[2])
+        }
+
+        if text.contains("accent: Color(uiColor: UIColor {"), let light = rgb(after: ":"), let dark = rgb(after: "?") {
+            // The dual form lists the dark color after `?` and the light one after `:`.
+            tuning.accent = .custom
+            tuning.customAccent = light
+            tuning.customAccentDark = dark
+        } else if let range = text.range(of: "accent:\\s*\\.([a-z]+)", options: .regularExpression) {
+            let word = text[range].split(separator: ".").last.map(String.init) ?? ""
+            let presetNames: [String: Accent] = ["primary": .ink, "rose": .pink, "emerald": .green, "amber": .yellow, "graphite": .ink, "system": .system]
+            if let known = presetNames[word] {
+                tuning.accent = known
+            } else if let named = Accent(rawValue: word) {
+                tuning.accent = named
+            }
+            tuning.customAccentDark = nil
+        } else if let custom = rgb(after: "accent:") {
+            tuning.accent = .custom
+            tuning.customAccent = custom
+            tuning.customAccentDark = nil
+        }
+
+        if text.contains("onAccent: .black") {
+            tuning.darkLabelOnAccent = true
+        } else if text.contains("onAccent: .white") {
+            tuning.darkLabelOnAccent = false
+        }
+        if let value = opacity("surface") { tuning.surfaceOpacity = value }
+        if let value = opacity("border") { tuning.borderOpacity = value }
+        if let value = number("disabledOpacity") { tuning.disabledOpacity = value }
+        if let value = number("compactSpacing") { tuning.compactSpacing = value }
+        if let value = number("standardSpacing") { tuning.standardSpacing = value }
+        if let value = number("sectionSpacing") { tuning.sectionSpacing = value }
+        if let value = number("controlHorizontalPadding") { tuning.controlHorizontalPadding = value }
+        if let value = number("borderWidth") { tuning.borderWidth = value }
+        if let value = number("emphasizedBorderWidth") { tuning.emphasizedBorderWidth = value }
+        if let value = number("compactRadius") { tuning.compactRadius = value }
+        if let value = number("controlRadius") { tuning.controlRadius = value }
+        if let value = number("cardRadius") { tuning.cardRadius = value }
+        return tuning
     }
 
     // MARK: Presets

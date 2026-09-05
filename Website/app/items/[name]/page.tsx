@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
-import { findItem, installCommand, registry } from "@/lib/registry"
+import { asset, findItem, installCommand, registry } from "@/lib/registry"
 
 type Params = { name: string }
 
@@ -58,6 +58,21 @@ export default async function ItemPage({ params }: { params: Promise<Params> }) 
         codeLabel={isRecipe ? "Snippet" : "Source"}
         code={<CodeBlock code={isRecipe ? item.usage : (item.source ?? "")} />}
       />
+
+      {item.wideScreenshots.light && item.wideScreenshots.dark ? (
+        <section className="flex flex-col gap-3">
+          <h2 className="text-xl font-semibold tracking-tight">On iPad</h2>
+          <p className="text-sm text-muted-foreground">
+            The same installed source at a regular width; the block adapts its rows and metrics without a separate layout.
+          </p>
+          <div className="overflow-hidden rounded-xl border bg-muted">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={asset(item.wideScreenshots.light)} alt={`${item.name} on iPad, light`} loading="lazy" className="w-full dark:hidden" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={asset(item.wideScreenshots.dark)} alt={`${item.name} on iPad, dark`} loading="lazy" className="hidden w-full dark:block" />
+          </div>
+        </section>
+      ) : null}
 
       <section className="flex flex-col gap-3">
         <h2 className="text-xl font-semibold tracking-tight">Install</h2>

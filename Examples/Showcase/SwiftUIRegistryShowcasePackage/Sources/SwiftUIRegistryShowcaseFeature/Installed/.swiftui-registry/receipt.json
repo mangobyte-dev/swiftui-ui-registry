@@ -9,10 +9,10 @@
     },
     "AuthForm.swift": {
       "base": "bases/b808915e7c307350d015763d2cb828270f25868f16345bd7122b187337a9d83f.base",
-      "installedDigest": "sha256:ded4ca3f886a4cec699fc6c2f7922fda18e1d5a25b55b764f2b1f5a90222cf70",
+      "installedDigest": "sha256:4b6a1f6cd1f700d6121899367076b652e44f6748f5662c9d45308873987a860f",
       "item": "auth-form",
-      "sourceDigest": "sha256:ded4ca3f886a4cec699fc6c2f7922fda18e1d5a25b55b764f2b1f5a90222cf70",
-      "version": "0.2.0"
+      "sourceDigest": "sha256:4b6a1f6cd1f700d6121899367076b652e44f6748f5662c9d45308873987a860f",
+      "version": "0.3.0"
     },
     "Avatar.swift": {
       "base": "bases/52f53b07c4f5b4deb26b2c60971258bd9c19da8a9e21a7ab004c5edacbf27f7e.base",
@@ -37,10 +37,10 @@
     },
     "ItemRow.swift": {
       "base": "bases/bc855952cda7fd950cb49608a75fbc629e03015cdf44548d2113a3abc74b87ba.base",
-      "installedDigest": "sha256:d433280148e88fa2eb31cbcc63b89afdfe4c49b38b1683f981518d92e6f8e769",
+      "installedDigest": "sha256:1a8eabd487ab1ca68335e0a34541970928939e372608d9fe93a4fcb83bd9619b",
       "item": "item",
-      "sourceDigest": "sha256:d433280148e88fa2eb31cbcc63b89afdfe4c49b38b1683f981518d92e6f8e769",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:1a8eabd487ab1ca68335e0a34541970928939e372608d9fe93a4fcb83bd9619b",
+      "version": "0.1.1"
     },
     "MacroProgress.swift": {
       "base": "bases/061c048d9552b3eb5f519bbb2c6158fd60f407fa4a68b22ce277c9fad95ac8a9.base",
@@ -114,10 +114,10 @@
     },
     "RegistryInputStyle.swift": {
       "base": "bases/66c24a2324bc206ee6b03a7ba2dfead5fe1cec8f6eb52595c4ddc2131308bad9.base",
-      "installedDigest": "sha256:a4fb20b8787ffbfa3433554f7dfb37dbeb0500f37862d079212075789f16ade9",
+      "installedDigest": "sha256:2b00d1e38d8ded497cb3383df1e7b8128661b8fbc7d519b32b5655cac46d3789",
       "item": "input",
-      "sourceDigest": "sha256:a4fb20b8787ffbfa3433554f7dfb37dbeb0500f37862d079212075789f16ade9",
-      "version": "0.3.0"
+      "sourceDigest": "sha256:2b00d1e38d8ded497cb3383df1e7b8128661b8fbc7d519b32b5655cac46d3789",
+      "version": "0.4.0"
     },
     "RegistryLabelStyle.swift": {
       "base": "bases/04739f973034fb8d715a72289080746b744a673da290b3b462fc035871996323.base",
@@ -277,7 +277,7 @@
         "button",
         "card"
       ],
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "avatar": {
       "packageDependencies": [
@@ -427,7 +427,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.3.0"
+      "version": "0.4.0"
     },
     "item": {
       "packageDependencies": [
@@ -446,7 +446,7 @@
         "separator",
         "badge"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "label": {
       "packageDependencies": [

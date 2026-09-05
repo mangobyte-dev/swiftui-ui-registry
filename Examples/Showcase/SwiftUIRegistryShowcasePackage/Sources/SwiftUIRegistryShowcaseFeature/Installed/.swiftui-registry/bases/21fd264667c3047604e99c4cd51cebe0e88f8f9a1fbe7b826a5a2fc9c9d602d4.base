@@ -26,6 +26,7 @@ public struct PreviewWall: View {
             ContributionsActivity()
             Contributors()
             EnvironmentVariables()
+            FeedbackForm()
         }
     }
 

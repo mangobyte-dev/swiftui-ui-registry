@@ -54,6 +54,10 @@
     {
       "source": "sources/blocks/Preview/EnvironmentVariables.swift",
       "target": "Preview/EnvironmentVariables.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/FeedbackForm.swift",
+      "target": "Preview/FeedbackForm.swift"
     }
   ],
   "registryDependencies": [
@@ -70,7 +74,8 @@
     "field",
     "input-group",
     "spinner",
-    "checkbox"
+    "checkbox",
+    "textarea"
   ],
   "packageDependencies": [
     {

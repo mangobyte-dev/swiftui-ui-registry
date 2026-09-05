@@ -28,6 +28,13 @@
       "sourceDigest": "sha256:4ef0dfdd33feed31133cf3e524c727a646e8a234699eacd8ee8e018b3d56dd1c",
       "version": "0.1.0"
     },
+    "Combobox.swift": {
+      "base": "bases/ee1324adc0e16e3d8dfbe47c2ec10d029728b0e55e77dbf3a3b01bc123eeeb8c.base",
+      "installedDigest": "sha256:1df7c895676068d75ca9905fe193eaafea0b9289ed59bb055adc91efa44562e8",
+      "item": "combobox",
+      "sourceDigest": "sha256:1df7c895676068d75ca9905fe193eaafea0b9289ed59bb055adc91efa44562e8",
+      "version": "0.1.0"
+    },
     "CommandPalette.swift": {
       "base": "bases/b44cc9fe32bbb74237996e0556b041a7dcc5972d193b83b1d3ef1412cee5040b.base",
       "installedDigest": "sha256:0c596aaf59a76dfd6a4348b76e85802087d3f2a6dc549bc76703b8631e14049d",
@@ -441,6 +448,28 @@
       ],
       "registryDependencies": [],
       "version": "0.3.0"
+    },
+    "combobox": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "input-group",
+        "item",
+        "empty",
+        "separator",
+        "button"
+      ],
+      "version": "0.1.0"
     },
     "command": {
       "packageDependencies": [

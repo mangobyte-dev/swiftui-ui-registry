@@ -152,6 +152,15 @@ enum RegistryCatalogManifest {
             tags: ["collapsible", "disclosure", "expand", "toggle", "guidance"]
         ),
         CatalogEntry(
+            name: "combobox",
+            kind: "component",
+            version: "0.1.0",
+            description: "A searchable single-selection control: a registry search field over caller options with a filtered list that opens below the field, controlled selection through a binding, and a native empty state.",
+            usage: "@State private var timezone: String? = \"riyadh\"\n\nCombobox(\n    selection: $timezone,\n    options: [\n        ComboboxOption(id: \"kuwait\", title: \"Kuwait City\", systemImage: \"clock\"),\n        ComboboxOption(id: \"riyadh\", title: \"Riyadh\", systemImage: \"clock\")\n    ],\n    prompt: \"Search time zones\",\n    emptyDescription: Text(\"Try a city name.\")\n)",
+            dependencies: ["input-group", "item", "empty", "separator", "button"],
+            tags: ["combobox", "search", "select", "autocomplete", "picker", "shadcn"]
+        ),
+        CatalogEntry(
             name: "command",
             kind: "component",
             version: "0.2.0",

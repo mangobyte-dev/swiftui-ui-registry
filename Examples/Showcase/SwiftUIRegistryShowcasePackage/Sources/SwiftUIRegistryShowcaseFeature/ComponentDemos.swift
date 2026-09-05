@@ -816,3 +816,28 @@ struct BreadcrumbDemo: View {
         }
     }
 }
+
+struct ComboboxDemo: View {
+    @State private var timezone: String? = "riyadh"
+
+    private let zones = [
+        ComboboxOption(id: "kuwait", title: "Kuwait City", systemImage: "clock"),
+        ComboboxOption(id: "riyadh", title: "Riyadh", systemImage: "clock"),
+        ComboboxOption(id: "dubai", title: "Dubai", systemImage: "clock"),
+        ComboboxOption(id: "doha", title: "Doha", systemImage: "clock"),
+    ]
+
+    var body: some View {
+        DemoSurface {
+            Combobox(
+                selection: $timezone,
+                options: zones,
+                prompt: "Search time zones",
+                emptyDescription: Text("Try a city name.")
+            )
+            Text("Selected: \(timezone ?? "none")")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+    }
+}

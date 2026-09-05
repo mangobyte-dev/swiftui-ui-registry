@@ -2,7 +2,7 @@
 
 # SwiftUIRegistry catalog
 
-53 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
+54 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
 
 ```sh
 python3 Scripts/install.py <name> --destination Sources/YourFeature/Components
@@ -21,7 +21,7 @@ Compositions of components. Installing one installs its whole closure
 - [nutrition-overview](nutrition-overview.md): Composes prepared energy and macronutrient values into an embeddable nutrition overview.
 - [settings-section](settings-section.md): Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
 
-## Components (29)
+## Components (30)
 
 One installable style, modifier, or view each
 
@@ -34,6 +34,7 @@ One installable style, modifier, or view each
 - [button-group](button-group.md): Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.
 - [card](card.md): Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.
 - [checkbox](checkbox.md): Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.
+- [combobox](combobox.md): A searchable single-selection control: a registry search field over caller options with a filtered list that opens below the field, controlled selection through a binding, and a native empty state.
 - [command](command.md): Composes the registry input group, item rows, keycaps, and empty state into a search field over caller-filtered command sections.
 - [empty](empty.md): Places a native ContentUnavailableView on the registry content surface so an empty section sits where its rows would.
 - [field](field.md): Composes a labeled form field around a native control with an optional description and an error message that drives the content's invalid state.

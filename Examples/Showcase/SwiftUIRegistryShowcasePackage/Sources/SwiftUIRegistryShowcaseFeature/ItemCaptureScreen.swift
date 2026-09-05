@@ -4,9 +4,9 @@ import SwiftUIRegistryFoundations
 
 /// Renders one item's demo alone for screenshot capture. Launched by
 /// `Scripts/capture_previews.py` with `-item <name>`, optionally
-/// `-appearance dark`, `-theme <preset>`, and `-capture-info <path>`, where the
-/// screen writes the demo's frame so the script can crop the screenshot to
-/// the content.
+/// `-appearance dark`, `-preset <code>` or `-theme <preset name>`, and
+/// `-capture-info <path>`, where the screen writes the demo's frame so the
+/// script can crop the screenshot to the content.
 struct ItemCaptureScreen: View {
     let name: String
     let arguments: LaunchArguments
@@ -14,7 +14,10 @@ struct ItemCaptureScreen: View {
     @Environment(\.displayScale) private var displayScale
 
     private var theme: RegistryTheme {
-        arguments.value(after: "-theme").flatMap(RegistryTheme.preset(named:)) ?? .indigo
+        if let code = arguments.value(after: "-preset"), let tuned = ThemeTuning(presetCode: code) {
+            return tuned.theme
+        }
+        return arguments.value(after: "-theme").flatMap(RegistryTheme.preset(named:)) ?? .indigo
     }
 
     private var colorScheme: ColorScheme {

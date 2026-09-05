@@ -1,36 +1,53 @@
 import SwiftUI
 import SwiftUIRegistryFoundations
-import UIKit
 
-/// The browsable catalog: one tab per item kind plus the tuning panel. The
-/// tuned theme is applied once here, so every screen below inherits it, which
-/// is exactly how a consuming app adopts the registry.
+/// The browsable catalog: one tab per item kind, with the tuning panel kept
+/// beside it rather than on a tab of its own: a trailing column on a regular
+/// width and, on iPhone, a sheet the catalog stays interactive under, plus
+/// the accent strip above the tab bar. The tuned theme is applied once here,
+/// so every screen below inherits it, which is exactly how a consuming app
+/// adopts the registry.
+///
+/// The column is a plain sibling, not `inspector(isPresented:)`: measured on
+/// iOS 27, that modifier on the tab's navigation stack stopped the auth
+/// form's Return key from moving focus even while nothing was presented.
 struct CatalogRoot: View {
     let arguments: LaunchArguments
     @State private var tuning: ThemeTuning
+    @State private var isTuning = false
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     init(arguments: LaunchArguments) {
         self.arguments = arguments
-        _tuning = State(
-            initialValue: arguments.contains("-default-tuning")
-                ? ThemeTuning.default
-                : ThemeTuning.restored()
-        )
+        _tuning = State(initialValue: ThemeTuning.initial(for: arguments))
     }
 
     var body: some View {
-        TabView {
-            Tab("Components", systemImage: "square.grid.2x2") {
-                CatalogList(kind: "component", title: "Components")
+        HStack(spacing: 0) {
+            TabView {
+                Tab("Components", systemImage: "square.grid.2x2") {
+                    CatalogList(kind: "component", title: "Components")
+                }
+                Tab("Blocks", systemImage: "rectangle.3.group") {
+                    CatalogList(kind: "block", title: "Blocks")
+                }
+                Tab("Recipes", systemImage: "text.book.closed") {
+                    CatalogList(kind: "recipe", title: "Recipes")
+                }
             }
-            Tab("Blocks", systemImage: "rectangle.3.group") {
-                CatalogList(kind: "block", title: "Blocks")
+            .tabViewBottomAccessory {
+                TuningAccessory(tuning: $tuning, isTuning: $isTuning)
             }
-            Tab("Recipes", systemImage: "text.book.closed") {
-                CatalogList(kind: "recipe", title: "Recipes")
-            }
-            Tab("Tune", systemImage: "slider.horizontal.3") {
+            .sheet(isPresented: sizeClass == .compact ? $isTuning : .constant(false)) {
                 TuningPanel(tuning: $tuning)
+                    .presentationDetents([.medium, .large])
+                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+            }
+            if sizeClass == .regular && isTuning {
+                Divider()
+                TuningPanel(tuning: $tuning)
+                    .frame(width: 380)
+                    .transition(.move(edge: .trailing))
             }
         }
         .registryTheme(tuning.theme)
@@ -164,7 +181,6 @@ struct DetailSection<Content: View>: View {
 /// Monospaced code on the registry surface with a copy action.
 struct CodeBlock: View {
     @Environment(\.registryTheme) private var theme
-    @State private var didCopy = false
     let code: String
 
     init(_ code: String) {
@@ -183,27 +199,12 @@ struct CodeBlock: View {
             .padding(.trailing, 40)
             .registrySurface()
         .overlay(alignment: .topTrailing) {
-            Button {
-                UIPasteboard.general.string = code
-                didCopy = true
-            } label: {
-                Image(systemName: didCopy ? "checkmark" : "doc.on.doc")
-                    .contentTransition(.symbolEffect(.replace))
-            }
-            .buttonStyle(.registryGhost)
-            .controlSize(.small)
-            .background(.regularMaterial, in: Circle())
-            .padding(theme.metrics.compactSpacing / 2)
-            .accessibilityLabel(didCopy ? "Copied" : "Copy code")
-        }
-        .task(id: didCopy) {
-            guard didCopy else { return }
-            do {
-                try await Task.sleep(for: .seconds(1.5))
-            } catch {
-                return
-            }
-            didCopy = false
+            CopyButton("Copy code", text: code)
+                .labelStyle(.iconOnly)
+                .buttonStyle(.registryGhost)
+                .controlSize(.small)
+                .background(.regularMaterial, in: Circle())
+                .padding(theme.metrics.compactSpacing / 2)
         }
     }
 }

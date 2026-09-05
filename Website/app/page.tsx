@@ -25,7 +25,7 @@ export default function HomePage() {
           <Badge variant="secondary">iOS 26 and later</Badge>
           <Badge variant="secondary">MIT</Badge>
         </div>
-        <h1 className="max-w-[18ch] text-4xl font-bold tracking-tight sm:text-5xl">
+        <h1 className="max-w-[18ch] text-3xl font-bold tracking-tight sm:text-5xl">
           Native-first SwiftUI you copy and own.
         </h1>
         <p className="max-w-[62ch] text-lg text-muted-foreground">

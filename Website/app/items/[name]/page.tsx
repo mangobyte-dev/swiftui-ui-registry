@@ -41,8 +41,8 @@ export default async function ItemPage({ params }: { params: Promise<Params> }) 
         <Badge variant="outline" className="w-fit uppercase">
           {item.kind}
         </Badge>
-        <h1 className="text-4xl font-bold tracking-tight">{item.name}</h1>
-        <p className="max-w-[62ch] text-lg text-muted-foreground">{item.description}</p>
+        <h1 className="break-words text-3xl font-bold tracking-tight sm:text-4xl">{item.name}</h1>
+        <p className="max-w-[62ch] text-base text-muted-foreground sm:text-lg">{item.description}</p>
         <div className="flex flex-wrap gap-1.5">
           {item.tags.map((tag) => (
             <Badge key={tag} variant="secondary">
@@ -124,11 +124,11 @@ export default async function ItemPage({ params }: { params: Promise<Params> }) 
 
       <section className="flex flex-col gap-3">
         <h2 className="text-xl font-semibold tracking-tight">Details</h2>
-        <div className="rounded-xl border">
+        <div className="overflow-x-auto rounded-xl border">
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className="w-40 text-muted-foreground">Kind</TableCell>
+                <TableCell className="w-32 text-muted-foreground sm:w-40">Kind</TableCell>
                 <TableCell>{item.kind}</TableCell>
               </TableRow>
               <TableRow>
@@ -158,7 +158,7 @@ export default async function ItemPage({ params }: { params: Promise<Params> }) 
                 <TableCell className="text-muted-foreground">Source</TableCell>
                 <TableCell>
                   {item.sourceURL ? (
-                    <a href={item.sourceURL} className="underline-offset-4 hover:underline">
+                    <a href={item.sourceURL} className="break-all underline-offset-4 hover:underline">
                       {item.sourcePath}
                     </a>
                   ) : (

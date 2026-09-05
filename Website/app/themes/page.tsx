@@ -54,7 +54,7 @@ export default function ThemesPage() {
     <div className="flex flex-col gap-12">
       <header className="flex flex-col gap-3">
         <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">Themes</p>
-        <h1 className="text-4xl font-bold tracking-tight">One modifier, every screen</h1>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">One modifier, every screen</h1>
         <p className="max-w-[62ch] text-lg text-muted-foreground">
           A <code>RegistryTheme</code> is a small value: an optional accent, the label color on top of it,
           the content surface, the hairline border, positive and negative colors, a disabled opacity, and the
@@ -125,7 +125,7 @@ export default function ThemesPage() {
 
       <section className="flex flex-col gap-4">
         <h2 className="text-2xl font-semibold tracking-tight">Every token, and who reads it</h2>
-        <div className="rounded-xl border">
+        <div className="overflow-x-auto rounded-xl border">
           <Table>
             <TableHeader>
               <TableRow>

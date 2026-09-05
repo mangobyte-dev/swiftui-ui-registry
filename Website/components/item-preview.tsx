@@ -26,7 +26,7 @@ export function ItemPreview({ name, screenshots, codeLabel, code }: ItemPreviewP
 
   return (
     <Tabs defaultValue="preview" className="gap-0 overflow-hidden rounded-xl border">
-      <div className="flex items-center justify-between gap-2 border-b bg-muted/50 px-2 py-1.5">
+      <div className="flex min-w-0 items-center justify-between gap-2 border-b bg-muted/50 px-2 py-1.5">
         <TabsList>
           <TabsTrigger value="preview">Preview</TabsTrigger>
           <TabsTrigger value="code">{codeLabel}</TabsTrigger>
@@ -49,7 +49,7 @@ export function ItemPreview({ name, screenshots, codeLabel, code }: ItemPreviewP
       <TabsContent
         value="preview"
         className={cn(
-          "flex justify-center p-6 sm:p-8",
+          "flex justify-center p-3 sm:p-8",
           appearance === "dark" ? "bg-[#0b0b0d]" : "bg-[#f4f4f6]"
         )}
       >

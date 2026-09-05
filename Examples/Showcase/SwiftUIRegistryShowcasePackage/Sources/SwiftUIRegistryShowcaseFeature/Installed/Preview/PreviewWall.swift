@@ -18,6 +18,7 @@ public struct PreviewWall: View {
             ActivateAgentDialog()
             AnalyticsCard()
             AnomalyAlert()
+            AssignIssue()
         }
     }
 

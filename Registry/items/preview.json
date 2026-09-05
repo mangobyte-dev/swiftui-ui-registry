@@ -82,6 +82,10 @@
     {
       "source": "sources/blocks/Preview/LiveWaveform.swift",
       "target": "Preview/LiveWaveform.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/NoTeamMembers.swift",
+      "target": "Preview/NoTeamMembers.swift"
     }
   ],
   "registryDependencies": [

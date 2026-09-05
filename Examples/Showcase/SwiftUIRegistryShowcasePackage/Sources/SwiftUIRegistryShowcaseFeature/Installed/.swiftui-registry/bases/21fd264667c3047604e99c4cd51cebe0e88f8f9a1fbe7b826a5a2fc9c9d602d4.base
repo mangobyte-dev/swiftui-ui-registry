@@ -33,6 +33,7 @@ public struct PreviewWall: View {
             InviteTeam()
             Invoice()
             LiveWaveform()
+            NoTeamMembers()
         }
     }
 

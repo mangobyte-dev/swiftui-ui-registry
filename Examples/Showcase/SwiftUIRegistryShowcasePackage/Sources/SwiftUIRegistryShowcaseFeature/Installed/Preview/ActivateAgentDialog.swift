@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftUIRegistryFoundations
 
-/// Vercel Agent activation, translated from shadcn's activate-agent-dialog: a
+/// Review Agent activation, translated from shadcn's activate-agent-dialog: a
 /// card that lists the agent's features and opens a native confirmation alert
 /// from a registry button. The alert is a recipe here, so the native control
 /// stays visible; the card owns only its transient presentation state.
@@ -14,7 +14,7 @@ public struct ActivateAgentDialog: View {
     public var body: some View {
         GroupBox {
             VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {
-                Text("Your use is subject to Vercel's Public Beta Agreement and AI Product Terms.")
+                Text("Your use is subject to the beta program terms and AI usage guidelines.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
 
@@ -26,7 +26,7 @@ public struct ActivateAgentDialog: View {
 
                 InlineAlert(
                     "Trial credit",
-                    message: Text("Pro teams get $100 in Vercel Agent trial credit for two weeks after activation.")
+                    message: Text("Pro teams get $100 in Review Agent trial credit for two weeks after activation.")
                 )
 
                 Button("Enable with $100 credits") { isConfirming = true }
@@ -34,10 +34,10 @@ public struct ActivateAgentDialog: View {
                     .frame(maxWidth: .infinity)
             }
         } label: {
-            Text("Ship faster & safer with Vercel Agent")
+            Text("Ship faster & safer with Review Agent")
         }
         .groupBoxStyle(.registryCard)
-        .alert("Enable Vercel Agent?", isPresented: $isConfirming) {
+        .alert("Enable Review Agent?", isPresented: $isConfirming) {
             Button("Cancel", role: .cancel) {}
             Button("Enable") {}
         } message: {
@@ -67,7 +67,7 @@ public struct ActivateAgentDialog: View {
     private let features: [Feature] = [
         Feature(id: "reviews", title: "Code reviews with full codebase context to catch hard-to-find bugs.", badge: nil),
         Feature(id: "suggestions", title: "Code suggestions validated in sandboxes before you merge.", badge: nil),
-        Feature(id: "root-cause", title: "Root-cause analysis for production issues with deployment context.", badge: "Observability Plus"),
+        Feature(id: "root-cause", title: "Root-cause analysis for production issues with deployment context.", badge: "Insights Plus"),
     ]
 }
 

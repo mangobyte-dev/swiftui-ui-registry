@@ -66,8 +66,8 @@ public struct EnvironmentVariables: View {
 
     private let variables: [EnvVar] = [
         EnvVar(id: "database", key: "DATABASE_URL", value: "postgres://db.example.com", masked: true),
-        EnvVar(id: "api", key: "NEXT_PUBLIC_API", value: "https://api.example.com", masked: false),
-        EnvVar(id: "stripe", key: "STRIPE_SECRET", value: "sk_live_51xxxxxxxx", masked: true),
+        EnvVar(id: "api", key: "PUBLIC_API_URL", value: "https://api.example.com", masked: false),
+        EnvVar(id: "secret", key: "API_SECRET_KEY", value: "svc_0000000000000000", masked: true),
     ]
 }
 

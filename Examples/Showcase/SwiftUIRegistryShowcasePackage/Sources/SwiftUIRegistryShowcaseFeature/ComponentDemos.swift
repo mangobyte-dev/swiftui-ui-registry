@@ -1,3 +1,4 @@
+import Charts
 import SwiftUI
 import SwiftUIRegistryFoundations
 
@@ -838,6 +839,122 @@ struct ComboboxDemo: View {
             Text("Selected: \(timezone ?? "none")")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
+        }
+    }
+}
+
+private struct DemoChannelVisits: Identifiable {
+    let id = UUID()
+    let month: String
+    let channel: String
+    let visits: Int
+}
+
+private struct DemoMonthlyBalance: Identifiable {
+    let id = UUID()
+    let month: String
+    let amount: Double
+}
+
+private struct DemoBrowserShare: Identifiable {
+    let id = UUID()
+    let browser: String
+    let share: Double
+}
+
+struct ChartDemo: View {
+    private let visits = [
+        DemoChannelVisits(month: "Jan", channel: "Desktop", visits: 186),
+        DemoChannelVisits(month: "Jan", channel: "Mobile", visits: 80),
+        DemoChannelVisits(month: "Feb", channel: "Desktop", visits: 205),
+        DemoChannelVisits(month: "Feb", channel: "Mobile", visits: 130),
+        DemoChannelVisits(month: "Mar", channel: "Desktop", visits: 237),
+        DemoChannelVisits(month: "Mar", channel: "Mobile", visits: 120),
+        DemoChannelVisits(month: "Apr", channel: "Desktop", visits: 173),
+        DemoChannelVisits(month: "Apr", channel: "Mobile", visits: 190),
+    ]
+
+    private let balances = [
+        DemoMonthlyBalance(month: "Jan", amount: 2.1),
+        DemoMonthlyBalance(month: "Feb", amount: 2.6),
+        DemoMonthlyBalance(month: "Mar", amount: 2.4),
+        DemoMonthlyBalance(month: "Apr", amount: 3.1),
+        DemoMonthlyBalance(month: "May", amount: 3.5),
+    ]
+
+    private let shares = [
+        DemoBrowserShare(browser: "Safari", share: 38),
+        DemoBrowserShare(browser: "Chrome", share: 34),
+        DemoBrowserShare(browser: "Firefox", share: 16),
+        DemoBrowserShare(browser: "Edge", share: 12),
+    ]
+
+    var body: some View {
+        DemoSurface {
+            chart("Traffic by channel") {
+                Chart(visits) { row in
+                    BarMark(
+                        x: .value("Month", row.month),
+                        y: .value("Visits", row.visits)
+                    )
+                    .foregroundStyle(by: .value("Channel", row.channel))
+                    .position(by: .value("Channel", row.channel))
+                }
+                .registryChart()
+                .frame(height: 160)
+            }
+
+            chart("Balance trend") {
+                Chart(balances) { row in
+                    LineMark(
+                        x: .value("Month", row.month),
+                        y: .value("Balance", row.amount)
+                    )
+                    .interpolationMethod(.catmullRom)
+                    .foregroundStyle(TintShapeStyle())
+                }
+                .registryChart()
+                .frame(height: 105)
+            }
+
+            chart("Cumulative inflow") {
+                Chart(balances) { row in
+                    AreaMark(
+                        x: .value("Month", row.month),
+                        y: .value("Balance", row.amount)
+                    )
+                    .foregroundStyle(TintShapeStyle().opacity(0.2))
+                    LineMark(
+                        x: .value("Month", row.month),
+                        y: .value("Balance", row.amount)
+                    )
+                    .foregroundStyle(TintShapeStyle())
+                }
+                .registryChart()
+                .frame(height: 105)
+            }
+
+            chart("Browser share") {
+                Chart(shares) { row in
+                    SectorMark(
+                        angle: .value("Share", row.share),
+                        innerRadius: .ratio(0.6),
+                        angularInset: 1.5
+                    )
+                    .foregroundStyle(by: .value("Browser", row.browser))
+                }
+                .registryChart()
+                .frame(height: 170)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func chart(_ title: String, @ViewBuilder content: () -> some View) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.subheadline.weight(.medium))
+            content()
         }
     }
 }

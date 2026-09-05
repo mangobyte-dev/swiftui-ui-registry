@@ -46,11 +46,11 @@ MetricCard(
 ## Details
 
 - Kind: component
-- Version: 0.2.0
+- Version: 0.2.1
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Uses system text styles for Dynamic Type.
   - Combines title, value, and detail into one VoiceOver element.
-  - Treats the SF Symbol as decorative.
+  - Treats the SF Symbol as decorative; its circle scales with the body text style.
 - Source: [sources/components/MetricCard.swift](../../Registry/sources/components/MetricCard.swift), with the `Metric Card` Xcode preview

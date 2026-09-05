@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "name": "nutrition-overview",
   "kind": "block",
   "description": "Composes prepared energy and macronutrient values into an embeddable nutrition overview.",
@@ -47,7 +47,7 @@
     "calories"
   ],
   "accessibility": [
-    "Uses native Button and ProgressView semantics.",
+    "Uses native Button and ProgressView semantics; the screen and section titles carry the header trait.",
     "Uses system text styles and adaptive macro rows for Dynamic Type.",
     "Accepts prepared values so callers retain localization and measurement-format control."
   ],

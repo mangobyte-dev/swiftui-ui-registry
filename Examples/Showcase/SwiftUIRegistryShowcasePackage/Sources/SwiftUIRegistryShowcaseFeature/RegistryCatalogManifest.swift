@@ -217,7 +217,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "finance-overview",
             kind: "block",
-            version: "0.4.0",
+            version: "0.4.1",
             description: "Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.",
             usage: "FinanceOverview(\n    \"Overview\",\n    balanceTitle: \"Available balance\",\n    balance: Text(12_480.32, format: .currency(code: \"USD\")),\n    changeTitle: \"Monthly change\",\n    change: Text(0.082, format: .percent),\n    sectionTitle: \"Recent activity\",\n    transactions: [\n        FinanceTransactionItem(\n            id: \"salary\",\n            title: Text(\"Salary\"),\n            subtitle: Text(\"Yesterday\"),\n            amount: Text(2_450, format: .currency(code: \"KWD\")),\n            systemImage: \"building.columns.fill\",\n            tone: .positive\n        )\n    ],\n    onSelect: { id in }\n)",
             dependencies: ["metric-card", "transaction-row", "empty"],
@@ -280,7 +280,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "metric-card",
             kind: "component",
-            version: "0.2.0",
+            version: "0.2.1",
             description: "Displays one prepared product metric using native text formatting and semantic styling.",
             usage: "MetricCard(\n    \"Available balance\",\n    value: Text(12_480.32, format: .currency(code: \"USD\")),\n    detail: Text(\"Up 8.2% this month\"),\n    systemImage: \"creditcard.fill\"\n)",
             dependencies: [],
@@ -298,7 +298,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "nutrition-overview",
             kind: "block",
-            version: "0.2.0",
+            version: "0.2.1",
             description: "Composes prepared energy and macronutrient values into an embeddable nutrition overview.",
             usage: "NutritionOverview(\n    \"Today\",\n    energyTitle: \"Energy\",\n    energy: Text(\"1,640 kcal\"),\n    energyDetail: Text(\"360 kcal remaining\"),\n    sectionTitle: \"Macronutrients\",\n    macros: [\n        NutritionMacroItem(\n            id: \"protein\",\n            name: \"Protein\",\n            value: Text(\"96 g\"),\n            target: Text(\"130 g\"),\n            progress: 96.0 / 130.0,\n            systemImage: \"fish.fill\",\n            tint: .indigo\n        )\n    ],\n    actionTitle: \"Log food\",\n    onLogFood: {}\n)",
             dependencies: ["metric-card", "macro-progress"],
@@ -361,7 +361,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "settings-section",
             kind: "block",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.",
             usage: "SettingsSection(\n    \"Notifications\",\n    footer: Text(\"Quiet hours apply to every channel.\")\n) {\n    Toggle(\"Transaction alerts\", isOn: $alertsEnabled)\n        .settingsRowDescription(Text(\"A push notification for every card transaction.\"))\n\n    Toggle(\"Marketing messages\", isOn: $marketingEnabled)\n        .settingsRowDisabled(\n            !marketingAllowed,\n            explanation: Text(\"Managed by your organization's privacy policy.\")\n        )\n\n    LabeledContent(\"Currency\") {\n        Picker(\"Currency\", selection: $currency) {\n            Text(\"Kuwaiti dinar\").tag(\"KWD\")\n            Text(\"US dollar\").tag(\"USD\")\n        }\n        .registrySelect()\n    }\n\n    Button(\"Sign out\", role: .destructive) { }\n        .buttonStyle(.registry)\n}",
             dependencies: ["select", "separator", "button"],
@@ -460,7 +460,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "transaction-row",
             kind: "component",
-            version: "0.4.0",
+            version: "0.4.1",
             description: "Displays prepared transaction content while leaving selection to a native Button at the call site.",
             usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\",\n    tone: .negative\n)",
             dependencies: [],

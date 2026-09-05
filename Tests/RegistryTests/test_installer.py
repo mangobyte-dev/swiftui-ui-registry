@@ -489,7 +489,7 @@ class InstallerTests(unittest.TestCase):
                 (destination / ".swiftui-registry" / "receipt.json").read_text()
             )
             self.assertEqual(receipt["schemaVersion"], 1)
-            self.assertEqual(receipt["items"]["finance-overview"]["version"], "0.4.0")
+            self.assertEqual(receipt["items"]["finance-overview"]["version"], "0.4.1")
             self.assertEqual(
                 receipt["items"]["finance-overview"]["packageDependencies"],
                 [
@@ -783,10 +783,10 @@ class InstallerTests(unittest.TestCase):
             self.assertEqual(process.returncode, 0)
             self.assertIn(
                 "closure:\n"
-                "  metric-card 0.2.0 (component)\n"
-                "  transaction-row 0.4.0 (component)\n"
+                "  metric-card 0.2.1 (component)\n"
+                "  transaction-row 0.4.1 (component)\n"
                 "  empty 0.1.0 (component)\n"
-                "  finance-overview 0.4.0 (block)\n",
+                "  finance-overview 0.4.1 (block)\n",
                 process.stdout,
             )
             self.assertIn(

@@ -59,11 +59,11 @@ FinanceOverview(
 ## Details
 
 - Kind: block
-- Version: 0.4.0
+- Version: 0.4.1
 - Platforms: iOS 26.0+
-- Installs in order: [metric-card](metric-card.md) 0.2.0, [transaction-row](transaction-row.md) 0.4.0, [empty](empty.md) 0.1.0, [finance-overview](finance-overview.md) 0.4.0
+- Installs in order: [metric-card](metric-card.md) 0.2.1, [transaction-row](transaction-row.md) 0.4.1, [empty](empty.md) 0.1.0, [finance-overview](finance-overview.md) 0.4.1
 - Accessibility contract:
-  - Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state.
+  - Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state; the screen and section titles carry the header trait, and Voice Control can address a row by its title alone.
   - Uses system text styles and ViewThatFits for Dynamic Type.
   - Uses leading and trailing alignment so layout follows right-to-left direction.
 - Source: [sources/blocks/FinanceOverview.swift](../../Registry/sources/blocks/FinanceOverview.swift), with the `Finance Overview` Xcode preview

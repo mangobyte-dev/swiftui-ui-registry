@@ -64,14 +64,14 @@ SettingsSection(
 ## Details
 
 - Kind: block
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
-- Installs in order: [select](select.md) 0.2.0, [separator](separator.md) 0.2.0, [button](button.md) 0.5.0, [settings-section](settings-section.md) 0.1.0
+- Installs in order: [select](select.md) 0.2.0, [separator](separator.md) 0.2.0, [button](button.md) 0.5.0, [settings-section](settings-section.md) 0.1.1
 - Accessibility contract:
   - The section title renders with the header accessibility trait so the VoiceOver rotor can jump between settings sections.
   - Rows keep native control semantics: the block never hides or renames a control, and every control's accessibility name comes from its visible label. Callers who hide a label (.labelsHidden()) must supply their own accessibility label.
   - settingsRowDisabled composes native .disabled, so a disabled control dims through its own style treatment and is announced as dimmed by VoiceOver, while the description and explanation render outside the disabled subtree at full secondary contrast.
   - A disabled row's explanation is visible static text in reading order directly under the control, not an accessibility hint, so nothing double-announces. An enabled row with an explanation is unrepresentable: the modifier clears the explanation when isDisabled is false.
   - Reading order per row is control, then description, then explanation, then the section footer, following caller declaration order for VoiceOver and Full Keyboard Access.
-  - Text uses system styles (.headline, .footnote) with a 44-point minimum row control height and no fixed heights, so Dynamic Type and right-to-left layouts reflow. Rotor grouping of row chrome (.accessibilityElement(children: .contain)) is deliberately not applied; it remains an open UI-verification question for the Stage 2 exit pass.
+  - Text uses system styles (.headline, .footnote) with a 44-point minimum row control height and no fixed heights, so Dynamic Type and right-to-left layouts reflow. Rotor grouping of row chrome (.accessibilityElement(children: .contain)) is deliberately not applied, so each control stays its own element.
 - Source: [sources/blocks/SettingsSection.swift](../../Registry/sources/blocks/SettingsSection.swift), with the `Settings Section` Xcode preview

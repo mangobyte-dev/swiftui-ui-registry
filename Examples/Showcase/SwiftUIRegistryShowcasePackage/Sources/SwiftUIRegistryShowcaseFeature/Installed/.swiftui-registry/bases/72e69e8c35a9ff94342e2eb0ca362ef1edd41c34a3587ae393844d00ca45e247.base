@@ -33,6 +33,7 @@ public struct MetricCard: View {
 
 private struct MetricCardContent: View {
     @Environment(\.registryTheme) private var theme
+    @ScaledMetric(relativeTo: .body) private var iconDiameter: CGFloat = 40
 
     let title: LocalizedStringResource
     let value: Text
@@ -57,7 +58,7 @@ private struct MetricCardContent: View {
                         .foregroundStyle(.tint)
                         .accessibilityHidden(true)
                 }
-                .frame(width: 40, height: 40)
+                .frame(width: iconDiameter, height: iconDiameter)
             }
 
             VStack(alignment: .leading, spacing: theme.metrics.compactSpacing / 2) {

@@ -50,11 +50,7 @@ private struct TransactionRowContent: View {
     let tone: TransactionRow.Tone
 
     var body: some View {
-        if let toneDescription {
-            row.accessibilityValue(toneDescription)
-        } else {
-            row
-        }
+        row.accessibilityValue(toneDescription ?? Text(verbatim: ""))
     }
 
     private var row: some View {
@@ -93,6 +89,7 @@ private struct TransactionRowContent: View {
 
 private struct TransactionIcon: View {
     @Environment(\.registryTheme) private var theme
+    @ScaledMetric(relativeTo: .body) private var diameter: CGFloat = 40
 
     let systemImage: String
     let tone: TransactionRow.Tone
@@ -101,7 +98,7 @@ private struct TransactionIcon: View {
         Image(systemName: systemImage)
             .font(.body.weight(.semibold))
             .foregroundStyle(toneColor)
-            .frame(width: 40, height: 40)
+            .frame(width: diameter, height: diameter)
             .background(toneColor.opacity(0.12), in: Circle())
             .accessibilityHidden(true)
     }

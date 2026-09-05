@@ -59,13 +59,14 @@ ActivityFeed(
 ## Details
 
 - Kind: block
-- Version: 0.1.1
+- Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [alert](alert.md) 0.1.1, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [skeleton](skeleton.md) 0.2.0, [empty](empty.md) 0.1.0, [accordion](accordion.md) 0.2.0, [activity-feed](activity-feed.md) 0.1.1
+- Installs in order: [button](button.md) 0.5.0, [alert](alert.md) 0.1.1, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [skeleton](skeleton.md) 0.2.0, [empty](empty.md) 0.1.0, [accordion](accordion.md) 0.2.0, [activity-feed](activity-feed.md) 0.2.0
 - Accessibility contract:
   - Feedback is never color alone: unread rows use a heavier title, a dot, and an Unread accessibility value; the notice variant pairs a symbol with its color.
   - Loading placeholders are one disabled accessibility element labeled Loading activity and cannot trigger selection.
   - Every avatar carries the caller-provided sender name as its label; the notice symbol and unread dot are decorative and hidden.
   - The empty state is a native ContentUnavailableView with caller-provided copy; the earlier section is a native DisclosureGroup announcing Expanded or Collapsed.
-  - Rows are native Buttons whose combined label reads title, detail, timestamp, and unread state.
+  - Rows are native Buttons whose combined label reads the sender name, title, detail, and timestamp, with an Unread accessibility value; a sender name equal to the title is spoken twice. Voice Control can address a row by its title alone.
+  - The screen title and the section title carry the header accessibility trait.
 - Source: [sources/blocks/ActivityFeed.swift](../../Registry/sources/blocks/ActivityFeed.swift), with the `Activity Feed` Xcode preview

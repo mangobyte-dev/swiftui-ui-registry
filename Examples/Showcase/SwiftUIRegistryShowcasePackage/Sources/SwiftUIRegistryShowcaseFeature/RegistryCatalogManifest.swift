@@ -350,6 +350,15 @@ enum RegistryCatalogManifest {
             tags: ["popover", "hover-card", "tooltip", "anchored", "guidance"]
         ),
         CatalogEntry(
+            name: "preview",
+            kind: "block",
+            version: "0.1.0",
+            description: "The theme preview wall from shadcn's create page: an adaptive grid of realistic product cards built from registry components and native controls, so a theme can be judged against a screen of real UI.",
+            usage: "PreviewWall()",
+            dependencies: ["card", "item", "alert", "badge", "button"],
+            tags: ["preview", "theme", "showcase", "cards", "create", "shadcn", "dashboard"]
+        ),
+        CatalogEntry(
             name: "progress",
             kind: "component",
             version: "0.2.0",

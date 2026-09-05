@@ -19,7 +19,7 @@ export async function CodeBlock({ code, language = "swift", className }: CodeBlo
   return (
     <div
       className={cn(
-        "group/code relative overflow-hidden rounded-xl border bg-card text-sm",
+        "group/code relative min-w-0 max-w-full overflow-hidden rounded-xl border bg-card text-sm",
         className
       )}
     >
@@ -27,7 +27,7 @@ export async function CodeBlock({ code, language = "swift", className }: CodeBlo
         <CopyButton text={code} />
       </div>
       <div
-        className="overflow-x-auto p-4 pr-16 font-mono text-[13px] leading-relaxed [&_pre]:!bg-transparent [&_code]:whitespace-pre"
+        className="max-w-full overflow-x-auto p-3 pr-14 font-mono text-[12.5px] leading-relaxed sm:p-4 sm:pr-16 sm:text-[13px] [&_pre]:!bg-transparent [&_code]:whitespace-pre"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>

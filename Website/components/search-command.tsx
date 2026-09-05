@@ -36,7 +36,7 @@ export function SearchCommand() {
       <Button
         variant="outline"
         size="sm"
-        className="w-full justify-start text-muted-foreground sm:w-56"
+        className="min-w-0 flex-1 justify-start text-muted-foreground sm:w-56 sm:flex-none"
         onClick={() => setOpen(true)}
       >
         <SearchIcon data-icon="inline-start" />

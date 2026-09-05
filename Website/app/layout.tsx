@@ -34,8 +34,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ThemeProvider>
           <SidebarProvider>
             <SiteSidebar />
-            <SidebarInset>
-              <header className="sticky top-0 z-10 flex h-14 items-center gap-2 border-b bg-background/85 px-4 backdrop-blur">
+            <SidebarInset className="min-w-0">
+              <header className="sticky top-0 z-10 flex h-14 min-w-0 items-center gap-2 border-b bg-background/85 px-3 backdrop-blur sm:px-4">
                 <SidebarTrigger />
                 <Separator orientation="vertical" className="mx-1 h-5" />
                 <SearchCommand />
@@ -60,7 +60,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 </nav>
                 <ThemeToggle />
               </header>
-              <main className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-8">{children}</main>
+              <main className="mx-auto w-full min-w-0 max-w-5xl px-4 py-6 sm:px-8 sm:py-8">{children}</main>
               <footer className="mx-auto w-full max-w-5xl px-4 pb-10 text-xs text-muted-foreground sm:px-8">
                 <Separator className="mb-4" />
                 {registry.name} · MIT · Built with shadcn/ui from <code>Registry/</code> metadata.

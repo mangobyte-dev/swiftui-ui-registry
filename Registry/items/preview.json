@@ -30,6 +30,10 @@
     {
       "source": "sources/blocks/Preview/BarChartCard.swift",
       "target": "Preview/BarChartCard.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/BarVisualizer.swift",
+      "target": "Preview/BarVisualizer.swift"
     }
   ],
   "registryDependencies": [

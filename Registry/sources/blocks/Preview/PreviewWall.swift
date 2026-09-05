@@ -20,6 +20,7 @@ public struct PreviewWall: View {
             AnomalyAlert()
             AssignIssue()
             BarChartCard()
+            BarVisualizer()
         }
     }
 

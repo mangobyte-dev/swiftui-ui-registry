@@ -3,10 +3,12 @@ import SwiftUIRegistryFoundations
 
 /// A circular identity image with initials or symbol fallback. The caller
 /// prepares the image and the accessibility label; the avatar owns only its
-/// shape, fallback, and size, which follows the environment control size.
+/// shape, fallback, and size, which follows the environment control size and
+/// scales with the text size.
 public struct Avatar: View {
     @Environment(\.controlSize) private var controlSize
     @Environment(\.registryTheme) private var theme
+    @ScaledMetric(relativeTo: .body) private var typeScale: CGFloat = 1
 
     private let image: Image?
     private let initials: String?
@@ -52,7 +54,7 @@ public struct Avatar: View {
                     .foregroundStyle(.secondary)
             }
         }
-        .frame(width: diameter, height: diameter)
+        .frame(width: diameter * typeScale, height: diameter * typeScale)
         .clipShape(Circle())
         .overlay {
             Circle().stroke(theme.border, lineWidth: theme.metrics.borderWidth)
@@ -91,9 +93,9 @@ private struct AvatarPreview: View {
             HStack(spacing: 12) {
                 Avatar(
                     Image(systemName: "person.crop.circle.fill"),
-                    accessibilityLabel: Text("Mishmash Bakery")
+                    accessibilityLabel: Text(verbatim: "Mishmash Bakery")
                 )
-                Avatar(initials: "MK", accessibilityLabel: Text("Maya Khalid"))
+                Avatar(initials: "MK", accessibilityLabel: Text(verbatim: "Maya Khalid"))
                 Avatar(accessibilityLabel: Text("Unknown sender"))
             }
 

@@ -16,10 +16,10 @@
     },
     "Avatar.swift": {
       "base": "bases/52f53b07c4f5b4deb26b2c60971258bd9c19da8a9e21a7ab004c5edacbf27f7e.base",
-      "installedDigest": "sha256:8147e20c6442ef2900f18036409ed407ab5f5746c50e5883a25bf8677a71bb34",
+      "installedDigest": "sha256:559db8f86ce8d375bde7cd5cc2f9b9eb0d45d2aa0ee18f7e54bff5aeb6674c10",
       "item": "avatar",
-      "sourceDigest": "sha256:8147e20c6442ef2900f18036409ed407ab5f5746c50e5883a25bf8677a71bb34",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:559db8f86ce8d375bde7cd5cc2f9b9eb0d45d2aa0ee18f7e54bff5aeb6674c10",
+      "version": "0.2.0"
     },
     "CommandPalette.swift": {
       "base": "bases/b44cc9fe32bbb74237996e0556b041a7dcc5972d193b83b1d3ef1412cee5040b.base",
@@ -321,7 +321,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     "badge": {
       "packageDependencies": [

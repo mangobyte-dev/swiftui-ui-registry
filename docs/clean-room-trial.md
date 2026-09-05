@@ -1,6 +1,6 @@
 # Clean-room adoption trial
 
-> Closed record: the trial ran and all six recorded defects were fixed on 2026-08-31 (see Fixes applied). The Deferrals below remain open and are tracked in `docs/component-roadmap.md`, Current state
+> Closed record: the first trial ran and all six recorded defects were fixed on 2026-08-31 (see Fixes applied). A second trial on 2026-09-05 (Trial 2 below) closed two of its three deferrals; the remaining one is tracked in `docs/component-roadmap.md`, Current state
 
 > Note (2026-08-31): this trial ran at the historical iOS 18 platform floor, before the floor was raised to iOS 26
 
@@ -126,3 +126,18 @@ Date: 2026-08-31. All six defects above were fixed in this repository:
 6. Defect 6: generated catalog pages replace `<your-target-dir>` with `Sources/YourFeature/Components` plus one sentence on build-target membership
 
 Verified after the fixes: `python3 Scripts/generate_catalog.py` regenerated the catalog, `python3 Scripts/validate.py` passed, the full Python suite passed (72 tests including catalog freshness), and a real `finance-overview --force` install into the showcase printed the new snippet output. Not re-run for this documentation change: Swift package tests, the showcase simulator build and UI tests
+
+## Trial 2 (2026-09-05): Xcode-project consumer, customize, and update
+
+Protocol: a scratch iOS app scaffolded outside this repository (an `.xcodeproj` with a synchronized source folder, iOS 26 floor), the registry added the way an Xcode adopter adds a local package, one block installed into the app target's folder, the copied source customized, a real upstream change published to the same file, and `--update` run
+
+1. Discover and install: `python3 Scripts/install.py activity-feed --destination CleanRoomApp/Components` copied the ten-file closure into the app target's synchronized folder; no project edit was needed for membership
+2. Package requirement: the registry was added as a workspace package reference and `SwiftUIRegistryFoundations` as a product dependency of the app target (in Xcode this is File > Add Package Dependency; the trial edited the workspace and project files directly). The installer's printed instruction matched what was needed
+3. Compile: the app built for the iOS Simulator with the block composed at the app root under `.registryTheme(.graphite)`
+4. Customize: the copied `ActivityFeed.swift` was edited locally (section title font); `--diff` reported the hunk and exit code 1 while every other file stayed identical
+5. Upstream change: `activity-feed` 0.1.1 sharpened the type's documentation comment, a change disjoint from the local edit. `--plan` reported the file as `would-merge` and stale
+6. Update: `--update` merged the two edits with `git merge-file`, reported `merged` for the block and `unchanged` for the nine dependencies, kept the local customization, and the app built again
+
+Defects recorded: none in the registry. One scaffold defect outside the registry: the generated package pinned `swift-tools-version: 6.1`, where `.iOS(.v26)` is unavailable; 6.2 fixed it
+
+Deferrals closed by this trial: the Xcode-project consumer and the `--update` three-way merge. Still open: the published URL and tag remain unexercised until the tag is pushed

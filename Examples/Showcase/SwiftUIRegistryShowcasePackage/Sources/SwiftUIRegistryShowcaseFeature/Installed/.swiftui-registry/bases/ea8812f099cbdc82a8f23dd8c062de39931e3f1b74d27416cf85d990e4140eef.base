@@ -22,7 +22,7 @@ public struct CommandSearch<ID: Hashable>: View {
     public init(
         _ title: LocalizedStringResource,
         query: Binding<String>,
-        prompt: LocalizedStringResource = "Search",
+        prompt: LocalizedStringResource = LocalizedStringResource("Search", comment: "Placeholder inside the command search field"),
         sections: [CommandSection<ID>],
         emptyTitle: LocalizedStringResource = "No results",
         emptyDescription: Text? = nil,
@@ -43,6 +43,7 @@ public struct CommandSearch<ID: Hashable>: View {
         VStack(alignment: .leading, spacing: theme.metrics.sectionSpacing) {
             Text(title)
                 .font(.largeTitle.bold())
+                .accessibilityAddTraits(.isHeader)
 
             CommandPalette(
                 query: $query,
@@ -74,7 +75,7 @@ public struct CommandSearch<ID: Hashable>: View {
 
 /// One line of the shortcut legend under ``CommandSearch``.
 public struct CommandShortcutHint: Identifiable {
-    public var id: String { keys }
+    public let id: String
     public let action: LocalizedStringResource
     public let keys: String
     public let keysLabel: Text
@@ -83,7 +84,10 @@ public struct CommandShortcutHint: Identifiable {
     ///   - action: What the shortcut does, in the caller's words.
     ///   - keys: The visible keycap text, such as "⌘K".
     ///   - keysLabel: The spoken form, such as "Command K".
-    public init(_ action: LocalizedStringResource, keys: String, keysLabel: Text) {
+    ///   - id: A stable identity for the legend line. Defaults to `keys`, so
+    ///     pass one when two lines show the same keys.
+    public init(_ action: LocalizedStringResource, keys: String, keysLabel: Text, id: String? = nil) {
+        self.id = id ?? keys
         self.action = action
         self.keys = keys
         self.keysLabel = keysLabel
@@ -118,14 +122,20 @@ private struct CommandSearchPreview: View {
         Command(id: "salary", name: "Salary", detail: "KWD 2,450.000, yesterday", symbol: "building.columns.fill", shortcut: nil, shortcutLabel: nil, section: "Recent"),
     ]
 
+    // Section titles stay literals so a string catalog can extract them.
+    private let groups: [(id: String, title: LocalizedStringResource)] = [
+        ("Actions", "Actions"),
+        ("Recent", "Recent")
+    ]
+
     private var sections: [CommandSection<String>] {
-        ["Actions", "Recent"].map { name in
+        groups.map { group in
             CommandSection(
-                id: name,
-                title: LocalizedStringResource(stringLiteral: name),
+                id: group.id,
+                title: group.title,
                 entries: commands
-                    .filter { $0.section == name }
-                    .filter { query.isEmpty || $0.name.localizedCaseInsensitiveContains(query) }
+                    .filter { $0.section == group.id }
+                    .filter { query.isEmpty || $0.name.localizedStandardContains(query) }
                     .map {
                         CommandEntry(
                             id: $0.id,

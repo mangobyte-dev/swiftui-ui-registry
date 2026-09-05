@@ -145,7 +145,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "command",
             kind: "component",
-            version: "0.1.0",
+            version: "0.2.0",
             description: "Composes the registry input group, item rows, keycaps, and empty state into a search field over caller-filtered command sections.",
             usage: "@State private var query = \"\"\n\nCommandPalette(\n    query: $query,\n    prompt: \"Search actions\",\n    sections: [\n        CommandSection(id: \"actions\", title: \"Actions\", entries: [\n            CommandEntry(id: \"transfer\", title: Text(\"New transfer\"), systemImage: \"arrow.up.right\", shortcut: \"⌘T\", shortcutLabel: Text(\"Command T\"))\n        ])\n    ],\n    onSelect: { id in }\n)",
             dependencies: ["input-group", "item", "kbd", "empty", "separator", "button"],
@@ -154,7 +154,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "command-search",
             kind: "block",
-            version: "0.1.0",
+            version: "0.2.0",
             description: "Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.",
             usage: "@State private var query = \"\"\n\nCommandSearch(\n    \"Search\",\n    query: $query,\n    prompt: \"Search actions and activity\",\n    sections: sections,\n    emptyDescription: Text(\"Try a payee, a card, or an action.\"),\n    shortcuts: [\n        CommandShortcutHint(\"Open search\", keys: \"⌘K\", keysLabel: Text(\"Command K\"))\n    ],\n    onSelect: { id in }\n)",
             dependencies: ["command", "kbd"],

@@ -53,11 +53,11 @@ CommandSearch(
 ## Details
 
 - Kind: block
-- Version: 0.1.0
+- Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [input-group](input-group.md) 0.2.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [kbd](kbd.md) 0.1.1, [empty](empty.md) 0.1.0, [command](command.md) 0.1.0, [command-search](command-search.md) 0.1.0
+- Installs in order: [button](button.md) 0.5.0, [input-group](input-group.md) 0.2.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [kbd](kbd.md) 0.1.1, [empty](empty.md) 0.1.0, [command](command.md) 0.2.0, [command-search](command-search.md) 0.2.0
 - Accessibility contract:
-  - The search field is labeled with its prompt; commands are native Buttons with combined labels; section titles are headers.
+  - The search field is labeled with its prompt; commands are native Buttons with combined labels; the screen title and section titles are headers.
   - No results is a native ContentUnavailableView with caller copy, never a blank surface.
   - Each legend line combines its action and spoken shortcut into one element; keycaps are hidden unless labeled.
   - Selection, filtering, and the query stay caller-owned, so the screen never triggers an action on its own.

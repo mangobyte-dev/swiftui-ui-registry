@@ -80,6 +80,16 @@ Pre-1.0 foundations evolve by minor version: within `0.minor.patch`, a patch rel
 - Receipts identify exact source and installed content, not only an item name
 - Updating a modified file requires a clean three-way merge or explicit conflict review
 
+## Preset codes
+
+A preset code is a `RegistryTheme` as a short shareable string, the registry's counterpart of shadcn's `--preset` codes: `a13GkaOXWwIF` is the Indigo preset on the foundation metrics. The reference implementation is `Scripts/preset.py`; `Website/lib/preset.ts` (the Create page) and the Showcase's `ThemePreset.swift` (the tuning panel's Copy Code and Import, the `-preset <code>` launch argument) reproduce it, and `Tests/RegistryTests/preset_vectors.json` pins codes all three must agree on byte for byte (`test_preset.py` checks Python and, through Node, the TypeScript; the Showcase package's `ThemePresetTests` checks the Swift)
+
+Format, version `a`: the knobs pack little-endian into one integer written in base62 (`0-9A-Za-z`) behind the version letter. Fields, in order, with their bit widths: `accent` (4 bits; system, ink, blue, indigo, purple, pink, red, orange, yellow, green, mint, teal, cyan, brown, custom), `darkLabelOnAccent` (1), `surfaceOpacity` (6; 0 to 0.2 by 0.005), `borderOpacity` (5; 0 to 0.3 by 0.01), `borderWidth` (3; 0.5 to 3 by 0.5), `emphasizedBorderWidth` (3; 1 to 4 by 0.5), `compactRadius` (4; 0 to 12), `controlRadius` (5; 0 to 22), `cardRadius` (6; 0 to 32), `compactSpacing` (4; 4 to 16), `standardSpacing` (5; 8 to 32), `sectionSpacing` (6; 12 to 48), `controlHorizontalPadding` (5; 8 to 24), `disabledOpacity` (4; 0.2 to 0.8 by 0.05), 61 bits in all. A numeric field stores its index on that grid, the tuning panel's slider grid, so a value off the grid snaps to it on encode. A custom accent appends 24 bits of RGB, one flag bit, and 24 more bits for a separate dark accent when the flag is set. `positive`, `negative`, and the environment switches are never part of a code
+
+Rules, binding on every implementation: never reorder or resize an existing field, only append with the default at index 0; new fields go after the custom accent block; a field index beyond its value count makes the code invalid rather than clamping; bits above the known fields are ignored so an older decoder tolerates a newer code; a code has at most 22 characters. A change to any of these is a new version letter
+
+`python3 Scripts/preset.py apply <code> --destination <path>` writes `RegistryTheme+App.swift`, an extension declaring `RegistryTheme.app` for the consumer to apply once at the scene root; it replaces an existing file only while that file still resolves to the code in its own header, and `--force` overrides. `resolve <path>` parses the initializer back into a code (never trusting the header), `decode <code>` prints the knobs, the Swift, and the website URL, and the MCP server exposes the same as `describe_preset` and `apply_preset`. The theme file is not a registry item: it carries no receipt entry and the installer never touches it
+
 ## Agent usage
 
 An agent should:
@@ -93,4 +103,4 @@ An agent should:
 7. Compile the consumer at its deployment floor
 8. Before `--update`, audit owned source against the canonical registry with `Scripts/install.py <item> --diff --destination <path>`, which requires the installation receipt and exits 0 on parity or 1 with unified diffs
 
-The same steps are available as MCP tools from `Scripts/mcp_server.py` (`search_items`, `describe_item`, `plan_install`, `diff_item`, `install_item`) over the stdio transport; `Tests/RegistryTests/test_mcp_server.py` drives the real subprocess and pins the wire shape
+The same steps are available as MCP tools from `Scripts/mcp_server.py` (`search_items`, `describe_item`, `plan_install`, `diff_item`, `install_item`, plus `describe_preset` and `apply_preset` for preset codes) over the stdio transport; `Tests/RegistryTests/test_mcp_server.py` drives the real subprocess and pins the wire shape

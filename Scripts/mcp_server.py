@@ -33,6 +33,7 @@ if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
 from install import Installer, RecipeGuidance, RegistryError
+from preset import PresetError, apply as apply_preset, describe as describe_preset, preset_code_in
 from search import search_items
 
 PROTOCOL_VERSIONS = ("2025-06-18", "2025-03-26", "2024-11-05")
@@ -41,7 +42,9 @@ INSTRUCTIONS = (
     "Search the registry, describe an item to read its usage snippet and source, plan an"
     " install to see the dependency closure and target writes, then install. Installs copy"
     " Swift source into the destination and write a receipt; they never edit project files."
-    " Recipes are native guidance and install nothing."
+    " Recipes are native guidance and install nothing. A preset code from the website's"
+    " /create page or the Showcase's tuning panel describes a RegistryTheme; apply_preset"
+    " writes it as RegistryTheme+App.swift next to the installed items."
 )
 
 _DESTINATION = {
@@ -110,6 +113,32 @@ TOOLS = [
                 "force": {"type": "boolean", "default": False},
             },
             "required": ["name", "destination"],
+        },
+        "annotations": {"readOnlyHint": False, "destructiveHint": True, "idempotentHint": True},
+    },
+    {
+        "name": "describe_preset",
+        "title": "Describe a preset code",
+        "description": "Decode a preset code into its theme knobs, the RegistryTheme Swift it stands for, and its website URL.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"code": {"type": "string", "description": "A preset code such as a13GkaOXWwIF, with or without a --preset prefix"}},
+            "required": ["code"],
+        },
+        "annotations": {"readOnlyHint": True, "idempotentHint": True},
+    },
+    {
+        "name": "apply_preset",
+        "title": "Apply a preset code",
+        "description": "Write RegistryTheme+App.swift for the code into the destination, declaring RegistryTheme.app to apply once at the scene root. Refuses to replace a theme file edited by hand unless force is true.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "code": {"type": "string"},
+                "destination": _DESTINATION,
+                "force": {"type": "boolean", "default": False},
+            },
+            "required": ["code", "destination"],
         },
         "annotations": {"readOnlyHint": False, "destructiveHint": True, "idempotentHint": True},
     },
@@ -190,6 +219,8 @@ class Server:
             "plan_install": self._plan,
             "diff_item": self._diff,
             "install_item": self._install,
+            "describe_preset": self._describe_preset,
+            "apply_preset": self._apply_preset,
         }.get(name)
         if handler is None:
             raise _InvalidParams(f"Unknown tool: {name}")
@@ -202,7 +233,7 @@ class Server:
                 "installs": False,
                 "guidance": guidance.guidance,
             }
-        except RegistryError as error:
+        except (RegistryError, PresetError) as error:
             return _tool_error(str(error))
         except (TypeError, ValueError) as error:
             return _tool_error(f"Invalid arguments: {error}")
@@ -321,6 +352,24 @@ class Server:
             ],
         }
 
+    def _describe_preset(self, arguments: dict) -> dict:
+        return describe_preset(_preset_code(arguments))
+
+    def _apply_preset(self, arguments: dict) -> dict:
+        code = _preset_code(arguments)
+        force = arguments.get("force", False)
+        if not isinstance(force, bool):
+            raise ValueError("force must be a boolean")
+        target = apply_preset(code, _destination(arguments), force=force)
+        return {
+            "code": code,
+            "file": str(target),
+            "nextSteps": [
+                "Ensure the destination folder is a member of the consuming build target",
+                "Apply the theme once at the scene root: ContentView().registryTheme(.app)",
+            ],
+        }
+
     # MARK: Transport
 
     @staticmethod
@@ -359,6 +408,13 @@ def _optional_string(arguments: dict, key: str) -> str | None:
 
 def _destination(arguments: dict) -> Path:
     return Path(_string(arguments, "destination")).expanduser()
+
+
+def _preset_code(arguments: dict) -> str:
+    code = preset_code_in(_string(arguments, "code"))
+    if code is None:
+        raise PresetError(f"invalid preset code: {arguments.get('code')!r}")
+    return code
 
 
 def main() -> int:

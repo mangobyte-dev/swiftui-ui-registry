@@ -50,7 +50,10 @@ class McpServerTests(unittest.TestCase):
         self.assertEqual(responses[1]["result"]["protocolVersion"], "2025-06-18")
         self.assertIn("tools", responses[1]["result"]["capabilities"])
         names = {tool["name"] for tool in responses[2]["result"]["tools"]}
-        self.assertEqual(names, {"search_items", "describe_item", "plan_install", "diff_item", "install_item"})
+        self.assertEqual(names, {
+            "search_items", "describe_item", "plan_install", "diff_item", "install_item",
+            "describe_preset", "apply_preset",
+        })
         for tool in responses[2]["result"]["tools"]:
             self.assertEqual(tool["inputSchema"]["type"], "object")
         search = responses[3]["result"]
@@ -107,6 +110,36 @@ class McpServerTests(unittest.TestCase):
             self.assertFalse(any(Path(directory).iterdir()), "a recipe must write nothing")
             self.assertFalse(responses[2]["result"]["structuredContent"]["installs"])
             self.assertTrue(responses[3]["result"]["isError"])
+
+
+    def test_preset_tools_decode_and_write_the_theme_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            destination = str(Path(directory) / "Components")
+            responses = self.run_session([
+                self.call(1, "describe_preset", code="--preset a13GkaOXWwIa"),
+                self.call(2, "apply_preset", code="a13GkaOXWwIa", destination=destination),
+                self.call(3, "describe_preset", code="not a code"),
+                self.call(4, "apply_preset", code="a13GkaOXWwIF", destination=destination, force="yes"),
+            ])
+            described = responses[1]["result"]["structuredContent"]
+            self.assertFalse(responses[1]["result"]["isError"])
+            self.assertEqual(described["code"], "a13GkaOXWwIa")
+            self.assertEqual(described["tuning"]["accent"], "yellow")
+            self.assertTrue(described["tuning"]["darkLabelOnAccent"])
+            self.assertIn("accent: .yellow,", described["swift"])
+            self.assertTrue(described["url"].endswith("/create?preset=a13GkaOXWwIa"))
+
+            applied = responses[2]["result"]["structuredContent"]
+            self.assertFalse(responses[2]["result"]["isError"])
+            theme_file = Path(applied["file"])
+            self.assertEqual(theme_file, Path(destination) / "RegistryTheme+App.swift")
+            self.assertIn("static let app = RegistryTheme(", theme_file.read_text(encoding="utf-8"))
+            self.assertIn(".registryTheme(.app)", applied["nextSteps"][1])
+
+            self.assertTrue(responses[3]["result"]["isError"])
+            self.assertIn("invalid preset code", responses[3]["result"]["content"][0]["text"])
+            self.assertTrue(responses[4]["result"]["isError"])
+            self.assertIn("force must be a boolean", responses[4]["result"]["content"][0]["text"])
 
 
 if __name__ == "__main__":

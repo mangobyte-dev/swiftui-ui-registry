@@ -2,7 +2,7 @@
 
 ## Contract
 
-The showcase UI tests compare the finance, nutrition, authentication, settings, and activity screens with approved references under `Examples/Showcase/SwiftUIRegistryShowcaseUITests/ReferenceImages/`
+The showcase UI tests compare the finance, nutrition, authentication, settings, activity, and command-search screens with approved references under `Examples/Showcase/SwiftUIRegistryShowcaseUITests/ReferenceImages/`
 
 The contract is pinned to a light-mode iPhone 17 running iOS 27.0. Native controls and tab presentation intentionally change across Apple platform versions, so a different runtime is visual review evidence rather than a valid baseline runner
 
@@ -25,6 +25,7 @@ Semantic UI assertions remain separate. The image check protects layout, hierarc
 - `auth-light.png`
 - `settings-light.png`
 - `activity-light.png`
+- `command-light.png`
 
 GOLDEN-CHANGE: these initial references were approved after iPhone and iPad review of both domains, an iOS 18 deployment-floor run, and an accessibility-size run. Future reference changes require the same explicit note in the reviewing change
 
@@ -35,6 +36,8 @@ GOLDEN-CHANGE (2026-09-01): `auth-light.png` and `settings-light.png` were added
 GOLDEN-CHANGE (2026-09-01): `finance-light.png` and `nutrition-light.png` were recaptured on the same light-mode iPhone 17 iOS 27.0 pin. The prior references were approved before the Authentication and Settings tabs existed and showed a stale two-tab bar; Stage 2 grew the tab bar from two to four tabs (Finance, Nutrition, Authentication, Settings), a difference the 2 percent tolerance silently absorbed. The recapture updates the references to the intended current product state. Screen content, hierarchy, and copy are unchanged; the visual difference is the four-tab Liquid Glass tab bar only. Both images were captured through the suite's kept attachments, exported with `xcrun xcresulttool export attachments`, and reviewed directly before approval
 
 GOLDEN-CHANGE (2026-09-05): all four existing references were recaptured and `activity-light.png` was added. The Showcase became a browsable catalog: every block now opens from the Blocks tab as a pushed detail screen with an inline navigation title, a one-line description above the block, and the four-tab Liquid Glass bar (Components, Blocks, Recipes, Tune) instead of the previous five block tabs. The block content, hierarchy, and copy are unchanged, and the accent is the Indigo theme applied once at the catalog root. The activity reference shows the Stage 3 feed in its loaded state: the Card delivery delayed notice with Dismiss, the Recent section with the unread Mishmash Bakery row, Salary received, and Statement ready. All five were captured through the suite's kept attachments, exported with `xcrun xcresulttool export attachments`, and reviewed directly before approval. This closes the open deferral about the fifth Components tab
+
+GOLDEN-CHANGE (2026-09-05): `command-light.png` was added for the Stage 4 block. It shows the pristine light-mode screen on the pinned iPhone 17 iOS 27.0 runtime: the Search title, the empty search field with its magnifying glass, the Actions section (New transfer with its command-T keycap, Freeze card, Download statement), the Recent section (Mishmash Bakery, Salary), and the top of the shortcut legend. Captured through the suite's kept attachment, exported with `xcrun xcresulttool export attachments`, and reviewed directly before approval
 
 ## Item captures
 

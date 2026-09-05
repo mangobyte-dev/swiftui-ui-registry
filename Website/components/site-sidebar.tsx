@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BoxesIcon, LayersIcon, PaletteIcon, ScrollTextIcon } from "lucide-react"
+import { BoxesIcon, LayersIcon, PaletteIcon, ScrollTextIcon, WandSparklesIcon } from "lucide-react"
 
 import {
   Sidebar,
@@ -51,6 +51,12 @@ export function SiteSidebar() {
             <SidebarMenuButton render={<Link href="/themes/" />} isActive={isActive("/themes")}>
               <PaletteIcon />
               Themes
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton render={<Link href="/create/" />} isActive={isActive("/create")}>
+              <WandSparklesIcon />
+              Create
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

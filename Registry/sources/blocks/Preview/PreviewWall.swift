@@ -16,6 +16,7 @@ public struct PreviewWall: View {
     public var body: some View {
         LazyVGrid(columns: columns, alignment: .leading, spacing: theme.metrics.standardSpacing) {
             ActivateAgentDialog()
+            AnalyticsCard()
         }
     }
 

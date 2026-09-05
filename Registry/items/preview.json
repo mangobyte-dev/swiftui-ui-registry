@@ -14,6 +14,10 @@
     {
       "source": "sources/blocks/Preview/ActivateAgentDialog.swift",
       "target": "Preview/ActivateAgentDialog.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/AnalyticsCard.swift",
+      "target": "Preview/AnalyticsCard.swift"
     }
   ],
   "registryDependencies": [
@@ -21,7 +25,8 @@
     "item",
     "alert",
     "badge",
-    "button"
+    "button",
+    "chart"
   ],
   "packageDependencies": [
     {

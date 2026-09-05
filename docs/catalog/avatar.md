@@ -46,12 +46,12 @@ Avatar(accessibilityLabel: Text("Unknown sender"))
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.2.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Requires a caller-supplied accessibility label because a face or monogram cannot be derived from visible content.
   - Exposes one image-trait accessibility element and ignores its inner text and symbol.
-  - Initials use the tint color on the surface fill and scale down before truncating at accessibility text sizes.
-  - Diameter follows the environment controlSize from 24 to 72 points; the border uses the semantic border token.
+  - Initials use the tint color on the surface fill; the whole avatar scales with the body text style, so the monogram and symbol keep their size relative to the text beside them.
+  - Diameter follows the environment controlSize from 24 to 72 points at the default text size; the border uses the semantic border token.
 - Source: [sources/components/Avatar.swift](../../Registry/sources/components/Avatar.swift), with the `Avatar` Xcode preview

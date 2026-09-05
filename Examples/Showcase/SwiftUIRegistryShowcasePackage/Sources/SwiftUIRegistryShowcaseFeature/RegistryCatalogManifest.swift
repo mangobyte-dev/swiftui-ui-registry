@@ -64,7 +64,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "auth-form",
             kind: "block",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.",
             usage: "AuthForm(\n    \"Welcome back\",\n    identity: $email,\n    identityError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Forgot password?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
             dependencies: ["input", "button", "card"],

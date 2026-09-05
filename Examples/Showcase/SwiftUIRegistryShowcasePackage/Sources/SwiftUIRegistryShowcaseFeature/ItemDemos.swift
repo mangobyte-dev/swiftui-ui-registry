@@ -36,6 +36,7 @@ enum ItemDemos {
         case "kbd": AnyView(KeycapDemo())
         case "command": AnyView(CommandPaletteDemo())
         case "field": AnyView(FieldDemo())
+        case "table": AnyView(TableDemo())
         // Blocks
         case "finance-overview": AnyView(FinanceDemo())
         case "nutrition-overview": AnyView(NutritionDemo())

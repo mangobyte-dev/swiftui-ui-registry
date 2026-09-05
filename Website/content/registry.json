@@ -2,7 +2,7 @@
   "name": "SwiftUIRegistry",
   "repositoryURL": "https://github.com/mangobyte-dev/swiftui-ui-registry",
   "counts": {
-    "component": 27,
+    "component": 28,
     "block": 6,
     "recipe": 18
   },
@@ -2490,6 +2490,69 @@
         "dark": null
       },
       "requirements": []
+    },
+    {
+      "name": "table",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "Lays out Identifiable rows in aligned columns on a native Grid, with numeric columns in monospaced digits, optional summary rows, and theme hairline separators.",
+      "usage": "DataTable(\n    lines,\n    columns: [\n        DataTableColumn(Text(\"Item\")) { Text($0.item) },\n        DataTableColumn(Text(\"Qty\"), alignment: .trailing) { Text($0.quantity, format: .number) },\n        DataTableColumn(Text(\"Amount\"), alignment: .trailing) { Text($0.amount, format: .currency(code: \"USD\")) }\n    ],\n    footer: [\n        DataTableFooterRow(label: Text(\"Total due\"), value: Text(total, format: .currency(code: \"USD\")), isEmphasized: true)\n    ]\n)",
+      "docs": null,
+      "tags": [
+        "table",
+        "grid",
+        "data",
+        "rows",
+        "columns",
+        "shadcn"
+      ],
+      "aliases": [
+        "data-table",
+        "datagrid",
+        "spreadsheet",
+        "invoice"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "separator"
+      ],
+      "installOrder": [
+        {
+          "name": "separator",
+          "version": "0.2.0"
+        },
+        {
+          "name": "table",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "Each header and body row is combined into one accessibility element so VoiceOver reads its cells in order; the header row also carries the header trait.",
+        "Trailing columns are the numeric convention: their cells use monospaced digits and hug the trailing edge, so figures line up down the column.",
+        "Built on a native Grid rather than SwiftUI Table, which collapses to a single column on iPhone; the leading column takes the remaining width so the table fills its container.",
+        "Uses system text styles and the semantic spacing tokens, and the theme border for hairline separators; cell content wraps rather than truncates."
+      ],
+      "sourcePath": "Registry/sources/components/DataTable.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/DataTable.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// One column of a ``DataTable``: a header, a horizontal alignment, and a cell\n/// builder over a row. A trailing column is treated as numeric, so its cells\n/// use monospaced digits and hug the trailing edge; a leading column is\n/// flexible and takes the remaining width.\npublic struct DataTableColumn<Row>: Identifiable {\n    public let id = UUID()\n    public let header: Text\n    public let alignment: HorizontalAlignment\n    let cell: (Row) -> AnyView\n\n    public init<Cell: View>(\n        _ header: Text,\n        alignment: HorizontalAlignment = .leading,\n        @ViewBuilder cell: @escaping (Row) -> Cell\n    ) {\n        self.header = header\n        self.alignment = alignment\n        self.cell = { AnyView(cell($0)) }\n    }\n}\n\n/// One summary row under the table body: a label that spans every column but\n/// the last, and a trailing value. Use it for subtotals and totals.\npublic struct DataTableFooterRow: Identifiable {\n    public let id = UUID()\n    public let label: Text\n    public let value: Text\n    public let isEmphasized: Bool\n\n    public init(label: Text, value: Text, isEmphasized: Bool = false) {\n        self.label = label\n        self.value = value\n        self.isEmphasized = isEmphasized\n    }\n}\n\n/// A content-layer data table built on a native `Grid`, so it keeps its columns\n/// aligned on iPhone where SwiftUI's `Table` collapses to a single column. The\n/// caller declares columns with alignment and provides `Identifiable` rows plus\n/// optional footer rows. Numeric (trailing) columns use monospaced digits;\n/// hairline separators come from the theme border.\npublic struct DataTable<Row: Identifiable>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let rows: [Row]\n    private let columns: [DataTableColumn<Row>]\n    private let footer: [DataTableFooterRow]\n\n    public init(\n        _ rows: [Row],\n        columns: [DataTableColumn<Row>],\n        footer: [DataTableFooterRow] = []\n    ) {\n        self.rows = rows\n        self.columns = columns\n        self.footer = footer\n    }\n\n    public var body: some View {\n        Grid(alignment: .leading, horizontalSpacing: theme.metrics.standardSpacing, verticalSpacing: 0) {\n            GridRow {\n                ForEach(columns) { column in\n                    styledCell(column.header, alignment: column.alignment)\n                        .font(.footnote.weight(.semibold))\n                        .foregroundStyle(.secondary)\n                        .gridColumnAlignment(column.alignment)\n                }\n            }\n            .accessibilityElement(children: .combine)\n            .accessibilityAddTraits(.isHeader)\n\n            Divider().registrySeparator()\n\n            ForEach(rows) { row in\n                GridRow {\n                    ForEach(columns) { column in\n                        styledCell(column.cell(row), alignment: column.alignment)\n                    }\n                }\n                .font(.subheadline)\n                .accessibilityElement(children: .combine)\n\n                if row.id != rows.last?.id {\n                    Divider().registrySeparator()\n                }\n            }\n\n            if !footer.isEmpty {\n                Divider().registrySeparator()\n\n                ForEach(footer) { row in\n                    GridRow {\n                        row.label\n                            .frame(maxWidth: .infinity, alignment: .trailing)\n                            .padding(.vertical, theme.metrics.compactSpacing)\n                            .gridCellColumns(max(1, columns.count - 1))\n                        row.value\n                            .monospacedDigit()\n                            .padding(.vertical, theme.metrics.compactSpacing)\n                            .gridColumnAlignment(.trailing)\n                    }\n                    .font(.subheadline)\n                    .fontWeight(row.isEmphasized ? .semibold : .regular)\n                    .foregroundStyle(row.isEmphasized ? AnyShapeStyle(.primary) : AnyShapeStyle(.secondary))\n                    .accessibilityElement(children: .combine)\n\n                    if row.id != footer.last?.id {\n                        Divider().registrySeparator()\n                    }\n                }\n            }\n        }\n    }\n\n    @ViewBuilder\n    private func styledCell(_ content: some View, alignment: HorizontalAlignment) -> some View {\n        let aligned = content\n            .frame(\n                maxWidth: alignment == .leading ? .infinity : nil,\n                alignment: frameAlignment(alignment)\n            )\n            .padding(.vertical, theme.metrics.compactSpacing)\n\n        if alignment == .trailing {\n            aligned.monospacedDigit()\n        } else {\n            aligned\n        }\n    }\n\n    private func frameAlignment(_ alignment: HorizontalAlignment) -> Alignment {\n        switch alignment {\n        case .trailing: .trailing\n        case .center: .center\n        default: .leading\n        }\n    }\n}\n\nprivate struct InvoiceLine: Identifiable {\n    let id = UUID()\n    let item: String\n    let quantity: Int\n    let unitPrice: Decimal\n}\n\nprivate struct DataTablePreview: View {\n    private let lines = [\n        InvoiceLine(item: \"Design system license\", quantity: 1, unitPrice: 499),\n        InvoiceLine(item: \"Priority support\", quantity: 12, unitPrice: 99),\n        InvoiceLine(item: \"Custom components\", quantity: 3, unitPrice: 250),\n    ]\n\n    private var subtotal: Decimal {\n        lines.reduce(0) { $0 + Decimal($1.quantity) * $1.unitPrice }\n    }\n\n    var body: some View {\n        DataTable(\n            lines,\n            columns: [\n                DataTableColumn(Text(\"Item\")) { line in\n                    Text(line.item)\n                },\n                DataTableColumn(Text(\"Qty\"), alignment: .trailing) { line in\n                    Text(line.quantity, format: .number)\n                },\n                DataTableColumn(Text(\"Rate\"), alignment: .trailing) { line in\n                    Text(line.unitPrice, format: .currency(code: \"USD\"))\n                },\n                DataTableColumn(Text(\"Amount\"), alignment: .trailing) { line in\n                    Text(Decimal(line.quantity) * line.unitPrice, format: .currency(code: \"USD\"))\n                },\n            ],\n            footer: [\n                DataTableFooterRow(label: Text(\"Subtotal\"), value: Text(subtotal, format: .currency(code: \"USD\"))),\n                DataTableFooterRow(label: Text(\"Tax\"), value: Text(0, format: .currency(code: \"USD\"))),\n                DataTableFooterRow(\n                    label: Text(\"Total due\"),\n                    value: Text(subtotal, format: .currency(code: \"USD\")),\n                    isEmphasized: true\n                ),\n            ]\n        )\n        .padding(16)\n        .registrySurface()\n        .padding()\n    }\n}\n\n#Preview(\"Data Table\") {\n    DataTablePreview().tint(.indigo)\n}\n\n#Preview(\"Data Table Dark\") {\n    DataTablePreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Data Table Right to Left\") {\n    DataTablePreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Data Table Accessibility Size\") {\n    DataTablePreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Data Table",
+      "screenshots": {
+        "light": "/images/items/table-light.png",
+        "dark": "/images/items/table-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
     },
     {
       "name": "tabs",

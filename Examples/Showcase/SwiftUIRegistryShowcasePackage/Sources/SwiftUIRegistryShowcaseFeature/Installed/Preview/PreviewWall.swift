@@ -30,6 +30,7 @@ public struct PreviewWall: View {
             FileUpload()
             DeveloperProfile()
             IconPreviewGrid()
+            InviteTeam()
         }
     }
 

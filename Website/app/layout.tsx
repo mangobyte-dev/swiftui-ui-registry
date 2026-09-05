@@ -49,6 +49,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                   <Button variant="ghost" size="sm" render={<Link href="/themes/" />} nativeButton={false}>
                     Themes
                   </Button>
+                  <Button variant="ghost" size="sm" render={<Link href="/create/" />} nativeButton={false}>
+                    Create
+                  </Button>
                   <Button
                     variant="ghost"
                     size="icon-sm"

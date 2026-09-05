@@ -38,6 +38,9 @@ export default function HomePage() {
             Browse components
             <ArrowRightIcon data-icon="inline-end" />
           </Button>
+          <Button variant="outline" render={<Link href="/create/" />} nativeButton={false}>
+            Create a theme
+          </Button>
           <Button variant="outline" render={<Link href="/themes/" />} nativeButton={false}>
             Themes
           </Button>
@@ -81,8 +84,8 @@ export default function HomePage() {
               <CardHeader>
                 <CardTitle>2. Apply a theme at your root</CardTitle>
                 <CardDescription>
-                  Pick a preset or paste what the Showcase&apos;s Tune tab exports. Every item below inherits
-                  it, and native controls follow through the tint.
+                  Pick a preset, or compose one on the Create page and apply its code. Every item below
+                  inherits it, and native controls follow through the tint.
                 </CardDescription>
               </CardHeader>
               <CardContent>

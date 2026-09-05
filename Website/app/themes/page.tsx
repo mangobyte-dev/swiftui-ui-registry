@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 
 import { CodeBlock } from "@/components/code-block"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -108,18 +109,22 @@ export default function ThemesPage() {
       <section className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">Tune it live</h2>
-          <p className="text-muted-foreground">The Showcase app&apos;s Tune tab is the theme creator.</p>
+          <p className="text-muted-foreground">The Showcase&apos;s tuning panel is the theme creator, beside the catalog.</p>
         </div>
         <p className="max-w-[70ch] text-sm leading-relaxed">
           Every token is a slider or a swatch beside a live preview of the registry: accent and its label
           color, surface and border opacity, border widths, the three radii, the four spacings, the disabled
           opacity, plus appearance, text size, and right-to-left for checking the result.{" "}
-          <strong>Copy Swift</strong> puts the exact initializer on the pasteboard:
+          <strong>Copy Swift</strong> puts the exact initializer on the pasteboard, and{" "}
+          <strong>Copy Code</strong> the preset code:
         </p>
         <CodeBlock code={TUNE_EXPORT} />
         <p className="text-sm text-muted-foreground">
-          Open <code>Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace</code>, run the Showcase, and
-          choose Tune. On iPad the controls sit beside the preview; on iPhone the preview leads.
+          Open <code>Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace</code>, run the Showcase, and tap
+          Tune in the strip above the tab bar. The panel stays beside the catalog, an inspector on iPad and a
+          sheet the catalog remains interactive under on iPhone, so every demo shows the change as you make
+          it. Copy Code puts the theme on the pasteboard as a preset code the{" "}
+          <Link href="/create/">Create page</Link> and <code>Scripts/preset.py</code> both read.
         </p>
       </section>
 

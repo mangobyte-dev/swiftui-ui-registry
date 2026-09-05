@@ -50,12 +50,12 @@ Button("Delete", role: .destructive) {}
 ## Details
 
 - Kind: component
-- Version: 0.4.0
+- Version: 0.5.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Preserves native Button semantics and ButtonRole behavior.
   - Maintains a minimum 44 by 44 point interaction area across control sizes.
   - Uses system text styles and keeps the label on one line: it never wraps or breaks, scaling down slightly before truncating, so the call site provides room with a full-width frame or a stacked layout at large text sizes.
-  - Reads the enabled state from the environment and does not rely on color alone for destructive actions.
+  - Reads the enabled state from the environment and preserves the native ButtonRole: a destructive role draws the negative fill in the primary variant and negative label text in the outline, secondary, ghost, and link variants, alongside the caller's label.
 - Source: [sources/components/RegistryButtonStyle.swift](../../Registry/sources/components/RegistryButtonStyle.swift), with the `Button Variants` Xcode preview

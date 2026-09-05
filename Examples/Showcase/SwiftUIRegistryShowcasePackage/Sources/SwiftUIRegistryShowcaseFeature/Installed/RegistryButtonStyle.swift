@@ -24,6 +24,7 @@ public struct RegistryButtonStyle: ButtonStyle {
 
     public func makeBody(configuration: Configuration) -> some View {
         let variant = resolvedVariant(for: configuration)
+        let isDestructiveRole = configuration.role == .destructive
         let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)
 
         configuration.label
@@ -36,11 +37,11 @@ public struct RegistryButtonStyle: ButtonStyle {
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, verticalPadding)
             .frame(minHeight: visualMinimumHeight)
-            .foregroundStyle(foregroundStyle(for: variant))
+            .foregroundStyle(foregroundStyle(for: variant, isDestructiveRole: isDestructiveRole))
             .background(backgroundStyle(for: variant, isPressed: configuration.isPressed), in: shape)
             .overlay {
                 shape.stroke(
-                    borderStyle(for: variant),
+                    borderStyle(for: variant, isDestructiveRole: isDestructiveRole),
                     lineWidth: variant == .outline ? theme.metrics.borderWidth : 0
                 )
             }
@@ -137,7 +138,10 @@ private extension RegistryButtonStyle {
         }
     }
 
-    func foregroundStyle(for variant: Variant) -> AnyShapeStyle {
+    /// A destructive role inside a non-primary variant keeps that variant's
+    /// chrome and reads in the negative color, so an outline or ghost Delete
+    /// still signals what it does.
+    func foregroundStyle(for variant: Variant, isDestructiveRole: Bool) -> AnyShapeStyle {
         switch variant {
         case .primary:
             AnyShapeStyle(theme.onAccent)
@@ -146,9 +150,9 @@ private extension RegistryButtonStyle {
             // accent may not be, which is why primary reads theme.onAccent.
             AnyShapeStyle(Color.white)
         case .outline, .secondary, .ghost:
-            AnyShapeStyle(Color.primary)
+            AnyShapeStyle(isDestructiveRole ? theme.negative : Color.primary)
         case .link:
-            AnyShapeStyle(TintShapeStyle())
+            isDestructiveRole ? AnyShapeStyle(theme.negative) : AnyShapeStyle(TintShapeStyle())
         }
     }
 
@@ -167,8 +171,9 @@ private extension RegistryButtonStyle {
         }
     }
 
-    func borderStyle(for variant: Variant) -> AnyShapeStyle {
-        AnyShapeStyle(variant == .outline ? theme.border : Color.clear)
+    func borderStyle(for variant: Variant, isDestructiveRole: Bool) -> Color {
+        guard variant == .outline else { return .clear }
+        return isDestructiveRole ? theme.negative : theme.border
     }
 
     func opacity(isPressed: Bool) -> Double {
@@ -227,4 +232,16 @@ private struct RegistryButtonStylePreview: View {
     RegistryButtonStylePreview()
         .tint(.indigo)
         .dynamicTypeSize(.accessibility3)
+}
+
+#Preview("Button Sizes") {
+    VStack(alignment: .leading, spacing: 12) {
+        ForEach(ControlSize.allCases, id: \.self) { size in
+            Button("Save changes") {}
+                .buttonStyle(.registry)
+                .controlSize(size)
+        }
+    }
+    .tint(.indigo)
+    .padding()
 }

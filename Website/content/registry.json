@@ -106,7 +106,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         },
         {
           "name": "alert",
@@ -202,7 +202,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         },
         {
           "name": "alert",
@@ -353,7 +353,7 @@
         },
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         },
         {
           "name": "card",
@@ -507,7 +507,7 @@
     {
       "name": "button",
       "kind": "component",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "description": "Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.",
       "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nButton(\"Save changes\") {}\n    .buttonStyle(.registry)\n\nButton(\"Cancel\") {}\n    .buttonStyle(.registryOutline)\n\nButton(\"Delete\", role: .destructive) {}\n    .buttonStyle(.registry)",
       "docs": null,
@@ -529,18 +529,18 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         }
       ],
       "accessibility": [
         "Preserves native Button semantics and ButtonRole behavior.",
         "Maintains a minimum 44 by 44 point interaction area across control sizes.",
         "Uses system text styles and keeps the label on one line: it never wraps or breaks, scaling down slightly before truncating, so the call site provides room with a full-width frame or a stacked layout at large text sizes.",
-        "Reads the enabled state from the environment and does not rely on color alone for destructive actions."
+        "Reads the enabled state from the environment and preserves the native ButtonRole: a destructive role draws the negative fill in the primary variant and negative label text in the outline, secondary, ghost, and link variants, alongside the caller's label."
       ],
       "sourcePath": "Registry/sources/components/RegistryButtonStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryButtonStyle.swift",
-      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A shadcn-inspired treatment for native SwiftUI buttons.\npublic struct RegistryButtonStyle: ButtonStyle {\n    public enum Variant: Sendable {\n        case primary\n        case destructive\n        case outline\n        case secondary\n        case ghost\n        case link\n    }\n\n    @Environment(\\.controlSize) private var controlSize\n    @Environment(\\.isEnabled) private var isEnabled\n    @Environment(\\.registryTheme) private var theme\n\n    private let variant: Variant\n\n    public init(_ variant: Variant = .primary) {\n        self.variant = variant\n    }\n\n    public func makeBody(configuration: Configuration) -> some View {\n        let variant = resolvedVariant(for: configuration)\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)\n\n        configuration.label\n            .font(font)\n            // A button label never wraps or breaks lines: it stays on one\n            // line, scales down a little under pressure, and the call site\n            // gives it room (a full-width frame, a stacked layout) instead.\n            .lineLimit(1)\n            .minimumScaleFactor(0.8)\n            .padding(.horizontal, horizontalPadding)\n            .padding(.vertical, verticalPadding)\n            .frame(minHeight: visualMinimumHeight)\n            .foregroundStyle(foregroundStyle(for: variant))\n            .background(backgroundStyle(for: variant, isPressed: configuration.isPressed), in: shape)\n            .overlay {\n                shape.stroke(\n                    borderStyle(for: variant),\n                    lineWidth: variant == .outline ? theme.metrics.borderWidth : 0\n                )\n            }\n            .underline(variant == .link)\n            .opacity(opacity(isPressed: configuration.isPressed))\n            .frame(\n                minWidth: RegistryMetrics.minimumHitSize,\n                minHeight: RegistryMetrics.minimumHitSize\n            )\n            .contentShape(Rectangle())\n    }\n}\n\npublic extension ButtonStyle where Self == RegistryButtonStyle {\n    static var registry: RegistryButtonStyle { RegistryButtonStyle() }\n    static var registryDestructive: RegistryButtonStyle { RegistryButtonStyle(.destructive) }\n    static var registryOutline: RegistryButtonStyle { RegistryButtonStyle(.outline) }\n    static var registrySecondary: RegistryButtonStyle { RegistryButtonStyle(.secondary) }\n    static var registryGhost: RegistryButtonStyle { RegistryButtonStyle(.ghost) }\n    static var registryLink: RegistryButtonStyle { RegistryButtonStyle(.link) }\n}\n\nprivate extension RegistryButtonStyle {\n    func resolvedVariant(for configuration: Configuration) -> Variant {\n        if variant == .primary, configuration.role == .destructive {\n            return .destructive\n        }\n        return variant\n    }\n\n    var font: Font {\n        switch controlSize {\n        case .mini:\n            .caption2.weight(.medium)\n        case .small:\n            .caption.weight(.medium)\n        case .regular:\n            .subheadline.weight(.medium)\n        case .large, .extraLarge:\n            .body.weight(.medium)\n        @unknown default:\n            .subheadline.weight(.medium)\n        }\n    }\n\n    var horizontalPadding: CGFloat {\n        switch controlSize {\n        case .mini:\n            8\n        case .small:\n            12\n        case .regular:\n            16\n        case .large:\n            20\n        case .extraLarge:\n            24\n        @unknown default:\n            16\n        }\n    }\n\n    var verticalPadding: CGFloat {\n        switch controlSize {\n        case .mini:\n            4\n        case .small:\n            6\n        case .regular:\n            8\n        case .large:\n            10\n        case .extraLarge:\n            12\n        @unknown default:\n            8\n        }\n    }\n\n    var visualMinimumHeight: CGFloat {\n        switch controlSize {\n        case .mini:\n            24\n        case .small:\n            32\n        case .regular:\n            36\n        case .large:\n            40\n        case .extraLarge:\n            44\n        @unknown default:\n            36\n        }\n    }\n\n    func foregroundStyle(for variant: Variant) -> AnyShapeStyle {\n        switch variant {\n        case .primary:\n            AnyShapeStyle(theme.onAccent)\n        case .destructive:\n            // The negative fill is always dark enough for a white label; the\n            // accent may not be, which is why primary reads theme.onAccent.\n            AnyShapeStyle(Color.white)\n        case .outline, .secondary, .ghost:\n            AnyShapeStyle(Color.primary)\n        case .link:\n            AnyShapeStyle(TintShapeStyle())\n        }\n    }\n\n    func backgroundStyle(for variant: Variant, isPressed: Bool) -> AnyShapeStyle {\n        switch variant {\n        case .primary:\n            AnyShapeStyle(TintShapeStyle())\n        case .destructive:\n            AnyShapeStyle(theme.negative)\n        case .secondary:\n            AnyShapeStyle(theme.surface)\n        case .outline, .ghost:\n            AnyShapeStyle(isPressed ? theme.surface : Color.clear)\n        case .link:\n            AnyShapeStyle(Color.clear)\n        }\n    }\n\n    func borderStyle(for variant: Variant) -> AnyShapeStyle {\n        AnyShapeStyle(variant == .outline ? theme.border : Color.clear)\n    }\n\n    func opacity(isPressed: Bool) -> Double {\n        guard isEnabled else { return theme.disabledOpacity }\n        return isPressed ? 0.82 : 1\n    }\n}\n\nprivate struct RegistryButtonStylePreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            Button(\"Default\") {}\n                .buttonStyle(.registry)\n\n            Button(\"Secondary\") {}\n                .buttonStyle(.registrySecondary)\n\n            Button(\"Outline\") {}\n                .buttonStyle(.registryOutline)\n\n            Button(\"Ghost\") {}\n                .buttonStyle(.registryGhost)\n\n            Button(\"Destructive\", role: .destructive) {}\n                .buttonStyle(.registry)\n\n            Button(\"Link\") {}\n                .buttonStyle(.registryLink)\n\n            Button(\"Disabled\") {}\n                .buttonStyle(.registry)\n                .disabled(true)\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Button Variants\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n}\n\n#Preview(\"Button Dark\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .preferredColorScheme(.dark)\n}\n\n#Preview(\"Button Right to Left\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Button Accessibility Size\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A shadcn-inspired treatment for native SwiftUI buttons.\npublic struct RegistryButtonStyle: ButtonStyle {\n    public enum Variant: Sendable {\n        case primary\n        case destructive\n        case outline\n        case secondary\n        case ghost\n        case link\n    }\n\n    @Environment(\\.controlSize) private var controlSize\n    @Environment(\\.isEnabled) private var isEnabled\n    @Environment(\\.registryTheme) private var theme\n\n    private let variant: Variant\n\n    public init(_ variant: Variant = .primary) {\n        self.variant = variant\n    }\n\n    public func makeBody(configuration: Configuration) -> some View {\n        let variant = resolvedVariant(for: configuration)\n        let isDestructiveRole = configuration.role == .destructive\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)\n\n        configuration.label\n            .font(font)\n            // A button label never wraps or breaks lines: it stays on one\n            // line, scales down a little under pressure, and the call site\n            // gives it room (a full-width frame, a stacked layout) instead.\n            .lineLimit(1)\n            .minimumScaleFactor(0.8)\n            .padding(.horizontal, horizontalPadding)\n            .padding(.vertical, verticalPadding)\n            .frame(minHeight: visualMinimumHeight)\n            .foregroundStyle(foregroundStyle(for: variant, isDestructiveRole: isDestructiveRole))\n            .background(backgroundStyle(for: variant, isPressed: configuration.isPressed), in: shape)\n            .overlay {\n                shape.stroke(\n                    borderStyle(for: variant, isDestructiveRole: isDestructiveRole),\n                    lineWidth: variant == .outline ? theme.metrics.borderWidth : 0\n                )\n            }\n            .underline(variant == .link)\n            .opacity(opacity(isPressed: configuration.isPressed))\n            .frame(\n                minWidth: RegistryMetrics.minimumHitSize,\n                minHeight: RegistryMetrics.minimumHitSize\n            )\n            .contentShape(Rectangle())\n    }\n}\n\npublic extension ButtonStyle where Self == RegistryButtonStyle {\n    static var registry: RegistryButtonStyle { RegistryButtonStyle() }\n    static var registryDestructive: RegistryButtonStyle { RegistryButtonStyle(.destructive) }\n    static var registryOutline: RegistryButtonStyle { RegistryButtonStyle(.outline) }\n    static var registrySecondary: RegistryButtonStyle { RegistryButtonStyle(.secondary) }\n    static var registryGhost: RegistryButtonStyle { RegistryButtonStyle(.ghost) }\n    static var registryLink: RegistryButtonStyle { RegistryButtonStyle(.link) }\n}\n\nprivate extension RegistryButtonStyle {\n    func resolvedVariant(for configuration: Configuration) -> Variant {\n        if variant == .primary, configuration.role == .destructive {\n            return .destructive\n        }\n        return variant\n    }\n\n    var font: Font {\n        switch controlSize {\n        case .mini:\n            .caption2.weight(.medium)\n        case .small:\n            .caption.weight(.medium)\n        case .regular:\n            .subheadline.weight(.medium)\n        case .large, .extraLarge:\n            .body.weight(.medium)\n        @unknown default:\n            .subheadline.weight(.medium)\n        }\n    }\n\n    var horizontalPadding: CGFloat {\n        switch controlSize {\n        case .mini:\n            8\n        case .small:\n            12\n        case .regular:\n            16\n        case .large:\n            20\n        case .extraLarge:\n            24\n        @unknown default:\n            16\n        }\n    }\n\n    var verticalPadding: CGFloat {\n        switch controlSize {\n        case .mini:\n            4\n        case .small:\n            6\n        case .regular:\n            8\n        case .large:\n            10\n        case .extraLarge:\n            12\n        @unknown default:\n            8\n        }\n    }\n\n    var visualMinimumHeight: CGFloat {\n        switch controlSize {\n        case .mini:\n            24\n        case .small:\n            32\n        case .regular:\n            36\n        case .large:\n            40\n        case .extraLarge:\n            44\n        @unknown default:\n            36\n        }\n    }\n\n    /// A destructive role inside a non-primary variant keeps that variant's\n    /// chrome and reads in the negative color, so an outline or ghost Delete\n    /// still signals what it does.\n    func foregroundStyle(for variant: Variant, isDestructiveRole: Bool) -> AnyShapeStyle {\n        switch variant {\n        case .primary:\n            AnyShapeStyle(theme.onAccent)\n        case .destructive:\n            // The negative fill is always dark enough for a white label; the\n            // accent may not be, which is why primary reads theme.onAccent.\n            AnyShapeStyle(Color.white)\n        case .outline, .secondary, .ghost:\n            AnyShapeStyle(isDestructiveRole ? theme.negative : Color.primary)\n        case .link:\n            isDestructiveRole ? AnyShapeStyle(theme.negative) : AnyShapeStyle(TintShapeStyle())\n        }\n    }\n\n    func backgroundStyle(for variant: Variant, isPressed: Bool) -> AnyShapeStyle {\n        switch variant {\n        case .primary:\n            AnyShapeStyle(TintShapeStyle())\n        case .destructive:\n            AnyShapeStyle(theme.negative)\n        case .secondary:\n            AnyShapeStyle(theme.surface)\n        case .outline, .ghost:\n            AnyShapeStyle(isPressed ? theme.surface : Color.clear)\n        case .link:\n            AnyShapeStyle(Color.clear)\n        }\n    }\n\n    func borderStyle(for variant: Variant, isDestructiveRole: Bool) -> Color {\n        guard variant == .outline else { return .clear }\n        return isDestructiveRole ? theme.negative : theme.border\n    }\n\n    func opacity(isPressed: Bool) -> Double {\n        guard isEnabled else { return theme.disabledOpacity }\n        return isPressed ? 0.82 : 1\n    }\n}\n\nprivate struct RegistryButtonStylePreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            Button(\"Default\") {}\n                .buttonStyle(.registry)\n\n            Button(\"Secondary\") {}\n                .buttonStyle(.registrySecondary)\n\n            Button(\"Outline\") {}\n                .buttonStyle(.registryOutline)\n\n            Button(\"Ghost\") {}\n                .buttonStyle(.registryGhost)\n\n            Button(\"Destructive\", role: .destructive) {}\n                .buttonStyle(.registry)\n\n            Button(\"Link\") {}\n                .buttonStyle(.registryLink)\n\n            Button(\"Disabled\") {}\n                .buttonStyle(.registry)\n                .disabled(true)\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Button Variants\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n}\n\n#Preview(\"Button Dark\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .preferredColorScheme(.dark)\n}\n\n#Preview(\"Button Right to Left\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Button Accessibility Size\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .dynamicTypeSize(.accessibility3)\n}\n\n#Preview(\"Button Sizes\") {\n    VStack(alignment: .leading, spacing: 12) {\n        ForEach(ControlSize.allCases, id: \\.self) { size in\n            Button(\"Save changes\") {}\n                .buttonStyle(.registry)\n                .controlSize(size)\n        }\n    }\n    .tint(.indigo)\n    .padding()\n}\n",
       "previewName": "Button Variants",
       "screenshots": {
         "light": "/images/items/button-light.png",
@@ -561,7 +561,7 @@
     {
       "name": "button-group",
       "kind": "component",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.",
       "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
       "docs": null,
@@ -569,8 +569,7 @@
         "button",
         "control-group",
         "action",
-        "style",
-        "toolbar"
+        "style"
       ],
       "aliases": [
         "control-group",
@@ -585,11 +584,11 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         },
         {
           "name": "button-group",
-          "version": "0.2.0"
+          "version": "0.2.1"
         }
       ],
       "accessibility": [
@@ -843,7 +842,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         },
         {
           "name": "input-group",
@@ -929,7 +928,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         },
         {
           "name": "input-group",
@@ -1409,7 +1408,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         },
         {
           "name": "input-group",
@@ -2144,7 +2143,7 @@
         },
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         },
         {
           "name": "settings-section",
@@ -2537,7 +2536,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         },
         {
           "name": "toggle",
@@ -2598,7 +2597,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.4.0"
+          "version": "0.5.0"
         },
         {
           "name": "toggle",

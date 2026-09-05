@@ -55,7 +55,7 @@ InlineAlert(
 - Kind: component
 - Version: 0.1.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.4.0, [alert](alert.md) 0.1.0
+- Installs in order: [button](button.md) 0.5.0, [alert](alert.md) 0.1.0
 - Accessibility contract:
   - Each variant pairs its own symbol with its color, so informational, positive, and destructive meaning never rests on color alone.
   - The title and message combine into one accessibility element; caller-provided action buttons remain separate, activatable elements.

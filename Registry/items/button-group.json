@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "name": "button-group",
   "kind": "component",
   "description": "Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.",
@@ -37,8 +37,7 @@
     "button",
     "control-group",
     "action",
-    "style",
-    "toolbar"
+    "style"
   ],
   "aliases": [
     "control-group",

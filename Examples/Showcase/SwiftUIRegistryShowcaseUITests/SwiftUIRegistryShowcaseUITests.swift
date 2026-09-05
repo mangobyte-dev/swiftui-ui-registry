@@ -547,6 +547,8 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
         let field = app.textFields["Search actions and activity"]
         XCTAssertTrue(field.waitForExistence(timeout: 5), "The search field must be labeled with its prompt.")
+        attachSnapshot(named: "command-light", app: app)
+        assertVisualSnapshot(named: "command-light", app: app)
         let transfer = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "New transfer")).firstMatch
         XCTAssertTrue(transfer.exists)
         XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Mishmash Bakery")).firstMatch.exists)

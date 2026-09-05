@@ -37,7 +37,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "alert",
             kind: "component",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Composes an inline, non-modal status message with informational, positive, and destructive variants and optional caller-owned actions.",
             usage: "InlineAlert(\n    \"Card delivery delayed\",\n    message: Text(\"Your new card now arrives on Thursday.\")\n)\n\nInlineAlert(\n    \"Payment failed\",\n    message: Text(\"The card on file was declined.\"),\n    variant: .destructive\n) {\n    Button(\"Retry\") {}\n        .buttonStyle(.registry)\n}",
             dependencies: ["button"],

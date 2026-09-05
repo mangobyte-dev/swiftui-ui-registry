@@ -92,19 +92,19 @@ public struct InlineAlert<Actions: View>: View {
         }
     }
 
-    private var backgroundStyle: AnyShapeStyle {
+    private var backgroundStyle: Color {
         switch variant {
-        case .informational: AnyShapeStyle(theme.surface)
-        case .positive: AnyShapeStyle(theme.positive.opacity(0.1))
-        case .destructive: AnyShapeStyle(theme.negative.opacity(0.1))
+        case .informational: theme.surface
+        case .positive: theme.positive.opacity(0.1)
+        case .destructive: theme.negative.opacity(0.1)
         }
     }
 
-    private var borderStyle: AnyShapeStyle {
+    private var borderStyle: Color {
         switch variant {
-        case .informational: AnyShapeStyle(theme.border)
-        case .positive: AnyShapeStyle(theme.positive.opacity(0.35))
-        case .destructive: AnyShapeStyle(theme.negative.opacity(0.35))
+        case .informational: theme.border
+        case .positive: theme.positive.opacity(0.35)
+        case .destructive: theme.negative.opacity(0.35)
         }
     }
 }
@@ -146,11 +146,21 @@ private struct InlineAlertPreview: View {
                 message: Text("The card on file was declined."),
                 variant: .destructive
             ) {
-                HStack {
-                    Button("Retry") {}
-                        .buttonStyle(.registry)
-                    Button("Change card") {}
-                        .buttonStyle(.registryOutline)
+                // Buttons never wrap, so the call site stacks them when the
+                // row cannot fit, such as at accessibility text sizes.
+                ViewThatFits(in: .horizontal) {
+                    HStack {
+                        Button("Retry") {}
+                            .buttonStyle(.registry)
+                        Button("Change card") {}
+                            .buttonStyle(.registryOutline)
+                    }
+                    VStack(alignment: .leading) {
+                        Button("Retry") {}
+                            .buttonStyle(.registry)
+                        Button("Change card") {}
+                            .buttonStyle(.registryOutline)
+                    }
                 }
             }
         }

@@ -53,12 +53,12 @@ InlineAlert(
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [alert](alert.md) 0.1.0
+- Installs in order: [button](button.md) 0.5.0, [alert](alert.md) 0.1.1
 - Accessibility contract:
   - Each variant pairs its own symbol with its color, so informational, positive, and destructive meaning never rests on color alone.
   - The title and message combine into one accessibility element; caller-provided action buttons remain separate, activatable elements.
-  - The leading symbol is decorative and hidden from accessibility.
+  - The leading symbol is hidden from VoiceOver, so the variant reaches assistive technology only through the title and message; name the outcome in the title.
   - Stays in the content flow and never interrupts; use the native .alert modifier for decisions that must be answered.
 - Source: [sources/components/InlineAlert.swift](../../Registry/sources/components/InlineAlert.swift), with the `Inline Alert` Xcode preview

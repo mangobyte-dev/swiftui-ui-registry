@@ -16,6 +16,7 @@ Updated 2026-09-05. This section and the per-stage Status lines are the only hom
 - Stage 3: complete 2026-09-05. The activity feed is the one coherent screen; it named alert, avatar, skeleton, empty, accordion, and item, and the finance block adopted the empty-state treatment as its second consumer. Eleven presentation and navigation recipes landed alongside. Exit evidence is recorded in its section below
 - Foundations grew on 2026-09-05 into the set-up-once contract: `accent` and `onAccent` tokens, `compactRadius`, six presets, and a root `registryTheme(_:)` that also applies the tint. No tag exists yet, so `0.1.0` remains the first published contract and now means this shape
 - Showcase is a browsable catalog (Components, Blocks, Recipes) with a generated manifest, a demo per item, a capture launch route, and the theme tuning panel kept beside the catalog since 2026-09-05: an accent strip above the tab bar, a sheet the catalog stays interactive under on iPhone, a trailing column on iPad, with Copy Swift, Copy Code, and Import
+- Stage 5 (planned 2026-09-05): the theme preview wall, shadcn's 68 create-page cards and their five missing primitives, delivered in eight serial slices; status and the card list are in its section below
 - Preset codes (2026-09-05): a `RegistryTheme` as one short string that the website's Create page (`/create`), the Showcase panel, `Scripts/preset.py`, and the MCP server's `describe_preset` and `apply_preset` all read and write (`docs/registry-spec.md`, "Preset codes"); `preset.py apply` writes `RegistryTheme+App.swift` for a consumer, `capture_previews.py --preset` renders any code on the pinned simulator, and `Tests/RegistryTests/preset_vectors.json` pins the codes all three codecs reproduce
 - The website is a Next.js static site built with shadcn/ui under `Website/`, fed by generated `content/registry.json`, with a page per item and a Themes page, deployed 2026-09-05 to Cloudflare Workers at https://swiftui-registry.mangobytekw.workers.dev; `docs/images/items/` and `docs/images/themes/` hold the light and dark captures
 - Stage 4 (2026-09-05): the command and search screen, `command-search`, named `input-group`, `kbd`, and `command`; status and evidence in its section below
@@ -260,6 +261,31 @@ The screen is a global search (`command-search`): a search field with a leading 
 ### Stage 4 exit-criteria evidence (2026-09-05)
 
 Verified on the pinned light-mode iPhone 17 iOS 27.0 simulator by `testCommandSearchFiltersEmptiesAndRunsCallerCommands`: typing narrows the list through the caller's filter and non-matching commands leave it; a query with no matches shows the native No results state with the caller's copy; Clear search restores the sections; selecting a command runs caller code (the harness caption reports it); the shortcut legend exposes the spoken shortcut. The 50-item demo walk with the accessibility audit passes, so every new control and image carries a label. Light and dark captures exist for the three components and the block, plus the block on iPad
+
+## Stage 5: the theme preview wall, shadcn's `/create` preview recreated
+
+Status: planned 2026-09-05, in progress. Owner's instruction: recreate every element shadcn's `/create` page shows while a theme is being composed, so the Showcase's tuning panel and the website's Create page preview a wall of realistic product UI instead of one strip
+
+What shadcn shows: its create page previews two registry blocks, `preview` (33 cards) and `preview-02` (35 cards), each a seven-column masonry of cards built from the ui primitives (`apps/v4/registry/bases/base/blocks/preview*/cards/*.tsx` in shadcn-ui at 7c9eaba). Measured against this registry on 2026-09-05, the primitives those 68 cards use are all present as components or recipes except five: `field` (20 cards), `chart` (11 cards, Swift Charts), `combobox` (2), `table` (2), and `breadcrumb` (1)
+
+Delivery, one serial slice per Opus 4.8 worker run, each slice a dependency-closed unit (source, metadata with usage and accessibility, preview, demo, captures, generators, tests, compile, one commit per item or block):
+
+1. Primitives: `field`, `chart`, `table`, `combobox`, `breadcrumb`. Native controls stay visible; each earns its place under the value gate or ships as a recipe
+2. Block `preview`, cards 1 to 11: activate-agent-dialog, analytics-card, anomaly-alert, assign-issue, bar-chart-card, bar-visualizer, book-appointment, codespaces-card, contributions-activity, contributors, environment-variables
+3. Block `preview`, cards 12 to 22: feedback-form, file-upload, github-profile, icon-preview-grid, invite-team, invoice, live-waveform, no-team-members, not-found, observability-card, pie-chart-card
+4. Block `preview`, cards 23 to 33 plus the block itself: report-bug, shipping-address, shortcuts, skeleton-loading, sleep-report, style-overview, typography-specimen, ui-elements, usage-card, visitors, weekly-fitness-summary; the masonry layout, metadata, demo, iPhone and iPad captures
+5. Block `preview-02`, cards 1 to 12: account-access, album-card, card-overview, catalog-toolbar, claimable-balance, contribution-history, cover-art, dividend-income, empty-connect-bank, empty-distribute-track, empty-explore-catalog, faq
+6. Block `preview-02`, cards 13 to 24: front-door, index-investing, kitchen-island, loading-card, new-milestone, notification-settings, payments, payout-threshold, power-usage, preferences, qr-connect, receiving-method
+7. Block `preview-02`, cards 25 to 35 plus the block itself: recent-transactions, release-catalog, roller-shades, savings-progress, savings-targets, sidebar-nav, social-links, stock-performance, syncing-state, transfer-funds, upcoming-payments
+8. Wire-up: the `theme-preview` capture route and the website's Create page render the `preview` wall, the preset captures regenerate, and the docs record the stage
+
+Rules that bind every slice: `AGENTS.md` in full; a card composes registry items and native controls with sample data, never a wrapper that renames an Apple control; charts use Swift Charts; the animated visualizers use `TimelineView` and `Canvas`; nothing is pushed; visual references are never regenerated to pass a test
+
+### Stage 5 exit criteria
+
+- Every one of the 68 cards renders in the Showcase under all six presets and both appearances, and the two blocks install through `Scripts/install.py` with their closures
+- The five primitives have metadata, previews, demos, captures, and accessibility notes like every other item
+- The Create page shows the wall for the six presets, and the tuning panel's preview on device is the same wall
 
 ## Later
 

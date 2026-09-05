@@ -29,6 +29,7 @@ public struct PreviewWall: View {
             FeedbackForm()
             FileUpload()
             DeveloperProfile()
+            IconPreviewGrid()
         }
     }
 

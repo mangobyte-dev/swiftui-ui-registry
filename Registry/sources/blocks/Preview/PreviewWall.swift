@@ -36,6 +36,7 @@ public struct PreviewWall: View {
             NoTeamMembers()
             NotFound()
             ObservabilityCard()
+            PieChartCard()
         }
     }
 

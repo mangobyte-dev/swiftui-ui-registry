@@ -81,7 +81,7 @@ class CodecTests(unittest.TestCase):
             capture_output=True, text=True, check=True,
         )
         results = json.loads(process.stdout)
-        for vector, result in zip(VECTORS["vectors"], results, strict=False):
+        for vector, result in zip(VECTORS["vectors"], results):
             with self.subTest(vector["name"]):
                 self.assertEqual(result["encoded"], vector["code"])
                 self.assertEqual(result["decoded"], vector["tuning"])

@@ -58,7 +58,8 @@ public struct ActivityNotice {
 /// skeleton, empty state, and accordion treatments. The caller owns loading,
 /// the items, the notice, and selection; the block owns only the accordion's
 /// transient expansion. It does not own a `ScrollView`, navigation container,
-/// or maximum width.
+/// or maximum width. Unread rows carry a heavier title, a dot, and an Unread
+/// accessibility value, so the state never rests on color alone.
 public struct ActivityFeed<ID: Hashable>: View {
     @Environment(\.registryTheme) private var theme
     @State private var isEarlierExpanded = false

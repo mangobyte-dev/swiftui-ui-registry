@@ -264,7 +264,7 @@ Verified on the pinned light-mode iPhone 17 iOS 27.0 simulator by `testCommandSe
 
 ## Stage 5: the theme preview wall, shadcn's `/create` preview recreated
 
-Status: planned 2026-09-05, in progress. Owner's instruction: recreate every element shadcn's `/create` page shows while a theme is being composed, so the Showcase's tuning panel and the website's Create page preview a wall of realistic product UI instead of one strip
+Status: in progress. Slice 1 (the `field`, `chart`, `table`, `combobox`, `breadcrumb` primitives) is on main; slice 2 (the `preview` block with cards 1 to 11: activate-agent-dialog, analytics-card, anomaly-alert, assign-issue, bar-chart-card, bar-visualizer, book-appointment, codespaces-card, contributions-activity, contributors, environment-variables) is done 2026-09-06. Owner's instruction: recreate every element shadcn's `/create` page shows while a theme is being composed, so the Showcase's tuning panel and the website's Create page preview a wall of realistic product UI instead of one strip
 
 What shadcn shows: its create page previews two registry blocks, `preview` (33 cards) and `preview-02` (35 cards), each a seven-column masonry of cards built from the ui primitives (`apps/v4/registry/bases/base/blocks/preview*/cards/*.tsx` in shadcn-ui at 7c9eaba). Measured against this registry on 2026-09-05, the primitives those 68 cards use are all present as components or recipes except five: `field` (20 cards), `chart` (11 cards, Swift Charts), `combobox` (2), `table` (2), and `breadcrumb` (1)
 

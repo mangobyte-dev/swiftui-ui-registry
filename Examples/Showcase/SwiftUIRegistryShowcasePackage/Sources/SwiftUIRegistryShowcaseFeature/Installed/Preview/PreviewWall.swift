@@ -34,6 +34,7 @@ public struct PreviewWall: View {
             Invoice()
             LiveWaveform()
             NoTeamMembers()
+            NotFound()
         }
     }
 

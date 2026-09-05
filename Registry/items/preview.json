@@ -70,6 +70,10 @@
     {
       "source": "sources/blocks/Preview/IconPreviewGrid.swift",
       "target": "Preview/IconPreviewGrid.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/InviteTeam.swift",
+      "target": "Preview/InviteTeam.swift"
     }
   ],
   "registryDependencies": [

@@ -48,11 +48,11 @@ MacroProgress(
 ## Details
 
 - Kind: component
-- Version: 0.2.0
+- Version: 0.3.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Uses native ProgressView semantics.
   - Uses ViewThatFits to move prepared values below the label when horizontal space is constrained.
-  - Combines the label and prepared values without relying on tint to communicate meaning.
+  - Combines the label and one localized progress phrase without relying on tint to communicate meaning.
 - Source: [sources/components/MacroProgress.swift](../../Registry/sources/components/MacroProgress.swift), with the `Macro Progress` Xcode preview

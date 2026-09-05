@@ -65,10 +65,10 @@
     },
     "MacroProgress.swift": {
       "base": "bases/061c048d9552b3eb5f519bbb2c6158fd60f407fa4a68b22ce277c9fad95ac8a9.base",
-      "installedDigest": "sha256:cddb68e2f68baeefa7977ff8e3df685186631244be966739cbea9566eef116bf",
+      "installedDigest": "sha256:1d0f143d4b886ac3a72510685c439acb78112e411056ac9fb859e8af1f89b54a",
       "item": "macro-progress",
-      "sourceDigest": "sha256:cddb68e2f68baeefa7977ff8e3df685186631244be966739cbea9566eef116bf",
-      "version": "0.2.0"
+      "sourceDigest": "sha256:1d0f143d4b886ac3a72510685c439acb78112e411056ac9fb859e8af1f89b54a",
+      "version": "0.3.0"
     },
     "MetricCard.swift": {
       "base": "bases/72e69e8c35a9ff94342e2eb0ca362ef1edd41c34a3587ae393844d00ca45e247.base",
@@ -582,7 +582,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "metric-card": {
       "packageDependencies": [

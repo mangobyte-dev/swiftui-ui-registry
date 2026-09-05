@@ -93,7 +93,7 @@ private struct AvatarPreview: View {
                     Image(systemName: "person.crop.circle.fill"),
                     accessibilityLabel: Text("Mishmash Bakery")
                 )
-                Avatar(initials: "MK", accessibilityLabel: Text("Mohammed K."))
+                Avatar(initials: "MK", accessibilityLabel: Text("Maya Khalid"))
                 Avatar(accessibilityLabel: Text("Unknown sender"))
             }
 

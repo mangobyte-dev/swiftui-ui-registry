@@ -127,9 +127,15 @@
     @apply font-sans;
     }
 }
-/* shiki dual themes: the dark palette rides as CSS variables until .dark is set. */
+/* shiki dual themes: every token carries both palettes as CSS variables;
+   pick the light one by default and the dark one under .dark. */
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
 .dark .shiki,
 .dark .shiki span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
 }

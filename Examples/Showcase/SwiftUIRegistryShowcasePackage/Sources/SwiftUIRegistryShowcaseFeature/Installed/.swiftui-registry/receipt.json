@@ -2,9 +2,9 @@
   "files": {
     "ActivityFeed.swift": {
       "base": "bases/b57c6c9a7eeddc0d5af2a8d1c3a3b2404a88e22ee7f4847c99624a7e29e4dc35.base",
-      "installedDigest": "sha256:c9ee777a09717f87dc23cacef94f4451e4b07a2f3af0717e17f44e716cfaf62a",
+      "installedDigest": "sha256:6fd825cd14d180241920791d8d5c7466f2894478835767736fb8573f9acc60c1",
       "item": "activity-feed",
-      "sourceDigest": "sha256:c9ee777a09717f87dc23cacef94f4451e4b07a2f3af0717e17f44e716cfaf62a",
+      "sourceDigest": "sha256:6fd825cd14d180241920791d8d5c7466f2894478835767736fb8573f9acc60c1",
       "version": "0.1.0"
     },
     "AuthForm.swift": {
@@ -16,9 +16,9 @@
     },
     "Avatar.swift": {
       "base": "bases/52f53b07c4f5b4deb26b2c60971258bd9c19da8a9e21a7ab004c5edacbf27f7e.base",
-      "installedDigest": "sha256:be4c29b60bd032748f87c488b07bc53b19ee1900d5704121df4299f6bed3b7e6",
+      "installedDigest": "sha256:8147e20c6442ef2900f18036409ed407ab5f5746c50e5883a25bf8677a71bb34",
       "item": "avatar",
-      "sourceDigest": "sha256:be4c29b60bd032748f87c488b07bc53b19ee1900d5704121df4299f6bed3b7e6",
+      "sourceDigest": "sha256:8147e20c6442ef2900f18036409ed407ab5f5746c50e5883a25bf8677a71bb34",
       "version": "0.1.0"
     },
     "FinanceOverview.swift": {

@@ -144,7 +144,7 @@ def record_screenshots(names: list[str]) -> None:
             f"docs/images/items/{name}-{appearance}.png" for appearance in APPEARANCES
         ]
         path.write_text(json.dumps(item, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print("metadata updated; run generate_catalog.py, generate_showcase_manifest.py, and generate_site.py")
+    print("metadata updated; run generate_catalog.py, generate_showcase_manifest.py, and generate_site_data.py")
 
 
 def main() -> int:

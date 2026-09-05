@@ -262,10 +262,10 @@ struct ActivityFeedDemo: View {
             ActivityItem(
                 id: "salary",
                 title: Text("Salary received"),
-                detail: Text("KWD 2,450.000 from Warba Bank"),
+                detail: Text("KWD 2,450.000 from Harbor Bank"),
                 timestamp: Text("Yesterday"),
                 initials: "WB",
-                senderName: Text("Warba Bank")
+                senderName: Text("Harbor Bank")
             ),
             ActivityItem(
                 id: "statement",

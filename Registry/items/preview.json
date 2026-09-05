@@ -94,6 +94,10 @@
     {
       "source": "sources/blocks/Preview/ObservabilityCard.swift",
       "target": "Preview/ObservabilityCard.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/PieChartCard.swift",
+      "target": "Preview/PieChartCard.swift"
     }
   ],
   "registryDependencies": [
@@ -114,7 +118,8 @@
     "textarea",
     "input",
     "table",
-    "kbd"
+    "kbd",
+    "progress"
   ],
   "packageDependencies": [
     {

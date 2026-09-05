@@ -38,6 +38,7 @@ enum ItemDemos {
         case "field": AnyView(FieldDemo())
         case "table": AnyView(TableDemo())
         case "breadcrumb": AnyView(BreadcrumbDemo())
+        case "combobox": AnyView(ComboboxDemo())
         // Blocks
         case "finance-overview": AnyView(FinanceDemo())
         case "nutrition-overview": AnyView(NutritionDemo())

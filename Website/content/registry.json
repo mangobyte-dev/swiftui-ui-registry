@@ -2,7 +2,7 @@
   "name": "SwiftUIRegistry",
   "repositoryURL": "https://github.com/mangobyte-dev/swiftui-ui-registry",
   "counts": {
-    "component": 29,
+    "component": 30,
     "block": 6,
     "recipe": 18
   },
@@ -866,6 +866,97 @@
         "dark": null
       },
       "requirements": []
+    },
+    {
+      "name": "combobox",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "A searchable single-selection control: a registry search field over caller options with a filtered list that opens below the field, controlled selection through a binding, and a native empty state.",
+      "usage": "@State private var timezone: String? = \"riyadh\"\n\nCombobox(\n    selection: $timezone,\n    options: [\n        ComboboxOption(id: \"kuwait\", title: \"Kuwait City\", systemImage: \"clock\"),\n        ComboboxOption(id: \"riyadh\", title: \"Riyadh\", systemImage: \"clock\")\n    ],\n    prompt: \"Search time zones\",\n    emptyDescription: Text(\"Try a city name.\")\n)",
+      "docs": null,
+      "tags": [
+        "combobox",
+        "search",
+        "select",
+        "autocomplete",
+        "picker",
+        "shadcn"
+      ],
+      "aliases": [
+        "autocomplete",
+        "typeahead",
+        "searchable-select",
+        "dropdown"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "input-group",
+        "item",
+        "empty",
+        "separator",
+        "button"
+      ],
+      "installOrder": [
+        {
+          "name": "button",
+          "version": "0.5.0"
+        },
+        {
+          "name": "input-group",
+          "version": "0.2.0"
+        },
+        {
+          "name": "avatar",
+          "version": "0.2.0"
+        },
+        {
+          "name": "separator",
+          "version": "0.2.0"
+        },
+        {
+          "name": "badge",
+          "version": "0.3.1"
+        },
+        {
+          "name": "item",
+          "version": "0.2.0"
+        },
+        {
+          "name": "empty",
+          "version": "0.1.0"
+        },
+        {
+          "name": "combobox",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "The field carries the prompt as its explicit accessibility label and uses the search-and-filter query binding; each option is a native Button whose label is its title, addressable by title through Voice Control.",
+        "The selected option carries the isSelected trait and a checkmark; the option symbol is decorative and hidden.",
+        "No matches renders a native ContentUnavailableView on the registry surface with the caller's empty title and description.",
+        "The list opens inline below the field on focus and pushes content rather than overlaying it, so it never covers other controls; a popover is not used because on a compact iPhone width it presents as a full sheet, heavier than a single-select filter needs."
+      ],
+      "sourcePath": "Registry/sources/components/Combobox.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/Combobox.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// One selectable option in a ``Combobox``. The title is the plain, editable\n/// text shown in the field and matched against the query; an optional symbol\n/// is decorative media on the option row.\npublic struct ComboboxOption<ID: Hashable>: Identifiable {\n    public let id: ID\n    public let title: String\n    public let systemImage: String?\n\n    public init(id: ID, title: String, systemImage: String? = nil) {\n        self.id = id\n        self.title = title\n        self.systemImage = systemImage\n    }\n}\n\n/// A searchable single-selection control: a registry-styled search field over\n/// caller-provided options, with a filtered list that opens below the field on\n/// focus and a native empty state when nothing matches. Selection is controlled\n/// through the binding; filtering and the option data stay with the caller.\n///\n/// The list opens inline below the field rather than in a popover: on a compact\n/// iPhone width a popover presents as a full sheet, which is heavier than a\n/// single-select filter warrants, so the lightest presentation (an inline\n/// dropdown that pushes content, never overlays it) is used instead.\npublic struct Combobox<ID: Hashable>: View {\n    @Environment(\\.registryTheme) private var theme\n    // The symbol column scales with the body text the symbols are drawn in.\n    @ScaledMetric(relativeTo: .body) private var symbolWidth: CGFloat = 28\n\n    @Binding private var selection: ID?\n    private let options: [ComboboxOption<ID>]\n    private let prompt: LocalizedStringResource\n    private let emptyTitle: LocalizedStringResource\n    private let emptyDescription: Text?\n\n    @State private var query: String = \"\"\n    @FocusState private var isFocused: Bool\n\n    public init(\n        selection: Binding<ID?>,\n        options: [ComboboxOption<ID>],\n        prompt: LocalizedStringResource = LocalizedStringResource(\"Search\", comment: \"Placeholder inside the combobox search field\"),\n        emptyTitle: LocalizedStringResource = \"No results\",\n        emptyDescription: Text? = nil\n    ) {\n        self._selection = selection\n        self.options = options\n        self.prompt = prompt\n        self.emptyTitle = emptyTitle\n        self.emptyDescription = emptyDescription\n    }\n\n    private var selectedOption: ComboboxOption<ID>? {\n        options.first { $0.id == selection }\n    }\n\n    private var filtered: [ComboboxOption<ID>] {\n        // An empty query, or a query still equal to the selected title, browses\n        // every option; anything else filters case- and diacritic-insensitively.\n        guard !query.isEmpty, query != selectedOption?.title else { return options }\n        return options.filter { $0.title.localizedStandardContains(query) }\n    }\n\n    public var body: some View {\n        VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n            InputGroup {\n                Image(systemName: \"magnifyingglass\")\n                    .accessibilityHidden(true)\n            } content: {\n                TextField(text: $query, prompt: Text(prompt)) {\n                    Text(prompt)\n                }\n                .accessibilityLabel(Text(prompt))\n                .autocorrectionDisabled()\n                .textInputAutocapitalization(.never)\n                .submitLabel(.done)\n                .focused($isFocused)\n            } trailing: {\n                if isFocused {\n                    if !query.isEmpty {\n                        Button(\"Clear\", systemImage: \"xmark.circle.fill\") {\n                            query = \"\"\n                            selection = nil\n                        }\n                        .labelStyle(.iconOnly)\n                        .buttonStyle(.registryGhost)\n                        .controlSize(.small)\n                    }\n                } else {\n                    Button(\"Show options\", systemImage: \"chevron.up.chevron.down\") {\n                        isFocused = true\n                    }\n                    .labelStyle(.iconOnly)\n                    .buttonStyle(.registryGhost)\n                    .controlSize(.small)\n                }\n            }\n\n            if isFocused {\n                list\n            }\n        }\n        .onAppear { syncQueryToSelection() }\n        .onChange(of: selection) { _, _ in\n            if !isFocused { syncQueryToSelection() }\n        }\n        .onChange(of: isFocused) { _, focused in\n            if !focused { syncQueryToSelection() }\n        }\n    }\n\n    @ViewBuilder\n    private var list: some View {\n        if filtered.isEmpty {\n            ContentUnavailableView(\n                emptyTitle,\n                systemImage: \"magnifyingglass\",\n                description: emptyDescription\n            )\n            .registryEmptyState()\n        } else {\n            VStack(spacing: 0) {\n                ForEach(filtered) { option in\n                    optionRow(option)\n                    if option.id != filtered.last?.id {\n                        Divider().registrySeparator()\n                    }\n                }\n            }\n            .padding(.horizontal, theme.metrics.standardSpacing)\n            .registrySurface()\n        }\n    }\n\n    private func optionRow(_ option: ComboboxOption<ID>) -> some View {\n        Button {\n            selection = option.id\n            query = option.title\n            isFocused = false\n        } label: {\n            ItemRow(title: Text(option.title)) {\n                if let symbol = option.systemImage {\n                    Image(systemName: symbol)\n                        .font(.body.weight(.medium))\n                        .foregroundStyle(.tint)\n                        .frame(width: symbolWidth)\n                        .accessibilityHidden(true)\n                }\n            } accessory: {\n                if option.id == selection {\n                    Image(systemName: \"checkmark\")\n                        .font(.body.weight(.semibold))\n                        .foregroundStyle(.tint)\n                        .accessibilityHidden(true)\n                }\n            }\n            .padding(.vertical, theme.metrics.compactSpacing)\n        }\n        .buttonStyle(.plain)\n        .accessibilityAddTraits(option.id == selection ? .isSelected : [])\n        .accessibilityInputLabels([option.title])\n    }\n\n    private func syncQueryToSelection() {\n        query = selectedOption?.title ?? \"\"\n    }\n}\n\nprivate struct ComboboxPreview: View {\n    @State private var timezone: String? = \"riyadh\"\n\n    private let zones = [\n        ComboboxOption(id: \"kuwait\", title: \"Kuwait City\", systemImage: \"clock\"),\n        ComboboxOption(id: \"riyadh\", title: \"Riyadh\", systemImage: \"clock\"),\n        ComboboxOption(id: \"dubai\", title: \"Dubai\", systemImage: \"clock\"),\n        ComboboxOption(id: \"doha\", title: \"Doha\", systemImage: \"clock\"),\n    ]\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: 8) {\n            Combobox(\n                selection: $timezone,\n                options: zones,\n                prompt: \"Search time zones\",\n                emptyDescription: Text(\"Try a city name.\")\n            )\n            Text(\"Selected: \\(timezone ?? \"none\")\")\n                .font(.footnote)\n                .foregroundStyle(.secondary)\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Combobox\") {\n    ComboboxPreview().tint(.indigo)\n}\n\n#Preview(\"Combobox Dark\") {\n    ComboboxPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Combobox Right to Left\") {\n    ComboboxPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Combobox Accessibility Size\") {\n    ComboboxPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Combobox",
+      "screenshots": {
+        "light": "/images/items/combobox-light.png",
+        "dark": "/images/items/combobox-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
     },
     {
       "name": "command",

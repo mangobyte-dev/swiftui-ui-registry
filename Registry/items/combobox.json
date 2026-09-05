@@ -1,0 +1,68 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "combobox",
+  "kind": "component",
+  "description": "A searchable single-selection control: a registry search field over caller options with a filtered list that opens below the field, controlled selection through a binding, and a native empty state.",
+  "usage": "@State private var timezone: String? = \"riyadh\"\n\nCombobox(\n    selection: $timezone,\n    options: [\n        ComboboxOption(id: \"kuwait\", title: \"Kuwait City\", systemImage: \"clock\"),\n        ComboboxOption(id: \"riyadh\", title: \"Riyadh\", systemImage: \"clock\")\n    ],\n    prompt: \"Search time zones\",\n    emptyDescription: Text(\"Try a city name.\")\n)",
+  "files": [
+    {
+      "source": "sources/components/Combobox.swift",
+      "target": "Combobox.swift"
+    }
+  ],
+  "registryDependencies": [
+    "input-group",
+    "item",
+    "empty",
+    "separator",
+    "button"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "combobox",
+    "search",
+    "select",
+    "autocomplete",
+    "picker",
+    "shadcn"
+  ],
+  "aliases": [
+    "autocomplete",
+    "typeahead",
+    "searchable-select",
+    "dropdown"
+  ],
+  "accessibility": [
+    "The field carries the prompt as its explicit accessibility label and uses the search-and-filter query binding; each option is a native Button whose label is its title, addressable by title through Voice Control.",
+    "The selected option carries the isSelected trait and a checkmark; the option symbol is decorative and hidden.",
+    "No matches renders a native ContentUnavailableView on the registry surface with the caller's empty title and description.",
+    "The list opens inline below the field on focus and pushes content rather than overlaying it, so it never covers other controls; a popover is not used because on a compact iPhone width it presents as a full sheet, heavier than a single-select filter needs."
+  ],
+  "preview": {
+    "source": "sources/components/Combobox.swift",
+    "name": "Combobox",
+    "screenshots": [
+      "docs/images/items/combobox-light.png",
+      "docs/images/items/combobox-dark.png"
+    ]
+  }
+}

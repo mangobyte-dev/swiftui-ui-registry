@@ -46,6 +46,10 @@
     {
       "source": "sources/blocks/Preview/ContributionsActivity.swift",
       "target": "Preview/ContributionsActivity.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/Contributors.swift",
+      "target": "Preview/Contributors.swift"
     }
   ],
   "registryDependencies": [

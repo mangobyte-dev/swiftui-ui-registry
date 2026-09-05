@@ -24,6 +24,7 @@ public struct PreviewWall: View {
             BookAppointment()
             CodespacesCard()
             ContributionsActivity()
+            Contributors()
         }
     }
 

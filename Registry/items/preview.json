@@ -38,6 +38,10 @@
     {
       "source": "sources/blocks/Preview/BookAppointment.swift",
       "target": "Preview/BookAppointment.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/CodespacesCard.swift",
+      "target": "Preview/CodespacesCard.swift"
     }
   ],
   "registryDependencies": [
@@ -51,7 +55,9 @@
     "avatar",
     "combobox",
     "separator",
-    "field"
+    "field",
+    "input-group",
+    "spinner"
   ],
   "packageDependencies": [
     {

@@ -161,11 +161,18 @@
       "sourceDigest": "sha256:534a61837a053b422157a10a35cd7af7852483f9eaffa10b89aec97a44364078",
       "version": "0.1.0"
     },
+    "Preview/CodespacesCard.swift": {
+      "base": "bases/6202b70a29e773f8283ac559c1cfd6653e67684534be43d79689df4ad6087403.base",
+      "installedDigest": "sha256:d693f401a172d7660281741289766b5105f1ca53cbc6961c07021c5df843924e",
+      "item": "preview",
+      "sourceDigest": "sha256:d693f401a172d7660281741289766b5105f1ca53cbc6961c07021c5df843924e",
+      "version": "0.1.0"
+    },
     "Preview/PreviewWall.swift": {
       "base": "bases/21fd264667c3047604e99c4cd51cebe0e88f8f9a1fbe7b826a5a2fc9c9d602d4.base",
-      "installedDigest": "sha256:0296068694112f3173e01cdc194aa80a02b1cdbc6037098f818b8756881c0c25",
+      "installedDigest": "sha256:86c4191cd10e726a148bdcfa77e027bd8d66e43c7406b67df508818fd4b4d3c2",
       "item": "preview",
-      "sourceDigest": "sha256:0296068694112f3173e01cdc194aa80a02b1cdbc6037098f818b8756881c0c25",
+      "sourceDigest": "sha256:86c4191cd10e726a148bdcfa77e027bd8d66e43c7406b67df508818fd4b4d3c2",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -807,7 +814,9 @@
         "avatar",
         "combobox",
         "separator",
-        "field"
+        "field",
+        "input-group",
+        "spinner"
       ],
       "version": "0.1.0"
     },

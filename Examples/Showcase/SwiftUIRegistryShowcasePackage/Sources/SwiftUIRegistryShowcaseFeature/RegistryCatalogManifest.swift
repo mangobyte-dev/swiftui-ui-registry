@@ -134,6 +134,15 @@ enum RegistryCatalogManifest {
             tags: ["card", "group-box", "surface", "container", "style"]
         ),
         CatalogEntry(
+            name: "chart",
+            kind: "component",
+            version: "0.1.0",
+            description: "Styles a native Swift Charts Chart to the theme: a series palette derived from the accent on the foreground style scale, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.",
+            usage: "Chart(data) { row in\n    BarMark(\n        x: .value(\"Month\", row.month),\n        y: .value(\"Visits\", row.visits)\n    )\n    .foregroundStyle(by: .value(\"Channel\", row.channel))\n    .position(by: .value(\"Channel\", row.channel))\n}\n.registryChart()\n.frame(height: 180)",
+            dependencies: [],
+            tags: ["chart", "charts", "graph", "bar", "line", "pie", "shadcn"]
+        ),
+        CatalogEntry(
             name: "checkbox",
             kind: "component",
             version: "0.3.0",

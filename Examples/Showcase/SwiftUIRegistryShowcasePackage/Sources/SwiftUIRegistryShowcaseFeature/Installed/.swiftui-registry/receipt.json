@@ -147,6 +147,13 @@
       "sourceDigest": "sha256:81cd02993afae28407c955a05609bae2ce0770da4dc55e56c2bb3c305214ffb1",
       "version": "0.2.0"
     },
+    "RegistryChart.swift": {
+      "base": "bases/d30352e1a86b8dc6487fb81b1536b1d2d7936ed4c6c35783195f2dce859d221d.base",
+      "installedDigest": "sha256:3c8868effc2a98b1e3b24fc3f11e53fbf16eb99caf6d75b9a05a314909fbe408",
+      "item": "chart",
+      "sourceDigest": "sha256:3c8868effc2a98b1e3b24fc3f11e53fbf16eb99caf6d75b9a05a314909fbe408",
+      "version": "0.1.0"
+    },
     "RegistryCheckboxToggleStyle.swift": {
       "base": "bases/84ef61e84e290159ebfd98ceb45adbe2c83371f33abc11c357b1d2e38db16213.base",
       "installedDigest": "sha256:66ac20e80830fc44880e1fbd8aa5fbbba6e1af71063ba9e55a88308382a68ec8",
@@ -432,6 +439,22 @@
       ],
       "registryDependencies": [],
       "version": "0.2.0"
+    },
+    "chart": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.1.0"
     },
     "checkbox": {
       "packageDependencies": [

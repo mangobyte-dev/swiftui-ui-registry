@@ -17,6 +17,7 @@ public struct PreviewWall: View {
         LazyVGrid(columns: columns, alignment: .leading, spacing: theme.metrics.standardSpacing) {
             ActivateAgentDialog()
             AnalyticsCard()
+            AnomalyAlert()
         }
     }
 

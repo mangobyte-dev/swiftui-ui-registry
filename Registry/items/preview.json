@@ -18,6 +18,10 @@
     {
       "source": "sources/blocks/Preview/AnalyticsCard.swift",
       "target": "Preview/AnalyticsCard.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/AnomalyAlert.swift",
+      "target": "Preview/AnomalyAlert.swift"
     }
   ],
   "registryDependencies": [
@@ -26,7 +30,8 @@
     "alert",
     "badge",
     "button",
-    "chart"
+    "chart",
+    "empty"
   ],
   "packageDependencies": [
     {

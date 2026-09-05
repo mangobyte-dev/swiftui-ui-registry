@@ -142,10 +142,10 @@
     },
     "RegistryKeycapModifier.swift": {
       "base": "bases/27d4e89f7b1eea1cb61637ba4d7925f3c287418f60a0a6d0b31fa5abc8b7b7ba.base",
-      "installedDigest": "sha256:d90ad2e533273cc7c5b180dbe7b13e2b7c50bfc44fb9d57c429f47936bfbf9b1",
+      "installedDigest": "sha256:99290060891e2727548c5ce1d60f8b3cb04ada8417973d713808772c3dbf176f",
       "item": "kbd",
-      "sourceDigest": "sha256:d90ad2e533273cc7c5b180dbe7b13e2b7c50bfc44fb9d57c429f47936bfbf9b1",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:99290060891e2727548c5ce1d60f8b3cb04ada8417973d713808772c3dbf176f",
+      "version": "0.1.1"
     },
     "RegistryLabelStyle.swift": {
       "base": "bases/04739f973034fb8d715a72289080746b744a673da290b3b462fc035871996323.base",
@@ -550,7 +550,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "label": {
       "packageDependencies": [

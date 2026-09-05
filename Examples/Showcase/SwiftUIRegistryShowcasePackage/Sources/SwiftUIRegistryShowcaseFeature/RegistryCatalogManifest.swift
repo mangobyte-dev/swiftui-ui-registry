@@ -253,9 +253,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "kbd",
             kind: "component",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Draws text as a keycap for keyboard shortcut hints, hidden from accessibility unless a spoken label is supplied.",
-            usage: "Text(\"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(\"esc\")\n    .registryKeycap()",
+            usage: "Text(verbatim: \"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(verbatim: \"esc\")\n    .registryKeycap()",
             dependencies: [],
             tags: ["keyboard", "shortcut", "keycap", "hint", "shadcn"]
         ),

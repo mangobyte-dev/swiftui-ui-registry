@@ -23,28 +23,17 @@ private struct RegistryKeycapModifier: ViewModifier {
             .lineLimit(1)
             .fixedSize()
             .foregroundStyle(.secondary)
-            .padding(.horizontal, theme.metrics.compactSpacing / 2 + 2)
-            .padding(.vertical, 2)
+            .padding(.horizontal, theme.metrics.compactSpacing * 0.75)
+            .padding(.vertical, theme.metrics.compactSpacing / 4)
             .background(theme.surface, in: shape)
             .overlay {
                 shape.stroke(theme.border, lineWidth: theme.metrics.borderWidth)
             }
-            .modifier(KeycapAccessibility(label: accessibilityLabel))
-    }
-}
-
-private struct KeycapAccessibility: ViewModifier {
-    let label: Text?
-
-    @ViewBuilder
-    func body(content: Content) -> some View {
-        if let label {
-            content
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(label)
-        } else {
-            content.accessibilityHidden(true)
-        }
+            // One identity for both states: the label applies only when given,
+            // and the keycap hides itself when it has nothing to say.
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(accessibilityLabel ?? Text(verbatim: ""), isEnabled: accessibilityLabel != nil)
+            .accessibilityHidden(accessibilityLabel == nil)
     }
 }
 
@@ -54,17 +43,17 @@ private struct RegistryKeycapModifierPreview: View {
             HStack {
                 Text("Open search")
                 Spacer()
-                Text("⌘K").registryKeycap(accessibilityLabel: Text("Command K"))
+                Text(verbatim: "⌘K").registryKeycap(accessibilityLabel: Text("Command K"))
             }
             HStack {
                 Text("Select")
                 Spacer()
-                Text("↩").registryKeycap(accessibilityLabel: Text("Return"))
+                Text(verbatim: "↩").registryKeycap(accessibilityLabel: Text("Return"))
             }
             HStack {
                 Text("Dismiss")
                 Spacer()
-                Text("esc").registryKeycap(accessibilityLabel: Text("Escape"))
+                Text(verbatim: "esc").registryKeycap(accessibilityLabel: Text("Escape"))
             }
         }
         .padding()

@@ -35,21 +35,21 @@ Verify the install by building the consuming target for an iOS Simulator destina
 ## Usage
 
 ```swift
-Text("⌘K")
+Text(verbatim: "⌘K")
     .registryKeycap(accessibilityLabel: Text("Command K"))
 
-Text("esc")
+Text(verbatim: "esc")
     .registryKeycap()
 ```
 
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Hidden from accessibility by default because symbols such as the command glyph read poorly; pass accessibilityLabel to speak the shortcut.
   - One line at its intrinsic size; a keycap never wraps.
-  - Uses the compact radius, surface, and border tokens so it matches badges.
+  - Uses the compact radius, surface, border, and spacing tokens so it matches badges.
 - Source: [sources/components/RegistryKeycapModifier.swift](../../Registry/sources/components/RegistryKeycapModifier.swift), with the `Keycap` Xcode preview

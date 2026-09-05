@@ -118,8 +118,10 @@ private struct ItemRowPreview: View {
                 title: Text("Spending limit"),
                 description: Text("Applies to online purchases."),
                 accessory: {
+                    // labelsHidden also drops the accessibility label; restore it.
                     Toggle("Spending limit", isOn: .constant(true))
                         .labelsHidden()
+                        .accessibilityLabel("Spending limit")
                 }
             )
             .padding(.vertical, theme.metrics.standardSpacing)

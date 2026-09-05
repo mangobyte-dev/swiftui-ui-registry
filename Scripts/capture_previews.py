@@ -15,6 +15,7 @@ Usage (from the repository root):
     python3 Scripts/capture_previews.py            # every item, light and dark
     python3 Scripts/capture_previews.py badge card # a subset
     python3 Scripts/capture_previews.py --themes   # the theme presets page
+    python3 Scripts/capture_previews.py --blocks   # every block on the iPad, wide layout
 
 `--app` points at a built SwiftUIRegistryShowcase.app; without it the script
 builds one with xcodebuild into a scratch derived-data directory.
@@ -44,6 +45,9 @@ WORKSPACE = REPOSITORY_ROOT / "Examples" / "Showcase" / "SwiftUIRegistryShowcase
 SCHEME = "SwiftUIRegistryShowcase"
 OUTPUT = REPOSITORY_ROOT / "docs" / "images" / "items"
 THEME_OUTPUT = REPOSITORY_ROOT / "docs" / "images" / "themes"
+BLOCK_OUTPUT = REPOSITORY_ROOT / "docs" / "images" / "blocks"
+# The iOS 27 iPad Pro 13-inch (M5) used for the wide block captures on this machine.
+IPAD_UDID = "FF62F68C-7D96-4073-B0CC-865A9D3B0A41"
 APPEARANCES = ("light", "dark")
 THEME_PRESETS = ("System", "Graphite", "Indigo", "Rose", "Emerald", "Amber")
 # No top margin: the demo starts at the safe-area edge, right under the Dynamic Island.
@@ -153,6 +157,7 @@ def main() -> int:
     parser.add_argument("--udid", default=PINNED_UDID)
     parser.add_argument("--app", type=Path, help="A built SwiftUIRegistryShowcase.app")
     parser.add_argument("--themes", action="store_true", help="Capture the theme presets instead of items")
+    parser.add_argument("--blocks", action="store_true", help="Capture every block on the iPad into docs/images/blocks")
     parser.add_argument("--no-metadata", action="store_true", help="Do not write preview.screenshots")
     arguments = parser.parse_args()
 
@@ -165,13 +170,22 @@ def main() -> int:
     if unknown:
         parser.error(f"unknown items: {', '.join(unknown)}")
 
+    if arguments.blocks and arguments.udid == PINNED_UDID:
+        arguments.udid = IPAD_UDID
     with tempfile.TemporaryDirectory() as directory:
         scratch = Path(directory)
         boot(arguments.udid)
         app = arguments.app or build_app(scratch / "DerivedData", arguments.udid)
         run(["xcrun", "simctl", "install", arguments.udid, str(app)])
 
-        if arguments.themes:
+        if arguments.blocks:
+            blocks = [name for name in names if installer.items[name]["kind"] == "block"]
+            for name in blocks:
+                for appearance in APPEARANCES:
+                    destination = BLOCK_OUTPUT / f"{name}-ipad-{appearance}.png"
+                    capture(arguments.udid, name, appearance, destination, scratch=scratch)
+                    print(f"captured {destination.relative_to(REPOSITORY_ROOT)}")
+        elif arguments.themes:
             for preset in THEME_PRESETS:
                 for appearance in APPEARANCES:
                     destination = THEME_OUTPUT / f"{preset.lower()}-{appearance}.png"

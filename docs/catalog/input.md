@@ -36,21 +36,32 @@ Verify the install by building the consuming target for an iOS Simulator destina
 
 ```swift
 @State private var email = ""
+@State private var password = ""
 
+// The title is placeholder text to VoiceOver; the explicit label names
+// the field once it holds text.
 TextField("Email", text: $email)
     .textFieldStyle(.registryInput)
+    .accessibilityLabel("Email")
+
+SecureField("Password", text: $password)
+    .textFieldStyle(.registryInput)
+    .accessibilityLabel("Password")
 
 TextField("Email", text: $email)
     .textFieldStyle(RegistryInputStyle(isInvalid: true))
+    .accessibilityLabel("Email")
+    .accessibilityHint("Enter a valid email address")
 ```
 
 ## Details
 
 - Kind: component
-- Version: 0.3.0
+- Version: 0.4.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
+  - Give every field an explicit accessibilityLabel matching its visible title. Measured on iOS 27: neither the title initializer nor the label-plus-prompt initializer exposes a label (the title is the placeholder value only), so a field with typed content is otherwise unnamed to VoiceOver; the Showcase demo audit rejects an unlabeled field.
   - Preserves native TextField and SecureField editing, keyboard, and autofill behavior.
   - Uses focus and border width in addition to color for input states.
   - Requires callers to provide visible validation copy and an accessibility hint for invalid input.

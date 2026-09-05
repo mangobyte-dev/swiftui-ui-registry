@@ -50,7 +50,7 @@ Six presets (`system`, `graphite`, `indigo`, `rose`, `emerald`, `amber`) are pla
 
 This is deliberately smaller than a full token system. Repeated colors and metrics use semantic tokens rather than hardcoded values, but a token enters foundations only after two real registry items need the exact same meaning (`Tests/RegistryTests/test_installer.py` names every token's two consumers). A style or modifier remains source-owned until two items use the exact same treatment
 
-The Showcase's Tune tab is the theme creator: every token as a live control beside a preview of the registry, presets one tap away, and Copy Swift for the exact `RegistryTheme` initializer to paste at a root. The panel's model lives in the Showcase, not in foundations, so the package stays a value type with no persistence
+The Showcase's Tune tab is the theme creator: every token as a live control beside a preview of the registry, presets one tap away, Copy Swift for the exact `RegistryTheme` initializer to paste at a root, and Import to load such an initializer back into the knobs. A custom accent can carry a separate dark value, exported as a dynamic `UIColor`. The panel's model lives in the Showcase, not in foundations, so the package stays a value type with no persistence
 
 ## Compatibility policy
 

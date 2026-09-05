@@ -1,11 +1,11 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "name": "input",
   "kind": "component",
   "description": "Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.",
-  "usage": "@State private var email = \"\"\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(.registryInput)\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(RegistryInputStyle(isInvalid: true))",
+  "usage": "@State private var email = \"\"\n@State private var password = \"\"\n\n// The title is placeholder text to VoiceOver; the explicit label names\n// the field once it holds text.\nTextField(\"Email\", text: $email)\n    .textFieldStyle(.registryInput)\n    .accessibilityLabel(\"Email\")\n\nSecureField(\"Password\", text: $password)\n    .textFieldStyle(.registryInput)\n    .accessibilityLabel(\"Password\")\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(RegistryInputStyle(isInvalid: true))\n    .accessibilityLabel(\"Email\")\n    .accessibilityHint(\"Enter a valid email address\")",
   "files": [
     {
       "source": "sources/components/RegistryInputStyle.swift",
@@ -44,6 +44,7 @@
     "secure-field"
   ],
   "accessibility": [
+    "Give every field an explicit accessibilityLabel matching its visible title. Measured on iOS 27: neither the title initializer nor the label-plus-prompt initializer exposes a label (the title is the placeholder value only), so a field with typed content is otherwise unnamed to VoiceOver; the Showcase demo audit rejects an unlabeled field.",
     "Preserves native TextField and SecureField editing, keyboard, and autofill behavior.",
     "Uses focus and border width in addition to color for input states.",
     "Requires callers to provide visible validation copy and an accessibility hint for invalid input.",

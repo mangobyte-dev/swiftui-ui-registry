@@ -57,6 +57,10 @@
         "light": "/images/items/accordion-light.png",
         "dark": "/images/items/accordion-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -122,7 +126,7 @@
         },
         {
           "name": "item",
-          "version": "0.1.0"
+          "version": "0.1.1"
         },
         {
           "name": "skeleton",
@@ -155,6 +159,10 @@
       "screenshots": {
         "light": "/images/items/activity-feed-light.png",
         "dark": "/images/items/activity-feed-dark.png"
+      },
+      "wideScreenshots": {
+        "light": "/images/blocks/activity-feed-ipad-light.png",
+        "dark": "/images/blocks/activity-feed-ipad-dark.png"
       },
       "requirements": [
         {
@@ -215,6 +223,10 @@
         "light": "/images/items/alert-light.png",
         "dark": "/images/items/alert-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -261,6 +273,10 @@
         "light": "/images/items/alert-dialog-light.png",
         "dark": "/images/items/alert-dialog-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": []
     },
     {
@@ -296,12 +312,16 @@
         "light": "/images/items/aspect-ratio-light.png",
         "dark": "/images/items/aspect-ratio-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": []
     },
     {
       "name": "auth-form",
       "kind": "block",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "description": "Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.",
       "usage": "AuthForm(\n    \"Welcome back\",\n    identity: $email,\n    identityError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Forgot password?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
       "docs": null,
@@ -329,7 +349,7 @@
       "installOrder": [
         {
           "name": "input",
-          "version": "0.3.0"
+          "version": "0.4.0"
         },
         {
           "name": "button",
@@ -341,11 +361,11 @@
         },
         {
           "name": "auth-form",
-          "version": "0.2.0"
+          "version": "0.3.0"
         }
       ],
       "accessibility": [
-        "Both fields use label-plus-prompt initializers so the field titles are real accessibility labels, not placeholder-only text.",
+        "Both fields carry an explicit accessibilityLabel equal to their visible titles. Measured on iOS 27: the label-plus-prompt initializer alone exposes the title as placeholder text only, so a field with typed content would be unnamed without it.",
         "Focus order is identity then password: the identity field submits with a Next return key that moves focus to the password field, and the password return key submits the form.",
         "Invalid fields are never color-alone: the input border width increases, a visible footnote message renders under the field, and the message is attached as the field's accessibility hint.",
         "Field and form error messages post an AccessibilityNotification.Announcement when they appear or change; VoiceOver announcement timing has not been verified on device.",
@@ -354,11 +374,15 @@
       ],
       "sourcePath": "Registry/sources/blocks/AuthForm.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/AuthForm.swift",
-      "source": "import Accessibility\nimport Foundation\nimport SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A source-owned sign-in block composing the registry input, button, and card\n/// treatments around native `TextField`, `SecureField`, and `Button`.\n/// The caller owns credentials, validation results, and submission state; the\n/// block owns only transient keyboard focus. No networking, validation logic,\n/// or credential storage lives inside. The block does not own a `ScrollView`,\n/// navigation container, or maximum width.\npublic struct AuthForm: View {\n\n    /// The kind of identity credential the form collects. Drives only the\n    /// keyboard type; autofill content types are fixed (`.username` / `.password`).\n    public enum IdentityKind: Sendable {\n        case email\n        case username\n    }\n\n    private let title: LocalizedStringResource\n    private let identityTitle: LocalizedStringResource\n    @Binding private var identity: String\n    private let identityKind: IdentityKind\n    private let identityError: LocalizedStringResource?\n    private let passwordTitle: LocalizedStringResource\n    @Binding private var password: String\n    private let passwordError: LocalizedStringResource?\n    private let formError: LocalizedStringResource?\n    private let submitTitle: LocalizedStringResource\n    private let isSubmitting: Bool\n    private let secondaryActionTitle: LocalizedStringResource?\n    private let onSecondaryAction: (() -> Void)?\n    private let onSubmit: () -> Void\n\n    @Environment(\\.registryTheme) private var theme\n    @FocusState private var focusedField: Field?\n\n    private enum Field: Hashable {\n        case identity\n        case password\n    }\n\n    /// Parameters mirror the block grammar: unlabeled title, labeled prepared\n    /// values with defaults, trailing action closure.\n    /// `secondaryActionTitle` and `onSecondaryAction` must be supplied\n    /// together; the row renders only when both are non-nil.\n    public init(\n        _ title: LocalizedStringResource,\n        identityTitle: LocalizedStringResource = \"Email\",\n        identity: Binding<String>,\n        identityKind: IdentityKind = .email,\n        identityError: LocalizedStringResource? = nil,\n        passwordTitle: LocalizedStringResource = \"Password\",\n        password: Binding<String>,\n        passwordError: LocalizedStringResource? = nil,\n        formError: LocalizedStringResource? = nil,\n        submitTitle: LocalizedStringResource = \"Sign in\",\n        isSubmitting: Bool = false,\n        secondaryActionTitle: LocalizedStringResource? = nil,\n        onSecondaryAction: (() -> Void)? = nil,\n        onSubmit: @escaping () -> Void\n    ) {\n        self.title = title\n        self.identityTitle = identityTitle\n        self._identity = identity\n        self.identityKind = identityKind\n        self.identityError = identityError\n        self.passwordTitle = passwordTitle\n        self._password = password\n        self.passwordError = passwordError\n        self.formError = formError\n        self.submitTitle = submitTitle\n        self.isSubmitting = isSubmitting\n        self.secondaryActionTitle = secondaryActionTitle\n        self.onSecondaryAction = onSecondaryAction\n        self.onSubmit = onSubmit\n    }\n\n    public var body: some View {\n        GroupBox {\n            VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {\n                VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n                    // Label+prompt init form so the title is a real\n                    // accessibility label, not placeholder-only text.\n                    TextField(text: $identity, prompt: Text(identityTitle)) {\n                        Text(identityTitle)\n                    }\n                    .textFieldStyle(RegistryInputStyle(isInvalid: identityError != nil))\n                    .textContentType(.username)\n                    .keyboardType(identityKind == .email ? .emailAddress : .asciiCapable)\n                    .textInputAutocapitalization(.never)\n                    .autocorrectionDisabled()\n                    .submitLabel(.next)\n                    .focused($focusedField, equals: .identity)\n                    .onSubmit { focusedField = .password }\n                    .accessibilityHint(identityError.map { Text($0) } ?? Text(verbatim: \"\"))\n\n                    fieldMessage(identityError)\n                }\n\n                VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n                    SecureField(text: $password, prompt: Text(passwordTitle)) {\n                        Text(passwordTitle)\n                    }\n                    .textFieldStyle(RegistryInputStyle(isInvalid: passwordError != nil))\n                    .textContentType(.password)\n                    .submitLabel(.go)\n                    .focused($focusedField, equals: .password)\n                    .onSubmit {\n                        if !isSubmitting {\n                            onSubmit()\n                        }\n                    }\n                    .accessibilityHint(passwordError.map { Text($0) } ?? Text(verbatim: \"\"))\n\n                    fieldMessage(passwordError)\n                }\n\n                fieldMessage(formError)\n\n                Button {\n                    onSubmit()\n                } label: {\n                    ZStack {\n                        Text(submitTitle)\n                            .opacity(isSubmitting ? 0 : 1)\n                        if isSubmitting {\n                            // Explicit tint: the spinner sits on the accent\n                            // fill, so it uses the same foreground as the\n                            // primary button label.\n                            ProgressView()\n                                .tint(theme.onAccent)\n                        }\n                    }\n                    .frame(maxWidth: .infinity)\n                }\n                .buttonStyle(.registry)\n                .controlSize(.large)\n                .accessibilityLabel(Text(submitTitle))\n\n                if let secondaryActionTitle, let onSecondaryAction {\n                    Button(action: onSecondaryAction) {\n                        Text(secondaryActionTitle)\n                    }\n                    .buttonStyle(.registryLink)\n                }\n            }\n            .disabled(isSubmitting)\n        } label: {\n            Text(title)\n        }\n        .groupBoxStyle(.registryCard)\n        .onChange(of: localized(identityError)) { _, message in announce(message) }\n        .onChange(of: localized(passwordError)) { _, message in announce(message) }\n        .onChange(of: localized(formError)) { _, message in announce(message) }\n    }\n\n    @ViewBuilder\n    private func fieldMessage(_ message: LocalizedStringResource?) -> some View {\n        if let message {\n            Text(message)\n                .font(.footnote)\n                .foregroundStyle(theme.negative)\n        }\n    }\n\n    private func localized(_ resource: LocalizedStringResource?) -> String? {\n        resource.map { String(localized: $0) }\n    }\n\n    private func announce(_ message: String?) {\n        guard let message else { return }\n        AccessibilityNotification.Announcement(message).post()\n    }\n}\n\n#if DEBUG\nprivate struct AuthFormPreview: View {\n    var showErrors = false\n    var isSubmitting = false\n\n    @State private var email = \"\"\n    @State private var password = \"\"\n\n    var body: some View {\n        ScrollView {\n            AuthForm(\n                \"Welcome back\",\n                identity: $email,\n                identityError: showErrors ? \"Enter a valid email address\" : nil,\n                password: $password,\n                passwordError: showErrors ? \"Enter your password\" : nil,\n                formError: showErrors ? \"We could not sign you in. Try again.\" : nil,\n                isSubmitting: isSubmitting,\n                secondaryActionTitle: \"Forgot password?\",\n                onSecondaryAction: {},\n                onSubmit: {}\n            )\n            .padding()\n        }\n    }\n}\n\n#Preview(\"Auth Form\") {\n    AuthFormPreview()\n}\n\n#Preview(\"Auth Form Error\") {\n    AuthFormPreview(showErrors: true)\n}\n\n#Preview(\"Auth Form Submitting\") {\n    AuthFormPreview(isSubmitting: true)\n}\n\n#Preview(\"Auth Form Dark\") {\n    AuthFormPreview()\n        .preferredColorScheme(.dark)\n}\n\n#Preview(\"Auth Form Right to Left\") {\n    AuthFormPreview()\n        .environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Auth Form Accessibility Size\") {\n    AuthFormPreview()\n        .environment(\\.dynamicTypeSize, .accessibility3)\n}\n#endif\n",
+      "source": "import Accessibility\nimport Foundation\nimport SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A source-owned sign-in block composing the registry input, button, and card\n/// treatments around native `TextField`, `SecureField`, and `Button`.\n/// The caller owns credentials, validation results, and submission state; the\n/// block owns only transient keyboard focus. No networking, validation logic,\n/// or credential storage lives inside. The block does not own a `ScrollView`,\n/// navigation container, or maximum width.\npublic struct AuthForm: View {\n\n    /// The kind of identity credential the form collects. Drives only the\n    /// keyboard type; autofill content types are fixed (`.username` / `.password`).\n    public enum IdentityKind: Sendable {\n        case email\n        case username\n    }\n\n    private let title: LocalizedStringResource\n    private let identityTitle: LocalizedStringResource\n    @Binding private var identity: String\n    private let identityKind: IdentityKind\n    private let identityError: LocalizedStringResource?\n    private let passwordTitle: LocalizedStringResource\n    @Binding private var password: String\n    private let passwordError: LocalizedStringResource?\n    private let formError: LocalizedStringResource?\n    private let submitTitle: LocalizedStringResource\n    private let isSubmitting: Bool\n    private let secondaryActionTitle: LocalizedStringResource?\n    private let onSecondaryAction: (() -> Void)?\n    private let onSubmit: () -> Void\n\n    @Environment(\\.registryTheme) private var theme\n    @FocusState private var focusedField: Field?\n\n    private enum Field: Hashable {\n        case identity\n        case password\n    }\n\n    /// Parameters mirror the block grammar: unlabeled title, labeled prepared\n    /// values with defaults, trailing action closure.\n    /// `secondaryActionTitle` and `onSecondaryAction` must be supplied\n    /// together; the row renders only when both are non-nil.\n    public init(\n        _ title: LocalizedStringResource,\n        identityTitle: LocalizedStringResource = \"Email\",\n        identity: Binding<String>,\n        identityKind: IdentityKind = .email,\n        identityError: LocalizedStringResource? = nil,\n        passwordTitle: LocalizedStringResource = \"Password\",\n        password: Binding<String>,\n        passwordError: LocalizedStringResource? = nil,\n        formError: LocalizedStringResource? = nil,\n        submitTitle: LocalizedStringResource = \"Sign in\",\n        isSubmitting: Bool = false,\n        secondaryActionTitle: LocalizedStringResource? = nil,\n        onSecondaryAction: (() -> Void)? = nil,\n        onSubmit: @escaping () -> Void\n    ) {\n        self.title = title\n        self.identityTitle = identityTitle\n        self._identity = identity\n        self.identityKind = identityKind\n        self.identityError = identityError\n        self.passwordTitle = passwordTitle\n        self._password = password\n        self.passwordError = passwordError\n        self.formError = formError\n        self.submitTitle = submitTitle\n        self.isSubmitting = isSubmitting\n        self.secondaryActionTitle = secondaryActionTitle\n        self.onSecondaryAction = onSecondaryAction\n        self.onSubmit = onSubmit\n    }\n\n    public var body: some View {\n        GroupBox {\n            VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {\n                VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n                    // The title is placeholder text to VoiceOver; the explicit\n                    // label keeps the field named once it holds text.\n                    TextField(text: $identity, prompt: Text(identityTitle)) {\n                        Text(identityTitle)\n                    }\n                    .accessibilityLabel(Text(identityTitle))\n                    .textFieldStyle(RegistryInputStyle(isInvalid: identityError != nil))\n                    .textContentType(.username)\n                    .keyboardType(identityKind == .email ? .emailAddress : .asciiCapable)\n                    .textInputAutocapitalization(.never)\n                    .autocorrectionDisabled()\n                    .submitLabel(.next)\n                    .focused($focusedField, equals: .identity)\n                    .onSubmit { focusedField = .password }\n                    .accessibilityHint(identityError.map { Text($0) } ?? Text(verbatim: \"\"))\n\n                    fieldMessage(identityError)\n                }\n\n                VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n                    SecureField(text: $password, prompt: Text(passwordTitle)) {\n                        Text(passwordTitle)\n                    }\n                    .accessibilityLabel(Text(passwordTitle))\n                    .textFieldStyle(RegistryInputStyle(isInvalid: passwordError != nil))\n                    .textContentType(.password)\n                    .submitLabel(.go)\n                    .focused($focusedField, equals: .password)\n                    .onSubmit {\n                        if !isSubmitting {\n                            onSubmit()\n                        }\n                    }\n                    .accessibilityHint(passwordError.map { Text($0) } ?? Text(verbatim: \"\"))\n\n                    fieldMessage(passwordError)\n                }\n\n                fieldMessage(formError)\n\n                Button {\n                    onSubmit()\n                } label: {\n                    ZStack {\n                        Text(submitTitle)\n                            .opacity(isSubmitting ? 0 : 1)\n                        if isSubmitting {\n                            // Explicit tint: the spinner sits on the accent\n                            // fill, so it uses the same foreground as the\n                            // primary button label.\n                            ProgressView()\n                                .tint(theme.onAccent)\n                        }\n                    }\n                    .frame(maxWidth: .infinity)\n                }\n                .buttonStyle(.registry)\n                .controlSize(.large)\n                .accessibilityLabel(Text(submitTitle))\n\n                if let secondaryActionTitle, let onSecondaryAction {\n                    Button(action: onSecondaryAction) {\n                        Text(secondaryActionTitle)\n                    }\n                    .buttonStyle(.registryLink)\n                }\n            }\n            .disabled(isSubmitting)\n        } label: {\n            Text(title)\n        }\n        .groupBoxStyle(.registryCard)\n        .onChange(of: localized(identityError)) { _, message in announce(message) }\n        .onChange(of: localized(passwordError)) { _, message in announce(message) }\n        .onChange(of: localized(formError)) { _, message in announce(message) }\n    }\n\n    @ViewBuilder\n    private func fieldMessage(_ message: LocalizedStringResource?) -> some View {\n        if let message {\n            Text(message)\n                .font(.footnote)\n                .foregroundStyle(theme.negative)\n        }\n    }\n\n    private func localized(_ resource: LocalizedStringResource?) -> String? {\n        resource.map { String(localized: $0) }\n    }\n\n    private func announce(_ message: String?) {\n        guard let message else { return }\n        AccessibilityNotification.Announcement(message).post()\n    }\n}\n\n#if DEBUG\nprivate struct AuthFormPreview: View {\n    var showErrors = false\n    var isSubmitting = false\n\n    @State private var email = \"\"\n    @State private var password = \"\"\n\n    var body: some View {\n        ScrollView {\n            AuthForm(\n                \"Welcome back\",\n                identity: $email,\n                identityError: showErrors ? \"Enter a valid email address\" : nil,\n                password: $password,\n                passwordError: showErrors ? \"Enter your password\" : nil,\n                formError: showErrors ? \"We could not sign you in. Try again.\" : nil,\n                isSubmitting: isSubmitting,\n                secondaryActionTitle: \"Forgot password?\",\n                onSecondaryAction: {},\n                onSubmit: {}\n            )\n            .padding()\n        }\n    }\n}\n\n#Preview(\"Auth Form\") {\n    AuthFormPreview()\n}\n\n#Preview(\"Auth Form Error\") {\n    AuthFormPreview(showErrors: true)\n}\n\n#Preview(\"Auth Form Submitting\") {\n    AuthFormPreview(isSubmitting: true)\n}\n\n#Preview(\"Auth Form Dark\") {\n    AuthFormPreview()\n        .preferredColorScheme(.dark)\n}\n\n#Preview(\"Auth Form Right to Left\") {\n    AuthFormPreview()\n        .environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Auth Form Accessibility Size\") {\n    AuthFormPreview()\n        .environment(\\.dynamicTypeSize, .accessibility3)\n}\n#endif\n",
       "previewName": "Auth Form",
       "screenshots": {
         "light": "/images/items/auth-form-light.png",
         "dark": "/images/items/auth-form-dark.png"
+      },
+      "wideScreenshots": {
+        "light": "/images/blocks/auth-form-ipad-light.png",
+        "dark": "/images/blocks/auth-form-ipad-dark.png"
       },
       "requirements": [
         {
@@ -412,6 +436,10 @@
         "light": "/images/items/avatar-light.png",
         "dark": "/images/items/avatar-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -464,6 +492,10 @@
         "light": "/images/items/badge-light.png",
         "dark": "/images/items/badge-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -513,6 +545,10 @@
       "screenshots": {
         "light": "/images/items/button-light.png",
         "dark": "/images/items/button-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {
@@ -570,6 +606,10 @@
         "light": "/images/items/button-group-light.png",
         "dark": "/images/items/button-group-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -613,6 +653,10 @@
       "screenshots": {
         "light": "/images/items/calendar-light.png",
         "dark": "/images/items/calendar-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": []
     },
@@ -658,6 +702,10 @@
       "screenshots": {
         "light": "/images/items/card-light.png",
         "dark": "/images/items/card-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {
@@ -708,6 +756,10 @@
         "light": "/images/items/checkbox-light.png",
         "dark": "/images/items/checkbox-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -751,6 +803,10 @@
         "light": "/images/items/collapsible-light.png",
         "dark": "/images/items/collapsible-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": []
     },
     {
@@ -788,6 +844,10 @@
       "screenshots": {
         "light": "/images/items/context-menu-light.png",
         "dark": "/images/items/context-menu-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": []
     },
@@ -827,6 +887,10 @@
         "light": "/images/items/dialog-light.png",
         "dark": "/images/items/dialog-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": []
     },
     {
@@ -861,6 +925,10 @@
       "screenshots": {
         "light": "/images/items/direction-light.png",
         "dark": "/images/items/direction-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": []
     },
@@ -901,6 +969,10 @@
         "light": "/images/items/drawer-light.png",
         "dark": "/images/items/drawer-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": []
     },
     {
@@ -938,6 +1010,10 @@
       "screenshots": {
         "light": "/images/items/dropdown-menu-light.png",
         "dark": "/images/items/dropdown-menu-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": []
     },
@@ -982,6 +1058,10 @@
       "screenshots": {
         "light": "/images/items/empty-light.png",
         "dark": "/images/items/empty-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {
@@ -1048,6 +1128,10 @@
         "light": "/images/items/finance-overview-light.png",
         "dark": "/images/items/finance-overview-dark.png"
       },
+      "wideScreenshots": {
+        "light": "/images/blocks/finance-overview-ipad-light.png",
+        "dark": "/images/blocks/finance-overview-ipad-dark.png"
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -1059,9 +1143,9 @@
     {
       "name": "input",
       "kind": "component",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "description": "Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.",
-      "usage": "@State private var email = \"\"\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(.registryInput)\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(RegistryInputStyle(isInvalid: true))",
+      "usage": "@State private var email = \"\"\n@State private var password = \"\"\n\n// The title is placeholder text to VoiceOver; the explicit label names\n// the field once it holds text.\nTextField(\"Email\", text: $email)\n    .textFieldStyle(.registryInput)\n    .accessibilityLabel(\"Email\")\n\nSecureField(\"Password\", text: $password)\n    .textFieldStyle(.registryInput)\n    .accessibilityLabel(\"Password\")\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(RegistryInputStyle(isInvalid: true))\n    .accessibilityLabel(\"Email\")\n    .accessibilityHint(\"Enter a valid email address\")",
       "docs": null,
       "tags": [
         "input",
@@ -1082,10 +1166,11 @@
       "installOrder": [
         {
           "name": "input",
-          "version": "0.3.0"
+          "version": "0.4.0"
         }
       ],
       "accessibility": [
+        "Give every field an explicit accessibilityLabel matching its visible title. Measured on iOS 27: neither the title initializer nor the label-plus-prompt initializer exposes a label (the title is the placeholder value only), so a field with typed content is otherwise unnamed to VoiceOver; the Showcase demo audit rejects an unlabeled field.",
         "Preserves native TextField and SecureField editing, keyboard, and autofill behavior.",
         "Uses focus and border width in addition to color for input states.",
         "Requires callers to provide visible validation copy and an accessibility hint for invalid input.",
@@ -1093,11 +1178,15 @@
       ],
       "sourcePath": "Registry/sources/components/RegistryInputStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryInputStyle.swift",
-      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A bordered input treatment for native `TextField` and `SecureField` controls.\npublic struct RegistryInputStyle: TextFieldStyle {\n    @Environment(\\.isEnabled) private var isEnabled\n    @Environment(\\.registryTheme) private var theme\n    @FocusState private var isFocused: Bool\n\n    private let isInvalid: Bool\n\n    public init(isInvalid: Bool = false) {\n        self.isInvalid = isInvalid\n    }\n\n    public func _body(configuration: TextField<Self._Label>) -> some View {\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)\n\n        configuration\n            .focused($isFocused)\n            .padding(.horizontal, theme.metrics.controlHorizontalPadding)\n            .padding(.vertical, 10)\n            .background(theme.surface, in: shape)\n            .overlay {\n                shape.stroke(\n                    borderStyle,\n                    lineWidth: isFocused || isInvalid\n                        ? theme.metrics.emphasizedBorderWidth\n                        : theme.metrics.borderWidth\n                )\n            }\n            .opacity(isEnabled ? 1 : theme.disabledOpacity)\n    }\n\n    private var borderStyle: AnyShapeStyle {\n        if isInvalid {\n            AnyShapeStyle(theme.negative)\n        } else if isFocused {\n            AnyShapeStyle(TintShapeStyle())\n        } else {\n            AnyShapeStyle(theme.border)\n        }\n    }\n}\n\npublic extension TextFieldStyle where Self == RegistryInputStyle {\n    static var registryInput: RegistryInputStyle { RegistryInputStyle() }\n}\n\nprivate struct RegistryInputStylePreview: View {\n    @Environment(\\.registryTheme) private var theme\n    @State private var name = \"\"\n    @State private var email = \"not-an-email\"\n    @State private var password = \"\"\n    @FocusState private var focusedField: Field?\n\n    private enum Field {\n        case name\n    }\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            TextField(\"Full name\", text: $name)\n                .textFieldStyle(.registryInput)\n                .focused($focusedField, equals: .name)\n\n            SecureField(\"Password\", text: $password)\n                .textFieldStyle(.registryInput)\n\n            VStack(alignment: .leading, spacing: 4) {\n                TextField(\"Email\", text: $email)\n                    .textFieldStyle(RegistryInputStyle(isInvalid: true))\n                    .accessibilityHint(\"Enter a valid email address\")\n                Text(\"Enter a valid email address\")\n                    .font(.footnote)\n                    .foregroundStyle(theme.negative)\n            }\n\n            TextField(\"Disabled\", text: .constant(\"Unavailable\"))\n                .textFieldStyle(.registryInput)\n                .disabled(true)\n        }\n        .padding()\n        .onAppear { focusedField = .name }\n    }\n}\n\n#Preview(\"Input States\") {\n    RegistryInputStylePreview().tint(.indigo)\n}\n\n#Preview(\"Input Dark\") {\n    RegistryInputStylePreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Input Right to Left\") {\n    RegistryInputStylePreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Input Accessibility Size\") {\n    RegistryInputStylePreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A bordered input treatment for native `TextField` and `SecureField` controls.\npublic struct RegistryInputStyle: TextFieldStyle {\n    @Environment(\\.isEnabled) private var isEnabled\n    @Environment(\\.registryTheme) private var theme\n    @FocusState private var isFocused: Bool\n\n    private let isInvalid: Bool\n\n    public init(isInvalid: Bool = false) {\n        self.isInvalid = isInvalid\n    }\n\n    public func _body(configuration: TextField<Self._Label>) -> some View {\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)\n\n        configuration\n            .focused($isFocused)\n            .padding(.horizontal, theme.metrics.controlHorizontalPadding)\n            .padding(.vertical, 10)\n            .background(theme.surface, in: shape)\n            .overlay {\n                shape.stroke(\n                    borderStyle,\n                    lineWidth: isFocused || isInvalid\n                        ? theme.metrics.emphasizedBorderWidth\n                        : theme.metrics.borderWidth\n                )\n            }\n            .opacity(isEnabled ? 1 : theme.disabledOpacity)\n    }\n\n    private var borderStyle: AnyShapeStyle {\n        if isInvalid {\n            AnyShapeStyle(theme.negative)\n        } else if isFocused {\n            AnyShapeStyle(TintShapeStyle())\n        } else {\n            AnyShapeStyle(theme.border)\n        }\n    }\n}\n\npublic extension TextFieldStyle where Self == RegistryInputStyle {\n    static var registryInput: RegistryInputStyle { RegistryInputStyle() }\n}\n\nprivate struct RegistryInputStylePreview: View {\n    @Environment(\\.registryTheme) private var theme\n    @State private var name = \"\"\n    @State private var email = \"not-an-email\"\n    @State private var password = \"\"\n    @FocusState private var focusedField: Field?\n\n    private enum Field {\n        case name\n    }\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            // An explicit accessibility label: on iOS the field's title and\n            // prompt are exposed as placeholder text only, so a field with\n            // typed content would otherwise be unnamed to VoiceOver.\n            TextField(\"Full name\", text: $name)\n                .textFieldStyle(.registryInput)\n                .accessibilityLabel(\"Full name\")\n                .focused($focusedField, equals: .name)\n\n            SecureField(\"Password\", text: $password)\n                .textFieldStyle(.registryInput)\n                .accessibilityLabel(\"Password\")\n\n            VStack(alignment: .leading, spacing: 4) {\n                TextField(\"Email\", text: $email)\n                    .textFieldStyle(RegistryInputStyle(isInvalid: true))\n                    .accessibilityLabel(\"Email\")\n                    .accessibilityHint(\"Enter a valid email address\")\n                Text(\"Enter a valid email address\")\n                    .font(.footnote)\n                    .foregroundStyle(theme.negative)\n            }\n\n            TextField(\"Disabled\", text: .constant(\"Unavailable\"))\n                .textFieldStyle(.registryInput)\n                .accessibilityLabel(\"Disabled\")\n                .disabled(true)\n        }\n        .padding()\n        .onAppear { focusedField = .name }\n    }\n}\n\n#Preview(\"Input States\") {\n    RegistryInputStylePreview().tint(.indigo)\n}\n\n#Preview(\"Input Dark\") {\n    RegistryInputStylePreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Input Right to Left\") {\n    RegistryInputStylePreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Input Accessibility Size\") {\n    RegistryInputStylePreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Input States",
       "screenshots": {
         "light": "/images/items/input-light.png",
         "dark": "/images/items/input-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {
@@ -1110,7 +1199,7 @@
     {
       "name": "item",
       "kind": "component",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Composes a generic content row with leading media, a title and optional description, and a trailing accessory while leaving selection to the call site.",
       "usage": "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
       "docs": null,
@@ -1145,22 +1234,27 @@
         },
         {
           "name": "item",
-          "version": "0.1.0"
+          "version": "0.1.1"
         }
       ],
       "accessibility": [
         "Combines the title and description into one accessibility element; media and accessory remain separate so an interactive accessory stays activatable.",
         "Selection belongs to a native Button or NavigationLink at the call site, which combines the row into its own label.",
         "Keeps the 44 point minimum row height and a rectangular content shape.",
-        "Uses system text styles and the semantic spacing tokens; the description wraps rather than truncates."
+        "Uses system text styles and the semantic spacing tokens; the description wraps rather than truncates.",
+        "A control placed in the accessory with labelsHidden must restore its label with accessibilityLabel; hiding the visual label also removes the spoken one."
       ],
       "sourcePath": "Registry/sources/components/ItemRow.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/ItemRow.swift",
-      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A generic content row: leading media, a title with an optional description,\n/// and a trailing accessory. Selection stays at the call site: wrap the row in\n/// a native `Button` or `NavigationLink`, which combines its children into one\n/// accessible label. The row owns spacing, the minimum row height, and the\n/// title and description hierarchy.\npublic struct ItemRow<Media: View, Accessory: View>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let title: Text\n    private let description: Text?\n    private let media: Media\n    private let accessory: Accessory\n\n    public init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder media: () -> Media,\n        @ViewBuilder accessory: () -> Accessory\n    ) {\n        self.title = title\n        self.description = description\n        self.media = media()\n        self.accessory = accessory()\n    }\n\n    public var body: some View {\n        HStack(alignment: .center, spacing: theme.metrics.standardSpacing) {\n            media\n\n            VStack(alignment: .leading, spacing: theme.metrics.compactSpacing / 2) {\n                title\n                    .font(.body.weight(.medium))\n                if let description {\n                    description\n                        .font(.footnote)\n                        .foregroundStyle(.secondary)\n                }\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .accessibilityElement(children: .combine)\n\n            accessory\n        }\n        .frame(minHeight: RegistryMetrics.minimumHitSize)\n        .contentShape(Rectangle())\n    }\n}\n\npublic extension ItemRow where Media == EmptyView {\n    init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder accessory: () -> Accessory\n    ) {\n        self.init(title: title, description: description, media: { EmptyView() }, accessory: accessory)\n    }\n}\n\npublic extension ItemRow where Accessory == EmptyView {\n    init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder media: () -> Media\n    ) {\n        self.init(title: title, description: description, media: media, accessory: { EmptyView() })\n    }\n}\n\npublic extension ItemRow where Media == EmptyView, Accessory == EmptyView {\n    init(title: Text, description: Text? = nil) {\n        self.init(title: title, description: description, media: { EmptyView() }, accessory: { EmptyView() })\n    }\n}\n\nprivate struct ItemRowPreview: View {\n    @Environment(\\.registryTheme) private var theme\n\n    var body: some View {\n        VStack(spacing: 0) {\n            Button {} label: {\n                ItemRow(\n                    title: Text(\"Mishmash Bakery\"),\n                    description: Text(\"Card ending 4021 · Today, 09:41\")\n                ) {\n                    Image(systemName: \"cup.and.saucer.fill\")\n                        .foregroundStyle(.tint)\n                        .frame(width: 40, height: 40)\n                        .background(.tint.opacity(0.12), in: Circle())\n                        .accessibilityHidden(true)\n                } accessory: {\n                    Image(systemName: \"chevron.forward\")\n                        .font(.footnote.weight(.semibold))\n                        .foregroundStyle(.tertiary)\n                        .accessibilityHidden(true)\n                }\n                .padding(.vertical, theme.metrics.standardSpacing)\n            }\n            .buttonStyle(.plain)\n\n            Divider().registrySeparator()\n\n            ItemRow(\n                title: Text(\"Statement ready\"),\n                description: Text(\"August 2026\"),\n                accessory: {\n                    Text(\"New\")\n                        .registryBadge()\n                }\n            )\n            .padding(.vertical, theme.metrics.standardSpacing)\n\n            Divider().registrySeparator()\n\n            ItemRow(\n                title: Text(\"Spending limit\"),\n                description: Text(\"Applies to online purchases.\"),\n                accessory: {\n                    Toggle(\"Spending limit\", isOn: .constant(true))\n                        .labelsHidden()\n                }\n            )\n            .padding(.vertical, theme.metrics.standardSpacing)\n        }\n        .padding(.horizontal, theme.metrics.standardSpacing)\n        .registrySurface()\n        .padding()\n    }\n}\n\n#Preview(\"Item Row\") {\n    ItemRowPreview().tint(.indigo)\n}\n\n#Preview(\"Item Row Dark\") {\n    ItemRowPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Item Row Right to Left\") {\n    ItemRowPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Item Row Accessibility Size\") {\n    ItemRowPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A generic content row: leading media, a title with an optional description,\n/// and a trailing accessory. Selection stays at the call site: wrap the row in\n/// a native `Button` or `NavigationLink`, which combines its children into one\n/// accessible label. The row owns spacing, the minimum row height, and the\n/// title and description hierarchy.\npublic struct ItemRow<Media: View, Accessory: View>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let title: Text\n    private let description: Text?\n    private let media: Media\n    private let accessory: Accessory\n\n    public init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder media: () -> Media,\n        @ViewBuilder accessory: () -> Accessory\n    ) {\n        self.title = title\n        self.description = description\n        self.media = media()\n        self.accessory = accessory()\n    }\n\n    public var body: some View {\n        HStack(alignment: .center, spacing: theme.metrics.standardSpacing) {\n            media\n\n            VStack(alignment: .leading, spacing: theme.metrics.compactSpacing / 2) {\n                title\n                    .font(.body.weight(.medium))\n                if let description {\n                    description\n                        .font(.footnote)\n                        .foregroundStyle(.secondary)\n                }\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .accessibilityElement(children: .combine)\n\n            accessory\n        }\n        .frame(minHeight: RegistryMetrics.minimumHitSize)\n        .contentShape(Rectangle())\n    }\n}\n\npublic extension ItemRow where Media == EmptyView {\n    init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder accessory: () -> Accessory\n    ) {\n        self.init(title: title, description: description, media: { EmptyView() }, accessory: accessory)\n    }\n}\n\npublic extension ItemRow where Accessory == EmptyView {\n    init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder media: () -> Media\n    ) {\n        self.init(title: title, description: description, media: media, accessory: { EmptyView() })\n    }\n}\n\npublic extension ItemRow where Media == EmptyView, Accessory == EmptyView {\n    init(title: Text, description: Text? = nil) {\n        self.init(title: title, description: description, media: { EmptyView() }, accessory: { EmptyView() })\n    }\n}\n\nprivate struct ItemRowPreview: View {\n    @Environment(\\.registryTheme) private var theme\n\n    var body: some View {\n        VStack(spacing: 0) {\n            Button {} label: {\n                ItemRow(\n                    title: Text(\"Mishmash Bakery\"),\n                    description: Text(\"Card ending 4021 · Today, 09:41\")\n                ) {\n                    Image(systemName: \"cup.and.saucer.fill\")\n                        .foregroundStyle(.tint)\n                        .frame(width: 40, height: 40)\n                        .background(.tint.opacity(0.12), in: Circle())\n                        .accessibilityHidden(true)\n                } accessory: {\n                    Image(systemName: \"chevron.forward\")\n                        .font(.footnote.weight(.semibold))\n                        .foregroundStyle(.tertiary)\n                        .accessibilityHidden(true)\n                }\n                .padding(.vertical, theme.metrics.standardSpacing)\n            }\n            .buttonStyle(.plain)\n\n            Divider().registrySeparator()\n\n            ItemRow(\n                title: Text(\"Statement ready\"),\n                description: Text(\"August 2026\"),\n                accessory: {\n                    Text(\"New\")\n                        .registryBadge()\n                }\n            )\n            .padding(.vertical, theme.metrics.standardSpacing)\n\n            Divider().registrySeparator()\n\n            ItemRow(\n                title: Text(\"Spending limit\"),\n                description: Text(\"Applies to online purchases.\"),\n                accessory: {\n                    // labelsHidden also drops the accessibility label; restore it.\n                    Toggle(\"Spending limit\", isOn: .constant(true))\n                        .labelsHidden()\n                        .accessibilityLabel(\"Spending limit\")\n                }\n            )\n            .padding(.vertical, theme.metrics.standardSpacing)\n        }\n        .padding(.horizontal, theme.metrics.standardSpacing)\n        .registrySurface()\n        .padding()\n    }\n}\n\n#Preview(\"Item Row\") {\n    ItemRowPreview().tint(.indigo)\n}\n\n#Preview(\"Item Row Dark\") {\n    ItemRowPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Item Row Right to Left\") {\n    ItemRowPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Item Row Accessibility Size\") {\n    ItemRowPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Item Row",
       "screenshots": {
         "light": "/images/items/item-light.png",
         "dark": "/images/items/item-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {
@@ -1211,6 +1305,10 @@
         "light": "/images/items/label-light.png",
         "dark": "/images/items/label-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -1255,6 +1353,10 @@
       "screenshots": {
         "light": "/images/items/macro-progress-light.png",
         "dark": "/images/items/macro-progress-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {
@@ -1301,6 +1403,10 @@
         "light": "/images/items/metric-card-light.png",
         "dark": "/images/items/metric-card-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -1345,6 +1451,10 @@
       "screenshots": {
         "light": "/images/items/native-select-light.png",
         "dark": "/images/items/native-select-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": []
     },
@@ -1401,6 +1511,10 @@
         "light": "/images/items/nutrition-overview-light.png",
         "dark": "/images/items/nutrition-overview-dark.png"
       },
+      "wideScreenshots": {
+        "light": "/images/blocks/nutrition-overview-ipad-light.png",
+        "dark": "/images/blocks/nutrition-overview-ipad-dark.png"
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -1443,6 +1557,10 @@
       "screenshots": {
         "light": "/images/items/popover-light.png",
         "dark": "/images/items/popover-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": []
     },
@@ -1488,6 +1606,10 @@
         "light": "/images/items/progress-light.png",
         "dark": "/images/items/progress-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -1530,6 +1652,10 @@
         "light": "/images/items/radio-group-light.png",
         "dark": "/images/items/radio-group-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": []
     },
     {
@@ -1566,6 +1692,10 @@
       "screenshots": {
         "light": "/images/items/scroll-area-light.png",
         "dark": "/images/items/scroll-area-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": []
     },
@@ -1610,6 +1740,10 @@
       "screenshots": {
         "light": "/images/items/select-light.png",
         "dark": "/images/items/select-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {
@@ -1660,6 +1794,10 @@
       "screenshots": {
         "light": "/images/items/separator-light.png",
         "dark": "/images/items/separator-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {
@@ -1729,6 +1867,10 @@
         "light": "/images/items/settings-section-light.png",
         "dark": "/images/items/settings-section-dark.png"
       },
+      "wideScreenshots": {
+        "light": "/images/blocks/settings-section-ipad-light.png",
+        "dark": "/images/blocks/settings-section-ipad-dark.png"
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -1772,6 +1914,10 @@
       "screenshots": {
         "light": "/images/items/sidebar-light.png",
         "dark": "/images/items/sidebar-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": []
     },
@@ -1819,6 +1965,10 @@
         "light": "/images/items/skeleton-light.png",
         "dark": "/images/items/skeleton-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -1860,6 +2010,10 @@
       "screenshots": {
         "light": "/images/items/slider-light.png",
         "dark": "/images/items/slider-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": []
     },
@@ -1906,6 +2060,10 @@
         "light": "/images/items/spinner-light.png",
         "dark": "/images/items/spinner-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -1950,6 +2108,10 @@
         "light": "/images/items/switch-light.png",
         "dark": "/images/items/switch-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": []
     },
     {
@@ -1988,6 +2150,10 @@
       "screenshots": {
         "light": "/images/items/tabs-light.png",
         "dark": "/images/items/tabs-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": []
     },
@@ -2032,6 +2198,10 @@
       "screenshots": {
         "light": "/images/items/textarea-light.png",
         "dark": "/images/items/textarea-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {
@@ -2087,6 +2257,10 @@
       "screenshots": {
         "light": "/images/items/toggle-light.png",
         "dark": "/images/items/toggle-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {
@@ -2149,6 +2323,10 @@
         "light": "/images/items/toggle-group-light.png",
         "dark": "/images/items/toggle-group-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": [
         {
           "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
@@ -2193,6 +2371,10 @@
         "light": "/images/items/tooltip-light.png",
         "dark": "/images/items/tooltip-dark.png"
       },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
       "requirements": []
     },
     {
@@ -2231,6 +2413,10 @@
       "screenshots": {
         "light": "/images/items/transaction-row-light.png",
         "dark": "/images/items/transaction-row-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {

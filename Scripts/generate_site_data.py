@@ -78,6 +78,14 @@ def render(repository_root: Path) -> dict:
                 )
                 for appearance in ("light", "dark")
             },
+            "wideScreenshots": {
+                appearance: (
+                    f"/images/blocks/{name}-ipad-{appearance}.png"
+                    if (repository_root / "docs" / "images" / "blocks" / f"{name}-ipad-{appearance}.png").is_file()
+                    else None
+                )
+                for appearance in ("light", "dark")
+            },
             "requirements": [] if is_recipe else [
                 {
                     "instruction": Installer.dependency_instruction(entry),
@@ -120,7 +128,7 @@ def render_text(repository_root: Path) -> str:
 
 def copy_images(repository_root: Path, destination: Path) -> int:
     copied = 0
-    for folder in ("items", "themes"):
+    for folder in ("items", "themes", "blocks"):
         source = repository_root / "docs" / "images" / folder
         target = destination / folder
         if target.exists():

@@ -153,13 +153,16 @@ struct InputDemo: View {
         DemoSurface {
             TextField("Email", text: $email)
                 .textFieldStyle(.registryInput)
+                .accessibilityLabel("Email")
                 .keyboardType(.emailAddress)
                 .textInputAutocapitalization(.never)
             SecureField("Password", text: $password)
                 .textFieldStyle(.registryInput)
+                .accessibilityLabel("Password")
             VStack(alignment: .leading, spacing: 4) {
-                TextField("Email", text: .constant("not-an-email"))
+                TextField("Work email", text: .constant("not-an-email"))
                     .textFieldStyle(RegistryInputStyle(isInvalid: true))
+                    .accessibilityLabel("Work email")
                     .accessibilityHint("Enter a valid email address")
                 Text("Enter a valid email address")
                     .font(.footnote)
@@ -167,6 +170,7 @@ struct InputDemo: View {
             }
             TextField("Disabled", text: .constant("Unavailable"))
                 .textFieldStyle(.registryInput)
+                .accessibilityLabel("Disabled")
                 .disabled(true)
         }
     }
@@ -562,8 +566,10 @@ struct ItemDemo: View {
                 title: Text("Spending limit"),
                 description: Text("Applies to online purchases."),
                 accessory: {
+                    // labelsHidden also drops the accessibility label; restore it.
                     Toggle("Spending limit", isOn: $limitEnabled)
                         .labelsHidden()
+                        .accessibilityLabel("Spending limit")
                 }
             )
             .padding(.vertical, theme.metrics.standardSpacing)

@@ -2151,7 +2151,7 @@
     {
       "name": "preview",
       "kind": "block",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "description": "The theme preview wall from shadcn's create page: an adaptive grid of realistic product cards built from registry components and native controls, so a theme can be judged against a screen of real UI.",
       "usage": "PreviewWall()",
       "docs": null,
@@ -2273,7 +2273,7 @@
         },
         {
           "name": "preview",
-          "version": "0.1.0"
+          "version": "0.2.0"
         }
       ],
       "accessibility": [

@@ -2,7 +2,7 @@
   "name": "SwiftUIRegistry",
   "repositoryURL": "https://github.com/mangobyte-dev/swiftui-ui-registry",
   "counts": {
-    "component": 26,
+    "component": 27,
     "block": 6,
     "recipe": 18
   },
@@ -1248,6 +1248,69 @@
       "screenshots": {
         "light": "/images/items/empty-light.png",
         "dark": "/images/items/empty-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "Composes a labeled form field around a native control with an optional description and an error message that drives the content's invalid state.",
+      "usage": "@State private var email = \"\"\n\nFieldGroup {\n    Field(\"Full name\", description: \"As it appears on your card.\") { _ in\n        TextField(\"Full name\", text: $name)\n            .textFieldStyle(.registryInput)\n            .accessibilityLabel(\"Full name\")\n    }\n    Field(\"Email\", error: emailError) { isInvalid in\n        TextField(\"you@example.com\", text: $email)\n            .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))\n            .accessibilityLabel(\"Email\")\n    }\n}",
+      "docs": null,
+      "tags": [
+        "field",
+        "form",
+        "label",
+        "validation",
+        "error",
+        "shadcn"
+      ],
+      "aliases": [
+        "form-field",
+        "form-row",
+        "labeled-field",
+        "validation-message"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "input"
+      ],
+      "installOrder": [
+        {
+          "name": "input",
+          "version": "0.5.0"
+        },
+        {
+          "name": "field",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "The content builder receives the invalid state; the caller applies it to a control that has one, such as RegistryInputStyle(isInvalid:), so the field never fakes an invalid treatment on a control without one.",
+        "A separate label view is not associated with the control automatically, so give the control an explicit accessibilityLabel matching the visible label.",
+        "When present the error, otherwise the description, becomes the content's accessibility hint, so a focused control re-reads the most urgent message; a new error is also posted as an announcement.",
+        "Uses system text styles and the semantic spacing tokens; the label, description, and error all wrap rather than truncate."
+      ],
+      "sourcePath": "Registry/sources/components/Field.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/Field.swift",
+      "source": "import Accessibility\nimport Foundation\nimport SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A form field composition: a visible label above caller-provided content,\n/// with an optional description and an optional error message. The content\n/// builder receives the invalid state, so a native control can adopt it, such\n/// as a `TextField` styled with `RegistryInputStyle(isInvalid:)`. The label,\n/// the control, and the messages stay native at the call site; the field owns\n/// only the vertical rhythm and the error's accessibility behavior.\npublic struct Field<Content: View>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let label: LocalizedStringResource\n    private let description: LocalizedStringResource?\n    private let error: LocalizedStringResource?\n    private let content: (Bool) -> Content\n\n    /// - Parameters:\n    ///   - label: The field's visible label. Give the control the same text as\n    ///     its `accessibilityLabel`; a separate label view is not associated\n    ///     with the control automatically.\n    ///   - description: Guidance shown below the content and read as the\n    ///     content's accessibility hint when no error is present.\n    ///   - error: A validation message. When it is non-nil the content builder\n    ///     is called with `isInvalid == true`, the message shows in the negative\n    ///     color, is announced, and is read as the content's hint.\n    ///   - content: The field's control. The `Bool` is the invalid state, true\n    ///     when `error` is non-nil.\n    public init(\n        _ label: LocalizedStringResource,\n        description: LocalizedStringResource? = nil,\n        error: LocalizedStringResource? = nil,\n        @ViewBuilder content: @escaping (Bool) -> Content\n    ) {\n        self.label = label\n        self.description = description\n        self.error = error\n        self.content = content\n    }\n\n    public var body: some View {\n        VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n            Text(label)\n                .font(.subheadline.weight(.medium))\n\n            content(error != nil)\n                .accessibilityHint(hint ?? Text(verbatim: \"\"), isEnabled: hint != nil)\n\n            if let description, error == nil {\n                Text(description)\n                    .font(.footnote)\n                    .foregroundStyle(.secondary)\n            }\n\n            if let error {\n                Text(error)\n                    .font(.footnote)\n                    .foregroundStyle(theme.negative)\n            }\n        }\n        .frame(maxWidth: .infinity, alignment: .leading)\n        .onChange(of: error) { _, message in announce(message) }\n    }\n\n    /// The error takes the hint when present, otherwise the description; a\n    /// focused control then re-reads the most urgent message.\n    private var hint: Text? {\n        if let error {\n            return Text(error)\n        }\n        if let description {\n            return Text(description)\n        }\n        return nil\n    }\n\n    private func announce(_ message: LocalizedStringResource?) {\n        guard let message else { return }\n        AccessibilityNotification.Announcement(String(localized: message)).post()\n    }\n}\n\n/// A vertical stack of ``Field`` values on the shared section rhythm. Use it\n/// when a card presents several fields together; a single field needs no group.\npublic struct FieldGroup<Content: View>: View {\n    @Environment(\\.registryTheme) private var theme\n    private let content: Content\n\n    public init(@ViewBuilder content: () -> Content) {\n        self.content = content()\n    }\n\n    public var body: some View {\n        VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {\n            content\n        }\n        .frame(maxWidth: .infinity, alignment: .leading)\n    }\n}\n\nprivate struct FieldPreview: View {\n    var showErrors = false\n\n    @State private var email = \"\"\n    @State private var role = \"member\"\n\n    var body: some View {\n        FieldGroup {\n            Field(\n                \"Full name\",\n                description: \"As it appears on your card.\"\n            ) { _ in\n                TextField(\"Full name\", text: .constant(\"Maya Khalid\"))\n                    .textFieldStyle(.registryInput)\n                    .accessibilityLabel(\"Full name\")\n            }\n\n            Field(\n                \"Email\",\n                error: showErrors ? \"Enter a valid email address.\" : nil\n            ) { isInvalid in\n                TextField(\"you@example.com\", text: $email)\n                    .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))\n                    .keyboardType(.emailAddress)\n                    .textInputAutocapitalization(.never)\n                    .accessibilityLabel(\"Email\")\n            }\n\n            Field(\"Role\") { _ in\n                Picker(\"Role\", selection: $role) {\n                    Text(\"Member\").tag(\"member\")\n                    Text(\"Admin\").tag(\"admin\")\n                }\n                .pickerStyle(.menu)\n                .accessibilityLabel(\"Role\")\n            }\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Field\") {\n    FieldPreview().tint(.indigo)\n}\n\n#Preview(\"Field Error\") {\n    FieldPreview(showErrors: true).tint(.indigo)\n}\n\n#Preview(\"Field Dark\") {\n    FieldPreview(showErrors: true).tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Field Right to Left\") {\n    FieldPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Field Accessibility Size\") {\n    FieldPreview(showErrors: true).tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Field",
+      "screenshots": {
+        "light": "/images/items/field-light.png",
+        "dark": "/images/items/field-dark.png"
       },
       "wideScreenshots": {
         "light": null,

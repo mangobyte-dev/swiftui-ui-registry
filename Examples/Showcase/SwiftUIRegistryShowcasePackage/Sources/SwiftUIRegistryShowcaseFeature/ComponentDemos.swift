@@ -712,3 +712,36 @@ enum DemoCommands {
         }
     }
 }
+
+struct FieldDemo: View {
+    @State private var name = "Maya Khalid"
+    @State private var email = "not-an-email"
+    @State private var role = "member"
+
+    var body: some View {
+        DemoSurface {
+            FieldGroup {
+                Field("Full name", description: "As it appears on your card.") { _ in
+                    TextField("Full name", text: $name)
+                        .textFieldStyle(.registryInput)
+                        .accessibilityLabel("Full name")
+                }
+                Field("Email", error: "Enter a valid email address.") { isInvalid in
+                    TextField("you@example.com", text: $email)
+                        .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .accessibilityLabel("Email")
+                }
+                Field("Role") { _ in
+                    Picker("Role", selection: $role) {
+                        Text("Member").tag("member")
+                        Text("Admin").tag("admin")
+                    }
+                    .pickerStyle(.menu)
+                    .accessibilityLabel("Role")
+                }
+            }
+        }
+    }
+}

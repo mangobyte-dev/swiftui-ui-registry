@@ -1,0 +1,64 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "field",
+  "kind": "component",
+  "description": "Composes a labeled form field around a native control with an optional description and an error message that drives the content's invalid state.",
+  "usage": "@State private var email = \"\"\n\nFieldGroup {\n    Field(\"Full name\", description: \"As it appears on your card.\") { _ in\n        TextField(\"Full name\", text: $name)\n            .textFieldStyle(.registryInput)\n            .accessibilityLabel(\"Full name\")\n    }\n    Field(\"Email\", error: emailError) { isInvalid in\n        TextField(\"you@example.com\", text: $email)\n            .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))\n            .accessibilityLabel(\"Email\")\n    }\n}",
+  "files": [
+    {
+      "source": "sources/components/Field.swift",
+      "target": "Field.swift"
+    }
+  ],
+  "registryDependencies": [
+    "input"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "field",
+    "form",
+    "label",
+    "validation",
+    "error",
+    "shadcn"
+  ],
+  "aliases": [
+    "form-field",
+    "form-row",
+    "labeled-field",
+    "validation-message"
+  ],
+  "accessibility": [
+    "The content builder receives the invalid state; the caller applies it to a control that has one, such as RegistryInputStyle(isInvalid:), so the field never fakes an invalid treatment on a control without one.",
+    "A separate label view is not associated with the control automatically, so give the control an explicit accessibilityLabel matching the visible label.",
+    "When present the error, otherwise the description, becomes the content's accessibility hint, so a focused control re-reads the most urgent message; a new error is also posted as an announcement.",
+    "Uses system text styles and the semantic spacing tokens; the label, description, and error all wrap rather than truncate."
+  ],
+  "preview": {
+    "source": "sources/components/Field.swift",
+    "name": "Field",
+    "screenshots": [
+      "docs/images/items/field-light.png",
+      "docs/images/items/field-dark.png"
+    ]
+  }
+}

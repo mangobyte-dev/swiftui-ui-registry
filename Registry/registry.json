@@ -52,6 +52,7 @@
     "items/input-group.json",
     "items/kbd.json",
     "items/command.json",
-    "items/command-search.json"
+    "items/command-search.json",
+    "items/field.json"
   ]
 }

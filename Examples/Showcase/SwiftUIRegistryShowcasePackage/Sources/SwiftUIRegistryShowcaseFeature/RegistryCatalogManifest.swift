@@ -215,6 +215,15 @@ enum RegistryCatalogManifest {
             tags: ["empty", "placeholder", "content-unavailable", "state", "shadcn"]
         ),
         CatalogEntry(
+            name: "field",
+            kind: "component",
+            version: "0.1.0",
+            description: "Composes a labeled form field around a native control with an optional description and an error message that drives the content's invalid state.",
+            usage: "@State private var email = \"\"\n\nFieldGroup {\n    Field(\"Full name\", description: \"As it appears on your card.\") { _ in\n        TextField(\"Full name\", text: $name)\n            .textFieldStyle(.registryInput)\n            .accessibilityLabel(\"Full name\")\n    }\n    Field(\"Email\", error: emailError) { isInvalid in\n        TextField(\"you@example.com\", text: $email)\n            .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))\n            .accessibilityLabel(\"Email\")\n    }\n}",
+            dependencies: ["input"],
+            tags: ["field", "form", "label", "validation", "error", "shadcn"]
+        ),
+        CatalogEntry(
             name: "finance-overview",
             kind: "block",
             version: "0.4.1",

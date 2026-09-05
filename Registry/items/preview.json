@@ -50,6 +50,10 @@
     {
       "source": "sources/blocks/Preview/Contributors.swift",
       "target": "Preview/Contributors.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/EnvironmentVariables.swift",
+      "target": "Preview/EnvironmentVariables.swift"
     }
   ],
   "registryDependencies": [

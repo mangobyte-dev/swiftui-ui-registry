@@ -25,6 +25,7 @@ public struct PreviewWall: View {
             CodespacesCard()
             ContributionsActivity()
             Contributors()
+            EnvironmentVariables()
         }
     }
 

@@ -28,7 +28,7 @@ One installable style, modifier, or view each
 - [accordion](accordion.md): Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, for stacked expandable sections.
 - [alert](alert.md): Composes an inline, non-modal status message with informational, positive, and destructive variants and optional caller-owned actions.
 - [avatar](avatar.md): Displays a circular identity image with initials or symbol fallback, sized by the environment control size, with a required accessibility label.
-- [badge](badge.md): Applies accent, positive, negative, secondary, and outline badge treatments to native Text and Label content.
+- [badge](badge.md): Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.
 - [button](button.md): Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.
 - [button-group](button-group.md): Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.
 - [card](card.md): Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.

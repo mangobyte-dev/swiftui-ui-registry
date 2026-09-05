@@ -50,7 +50,7 @@ ItemRow(
 - Kind: component
 - Version: 0.1.1
 - Platforms: iOS 26.0+
-- Installs in order: [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.0, [item](item.md) 0.1.1
+- Installs in order: [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.1.1
 - Accessibility contract:
   - Combines the title and description into one accessibility element; media and accessory remain separate so an interactive accessory stays activatable.
   - Selection belongs to a native Button or NavigationLink at the call site, which combines the row into its own label.

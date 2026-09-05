@@ -74,6 +74,10 @@
     {
       "source": "sources/blocks/Preview/InviteTeam.swift",
       "target": "Preview/InviteTeam.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/Invoice.swift",
+      "target": "Preview/Invoice.swift"
     }
   ],
   "registryDependencies": [
@@ -92,7 +96,8 @@
     "spinner",
     "checkbox",
     "textarea",
-    "input"
+    "input",
+    "table"
   ],
   "packageDependencies": [
     {

@@ -226,7 +226,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "input",
             kind: "component",
-            version: "0.4.0",
+            version: "0.5.0",
             description: "Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.",
             usage: "@State private var email = \"\"\n@State private var password = \"\"\n\n// The title is placeholder text to VoiceOver; the explicit label names\n// the field once it holds text.\nTextField(\"Email\", text: $email)\n    .textFieldStyle(.registryInput)\n    .accessibilityLabel(\"Email\")\n\nSecureField(\"Password\", text: $password)\n    .textFieldStyle(.registryInput)\n    .accessibilityLabel(\"Password\")\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(RegistryInputStyle(isInvalid: true))\n    .accessibilityLabel(\"Email\")\n    .accessibilityHint(\"Enter a valid email address\")",
             dependencies: [],
@@ -235,9 +235,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "input-group",
             kind: "component",
-            version: "0.1.0",
+            version: "0.2.0",
             description: "Wraps a native text field with registry input chrome and caller-provided leading and trailing accessories, such as a search symbol and a clear button.",
-            usage: "@State private var query = \"\"\n\nInputGroup {\n    Image(systemName: \"magnifyingglass\")\n        .accessibilityHidden(true)\n} content: {\n    TextField(\"Search transactions\", text: $query)\n        .accessibilityLabel(\"Search transactions\")\n} trailing: {\n    if !query.isEmpty {\n        Button(\"Clear\", systemImage: \"xmark.circle.fill\") { query = \"\" }\n            .labelStyle(.iconOnly)\n            .buttonStyle(.registryGhost)\n            .controlSize(.small)\n    }\n}",
+            usage: "@State private var query = \"\"\n\nInputGroup {\n    Image(systemName: \"magnifyingglass\")\n        .accessibilityHidden(true)\n} content: {\n    TextField(\"Search transactions\", text: $query)\n        .accessibilityLabel(\"Search transactions\")\n} trailing: {\n    if !query.isEmpty {\n        Button(\"Clear search\", systemImage: \"xmark.circle.fill\") { query = \"\" }\n            .labelStyle(.iconOnly)\n            .buttonStyle(.registryGhost)\n            .controlSize(.small)\n    }\n}",
             dependencies: ["button"],
             tags: ["input", "group", "search", "accessory", "text-field", "shadcn"]
         ),

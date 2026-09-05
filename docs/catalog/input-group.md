@@ -45,7 +45,7 @@ InputGroup {
         .accessibilityLabel("Search transactions")
 } trailing: {
     if !query.isEmpty {
-        Button("Clear", systemImage: "xmark.circle.fill") { query = "" }
+        Button("Clear search", systemImage: "xmark.circle.fill") { query = "" }
             .labelStyle(.iconOnly)
             .buttonStyle(.registryGhost)
             .controlSize(.small)
@@ -56,12 +56,12 @@ InputGroup {
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.4.0, [input-group](input-group.md) 0.1.0
+- Installs in order: [button](button.md) 0.4.0, [input-group](input-group.md) 0.2.0
 - Accessibility contract:
   - The field stays a native TextField or SecureField; give it an explicit accessibilityLabel because the title is placeholder text only.
-  - Leading accessories are decorative by default and should be hidden; a trailing button keeps its own label and 44 point hit area.
-  - Focus draws the accent ring and the invalid state draws the negative border at the emphasized width, never color alone because the caller pairs it with a message.
+  - Hide a decorative leading accessory with accessibilityHidden(true); an informational prefix stays visible and the field's accessibilityLabel carries its meaning. A trailing registry button keeps its own label and 44 point hit area.
+  - Focus draws the accent ring; the invalid state draws the negative border at the same emphasized width and wins over focus, so the caller pairs it with a message.
   - Keeps the 44 point minimum height and applies the shared disabled opacity.
 - Source: [sources/components/InputGroup.swift](../../Registry/sources/components/InputGroup.swift), with the `Input Group` Xcode preview

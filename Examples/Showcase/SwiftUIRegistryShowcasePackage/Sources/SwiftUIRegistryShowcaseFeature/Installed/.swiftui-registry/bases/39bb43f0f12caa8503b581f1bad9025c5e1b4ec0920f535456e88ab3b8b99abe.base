@@ -42,6 +42,7 @@ public struct InputGroup<Leading: View, Content: View, Trailing: View>: View {
                 .textFieldStyle(.plain)
                 .focused($isFocused)
                 .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
             trailing
         }
         .padding(.horizontal, theme.metrics.controlHorizontalPadding)
@@ -91,7 +92,7 @@ public extension InputGroup where Trailing == EmptyView {
 
 private struct InputGroupPreview: View {
     @State private var query = ""
-    @State private var amount = "120"
+    @State private var amount = 120.0
 
     var body: some View {
         VStack(spacing: 16) {
@@ -103,7 +104,7 @@ private struct InputGroupPreview: View {
                     .accessibilityLabel("Search transactions")
             } trailing: {
                 if !query.isEmpty {
-                    Button("Clear", systemImage: "xmark.circle.fill") { query = "" }
+                    Button("Clear search", systemImage: "xmark.circle.fill") { query = "" }
                         .labelStyle(.iconOnly)
                         .buttonStyle(.registryGhost)
                         .controlSize(.small)
@@ -114,9 +115,9 @@ private struct InputGroupPreview: View {
                 Text("KWD")
                     .font(.subheadline.weight(.medium))
             } content: {
-                TextField("Amount", text: $amount)
+                TextField("Amount", value: $amount, format: .number)
                     .keyboardType(.decimalPad)
-                    .accessibilityLabel("Amount")
+                    .accessibilityLabel("Amount in KWD")
                     .accessibilityHint("Enter an amount below your daily limit")
             }
         }

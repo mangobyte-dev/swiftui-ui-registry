@@ -44,12 +44,12 @@ Toggle("Accept terms", isOn: $accepted)
 ## Details
 
 - Kind: component
-- Version: 0.2.0
+- Version: 0.3.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
   - Uses a native Toggle as its accessibility representation.
   - Requires the caller's visible Toggle label and preserves the enabled state.
   - Provides a 44-point minimum row height and does not communicate selection by color alone.
-  - Inherits Dynamic Type and layout direction.
+  - Inherits Dynamic Type for the label, the glyph, and the box, which scales with the body text style, and inherits layout direction.
 - Source: [sources/components/RegistryCheckboxToggleStyle.swift](../../Registry/sources/components/RegistryCheckboxToggleStyle.swift), with the `Checkbox` Xcode preview

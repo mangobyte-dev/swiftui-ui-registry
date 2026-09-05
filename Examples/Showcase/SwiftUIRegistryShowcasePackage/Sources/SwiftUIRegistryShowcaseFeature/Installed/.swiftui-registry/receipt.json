@@ -121,10 +121,10 @@
     },
     "RegistryCheckboxToggleStyle.swift": {
       "base": "bases/84ef61e84e290159ebfd98ceb45adbe2c83371f33abc11c357b1d2e38db16213.base",
-      "installedDigest": "sha256:a5586341e1ae1d2ac2577c5f7e18a165824809c306aa2f4503e8ae10f2eb89a5",
+      "installedDigest": "sha256:66ac20e80830fc44880e1fbd8aa5fbbba6e1af71063ba9e55a88308382a68ec8",
       "item": "checkbox",
-      "sourceDigest": "sha256:a5586341e1ae1d2ac2577c5f7e18a165824809c306aa2f4503e8ae10f2eb89a5",
-      "version": "0.2.0"
+      "sourceDigest": "sha256:66ac20e80830fc44880e1fbd8aa5fbbba6e1af71063ba9e55a88308382a68ec8",
+      "version": "0.3.0"
     },
     "RegistryEmptyStateModifier.swift": {
       "base": "bases/0fa5e256e67ba2b8faf6ff3535e44ba0bfbecd0e754ab7a92bb7e0d562a574f6.base",
@@ -403,7 +403,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "command": {
       "packageDependencies": [

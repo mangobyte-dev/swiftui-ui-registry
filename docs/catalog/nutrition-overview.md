@@ -4,9 +4,9 @@
 
 Composes prepared energy and macronutrient values into an embeddable nutrition overview.
 
-![nutrition-overview preview](../images/nutrition-overview-phone.jpg)
+![nutrition-overview preview](../images/items/nutrition-overview-light.png)
 
-More previews: [tablet](../images/nutrition-overview-tablet.jpg)
+More previews: [dark](../images/items/nutrition-overview-dark.png)
 
 ## Install
 

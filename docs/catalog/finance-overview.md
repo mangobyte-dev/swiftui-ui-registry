@@ -4,9 +4,9 @@
 
 Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.
 
-![finance-overview preview](../images/finance-overview-phone.jpg)
+![finance-overview preview](../images/items/finance-overview-light.png)
 
-More previews: [tablet](../images/finance-overview-tablet.jpg), [accessibility](../images/finance-overview-accessibility.jpg)
+More previews: [dark](../images/items/finance-overview-dark.png)
 
 ## Install
 
@@ -59,9 +59,9 @@ FinanceOverview(
 ## Details
 
 - Kind: block
-- Version: 0.3.0
+- Version: 0.4.0
 - Platforms: iOS 26.0+
-- Installs in order: [metric-card](metric-card.md) 0.2.0, [transaction-row](transaction-row.md) 0.4.0, [finance-overview](finance-overview.md) 0.3.0
+- Installs in order: [metric-card](metric-card.md) 0.2.0, [transaction-row](transaction-row.md) 0.4.0, [empty](empty.md) 0.1.0, [finance-overview](finance-overview.md) 0.4.0
 - Accessibility contract:
   - Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state.
   - Uses system text styles and ViewThatFits for Dynamic Type.

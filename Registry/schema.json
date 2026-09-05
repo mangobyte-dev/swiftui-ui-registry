@@ -95,7 +95,7 @@
     "accessibility": { "type": "array", "items": { "type": "string" } },
     "preview": {
       "type": "object",
-      "required": ["source", "name"],
+      "required": [],
       "properties": {
         "source": { "type": "string" },
         "name": { "type": "string" },

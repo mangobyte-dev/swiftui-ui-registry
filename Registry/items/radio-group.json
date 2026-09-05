@@ -11,13 +11,28 @@
   "registryDependencies": [],
   "packageDependencies": [],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["radio-group", "picker", "selection", "options", "guidance"],
+  "tags": [
+    "radio-group",
+    "picker",
+    "selection",
+    "options",
+    "guidance"
+  ],
   "accessibility": [
     "Retains native Picker selection and option semantics.",
     "Keeps selection caller-owned through the Picker binding.",
     "Uses visible option labels and native selected-state indicators.",
     "Inherits Dynamic Type, enabled state, and layout direction."
-  ]
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/radio-group-light.png",
+      "docs/images/items/radio-group-dark.png"
+    ]
+  }
 }

@@ -1,0 +1,66 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "activity-feed",
+  "kind": "block",
+  "description": "Composes inline alert, avatar, item row, skeleton, empty state, and accordion treatments into an activity feed with caller-owned loading, items, notice, and selection.",
+  "usage": "ActivityFeed(\n    \"Activity\",\n    notice: ActivityNotice(\"Card delivery delayed\", message: Text(\"Arrives Thursday.\")),\n    onDismissNotice: { },\n    items: [\n        ActivityItem(\n            id: \"bakery\",\n            title: Text(\"Mishmash Bakery\"),\n            detail: Text(\"Card payment of KWD 8.750\"),\n            timestamp: Text(\"09:41\"),\n            initials: \"MB\",\n            senderName: Text(\"Mishmash Bakery\"),\n            isUnread: true\n        )\n    ],\n    earlierItems: [],\n    isLoading: false,\n    onSelect: { id in }\n)",
+  "files": [
+    {
+      "source": "sources/blocks/ActivityFeed.swift",
+      "target": "ActivityFeed.swift"
+    }
+  ],
+  "registryDependencies": [
+    "alert",
+    "avatar",
+    "item",
+    "skeleton",
+    "empty",
+    "accordion",
+    "separator",
+    "button"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "activity",
+    "feed",
+    "inbox",
+    "notifications",
+    "timeline",
+    "loading"
+  ],
+  "accessibility": [
+    "Feedback is never color alone: unread rows use a heavier title, a dot, and an Unread accessibility value; the notice variant pairs a symbol with its color.",
+    "Loading placeholders are one disabled accessibility element labeled Loading activity and cannot trigger selection.",
+    "Every avatar carries the caller-provided sender name as its label; the notice symbol and unread dot are decorative and hidden.",
+    "The empty state is a native ContentUnavailableView with caller-provided copy; the earlier section is a native DisclosureGroup announcing Expanded or Collapsed.",
+    "Rows are native Buttons whose combined label reads title, detail, timestamp, and unread state."
+  ],
+  "preview": {
+    "source": "sources/blocks/ActivityFeed.swift",
+    "name": "Activity Feed",
+    "screenshots": [
+      "docs/images/items/activity-feed-light.png",
+      "docs/images/items/activity-feed-dark.png"
+    ]
+  }
+}

@@ -19,13 +19,25 @@
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["card", "group-box", "surface", "container", "style"],
+  "tags": [
+    "card",
+    "group-box",
+    "surface",
+    "container",
+    "style"
+  ],
   "accessibility": [
     "Preserves the native accessibility elements and reading order supplied by the GroupBox label and content.",
     "Uses system text styles and allows content to grow vertically with Dynamic Type.",
@@ -34,6 +46,10 @@
   ],
   "preview": {
     "source": "sources/components/RegistryCardStyle.swift",
-    "name": "Card"
+    "name": "Card",
+    "screenshots": [
+      "docs/images/items/card-light.png",
+      "docs/images/items/card-dark.png"
+    ]
   }
 }

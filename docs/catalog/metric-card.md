@@ -4,6 +4,10 @@
 
 Displays one prepared product metric using native text formatting and semantic styling.
 
+![metric-card preview](../images/items/metric-card-light.png)
+
+More previews: [dark](../images/items/metric-card-dark.png)
+
 ## Install
 
 ```sh

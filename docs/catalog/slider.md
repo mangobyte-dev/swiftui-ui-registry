@@ -4,6 +4,10 @@
 
 Native guidance for a Slider with semantic tint, control sizing, and caller-owned value and labels.
 
+![slider preview](../images/items/slider-light.png)
+
+More previews: [dark](../images/items/slider-dark.png)
+
 Nothing to install. Copy the snippet below
 
 ## Usage

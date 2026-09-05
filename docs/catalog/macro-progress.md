@@ -4,6 +4,10 @@
 
 Displays prepared nutrition progress with a native progress view and adaptive value layout.
 
+![macro-progress preview](../images/items/macro-progress-light.png)
+
+More previews: [dark](../images/items/macro-progress-dark.png)
+
 ## Install
 
 ```sh

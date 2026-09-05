@@ -1,12 +1,17 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.1",
+  "version": "0.2.0",
   "name": "checkbox",
   "kind": "component",
   "description": "Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.",
   "usage": "@State private var accepted = false\n\nToggle(\"Accept terms\", isOn: $accepted)\n    .toggleStyle(.registryCheckbox)",
-  "files": [{ "source": "sources/components/RegistryCheckboxToggleStyle.swift", "target": "RegistryCheckboxToggleStyle.swift" }],
+  "files": [
+    {
+      "source": "sources/components/RegistryCheckboxToggleStyle.swift",
+      "target": "RegistryCheckboxToggleStyle.swift"
+    }
+  ],
   "registryDependencies": [],
   "packageDependencies": [
     {
@@ -14,16 +19,37 @@
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
-  "tags": ["checkbox", "toggle", "selection", "form", "style"],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "checkbox",
+    "toggle",
+    "selection",
+    "form",
+    "style"
+  ],
   "accessibility": [
     "Uses a native Toggle as its accessibility representation.",
     "Requires the caller's visible Toggle label and preserves the enabled state.",
     "Provides a 44-point minimum row height and does not communicate selection by color alone.",
     "Inherits Dynamic Type and layout direction."
   ],
-  "preview": { "source": "sources/components/RegistryCheckboxToggleStyle.swift", "name": "Checkbox" }
+  "preview": {
+    "source": "sources/components/RegistryCheckboxToggleStyle.swift",
+    "name": "Checkbox",
+    "screenshots": [
+      "docs/images/items/checkbox-light.png",
+      "docs/images/items/checkbox-dark.png"
+    ]
+  }
 }

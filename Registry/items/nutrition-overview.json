@@ -12,20 +12,35 @@
       "target": "NutritionOverview.swift"
     }
   ],
-  "registryDependencies": ["metric-card", "macro-progress"],
+  "registryDependencies": [
+    "metric-card",
+    "macro-progress"
+  ],
   "packageDependencies": [
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["nutrition", "health", "dashboard", "overview", "macronutrients"],
+  "tags": [
+    "nutrition",
+    "health",
+    "dashboard",
+    "overview",
+    "macronutrients"
+  ],
   "accessibility": [
     "Uses native Button and ProgressView semantics.",
     "Uses system text styles and adaptive macro rows for Dynamic Type.",
@@ -35,8 +50,8 @@
     "source": "sources/blocks/NutritionOverview.swift",
     "name": "Nutrition Overview",
     "screenshots": [
-      "docs/images/nutrition-overview-phone.jpg",
-      "docs/images/nutrition-overview-tablet.jpg"
+      "docs/images/items/nutrition-overview-light.png",
+      "docs/images/items/nutrition-overview-dark.png"
     ]
   }
 }

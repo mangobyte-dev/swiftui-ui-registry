@@ -4,6 +4,10 @@
 
 Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.
 
+![button-group preview](../images/items/button-group-light.png)
+
+More previews: [dark](../images/items/button-group-dark.png)
+
 ## Install
 
 ```sh
@@ -45,7 +49,7 @@ ControlGroup {
 - Kind: component
 - Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.2.0, [button-group](button-group.md) 0.2.0
+- Installs in order: [button](button.md) 0.4.0, [button-group](button-group.md) 0.2.0
 - Accessibility contract:
   - Retains native Button controls and the ControlGroup container supplied by the caller.
   - Keeps each button's visible or derived accessibility label and role.

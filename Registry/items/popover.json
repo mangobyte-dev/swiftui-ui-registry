@@ -1,0 +1,36 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "popover",
+  "kind": "recipe",
+  "description": "Native guidance for anchored, transient content with .popover, which adapts to a sheet on compact widths.",
+  "usage": "@State private var isShowingHelp = false\n\nButton(\"Why is this needed?\") { isShowingHelp = true }\n    .buttonStyle(.registryLink)\n    .popover(isPresented: $isShowingHelp) {\n        Text(\"We use your date of birth to verify your identity.\")\n            .padding()\n            .presentationCompactAdaptation(.popover)\n    }",
+  "docs": "Anchor short explanatory content with `.popover`. On iPhone it adapts to a sheet unless `.presentationCompactAdaptation(.popover)` opts into the popover form. The system positions the arrow, dims nothing, and dismisses on outside tap; the registry adds no wrapper.",
+  "files": [],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "popover",
+    "hover-card",
+    "tooltip",
+    "anchored",
+    "guidance"
+  ],
+  "accessibility": [
+    "Popover content is reachable by VoiceOver and dismissed with the escape gesture.",
+    "Never place information only in a popover; keep the trigger label meaningful on its own."
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/popover-light.png",
+      "docs/images/items/popover-dark.png"
+    ]
+  }
+}

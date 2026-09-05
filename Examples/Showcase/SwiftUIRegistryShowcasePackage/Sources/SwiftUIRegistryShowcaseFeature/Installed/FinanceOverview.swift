@@ -117,9 +117,7 @@ private struct FinanceOverviewContent<ID: Hashable>: View {
                         systemImage: "clock.arrow.circlepath",
                         description: emptyDescription
                     )
-                    .frame(maxWidth: .infinity)
-                    .padding(theme.metrics.standardSpacing)
-                    .registrySurface()
+                    .registryEmptyState()
                 } else {
                     VStack(spacing: 0) {
                         ForEach(transactions) { transaction in

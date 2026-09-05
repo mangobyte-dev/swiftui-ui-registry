@@ -23,11 +23,13 @@ private struct RegistryBadgeModifier: ViewModifier {
     let variant: RegistryBadgeVariant
 
     func body(content: Content) -> some View {
-        let shape = RoundedRectangle(cornerRadius: 6, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: theme.metrics.compactRadius, style: .continuous)
 
         content
             .font(.caption.weight(.medium))
-            .multilineTextAlignment(.center)
+            // A badge is one line at its own width; it never wraps or breaks.
+            .lineLimit(1)
+            .fixedSize()
             .foregroundStyle(foregroundStyle)
             .padding(.horizontal, theme.metrics.compactSpacing)
             .padding(.vertical, theme.metrics.compactSpacing / 2)
@@ -38,7 +40,6 @@ private struct RegistryBadgeModifier: ViewModifier {
                     lineWidth: variant == .outline ? theme.metrics.borderWidth : 0
                 )
             }
-            .fixedSize(horizontal: false, vertical: true)
     }
 
     private var foregroundStyle: AnyShapeStyle {

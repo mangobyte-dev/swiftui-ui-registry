@@ -11,13 +11,28 @@
   "registryDependencies": [],
   "packageDependencies": [],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["switch", "toggle", "setting", "boolean", "guidance"],
+  "tags": [
+    "switch",
+    "toggle",
+    "setting",
+    "boolean",
+    "guidance"
+  ],
   "accessibility": [
     "Retains native Toggle switch semantics and state announcements.",
     "Requires a caller-supplied visible label unless the surrounding context supplies an accessibility label.",
     "Inherits tint, enabled state, Dynamic Type, and layout direction.",
     "Does not replace platform interaction or animation behavior."
-  ]
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/switch-light.png",
+      "docs/images/items/switch-dark.png"
+    ]
+  }
 }

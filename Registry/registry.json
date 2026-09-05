@@ -30,6 +30,24 @@
     "items/finance-overview.json",
     "items/nutrition-overview.json",
     "items/auth-form.json",
-    "items/settings-section.json"
+    "items/settings-section.json",
+    "items/alert.json",
+    "items/avatar.json",
+    "items/skeleton.json",
+    "items/empty.json",
+    "items/accordion.json",
+    "items/item.json",
+    "items/activity-feed.json",
+    "items/alert-dialog.json",
+    "items/dialog.json",
+    "items/drawer.json",
+    "items/popover.json",
+    "items/context-menu.json",
+    "items/dropdown-menu.json",
+    "items/tooltip.json",
+    "items/calendar.json",
+    "items/collapsible.json",
+    "items/scroll-area.json",
+    "items/sidebar.json"
   ]
 }

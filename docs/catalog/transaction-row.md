@@ -4,6 +4,10 @@
 
 Displays prepared transaction content while leaving selection to a native Button at the call site.
 
+![transaction-row preview](../images/items/transaction-row-light.png)
+
+More previews: [dark](../images/items/transaction-row-dark.png)
+
 ## Install
 
 ```sh

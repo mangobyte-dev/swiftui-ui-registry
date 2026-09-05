@@ -26,7 +26,10 @@ This is a hypothesis exercised by finance and nutrition, not a claim of universa
 - `Registry/sources/blocks/`: canonical copied block source
 - `Scripts/install.py`: dependency resolution, receipts, installation, and conflict-aware updates
 - `Scripts/search.py`: deterministic developer and agent discovery over registry metadata
-- `Examples/Showcase/`: a real iOS consumer and visual harness
+- `Examples/Showcase/`: a real iOS consumer, a browsable catalog with a demo per item, the theme tuning panel, and the capture route for item screenshots
+- `Scripts/generate_catalog.py`, `Scripts/generate_showcase_manifest.py`, `Scripts/generate_site_data.py`: the derived catalog, Showcase manifest, and website data, all from metadata
+- `Website/`: the registry website, a Next.js static export built with shadcn/ui that reads only the generated `content/registry.json`; `npm run deploy` publishes it to Cloudflare Workers as static assets (`Website/wrangler.jsonc`), and `.github/workflows/pages.yml` can deploy the same export to GitHub Pages
+- `Scripts/capture_previews.py`: per-item light and dark captures from the Showcase on the pinned simulator
 - `Tests/RegistryTests/`: registry and overwrite behavior
 
 ## View boundaries
@@ -41,9 +44,13 @@ The composed block does not own a `ScrollView`, navigation container, or maximum
 
 ## Foundations
 
-`RegistryTheme` provides semantic surface, border, positive, and negative colors, disabled-state opacity, and semantic metrics. It is injected through SwiftUI `EnvironmentValues` with `@Entry`. The app's native tint remains the source for interactive accent color
+`RegistryTheme` is the set-up-once contract: an optional `accent`, the `onAccent` label color drawn on accent fills, `surface`, `border`, `positive`, `negative`, `disabledOpacity`, and `RegistryMetrics` (three spacings, control padding, two border widths, and the compact, control, and card radii). It is injected through SwiftUI `EnvironmentValues` with `@Entry`. The `registryTheme(_:)` modifier sets the environment and, when the theme declares an accent, applies it as the subtree tint, so Apple controls and registry items follow the same accent from one call at the scene root. A theme with `accent == nil` inherits the app tint already in place; the default never replaces a consumer's tint
 
-This is deliberately smaller than a full token system. Repeated colors and metrics use semantic tokens rather than hardcoded values, but a token enters foundations only after two real registry items need the exact same meaning. A style or modifier remains source-owned until two items use the exact same treatment
+Six presets (`system`, `graphite`, `indigo`, `rose`, `emerald`, `amber`) are plain `static let` values and starting points, not a theme engine. `graphite` is the ink-on-paper look: primary-colored accent with a background-colored label. `amber` is the light accent whose dark label proves `onAccent` earns its place
+
+This is deliberately smaller than a full token system. Repeated colors and metrics use semantic tokens rather than hardcoded values, but a token enters foundations only after two real registry items need the exact same meaning (`Tests/RegistryTests/test_installer.py` names every token's two consumers). A style or modifier remains source-owned until two items use the exact same treatment
+
+The Showcase's Tune tab is the theme creator: every token as a live control beside a preview of the registry, presets one tap away, and Copy Swift for the exact `RegistryTheme` initializer to paste at a root. The panel's model lives in the Showcase, not in foundations, so the package stays a value type with no persistence
 
 ## Compatibility policy
 
@@ -64,6 +71,10 @@ Copied source remains consumer-owned. `--update` uses the receipt's base content
 A clean three-way merge becomes owned source and advances the recorded base to the incoming registry source. A conflict leaves all planned owned files unchanged and writes a reviewable `.merge` artifact. Update decisions are preflighted for the full dependency closure before source is written, so one conflicting file cannot silently produce a partial update
 
 This policy proves conflict-aware evolution without making the registry authoritative over local edits
+
+## Presentation policy
+
+Three derived surfaces present the same metadata, and none is hand-edited: the markdown catalog under `docs/catalog/`, the website's data file `Website/content/registry.json` (every item with preview paths, install order, usage, source text, requirements, and the accessibility contract, plus the presets), and the Showcase manifest that drives the app's lists and usage snippets. Each has a byte-exact freshness test. The website itself is a Next.js app built with shadcn/ui components (sidebar, tabs, toggle group, command search, cards, tables) that renders that JSON into one page per item: preview first, one install command, the usage snippet, the source, and the details. It builds to a static export deployed to Cloudflare Workers, so no generated HTML is committed. Item images are captured from the Showcase's `-item` launch, cropped to the demo's reported frame, so a website preview is the same code a consumer installs, rendered on the same simulator the visual contract uses
 
 ## Discovery policy
 

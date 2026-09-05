@@ -1,80 +1,69 @@
 # SwiftUIRegistry
 
-A native-first registry of SwiftUI product UI that you copy into your app and own, in the spirit of shadcn/ui. The unit of distribution is understandable Swift source plus machine-readable metadata, not a framework: search a local catalog, inspect the install plan, copy the code, customize it, and audit updates later through a receipt-backed three-way merge. Apple controls stay visible at the call site
+A native-first registry of SwiftUI product UI that you copy into your app and own, in the spirit of shadcn/ui. The unit of distribution is understandable Swift source plus machine-readable metadata, not a framework: set the theme once, search a local catalog, inspect the install plan, copy the code, customize it, and audit updates later through a receipt-backed three-way merge. Apple controls stay visible at the call site
+
+Browse it three ways:
+
+- The website: `Website/`, a Next.js static site built with shadcn/ui. Every item has a page that leads with its rendered preview in light and dark, one install command, the usage snippet, and the full source. Live at https://swiftui-registry.mangobytekw.workers.dev (Cloudflare Workers static assets, `cd Website && npm run deploy`); run it locally with `cd Website && npm ci && npm run dev`
+- The Showcase app: `Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace`. Components, Blocks, and Recipes tabs with a live demo per item, and a Tune tab that turns every foundation token into a slider beside a preview and exports the Swift to paste
+- The markdown catalog: [docs/catalog/index.md](docs/catalog/index.md)
 
 ## Taxonomy
 
 Three item kinds, enforced by a single validator:
 
-- `component`: an installable style or focused modifier that adds a meaningful reusable treatment to a native control, such as `button`, `input`, or `card`
-- `block`: an installable, architecture-neutral composition of components, such as `finance-overview`
-- `recipe`: native guidance where a one-line Apple API is the entire treatment, such as `switch` or `tabs`; nothing installs
+- `component`: an installable style, focused modifier, or small composition that adds a meaningful reusable treatment to a native control, such as `button`, `input`, `card`, or `avatar`
+- `block`: an installable, architecture-neutral composition of components, such as `auth-form` or `activity-feed`
+- `recipe`: native guidance where a one-line Apple API is the entire treatment, such as `switch`, `sheet`, or `context-menu`; nothing installs
 
 The value gate: an installable item must add a meaningful reusable treatment or composition beyond a native API. A wrapper that merely renames an Apple control ships as a recipe instead (`docs/registry-spec.md`)
 
-## Use one item in minutes
+## Set up once, use it everywhere
 
-Clone this repository first; every `python3 Scripts/...` command below runs from the root of that clone, because there is no hosted registry yet
+1. Add the `SwiftUIRegistryFoundations` package product (SwiftPM snippet below, or File > Add Package Dependency in Xcode)
+2. Apply a theme at your scene root. Every registry item below inherits it, and native controls follow the accent through the tint:
 
-Browse the generated catalog at [docs/catalog/index.md](docs/catalog/index.md). A component or block page leads with the preview, one install command, and a call-site snippet; a recipe page leads with the snippet because nothing installs. Everything else recedes into Details
-
-1. Find an item:
-
-   ```sh
-   python3 Scripts/search.py finance --kind block --format names
+   ```swift
+   ContentView()
+       .registryTheme(.graphite)
    ```
 
-2. Inspect the plan; this is read-only and writes nothing:
+   Presets: `.system` (inherits your app tint), `.graphite`, `.indigo`, `.rose`, `.emerald`, `.amber`. To make your own, open the Showcase's Tune tab, move the sliders, and tap Copy Swift; it exports the exact `RegistryTheme(...)` initializer
+
+3. Install items from a clone of this repository; every `python3 Scripts/...` command runs from the root of that clone:
 
    ```sh
-   python3 Scripts/install.py finance-overview \
-     --destination path/to/YourTarget/Components \
-     --plan
+   python3 Scripts/search.py activity --kind block --format names
+   python3 Scripts/install.py activity-feed --destination path/to/YourTarget/Components --plan
+   python3 Scripts/install.py activity-feed --destination path/to/YourTarget/Components
    ```
 
-3. Install the item and its dependency closure:
+   The installer resolves the dependency closure, copies exact source, writes `.swiftui-registry/receipt.json`, and prints the package requirement. It never edits project files; make the destination folder a member of your build target
 
-   ```sh
-   python3 Scripts/install.py finance-overview \
-     --destination path/to/YourTarget/Components
-   ```
-
-4. Add the printed package requirement (the `SwiftUIRegistryFoundations` product with its SwiftPM rule) to your project and make the destination folder a member of your build target; the installer never edits project files
-
-5. Compose through the item's public API; the exact snippet is on its [catalog page](docs/catalog/finance-overview.md) and in the Compose section below
+4. Compose through the item's public API; the exact snippet is on its catalog page and in the Showcase
 
 ## Status
 
 Version 0, an honest prototype:
 
-- 28 items: 17 installable components, 4 blocks, and 7 recipes, generated into `docs/catalog/`
-- `SwiftUIRegistryFoundations` is a small pre-1.0 package for shared semantic surfaces and spacing, evolving under the compatibility policy in `docs/registry-spec.md`
-- Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, and a usage snippet, all checked by one validator
+- 46 items: 23 installable components, 5 blocks, and 18 recipes, generated into `docs/catalog/` and the website's data file
+- `SwiftUIRegistryFoundations` is a small pre-1.0 package: accent, on-accent, surface, border, positive, negative, disabled opacity, and metrics, with six presets and one root modifier
+- Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, captured screenshots, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates
-- A universal iOS showcase compiles and tests every installable item at the iOS 26 floor, with pinned visual contract checks for all four blocks
-- Not yet: hosted registry, MCP server, Xcode project mutation, platforms beyond iOS, or external adoption evidence; the first independent clean-room trial is the open gate before Stage 2 (`docs/component-roadmap.md`)
+- The Showcase compiles every installable item and every recipe snippet at the iOS 26 floor, with pinned visual contract checks for all five blocks and a demo walk over all 46 items
+- Not yet: hosted registry, MCP server, Xcode project mutation, platforms beyond iOS, or a published version tag. Stage status and open deferrals live in one place, `docs/component-roadmap.md`, Current state
 
 ## Showcase screenshots
 
-### Stage 1 component catalog
+| Activity feed (Stage 3) | Authentication (Stage 2) | Finance (Stage 1) |
+| --- | --- | --- |
+| ![Activity feed](docs/images/items/activity-feed-light.png) | ![Authentication form](docs/images/items/auth-form-light.png) | ![Finance overview](docs/images/items/finance-overview-light.png) |
 
-![Stage 1 native SwiftUI component catalog on iPhone](docs/images/stage-one-components-phone.jpg)
+| Button | Alert | Item row |
+| --- | --- | --- |
+| ![Button variants](docs/images/items/button-light.png) | ![Inline alert](docs/images/items/alert-light.png) | ![Item rows](docs/images/items/item-light.png) |
 
-Launch this catalog with the `-stage-one` argument. The default launch remains the Finance and Nutrition block showcase
-
-### Product blocks
-
-| Finance on iPhone | Nutrition on iPhone |
-| --- | --- |
-| ![Finance overview on iPhone](docs/images/finance-overview-phone.jpg) | ![Nutrition overview on iPhone](docs/images/nutrition-overview-phone.jpg) |
-
-| Finance on iPad | Nutrition on iPad |
-| --- | --- |
-| ![Finance overview in dark appearance on iPad](docs/images/finance-overview-tablet.jpg) | ![Nutrition overview in dark appearance on iPad](docs/images/nutrition-overview-tablet.jpg) |
-
-### Accessibility Dynamic Type
-
-![Finance overview at an accessibility Dynamic Type size](docs/images/finance-overview-accessibility.jpg)
+Dark captures sit beside every light one under `docs/images/items/`, and the website switches between them
 
 ## Discover
 
@@ -110,16 +99,9 @@ python3 Scripts/install.py finance-overview \
   --destination path/to/YourTarget/Components
 ```
 
-The installer resolves `metric-card` and `transaction-row` before copying `finance-overview`. It writes `.swiftui-registry/receipt.json` and non-Swift base snapshots inside the destination. A repeated install is accepted only when the existing source still matches its receipt. `--force` is required to replace modified owned source
+The installer resolves `metric-card`, `transaction-row`, and `empty` before copying `finance-overview`. It writes `.swiftui-registry/receipt.json` and non-Swift base snapshots inside the destination. A repeated install is accepted only when the existing source still matches its receipt. `--force` is required to replace modified owned source
 
 Verify the install by building the consuming target for an iOS Simulator destination, for example `xcodebuild -scheme YourApp -destination 'generic/platform=iOS Simulator' build`
-
-Install another block into the same destination without duplicating shared dependencies:
-
-```sh
-python3 Scripts/install.py nutrition-overview \
-  --destination path/to/YourTarget/Components
-```
 
 ## Update owned source
 
@@ -148,7 +130,7 @@ python3 Scripts/install.py finance-overview \
   --plan
 ```
 
-`--plan` resolves the item like a real install and prints the ordered dependency closure with versions and kinds, every target write with its status (`new`, `up-to-date`, `modified-would-require-force`, `would-merge`), the actionable package requirements, preflight collisions, and the manual integration steps (add the package dependency, ensure target membership). For a recipe it prints the native guidance and states nothing installs
+`--plan` resolves the item like a real install and prints the ordered dependency closure with versions and kinds, every target write with its status (`new`, `up-to-date`, `modified-would-require-force`, `would-merge`), the actionable package requirements, preflight collisions, and the manual integration steps. For a recipe it prints the native guidance and states nothing installs
 
 ```sh
 python3 Scripts/install.py finance-overview \
@@ -161,14 +143,13 @@ python3 Scripts/install.py finance-overview \
 ## Compose
 
 ```swift
-FinanceOverview(
-    "Overview",
-    balanceTitle: "Available balance",
-    balance: Text(balance, format: .currency(code: currencyCode)),
-    changeTitle: "Monthly change",
-    change: Text(change, format: .percent),
-    sectionTitle: "Recent activity",
-    transactions: rows,
+ActivityFeed(
+    "Activity",
+    notice: ActivityNotice("Card delivery delayed", message: Text("Arrives Thursday.")),
+    onDismissNotice: { },
+    items: items,
+    earlierItems: earlier,
+    isLoading: isLoading,
     onSelect: onSelect
 )
 ```
@@ -177,42 +158,42 @@ The block owns presentation composition. The caller owns value preparation, loca
 
 ## Sample app
 
-Open the universal iOS showcase to inspect the installed blocks on iPhone or iPad:
-
 ```sh
 open Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace
 ```
 
-Select the `SwiftUIRegistryShowcase` scheme and run. The app exposes finance and nutrition through native tabs and consumes the exact source installed under `Examples/Showcase/SwiftUIRegistryShowcasePackage/Sources/SwiftUIRegistryShowcaseFeature/Installed/`
-
-The sample also contains launch-driven empty, accessibility-size, and right-to-left states exercised by `SwiftUIRegistryShowcaseUITests.swift`
+Select the `SwiftUIRegistryShowcase` scheme and run. The Components, Blocks, and Recipes tabs list every item from the generated manifest and open a live demo, the install command, and the usage snippet; the Tune tab is the theme creator. The app consumes the exact source installed under `Examples/Showcase/SwiftUIRegistryShowcasePackage/Sources/SwiftUIRegistryShowcaseFeature/Installed/`
 
 ## Verify
 
 ```sh
-xcodebuildmcp swift-package test --package-path .
+python3 Scripts/validate.py
+python3 Scripts/generate_catalog.py
+python3 Scripts/generate_showcase_manifest.py
+python3 Scripts/generate_site_data.py
 python3 -m unittest discover Tests/RegistryTests
+xcodebuildmcp swift-package test --package-path .
 xcodebuildmcp simulator test \
   --workspace-path Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace \
   --scheme SwiftUIRegistryShowcase \
   --simulator-id YOUR_IOS_27_IPHONE_SIMULATOR_ID
 ```
 
-The simulator suite verifies finance rendering, nutrition navigation, the empty state, accessibility-size typography, right-to-left mirroring, combined transaction semantics, and approved visual references. Baseline policy is documented in `docs/visual-testing.md`
+The simulator suite walks every item's demo, verifies the blocks' behavior (focus order, disabled states, validation copy, bindings, placeholder states, accordion, notice dismissal), the empty state, accessibility-size typography, right-to-left mirroring, the tuning export, and approved visual references. Baseline policy is documented in `docs/visual-testing.md`. Item screenshots are captured with `python3 Scripts/capture_previews.py`
 
 ## Requirements
 
 - Swift tools 6.2 or newer
 - iOS 26 or newer
 - Xcode capable of building Swift 6.2 packages
-- Python 3.8 or newer for every `Scripts/` command; the newest interpreter feature the scripts use is `Path.unlink(missing_ok=)`, added in Python 3.8
+- Python 3.8 or newer for every `Scripts/` command
 - Git when an update needs a three-way merge
 
 The repository is currently verified with Xcode 27.0 and Swift 6.4. The registry targets iOS 26 and above: items inherit Liquid Glass natively, carry no pre-26 compatibility styling, and intentionally avoid 27-only APIs so the floor remains iOS 26
 
 ## Read next
 
-- [Item catalog](docs/catalog/index.md)
+- [Website source](Website/) and the [item catalog](docs/catalog/index.md)
 - [Philosophy](docs/philosophy.md)
 - [Architecture](docs/architecture.md)
 - [Component roadmap](docs/component-roadmap.md)

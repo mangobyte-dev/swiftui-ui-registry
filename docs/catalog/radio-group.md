@@ -4,6 +4,10 @@
 
 Native guidance for presenting a bound Picker as an inline mutually exclusive option group.
 
+![radio-group preview](../images/items/radio-group-light.png)
+
+More previews: [dark](../images/items/radio-group-dark.png)
+
 Nothing to install. Copy the snippet below
 
 ## Usage

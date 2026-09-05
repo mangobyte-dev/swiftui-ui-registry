@@ -12,20 +12,36 @@
       "target": "SettingsSection.swift"
     }
   ],
-  "registryDependencies": ["select", "separator", "button"],
+  "registryDependencies": [
+    "select",
+    "separator",
+    "button"
+  ],
   "packageDependencies": [
     {
       "package": "SwiftUIRegistry",
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["settings", "preferences", "section", "toggle", "form"],
+  "tags": [
+    "settings",
+    "preferences",
+    "section",
+    "toggle",
+    "form"
+  ],
   "accessibility": [
     "The section title renders with the header accessibility trait so the VoiceOver rotor can jump between settings sections.",
     "Rows keep native control semantics: the block never hides or renames a control, and every control's accessibility name comes from its visible label. Callers who hide a label (.labelsHidden()) must supply their own accessibility label.",
@@ -36,6 +52,10 @@
   ],
   "preview": {
     "source": "sources/blocks/SettingsSection.swift",
-    "name": "Settings Section"
+    "name": "Settings Section",
+    "screenshots": [
+      "docs/images/items/settings-section-light.png",
+      "docs/images/items/settings-section-dark.png"
+    ]
   }
 }

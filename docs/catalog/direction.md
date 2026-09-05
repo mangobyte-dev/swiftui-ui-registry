@@ -4,6 +4,10 @@
 
 Native guidance for layoutDirection behavior and semantic leading/trailing layout without a replacement API.
 
+![direction preview](../images/items/direction-light.png)
+
+More previews: [dark](../images/items/direction-dark.png)
+
 Nothing to install. Copy the snippet below
 
 ## Usage

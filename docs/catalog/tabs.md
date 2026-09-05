@@ -4,6 +4,10 @@
 
 Native guidance for a local-selection Picker with the platform segmented style while leaving app navigation to TabView.
 
+![tabs preview](../images/items/tabs-light.png)
+
+More previews: [dark](../images/items/tabs-dark.png)
+
 Nothing to install. Copy the snippet below
 
 ## Usage

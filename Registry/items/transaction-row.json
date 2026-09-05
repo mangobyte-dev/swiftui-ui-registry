@@ -19,13 +19,24 @@
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["transaction", "row", "finance", "activity"],
+  "tags": [
+    "transaction",
+    "row",
+    "finance",
+    "activity"
+  ],
   "accessibility": [
     "Uses ViewThatFits to preserve content at large Dynamic Type sizes.",
     "Combines row text into one VoiceOver element.",
@@ -33,6 +44,10 @@
   ],
   "preview": {
     "source": "sources/components/TransactionRow.swift",
-    "name": "Transaction Row"
+    "name": "Transaction Row",
+    "screenshots": [
+      "docs/images/items/transaction-row-light.png",
+      "docs/images/items/transaction-row-dark.png"
+    ]
   }
 }

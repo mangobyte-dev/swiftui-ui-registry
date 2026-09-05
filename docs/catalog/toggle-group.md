@@ -4,6 +4,10 @@
 
 Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.
 
+![toggle-group preview](../images/items/toggle-group-light.png)
+
+More previews: [dark](../images/items/toggle-group-dark.png)
+
 ## Install
 
 ```sh
@@ -48,7 +52,7 @@ ControlGroup {
 - Kind: component
 - Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.2.0, [toggle](toggle.md) 0.2.0, [toggle-group](toggle-group.md) 0.2.0
+- Installs in order: [button](button.md) 0.4.0, [toggle](toggle.md) 0.2.0, [toggle-group](toggle-group.md) 0.2.0
 - Accessibility contract:
   - Retains each native Toggle's independent state and activation behavior.
   - Keeps all selection bindings caller-owned.

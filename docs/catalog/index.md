@@ -2,7 +2,7 @@
 
 # SwiftUIRegistry catalog
 
-28 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
+46 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
 
 ```sh
 python3 Scripts/install.py <name> --destination Sources/YourFeature/Components
@@ -10,45 +10,63 @@ python3 Scripts/install.py <name> --destination Sources/YourFeature/Components
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-## Blocks (4)
+## Blocks (5)
 
 Compositions of components. Installing one installs its whole closure
 
+- [activity-feed](activity-feed.md): Composes inline alert, avatar, item row, skeleton, empty state, and accordion treatments into an activity feed with caller-owned loading, items, notice, and selection.
 - [auth-form](auth-form.md): Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.
 - [finance-overview](finance-overview.md): Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.
 - [nutrition-overview](nutrition-overview.md): Composes prepared energy and macronutrient values into an embeddable nutrition overview.
 - [settings-section](settings-section.md): Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
 
-## Components (17)
+## Components (23)
 
 One installable style, modifier, or view each
 
+- [accordion](accordion.md): Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, for stacked expandable sections.
+- [alert](alert.md): Composes an inline, non-modal status message with informational, positive, and destructive variants and optional caller-owned actions.
+- [avatar](avatar.md): Displays a circular identity image with initials or symbol fallback, sized by the environment control size, with a required accessibility label.
 - [badge](badge.md): Applies accent, positive, negative, secondary, and outline badge treatments to native Text and Label content.
 - [button](button.md): Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.
 - [button-group](button-group.md): Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.
 - [card](card.md): Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.
 - [checkbox](checkbox.md): Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.
+- [empty](empty.md): Places a native ContentUnavailableView on the registry content surface so an empty section sits where its rows would.
 - [input](input.md): Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.
+- [item](item.md): Composes a generic content row with leading media, a title and optional description, and a trailing accessory while leaving selection to the call site.
 - [label](label.md): Controls native Label icon placement with semantic spacing and decorative icon accessibility behavior.
 - [macro-progress](macro-progress.md): Displays prepared nutrition progress with a native progress view and adaptive value layout.
 - [metric-card](metric-card.md): Displays one prepared product metric using native text formatting and semantic styling.
 - [progress](progress.md): Styles native determinate and indeterminate ProgressView controls with linear accent, positive, and negative semantic tones.
 - [select](select.md): Adds semantic field chrome to a native menu-style Picker without replacing its presentation or selection behavior.
 - [separator](separator.md): Applies semantic color, orientation, and caller-provided insets to a native Divider.
+- [skeleton](skeleton.md): Turns any view into a loading placeholder with native redaction, disabled interaction, one loading accessibility element, and a pulse that stops under Reduce Motion.
 - [spinner](spinner.md): Styles a native indeterminate ProgressView with a compact circular indicator and optional label.
 - [textarea](textarea.md): Applies input-matching focus, disabled, and invalid chrome to a native TextEditor.
 - [toggle](toggle.md): Applies registry button treatments to native Toggle state for compact selectable controls.
 - [toggle-group](toggle-group.md): Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.
 - [transaction-row](transaction-row.md): Displays prepared transaction content while leaving selection to a native Button at the call site.
 
-## Recipes (7)
+## Recipes (18)
 
 Native guidance. Nothing installs; copy the snippet
 
+- [alert-dialog](alert-dialog.md): Native guidance for a modal decision with .alert, using button roles and prepared copy while keeping the system presentation.
 - [aspect-ratio](aspect-ratio.md): Native guidance for SwiftUI's aspectRatio modifier without introducing a replacement API.
+- [calendar](calendar.md): Native guidance for date selection with DatePicker in graphical style and MultiDatePicker for several dates.
+- [collapsible](collapsible.md): Native guidance for a single expandable region with the default DisclosureGroup, distinct from the styled accordion.
+- [context-menu](context-menu.md): Native guidance for long-press actions with .contextMenu using labeled, role-tagged buttons.
+- [dialog](dialog.md): Native guidance for modal content with .sheet, leaving detents, drag dismissal, and focus to the system.
 - [direction](direction.md): Native guidance for layoutDirection behavior and semantic leading/trailing layout without a replacement API.
+- [drawer](drawer.md): Native guidance for a bottom drawer using .sheet with presentation detents and a visible drag indicator.
+- [dropdown-menu](dropdown-menu.md): Native guidance for a Menu trigger with labeled actions, sections, and a picker inside the menu.
 - [native-select](native-select.md): Native guidance for the minimal menu treatment of a bound SwiftUI Picker.
+- [popover](popover.md): Native guidance for anchored, transient content with .popover, which adapts to a sheet on compact widths.
 - [radio-group](radio-group.md): Native guidance for presenting a bound Picker as an inline mutually exclusive option group.
+- [scroll-area](scroll-area.md): Native guidance for scrollable content with content margins, indicator visibility, and clipping left to ScrollView.
+- [sidebar](sidebar.md): Native guidance for a sidebar layout with NavigationSplitView and a selection-bound List on iPad.
 - [slider](slider.md): Native guidance for a Slider with semantic tint, control sizing, and caller-owned value and labels.
 - [switch](switch.md): Native guidance for applying the platform switch treatment to a Toggle while inheriting app tint and environment behavior.
 - [tabs](tabs.md): Native guidance for a local-selection Picker with the platform segmented style while leaving app navigation to TabView.
+- [tooltip](tooltip.md): Native guidance for supplementary help without hover: an accessibility hint plus an optional informational popover.

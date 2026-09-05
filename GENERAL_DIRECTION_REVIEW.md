@@ -1,5 +1,7 @@
 # SwiftUI Registry direction review
 
+> Closed record (2026-09-01): the verdict was adopted; the Stage 1.5 corrections and both Stage 2 blocks prescribed below were delivered. Current stage status lives in `docs/component-roadmap.md`, Current state
+
 Review date: 2026-08-30
 
 ## Executive verdict

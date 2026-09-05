@@ -1,3 +1,4 @@
+import SwiftUI
 import SwiftUIRegistryFoundations
 import Testing
 
@@ -11,6 +12,7 @@ struct RegistryThemeTests {
         #expect(metrics.controlHorizontalPadding == 12)
         #expect(metrics.borderWidth == 1)
         #expect(metrics.emphasizedBorderWidth == 2)
+        #expect(metrics.compactRadius == 6)
         #expect(metrics.controlRadius == 8)
         #expect(metrics.cardRadius == 16)
         #expect(RegistryMetrics.minimumHitSize == 44)
@@ -25,6 +27,7 @@ struct RegistryThemeTests {
             controlHorizontalPadding: 10,
             borderWidth: 0.5,
             emphasizedBorderWidth: 1.5,
+            compactRadius: 4,
             controlRadius: 6,
             cardRadius: 12
         )
@@ -34,13 +37,39 @@ struct RegistryThemeTests {
         #expect(compact.metrics.controlHorizontalPadding == 10)
         #expect(compact.metrics.borderWidth == 0.5)
         #expect(compact.metrics.emphasizedBorderWidth == 1.5)
+        #expect(compact.metrics.compactRadius == 4)
         #expect(compact.metrics.controlRadius == 6)
         #expect(compact.metrics.cardRadius == 12)
         #expect(standard.disabledOpacity == 0.5)
         #expect(standard.metrics.controlHorizontalPadding == 12)
         #expect(standard.metrics.borderWidth == 1)
         #expect(standard.metrics.emphasizedBorderWidth == 2)
+        #expect(standard.metrics.compactRadius == 6)
         #expect(standard.metrics.controlRadius == 8)
         #expect(standard.metrics.cardRadius == 16)
+    }
+
+    // The default theme must never replace an app's own tint: a consumer that
+    // already calls .tint(.indigo) keeps it when it adopts the registry. Only
+    // a preset that declares an accent takes over the tint.
+    @Test func `The system theme declares no accent so it inherits the app tint`() {
+        #expect(RegistryTheme.system.accent == nil)
+        #expect(RegistryTheme().accent == nil)
+        #expect(RegistryTheme.indigo.accent == .indigo)
+    }
+
+    // onAccent exists because a light accent cannot carry a white label; the
+    // amber preset is the proving case and must keep a dark label.
+    @Test func `A light accent preset pairs a dark on-accent foreground`() {
+        #expect(RegistryTheme.amber.onAccent == .black)
+        #expect(RegistryTheme.indigo.onAccent == .white)
+    }
+
+    @Test func `Presets are unique by name and resolvable case-insensitively`() {
+        let names = RegistryTheme.presets.map(\.name)
+        #expect(Set(names).count == names.count)
+        #expect(names.first == "System")
+        #expect(RegistryTheme.preset(named: "graphite")?.accent == .primary)
+        #expect(RegistryTheme.preset(named: "no such preset") == nil)
     }
 }

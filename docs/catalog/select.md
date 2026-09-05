@@ -4,6 +4,10 @@
 
 Adds semantic field chrome to a native menu-style Picker without replacing its presentation or selection behavior.
 
+![select preview](../images/items/select-light.png)
+
+More previews: [dark](../images/items/select-dark.png)
+
 ## Install
 
 ```sh

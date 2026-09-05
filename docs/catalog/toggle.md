@@ -4,6 +4,10 @@
 
 Applies registry button treatments to native Toggle state for compact selectable controls.
 
+![toggle preview](../images/items/toggle-light.png)
+
+More previews: [dark](../images/items/toggle-dark.png)
+
 ## Install
 
 ```sh
@@ -44,7 +48,7 @@ Toggle("Bold", systemImage: "bold", isOn: $bold)
 - Kind: component
 - Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.2.0, [toggle](toggle.md) 0.2.0
+- Installs in order: [button](button.md) 0.4.0, [toggle](toggle.md) 0.2.0
 - Accessibility contract:
   - Retains native Toggle state and activation behavior.
   - Requires caller-supplied labels for icon-only controls.

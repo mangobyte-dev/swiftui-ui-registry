@@ -28,6 +28,17 @@ RECIPE_NAMES = {
     "slider",
     "switch",
     "tabs",
+    "alert-dialog",
+    "calendar",
+    "collapsible",
+    "context-menu",
+    "dialog",
+    "drawer",
+    "dropdown-menu",
+    "popover",
+    "scroll-area",
+    "sidebar",
+    "tooltip",
 }
 
 
@@ -184,8 +195,8 @@ class InstallerTests(unittest.TestCase):
             {name for name, kind in kinds.items() if kind == "recipe"},
             RECIPE_NAMES,
         )
-        self.assertEqual(len([kind for kind in kinds.values() if kind == "component"]), 17)
-        self.assertEqual(len([kind for kind in kinds.values() if kind == "block"]), 4)
+        self.assertEqual(len([kind for kind in kinds.values() if kind == "component"]), 23)
+        self.assertEqual(len([kind for kind in kinds.values() if kind == "block"]), 5)
         # The per-item gate (a recipe is docs-only guidance with no files; an
         # installable item ships files plus a preview and never depends on a
         # recipe) is enforced on every registry load by the shared validator;
@@ -270,6 +281,10 @@ class InstallerTests(unittest.TestCase):
 
     def test_every_foundation_token_has_two_semantic_registry_consumers(self):
         consumer_contract = {
+            # The accent reaches items indirectly: the registryTheme modifier
+            # applies it as the subtree tint, and items read the tint.
+            "accent": ("TintShapeStyle()", ["badge", "button"]),
+            "onAccent": ("theme.onAccent", ["button", "auth-form"]),
             "surface": ("theme.surface", ["badge", "input"]),
             "border": ("theme.border", ["badge", "separator"]),
             "positive": ("theme.positive", ["badge", "progress"]),
@@ -302,6 +317,10 @@ class InstallerTests(unittest.TestCase):
                 "theme.metrics.emphasizedBorderWidth",
                 ["input", "textarea"],
             ),
+            "compactRadius": (
+                "theme.metrics.compactRadius",
+                ["badge", "checkbox"],
+            ),
             "controlRadius": (
                 "theme.metrics.controlRadius",
                 ["button", "input", "select", "textarea"],
@@ -320,7 +339,7 @@ class InstallerTests(unittest.TestCase):
         ).read_text()
         foundation_tokens = set(
             re.findall(r"public (?:var|static let) (\w+):", foundations)
-        ) - {"metrics"}
+        ) - {"metrics", "presets", "name", "theme", "id"}
 
         self.assertEqual(set(consumer_contract), foundation_tokens)
         for token, (marker, names) in consumer_contract.items():
@@ -392,7 +411,7 @@ class InstallerTests(unittest.TestCase):
     def test_block_resolves_components_before_the_block(self):
         self.assertEqual(
             self.installer.resolve("finance-overview"),
-            ["metric-card", "transaction-row", "finance-overview"],
+            ["metric-card", "transaction-row", "empty", "finance-overview"],
         )
 
     def test_non_finance_block_reuses_foundation_components(self):
@@ -462,7 +481,7 @@ class InstallerTests(unittest.TestCase):
             destination = Path(directory)
             installed = self.installer.install("finance-overview", destination)
 
-            self.assertEqual(len(installed), 3)
+            self.assertEqual(len(installed), 4)
             for planned in installed:
                 self.assertEqual(planned.target.read_bytes(), planned.source.read_bytes())
 
@@ -470,7 +489,7 @@ class InstallerTests(unittest.TestCase):
                 (destination / ".swiftui-registry" / "receipt.json").read_text()
             )
             self.assertEqual(receipt["schemaVersion"], 1)
-            self.assertEqual(receipt["items"]["finance-overview"]["version"], "0.3.0")
+            self.assertEqual(receipt["items"]["finance-overview"]["version"], "0.4.0")
             self.assertEqual(
                 receipt["items"]["finance-overview"]["packageDependencies"],
                 [
@@ -486,6 +505,7 @@ class InstallerTests(unittest.TestCase):
             self.assertEqual(set(receipt["files"]), {
                 "MetricCard.swift",
                 "TransactionRow.swift",
+                "RegistryEmptyStateModifier.swift",
                 "FinanceOverview.swift",
             })
             self.assertFalse(list((destination / ".swiftui-registry").rglob("*.swift")))
@@ -765,13 +785,15 @@ class InstallerTests(unittest.TestCase):
                 "closure:\n"
                 "  metric-card 0.2.0 (component)\n"
                 "  transaction-row 0.4.0 (component)\n"
-                "  finance-overview 0.3.0 (block)\n",
+                "  empty 0.1.0 (component)\n"
+                "  finance-overview 0.4.0 (block)\n",
                 process.stdout,
             )
             self.assertIn(
                 "files:\n"
                 f"  new metric-card: {destination / 'MetricCard.swift'}\n"
                 f"  new transaction-row: {destination / 'TransactionRow.swift'}\n"
+                f"  new empty: {destination / 'RegistryEmptyStateModifier.swift'}\n"
                 f"  new finance-overview: {destination / 'FinanceOverview.swift'}\n",
                 process.stdout,
             )

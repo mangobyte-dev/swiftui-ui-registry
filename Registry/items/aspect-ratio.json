@@ -11,12 +11,27 @@
   "registryDependencies": [],
   "packageDependencies": [],
   "platforms": [
-    { "name": "iOS", "minimumVersion": "26.0" }
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
   ],
-  "tags": ["aspect-ratio", "layout", "media", "native", "guidance"],
+  "tags": [
+    "aspect-ratio",
+    "layout",
+    "media",
+    "native",
+    "guidance"
+  ],
   "accessibility": [
     "Does not change the accessibility semantics of caller content.",
     "Keeps meaningful image labels and decorative-image hiding with the caller.",
     "Preserves parent layout proposals through the native aspectRatio modifier."
-  ]
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/aspect-ratio-light.png",
+      "docs/images/items/aspect-ratio-dark.png"
+    ]
+  }
 }

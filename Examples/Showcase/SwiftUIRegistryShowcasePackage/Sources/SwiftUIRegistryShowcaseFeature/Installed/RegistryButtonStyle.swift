@@ -28,7 +28,11 @@ public struct RegistryButtonStyle: ButtonStyle {
 
         configuration.label
             .font(font)
-            .multilineTextAlignment(.center)
+            // A button label never wraps or breaks lines: it stays on one
+            // line, scales down a little under pressure, and the call site
+            // gives it room (a full-width frame, a stacked layout) instead.
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, verticalPadding)
             .frame(minHeight: visualMinimumHeight)
@@ -135,7 +139,11 @@ private extension RegistryButtonStyle {
 
     func foregroundStyle(for variant: Variant) -> AnyShapeStyle {
         switch variant {
-        case .primary, .destructive:
+        case .primary:
+            AnyShapeStyle(theme.onAccent)
+        case .destructive:
+            // The negative fill is always dark enough for a white label; the
+            // accent may not be, which is why primary reads theme.onAccent.
             AnyShapeStyle(Color.white)
         case .outline, .secondary, .ghost:
             AnyShapeStyle(Color.primary)

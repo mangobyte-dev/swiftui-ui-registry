@@ -6,7 +6,12 @@
   "kind": "component",
   "description": "Styles native determinate and indeterminate ProgressView controls with linear accent, positive, and negative semantic tones.",
   "usage": "ProgressView(value: 0.68) {\n    Text(\"Uploading\")\n} currentValueLabel: {\n    Text(\"68 percent\")\n}\n.progressViewStyle(.registryLinear)\n\nProgressView(value: 1) {\n    Text(\"Import complete\")\n}\n.progressViewStyle(.registryLinearPositive)",
-  "files": [{ "source": "sources/components/RegistryProgressViewStyle.swift", "target": "RegistryProgressViewStyle.swift" }],
+  "files": [
+    {
+      "source": "sources/components/RegistryProgressViewStyle.swift",
+      "target": "RegistryProgressViewStyle.swift"
+    }
+  ],
   "registryDependencies": [],
   "packageDependencies": [
     {
@@ -14,16 +19,37 @@
       "product": "SwiftUIRegistryFoundations",
       "requirement": "0.x",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-      "swiftPM": { "kind": "upToNextMinor", "minimumVersion": "0.1.0" }
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
     }
   ],
-  "platforms": [{ "name": "iOS", "minimumVersion": "26.0" }],
-  "tags": ["progress", "progress-view", "linear", "loading", "style"],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "progress",
+    "progress-view",
+    "linear",
+    "loading",
+    "style"
+  ],
   "accessibility": [
     "Retains native ProgressView progress semantics.",
     "Combines the caller's label, progress value, and current-value label in reading order.",
     "Uses caller-provided prepared value text and semantic tint.",
     "Inherits Dynamic Type and layout direction."
   ],
-  "preview": { "source": "sources/components/RegistryProgressViewStyle.swift", "name": "Progress" }
+  "preview": {
+    "source": "sources/components/RegistryProgressViewStyle.swift",
+    "name": "Progress",
+    "screenshots": [
+      "docs/images/items/progress-light.png",
+      "docs/images/items/progress-dark.png"
+    ]
+  }
 }

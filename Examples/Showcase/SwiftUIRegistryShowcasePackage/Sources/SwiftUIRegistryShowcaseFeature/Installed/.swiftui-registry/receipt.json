@@ -245,11 +245,18 @@
       "sourceDigest": "sha256:3d93377e76153f6e54571a95a305b024f0bd0ad4247f4721fc11fdfb79e7aa61",
       "version": "0.1.0"
     },
+    "Preview/NotFound.swift": {
+      "base": "bases/c79ffcdb467a1d86f41d495e4f3e122bb53794ca3f11aeb8930ae2eb27864149.base",
+      "installedDigest": "sha256:c0a3cd4e9331577efb16bc5dabfa98a1edb18dd2122b55e8b37c72f7589c012a",
+      "item": "preview",
+      "sourceDigest": "sha256:c0a3cd4e9331577efb16bc5dabfa98a1edb18dd2122b55e8b37c72f7589c012a",
+      "version": "0.1.0"
+    },
     "Preview/PreviewWall.swift": {
       "base": "bases/21fd264667c3047604e99c4cd51cebe0e88f8f9a1fbe7b826a5a2fc9c9d602d4.base",
-      "installedDigest": "sha256:cb4deed57effb9f0f75e2320bbc9d694114c556c92b7b8a15911f2f6c63524f6",
+      "installedDigest": "sha256:7cbddf1f39f780a04b08e8549ee9f25a080d1ea0f168ec140010d9e8ef23cd25",
       "item": "preview",
-      "sourceDigest": "sha256:cb4deed57effb9f0f75e2320bbc9d694114c556c92b7b8a15911f2f6c63524f6",
+      "sourceDigest": "sha256:7cbddf1f39f780a04b08e8549ee9f25a080d1ea0f168ec140010d9e8ef23cd25",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -897,7 +904,8 @@
         "checkbox",
         "textarea",
         "input",
-        "table"
+        "table",
+        "kbd"
       ],
       "version": "0.1.0"
     },

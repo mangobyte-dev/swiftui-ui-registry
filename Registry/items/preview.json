@@ -62,6 +62,10 @@
     {
       "source": "sources/blocks/Preview/FileUpload.swift",
       "target": "Preview/FileUpload.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/DeveloperProfile.swift",
+      "target": "Preview/DeveloperProfile.swift"
     }
   ],
   "registryDependencies": [
@@ -79,7 +83,8 @@
     "input-group",
     "spinner",
     "checkbox",
-    "textarea"
+    "textarea",
+    "input"
   ],
   "packageDependencies": [
     {

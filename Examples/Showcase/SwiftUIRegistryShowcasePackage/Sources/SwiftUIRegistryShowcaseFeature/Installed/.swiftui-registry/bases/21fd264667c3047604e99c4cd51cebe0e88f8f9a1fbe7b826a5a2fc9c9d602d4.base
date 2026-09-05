@@ -28,6 +28,7 @@ public struct PreviewWall: View {
             EnvironmentVariables()
             FeedbackForm()
             FileUpload()
+            DeveloperProfile()
         }
     }
 

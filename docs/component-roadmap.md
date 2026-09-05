@@ -41,12 +41,12 @@ The honest list of what would bite the first outside adopter and what was left t
 2. Track `AGENTS.md` and `CLAUDE.md` so contributors see the verification list. Status: done 2026-09-05, both removed from `.gitignore` and committed
 3. Remove the stale pre-catalog images under `docs/images/` and mark installer `.base` snapshots as generated in `.gitattributes`. Status: done 2026-09-05
 4. Search aliases from observed misses (dropdown, sheet, modal, loading, login). Status: done 2026-09-05; `aliases` is an additive item field ranked between name and tag, with 39 items aliased and tests for the hit and the non-leak. `toast` still finds nothing because no item exists for it
-5. Demo walk audits accessibility per item: every button, switch, and image element exposes a label. Status: open
-6. Visual contract tolerance: compare at a larger normalized size so a tab-bar change cannot hide. Status: open
+5. Demo walk audits accessibility per item: every button, switch, and image element exposes a label. Status: in the UI suite, verification run pending
+6. Visual contract tolerance: compare at 192 by 384 with a 1.5 percent tolerance. Status: in the UI suite, verification run pending
 7. Tuning panel imports a pasted `RegistryTheme` and supports a light and dark custom accent. Status: open
 8. Xcode-project clean-room trial: install a block into a scratch Xcode app, build, customize, update. Status: open
 9. Website blocks story: iPad captures and a full-width block page. Status: open
-10. MCP adapter over the registry JSON (search, plan, install) for agents inside consuming apps. Status: open
+10. MCP adapter over the registry JSON (search, plan, install) for agents inside consuming apps. Status: done 2026-09-05; `Scripts/mcp_server.py` is a dependency-free stdio server tested end to end over JSON-RPC
 11. A Swift CLI or SwiftPM plugin so adopters do not need Python. Status: open
 12. Usage-snippet compile proof for installable items independent of the Showcase demos. Status: open
 13. iOS 26 simulator runtime for floor evidence. Status: open, needs a multi-gigabyte download on the owner's machine

@@ -59,6 +59,7 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         // The `-item` route is what the screenshot pipeline and the website
         // depend on; an item without a demo renders the loud placeholder.
         let app = XCUIApplication()
+        let unlabeled = NSPredicate(format: "label == ''")
         for name in RegistryItemNames.all {
             app.launchArguments = ["-item", name]
             app.launch()
@@ -66,6 +67,22 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
                 app.staticTexts["No demo for \(name)"].waitForExistence(timeout: 1),
                 "\(name) must have a registered demo."
             )
+            // Accessibility audit per demo: every interactive control and
+            // every exposed image must carry a label. Decorative symbols are
+            // hidden by the items, so an unlabeled image here is a defect.
+            for (kind, query) in [
+                ("button", app.buttons),
+                ("switch", app.switches),
+                ("image", app.images),
+                ("text field", app.textFields),
+                ("slider", app.sliders),
+            ] {
+                XCTAssertEqual(
+                    query.matching(unlabeled).count,
+                    0,
+                    "\(name) exposes a \(kind) without an accessibility label."
+                )
+            }
             app.terminate()
         }
     }
@@ -581,7 +598,7 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
         XCTAssertLessThanOrEqual(
             normalizedDifference,
-            0.02,
+            0.015,
             "Visual snapshot \(name) changed by \(normalizedDifference.formatted(.percent.precision(.fractionLength(2)))); review before replacing its approved reference."
         )
     }
@@ -596,8 +613,10 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
             height: source.height - cropTop
         )) else { return nil }
 
-        let width = 96
-        let height = 192
+        // 192 by 384 keeps a whole tab bar or nav bar from hiding inside the
+        // tolerance while still ignoring glyph-level rendering noise.
+        let width = 192
+        let height = 384
         var pixels = [UInt8](repeating: 0, count: width * height * 4)
         let created = pixels.withUnsafeMutableBytes { buffer in
             guard let context = CGContext(

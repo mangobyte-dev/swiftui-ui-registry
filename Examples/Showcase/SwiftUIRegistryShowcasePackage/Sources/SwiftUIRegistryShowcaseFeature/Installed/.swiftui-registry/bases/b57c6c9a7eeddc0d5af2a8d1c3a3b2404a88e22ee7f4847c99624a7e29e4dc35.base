@@ -56,13 +56,13 @@ public struct ActivityNotice {
 
 /// A source-owned activity feed composing the inline alert, avatar, item row,
 /// skeleton, empty state, and accordion treatments. The caller owns loading,
-/// the items, the notice, and selection; the block owns only the accordion's
+/// the items, the notice, and selection; the native `DisclosureGroup` owns its
 /// transient expansion. It does not own a `ScrollView`, navigation container,
 /// or maximum width. Unread rows carry a heavier title, a dot, and an Unread
 /// accessibility value, so the state never rests on color alone.
 public struct ActivityFeed<ID: Hashable>: View {
     @Environment(\.registryTheme) private var theme
-    @State private var isEarlierExpanded = false
+    @ScaledMetric(relativeTo: .caption) private var unreadDotSize: CGFloat = 8
 
     private let title: LocalizedStringResource
     private let notice: ActivityNotice?
@@ -80,9 +80,9 @@ public struct ActivityFeed<ID: Hashable>: View {
         _ title: LocalizedStringResource,
         notice: ActivityNotice? = nil,
         onDismissNotice: (() -> Void)? = nil,
-        sectionTitle: LocalizedStringResource = "Recent",
+        sectionTitle: LocalizedStringResource = LocalizedStringResource("Recent", comment: "Header of the section listing the newest activity"),
         items: [ActivityItem<ID>],
-        earlierTitle: LocalizedStringResource = "Earlier",
+        earlierTitle: LocalizedStringResource = LocalizedStringResource("Earlier", comment: "Header of the collapsible section listing older activity"),
         earlierItems: [ActivityItem<ID>] = [],
         isLoading: Bool = false,
         emptyTitle: LocalizedStringResource = "You're all caught up",
@@ -106,6 +106,7 @@ public struct ActivityFeed<ID: Hashable>: View {
         VStack(alignment: .leading, spacing: theme.metrics.sectionSpacing) {
             Text(title)
                 .font(.largeTitle.bold())
+                .accessibilityAddTraits(.isHeader)
 
             if let notice {
                 noticeView(notice)
@@ -132,7 +133,7 @@ public struct ActivityFeed<ID: Hashable>: View {
             }
 
             if !isLoading, !earlierItems.isEmpty {
-                DisclosureGroup(isExpanded: $isEarlierExpanded) {
+                DisclosureGroup {
                     VStack(spacing: 0) {
                         ForEach(earlierItems) { item in
                             row(item)
@@ -151,15 +152,14 @@ public struct ActivityFeed<ID: Hashable>: View {
         }
     }
 
-    @ViewBuilder
     private func noticeView(_ notice: ActivityNotice) -> some View {
-        if let onDismissNotice {
-            InlineAlert(notice.title, message: notice.message, variant: notice.variant) {
+        // One alert type whichever way the caller decides, so the notice
+        // keeps its identity when a dismiss handler comes or goes.
+        InlineAlert(notice.title, message: notice.message, variant: notice.variant) {
+            if let onDismissNotice {
                 Button("Dismiss", action: onDismissNotice)
                     .buttonStyle(.registryGhost)
             }
-        } else {
-            InlineAlert(notice.title, message: notice.message, variant: notice.variant)
         }
     }
 
@@ -194,7 +194,7 @@ public struct ActivityFeed<ID: Hashable>: View {
                     if item.isUnread {
                         Circle()
                             .fill(.tint)
-                            .frame(width: 8, height: 8)
+                            .frame(width: unreadDotSize, height: unreadDotSize)
                             .accessibilityHidden(true)
                     }
                 }
@@ -202,7 +202,13 @@ public struct ActivityFeed<ID: Hashable>: View {
             .padding(.vertical, theme.metrics.standardSpacing)
         }
         .buttonStyle(.plain)
-        .accessibilityValue(item.isUnread ? Text("Unread") : Text(verbatim: ""))
+        // Voice Control can name the row by its title alone.
+        .accessibilityInputLabels([item.title])
+        .accessibilityValue(
+            item.isUnread
+                ? Text("Unread", comment: "Accessibility value spoken after an activity row the user has not read")
+                : Text(verbatim: "")
+        )
     }
 
     /// Stable placeholder rows for the skeleton; ids never collide with caller ids
@@ -211,11 +217,11 @@ public struct ActivityFeed<ID: Hashable>: View {
         (0..<3).map { index in
             ActivityItem(
                 id: index,
-                title: Text("Placeholder activity title"),
-                detail: Text("Placeholder detail that spans one line"),
-                timestamp: Text("00:00"),
+                title: Text(verbatim: "Placeholder activity title"),
+                detail: Text(verbatim: "Placeholder detail that spans one line"),
+                timestamp: Text(verbatim: "00:00"),
                 initials: "··",
-                senderName: Text("Placeholder")
+                senderName: Text(verbatim: "Placeholder")
             )
         }
     }
@@ -273,7 +279,7 @@ private struct ActivityFeedPreview: View {
                         title: Text("Salary received"),
                         detail: Text("KWD 2,450.000 from Harbor Bank"),
                         timestamp: Text("Yesterday"),
-                        initials: "WB",
+                        initials: "HB",
                         senderName: Text("Harbor Bank")
                     ),
                     ActivityItem(

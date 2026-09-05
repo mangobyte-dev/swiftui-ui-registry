@@ -2,10 +2,10 @@
   "files": {
     "ActivityFeed.swift": {
       "base": "bases/b57c6c9a7eeddc0d5af2a8d1c3a3b2404a88e22ee7f4847c99624a7e29e4dc35.base",
-      "installedDigest": "sha256:1b77a01adb737b8828aed626c9ffae7fd34ab45a035e174ece33916926218416",
+      "installedDigest": "sha256:9040213fecde9f9c6a881f5907a4ae2375d7d65722295bfe85e5cbfeb83381f3",
       "item": "activity-feed",
-      "sourceDigest": "sha256:1b77a01adb737b8828aed626c9ffae7fd34ab45a035e174ece33916926218416",
-      "version": "0.1.1"
+      "sourceDigest": "sha256:9040213fecde9f9c6a881f5907a4ae2375d7d65722295bfe85e5cbfeb83381f3",
+      "version": "0.2.0"
     },
     "AuthForm.swift": {
       "base": "bases/b808915e7c307350d015763d2cb828270f25868f16345bd7122b187337a9d83f.base",
@@ -267,7 +267,7 @@
         "separator",
         "button"
       ],
-      "version": "0.1.1"
+      "version": "0.2.0"
     },
     "alert": {
       "packageDependencies": [

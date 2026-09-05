@@ -45,9 +45,9 @@ public struct Contributors: View {
     private let perRow = 6
 
     private let usernames = [
-        "shadcn", "vercel", "nextjs", "tailwindlabs", "typescript-lang", "eslint",
-        "prettier", "babel", "webpack", "rollup", "parcel", "vite",
-        "react", "vue", "angular", "solid",
+        "riverbend", "cobaltlab", "sablewing", "meridianco", "quartzly", "harborline",
+        "cedargrove", "vellum", "orbital", "pinnaclehq", "driftwood", "beaconbyte",
+        "tidalforge", "ferrousfox", "solsticelab", "novaline",
     ]
 
     private var rows: [[String]] {

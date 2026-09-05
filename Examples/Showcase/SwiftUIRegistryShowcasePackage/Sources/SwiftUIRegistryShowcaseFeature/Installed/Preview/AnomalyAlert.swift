@@ -16,7 +16,7 @@ public struct AnomalyAlert: View {
             } description: {
                 Text("Automatically monitor your projects for anomalies and get notified.")
             } actions: {
-                Button("Upgrade to Observability Plus") {}
+                Button("Upgrade to Insights Plus") {}
                     .buttonStyle(.registry)
             }
             .registryEmptyState()

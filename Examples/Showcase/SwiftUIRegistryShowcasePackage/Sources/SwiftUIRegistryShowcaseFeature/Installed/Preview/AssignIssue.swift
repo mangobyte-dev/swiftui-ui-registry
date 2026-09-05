@@ -7,7 +7,7 @@ import SwiftUIRegistryFoundations
 /// row. Avatars use initials, never fetched images.
 public struct AssignIssue: View {
     @Environment(\.registryTheme) private var theme
-    @State private var assigned: [String] = ["shadcn"]
+    @State private var assigned: [String] = ["riverbend"]
     @State private var selection: String?
 
     public init() {}
@@ -86,7 +86,7 @@ public struct AssignIssue: View {
     }
 
     private let users = [
-        "shadcn", "maxleiter", "evilrabbit", "pranathip", "jorgezreik", "shuding", "rauchg",
+        "riverbend", "cobaltlab", "sablewing", "meridianco", "quartzly", "harborline", "cedargrove",
     ]
 
     private var options: [ComboboxOption<String>] {

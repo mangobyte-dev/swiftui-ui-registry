@@ -1,13 +1,13 @@
 import SwiftUI
 import SwiftUIRegistryFoundations
 
-/// A GitHub Codespaces panel, translated from shadcn's codespaces-card. Its
+/// A cloud workspaces panel, translated from shadcn's codespaces-card. Its
 /// tabs become a segmented Picker, its dropdown a native Menu, its tooltips
 /// native help, and it composes the item row, input group, spinner, empty
 /// state, field, and separator treatments.
 public struct CodespacesCard: View {
     @Environment(\.registryTheme) private var theme
-    @State private var tab: Tab = .codespaces
+    @State private var tab: Tab = .cloud
 
     public init() {}
 
@@ -20,46 +20,46 @@ public struct CodespacesCard: View {
                     }
                 }
                 .pickerStyle(.segmented)
-                .accessibilityLabel("Codespaces view")
+                .accessibilityLabel("Workspaces view")
 
                 switch tab {
-                case .codespaces: CodespacesTab()
+                case .cloud: WorkspacesTab()
                 case .local: LocalCloneTab()
                 }
             }
         } label: {
-            Text("Codespaces")
+            Text("Workspaces")
         }
         .groupBoxStyle(.registryCard)
     }
 
     private enum Tab: String, CaseIterable, Identifiable {
-        case codespaces, local
+        case cloud, local
         var id: String { rawValue }
         var title: LocalizedStringResource {
             switch self {
-            case .codespaces: "Codespaces"
+            case .cloud: "Workspaces"
             case .local: "Local"
             }
         }
     }
 }
 
-private struct CodespacesTab: View {
+private struct WorkspacesTab: View {
     @Environment(\.registryTheme) private var theme
     @State private var isCreating = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {
-            ItemRow(title: Text("Codespaces"), description: Text("Your workspaces in the cloud")) {
+            ItemRow(title: Text("Workspaces"), description: Text("Your workspaces in the cloud")) {
                 EmptyView()
             } accessory: {
                 HStack(spacing: theme.metrics.compactSpacing) {
-                    Button("Create a codespace on main", systemImage: "plus") {}
+                    Button("Create a workspace on main", systemImage: "plus") {}
                         .labelStyle(.iconOnly)
                         .buttonStyle(.registryGhost)
                         .controlSize(.small)
-                        .help("Create a codespace on main")
+                        .help("Create a workspace on main")
                     menu
                 }
             }
@@ -67,9 +67,9 @@ private struct CodespacesTab: View {
             Divider().registrySeparator()
 
             ContentUnavailableView {
-                Label("No codespaces", systemImage: "externaldrive")
+                Label("No workspaces", systemImage: "externaldrive")
             } description: {
-                Text("You don't have any codespaces with this repository checked out.")
+                Text("You don't have any workspaces with this repository checked out.")
             } actions: {
                 Button {
                     isCreating = true
@@ -78,7 +78,7 @@ private struct CodespacesTab: View {
                         if isCreating {
                             ProgressView().progressViewStyle(.registrySpinner)
                         }
-                        Text("Create codespace")
+                        Text("Create workspace")
                     }
                 }
                 .buttonStyle(.registry)
@@ -92,7 +92,7 @@ private struct CodespacesTab: View {
                 isCreating = false
             }
 
-            Text("Codespace usage for this repository is paid for by shadcn.")
+            Text("Workspace usage for this repository is paid for by acme.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -104,13 +104,13 @@ private struct CodespacesTab: View {
             Button("Configure container", systemImage: "shippingbox") {}
             Button("Set up prebuilds", systemImage: "bolt") {}
             Divider()
-            Button("Manage codespaces", systemImage: "externaldrive") {}
-            Button("What are codespaces?", systemImage: "info.circle") {}
+            Button("Manage workspaces", systemImage: "externaldrive") {}
+            Button("What are workspaces?", systemImage: "info.circle") {}
         } label: {
             Image(systemName: "ellipsis")
                 .foregroundStyle(.secondary)
         }
-        .accessibilityLabel("More codespace options")
+        .accessibilityLabel("More workspace options")
     }
 }
 
@@ -147,7 +147,7 @@ private struct LocalCloneTab: View {
             }
 
             VStack(alignment: .leading, spacing: 0) {
-                Button("Open with GitHub Desktop", systemImage: "desktopcomputer") {}
+                Button("Open with Desktop app", systemImage: "desktopcomputer") {}
                     .buttonStyle(.registryGhost)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Button("Download ZIP", systemImage: "arrow.down.circle") {}
@@ -164,21 +164,21 @@ private struct LocalCloneTab: View {
             switch self {
             case .https: "HTTPS"
             case .ssh: "SSH"
-            case .cli: "GitHub CLI"
+            case .cli: "CLI"
             }
         }
         var url: String {
             switch self {
-            case .https: "https://github.com/shadcn-ui/ui.git"
-            case .ssh: "git@github.com:shadcn-ui/ui.git"
-            case .cli: "gh repo clone shadcn-ui/ui"
+            case .https: "https://example.com/acme/ui.git"
+            case .ssh: "git@example.com:acme/ui.git"
+            case .cli: "cli repo clone acme/ui"
             }
         }
         var hint: LocalizedStringResource {
             switch self {
             case .https: "Clone using the web URL."
             case .ssh: "Use a password-protected SSH key."
-            case .cli: "Work fast with the official CLI."
+            case .cli: "Work fast with the command-line tool."
             }
         }
     }

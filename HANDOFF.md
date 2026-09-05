@@ -4,7 +4,7 @@ Written 2026-09-05 at the end of the create session. State lives in `docs/compon
 
 ---
 
-I am Mo, the owner of SwiftUIRegistry. The registry now has its counterpart of shadcn's `/create`: preset codes that the website's Create page, the Showcase's tuning panel, `Scripts/preset.py`, and the MCP server all speak, and the tuning panel stays beside the catalog on device. Everything is committed locally; nothing is pushed. Read `AGENTS.md`, then Backlog items 16 and 17 and the Open deferrals in `docs/component-roadmap.md`
+I am Mo, the owner of SwiftUIRegistry. The registry now has its counterpart of shadcn's `/create`: preset codes that the website's Create page, the Showcase's tuning panel, `Scripts/preset.py`, and the MCP server all speak, and the tuning panel stays beside the catalog on device. Everything is committed and `main` is pushed (2026-09-05); the website is deployed to https://swiftui-registry.mangobytekw.workers.dev with the Create page live. The `0.1.0` tag is still local, so declared floors do not resolve until it is pushed. Read `AGENTS.md`, then Backlog items 16 and 17 and the Open deferrals in `docs/component-roadmap.md`
 
 ## What is waiting for me
 

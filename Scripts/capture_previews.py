@@ -16,6 +16,7 @@ Usage (from the repository root):
     python3 Scripts/capture_previews.py badge card # a subset
     python3 Scripts/capture_previews.py --themes   # the theme presets page
     python3 Scripts/capture_previews.py --blocks   # every block on the iPad, wide layout
+    python3 Scripts/capture_previews.py --preset a13GkaOXWwIa --output /tmp/presets  # one preset code, both appearances
 
 `--app` points at a built SwiftUIRegistryShowcase.app; without it the script
 builds one with xcodebuild into a scratch derived-data directory.
@@ -38,6 +39,7 @@ if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
 from install import Installer, RegistryError
+from preset import is_preset_code
 
 REPOSITORY_ROOT = _SCRIPTS.parent
 PINNED_UDID = "1807166B-C557-4F6B-B177-D5F3F701CBD7"
@@ -108,10 +110,24 @@ def first_pixel(path: Path) -> tuple[int, int, int]:
     return (row[1], row[2], row[3])
 
 
-def shows_app_background(path: Path, appearance: str) -> bool:
-    """Whether a screenshot starts with the app's own background: white in
-    light appearance, black in dark. The home screen wallpaper is neither."""
-    red, green, blue = first_pixel(path)
+def pixel(path: Path, x: int, y: int, scratch: Path) -> tuple[int, int, int]:
+    """One pixel of a PNG, cropped out with sips and decoded without an image library."""
+    tiny = scratch / f"{path.stem}-pixel.png"
+    run(["sips", str(path), "--cropToHeightWidth", "1", "1", "--cropOffset", str(y), str(x), "--out", str(tiny)])
+    return first_pixel(tiny)
+
+
+def shows_app_background(path: Path, appearance: str, scratch: Path) -> bool:
+    """Whether a screenshot shows the app's own background at its leading
+    edge, halfway down: white in light appearance, black in dark. The home
+    screen wallpaper is neither. The corner pixel is not used because the
+    simulator masks the display's rounded corners black."""
+    height = int(next(
+        line.split()[-1]
+        for line in run(["sips", "-g", "pixelHeight", str(path)]).stdout.splitlines()
+        if "pixelHeight" in line
+    ))
+    red, green, blue = pixel(path, 8, height // 2, scratch)
     if appearance == "dark":
         return max(red, green, blue) <= 8
     return min(red, green, blue) >= 245
@@ -124,6 +140,7 @@ def capture(
     destination: Path,
     *,
     theme: str | None = None,
+    preset: str | None = None,
     scratch: Path,
 ) -> None:
     info_path = scratch / f"{name}-{appearance}.json"
@@ -137,6 +154,8 @@ def capture(
     ]
     if theme:
         launch += ["-theme", theme]
+    if preset:
+        launch += ["-preset", preset]
     run(launch)
 
     deadline = time.monotonic() + 8
@@ -152,7 +171,7 @@ def capture(
     # pixel is the app's own background for the requested appearance.
     for _ in range(12):
         run(["xcrun", "simctl", "io", udid, "screenshot", "--type=png", str(raw_path)])
-        if shows_app_background(raw_path, appearance):
+        if shows_app_background(raw_path, appearance, scratch):
             break
         time.sleep(0.5)
     else:
@@ -205,6 +224,8 @@ def main() -> int:
     parser.add_argument("--app", type=Path, help="A built SwiftUIRegistryShowcase.app")
     parser.add_argument("--themes", action="store_true", help="Capture the theme presets instead of items")
     parser.add_argument("--blocks", action="store_true", help="Capture every block on the iPad into docs/images/blocks")
+    parser.add_argument("--preset", metavar="CODE", help="Capture the theme preview under a preset code instead of items")
+    parser.add_argument("--output", type=Path, help="Folder for --preset captures; required with --preset")
     parser.add_argument("--no-metadata", action="store_true", help="Do not write preview.screenshots")
     arguments = parser.parse_args()
 
@@ -216,6 +237,10 @@ def main() -> int:
     unknown = [name for name in names if name not in installer.items]
     if unknown:
         parser.error(f"unknown items: {', '.join(unknown)}")
+    if arguments.preset and not is_preset_code(arguments.preset):
+        parser.error(f"invalid preset code: {arguments.preset}")
+    if arguments.preset and arguments.output is None:
+        parser.error("--preset needs --output")
 
     if arguments.blocks and arguments.udid == PINNED_UDID:
         arguments.udid = IPAD_UDID
@@ -232,6 +257,14 @@ def main() -> int:
                     destination = BLOCK_OUTPUT / f"{name}-ipad-{appearance}.png"
                     capture(arguments.udid, name, appearance, destination, scratch=scratch)
                     print(f"captured {destination.relative_to(REPOSITORY_ROOT)}")
+        elif arguments.preset:
+            for appearance in APPEARANCES:
+                destination = arguments.output / f"preset-{arguments.preset}-{appearance}.png"
+                capture(
+                    arguments.udid, "theme-preview", appearance, destination,
+                    preset=arguments.preset, scratch=scratch,
+                )
+                print(f"captured {destination}")
         elif arguments.themes:
             for preset in THEME_PRESETS:
                 for appearance in APPEARANCES:

@@ -21,6 +21,7 @@ public struct PreviewWall: View {
             AssignIssue()
             BarChartCard()
             BarVisualizer()
+            BookAppointment()
         }
     }
 

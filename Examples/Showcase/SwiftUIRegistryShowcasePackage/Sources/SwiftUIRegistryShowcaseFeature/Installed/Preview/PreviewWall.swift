@@ -27,6 +27,7 @@ public struct PreviewWall: View {
             Contributors()
             EnvironmentVariables()
             FeedbackForm()
+            FileUpload()
         }
     }
 

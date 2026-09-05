@@ -58,6 +58,10 @@
     {
       "source": "sources/blocks/Preview/FeedbackForm.swift",
       "target": "Preview/FeedbackForm.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/FileUpload.swift",
+      "target": "Preview/FileUpload.swift"
     }
   ],
   "registryDependencies": [

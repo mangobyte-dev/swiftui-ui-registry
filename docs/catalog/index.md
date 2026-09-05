@@ -2,7 +2,7 @@
 
 # SwiftUIRegistry catalog
 
-52 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
+53 items you copy into your app and own. Clone the registry repository first; every command in these pages runs from the root of that clone. Components and blocks install with one command:
 
 ```sh
 python3 Scripts/install.py <name> --destination Sources/YourFeature/Components
@@ -21,7 +21,7 @@ Compositions of components. Installing one installs its whole closure
 - [nutrition-overview](nutrition-overview.md): Composes prepared energy and macronutrient values into an embeddable nutrition overview.
 - [settings-section](settings-section.md): Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
 
-## Components (28)
+## Components (29)
 
 One installable style, modifier, or view each
 
@@ -29,6 +29,7 @@ One installable style, modifier, or view each
 - [alert](alert.md): Composes an inline, non-modal status message with informational, positive, and destructive variants and optional caller-owned actions.
 - [avatar](avatar.md): Displays a circular identity image with initials or symbol fallback, sized by the environment control size, with a required accessibility label.
 - [badge](badge.md): Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.
+- [breadcrumb](breadcrumb.md): A horizontal navigation trail of links with chevron separators and a current page, collapsing middle crumbs into an overflow menu when they do not fit; a component because iOS has no native breadcrumb control.
 - [button](button.md): Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.
 - [button-group](button-group.md): Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.
 - [card](card.md): Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.

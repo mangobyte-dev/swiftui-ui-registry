@@ -9,10 +9,10 @@
     },
     "AuthForm.swift": {
       "base": "bases/b808915e7c307350d015763d2cb828270f25868f16345bd7122b187337a9d83f.base",
-      "installedDigest": "sha256:4b6a1f6cd1f700d6121899367076b652e44f6748f5662c9d45308873987a860f",
+      "installedDigest": "sha256:e1606a6a417d74bd257e1cf7d386391e2fd5db482304593d8f74dd18368b833c",
       "item": "auth-form",
-      "sourceDigest": "sha256:4b6a1f6cd1f700d6121899367076b652e44f6748f5662c9d45308873987a860f",
-      "version": "0.3.0"
+      "sourceDigest": "sha256:e1606a6a417d74bd257e1cf7d386391e2fd5db482304593d8f74dd18368b833c",
+      "version": "0.3.1"
     },
     "Avatar.swift": {
       "base": "bases/52f53b07c4f5b4deb26b2c60971258bd9c19da8a9e21a7ab004c5edacbf27f7e.base",
@@ -305,7 +305,7 @@
         "button",
         "card"
       ],
-      "version": "0.3.0"
+      "version": "0.3.1"
     },
     "avatar": {
       "packageDependencies": [

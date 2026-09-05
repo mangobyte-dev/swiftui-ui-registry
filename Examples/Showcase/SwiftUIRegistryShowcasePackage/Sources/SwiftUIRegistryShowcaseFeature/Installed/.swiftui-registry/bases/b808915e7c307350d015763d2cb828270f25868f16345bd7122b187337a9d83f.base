@@ -95,7 +95,7 @@ public struct AuthForm: View {
                     .submitLabel(.next)
                     .focused($focusedField, equals: .identity)
                     .onSubmit { focusedField = .password }
-                    .accessibilityHint(identityError.map { Text($0) } ?? Text(verbatim: ""))
+                    .accessibilityHint(identityError.map { Text($0) } ?? Text(verbatim: ""), isEnabled: identityError != nil)
 
                     fieldMessage(identityError)
                 }
@@ -114,7 +114,7 @@ public struct AuthForm: View {
                             onSubmit()
                         }
                     }
-                    .accessibilityHint(passwordError.map { Text($0) } ?? Text(verbatim: ""))
+                    .accessibilityHint(passwordError.map { Text($0) } ?? Text(verbatim: ""), isEnabled: passwordError != nil)
 
                     fieldMessage(passwordError)
                 }
@@ -151,11 +151,12 @@ public struct AuthForm: View {
             .disabled(isSubmitting)
         } label: {
             Text(title)
+                .accessibilityAddTraits(.isHeader)
         }
         .groupBoxStyle(.registryCard)
-        .onChange(of: localized(identityError)) { _, message in announce(message) }
-        .onChange(of: localized(passwordError)) { _, message in announce(message) }
-        .onChange(of: localized(formError)) { _, message in announce(message) }
+        .onChange(of: identityError) { _, message in announce(message) }
+        .onChange(of: passwordError) { _, message in announce(message) }
+        .onChange(of: formError) { _, message in announce(message) }
     }
 
     @ViewBuilder
@@ -167,13 +168,9 @@ public struct AuthForm: View {
         }
     }
 
-    private func localized(_ resource: LocalizedStringResource?) -> String? {
-        resource.map { String(localized: $0) }
-    }
-
-    private func announce(_ message: String?) {
+    private func announce(_ message: LocalizedStringResource?) {
         guard let message else { return }
-        AccessibilityNotification.Announcement(message).post()
+        AccessibilityNotification.Announcement(String(localized: message)).post()
     }
 }
 

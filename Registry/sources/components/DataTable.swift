@@ -5,8 +5,7 @@ import SwiftUIRegistryFoundations
 /// builder over a row. A trailing column is treated as numeric, so its cells
 /// use monospaced digits and hug the trailing edge; a leading column is
 /// flexible and takes the remaining width.
-public struct DataTableColumn<Row>: Identifiable {
-    public let id = UUID()
+public struct DataTableColumn<Row> {
     public let header: Text
     public let alignment: HorizontalAlignment
     let cell: (Row) -> AnyView
@@ -24,8 +23,7 @@ public struct DataTableColumn<Row>: Identifiable {
 
 /// One summary row under the table body: a label that spans every column but
 /// the last, and a trailing value. Use it for subtotals and totals.
-public struct DataTableFooterRow: Identifiable {
-    public let id = UUID()
+public struct DataTableFooterRow {
     public let label: Text
     public let value: Text
     public let isEmphasized: Bool
@@ -62,7 +60,8 @@ public struct DataTable<Row: Identifiable>: View {
     public var body: some View {
         Grid(alignment: .leading, horizontalSpacing: theme.metrics.standardSpacing, verticalSpacing: 0) {
             GridRow {
-                ForEach(columns) { column in
+                // Columns are static per table, so position is a stable identity.
+                ForEach(Array(columns.enumerated()), id: \.offset) { _, column in
                     styledCell(column.header, alignment: column.alignment)
                         .font(.footnote.weight(.semibold))
                         .foregroundStyle(.secondary)
@@ -76,7 +75,7 @@ public struct DataTable<Row: Identifiable>: View {
 
             ForEach(rows) { row in
                 GridRow {
-                    ForEach(columns) { column in
+                    ForEach(Array(columns.enumerated()), id: \.offset) { _, column in
                         styledCell(column.cell(row), alignment: column.alignment)
                     }
                 }
@@ -91,7 +90,7 @@ public struct DataTable<Row: Identifiable>: View {
             if !footer.isEmpty {
                 Divider().registrySeparator()
 
-                ForEach(footer) { row in
+                ForEach(Array(footer.enumerated()), id: \.offset) { index, row in
                     GridRow {
                         row.label
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -107,7 +106,7 @@ public struct DataTable<Row: Identifiable>: View {
                     .foregroundStyle(row.isEmphasized ? AnyShapeStyle(.primary) : AnyShapeStyle(.secondary))
                     .accessibilityElement(children: .combine)
 
-                    if row.id != footer.last?.id {
+                    if index < footer.count - 1 {
                         Divider().registrySeparator()
                     }
                 }

@@ -23,9 +23,9 @@
     },
     "Breadcrumb.swift": {
       "base": "bases/00aa1d3117261e6ebcfe6cedb98c212262e4142e72015216d27181c2a9950dc5.base",
-      "installedDigest": "sha256:4ef0dfdd33feed31133cf3e524c727a646e8a234699eacd8ee8e018b3d56dd1c",
+      "installedDigest": "sha256:b26c66128e5ff98de21bc67e4cb7fb0b01e536405a6bc7e09eeb739e5c36e1e2",
       "item": "breadcrumb",
-      "sourceDigest": "sha256:4ef0dfdd33feed31133cf3e524c727a646e8a234699eacd8ee8e018b3d56dd1c",
+      "sourceDigest": "sha256:b26c66128e5ff98de21bc67e4cb7fb0b01e536405a6bc7e09eeb739e5c36e1e2",
       "version": "0.1.0"
     },
     "Combobox.swift": {
@@ -51,9 +51,9 @@
     },
     "DataTable.swift": {
       "base": "bases/9c688bb3f46b32b93fcf941f8ad31a7dc06f3436863b4a73656dd267b4c44a97.base",
-      "installedDigest": "sha256:bf2c2aa919a4fc5126cf74bc3bc4301ea58820df35805537e64fc2f323189681",
+      "installedDigest": "sha256:d55f7c5f1112b5ede47d2b63997999d28324aefc89ad03c44f9d2c37e44b2958",
       "item": "table",
-      "sourceDigest": "sha256:bf2c2aa919a4fc5126cf74bc3bc4301ea58820df35805537e64fc2f323189681",
+      "sourceDigest": "sha256:d55f7c5f1112b5ede47d2b63997999d28324aefc89ad03c44f9d2c37e44b2958",
       "version": "0.1.0"
     },
     "Field.swift": {

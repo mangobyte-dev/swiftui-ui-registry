@@ -4,8 +4,7 @@ import SwiftUIRegistryFoundations
 /// One crumb in a ``Breadcrumb`` trail: a title and an optional action. A crumb
 /// with an action is a link; the last crumb in the trail is always rendered as
 /// the current page, whether or not it carries an action.
-public struct BreadcrumbItem: Identifiable {
-    public let id = UUID()
+public struct BreadcrumbItem {
     public let title: Text
     public let action: (() -> Void)?
 
@@ -49,7 +48,9 @@ public struct Breadcrumb: View {
 
     private func trail(_ crumbs: [Segment]) -> some View {
         HStack(spacing: theme.metrics.compactSpacing) {
-            ForEach(crumbs) { segment in
+            // A trail is rebuilt whole on each update, so position is its
+            // stable identity.
+            ForEach(Array(crumbs.enumerated()), id: \.offset) { _, segment in
                 switch segment.content {
                 case let .crumb(item, isCurrent):
                     crumb(item, isCurrent: isCurrent)
@@ -100,7 +101,7 @@ public struct Breadcrumb: View {
 
     private func overflowMenu(_ middle: [BreadcrumbItem]) -> some View {
         Menu {
-            ForEach(middle) { item in
+            ForEach(Array(middle.enumerated()), id: \.offset) { _, item in
                 Button {
                     item.action?()
                 } label: {
@@ -138,8 +139,7 @@ public struct Breadcrumb: View {
         ]
     }
 
-    private struct Segment: Identifiable {
-        let id = UUID()
+    private struct Segment {
         let content: Content
 
         init(_ content: Content) {

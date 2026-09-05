@@ -7,8 +7,6 @@ __pycache__/
 .DS_Store
 
 # Local AI and development tooling
-/AGENTS.md
-/CLAUDE.md
 /.agents/
 /.claude/
 /.impeccable/

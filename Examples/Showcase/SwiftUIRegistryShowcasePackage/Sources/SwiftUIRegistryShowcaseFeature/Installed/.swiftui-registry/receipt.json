@@ -58,10 +58,10 @@
     },
     "ItemRow.swift": {
       "base": "bases/bc855952cda7fd950cb49608a75fbc629e03015cdf44548d2113a3abc74b87ba.base",
-      "installedDigest": "sha256:1a8eabd487ab1ca68335e0a34541970928939e372608d9fe93a4fcb83bd9619b",
+      "installedDigest": "sha256:a1247ff9ab53074276ba3c904838aa5eea39ff6c91cda9db57e86f25dc2e093d",
       "item": "item",
-      "sourceDigest": "sha256:1a8eabd487ab1ca68335e0a34541970928939e372608d9fe93a4fcb83bd9619b",
-      "version": "0.1.1"
+      "sourceDigest": "sha256:a1247ff9ab53074276ba3c904838aa5eea39ff6c91cda9db57e86f25dc2e093d",
+      "version": "0.2.0"
     },
     "MacroProgress.swift": {
       "base": "bases/061c048d9552b3eb5f519bbb2c6158fd60f407fa4a68b22ce277c9fad95ac8a9.base",
@@ -531,10 +531,11 @@
         }
       ],
       "registryDependencies": [
+        "avatar",
         "separator",
         "badge"
       ],
-      "version": "0.1.1"
+      "version": "0.2.0"
     },
     "kbd": {
       "packageDependencies": [

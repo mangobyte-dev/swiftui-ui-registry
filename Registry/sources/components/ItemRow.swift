@@ -85,11 +85,7 @@ private struct ItemRowPreview: View {
                     title: Text("Mishmash Bakery"),
                     description: Text("Card ending 4021 · Today, 09:41")
                 ) {
-                    Image(systemName: "cup.and.saucer.fill")
-                        .foregroundStyle(.tint)
-                        .frame(width: 40, height: 40)
-                        .background(.tint.opacity(0.12), in: Circle())
-                        .accessibilityHidden(true)
+                    Avatar(initials: "MB", accessibilityLabel: Text(verbatim: "Mishmash Bakery"))
                 } accessory: {
                     Image(systemName: "chevron.forward")
                         .font(.footnote.weight(.semibold))
@@ -114,16 +110,15 @@ private struct ItemRowPreview: View {
 
             Divider().registrySeparator()
 
-            ItemRow(
-                title: Text("Spending limit"),
-                description: Text("Applies to online purchases."),
-                accessory: {
-                    // labelsHidden also drops the accessibility label; restore it.
-                    Toggle("Spending limit", isOn: .constant(true))
-                        .labelsHidden()
-                        .accessibilityLabel("Spending limit")
-                }
-            )
+            // A switch row: the row is the toggle's label, so its words are
+            // part of the control and are spoken once.
+            Toggle(isOn: .constant(true)) {
+                ItemRow(
+                    title: Text("Spending limit"),
+                    description: Text("Applies to online purchases.")
+                )
+            }
+            .toggleStyle(.switch)
             .padding(.vertical, theme.metrics.standardSpacing)
         }
         .padding(.horizontal, theme.metrics.standardSpacing)

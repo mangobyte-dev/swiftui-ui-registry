@@ -35,6 +35,13 @@
       "sourceDigest": "sha256:b1360c4c528432b440e5b7a7420df9157e5ae60dd4096dd5d3c122c060a68af5",
       "version": "0.2.0"
     },
+    "Field.swift": {
+      "base": "bases/64618fe49264c119c1f75ef524b449f4bd6c4f0cae3d95cab546f5e9dc49e378.base",
+      "installedDigest": "sha256:3f3969ced02a6b7c1aca94101fc228b2aedd02f9cac9605ff4a0b60d34f43ae5",
+      "item": "field",
+      "sourceDigest": "sha256:3f3969ced02a6b7c1aca94101fc228b2aedd02f9cac9605ff4a0b60d34f43ae5",
+      "version": "0.1.0"
+    },
     "FinanceOverview.swift": {
       "base": "bases/f9b286d5453416c4c440e65a4c2be76f47597245ad27cdad80314bf17053616c.base",
       "installedDigest": "sha256:587b0bac63abe439bb2235780d6953534567e8407318b8c2f437b97101477a88",
@@ -461,6 +468,24 @@
         }
       ],
       "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "field": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "input"
+      ],
       "version": "0.1.0"
     },
     "finance-overview": {

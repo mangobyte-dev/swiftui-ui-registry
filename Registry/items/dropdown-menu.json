@@ -23,6 +23,10 @@
     "picker",
     "guidance"
   ],
+  "aliases": [
+    "dropdown",
+    "menu"
+  ],
   "accessibility": [
     "The menu trigger keeps a visible text label; a symbol-only trigger needs an accessibility label.",
     "Picker selection inside a menu announces the checked state.",

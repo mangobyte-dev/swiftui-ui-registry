@@ -48,6 +48,12 @@
     "timeline",
     "loading"
   ],
+  "aliases": [
+    "inbox",
+    "notifications",
+    "timeline",
+    "feed"
+  ],
   "accessibility": [
     "Feedback is never color alone: unread rows use a heavier title, a dot, and an Unread accessibility value; the notice variant pairs a symbol with its color.",
     "Loading placeholders are one disabled accessibility element labeled Loading activity and cannot trigger selection.",

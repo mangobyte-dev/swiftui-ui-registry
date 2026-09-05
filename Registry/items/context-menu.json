@@ -23,6 +23,10 @@
     "menu",
     "guidance"
   ],
+  "aliases": [
+    "long-press",
+    "menu"
+  ],
   "accessibility": [
     "Context menus are exposed through the VoiceOver actions rotor.",
     "Destructive roles render in the system's destructive style without custom color.",

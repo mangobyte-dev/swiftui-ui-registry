@@ -40,6 +40,9 @@
     "formatting",
     "style"
   ],
+  "aliases": [
+    "toggle-button"
+  ],
   "accessibility": [
     "Retains native Toggle state and activation behavior.",
     "Requires caller-supplied labels for icon-only controls.",

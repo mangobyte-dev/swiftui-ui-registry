@@ -41,6 +41,11 @@
     "overview",
     "transactions"
   ],
+  "aliases": [
+    "dashboard",
+    "wallet",
+    "balance"
+  ],
   "accessibility": [
     "Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state.",
     "Uses system text styles and ViewThatFits for Dynamic Type.",

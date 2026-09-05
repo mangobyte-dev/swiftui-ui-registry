@@ -38,6 +38,11 @@
     "form",
     "style"
   ],
+  "aliases": [
+    "text-field",
+    "textfield",
+    "secure-field"
+  ],
   "accessibility": [
     "Preserves native TextField and SecureField editing, keyboard, and autofill behavior.",
     "Uses focus and border width in addition to color for input states.",

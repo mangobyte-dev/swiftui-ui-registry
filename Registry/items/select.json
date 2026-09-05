@@ -38,6 +38,10 @@
     "form",
     "modifier"
   ],
+  "aliases": [
+    "picker",
+    "dropdown"
+  ],
   "accessibility": [
     "Retains native Picker menu, selection, and dismissal behavior.",
     "Keeps option labels and selection caller-owned.",

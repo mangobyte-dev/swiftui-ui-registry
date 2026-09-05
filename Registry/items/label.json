@@ -38,6 +38,9 @@
     "alignment",
     "style"
   ],
+  "aliases": [
+    "icon-label"
+  ],
   "accessibility": [
     "Keeps the native Label title as the accessible content.",
     "Treats the paired icon as decorative to avoid repeating the title.",

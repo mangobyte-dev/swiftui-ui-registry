@@ -10,6 +10,7 @@ export type RegistryItem = {
   usage: string
   docs: string | null
   tags: string[]
+  aliases: string[]
   platforms: string[]
   dependencies: string[]
   installOrder: { name: string; version: string }[]

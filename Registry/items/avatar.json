@@ -39,6 +39,11 @@
     "initials",
     "shadcn"
   ],
+  "aliases": [
+    "profile-image",
+    "initials",
+    "monogram"
+  ],
   "accessibility": [
     "Requires a caller-supplied accessibility label because a face or monogram cannot be derived from visible content.",
     "Exposes one image-trait accessibility element and ignores its inner text and symbol.",

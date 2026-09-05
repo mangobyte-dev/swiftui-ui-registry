@@ -23,6 +23,10 @@
     "selection",
     "guidance"
   ],
+  "aliases": [
+    "segmented",
+    "segmented-control"
+  ],
   "accessibility": [
     "Retains native Picker selection and segmented-control semantics.",
     "Keeps local selection caller-owned and does not replace app-level TabView navigation.",

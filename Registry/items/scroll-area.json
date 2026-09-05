@@ -23,6 +23,10 @@
     "indicators",
     "guidance"
   ],
+  "aliases": [
+    "scroll-view",
+    "scrollview"
+  ],
   "accessibility": [
     "Native scroll views support VoiceOver page scrolling and the three-finger scroll gesture.",
     "Hidden indicators remove a sighted affordance; prefer .automatic for long content."

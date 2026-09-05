@@ -23,6 +23,10 @@
     "toggle",
     "guidance"
   ],
+  "aliases": [
+    "disclosure",
+    "expand"
+  ],
   "accessibility": [
     "The native disclosure announces expanded and collapsed states.",
     "Keep the label meaningful when collapsed, because that is all VoiceOver reads."

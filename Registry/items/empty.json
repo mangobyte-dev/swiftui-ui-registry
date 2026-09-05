@@ -38,6 +38,11 @@
     "state",
     "shadcn"
   ],
+  "aliases": [
+    "empty-state",
+    "no-data",
+    "content-unavailable"
+  ],
   "accessibility": [
     "Keeps the native ContentUnavailableView, so its title, description, symbol, and actions retain system accessibility semantics.",
     "Adds only the full-width surface, padding, and border; the empty state is not an interactive control.",

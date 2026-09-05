@@ -41,6 +41,11 @@
     "faq",
     "shadcn"
   ],
+  "aliases": [
+    "disclosure",
+    "expandable",
+    "faq"
+  ],
   "accessibility": [
     "Preserves the native DisclosureGroup binding; the header is a plain Button that toggles isExpanded.",
     "Reports Expanded or Collapsed as the header's accessibility value and adds the selected trait while expanded.",

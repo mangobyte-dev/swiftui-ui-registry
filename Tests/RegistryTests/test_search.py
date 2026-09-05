@@ -76,6 +76,16 @@ class SearchTests(unittest.TestCase):
         )
         self.assertTrue(matches[0]["accessibility"])
 
+    def test_alias_finds_an_item_a_newcomer_names_differently(self):
+        # Observed misses drive aliases: "dropdown" is what a web developer
+        # types for a Menu; it must find the recipe first, and an alias must
+        # never leak onto an item that does not declare it.
+        matches = search_items(self.installer, "dropdown")
+        self.assertEqual(matches[0]["name"], "dropdown-menu")
+        self.assertIn("dropdown", matches[0]["aliases"])
+        self.assertNotIn("dropdown-menu", [m["name"] for m in search_items(self.installer, "shimmer")])
+        self.assertEqual(search_items(self.installer, "shimmer")[0]["name"], "skeleton")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -92,6 +92,7 @@
       }
     },
     "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "aliases": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
     "accessibility": { "type": "array", "items": { "type": "string" } },
     "preview": {
       "type": "object",

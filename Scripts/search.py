@@ -30,14 +30,18 @@ def search_items(
             continue
 
         name_terms = _terms(item["name"])
+        alias_terms = {term for alias in item.get("aliases", []) for term in _terms(alias)}
         tag_terms = {term for tag in item["tags"] for term in _terms(tag)}
         description_terms = _terms(item["description"])
-        searchable = name_terms | tag_terms | description_terms | {item["kind"]}
+        searchable = name_terms | alias_terms | tag_terms | description_terms | {item["kind"]}
         if not query_terms.issubset(searchable):
             continue
 
         score = sum(
-            30 if term in name_terms else 20 if term in tag_terms else 5
+            30 if term in name_terms
+            else 25 if term in alias_terms
+            else 20 if term in tag_terms
+            else 5
             for term in query_terms
         )
         if query.strip().lower() == item["name"]:
@@ -53,6 +57,7 @@ def search_items(
             "packageDependencies": item["packageDependencies"],
             "platforms": compatible_platforms,
             "tags": item["tags"],
+            "aliases": item.get("aliases", []),
             "accessibility": item["accessibility"],
             "preview": item.get("preview"),
             "docs": item.get("docs"),

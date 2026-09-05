@@ -38,6 +38,9 @@
     "form",
     "style"
   ],
+  "aliases": [
+    "check"
+  ],
   "accessibility": [
     "Uses a native Toggle as its accessibility representation.",
     "Requires the caller's visible Toggle label and preserves the enabled state.",

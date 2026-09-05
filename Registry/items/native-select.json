@@ -23,6 +23,10 @@
     "selection",
     "guidance"
   ],
+  "aliases": [
+    "picker",
+    "menu-picker"
+  ],
   "accessibility": [
     "Retains native Picker accessibility, menu, and selection behavior.",
     "Requires caller-supplied labels and option text.",

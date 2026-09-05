@@ -23,6 +23,11 @@
     "sheet",
     "guidance"
   ],
+  "aliases": [
+    "bottom-sheet",
+    "sheet",
+    "detents"
+  ],
   "accessibility": [
     "Detent changes are announced and adjustable through VoiceOver.",
     "The drag indicator gives a visible affordance; keep a button-based dismissal too.",

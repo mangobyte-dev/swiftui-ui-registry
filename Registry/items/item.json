@@ -42,6 +42,11 @@
     "media",
     "shadcn"
   ],
+  "aliases": [
+    "row",
+    "list-item",
+    "cell"
+  ],
   "accessibility": [
     "Combines the title and description into one accessibility element; media and accessory remain separate so an interactive accessory stays activatable.",
     "Selection belongs to a native Button or NavigationLink at the call site, which combines the row into its own label.",

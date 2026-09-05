@@ -181,6 +181,12 @@ def _check_shape(item: dict, schema: dict, location: str, issues: list[Validatio
     )
     _check_platforms(item, properties["platforms"], location, issues)
     _check_string_array(item, "tags", location, issues, unique=True)
+    # Aliases are the words people searched for and did not find; kebab-case
+    # like names so a query term matches them the same way.
+    _check_string_array(item, "aliases", location, issues, unique=True)
+    for alias in item.get("aliases", []) if isinstance(item.get("aliases"), list) else []:
+        if isinstance(alias, str) and re.fullmatch(properties["name"]["pattern"], alias) is None:
+            issues.append(ValidationIssue(location, f"alias must be kebab-case: {alias}"))
     _check_string_array(item, "accessibility", location, issues, unique=False)
     _check_preview_shape(item, properties["preview"], location, issues)
 

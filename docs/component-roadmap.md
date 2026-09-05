@@ -40,7 +40,7 @@ The honest list of what would bite the first outside adopter and what was left t
 1. Tag `0.1.0` so declared floors resolve. Status: local annotated tag created; pushing it is the owner's call
 2. Track `AGENTS.md` and `CLAUDE.md` so contributors see the verification list. Status: done 2026-09-05, both removed from `.gitignore` and committed
 3. Remove the stale pre-catalog images under `docs/images/` and mark installer `.base` snapshots as generated in `.gitattributes`. Status: done 2026-09-05
-4. Search aliases from observed misses (toast, dropdown, sheet, modal, loading). Status: open
+4. Search aliases from observed misses (dropdown, sheet, modal, loading, login). Status: done 2026-09-05; `aliases` is an additive item field ranked between name and tag, with 39 items aliased and tests for the hit and the non-leak. `toast` still finds nothing because no item exists for it
 5. Demo walk audits accessibility per item: every button, switch, and image element exposes a label. Status: open
 6. Visual contract tolerance: compare at a larger normalized size so a tab-bar change cannot hide. Status: open
 7. Tuning panel imports a pasted `RegistryTheme` and supports a light and dark custom accent. Status: open

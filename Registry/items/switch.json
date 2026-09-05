@@ -23,6 +23,9 @@
     "boolean",
     "guidance"
   ],
+  "aliases": [
+    "toggle-switch"
+  ],
   "accessibility": [
     "Retains native Toggle switch semantics and state announcements.",
     "Requires a caller-supplied visible label unless the surrounding context supplies an accessibility label.",

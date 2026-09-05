@@ -149,6 +149,16 @@ class ValidationTests(unittest.TestCase):
         self.save_item("guide", guide)
         self.assert_rejects("recipe previews carry screenshots only, never a source or name")
 
+    def test_alias_must_be_kebab_case_and_unique(self):
+        item = self.load_item("example")
+        item["aliases"] = ["Text Field"]
+        self.save_item("example", item)
+        self.assert_rejects("alias must be kebab-case: Text Field")
+
+        item["aliases"] = ["text-field", "text-field"]
+        self.save_item("example", item)
+        self.assert_rejects("aliases entries must be unique")
+
     def test_installable_item_with_empty_files_is_rejected(self):
         item = self.load_item("example")
         item["files"] = []

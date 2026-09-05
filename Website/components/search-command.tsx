@@ -56,7 +56,7 @@ export function SearchCommand() {
                 .map((item) => (
                   <CommandItem
                     key={item.name}
-                    value={`${item.name} ${item.description} ${item.tags.join(" ")}`}
+                    value={`${item.name} ${item.aliases.join(" ")} ${item.description} ${item.tags.join(" ")}`}
                     onSelect={() => {
                       setOpen(false)
                       router.push(`/items/${item.name}/`)

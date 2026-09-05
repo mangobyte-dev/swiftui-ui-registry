@@ -126,7 +126,7 @@
         },
         {
           "name": "item",
-          "version": "0.1.1"
+          "version": "0.2.0"
         },
         {
           "name": "skeleton",
@@ -849,6 +849,10 @@
           "version": "0.2.0"
         },
         {
+          "name": "avatar",
+          "version": "0.2.0"
+        },
+        {
           "name": "separator",
           "version": "0.2.0"
         },
@@ -858,7 +862,7 @@
         },
         {
           "name": "item",
-          "version": "0.1.1"
+          "version": "0.2.0"
         },
         {
           "name": "kbd",
@@ -935,6 +939,10 @@
           "version": "0.2.0"
         },
         {
+          "name": "avatar",
+          "version": "0.2.0"
+        },
+        {
           "name": "separator",
           "version": "0.2.0"
         },
@@ -944,7 +952,7 @@
         },
         {
           "name": "item",
-          "version": "0.1.1"
+          "version": "0.2.0"
         },
         {
           "name": "kbd",
@@ -1444,7 +1452,7 @@
     {
       "name": "item",
       "kind": "component",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "description": "Composes a generic content row with leading media, a title and optional description, and a trailing accessory while leaving selection to the call site.",
       "usage": "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
       "docs": null,
@@ -1465,10 +1473,15 @@
         "iOS 26.0+"
       ],
       "dependencies": [
+        "avatar",
         "separator",
         "badge"
       ],
       "installOrder": [
+        {
+          "name": "avatar",
+          "version": "0.2.0"
+        },
         {
           "name": "separator",
           "version": "0.2.0"
@@ -1479,7 +1492,7 @@
         },
         {
           "name": "item",
-          "version": "0.1.1"
+          "version": "0.2.0"
         }
       ],
       "accessibility": [
@@ -1487,11 +1500,11 @@
         "Selection belongs to a native Button or NavigationLink at the call site, which combines the row into its own label.",
         "Keeps the 44 point minimum row height and a rectangular content shape.",
         "Uses system text styles and the semantic spacing tokens; the description wraps rather than truncates.",
-        "A control placed in the accessory with labelsHidden must restore its label with accessibilityLabel; hiding the visual label also removes the spoken one."
+        "To make a row a switch, put the row in the Toggle's label so its words are part of the control and are spoken once; a control placed in the accessory with labelsHidden must restore its label with accessibilityLabel."
       ],
       "sourcePath": "Registry/sources/components/ItemRow.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/ItemRow.swift",
-      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A generic content row: leading media, a title with an optional description,\n/// and a trailing accessory. Selection stays at the call site: wrap the row in\n/// a native `Button` or `NavigationLink`, which combines its children into one\n/// accessible label. The row owns spacing, the minimum row height, and the\n/// title and description hierarchy.\npublic struct ItemRow<Media: View, Accessory: View>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let title: Text\n    private let description: Text?\n    private let media: Media\n    private let accessory: Accessory\n\n    public init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder media: () -> Media,\n        @ViewBuilder accessory: () -> Accessory\n    ) {\n        self.title = title\n        self.description = description\n        self.media = media()\n        self.accessory = accessory()\n    }\n\n    public var body: some View {\n        HStack(alignment: .center, spacing: theme.metrics.standardSpacing) {\n            media\n\n            VStack(alignment: .leading, spacing: theme.metrics.compactSpacing / 2) {\n                title\n                    .font(.body.weight(.medium))\n                if let description {\n                    description\n                        .font(.footnote)\n                        .foregroundStyle(.secondary)\n                }\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .accessibilityElement(children: .combine)\n\n            accessory\n        }\n        .frame(minHeight: RegistryMetrics.minimumHitSize)\n        .contentShape(Rectangle())\n    }\n}\n\npublic extension ItemRow where Media == EmptyView {\n    init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder accessory: () -> Accessory\n    ) {\n        self.init(title: title, description: description, media: { EmptyView() }, accessory: accessory)\n    }\n}\n\npublic extension ItemRow where Accessory == EmptyView {\n    init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder media: () -> Media\n    ) {\n        self.init(title: title, description: description, media: media, accessory: { EmptyView() })\n    }\n}\n\npublic extension ItemRow where Media == EmptyView, Accessory == EmptyView {\n    init(title: Text, description: Text? = nil) {\n        self.init(title: title, description: description, media: { EmptyView() }, accessory: { EmptyView() })\n    }\n}\n\nprivate struct ItemRowPreview: View {\n    @Environment(\\.registryTheme) private var theme\n\n    var body: some View {\n        VStack(spacing: 0) {\n            Button {} label: {\n                ItemRow(\n                    title: Text(\"Mishmash Bakery\"),\n                    description: Text(\"Card ending 4021 · Today, 09:41\")\n                ) {\n                    Image(systemName: \"cup.and.saucer.fill\")\n                        .foregroundStyle(.tint)\n                        .frame(width: 40, height: 40)\n                        .background(.tint.opacity(0.12), in: Circle())\n                        .accessibilityHidden(true)\n                } accessory: {\n                    Image(systemName: \"chevron.forward\")\n                        .font(.footnote.weight(.semibold))\n                        .foregroundStyle(.tertiary)\n                        .accessibilityHidden(true)\n                }\n                .padding(.vertical, theme.metrics.standardSpacing)\n            }\n            .buttonStyle(.plain)\n\n            Divider().registrySeparator()\n\n            ItemRow(\n                title: Text(\"Statement ready\"),\n                description: Text(\"August 2026\"),\n                accessory: {\n                    Text(\"New\")\n                        .registryBadge()\n                }\n            )\n            .padding(.vertical, theme.metrics.standardSpacing)\n\n            Divider().registrySeparator()\n\n            ItemRow(\n                title: Text(\"Spending limit\"),\n                description: Text(\"Applies to online purchases.\"),\n                accessory: {\n                    // labelsHidden also drops the accessibility label; restore it.\n                    Toggle(\"Spending limit\", isOn: .constant(true))\n                        .labelsHidden()\n                        .accessibilityLabel(\"Spending limit\")\n                }\n            )\n            .padding(.vertical, theme.metrics.standardSpacing)\n        }\n        .padding(.horizontal, theme.metrics.standardSpacing)\n        .registrySurface()\n        .padding()\n    }\n}\n\n#Preview(\"Item Row\") {\n    ItemRowPreview().tint(.indigo)\n}\n\n#Preview(\"Item Row Dark\") {\n    ItemRowPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Item Row Right to Left\") {\n    ItemRowPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Item Row Accessibility Size\") {\n    ItemRowPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A generic content row: leading media, a title with an optional description,\n/// and a trailing accessory. Selection stays at the call site: wrap the row in\n/// a native `Button` or `NavigationLink`, which combines its children into one\n/// accessible label. The row owns spacing, the minimum row height, and the\n/// title and description hierarchy.\npublic struct ItemRow<Media: View, Accessory: View>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let title: Text\n    private let description: Text?\n    private let media: Media\n    private let accessory: Accessory\n\n    public init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder media: () -> Media,\n        @ViewBuilder accessory: () -> Accessory\n    ) {\n        self.title = title\n        self.description = description\n        self.media = media()\n        self.accessory = accessory()\n    }\n\n    public var body: some View {\n        HStack(alignment: .center, spacing: theme.metrics.standardSpacing) {\n            media\n\n            VStack(alignment: .leading, spacing: theme.metrics.compactSpacing / 2) {\n                title\n                    .font(.body.weight(.medium))\n                if let description {\n                    description\n                        .font(.footnote)\n                        .foregroundStyle(.secondary)\n                }\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .accessibilityElement(children: .combine)\n\n            accessory\n        }\n        .frame(minHeight: RegistryMetrics.minimumHitSize)\n        .contentShape(Rectangle())\n    }\n}\n\npublic extension ItemRow where Media == EmptyView {\n    init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder accessory: () -> Accessory\n    ) {\n        self.init(title: title, description: description, media: { EmptyView() }, accessory: accessory)\n    }\n}\n\npublic extension ItemRow where Accessory == EmptyView {\n    init(\n        title: Text,\n        description: Text? = nil,\n        @ViewBuilder media: () -> Media\n    ) {\n        self.init(title: title, description: description, media: media, accessory: { EmptyView() })\n    }\n}\n\npublic extension ItemRow where Media == EmptyView, Accessory == EmptyView {\n    init(title: Text, description: Text? = nil) {\n        self.init(title: title, description: description, media: { EmptyView() }, accessory: { EmptyView() })\n    }\n}\n\nprivate struct ItemRowPreview: View {\n    @Environment(\\.registryTheme) private var theme\n\n    var body: some View {\n        VStack(spacing: 0) {\n            Button {} label: {\n                ItemRow(\n                    title: Text(\"Mishmash Bakery\"),\n                    description: Text(\"Card ending 4021 · Today, 09:41\")\n                ) {\n                    Avatar(initials: \"MB\", accessibilityLabel: Text(verbatim: \"Mishmash Bakery\"))\n                } accessory: {\n                    Image(systemName: \"chevron.forward\")\n                        .font(.footnote.weight(.semibold))\n                        .foregroundStyle(.tertiary)\n                        .accessibilityHidden(true)\n                }\n                .padding(.vertical, theme.metrics.standardSpacing)\n            }\n            .buttonStyle(.plain)\n\n            Divider().registrySeparator()\n\n            ItemRow(\n                title: Text(\"Statement ready\"),\n                description: Text(\"August 2026\"),\n                accessory: {\n                    Text(\"New\")\n                        .registryBadge()\n                }\n            )\n            .padding(.vertical, theme.metrics.standardSpacing)\n\n            Divider().registrySeparator()\n\n            // A switch row: the row is the toggle's label, so its words are\n            // part of the control and are spoken once.\n            Toggle(isOn: .constant(true)) {\n                ItemRow(\n                    title: Text(\"Spending limit\"),\n                    description: Text(\"Applies to online purchases.\")\n                )\n            }\n            .toggleStyle(.switch)\n            .padding(.vertical, theme.metrics.standardSpacing)\n        }\n        .padding(.horizontal, theme.metrics.standardSpacing)\n        .registrySurface()\n        .padding()\n    }\n}\n\n#Preview(\"Item Row\") {\n    ItemRowPreview().tint(.indigo)\n}\n\n#Preview(\"Item Row Dark\") {\n    ItemRowPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Item Row Right to Left\") {\n    ItemRowPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Item Row Accessibility Size\") {\n    ItemRowPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Item Row",
       "screenshots": {
         "light": "/images/items/item-light.png",

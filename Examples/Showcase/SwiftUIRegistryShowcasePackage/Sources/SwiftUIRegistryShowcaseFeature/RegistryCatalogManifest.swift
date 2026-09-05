@@ -244,10 +244,10 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "item",
             kind: "component",
-            version: "0.1.1",
+            version: "0.2.0",
             description: "Composes a generic content row with leading media, a title and optional description, and a trailing accessory while leaving selection to the call site.",
             usage: "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
-            dependencies: ["separator", "badge"],
+            dependencies: ["avatar", "separator", "badge"],
             tags: ["item", "row", "list", "cell", "media", "shadcn"]
         ),
         CatalogEntry(

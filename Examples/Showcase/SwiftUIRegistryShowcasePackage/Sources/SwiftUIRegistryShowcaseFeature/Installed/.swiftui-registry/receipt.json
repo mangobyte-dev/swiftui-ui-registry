@@ -44,10 +44,10 @@
     },
     "InlineAlert.swift": {
       "base": "bases/ea8c868eda9aec86e5cd2571ffc9a41b5baccc19ce3f9847eb287a16dc368901.base",
-      "installedDigest": "sha256:b7637f74c12323191f52ecfc8eec728190d60b46344b7d4636761205b2dfe37c",
+      "installedDigest": "sha256:cd346c73b16a71dc0d79768e4b25cf63e4fcbf6714e19ff8da3fb53ffac2f3c5",
       "item": "alert",
-      "sourceDigest": "sha256:b7637f74c12323191f52ecfc8eec728190d60b46344b7d4636761205b2dfe37c",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:cd346c73b16a71dc0d79768e4b25cf63e4fcbf6714e19ff8da3fb53ffac2f3c5",
+      "version": "0.1.1"
     },
     "InputGroup.swift": {
       "base": "bases/39bb43f0f12caa8503b581f1bad9025c5e1b4ec0920f535456e88ab3b8b99abe.base",
@@ -285,7 +285,7 @@
       "registryDependencies": [
         "button"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "auth-form": {
       "packageDependencies": [

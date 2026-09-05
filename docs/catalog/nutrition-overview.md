@@ -62,7 +62,7 @@ NutritionOverview(
 - Kind: block
 - Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [metric-card](metric-card.md) 0.2.0, [macro-progress](macro-progress.md) 0.2.0, [nutrition-overview](nutrition-overview.md) 0.2.0
+- Installs in order: [metric-card](metric-card.md) 0.2.0, [macro-progress](macro-progress.md) 0.3.0, [nutrition-overview](nutrition-overview.md) 0.2.0
 - Accessibility contract:
   - Uses native Button and ProgressView semantics.
   - Uses system text styles and adaptive macro rows for Dynamic Type.

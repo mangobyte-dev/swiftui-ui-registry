@@ -58,15 +58,13 @@ private struct MacroValue: View {
     let target: Text
 
     var body: some View {
-        HStack(spacing: 3) {
-            value
-                .fontWeight(.semibold)
-            Text("of")
-                .foregroundStyle(.secondary)
-            target
-                .foregroundStyle(.secondary)
-        }
+        // One localized phrase, so translators can reorder it.
+        Text(
+            "\(value.fontWeight(.semibold).foregroundStyle(.primary)) of \(target)",
+            comment: "Progress toward a target: the first value is the amount so far, the second is the target"
+        )
         .font(.subheadline)
+        .foregroundStyle(.secondary)
     }
 }
 

@@ -1619,7 +1619,7 @@
     {
       "name": "macro-progress",
       "kind": "component",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "description": "Displays prepared nutrition progress with a native progress view and adaptive value layout.",
       "usage": "MacroProgress(\n    \"Protein\",\n    value: Text(\"96 g\"),\n    target: Text(\"130 g\"),\n    progress: 96.0 / 130.0,\n    systemImage: \"fish.fill\",\n    tint: .indigo\n)",
       "docs": null,
@@ -1637,17 +1637,17 @@
       "installOrder": [
         {
           "name": "macro-progress",
-          "version": "0.2.0"
+          "version": "0.3.0"
         }
       ],
       "accessibility": [
         "Uses native ProgressView semantics.",
         "Uses ViewThatFits to move prepared values below the label when horizontal space is constrained.",
-        "Combines the label and prepared values without relying on tint to communicate meaning."
+        "Combines the label and one localized progress phrase without relying on tint to communicate meaning."
       ],
       "sourcePath": "Registry/sources/components/MacroProgress.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/MacroProgress.swift",
-      "source": "import Foundation\nimport SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A source-owned nutrition progress row with prepared display values.\npublic struct MacroProgress: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let name: LocalizedStringResource\n    private let value: Text\n    private let target: Text\n    private let progress: Double\n    private let systemImage: String\n    private let tint: Color\n\n    public init(\n        _ name: LocalizedStringResource,\n        value: Text,\n        target: Text,\n        progress: Double,\n        systemImage: String,\n        tint: Color\n    ) {\n        self.name = name\n        self.value = value\n        self.target = target\n        self.progress = progress\n        self.systemImage = systemImage\n        self.tint = tint\n    }\n\n    public var body: some View {\n        VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n            ViewThatFits(in: .horizontal) {\n                HStack(spacing: theme.metrics.compactSpacing) {\n                    Label(name, systemImage: systemImage)\n                        .font(.headline)\n                    Spacer(minLength: theme.metrics.standardSpacing)\n                    MacroValue(value: value, target: target)\n                }\n\n                VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n                    Label(name, systemImage: systemImage)\n                        .font(.headline)\n                    MacroValue(value: value, target: target)\n                }\n            }\n\n            ProgressView(value: min(max(progress, 0), 1))\n                .tint(tint)\n        }\n        .accessibilityElement(children: .combine)\n    }\n}\n\nprivate struct MacroValue: View {\n    let value: Text\n    let target: Text\n\n    var body: some View {\n        HStack(spacing: 3) {\n            value\n                .fontWeight(.semibold)\n            Text(\"of\")\n                .foregroundStyle(.secondary)\n            target\n                .foregroundStyle(.secondary)\n        }\n        .font(.subheadline)\n    }\n}\n\nprivate struct MacroProgressPreview: View {\n    var body: some View {\n        MacroProgress(\n            \"Protein\",\n            value: Text(96, format: .number),\n            target: Text(130, format: .number),\n            progress: 96.0 / 130.0,\n            systemImage: \"fish.fill\",\n            tint: .indigo\n        )\n        .padding()\n    }\n}\n\n#Preview(\"Macro Progress\") {\n    MacroProgressPreview()\n}\n\n#Preview(\"Macro Progress Dark\") {\n    MacroProgressPreview().preferredColorScheme(.dark)\n}\n\n#Preview(\"Macro Progress Accessibility Size\") {\n    MacroProgressPreview().dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import Foundation\nimport SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A source-owned nutrition progress row with prepared display values.\npublic struct MacroProgress: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let name: LocalizedStringResource\n    private let value: Text\n    private let target: Text\n    private let progress: Double\n    private let systemImage: String\n    private let tint: Color\n\n    public init(\n        _ name: LocalizedStringResource,\n        value: Text,\n        target: Text,\n        progress: Double,\n        systemImage: String,\n        tint: Color\n    ) {\n        self.name = name\n        self.value = value\n        self.target = target\n        self.progress = progress\n        self.systemImage = systemImage\n        self.tint = tint\n    }\n\n    public var body: some View {\n        VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n            ViewThatFits(in: .horizontal) {\n                HStack(spacing: theme.metrics.compactSpacing) {\n                    Label(name, systemImage: systemImage)\n                        .font(.headline)\n                    Spacer(minLength: theme.metrics.standardSpacing)\n                    MacroValue(value: value, target: target)\n                }\n\n                VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n                    Label(name, systemImage: systemImage)\n                        .font(.headline)\n                    MacroValue(value: value, target: target)\n                }\n            }\n\n            ProgressView(value: min(max(progress, 0), 1))\n                .tint(tint)\n        }\n        .accessibilityElement(children: .combine)\n    }\n}\n\nprivate struct MacroValue: View {\n    let value: Text\n    let target: Text\n\n    var body: some View {\n        // One localized phrase, so translators can reorder it.\n        Text(\n            \"\\(value.fontWeight(.semibold).foregroundStyle(.primary)) of \\(target)\",\n            comment: \"Progress toward a target: the first value is the amount so far, the second is the target\"\n        )\n        .font(.subheadline)\n        .foregroundStyle(.secondary)\n    }\n}\n\nprivate struct MacroProgressPreview: View {\n    var body: some View {\n        MacroProgress(\n            \"Protein\",\n            value: Text(96, format: .number),\n            target: Text(130, format: .number),\n            progress: 96.0 / 130.0,\n            systemImage: \"fish.fill\",\n            tint: .indigo\n        )\n        .padding()\n    }\n}\n\n#Preview(\"Macro Progress\") {\n    MacroProgressPreview()\n}\n\n#Preview(\"Macro Progress Dark\") {\n    MacroProgressPreview().preferredColorScheme(.dark)\n}\n\n#Preview(\"Macro Progress Accessibility Size\") {\n    MacroProgressPreview().dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Macro Progress",
       "screenshots": {
         "light": "/images/items/macro-progress-light.png",
@@ -1790,7 +1790,7 @@
         },
         {
           "name": "macro-progress",
-          "version": "0.2.0"
+          "version": "0.3.0"
         },
         {
           "name": "nutrition-overview",

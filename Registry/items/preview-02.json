@@ -38,6 +38,10 @@
     {
       "source": "sources/blocks/Preview02/CoverArt.swift",
       "target": "Preview02/CoverArt.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/DividendIncome.swift",
+      "target": "Preview02/DividendIncome.swift"
     }
   ],
   "registryDependencies": [

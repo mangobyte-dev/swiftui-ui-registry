@@ -33,6 +33,7 @@ public struct PreviewWall02: View {
         AlbumCard()
         CardOverview()
         CatalogToolbar()
+        ClaimableBalance()
     }
 
     private var columns: [GridItem] {

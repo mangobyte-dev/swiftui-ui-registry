@@ -59,6 +59,7 @@ public struct PreviewWall02: View {
         SavingsProgress()
         SavingsTargets()
         SidebarNav()
+        SocialLinks()
     }
 
     private var columns: [GridItem] {

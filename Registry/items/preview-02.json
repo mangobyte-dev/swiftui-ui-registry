@@ -130,6 +130,10 @@
     {
       "source": "sources/blocks/Preview02/SidebarNav.swift",
       "target": "Preview02/SidebarNav.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/SocialLinks.swift",
+      "target": "Preview02/SocialLinks.swift"
     }
   ],
   "registryDependencies": [

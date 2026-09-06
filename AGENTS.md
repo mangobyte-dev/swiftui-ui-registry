@@ -53,6 +53,7 @@ On conflict: state beats archives, the more recent dated record wins between arc
 ## Environment pins
 
 - Visual contract and UI tests run on the light-mode iPhone 17, iOS 27.0 simulator; on this machine its UDID is `1807166B-C557-4F6B-B177-D5F3F701CBD7` (`docs/visual-testing.md`)
+- Captures launch the app with `-AppleLanguages (en) -AppleLocale en_US`, so dates, currency, and the calendar in an image never depend on a simulator's region; the iPad Pro 13-inch used for the wide block captures is set to en_US as well because the status bar date comes from the device (it was ar_SA until 2026-09-06)
 - Toolchain: Xcode 27.0, Swift 6.4. No iOS 26 simulator runtime is installed, so floor-26 claims rest on compilation plus iOS 27 runtime evidence
 - Package identity for consumers: `swiftui-ui-registry` at github.com/mangobyte-dev/swiftui-ui-registry. No tag is published yet; the first must be `0.1.0` so declared floors resolve (`docs/registry-spec.md`)
 

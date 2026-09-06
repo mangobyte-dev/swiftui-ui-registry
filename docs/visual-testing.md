@@ -43,7 +43,7 @@ GOLDEN-CHANGE (2026-09-05): `command-light.png` was added for the Stage 4 block.
 
 ## Item captures
 
-Per-item light and dark images under `docs/images/items/` and the preset images under `docs/images/themes/` are documentation captures produced by `Scripts/capture_previews.py` from the Showcase's `-item` launch on the same pinned simulator. They feed the catalog and the website (copied into `Website/public/images/` by the site-data generator) and are human review evidence, not test baselines
+Every capture launches the app with `-AppleLanguages (en) -AppleLocale en_US`, so the locale is part of the capture rather than of the simulator; the iPad used for the wide block captures is also set to en_US because the status bar date is the device's own (its region was ar_SA until 2026-09-06, which put Hijri dates and spaced currency into the first wall captures). Per-item light and dark images under `docs/images/items/` and the preset images under `docs/images/themes/` are documentation captures produced by `Scripts/capture_previews.py` from the Showcase's `-item` launch on the same pinned simulator. They feed the catalog and the website (copied into `Website/public/images/` by the site-data generator) and are human review evidence, not test baselines
 
 GOLDEN-CHANGE (2026-09-05, threshold): the comparison moved from 96 by 192 at 2 percent to 192 by 384 at 1.5 percent so a whole tab bar or navigation bar can no longer hide inside the tolerance. All five references passed at the new setting without recapture
 

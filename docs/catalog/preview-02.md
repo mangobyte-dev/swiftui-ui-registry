@@ -51,3 +51,4 @@ PreviewWall02()
 - Source:
   - [sources/blocks/Preview02/PreviewWall02.swift](../../Registry/sources/blocks/Preview02/PreviewWall02.swift), with the `Preview Wall 02` Xcode preview
   - [sources/blocks/Preview02/AccountAccess.swift](../../Registry/sources/blocks/Preview02/AccountAccess.swift)
+  - [sources/blocks/Preview02/AlbumCard.swift](../../Registry/sources/blocks/Preview02/AlbumCard.swift)

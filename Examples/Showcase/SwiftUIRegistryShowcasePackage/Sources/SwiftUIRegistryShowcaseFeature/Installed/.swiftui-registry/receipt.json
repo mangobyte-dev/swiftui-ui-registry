@@ -357,11 +357,18 @@
       "sourceDigest": "sha256:92ce39e97756665e8c27ee942d15a3ca98e591ec7727f8265a77297c7c317b88",
       "version": "0.1.0"
     },
+    "Preview02/AlbumCard.swift": {
+      "base": "bases/7c5e174fc722155c3f41659866713af7143670679efaa8cf240196f699962423.base",
+      "installedDigest": "sha256:c09b46168d8d52651f5f7fe03e5fcad17d0f33dc180b33b5c9a4e983ab40dc89",
+      "item": "preview-02",
+      "sourceDigest": "sha256:c09b46168d8d52651f5f7fe03e5fcad17d0f33dc180b33b5c9a4e983ab40dc89",
+      "version": "0.1.0"
+    },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
-      "installedDigest": "sha256:97dbf585069f0b126f6aea6c37380f29a325eba347f2ce3bf9c27b1cf36959ec",
+      "installedDigest": "sha256:b844bd774c922738f8829456fd3c0439907bd75d0c2c4ca2c35179a03c5d3bf1",
       "item": "preview-02",
-      "sourceDigest": "sha256:97dbf585069f0b126f6aea6c37380f29a325eba347f2ce3bf9c27b1cf36959ec",
+      "sourceDigest": "sha256:b844bd774c922738f8829456fd3c0439907bd75d0c2c4ca2c35179a03c5d3bf1",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -1036,7 +1043,9 @@
         "field",
         "input",
         "button",
-        "item"
+        "item",
+        "badge",
+        "separator"
       ],
       "version": "0.1.0"
     },

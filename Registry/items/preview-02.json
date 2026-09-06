@@ -14,6 +14,10 @@
     {
       "source": "sources/blocks/Preview02/AccountAccess.swift",
       "target": "Preview02/AccountAccess.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/AlbumCard.swift",
+      "target": "Preview02/AlbumCard.swift"
     }
   ],
   "registryDependencies": [
@@ -21,7 +25,9 @@
     "field",
     "input",
     "button",
-    "item"
+    "item",
+    "badge",
+    "separator"
   ],
   "packageDependencies": [
     {

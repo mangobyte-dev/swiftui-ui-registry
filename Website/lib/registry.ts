@@ -61,5 +61,5 @@ export function asset(path: string): string {
 }
 
 export function installCommand(name: string): string {
-  return `python3 Scripts/install.py ${name} --destination Sources/YourFeature/Components`
+  return `swiftui-registry install ${name} --destination Sources/YourFeature/Components`
 }

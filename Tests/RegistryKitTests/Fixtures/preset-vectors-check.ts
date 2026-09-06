@@ -1,8 +1,10 @@
-// Runs under `node --experimental-strip-types` from test_preset.py: proves the
-// website's codec reproduces every pinned vector in both directions and
-// refuses what the reference refuses. Prints one JSON line per check.
+// Runs under `node --experimental-strip-types` from the RegistryKit test
+// `websiteCodecReproducesEveryVector`: proves the website's codec reproduces
+// every pinned vector in both directions and refuses what the reference
+// refuses. Prints one JSON array with one entry per check; the Swift test
+// compares each entry against RegistryKit's codec.
 import { readFileSync } from "node:fs"
-import { decodePreset, encodePreset, isPresetCode, presetCodeIn, swiftSource } from "../../Website/lib/preset.ts"
+import { decodePreset, encodePreset, isPresetCode, presetCodeIn, swiftSource } from "../../../Website/lib/preset.ts"
 
 const [vectorsPath] = process.argv.slice(2)
 const document = JSON.parse(readFileSync(vectorsPath, "utf8"))

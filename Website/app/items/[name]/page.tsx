@@ -83,7 +83,7 @@ export default async function ItemPage({ params }: { params: Promise<Params> }) 
           </Alert>
         ) : (
           <>
-            <p className="text-sm text-muted-foreground">From the root of a clone of the registry:</p>
+            <p className="text-sm text-muted-foreground">With the swiftui-registry tool built from a clone of the registry:</p>
             <CodeBlock language="bash" code={installCommand(item.name)} />
             <p className="text-sm text-muted-foreground">
               Installs in order:{" "}

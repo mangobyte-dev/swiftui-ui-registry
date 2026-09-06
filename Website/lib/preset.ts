@@ -1,8 +1,9 @@
 // Preset codes: a RegistryTheme as a short shareable string.
 //
-// Mirrors Scripts/preset.py, the reference implementation; the format rules
-// live there and Tests/RegistryTests/preset_vectors.json pins codes both must
-// reproduce. Fields pack little-endian in FIELDS order into one integer,
+// Mirrors RegistryKit's Preset.swift, the reference implementation behind
+// `swiftui-registry preset`; the format rules live in docs/registry-spec.md
+// and Registry/preset_vectors.json pins codes both must reproduce. Fields
+// pack little-endian in FIELDS order into one integer,
 // written in base62 behind a version letter. Numeric fields store their
 // slider-grid index, so a code is exact on the tuning panel's grid.
 
@@ -296,7 +297,7 @@ export function swiftSource(tuning: PresetTuning): string {
 }
 
 export function applyCommand(code: string): string {
-  return `python3 Scripts/preset.py apply ${code} --destination Sources/YourFeature/Components`
+  return `swiftui-registry preset apply ${code} --destination Sources/YourFeature/Components`
 }
 
 // MARK: Presets and colors

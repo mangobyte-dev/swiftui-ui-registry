@@ -1,5 +1,5 @@
 {
-  "about": "Pinned preset codes every codec must reproduce: Scripts/preset.py, Website/lib/preset.ts, and the Showcase's ThemePreset.swift. Written once from Scripts/preset.py; a change here is a format change and needs a new version letter (see the rules in Scripts/preset.py).",
+  "about": "Pinned preset codes every codec must reproduce: RegistryKit's Preset.swift behind swiftui-registry preset, Website/lib/preset.ts, and the Showcase's ThemePreset.swift. Written once from the original Python reference; a change here is a format change and needs a new version letter (see the rules in docs/registry-spec.md, Preset codes).",
   "alphabet": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
   "version": "a",
   "maxLength": 22,

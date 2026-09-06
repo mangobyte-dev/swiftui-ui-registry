@@ -2,10 +2,10 @@ import Foundation
 import Testing
 @testable import SwiftUIRegistryShowcaseFeature
 
-/// The Showcase speaks the same preset codes as `Scripts/preset.py` and the
-/// website: every vector pinned by the Python reference must encode and
-/// decode identically here, or a code copied from the Tune panel would mean
-/// something else on the website.
+/// The Showcase speaks the same preset codes as `swiftui-registry preset` and
+/// the website: every vector pinned in `Registry/preset_vectors.json` must
+/// encode and decode identically here, or a code copied from the Tune panel
+/// would mean something else on the website.
 struct ThemePresetTests {
     struct Document: Decodable {
         let vectors: [Vector]
@@ -39,7 +39,7 @@ struct ThemePresetTests {
     static let vectors: [Vector] = {
         var url = URL(fileURLWithPath: #filePath)
         for _ in 0..<6 { url.deleteLastPathComponent() }
-        url.append(path: "Tests/RegistryTests/preset_vectors.json")
+        url.append(path: "Registry/preset_vectors.json")
         let data = try! Data(contentsOf: url)
         return try! JSONDecoder().decode(Document.self, from: data).vectors
     }()

@@ -647,7 +647,7 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["No preset code or RegistryTheme( initializer found in the pasted text."].waitForExistence(timeout: 2))
     }
 
-    /// Codes from `Tests/RegistryTests/preset_vectors.json`: Amber (yellow
+    /// Codes from `Registry/preset_vectors.json`: Amber (yellow
     /// accent, dark label) and Graphite (primary accent).
     @MainActor
     func testTuningStaysUpWhileBrowsingAndSpeaksPresetCodes() {

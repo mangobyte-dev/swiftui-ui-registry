@@ -19,7 +19,10 @@ Usage (from the repository root):
     python3 Scripts/capture_previews.py --preset a13GkaOXWwIa --output /tmp/presets  # one preset code, both appearances
 
 `--app` points at a built SwiftUIRegistryShowcase.app; without it the script
-builds one with xcodebuild into a scratch derived-data directory.
+builds one with xcodebuild into a scratch derived-data directory. `--tool`
+points at a built `swiftui-registry` binary, which lists and validates the
+items and checks a preset code; without it the script builds the tool in
+release from this clone.
 """
 
 from __future__ import annotations
@@ -35,11 +38,6 @@ import zlib
 from pathlib import Path
 
 _SCRIPTS = Path(__file__).resolve().parent
-if str(_SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(_SCRIPTS))
-
-from install import Installer, RegistryError
-from preset import is_preset_code
 
 REPOSITORY_ROOT = _SCRIPTS.parent
 PINNED_UDID = "1807166B-C557-4F6B-B177-D5F3F701CBD7"
@@ -60,6 +58,31 @@ BOTTOM_MARGIN_POINTS = 12
 
 def run(command: list[str], **kwargs) -> subprocess.CompletedProcess:
     return subprocess.run(command, check=True, capture_output=True, text=True, **kwargs)
+
+
+def registry_tool(explicit: Path | None) -> Path:
+    """The `swiftui-registry` tool, built in release from this clone unless given."""
+    if explicit:
+        return explicit
+    print("building swiftui-registry...", flush=True)
+    package = ["swift", "build", "--package-path", str(REPOSITORY_ROOT), "-c", "release"]
+    run(package + ["--product", "swiftui-registry"])
+    return Path(run(package + ["--show-bin-path"]).stdout.strip()) / "swiftui-registry"
+
+
+def catalog(tool: Path) -> dict[str, str]:
+    """Every item's kind by name, loaded through the tool's validated registry path."""
+    process = subprocess.run(
+        [str(tool), "search", "--registry", str(REPOSITORY_ROOT), "--format", "json"],
+        capture_output=True, text=True,
+    )
+    if process.returncode != 0:
+        raise RuntimeError(process.stderr.strip() or f"{tool} search exited {process.returncode}")
+    return {item["name"]: item["kind"] for item in json.loads(process.stdout)}
+
+
+def is_preset_code(tool: Path, code: str) -> bool:
+    return subprocess.run([str(tool), "preset", "url", code], capture_output=True).returncode == 0
 
 
 def build_app(derived_data: Path, udid: str) -> Path:
@@ -217,7 +240,7 @@ def record_screenshots(names: list[str]) -> None:
             f"docs/images/items/{name}-{appearance}.png" for appearance in APPEARANCES
         ]
         path.write_text(json.dumps(item, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print("metadata updated; run generate_catalog.py, generate_showcase_manifest.py, and generate_site_data.py")
+    print("metadata updated; run swiftui-registry generate catalog, showcase-manifest, and site-data")
 
 
 def main() -> int:
@@ -225,6 +248,7 @@ def main() -> int:
     parser.add_argument("items", nargs="*", help="Item names to capture (default: every item)")
     parser.add_argument("--udid", default=PINNED_UDID)
     parser.add_argument("--app", type=Path, help="A built SwiftUIRegistryShowcase.app")
+    parser.add_argument("--tool", type=Path, help="A built swiftui-registry binary (default: swift build -c release from this clone)")
     parser.add_argument("--themes", action="store_true", help="Capture the theme presets instead of items")
     parser.add_argument("--blocks", action="store_true", help="Capture every block on the iPad into docs/images/blocks")
     parser.add_argument("--preset", metavar="CODE", help="Capture the theme preview under a preset code instead of items")
@@ -233,14 +257,17 @@ def main() -> int:
     arguments = parser.parse_args()
 
     try:
-        installer = Installer(REPOSITORY_ROOT)
-    except RegistryError as error:
+        tool = registry_tool(arguments.tool)
+        kinds = catalog(tool)
+    except subprocess.CalledProcessError as error:
+        parser.error(error.stderr or str(error))
+    except RuntimeError as error:
         parser.error(str(error))
-    names = arguments.items or sorted(installer.items)
-    unknown = [name for name in names if name not in installer.items]
+    names = arguments.items or sorted(kinds)
+    unknown = [name for name in names if name not in kinds]
     if unknown:
         parser.error(f"unknown items: {', '.join(unknown)}")
-    if arguments.preset and not is_preset_code(arguments.preset):
+    if arguments.preset and not is_preset_code(tool, arguments.preset):
         parser.error(f"invalid preset code: {arguments.preset}")
     if arguments.preset and arguments.output is None:
         parser.error("--preset needs --output")
@@ -254,7 +281,7 @@ def main() -> int:
         run(["xcrun", "simctl", "install", arguments.udid, str(app)])
 
         if arguments.blocks:
-            blocks = [name for name in names if installer.items[name]["kind"] == "block"]
+            blocks = [name for name in names if kinds[name] == "block"]
             for name in blocks:
                 for appearance in APPEARANCES:
                     destination = BLOCK_OUTPUT / f"{name}-ipad-{appearance}.png"

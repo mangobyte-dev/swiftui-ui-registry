@@ -140,7 +140,7 @@ public struct MCPServer {
         ],
       ]
     }
-    // The Python adapter reloads and validates for each call.
+    // Reload and validate on every call so metadata edits are visible without a restart.
     let installer = try Installer(root: root)
     let registry = installer.registry
     if tool == "search_items" {

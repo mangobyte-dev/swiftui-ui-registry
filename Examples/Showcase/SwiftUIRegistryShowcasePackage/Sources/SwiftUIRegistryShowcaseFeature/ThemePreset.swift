@@ -1,10 +1,11 @@
 import Foundation
 
 /// Preset codes: the tuning knobs as a short shareable string, the same code
-/// `Scripts/preset.py` and the website's `/create` page speak. Fields pack
-/// little-endian in the reference order into one integer written in base62
-/// behind a version letter; numeric knobs store their slider-grid index. The
-/// format rules and the pinned vectors live with the Python reference.
+/// `swiftui-registry preset` and the website's `/create` page speak. Fields
+/// pack little-endian in the reference order into one integer written in
+/// base62 behind a version letter; numeric knobs store their slider-grid
+/// index. The format rules live in `docs/registry-spec.md` and the pinned
+/// vectors in `Registry/preset_vectors.json`.
 extension ThemeTuning {
     static let presetVersion: Character = "a"
     private static let presetAlphabet = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")

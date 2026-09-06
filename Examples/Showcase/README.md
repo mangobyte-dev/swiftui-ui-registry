@@ -2,7 +2,7 @@
 
 This universal iOS app is the compile, integration, and visual consumer for the registry, and the place to see and tune every item
 
-The feature package depends only on `SwiftUIRegistryFoundations`. Product components and blocks under `Sources/SwiftUIRegistryShowcaseFeature/Installed/` are copied from the registry by `Scripts/install.py`; the receipt and non-Swift base snapshots live under `.swiftui-registry/` there
+The feature package depends only on `SwiftUIRegistryFoundations`. Product components and blocks under `Sources/SwiftUIRegistryShowcaseFeature/Installed/` are copied from the registry by `swiftui-registry install`; the receipt and non-Swift base snapshots live under `.swiftui-registry/` there
 
 ## What it shows
 
@@ -21,8 +21,8 @@ From the repository root:
 
 ```sh
 DEST=Examples/Showcase/SwiftUIRegistryShowcasePackage/Sources/SwiftUIRegistryShowcaseFeature/Installed
-python3 Scripts/install.py activity-feed --destination "$DEST" --force
-python3 Scripts/generate_showcase_manifest.py
+swift run swiftui-registry install activity-feed --destination "$DEST" --force
+swift run swiftui-registry generate showcase-manifest
 ```
 
 Build with the shared `SwiftUIRegistryShowcase` scheme in `SwiftUIRegistryShowcase.xcworkspace`. Run the UI suite on the iPhone 17 iOS 27.0 simulator for the pinned visual contract (`docs/visual-testing.md`)

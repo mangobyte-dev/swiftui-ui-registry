@@ -399,11 +399,18 @@
       "sourceDigest": "sha256:ed35e83c31228a6d7c27093c07dedf105e1b0295d57a88a38db11566b0030d82",
       "version": "0.1.0"
     },
+    "Preview02/DividendIncome.swift": {
+      "base": "bases/4b056b1ab93e7f249e1ecf27f768a55422c681853c6fcf559ffe4264067ffcf6.base",
+      "installedDigest": "sha256:b77553bab52edeb2ecab1f2795880bf8c5ff7ed49d4e2bdc9afbb3ea0854d24f",
+      "item": "preview-02",
+      "sourceDigest": "sha256:b77553bab52edeb2ecab1f2795880bf8c5ff7ed49d4e2bdc9afbb3ea0854d24f",
+      "version": "0.1.0"
+    },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
-      "installedDigest": "sha256:562bb24bf34a4f5b39f9c63bcce6aada64fd24e644e5ce1162de4d220584df6c",
+      "installedDigest": "sha256:4ef0591807eef5665a2f9cf10ddce51a361e5da3730d2f127ecc6742217a93fd",
       "item": "preview-02",
-      "sourceDigest": "sha256:562bb24bf34a4f5b39f9c63bcce6aada64fd24e644e5ce1162de4d220584df6c",
+      "sourceDigest": "sha256:4ef0591807eef5665a2f9cf10ddce51a361e5da3730d2f127ecc6742217a93fd",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {

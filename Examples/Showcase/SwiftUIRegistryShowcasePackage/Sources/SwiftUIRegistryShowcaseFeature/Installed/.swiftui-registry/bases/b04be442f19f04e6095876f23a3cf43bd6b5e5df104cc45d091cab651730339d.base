@@ -36,6 +36,7 @@ public struct PreviewWall02: View {
         ClaimableBalance()
         ContributionHistory()
         CoverArt()
+        DividendIncome()
     }
 
     private var columns: [GridItem] {

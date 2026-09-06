@@ -54,6 +54,10 @@
     {
       "source": "sources/blocks/Preview02/EmptyExploreCatalog.swift",
       "target": "Preview02/EmptyExploreCatalog.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/Faq.swift",
+      "target": "Preview02/Faq.swift"
     }
   ],
   "registryDependencies": [
@@ -67,7 +71,8 @@
     "chart",
     "input-group",
     "toggle-group",
-    "empty"
+    "empty",
+    "accordion"
   ],
   "packageDependencies": [
     {

@@ -68,8 +68,8 @@ enum ItemDemos {
         case "scroll-area": AnyView(ScrollAreaRecipe())
         case "sidebar": AnyView(SidebarRecipe())
         case "tooltip": AnyView(TooltipRecipe())
-        // Not a registry item: the tuning preview, captured per preset for the website's Themes page
-        case "theme-preview": AnyView(TuningPreview())
+        // Not a registry item: the theme preview is the `preview` block's wall, captured per preset for the website's Create and Themes pages
+        case "theme-preview": AnyView(PreviewWall())
         default: nil
         }
     }

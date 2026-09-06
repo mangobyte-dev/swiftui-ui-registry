@@ -102,6 +102,10 @@
     {
       "source": "sources/blocks/Preview02/QrConnect.swift",
       "target": "Preview02/QrConnect.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/ReceivingMethod.swift",
+      "target": "Preview02/ReceivingMethod.swift"
     }
   ],
   "registryDependencies": [

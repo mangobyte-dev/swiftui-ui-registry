@@ -506,9 +506,9 @@
     },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
-      "installedDigest": "sha256:00fb37c1c76d260b682f24b50162b3a166728c3ccc15487e5ac0594705a06e92",
+      "installedDigest": "sha256:7164b0853a9809225a94cc6e600d796daef807f93b4f3929b7fc15763603ab3e",
       "item": "preview-02",
-      "sourceDigest": "sha256:00fb37c1c76d260b682f24b50162b3a166728c3ccc15487e5ac0594705a06e92",
+      "sourceDigest": "sha256:7164b0853a9809225a94cc6e600d796daef807f93b4f3929b7fc15763603ab3e",
       "version": "0.1.0"
     },
     "Preview02/QrConnect.swift": {
@@ -516,6 +516,13 @@
       "installedDigest": "sha256:88c8f605b8a427b2f1ca89fe60b8840af99024f17e407b87154cae926e55303d",
       "item": "preview-02",
       "sourceDigest": "sha256:88c8f605b8a427b2f1ca89fe60b8840af99024f17e407b87154cae926e55303d",
+      "version": "0.1.0"
+    },
+    "Preview02/ReceivingMethod.swift": {
+      "base": "bases/ecf5883bbe3934635d3deba1784ac030d7acef7df3b214953ef091da0163585d.base",
+      "installedDigest": "sha256:fcc828c668d76a5fa331f13585d47b0cca0d0f52c95312f1b037c09da94d1d61",
+      "item": "preview-02",
+      "sourceDigest": "sha256:fcc828c668d76a5fa331f13585d47b0cca0d0f52c95312f1b037c09da94d1d61",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {

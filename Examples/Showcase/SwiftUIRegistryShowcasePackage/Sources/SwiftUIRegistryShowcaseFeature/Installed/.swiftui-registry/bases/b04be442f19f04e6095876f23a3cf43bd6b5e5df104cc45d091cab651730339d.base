@@ -43,6 +43,7 @@ public struct PreviewWall02: View {
         Faq()
         FrontDoor()
         IndexInvesting()
+        KitchenIsland()
     }
 
     private var columns: [GridItem] {

@@ -66,6 +66,10 @@
     {
       "source": "sources/blocks/Preview02/IndexInvesting.swift",
       "target": "Preview02/IndexInvesting.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/KitchenIsland.swift",
+      "target": "Preview02/KitchenIsland.swift"
     }
   ],
   "registryDependencies": [

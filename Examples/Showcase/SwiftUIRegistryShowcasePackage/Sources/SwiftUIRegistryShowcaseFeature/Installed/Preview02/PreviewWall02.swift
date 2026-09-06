@@ -31,6 +31,7 @@ public struct PreviewWall02: View {
     private var cards: some View {
         AccountAccess()
         AlbumCard()
+        CardOverview()
     }
 
     private var columns: [GridItem] {

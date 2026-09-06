@@ -130,6 +130,10 @@
     {
       "source": "sources/blocks/Preview/UIElements.swift",
       "target": "Preview/UIElements.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/UsageCard.swift",
+      "target": "Preview/UsageCard.swift"
     }
   ],
   "registryDependencies": [

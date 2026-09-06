@@ -65,10 +65,10 @@
     },
     "FinanceOverview.swift": {
       "base": "bases/f9b286d5453416c4c440e65a4c2be76f47597245ad27cdad80314bf17053616c.base",
-      "installedDigest": "sha256:587b0bac63abe439bb2235780d6953534567e8407318b8c2f437b97101477a88",
+      "installedDigest": "sha256:d330188b7455fd7362218145381e3194e062066fce8ef745f20035c0aa3c67c6",
       "item": "finance-overview",
-      "sourceDigest": "sha256:587b0bac63abe439bb2235780d6953534567e8407318b8c2f437b97101477a88",
-      "version": "0.4.1"
+      "sourceDigest": "sha256:d330188b7455fd7362218145381e3194e062066fce8ef745f20035c0aa3c67c6",
+      "version": "0.4.2"
     },
     "InlineAlert.swift": {
       "base": "bases/ea8c868eda9aec86e5cd2571ffc9a41b5baccc19ce3f9847eb287a16dc368901.base",
@@ -583,10 +583,10 @@
     },
     "TransactionRow.swift": {
       "base": "bases/bb175adeaac2e6443042b5ae547edcdaea4daec1487cb932a128b37b41cb221d.base",
-      "installedDigest": "sha256:3c2812b80a76af17f7e05658166a54102db7471c17774ff8197101a5234bfcfe",
+      "installedDigest": "sha256:631d604ff9c30ff4961907141760ecda1e5c6a1c26baed99ac3c4a63a9a3cebc",
       "item": "transaction-row",
-      "sourceDigest": "sha256:3c2812b80a76af17f7e05658166a54102db7471c17774ff8197101a5234bfcfe",
-      "version": "0.4.1"
+      "sourceDigest": "sha256:631d604ff9c30ff4961907141760ecda1e5c6a1c26baed99ac3c4a63a9a3cebc",
+      "version": "0.5.0"
     }
   },
   "items": {
@@ -917,7 +917,7 @@
         "transaction-row",
         "empty"
       ],
-      "version": "0.4.1"
+      "version": "0.4.2"
     },
     "input": {
       "packageDependencies": [
@@ -1309,7 +1309,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.4.1"
+      "version": "0.5.0"
     }
   },
   "registry": "SwiftUIRegistry",

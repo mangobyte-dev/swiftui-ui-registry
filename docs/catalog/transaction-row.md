@@ -39,15 +39,15 @@ TransactionRow(
     title: Text("Mishmash Bakery"),
     subtitle: Text("Today, 09:41"),
     amount: Text(-8.75, format: .currency(code: "KWD")),
-    systemImage: "cup.and.saucer.fill",
-    tone: .negative
+    systemImage: "cup.and.saucer.fill"
 )
+.registryTone(.negative)
 ```
 
 ## Details
 
 - Kind: component
-- Version: 0.4.1
+- Version: 0.5.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:

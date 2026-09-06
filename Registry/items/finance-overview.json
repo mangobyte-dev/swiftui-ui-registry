@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.4.1",
+  "version": "0.4.2",
   "name": "finance-overview",
   "kind": "block",
   "description": "Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.",

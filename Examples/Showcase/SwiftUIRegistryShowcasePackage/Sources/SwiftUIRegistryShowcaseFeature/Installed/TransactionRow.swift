@@ -13,20 +13,25 @@ public struct TransactionRow: View {
     private let subtitle: Text
     private let amount: Text
     private let systemImage: String
-    private let tone: Tone
+    private var tone: Tone = .neutral
 
     public init(
         title: Text,
         subtitle: Text,
         amount: Text,
-        systemImage: String,
-        tone: Tone = .neutral
+        systemImage: String
     ) {
         self.title = title
         self.subtitle = subtitle
         self.amount = amount
         self.systemImage = systemImage
-        self.tone = tone
+    }
+
+    /// Sets the semantic tone. Defaults to neutral.
+    public func registryTone(_ tone: Tone) -> Self {
+        var copy = self
+        copy.tone = tone
+        return copy
     }
 
     public var body: some View {
@@ -159,16 +164,16 @@ private struct TransactionRowPreview: View {
                 title: Text("Mishmash Bakery"),
                 subtitle: Text("Today, 09:41"),
                 amount: Text(-8.75, format: .currency(code: "KWD")),
-                systemImage: "cup.and.saucer.fill",
-                tone: .negative
+                systemImage: "cup.and.saucer.fill"
             )
+            .registryTone(.negative)
             TransactionRow(
                 title: Text("Salary"),
                 subtitle: Text("Yesterday"),
                 amount: Text(2_450, format: .currency(code: "KWD")),
-                systemImage: "building.columns.fill",
-                tone: .positive
+                systemImage: "building.columns.fill"
             )
+            .registryTone(.positive)
             TransactionRow(
                 title: Text("Pending transfer"),
                 subtitle: Text("Yesterday"),

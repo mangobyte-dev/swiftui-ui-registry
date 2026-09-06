@@ -9,7 +9,9 @@ struct SwiftUIRegistry: ParsableCommand {
     commandName: "swiftui-registry",
     abstract: "Install and inspect source-owned SwiftUI registry items.",
     version: "0.1.0",
-    subcommands: [Validate.self, Search.self, Install.self, PresetCommand.self]
+    subcommands: [
+      Validate.self, Search.self, Install.self, PresetCommand.self, Generate.self, MCP.self,
+    ]
   )
 }
 

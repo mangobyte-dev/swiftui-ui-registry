@@ -4,6 +4,7 @@ import Foundation
 public protocol FileSystem: Sendable {
   var currentDirectory: String { get }
   func resolve(_ path: String) -> String
+  func expandUser(_ path: String) -> String
   func exists(_ path: String) -> Bool
   func isFile(_ path: String) -> Bool
   func isDirectory(_ path: String) -> Bool
@@ -18,6 +19,7 @@ public protocol FileSystem: Sendable {
 public struct LocalFileSystem: FileSystem {
   public init() {}
   public var currentDirectory: String { FileManager.default.currentDirectoryPath }
+  public func expandUser(_ path: String) -> String { (path as NSString).expandingTildeInPath }
   public func resolve(_ path: String) -> String {
     if let resolved = realpath(path, nil) {
       defer { free(resolved) }
@@ -125,4 +127,9 @@ func safeJoin(_ root: String, _ value: String, fs: any FileSystem) throws -> Str
     throw RegistryError("Registry path escapes through a symbolic link: \(value)")
   }
   return candidate
+}
+
+func parentDirectory(_ path: String) -> String {
+  let parent = (path as NSString).deletingLastPathComponent
+  return parent.isEmpty ? "." : parent
 }

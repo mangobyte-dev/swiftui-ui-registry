@@ -448,11 +448,18 @@
       "sourceDigest": "sha256:fc53d363f0c64da04a89aa892ca7f7b570a0374524fb5b75f75658ac876ed241",
       "version": "0.1.0"
     },
+    "Preview02/KitchenIsland.swift": {
+      "base": "bases/0c1a45b5199c545533dff08c85cb409505286cbf926d1b43ea2e57487a904d83.base",
+      "installedDigest": "sha256:b85998e3fd426525fa5a93738dac6e9e299acdc6721bc1aaf39196fc57966104",
+      "item": "preview-02",
+      "sourceDigest": "sha256:b85998e3fd426525fa5a93738dac6e9e299acdc6721bc1aaf39196fc57966104",
+      "version": "0.1.0"
+    },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
-      "installedDigest": "sha256:838390affec9096bf30171ad65b2840f00f486d929741482fa1541eae729f48e",
+      "installedDigest": "sha256:888e96feb4fe27720025623aaf3353f80ef7edce935a34f37c348bed5aa09f3c",
       "item": "preview-02",
-      "sourceDigest": "sha256:838390affec9096bf30171ad65b2840f00f486d929741482fa1541eae729f48e",
+      "sourceDigest": "sha256:888e96feb4fe27720025623aaf3353f80ef7edce935a34f37c348bed5aa09f3c",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {

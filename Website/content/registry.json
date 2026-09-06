@@ -3,7 +3,7 @@
   "repositoryURL": "https://github.com/mangobyte-dev/swiftui-ui-registry",
   "counts": {
     "component": 31,
-    "block": 7,
+    "block": 8,
     "recipe": 18
   },
   "items": [
@@ -2309,6 +2309,101 @@
       "wideScreenshots": {
         "light": "/images/blocks/preview-ipad-light.png",
         "dark": "/images/blocks/preview-ipad-dark.png"
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
+      "name": "preview-02",
+      "kind": "block",
+      "version": "0.1.0",
+      "description": "The second theme preview wall from shadcn's create page: realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a second screen of real UI.",
+      "usage": "PreviewWall02()",
+      "docs": null,
+      "tags": [
+        "preview",
+        "theme",
+        "showcase",
+        "cards",
+        "create",
+        "shadcn",
+        "dashboard"
+      ],
+      "aliases": [
+        "theme-preview",
+        "create",
+        "wall",
+        "gallery"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "card",
+        "field",
+        "input",
+        "button",
+        "item"
+      ],
+      "installOrder": [
+        {
+          "name": "card",
+          "version": "0.2.0"
+        },
+        {
+          "name": "input",
+          "version": "0.5.0"
+        },
+        {
+          "name": "field",
+          "version": "0.1.0"
+        },
+        {
+          "name": "button",
+          "version": "0.5.0"
+        },
+        {
+          "name": "avatar",
+          "version": "0.2.0"
+        },
+        {
+          "name": "separator",
+          "version": "0.2.0"
+        },
+        {
+          "name": "badge",
+          "version": "0.3.1"
+        },
+        {
+          "name": "item",
+          "version": "0.2.0"
+        },
+        {
+          "name": "preview-02",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "The cards render in one ordered wall: an adaptive grid on a regular width and a plain, non-lazy VStack on a compact width, so every card exists in the hierarchy even off screen and the capture-route accessibility audit reaches all of them.",
+        "Every interactive control carries an accessibility label and every decorative SF Symbol is hidden, so the capture-route audit finds no unlabeled button, image, switch, text field, or slider on any card.",
+        "Each card is a native GroupBox on the shared card surface and composes native controls, so Dynamic Type, color scheme, and layout direction are respected without per-card handling."
+      ],
+      "sourcePath": "Registry/sources/blocks/Preview02/PreviewWall02.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/Preview02/PreviewWall02.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// The second theme preview wall: shadcn's second create-page preview\n/// recreated as a wall of realistic product cards, so a theme can be judged\n/// against a second screen of real UI. The cards are a single ordered list in\n/// one place. On a regular width the wall is an adaptive, top-aligned grid; on\n/// a compact width it is a plain, non-lazy `VStack`, so every card exists in\n/// the hierarchy even when scrolled off screen and a full-height capture route\n/// and the accessibility audit reach all of them. It owns no `ScrollView`,\n/// navigation container, or maximum width: the app decides those.\npublic struct PreviewWall02: View {\n    @Environment(\\.horizontalSizeClass) private var sizeClass\n    @Environment(\\.registryTheme) private var theme\n\n    public init() {}\n\n    public var body: some View {\n        if sizeClass == .regular {\n            LazyVGrid(columns: columns, alignment: .leading, spacing: theme.metrics.standardSpacing) {\n                cards\n            }\n        } else {\n            VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {\n                cards\n            }\n        }\n    }\n\n    @ViewBuilder\n    private var cards: some View {\n        AccountAccess()\n    }\n\n    private var columns: [GridItem] {\n        [GridItem(.adaptive(minimum: 340, maximum: 460), spacing: theme.metrics.standardSpacing, alignment: .top)]\n    }\n}\n\n#if DEBUG\nprivate struct PreviewWall02Preview: View {\n    var body: some View {\n        ScrollView { PreviewWall02().padding() }\n    }\n}\n\n#Preview(\"Preview Wall 02\") {\n    PreviewWall02Preview().registryTheme(.indigo)\n}\n\n#Preview(\"Preview Wall 02 Dark\") {\n    PreviewWall02Preview().registryTheme(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Preview Wall 02 Right to Left\") {\n    PreviewWall02Preview().registryTheme(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Preview Wall 02 Accessibility Size\") {\n    PreviewWall02Preview().registryTheme(.indigo).dynamicTypeSize(.accessibility3)\n}\n#endif\n",
+      "previewName": "Preview Wall 02",
+      "screenshots": {
+        "light": "/images/items/preview-02-light.png",
+        "dark": "/images/items/preview-02-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
       },
       "requirements": [
         {

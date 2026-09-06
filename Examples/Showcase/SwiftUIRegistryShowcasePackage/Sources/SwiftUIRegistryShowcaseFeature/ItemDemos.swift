@@ -48,6 +48,7 @@ enum ItemDemos {
         case "activity-feed": AnyView(ActivityFeedDemo())
         case "command-search": AnyView(CommandSearchDemo())
         case "preview": AnyView(PreviewDemo())
+        case "preview-02": AnyView(Preview02Demo())
         // Recipes
         case "aspect-ratio": AnyView(AspectRatioRecipe())
         case "direction": AnyView(DirectionRecipe())

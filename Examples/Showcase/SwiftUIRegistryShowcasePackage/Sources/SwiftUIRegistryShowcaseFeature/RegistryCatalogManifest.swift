@@ -359,6 +359,15 @@ enum RegistryCatalogManifest {
             tags: ["preview", "theme", "showcase", "cards", "create", "shadcn", "dashboard"]
         ),
         CatalogEntry(
+            name: "preview-02",
+            kind: "block",
+            version: "0.1.0",
+            description: "The second theme preview wall from shadcn's create page: realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a second screen of real UI.",
+            usage: "PreviewWall02()",
+            dependencies: ["card", "field", "input", "button", "item"],
+            tags: ["preview", "theme", "showcase", "cards", "create", "shadcn", "dashboard"]
+        ),
+        CatalogEntry(
             name: "progress",
             kind: "component",
             version: "0.2.0",

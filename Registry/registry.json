@@ -58,6 +58,7 @@
     "items/breadcrumb.json",
     "items/combobox.json",
     "items/chart.json",
-    "items/preview.json"
+    "items/preview.json",
+    "items/preview-02.json"
   ]
 }

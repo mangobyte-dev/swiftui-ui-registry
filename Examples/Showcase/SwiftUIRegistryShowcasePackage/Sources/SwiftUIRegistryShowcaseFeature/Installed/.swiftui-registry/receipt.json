@@ -93,10 +93,10 @@
     },
     "MacroProgress.swift": {
       "base": "bases/061c048d9552b3eb5f519bbb2c6158fd60f407fa4a68b22ce277c9fad95ac8a9.base",
-      "installedDigest": "sha256:1d0f143d4b886ac3a72510685c439acb78112e411056ac9fb859e8af1f89b54a",
+      "installedDigest": "sha256:bc39758f36c8d5927330edfe6c13ddbfcf8f85f0be1cd29c4eef05c0539c5d3d",
       "item": "macro-progress",
-      "sourceDigest": "sha256:1d0f143d4b886ac3a72510685c439acb78112e411056ac9fb859e8af1f89b54a",
-      "version": "0.3.0"
+      "sourceDigest": "sha256:bc39758f36c8d5927330edfe6c13ddbfcf8f85f0be1cd29c4eef05c0539c5d3d",
+      "version": "0.4.0"
     },
     "MetricCard.swift": {
       "base": "bases/72e69e8c35a9ff94342e2eb0ca362ef1edd41c34a3587ae393844d00ca45e247.base",
@@ -107,10 +107,10 @@
     },
     "NutritionOverview.swift": {
       "base": "bases/414b159906565ccf3c90122a903dd45568afc9c26393be31e864c15bed24c433.base",
-      "installedDigest": "sha256:ffca84bba61f5b658f0fb7bd840232aa11f3048725f84bf24df4c3431abf79ee",
+      "installedDigest": "sha256:1a406d7e88dc87ee216db516deb2fffa4b972f7cab20ab546014f201232bf789",
       "item": "nutrition-overview",
-      "sourceDigest": "sha256:ffca84bba61f5b658f0fb7bd840232aa11f3048725f84bf24df4c3431abf79ee",
-      "version": "0.2.1"
+      "sourceDigest": "sha256:1a406d7e88dc87ee216db516deb2fffa4b972f7cab20ab546014f201232bf789",
+      "version": "0.2.2"
     },
     "Preview/ActivateAgentDialog.swift": {
       "base": "bases/177c71a90b8b6002ba3f18008b7247bad72ceeb58d2595804fbb61f8e05ac637.base",
@@ -1019,7 +1019,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.3.0"
+      "version": "0.4.0"
     },
     "metric-card": {
       "packageDependencies": [
@@ -1054,7 +1054,7 @@
         "metric-card",
         "macro-progress"
       ],
-      "version": "0.2.1"
+      "version": "0.2.2"
     },
     "preview": {
       "packageDependencies": [

@@ -196,17 +196,17 @@ struct MacroProgressDemo: View {
                 value: Text("96 g"),
                 target: Text("130 g"),
                 progress: 96.0 / 130.0,
-                systemImage: "fish.fill",
-                tint: .indigo
+                systemImage: "fish.fill"
             )
+            .registryTint(.indigo)
             MacroProgress(
                 "Carbohydrates",
                 value: Text("182 g"),
                 target: Text("240 g"),
                 progress: 182.0 / 240.0,
-                systemImage: "leaf.fill",
-                tint: .green
+                systemImage: "leaf.fill"
             )
+            .registryTint(.green)
         }
     }
 }

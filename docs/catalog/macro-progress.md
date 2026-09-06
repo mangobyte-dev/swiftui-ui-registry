@@ -40,15 +40,15 @@ MacroProgress(
     value: Text("96 g"),
     target: Text("130 g"),
     progress: 96.0 / 130.0,
-    systemImage: "fish.fill",
-    tint: .indigo
+    systemImage: "fish.fill"
 )
+.registryTint(.indigo)
 ```
 
 ## Details
 
 - Kind: component
-- Version: 0.3.0
+- Version: 0.4.0
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:

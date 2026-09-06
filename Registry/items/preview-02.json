@@ -78,6 +78,10 @@
     {
       "source": "sources/blocks/Preview02/NewMilestone.swift",
       "target": "Preview02/NewMilestone.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/NotificationSettings.swift",
+      "target": "Preview02/NotificationSettings.swift"
     }
   ],
   "registryDependencies": [
@@ -93,7 +97,8 @@
     "toggle-group",
     "empty",
     "accordion",
-    "skeleton"
+    "skeleton",
+    "checkbox"
   ],
   "packageDependencies": [
     {

@@ -42,6 +42,7 @@ public struct PreviewWall: View {
             Shortcuts()
             SkeletonLoading()
             SleepReport()
+            StyleOverview()
         }
     }
 

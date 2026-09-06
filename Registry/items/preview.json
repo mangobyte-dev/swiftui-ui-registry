@@ -138,6 +138,10 @@
     {
       "source": "sources/blocks/Preview/Visitors.swift",
       "target": "Preview/Visitors.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/WeeklyFitnessSummary.swift",
+      "target": "Preview/WeeklyFitnessSummary.swift"
     }
   ],
   "registryDependencies": [

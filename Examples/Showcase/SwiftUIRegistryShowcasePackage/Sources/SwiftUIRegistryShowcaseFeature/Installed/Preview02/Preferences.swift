@@ -73,20 +73,30 @@ public struct Preferences: View {
     }
 
     private struct SwitchRow: View {
+        @Environment(\.registryTheme) private var theme
         let title: LocalizedStringResource
         let detail: LocalizedStringResource
         @Binding var isOn: Bool
 
         var body: some View {
-            Toggle(isOn: $isOn) {
+            // The visible title and detail stay their own text; the native
+            // switch carries the title as an explicit accessibility label, so
+            // the switch itself is labeled for VoiceOver and the capture-route
+            // audit rather than left as a bare, unlabeled element.
+            HStack(alignment: .top, spacing: theme.metrics.standardSpacing) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
                     Text(detail)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                Toggle(isOn: $isOn) { Text(title) }
+                    .labelsHidden()
+                    .accessibilityLabel(Text(title))
             }
-            .toggleStyle(.switch)
+            .frame(minHeight: RegistryMetrics.minimumHitSize)
         }
     }
 

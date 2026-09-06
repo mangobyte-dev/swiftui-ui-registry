@@ -56,6 +56,7 @@ public struct PreviewWall02: View {
         RecentTransactions()
         ReleaseCatalog()
         RollerShades()
+        SavingsProgress()
     }
 
     private var columns: [GridItem] {

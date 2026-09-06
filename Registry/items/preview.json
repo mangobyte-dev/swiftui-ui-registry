@@ -110,6 +110,10 @@
     {
       "source": "sources/blocks/Preview/Shortcuts.swift",
       "target": "Preview/Shortcuts.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/SkeletonLoading.swift",
+      "target": "Preview/SkeletonLoading.swift"
     }
   ],
   "registryDependencies": [
@@ -132,7 +136,8 @@
     "table",
     "kbd",
     "progress",
-    "select"
+    "select",
+    "skeleton"
   ],
   "packageDependencies": [
     {

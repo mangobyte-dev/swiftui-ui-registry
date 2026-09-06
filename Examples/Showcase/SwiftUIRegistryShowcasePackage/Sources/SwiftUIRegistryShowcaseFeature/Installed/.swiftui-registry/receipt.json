@@ -268,9 +268,9 @@
     },
     "Preview/PreviewWall.swift": {
       "base": "bases/21fd264667c3047604e99c4cd51cebe0e88f8f9a1fbe7b826a5a2fc9c9d602d4.base",
-      "installedDigest": "sha256:7cd080d8ca0dff9d32e5f747320f46207897fcae2b10f5bf444ae9da83c9ee53",
+      "installedDigest": "sha256:ab7392c0c6074272c8735d3e93e3daf1165adbd939b73462d308113dc85ad033",
       "item": "preview",
-      "sourceDigest": "sha256:7cd080d8ca0dff9d32e5f747320f46207897fcae2b10f5bf444ae9da83c9ee53",
+      "sourceDigest": "sha256:ab7392c0c6074272c8735d3e93e3daf1165adbd939b73462d308113dc85ad033",
       "version": "0.2.0"
     },
     "Preview/ReportBug.swift": {
@@ -292,6 +292,13 @@
       "installedDigest": "sha256:b31da288d423ddb38af4c55eb8f4d98b636f0040d1c3f7b396f16fd9d21197cc",
       "item": "preview",
       "sourceDigest": "sha256:b31da288d423ddb38af4c55eb8f4d98b636f0040d1c3f7b396f16fd9d21197cc",
+      "version": "0.2.0"
+    },
+    "Preview/SkeletonLoading.swift": {
+      "base": "bases/aecfd77d4fe92a88cbc9eb352ab62ac3774bf7d4f2a19b6b8221d6f87f5794c0.base",
+      "installedDigest": "sha256:e56e2ed727c13e61a46a1d585d708420215d3636c1dc9563ba8f35f6fbbd6c19",
+      "item": "preview",
+      "sourceDigest": "sha256:e56e2ed727c13e61a46a1d585d708420215d3636c1dc9563ba8f35f6fbbd6c19",
       "version": "0.2.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -942,7 +949,8 @@
         "table",
         "kbd",
         "progress",
-        "select"
+        "select",
+        "skeleton"
       ],
       "version": "0.2.0"
     },

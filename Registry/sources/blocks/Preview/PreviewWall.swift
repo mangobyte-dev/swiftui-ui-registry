@@ -43,6 +43,7 @@ public struct PreviewWall: View {
             SkeletonLoading()
             SleepReport()
             StyleOverview()
+            TypographySpecimen()
         }
     }
 

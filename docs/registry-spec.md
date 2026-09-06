@@ -92,7 +92,7 @@ Rules, binding on every implementation: never reorder or resize an existing fiel
 
 ## Agent usage
 
-An agent should:
+The tool finds the registry in a fixed order: `--registry <path>`, then a clone enclosing the working directory, then a cached snapshot of the pinned release fetched from the published tag on first use (`docs/cli-migration.md`, Resolution and distribution). An agent should:
 
 1. Search item metadata by name, kind, tags, platform, and minimum version with `swiftui-registry search`
 2. Read the dependency closure and package requirements

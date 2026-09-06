@@ -9,7 +9,8 @@ final class InMemoryFileSystem: FileSystem, Sendable {
     case link(String)
   }
   let storage = Mutex<[String: Entry]>(["/": .directory])
-  var currentDirectory: String { "/registry" }
+  let workingDirectory = Mutex("/registry")
+  var currentDirectory: String { workingDirectory.withLock { $0 } }
   func expandUser(_ path: String) -> String {
     if path == "~" { return "/home/test" }
     return path.hasPrefix("~/") ? "/home/test/" + path.dropFirst(2) : path
@@ -70,8 +71,15 @@ final class InMemoryFileSystem: FileSystem, Sendable {
     storage.withLock { $0 = $0.filter { $0.key != key && !$0.key.hasPrefix(key + "/") } }
   }
   func replace(_ source: String, _ target: String) throws {
-    try write(read(source), to: target)
-    try remove(source)
+    let from = resolve(source)
+    let to = resolve(target)
+    try storage.withLock { entries in
+      guard entries[from] != nil else { throw RegistryError("Missing file: \(from)") }
+      for (key, value) in entries where key == from || key.hasPrefix(from + "/") {
+        entries[to + key.dropFirst(from.count)] = value
+        entries.removeValue(forKey: key)
+      }
+    }
   }
   func children(_ path: String) throws -> [String] {
     let key = resolve(path)
@@ -102,5 +110,7 @@ final class InMemoryFileSystem: FileSystem, Sendable {
 }
 
 struct InMemoryRegistrySource: RegistrySource {
-  func repositoryRoot(override: String?) throws -> String { override ?? "/registry" }
+  func repositoryRoot(override: String?, refresh: Bool) throws -> String {
+    override ?? "/registry"
+  }
 }

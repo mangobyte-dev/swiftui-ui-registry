@@ -134,6 +134,10 @@
     {
       "source": "sources/blocks/Preview/UsageCard.swift",
       "target": "Preview/UsageCard.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/Visitors.swift",
+      "target": "Preview/Visitors.swift"
     }
   ],
   "registryDependencies": [

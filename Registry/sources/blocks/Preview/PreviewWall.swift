@@ -46,6 +46,7 @@ public struct PreviewWall: View {
             TypographySpecimen()
             UIElements()
             UsageCard()
+            Visitors()
         }
     }
 

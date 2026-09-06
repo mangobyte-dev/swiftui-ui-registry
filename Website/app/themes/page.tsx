@@ -68,7 +68,9 @@ export default function ThemesPage() {
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">Presets</h2>
           <p className="text-muted-foreground">
-            Starting points. Each is a plain <code>static let</code> you can copy and edit.
+            Starting points. Each is a plain <code>static let</code> you can copy and edit. Every card here is the
+            first screen of the <Link href="/items/preview/">theme preview wall</Link> (the <code>preview</code>{" "}
+            block, 33 cards) rendered under that preset on iPhone 17.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -124,7 +126,10 @@ export default function ThemesPage() {
           Tune in the strip above the tab bar. The panel stays beside the catalog, an inspector on iPad and a
           sheet the catalog remains interactive under on iPhone, so every demo shows the change as you make
           it. Copy Code puts the theme on the pasteboard as a preset code the{" "}
-          <Link href="/create/">Create page</Link> and <code>Scripts/preset.py</code> both read.
+          <Link href="/create/">Create page</Link> and <code>Scripts/preset.py</code> both read. The preset
+          captures above are the first screen of the{" "}
+          <Link href="/items/preview/">theme preview wall</Link> (the <code>preview</code> block, 33 cards)
+          rendered under each preset on iPhone 17.
         </p>
       </section>
 

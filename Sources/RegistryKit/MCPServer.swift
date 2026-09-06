@@ -30,7 +30,8 @@ public struct MCPServer {
         result = [
           "protocolVersion": .string(version), "capabilities": ["tools": ["listChanged": false]],
           "serverInfo": [
-            "name": "swiftui-registry", "title": "SwiftUI Registry", "version": "0.1.0",
+            "name": "swiftui-registry", "title": "SwiftUI Registry",
+            "version": .string(RegistryRelease.version),
           ],
           "instructions": .string(Self.instructions),
         ]

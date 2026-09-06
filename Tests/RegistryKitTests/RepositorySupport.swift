@@ -8,7 +8,7 @@ let repositoryRoot = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
 
 struct FixedRegistrySource: RegistrySource {
   let root: String
-  func repositoryRoot(override: String?) throws -> String { override ?? root }
+  func repositoryRoot(override: String?, refresh: Bool) throws -> String { override ?? root }
 }
 
 /// Runs against the real registry through the live filesystem, as an adopter's shell does.
@@ -17,6 +17,7 @@ func withRepository<R>(_ body: () throws -> R) rethrows -> R {
     $0.registryFileSystem = LocalFileSystem()
     $0.registrySource = FixedRegistrySource(root: repositoryRoot)
     $0.registrySourceMerger = .git
+    $0.date = .constant(fixedNow)
   } operation: {
     try body()
   }

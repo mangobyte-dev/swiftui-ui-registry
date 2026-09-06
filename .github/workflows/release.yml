@@ -1,0 +1,28 @@
+name: Release
+
+# Measured from pointfreeco/pfw at 854b491: a published GitHub release builds a universal
+# macOS binary on macos-26 and uploads it to that release with gh
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Universal macOS binary
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Build release binary
+        run: swift build -c release --arch arm64 --arch x86_64
+      - name: Package binary
+        run: |
+          tar czf swiftui-registry-macos-universal.tar.gz -C .build/apple/Products/Release swiftui-registry
+          shasum -a 256 swiftui-registry-macos-universal.tar.gz > swiftui-registry-macos-universal.tar.gz.sha256
+          cat swiftui-registry-macos-universal.tar.gz.sha256
+      - name: Upload binary to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.event.release.tag_name }} swiftui-registry-macos-universal.tar.gz swiftui-registry-macos-universal.tar.gz.sha256

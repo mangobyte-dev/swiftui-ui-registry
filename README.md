@@ -38,7 +38,7 @@ The value gate: an installable item must add a meaningful reusable treatment or 
    swift run swiftui-registry install activity-feed --destination path/to/YourTarget/Components
    ```
 
-   The installer resolves the dependency closure, copies exact source, writes `.swiftui-registry/receipt.json`, and prints the package requirement. It never edits project files; make the destination folder a member of your build target
+   The installer resolves the dependency closure, copies exact source, writes `.swiftui-registry/receipt.json`, and prints the package requirement. It never edits project files; make the destination folder a member of your build target. Outside a clone, the tool fetches the pinned `0.1.0` registry snapshot from the published tag into `~/Library/Caches/swiftui-registry` on first use and reuses it; `--refresh` fetches it again. That needs the tag on GitHub, so until it is published use a clone or `--registry`
 
 4. Compose through the item's public API; the exact snippet is on its catalog page and in the Showcase
 
@@ -99,7 +99,7 @@ swiftui-registry install finance-overview \
   --destination path/to/YourTarget/Components
 ```
 
-The installer resolves `metric-card`, `transaction-row`, and `empty` before copying `finance-overview`. It writes `.swiftui-registry/receipt.json` and non-Swift base snapshots inside the destination. A repeated install is accepted only when the existing source still matches its receipt. `--force` is required to replace modified owned source
+The installer resolves `metric-card`, `transaction-row`, and `empty` before copying `finance-overview`. It writes `.swiftui-registry/receipt.json` and non-Swift base snapshots inside the destination. A repeated install is accepted only when the existing source still matches its receipt. `--force` is required to replace modified owned source; it never touches the registry cache, which only `--refresh` does. After an install the tool asks the Homebrew tap for a newer release at most once a day and prints the upgrade command when one exists; a failed check is silent
 
 Verify the install by building the consuming target for an iOS Simulator destination, for example `xcodebuild -scheme YourApp -destination 'generic/platform=iOS Simulator' build`
 

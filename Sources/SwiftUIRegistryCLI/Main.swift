@@ -8,7 +8,7 @@ struct SwiftUIRegistry: ParsableCommand {
   static let configuration = CommandConfiguration(
     commandName: "swiftui-registry",
     abstract: "Install and inspect source-owned SwiftUI registry items.",
-    version: "0.1.0",
+    version: RegistryRelease.version,
     subcommands: [
       Validate.self, Search.self, Install.self, PresetCommand.self, Generate.self, MCP.self,
     ]
@@ -17,14 +17,18 @@ struct SwiftUIRegistry: ParsableCommand {
 
 struct RegistryOptions: ParsableArguments {
   @Option(help: "Path to a registry clone.") var registry: String?
+  @Flag(
+    help:
+      "Download the pinned registry snapshot again and ask the release tags again, even when the cache is valid. The snapshot is not used with --registry or inside a clone."
+  ) var refresh = false
   func root() throws -> String {
     @Dependency(\.registrySource) var source
-    return try source.repositoryRoot(override: registry)
+    return try source.repositoryRoot(override: registry, refresh: refresh)
   }
 }
 
-func refusal(_ body: () throws -> Void) throws {
-  do { try body() } catch let error as RegistryError {
+func refusal<R>(_ body: () throws -> R) throws -> R {
+  do { return try body() } catch let error as RegistryError {
     writeError(error.description + "\n")
     throw ExitCode(2)
   }
@@ -34,7 +38,7 @@ struct Validate: ParsableCommand {
   @OptionGroup var options: RegistryOptions
   @Argument var items: [String] = []
   func run() throws {
-    let root = try options.root()
+    let root = try refusal { try options.root() }
     let validator = RegistryValidator()
     let issues =
       items.isEmpty
@@ -126,6 +130,7 @@ struct Install: ParsableCommand {
             }
           }
         }
+        if let notice = UpdateNotice().message(force: options.refresh) { print(notice) }
       } catch let guidance as RecipeGuidance {
         print(guidance.guidance)
         if plan {

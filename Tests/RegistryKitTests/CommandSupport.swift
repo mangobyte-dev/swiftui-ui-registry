@@ -46,20 +46,30 @@ let example: JSON = [
   "preview": ["source": "sources/Example.swift", "name": "Example"],
 ]
 
-func fixture(_ content: String = "source\n") throws -> InMemoryFileSystem {
-  let fs = InMemoryFileSystem()
+/// The one-item registry every fixture test reads, written at `root`.
+func populateRegistry(_ fs: InMemoryFileSystem, at root: String, content: String = "source\n")
+  throws
+{
   let schema = try String(
     contentsOf: Bundle.module.url(
       forResource: "schema", withExtension: "json", subdirectory: "Fixtures")!, encoding: .utf8)
-  try fs.put("/registry/Registry/schema.json", schema)
-  try fs.put("/registry/Registry/items/example.json", example.rendered())
+  try fs.put(root + "/Registry/schema.json", schema)
+  try fs.put(root + "/Registry/items/example.json", example.rendered())
   try fs.put(
-    "/registry/Registry/registry.json",
+    root + "/Registry/registry.json",
     JSON.object(["schemaVersion": 1, "name": "TestRegistry", "items": ["items/example.json"]])
       .rendered())
-  try fs.put("/registry/Registry/sources/Example.swift", content)
+  try fs.put(root + "/Registry/sources/Example.swift", content)
+}
+
+func fixture(_ content: String = "source\n") throws -> InMemoryFileSystem {
+  let fs = InMemoryFileSystem()
+  try populateRegistry(fs, at: "/registry", content: content)
   return fs
 }
+
+/// A fixed clock for the snapshot manifest and the update-notice stamp.
+let fixedNow = Date(timeIntervalSince1970: 1_800_000_000)
 
 func withFixture<R>(_ fs: InMemoryFileSystem, _ body: () throws -> R) rethrows -> R {
   try withDependencies {
@@ -67,6 +77,7 @@ func withFixture<R>(_ fs: InMemoryFileSystem, _ body: () throws -> R) rethrows -
     $0.registrySource = InMemoryRegistrySource()
     $0.registrySourceMerger = .git
     $0.uuid = .incrementing
+    $0.date = .constant(fixedNow)
   } operation: {
     try body()
   }

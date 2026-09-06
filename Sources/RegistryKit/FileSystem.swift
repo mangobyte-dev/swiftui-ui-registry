@@ -87,11 +87,18 @@ extension DependencyValues {
 }
 
 public protocol RegistrySource: Sendable {
-  func repositoryRoot(override: String?) throws -> String
+  func repositoryRoot(override: String?, refresh: Bool) throws -> String
 }
+extension RegistrySource {
+  public func repositoryRoot(override: String?) throws -> String {
+    try repositoryRoot(override: override, refresh: false)
+  }
+}
+/// Resolution order: the explicit path, a clone enclosing the working directory, then the
+/// cached release snapshot. `refresh` reaches only the snapshot.
 public struct LocalRegistrySource: RegistrySource {
   public init() {}
-  public func repositoryRoot(override: String?) throws -> String {
+  public func repositoryRoot(override: String?, refresh: Bool) throws -> String {
     @Dependency(\.registryFileSystem) var fs
     if let override { return fs.resolve(override) }
     var candidate = fs.resolve(fs.currentDirectory)
@@ -101,7 +108,7 @@ public struct LocalRegistrySource: RegistrySource {
       if candidate == parent { break }
       candidate = parent
     }
-    throw RegistryError("No registry clone found; pass --registry <path>")
+    return try ReleaseSnapshot().root(refresh: refresh)
   }
 }
 private enum RegistrySourceKey: DependencyKey {

@@ -469,11 +469,18 @@
       "sourceDigest": "sha256:7cefde01ddc18247f1a1cf820d6d132c0b9112b12382d04d6dfc5cc81a979bb1",
       "version": "0.1.0"
     },
+    "Preview02/NotificationSettings.swift": {
+      "base": "bases/ab07554f43ba48d0a523baa5ebdc9d429601c6381df8fdcd078e691561c8a103.base",
+      "installedDigest": "sha256:d1e23c3807ba854d2688987eb6d59b8f1ab42d2a25aaefebab2cdc49e9d99c9a",
+      "item": "preview-02",
+      "sourceDigest": "sha256:d1e23c3807ba854d2688987eb6d59b8f1ab42d2a25aaefebab2cdc49e9d99c9a",
+      "version": "0.1.0"
+    },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
-      "installedDigest": "sha256:7564eefbc79a92c1370a9b65e4093a41c3705dcc615f61e04b21ae6bd45159a1",
+      "installedDigest": "sha256:c1c1d4529a415632df19e3d271978b9f6c1558a128b52366d35afbbdc3f1268d",
       "item": "preview-02",
-      "sourceDigest": "sha256:7564eefbc79a92c1370a9b65e4093a41c3705dcc615f61e04b21ae6bd45159a1",
+      "sourceDigest": "sha256:c1c1d4529a415632df19e3d271978b9f6c1558a128b52366d35afbbdc3f1268d",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -1156,7 +1163,8 @@
         "toggle-group",
         "empty",
         "accordion",
-        "skeleton"
+        "skeleton",
+        "checkbox"
       ],
       "version": "0.1.0"
     },

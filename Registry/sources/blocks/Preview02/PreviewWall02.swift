@@ -46,6 +46,7 @@ public struct PreviewWall02: View {
         KitchenIsland()
         LoadingCard()
         NewMilestone()
+        NotificationSettings()
     }
 
     private var columns: [GridItem] {

@@ -47,6 +47,7 @@ public struct PreviewWall02: View {
         LoadingCard()
         NewMilestone()
         NotificationSettings()
+        Payments()
     }
 
     private var columns: [GridItem] {

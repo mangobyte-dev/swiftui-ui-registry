@@ -476,11 +476,18 @@
       "sourceDigest": "sha256:d1e23c3807ba854d2688987eb6d59b8f1ab42d2a25aaefebab2cdc49e9d99c9a",
       "version": "0.1.0"
     },
+    "Preview02/Payments.swift": {
+      "base": "bases/e98f589144276dab7a549bdb27e36ffc57bd2dee04221a956261f7b0c6e0edc6.base",
+      "installedDigest": "sha256:353aefe711c8ab988d9973dc342a318b43898f078eec781e22573c4a7ced09de",
+      "item": "preview-02",
+      "sourceDigest": "sha256:353aefe711c8ab988d9973dc342a318b43898f078eec781e22573c4a7ced09de",
+      "version": "0.1.0"
+    },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
-      "installedDigest": "sha256:c1c1d4529a415632df19e3d271978b9f6c1558a128b52366d35afbbdc3f1268d",
+      "installedDigest": "sha256:f02dc23978aec815c0551cffc07ed619cbbc55458be3705036af4392dc2b8846",
       "item": "preview-02",
-      "sourceDigest": "sha256:c1c1d4529a415632df19e3d271978b9f6c1558a128b52366d35afbbdc3f1268d",
+      "sourceDigest": "sha256:f02dc23978aec815c0551cffc07ed619cbbc55458be3705036af4392dc2b8846",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -1164,7 +1171,8 @@
         "empty",
         "accordion",
         "skeleton",
-        "checkbox"
+        "checkbox",
+        "breadcrumb"
       ],
       "version": "0.1.0"
     },

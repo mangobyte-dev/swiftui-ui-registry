@@ -46,6 +46,10 @@
     {
       "source": "sources/blocks/Preview02/EmptyConnectBank.swift",
       "target": "Preview02/EmptyConnectBank.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/EmptyDistributeTrack.swift",
+      "target": "Preview02/EmptyDistributeTrack.swift"
     }
   ],
   "registryDependencies": [

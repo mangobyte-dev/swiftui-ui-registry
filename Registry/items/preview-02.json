@@ -18,6 +18,10 @@
     {
       "source": "sources/blocks/Preview02/AlbumCard.swift",
       "target": "Preview02/AlbumCard.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/CardOverview.swift",
+      "target": "Preview02/CardOverview.swift"
     }
   ],
   "registryDependencies": [
@@ -27,7 +31,8 @@
     "button",
     "item",
     "badge",
-    "separator"
+    "separator",
+    "chart"
   ],
   "packageDependencies": [
     {

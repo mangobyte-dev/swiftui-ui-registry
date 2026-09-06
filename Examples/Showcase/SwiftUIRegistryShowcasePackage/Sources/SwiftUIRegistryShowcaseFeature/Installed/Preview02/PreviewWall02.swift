@@ -45,6 +45,7 @@ public struct PreviewWall02: View {
         IndexInvesting()
         KitchenIsland()
         LoadingCard()
+        NewMilestone()
     }
 
     private var columns: [GridItem] {

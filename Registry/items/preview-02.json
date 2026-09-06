@@ -74,6 +74,10 @@
     {
       "source": "sources/blocks/Preview02/LoadingCard.swift",
       "target": "Preview02/LoadingCard.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/NewMilestone.swift",
+      "target": "Preview02/NewMilestone.swift"
     }
   ],
   "registryDependencies": [

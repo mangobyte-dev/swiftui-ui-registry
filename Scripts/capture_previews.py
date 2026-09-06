@@ -148,9 +148,12 @@ def capture(
     info_path.unlink(missing_ok=True)
 
     run(["xcrun", "simctl", "ui", udid, "appearance", appearance])
+    # The locale is part of the capture, not of the simulator: dates, currency,
+    # and the calendar come out the same on any device the script is pointed at.
     launch = [
         "xcrun", "simctl", "launch", "--terminate-running-process", udid, BUNDLE_ID,
         "-item", name, "-appearance", appearance, "-capture-info", str(info_path),
+        "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
     ]
     if theme:
         launch += ["-theme", theme]

@@ -89,9 +89,9 @@ public struct NutritionOverview<ID: Hashable>: View {
                             value: macro.value,
                             target: macro.target,
                             progress: macro.progress,
-                            systemImage: macro.systemImage,
-                            tint: macro.tint
+                            systemImage: macro.systemImage
                         )
+                        .registryTint(macro.tint)
 
                         if macro.id != macros.last?.id {
                             Divider()

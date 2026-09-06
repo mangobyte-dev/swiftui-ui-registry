@@ -11,22 +11,27 @@ public struct MacroProgress: View {
     private let target: Text
     private let progress: Double
     private let systemImage: String
-    private let tint: Color
+    private var tint: Color = .accentColor
 
     public init(
         _ name: LocalizedStringResource,
         value: Text,
         target: Text,
         progress: Double,
-        systemImage: String,
-        tint: Color
+        systemImage: String
     ) {
         self.name = name
         self.value = value
         self.target = target
         self.progress = progress
         self.systemImage = systemImage
-        self.tint = tint
+    }
+
+    /// Sets the progress tint. Defaults to the theme tint.
+    public func registryTint(_ tint: Color) -> Self {
+        var copy = self
+        copy.tint = tint
+        return copy
     }
 
     public var body: some View {
@@ -75,9 +80,9 @@ private struct MacroProgressPreview: View {
             value: Text(96, format: .number),
             target: Text(130, format: .number),
             progress: 96.0 / 130.0,
-            systemImage: "fish.fill",
-            tint: .indigo
+            systemImage: "fish.fill"
         )
+        .registryTint(.indigo)
         .padding()
     }
 }

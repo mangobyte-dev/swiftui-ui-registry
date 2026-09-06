@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.1",
+  "version": "0.2.2",
   "name": "nutrition-overview",
   "kind": "block",
   "description": "Composes prepared energy and macronutrient values into an embeddable nutrition overview.",

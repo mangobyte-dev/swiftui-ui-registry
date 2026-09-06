@@ -307,9 +307,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "macro-progress",
             kind: "component",
-            version: "0.3.0",
+            version: "0.4.0",
             description: "Displays prepared nutrition progress with a native progress view and adaptive value layout.",
-            usage: "MacroProgress(\n    \"Protein\",\n    value: Text(\"96 g\"),\n    target: Text(\"130 g\"),\n    progress: 96.0 / 130.0,\n    systemImage: \"fish.fill\",\n    tint: .indigo\n)",
+            usage: "MacroProgress(\n    \"Protein\",\n    value: Text(\"96 g\"),\n    target: Text(\"130 g\"),\n    progress: 96.0 / 130.0,\n    systemImage: \"fish.fill\"\n)\n.registryTint(.indigo)",
             dependencies: [],
             tags: ["nutrition", "health", "progress", "macronutrients"]
         ),
@@ -334,7 +334,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "nutrition-overview",
             kind: "block",
-            version: "0.2.1",
+            version: "0.2.2",
             description: "Composes prepared energy and macronutrient values into an embeddable nutrition overview.",
             usage: "NutritionOverview(\n    \"Today\",\n    energyTitle: \"Energy\",\n    energy: Text(\"1,640 kcal\"),\n    energyDetail: Text(\"360 kcal remaining\"),\n    sectionTitle: \"Macronutrients\",\n    macros: [\n        NutritionMacroItem(\n            id: \"protein\",\n            name: \"Protein\",\n            value: Text(\"96 g\"),\n            target: Text(\"130 g\"),\n            progress: 96.0 / 130.0,\n            systemImage: \"fish.fill\",\n            tint: .indigo\n        )\n    ],\n    actionTitle: \"Log food\",\n    onLogFood: {}\n)",
             dependencies: ["metric-card", "macro-progress"],

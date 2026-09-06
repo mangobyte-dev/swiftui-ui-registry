@@ -26,6 +26,19 @@ done
 
 `docs/visual-testing.md` already carries the GOLDEN-CHANGE note dated 2026-09-05 for this replacement
 
+## Deferred: one placement rule for presentation choices (from a reading, 2026-09-06)
+
+Mo asked me to read "Designing predictable SwiftUI design system APIs" (https://kaanbiryol.com/designing-predictable-swiftui-design-system-apis/) and record anything substantial here. The article's thesis is a three-layer call site: the initializer says what a component is (content and behavior), a component-owned trailing method says how it presents (size, variant, implemented as copy-and-return methods on the view, prefixed for discoverability), and generic SwiftUI modifiers come last; environment values stay for inherited context such as a theme; style protocols are for reacting to state SwiftUI owns or for substantially different implementations; a `ViewModifier` cannot reach a component's internal layout and is visible on every view
+
+Measured against this registry (Registry/sources/components, 2026-09-06):
+
+- Already the rule here: native controls take their presentation as a trailing style (`.buttonStyle(.registryOutline)`, `.progressViewStyle(.registryLinearPositive)`), text treatments as a trailing modifier with a variant argument (`registryBadge(.positive)`), the theme through the environment (`registryTheme(_:)`), and sizes through Apple's own `controlSize`. The `registry` prefix does the discoverability job the article's `ds` prefix does
+- The one inconsistency: composed views carry presentation in their initializers. `InlineAlert(_:message:variant:systemImage:actions:)`, `TransactionRow(title:subtitle:amount:systemImage:tone:)`, and `MacroProgress(_:value:target:progress:systemImage:tint:)` mix how with what, so a developer who learned the styles cannot predict these three, and the Stage 5 cards inherit the mix
+- The change the article argues for: move those choices to copy-and-return methods on the view, named with the prefix, applied before generic modifiers (`InlineAlert("Card delivery delayed", message:) { }.registryVariant(.positive)`, `.registryTone(.negative)`, `.registryTint(.orange)`), and write the placement rule down in `AGENTS.md` ("Rules") and `docs/architecture.md` so every future composed view follows it. Cost: three items change their public API (minor version bumps, usage snippets, demos, the blocks and preview cards that pass a variant, recaptures), plus a one-paragraph rule. Benefit: one rule for the whole registry, and the `registry` prefix then covers composed views too
+- Not adopted from the article: wrapper types with a prefix (`DSButton`), because this registry keeps Apple controls visible at the call site by design; a custom style protocol per composed view, because no item needs substantially different implementations
+
+Recommendation: do it as its own small stage after Stage 5 lands, before more composed views appear. The decision is the owner's; nothing has been changed for it
+
 ## Facts measured this session
 
 - `inspector(isPresented:)` on a tab's navigation stack stops `@FocusState` moves in the auth form on iOS 27 even while nothing is presented; the iPad column is a plain `HStack` sibling instead (`CatalogRoot.swift`)

@@ -122,6 +122,10 @@
     {
       "source": "sources/blocks/Preview02/SavingsProgress.swift",
       "target": "Preview02/SavingsProgress.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/SavingsTargets.swift",
+      "target": "Preview02/SavingsTargets.swift"
     }
   ],
   "registryDependencies": [

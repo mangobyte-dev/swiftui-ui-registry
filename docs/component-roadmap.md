@@ -305,6 +305,8 @@ The owner requested one phase per pull of work. Phase A supplies the engine and 
 
 ### Phase A evidence (2026-09-06)
 
+Local commit: `4746b66 Implement Stage 6 Phase A registry engine and consumer commands`, based on `0d353ed`. It has not been pushed
+
 The root package has a SwiftUI-free `RegistryKit` library and a `swiftui-registry` executable. `validate`, `search`, all five install modes, and `preset decode | url | apply | resolve | random` use Swift implementations. `SwiftUIRegistryFoundations` and all Showcase source remain unchanged. `docs/cli-migration.md` records the dependency, codec-sharing, effect, and diagnostic decisions
 
 `Scripts/check_swift_parity.py` passed 794 real subprocess pairs against a temporary registry clone. It compared stdout, stderr, exit status, and complete destination trees, including receipts, source digests, installed digests, base paths, base bytes, and conflict artifacts. It exercised every catalog item, the search filters, every preset vector, negative and large random seeds, unknown items, both directions of Python and Swift receipt interoperability, clean merges, conflicted updates, and force cleanup. It normalizes temporary destination paths in output only; file bytes are compared directly
@@ -314,6 +316,44 @@ The RegistryKit Swift Testing suite passed 18 tests, including 45 captured valid
 `swift build`, `swift test --filter RegistryKitTests`, and `swift build -c release` passed with Swift 6.4. Both validators passed. All 106 Python tests remain green. The three Python generators regenerated with no tracked output changes. `make format-check` passed. Showcase built on the pinned iPhone 17 simulator; the build emitted one AppIntents metadata-extraction warning because it has no AppIntents.framework dependency, with no Swift compiler warnings or errors
 
 Not run: the Showcase UI suite and captures, because no Showcase or registry UI source changed; the website typecheck and build, because no website source changed. The existing auth-light and nutrition-light references remain untouched. The package's new executable is a macOS tool, not a new supported platform claim for registry items
+
+### Continuation checkpoint (2026-09-06)
+
+The owner explicitly authorized continuing until Phases A through D are complete. At this checkpoint Phase A is committed, the tree was clean before the handoff documentation update, and Phase B has only been inspected. No MCP or generator Swift implementation has been written. There are no running builds, tests, or agents to resume. Recheck the live tree before relying on this checkpoint
+
+The next implementation unit is Phase B. Read the complete Python MCP server and all three generators alongside their tests before writing their Swift equivalents. Add the protocol and generators to RegistryKit and keep the executable as argument parsing and transport/output. Extend the existing parity script before changing any Python command examples in generated output
+
+Ordered JSON needs an explicit decision: `JSON.rendered(keys:)` orders only the top-level object, while Python's MCP wire responses, nested tool text, and site data preserve dictionary insertion order. Do not assume sorted JSON or semantic JSON equality satisfies the byte contract. Preset JSON also deliberately retains integral float spelling. Preserve the currently passing sorted receipt and search layouts when adding ordered rendering
+
+`test_mcp_server.py` hardcodes `[sys.executable, str(SERVER)]`. To run its assertions unchanged against Swift, use an external harness that substitutes only that subprocess launch with the built executable plus `mcp`; do not weaken or rewrite its assertions. Record that launch substitution explicitly. Add separate complete JSON-RPC wire parity for initialization versions, all seven tools, notifications, parse errors, invalid parameters, registry refusals, recipes, preset errors, and filesystem side effects
+
+The three generators must compare every catalog Markdown file, both Showcase manifest Swift files, website JSON, and every copied image. Include stale-output cleanup, item sorting, relative image links, recipe handling, and source text. Preserve Python-generated headers during Phase B. In Phase C change the generator implementation first, then regenerate outputs so new Swift command examples have documented provenance
+
+Before Phase C deletion, port every remaining Python assertion, including the installer tests that inspect canonical Swift APIs and theme behavior. Phase A's 18 Swift tests and its subprocess sweep are evidence for that phase, not a claim that all 106 Python test methods have been individually ported. Keep the captured negative validation and diff fixtures with their provenance
+
+Move the shared preset vectors and TypeScript checker out of `Tests/RegistryTests` before deleting that directory, and update every reader, including Showcase resources and fixture freshness tests. `Scripts/capture_previews.py` imports `Installer`, `RegistryError`, and `is_preset_code` from the consumer scripts. Adapt it to the Swift CLI before deleting those modules; do not leave a broken exception merely because captures remain Python
+
+Phase C must update AGENTS.md's generator commands, verification order, RegistryKit boundary, and single structural validator path. Update the registry specification, architecture where needed, active README and MCP client instructions, website install and preset commands, Create page copy, CI, and this roadmap. Search for remaining active Python references and classify archive references without rewriting archives. The registry CI currently runs Python on Ubuntu; choose a runner/toolchain that builds the macOS Swift tool. The website job also invokes a Python generator and needs a deliberate replacement
+
+Phase D must work from any directory: explicit `--registry` clone first, then a cached release snapshot under the registry/version cache directory, fetched from the release tarball for pinned `0.1.0`. A valid cache skips downloading unless forced. Test path override, cache reuse, forced refresh, failures, and cache writes through injected effects; use the dependency clock for cache timing. Define and document how cache force combines with install overwrite force. After install, check the Homebrew tap tags for the best-effort newer-release notice, following the measured pfw behavior
+
+Provide the universal macOS release build workflow and `swiftui-registry` formula template for `mangobyte-dev/homebrew-tap`. The owner creates the tap repository and publishes the first tag. Do not claim a release upload, Homebrew installation, or live download was tested without performing it. Those publishing actions are outside this session's authorization; document any unavailable external proof separately from locally testable distribution behavior
+
+### Reproducible evidence and local logs
+
+The verification commands and source map are in `HANDOFF.md`. Phase A also passed the full root `swift test`: five Foundations tests and 18 RegistryKit tests. The subprocess oracle is `Scripts/check_swift_parity.py`; build first, then let it discover the binary directory or pass `--binary /absolute/path/to/swiftui-registry`. It compares 794 command pairs, not just parsed JSON
+
+Supporting Phase A logs are `/tmp/swiftui-registry-stage6-final-build.log`, `final-tests.log`, `package-tests.log`, `final-parity.log`, `release-build.log`, `showcase-build.log`, and `format-check.log`, all with the same `/tmp/swiftui-registry-stage6-` prefix. These temporary files are not required to continue. The complete Showcase build log was `/Users/developer/Library/Developer/XcodeBuildMCP/workspaces/swiftui-cn-13dead7d9e93/logs/build_sim_2026-09-06T10-06-31-290Z_pid22783_a0f34d20.log`
+
+The Showcase build generated an untracked workspace `xcshareddata/swiftpm/Package.resolved`; the session removed that generated file after verification. Do not commit an incidental workspace lockfile without reviewing whether the change requires it. No visual references or installed Showcase source changed during Phase A
+
+### Handoff documentation verification (2026-09-06)
+
+The documentation unit replaces the stale Stage 5 handoff with a restart procedure, source map, session authorization, commit trailers, and absolute verification commands. This roadmap records the continuation checkpoint and removal hazards; the migration contract records the command and disk compatibility checklist. The former Later-section deferral of MCP and release distribution was stale and is corrected to match the authorized Stage 6 scope
+
+For this documentation unit, `swift build`, `swift test --filter RegistryKitTests` (18 tests), all 106 Python tests, both validators, all three generators with no output drift, `make format-check`, local Markdown link-target checks, and `git diff --check` passed. The subprocess oracle passed all 794 command pairs again, including complete file trees and bidirectional receipt updates. Logs are `/tmp/swiftui-registry-stage6-handoff-tests.log`, `handoff-python.log`, and `handoff-parity.log`, each using the same `/tmp/swiftui-registry-stage6-` prefix
+
+No tool implementation, generated bytes, Showcase sources, or website sources changed in this unit. Release build, Showcase build and UI tests, captures, and website checks were not repeated for these documentation-only edits. Phase B through D remain implementation work, not completed by this documentation update
 
 ### Remaining phase gates
 
@@ -325,7 +365,7 @@ Not run: the Showcase UI suite and captures, because no Showcase or registry UI 
 
 Complex data, presentation guidance, and messaging proceed only on evidence from named adopters. Native sheets, alerts, menus, navigation, scroll views, and split views are recipes by default, not installable wrappers. Finance and nutrition remain proof fixtures; illustrative domains do not count as adoption evidence
 
-Deferred until real adoption proves the need: hosted registry distribution, namespaces, authentication, federation, MCP, marketplace and multi-author workflows, automatic `.xcodeproj` mutation, macOS/watchOS/tvOS/visionOS claims, and a large typography/color/elevation token framework
+Deferred until real adoption proves the need: hosted registry services beyond the pinned release snapshots authorized in Stage 6, namespaces, authentication, federation, marketplace and multi-author workflows, automatic `.xcodeproj` mutation, macOS/watchOS/tvOS/visionOS claims, and a large typography/color/elevation token framework. The local MCP adapter and release snapshot distribution are part of the authorized Swift CLI rewrite, not deferred services
 
 ## Delivery unit
 

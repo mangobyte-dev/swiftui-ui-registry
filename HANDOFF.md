@@ -1,43 +1,90 @@
-# Handoff: after Stage 5, the theme preview wall
+# Handoff: Swift CLI rewrite
 
-Written 2026-09-06 at the end of the Stage 5 run. State lives in `docs/component-roadmap.md` (Current state, Open deferrals, the Stage 5 section with its exit-criteria evidence, and the Backlog); this file is the brief, not a second home for state
+Read [AGENTS.md](AGENTS.md), [philosophy](docs/philosophy.md), [architecture](docs/architecture.md), and the full [registry specification](docs/registry-spec.md), in that order. Then read [the roadmap, Stage 6](docs/component-roadmap.md#stage-6-swift-command-line-rewrite) for the checkpoint, commit evidence, next actions, phase gates, and unresolved work. The roadmap is the only home for stage status and plans
 
----
+Read [the migration contract](docs/cli-migration.md) for package boundaries, compatibility exceptions, effect injection, and the Showcase codec decision. Read [fixture provenance](Tests/RegistryKitTests/Fixtures/README.md) before changing an expectation. Python is the byte oracle during the overlap; an unexplained snapshot update is not parity evidence
 
-I am Mo, the owner of SwiftUIRegistry. Stage 5 recreated everything shadcn's `/create` page previews: the five primitives it lacked (`field`, `chart`, `table`, `combobox`, `breadcrumb`) and the two walls, `preview` (33 cards) and `preview-02` (35 cards), each an installable block whose cards compose registry items and native controls with neutral sample data. The six theme captures and the website's Create and Themes pages now show the wall's first screen per preset. The placement rule for presentation choices (a `registry`-prefixed trailing call, never an initializer parameter) is in `AGENTS.md`. Everything is pushed and the site is deployed. Read `AGENTS.md`, then the Stage 5 section of the roadmap
+## Session instructions
 
-## What is waiting for me
+The owner authorized completing all four phases with local commits, without further confirmation. Do not push, tag, deploy, create the tap repository, or replace visual references. Do not inherit the previous Stage 5 session's publishing authorization. Do not use subagents or run remote workflows. Creating the requested CI and release workflow files is part of the implementation
 
-1. Replace the two visual references, reviewed first, then re-run the suite. `auth-light` (2.67 percent, stale since the audit) and `nutrition-light` (1.53 percent) fail only because their blocks reach the accent strip above the tab bar; the other 17 UI tests and the 7 Showcase unit tests pass on every run. The reviewed candidates are exported next to this session's final result bundle at `/private/tmp/claude-501/-Users-developer-Projects-swiftui-cn/7db8cc48-cfcb-4ea2-8c09-ebfba8bf4c18/scratchpad/final5-attachments` (`auth-light.png`, `nutrition-light.png`); the copy commands are under "Reference replacement" below
-2. Decide the GitHub Pages workflow: `.github/workflows/pages.yml` fails at its deploy step on every push because Pages is not enabled for the repository; enable Pages with the GitHub Actions source, or delete the workflow since Cloudflare Workers is the deploy path
-3. The owner decisions from the audit still stand in the roadmap's "Deferred, with the reason"
-4. Next stage, when I say go: the Swift CLI, recorded in Backlog item 11 as a rewrite of the whole Python path (installer, validator, receipts and merge, search, presets, MCP) with command parity and the same receipts on disk as the exit criteria; nothing has started
-5. argent 0.24.0 is available and was not installed
+Use absolute paths in shell commands and set the working directory explicitly. Do not use `cd` in concurrent commands. Write no em dashes or heading-ending periods. Read the actual Swift interface or the mirrored Python source before calling an unfamiliar API. Preserve raw SwiftUI controls, source ownership, and the four document classes in AGENTS.md
 
-## Reference replacement
+Every commit must pass the scope-appropriate verification loop. Record the commit hash and title, command outcomes, exact parity coverage, decisions, and omissions in the roadmap. End each commit message with:
 
-After reviewing each candidate (they are the real screens with the strip above the three-tab bar):
-
-```sh
-OUT=/private/tmp/claude-501/-Users-developer-Projects-swiftui-cn/7db8cc48-cfcb-4ea2-8c09-ebfba8bf4c18/scratchpad/final5-attachments
-cd Examples/Showcase/SwiftUIRegistryShowcaseUITests/ReferenceImages
-for name in auth nutrition; do
-  cp "$OUT/$name-light.png" "$name-light.png"
-done
+```text
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HsHG4U7cjKDqu9oTQY139e
 ```
 
-`docs/visual-testing.md` carries the GOLDEN-CHANGE note dated 2026-09-05 for this replacement
+The local commit-msg hook appends `By specifier.`; leave the hook alone
 
-## Facts measured this run
+## Restart procedure
 
-- The iPad Pro 13-inch simulator used for the wide captures was set to ar_SA, which put Hijri dates and spaced currency into the first wall captures; every capture now launches with `-AppleLanguages (en) -AppleLocale en_US` and the iPad is set to en_US for its status bar date (pins in `AGENTS.md`)
-- XcodeBuildMCP keeps a session profile; a worker running `test_sim` while the `ipad-qa` profile was active reported 13 false tab-bar failures. Check the active profile before any simulator test, or run `xcodebuild` with an explicit destination
-- The full UI suite now takes about 27 minutes on the pinned iPhone because the demo walk audits both non-lazy walls (68 cards); run subsets with `-only-testing` for slice gates and the full suite once per push
-- `inspector(isPresented:)` on a tab's navigation stack stops the auth form's Return key from moving focus on iOS 27 even while nothing is presented; the iPad column is a plain `HStack` sibling
-- The item capture route is one screen tall, so a wall's capture shows its first screen; the audit covers every card because the compact wall is a non-lazy `VStack`
-- argent's `describe` returns an empty tree for this app on the pinned iPhone and its taps do not land on the iPad; XcodeBuildMCP's `snapshot_ui` and `tap` work on the iPhone, and the UI suite is the proof
-- A local commit-msg hook (swarmforge) appends "By specifier." to every commit message; it is harmless and outside the repository
+Use `/Users/developer/Projects/swiftui-cn` as the working directory. Inspect the branch, recent commits, and working tree before editing; do not reset another session's work
 
-## Rules that still bind
+```sh
+git -C /Users/developer/Projects/swiftui-cn status --short --branch
+git -C /Users/developer/Projects/swiftui-cn log -5 --oneline
+git -C /Users/developer/Projects/swiftui-cn diff --stat
+```
 
-Everything in `AGENTS.md`; no em dashes; do not push, tag, or deploy without the owner (the owner authorized push and deploy for this run on 2026-09-06); never write into `ReferenceImages/` from an agent session; no large agent fan-outs, one Opus 4.8 worker per slice
+Follow the roadmap's Stage 6 continuation checkpoint rather than replaying completed Phase A. No chat history is required. Temporary logs are supporting evidence only; committed tests, fixtures, and the parity script reproduce the proof
+
+## Verification commands
+
+Run sequentially from the root, cheapest first. Keep the Python checks until Phase C removes that path. Use the Swift generator commands once implemented and compare their bytes before changing generated command examples
+
+```sh
+swift build --package-path /Users/developer/Projects/swiftui-cn
+swift test --package-path /Users/developer/Projects/swiftui-cn --filter RegistryKitTests
+python3 -m unittest discover -s /Users/developer/Projects/swiftui-cn/Tests/RegistryTests
+python3 /Users/developer/Projects/swiftui-cn/Scripts/validate.py
+swift run --package-path /Users/developer/Projects/swiftui-cn swiftui-registry validate --registry /Users/developer/Projects/swiftui-cn
+python3 /Users/developer/Projects/swiftui-cn/Scripts/generate_catalog.py
+python3 /Users/developer/Projects/swiftui-cn/Scripts/generate_showcase_manifest.py
+python3 /Users/developer/Projects/swiftui-cn/Scripts/generate_site_data.py
+git -C /Users/developer/Projects/swiftui-cn diff --exit-code -- docs/catalog Examples/Showcase Website/content Website/public/images
+python3 /Users/developer/Projects/swiftui-cn/Scripts/check_swift_parity.py
+make -C /Users/developer/Projects/swiftui-cn format-check
+git -C /Users/developer/Projects/swiftui-cn diff --check
+```
+
+Use `swift build --package-path /Users/developer/Projects/swiftui-cn --show-bin-path` to discover the binary directory rather than assuming an architecture-specific `.build` path. Also build with `-c release` for release changes
+
+After touching Showcase, build it on the pinned simulator:
+
+```sh
+xcodebuildmcp simulator build --workspace-path /Users/developer/Projects/swiftui-cn/Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace --scheme SwiftUIRegistryShowcase --simulator-id 1807166B-C557-4F6B-B177-D5F3F701CBD7
+```
+
+If Showcase sources change, run its UI suite once with the explicit destination, retain the result bundle, and report the known reference failures separately:
+
+```sh
+xcodebuild test -workspace /Users/developer/Projects/swiftui-cn/Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace -scheme SwiftUIRegistryShowcase -destination 'platform=iOS Simulator,id=1807166B-C557-4F6B-B177-D5F3F701CBD7' -resultBundlePath /tmp/swiftui-registry-stage6-showcase-tests.xcresult
+```
+
+Choose a fresh result bundle path if that one exists. The suite takes about 27 minutes; inspect its log while it runs. See the roadmap and [visual testing contract](docs/visual-testing.md) for the pre-existing `auth-light` and `nutrition-light` differences. Never write into `ReferenceImages/`
+
+Read `Website/AGENTS.md` before changing website files. After touching Website, run these commands with working directory `/Users/developer/Projects/swiftui-cn/Website`:
+
+```sh
+npm run typecheck
+npm run build
+```
+
+## Source navigation
+
+| Concern | Implementation and oracle |
+|---|---|
+| Real argument parsing and output | `Sources/SwiftUIRegistryCLI/Main.swift`, `PresetCommand.swift`; `Tests/RegistryKitTests/CommandSupport.swift` parses and runs the real root command |
+| Validation and resolution | `Sources/RegistryKit/Validation.swift`, `Registry.swift`; `Scripts/registry_validation.py`, `Tests/RegistryTests/test_validation.py` |
+| Ownership and merge | `Sources/RegistryKit/Installer.swift`, `SourceComparison.swift`; `Scripts/install.py`, `Tests/RegistryTests/test_installer.py` |
+| Effects | `Sources/RegistryKit/FileSystem.swift`, `Console.swift`; `Tests/RegistryKitTests/InMemoryFileSystem.swift` |
+| Search and preset codec | `Sources/RegistryKit/Registry.swift`, `Preset.swift`, `PresetRandom.swift`; `Scripts/search.py`, `preset.py` and their Python tests |
+| MCP wire contract | `Scripts/mcp_server.py`, `Tests/RegistryTests/test_mcp_server.py` |
+| Generator byte contracts | `Scripts/generate_catalog.py`, `generate_showcase_manifest.py`, `generate_site_data.py` and their three Python test files |
+| Shared codec vectors | `Tests/RegistryTests/preset_vectors.json`, `preset_vectors_check.ts`, `Tests/RegistryKitTests/Fixtures/preset_vectors.json`, Showcase `ThemePreset.swift` |
+| Release reference | `pointfreeco/pfw` commit `854b491`: `Sources/pfw/Main.swift`, `Install.swift`, `Dependencies/FileSystem.swift`, `Tests/pfwTests/InstallTests.swift`, `Tests/pfwTests/Internal/AssertComand.swift`, `.github/workflows/release.yml` |
+
+The reference checkout used during implementation is `/tmp/swiftui-registry-stage6-pfw`; recreate it from `https://github.com/pointfreeco/pfw` at the pinned commit if absent. Treat it as a design reference, not a runtime dependency. Its central store, symlinks, login, redirect server, and ZIP dependency do not belong in this source-copying registry

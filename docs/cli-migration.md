@@ -34,6 +34,25 @@ Swift Argument Parser supplies help and syntax-error presentation. Its executabl
 
 Preset numeric values use Python's ties-to-even rounding. Decoding keeps the known low bits of all 22-character codes, including values exceeding UInt128. Seeded random output reproduces Python's MT19937, integer seeding, and rejection sampling, including negative integers and integers beyond 64 bits. The Showcase remains unchanged; its behavior beyond the shared vectors is not silently widened by this migration
 
+## Command and disk contracts
+
+This table is the compatibility checklist for the rewrite, not a completion claim. Phase implementation and verification evidence belong to the roadmap. The corresponding Python source and tests define exact wording and negative cases until removal
+
+| Command | Contract to preserve |
+|---|---|
+| `validate [item ...]` | Full or scoped dependency-closure validation; exit 0 with `Registry validation passed: full catalog` or scoped wording; exit 1 with the ordered readable defect report |
+| `search [query ...] [--kind component\|block\|flow\|recipe] [--platform NAME] [--target-version X.Y] [--format json\|names]` | Every query term matches; name, alias, tag, description ranking and deterministic tie order; the same JSON fields |
+| `install <item> --destination <dir> [--force\|--update\|--plan\|--diff]` | Dependency-closed preflight, identical skips, collision and ownership refusals, packages and manifest snippets; diff exits 1 for differences, registry refusals exit 2; recipe install exits 2 and recipe plan exits 0 with native guidance |
+| `preset decode <code> [--json]`, `url <code>`, `apply <code> --destination <dir> [--force]`, `resolve <path> [--json]`, `random [--seed N]` | The same code grammar and 22-character limit, shared vectors, seeded output, text and JSON, generated theme bytes, and refusal to overwrite an edited theme |
+| `mcp` | Newline-delimited JSON-RPC on stdin/stdout; seven tools, exact structured content and error paths, protocol negotiation for `2025-06-18`, `2025-03-26`, and `2024-11-05`; logs on stderr only |
+| `generate catalog`, `generate showcase-manifest`, `generate site-data` | Byte equality for all generated files and copied images, including output cleanup; use the corresponding Python generator's output options |
+
+The MCP tools are `search_items`, `describe_item`, `plan_install`, `diff_item`, `install_item`, `describe_preset`, and `apply_preset`. Every tool must call the same RegistryKit operations as its CLI counterpart. The server reloads validated registry metadata per tool call so edits are visible without restarting. Compare both the wire response and the formatted text nested inside `content`; parsed-object equality alone misses drift
+
+`.swiftui-registry/receipt.json` in the destination uses schema version 1. It records registry identity, item versions and dependencies including every SwiftPM rule, and file ownership with digests and base paths. Bases are `bases/<id>.base`; conflict artifacts are `conflicts/<id>.merge`. Neither artifact may have a `.swift` extension. Verify the exact paths against `Installer.swift` and the Python oracle before changing them
+
+The interoperability proof must install with Python and update with Swift, then install with Swift and update with Python. Diff complete directory trees after the updates, including receipts, bases, conflicts, and the absence of unintended files. Exercise local edits, upstream edits, a clean three-way merge, conflicting edits, and forced cleanup. No normalization is permitted inside file contents
+
 ## Verification
 
 Run `swift build`, `swift test --filter RegistryKitTests`, and `python3 -m unittest discover Tests/RegistryTests` from the repository root. Run both validators and all three Python generators, then verify no generated files changed. `python3 Scripts/check_swift_parity.py` runs the temporary subprocess oracle after a build. `make format` and `make format-check` format and lint the new Swift tool and its tests without rewriting canonical registry source or generated consumers

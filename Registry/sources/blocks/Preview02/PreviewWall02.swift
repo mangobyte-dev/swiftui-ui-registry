@@ -51,6 +51,7 @@ public struct PreviewWall02: View {
         PayoutThreshold()
         PowerUsage()
         Preferences()
+        QrConnect()
     }
 
     private var columns: [GridItem] {

@@ -98,6 +98,10 @@
     {
       "source": "sources/blocks/Preview02/Preferences.swift",
       "target": "Preview02/Preferences.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/QrConnect.swift",
+      "target": "Preview02/QrConnect.swift"
     }
   ],
   "registryDependencies": [

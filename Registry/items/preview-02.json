@@ -142,6 +142,10 @@
     {
       "source": "sources/blocks/Preview02/SyncingState.swift",
       "target": "Preview02/SyncingState.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/TransferFunds.swift",
+      "target": "Preview02/TransferFunds.swift"
     }
   ],
   "registryDependencies": [

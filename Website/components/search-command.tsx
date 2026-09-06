@@ -6,6 +6,7 @@ import { SearchIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
+  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -13,12 +14,22 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import { KINDS, registry } from "@/lib/registry"
+import { KINDS, registry, type RegistryItem } from "@/lib/registry"
+import { rankItems } from "@/lib/search"
 
-/** ⌘K search over every item's name, description, and tags. */
+/** ⌘K search over every item's name, aliases, tags, and description. */
 export function SearchCommand() {
   const [open, setOpen] = React.useState(false)
+  const [query, setQuery] = React.useState("")
   const router = useRouter()
+  // cmdk 1.1.1 never reorders its groups (its group selector looks up the wrong data-value),
+  // so the dialog ranks the items itself and renders one ordered list for a query.
+  const results = React.useMemo(() => rankItems(query), [query])
+
+  function openItem(item: RegistryItem) {
+    setOpen(false)
+    router.push(`/items/${item.name}/`)
+  }
 
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -45,30 +56,49 @@ export function SearchCommand() {
           ⌘K
         </kbd>
       </Button>
-      <CommandDialog open={open} onOpenChange={setOpen} title="Search items" description="Jump to an item">
-        <CommandInput placeholder="Search components, blocks, recipes" />
-        <CommandList>
-          <CommandEmpty>No items match.</CommandEmpty>
-          {KINDS.map(({ kind, title }) => (
-            <CommandGroup key={kind} heading={title}>
-              {registry.items
-                .filter((item) => item.kind === kind)
-                .map((item) => (
-                  <CommandItem
-                    key={item.name}
-                    value={`${item.name} ${item.aliases.join(" ")} ${item.description} ${item.tags.join(" ")}`}
-                    onSelect={() => {
-                      setOpen(false)
-                      router.push(`/items/${item.name}/`)
-                    }}
-                  >
+      <CommandDialog
+        open={open}
+        onOpenChange={(value) => {
+          setOpen(value)
+          if (!value) setQuery("")
+        }}
+        title="Search items"
+        description="Jump to an item"
+      >
+        <Command shouldFilter={false}>
+          <CommandInput
+            placeholder="Search components, blocks, recipes"
+            value={query}
+            onValueChange={setQuery}
+          />
+          <CommandList>
+            <CommandEmpty>No items match.</CommandEmpty>
+            {query.trim() === "" ? (
+              KINDS.map(({ kind, title }) => (
+                <CommandGroup key={kind} heading={title}>
+                  {registry.items
+                    .filter((item) => item.kind === kind)
+                    .map((item) => (
+                      <CommandItem key={item.name} value={item.name} onSelect={() => openItem(item)}>
+                        <span className="font-medium">{item.name}</span>
+                        <span className="truncate text-muted-foreground">{item.description}</span>
+                      </CommandItem>
+                    ))}
+                </CommandGroup>
+              ))
+            ) : (
+              <CommandGroup heading="Results">
+                {results.map((item) => (
+                  <CommandItem key={item.name} value={item.name} onSelect={() => openItem(item)}>
                     <span className="font-medium">{item.name}</span>
+                    <span className="shrink-0 text-xs text-muted-foreground">{item.kind}</span>
                     <span className="truncate text-muted-foreground">{item.description}</span>
                   </CommandItem>
                 ))}
-            </CommandGroup>
-          ))}
-        </CommandList>
+              </CommandGroup>
+            )}
+          </CommandList>
+        </Command>
       </CommandDialog>
     </>
   )

@@ -150,7 +150,7 @@ function PreviewPanel({
         <pre className="max-h-[560px] overflow-auto p-4 pr-14 font-mono text-[12.5px] leading-relaxed sm:text-[13px]">{swift}</pre>
       </TabsContent>
       <TabsContent value="apply" className="flex flex-col gap-4 p-4">
-        <ApplyStep title="With the swiftui-registry tool from a clone of the registry" detail="Writes RegistryTheme+App.swift next to your installed items, declaring RegistryTheme.app.">
+        <ApplyStep title="With the swiftui-registry tool" detail="brew install mangobyte-dev/tap/swiftui-registry, then this writes RegistryTheme+App.swift next to your installed items, declaring RegistryTheme.app.">
           <Command text={applyCommand(code)} />
         </ApplyStep>
         <ApplyStep title="Then once at your scene root" detail="Every registry item and every tinted native control below inherits it.">

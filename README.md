@@ -30,15 +30,16 @@ The value gate: an installable item must add a meaningful reusable treatment or 
 
    Presets: `.system` (inherits your app tint), `.graphite`, `.indigo`, `.rose`, `.emerald`, `.amber`. To make your own, open the Showcase's Tune tab, move the sliders, and tap Copy Swift; it exports the exact `RegistryTheme(...)` initializer
 
-3. Install items with the `swiftui-registry` tool from a clone of this repository. From the root of that clone, `swift run swiftui-registry <command>` builds and runs it; or build it once with `swift build -c release`, put `.build/release/swiftui-registry` on your PATH, and pass `--registry /path/to/clone` from anywhere:
+3. Install the `swiftui-registry` tool with Homebrew, then install items from any directory. The tool fetches the pinned `0.1.0` registry snapshot from the published tag on first use, caches it under `~/Library/Caches/swiftui-registry`, and reuses it (`--refresh` fetches again). From a clone, `swift run swiftui-registry <command>` runs the same tool against that clone:
 
    ```sh
-   swift run swiftui-registry search activity --kind block --format names
-   swift run swiftui-registry install activity-feed --destination path/to/YourTarget/Components --plan
-   swift run swiftui-registry install activity-feed --destination path/to/YourTarget/Components
+   brew install mangobyte-dev/tap/swiftui-registry
+   swiftui-registry search activity --kind block --format names
+   swiftui-registry install activity-feed --destination path/to/YourTarget/Components --plan
+   swiftui-registry install activity-feed --destination path/to/YourTarget/Components
    ```
 
-   The installer resolves the dependency closure, copies exact source, writes `.swiftui-registry/receipt.json`, and prints the package requirement. It never edits project files; make the destination folder a member of your build target. Outside a clone, the tool fetches the pinned `0.1.0` registry snapshot from the published tag into `~/Library/Caches/swiftui-registry` on first use and reuses it; `--refresh` fetches it again. That needs the tag on GitHub, so until it is published use a clone or `--registry`
+   The installer resolves the dependency closure, copies exact source, writes `.swiftui-registry/receipt.json`, and prints the package requirement. It never edits project files; make the destination folder a member of your build target. `--registry /path/to/clone` points the tool at a checkout instead of the snapshot
 
 4. Compose through the item's public API; the exact snippet is on its catalog page and in the Showcase
 
@@ -51,7 +52,7 @@ Version 0, an honest prototype:
 - Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, captured screenshots, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates
 - The Showcase compiles every installable item and every recipe snippet at the iOS 26 floor, with pinned visual contract checks for the blocks and an accessibility-audited demo walk over all 50 items
-- Not yet: hosted registry, Xcode project mutation, platforms beyond iOS, a Homebrew formula, or a published version tag. Stage status and open deferrals live in one place, `docs/component-roadmap.md`, Current state
+- Published 2026-09-06: the `0.1.0` tag and GitHub release with the universal `swiftui-registry` binary, and the Homebrew tap `mangobyte-dev/tap`. Not yet: hosted registry, Xcode project mutation, or platforms beyond iOS. Stage status and open deferrals live in one place, `docs/component-roadmap.md`, Current state
 
 ## Showcase screenshots
 
@@ -76,7 +77,7 @@ swiftui-registry search nutrition dashboard \
   --target-version 26.0
 ```
 
-Results include dependency closure inputs, package requirements, accessibility notes, preview paths, and compatibility metadata. Search does not require a model, MCP server, account, or hosted registry. Every `swiftui-registry` command below runs as `swift run swiftui-registry ...` from the root of a clone, or as the built binary with `--registry /path/to/clone`
+Results include dependency closure inputs, package requirements, accessibility notes, preview paths, and compatibility metadata. Search does not require a model, MCP server, account, or hosted registry. Every `swiftui-registry` command below runs from any directory once the tool is installed with Homebrew, as `swift run swiftui-registry ...` from the root of a clone, or as a built binary with `--registry /path/to/clone`
 
 ## Install
 
@@ -142,14 +143,14 @@ swiftui-registry install finance-overview \
 
 ### MCP server
 
-`swiftui-registry mcp` exposes the same operations (search, describe, plan, diff, install, plus the preset tools) as MCP tools over stdio. Build the tool once with `swift build -c release` in your clone, then register the binary in your MCP client, for example Claude Code's `.mcp.json`:
+`swiftui-registry mcp` exposes the same operations (search, describe, plan, diff, install, plus the preset tools) as MCP tools over stdio. Register the Homebrew-installed binary in your MCP client, for example Claude Code's `.mcp.json`; add `"--registry", "/path/to/clone"` to the arguments to serve a checkout instead of the pinned snapshot:
 
 ```json
 {
   "mcpServers": {
     "swiftui-registry": {
-      "command": "/path/to/swiftui-cn/.build/release/swiftui-registry",
-      "args": ["mcp", "--registry", "/path/to/swiftui-cn"]
+      "command": "swiftui-registry",
+      "args": ["mcp"]
     }
   }
 }
@@ -179,7 +180,9 @@ The block owns presentation composition. The caller owns value preparation, loca
 open Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace
 ```
 
-Select the `SwiftUIRegistryShowcase` scheme and run. The Components, Blocks, and Recipes tabs list every item from the generated manifest and open a live demo, the install command, and the usage snippet; the Tune tab is the theme creator. The app consumes the exact source installed under `Examples/Showcase/SwiftUIRegistryShowcasePackage/Sources/SwiftUIRegistryShowcaseFeature/Installed/`
+Select the `SwiftUIRegistryShowcase` scheme and run. The Components, Blocks, and Recipes tabs list every item from the generated manifest and open a live demo, the install command, and the usage snippet; the tuning panel beside them is the theme creator. The app consumes the exact source installed under `Examples/Showcase/SwiftUIRegistryShowcasePackage/Sources/SwiftUIRegistryShowcaseFeature/Installed/`
+
+A second consumer, `Examples/TodoCounter/TodoCounter.xcworkspace`, was built from a fresh Xcode project on 2026-09-06 to prove the registry works with any architecture: the Composable Architecture drives a todo list and Point-Free's counter, the package comes from GitHub at the `0.1.0` tag, seven items were installed with the Homebrew-installed tool, the theme was applied from a preset code and then customized, and one component carries a local edit the receipt tracks. Its README lists every command that built it
 
 ## Verify
 
@@ -202,6 +205,7 @@ The simulator suite walks every item's demo, verifies the blocks' behavior (focu
 - Swift tools 6.2 or newer
 - iOS 26 or newer
 - Xcode capable of building Swift 6.2 packages
+- Homebrew on macOS for `brew install mangobyte-dev/tap/swiftui-registry`; Swift tools 6.2 or newer to run the tool from a clone instead
 - Node 22 for the website and for the website codec check inside `swift test`
 - Python 3 only for `Scripts/capture_previews.py`, the maintainer's simulator capture script
 - Git when an update needs a three-way merge

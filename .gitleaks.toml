@@ -6,5 +6,5 @@ title = "SwiftUIRegistry"
 useDefault = true
 
 [[allowlists]]
-description = "Commit 506da53 (Stage 5 slice 2) shipped the environment-variables preview card with the placeholder sk_live_51xxxxxxxx as sample text in the canonical source, the installed copy, and the receipt base. It was never a credential; 433659d replaced it with a neutral value and the commit stays in history unrewritten"
-commits = ["506da53f76406a5e105efcef610b1efe8c3a0dca"]
+description = "Commit cc678ab (Stage 5 slice 2) shipped the environment-variables preview card with the placeholder sk_live_51xxxxxxxx as sample text in the canonical source, the installed copy, and the receipt base. It was never a credential; 79ae888 replaced it with a neutral value and the commit stays in history unrewritten"
+commits = ["cc678ab2aebd44d828d3ae50402f42aceb8b24e8"]

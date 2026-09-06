@@ -1,32 +1,24 @@
-# Handoff: Stage 6 is complete; the release is the owner's
+# Handoff: Stage 6 is complete and published
 
-Read [AGENTS.md](AGENTS.md), [philosophy](docs/philosophy.md), [architecture](docs/architecture.md), and the full [registry specification](docs/registry-spec.md), in that order. Then read [the roadmap, Stage 6](docs/component-roadmap.md#stage-6-swift-command-line-rewrite) for the phase evidence and [Open deferrals](docs/component-roadmap.md#open-deferrals) for the owner's publishing sequence. The roadmap is the only home for stage status and plans
+Read [AGENTS.md](AGENTS.md), [philosophy](docs/philosophy.md), [architecture](docs/architecture.md), and the full [registry specification](docs/registry-spec.md), in that order. Then read [the roadmap, Stage 6](docs/component-roadmap.md#stage-6-swift-command-line-rewrite) for the phase and publication evidence and [Open deferrals](docs/component-roadmap.md#open-deferrals) for what is still open. The roadmap is the only home for stage status and plans
 
-## Owner steps before anything else ships
+## What is published
 
-1. Push `main` (seven local commits ahead of `origin/main`, `4746b66` through the Phase D hash record) and the local `0.1.0` tag. The tag makes `Package.swift` floors resolve and lets the tool's snapshot download succeed; on 2026-09-06 that download answered HTTP 404
-2. Publish a GitHub release for `0.1.0`; `.github/workflows/release.yml` builds the universal binary on `macos-26` and uploads `swiftui-registry-macos-universal.tar.gz` and its `.sha256` to the release
-3. Create `mangobyte-dev/homebrew-tap`, copy `Distribution/homebrew/swiftui-registry.rb` to `Formula/swiftui-registry.rb`, replace the zero `sha256` with the uploaded checksum, and tag the tap `swiftui-registry-0.1.0` so the tool's update notice sees it
-4. Only then document `brew install mangobyte-dev/tap/swiftui-registry` in the README, the catalog index template (`CatalogGenerator.swift`) with a regeneration, and the website copy
-5. Watch the first CI run on `macos-26` (`ci.yml`, `pages.yml`); it has never executed. `xcode-27` is the fallback runner label if the default Xcode 26.6 rejects something Swift 6.4 accepted locally
-6. Copy the reviewed `auth-light` and `nutrition-light` references if the drift is accepted (2.69 and 1.53 percent, `docs/visual-testing.md`)
+Release `0.1.0` on GitHub with the universal binary, the tag, the tap `mangobyte-dev/homebrew-tap` (`brew install mangobyte-dev/tap/swiftui-registry`), the website on Cloudflare Workers and GitHub Pages, and the `Examples/TodoCounter` consumer. The owner's remaining decisions are the two stale visual references (`auth-light` 2.69 percent, `nutrition-light` 1.53 percent, `docs/visual-testing.md`), the iOS 26 runtime (Backlog 13), and the custom domain (Backlog 14)
+
+## Commit messages
+
+A commit message carries only the change description; the local hook appends `By specifier.`. Never add assistant co-author, session, or "generated with" trailers: the owner had the whole history rewritten on 2026-09-06 to remove them
 
 Read [the migration contract](docs/cli-migration.md) for package boundaries, compatibility exceptions, effect injection, and the Showcase codec decision. Read [fixture provenance](Tests/RegistryKitTests/Fixtures/README.md) before changing an expectation. The Python oracle is gone since Phase C; the inline snapshots and captured fixtures under `Tests/RegistryKitTests/` are the byte contract, and an unexplained snapshot update is not evidence
 
 ## Session instructions
 
-The owner authorized completing all four phases with local commits, without further confirmation, and all four are done. Do not push, tag, deploy, create the tap repository, or replace visual references. Do not inherit the previous Stage 5 session's publishing authorization. Do not use subagents or run remote workflows
+Publishing actions (push, tag, release, deploy, tap changes) need the owner's explicit instruction in the session; on 2026-09-06 the owner gave it and everything was published. Never replace visual references. Keep subagents to the handful the owner asks for
 
 Use absolute paths in shell commands and set the working directory explicitly. Do not use `cd` in concurrent commands. Write no em dashes or heading-ending periods. Read the actual Swift interface before calling an unfamiliar API. Preserve raw SwiftUI controls, source ownership, and the four document classes in AGENTS.md
 
-Every commit must pass the scope-appropriate verification loop. Record the commit hash and title, command outcomes, decisions, and omissions in the roadmap. End each commit message with:
-
-```text
-Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_01HsHG4U7cjKDqu9oTQY139e
-```
-
-The local commit-msg hook appends `By specifier.`; leave the hook alone
+Every commit must pass the scope-appropriate verification loop. Record the commit hash and title, command outcomes, decisions, and omissions in the roadmap. The local commit-msg hook appends `By specifier.`; leave the hook alone
 
 ## Restart procedure
 
@@ -96,4 +88,4 @@ npm run build
 | Distribution | `.github/workflows/release.yml` (universal binary on a published release), `Distribution/homebrew/swiftui-registry.rb` (tap formula template); measured from pfw's `release.yml` and its `pfw-` tap tags |
 | Release reference | `pointfreeco/pfw` commit `854b491`: `Sources/pfw/Main.swift`, `Install.swift`, `Dependencies/FileSystem.swift`, `Tests/pfwTests/InstallTests.swift`, `Tests/pfwTests/Internal/AssertComand.swift`, `.github/workflows/release.yml` |
 
-The Python originals and the 1,184-comparison parity oracle are in git history at `41c2bd8` if a byte question needs the source. The reference checkout used during implementation is `/tmp/swiftui-registry-stage6-pfw`; recreate it from `https://github.com/pointfreeco/pfw` at the pinned commit if absent. Treat it as a design reference, not a runtime dependency. Its central store, symlinks, login, redirect server, and ZIP dependency do not belong in this source-copying registry
+The Python originals and the 1,184-comparison parity oracle are in git history at `796b399` if a byte question needs the source. The reference checkout used during implementation is `/tmp/swiftui-registry-stage6-pfw`; recreate it from `https://github.com/pointfreeco/pfw` at the pinned commit if absent. Treat it as a design reference, not a runtime dependency. Its central store, symlinks, login, redirect server, and ZIP dependency do not belong in this source-copying registry

@@ -2,7 +2,7 @@
 
 # SwiftUIRegistry catalog
 
-57 items you copy into your app and own. The `swiftui-registry` tool comes from a clone of the registry repository: run `swift run swiftui-registry <command>` from the root of that clone, or build it once with `swift build -c release` and pass `--registry <path to the clone>` from anywhere. Components and blocks install with one command:
+57 items you copy into your app and own. Install the `swiftui-registry` tool with `brew install mangobyte-dev/tap/swiftui-registry`; it fetches the pinned registry snapshot on first use, and `--registry <path to a clone>` points it at a checkout instead. Components and blocks install with one command:
 
 ```sh
 swiftui-registry install <name> --destination Sources/YourFeature/Components

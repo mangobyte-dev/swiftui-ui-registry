@@ -27,6 +27,7 @@ On conflict: state beats archives, the more recent dated record wins between arc
 - `Registry/sources/blocks/` contains source-owned compositions of components
 - `Registry/items/` is machine-readable metadata and the dependency graph; `Registry/preset_vectors.json` pins the preset codes every codec reproduces
 - `Distribution/homebrew/` is the formula template for the owner's Homebrew tap, and `.github/workflows/release.yml` builds the universal binary when a GitHub release is published; neither is exercised by the verification list
+- `Examples/TodoCounter/` is a second consumer built from a fresh Xcode project: the published package by URL, the Composable Architecture, seven items installed with the released tool, a customized preset theme, and one locally edited component. It is not part of the verification list; its own test plan runs from its workspace
 - `Examples/Showcase/` proves installation, integration, and visual contracts. It is a browsable catalog (Components, Blocks, Recipes) with the tuning panel beside it, whose item list and usage snippets come from the generated manifest; every item has a demo registered in `ItemDemos.swift`, and the `-item <name>` launch renders that demo alone for capture
 
 ## Rules

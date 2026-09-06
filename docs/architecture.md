@@ -26,6 +26,7 @@ This is a hypothesis exercised by finance and nutrition, not a claim of universa
 - `Registry/sources/blocks/`: canonical copied block source
 - `Sources/RegistryKit/` and `Sources/SwiftUIRegistryCLI/`: the `swiftui-registry` tool, a SwiftUI-free engine (validation, dependency resolution, receipts, installation and conflict-aware updates, search, preset codes, the MCP server, the generators) behind an ArgumentParser executable
 - `Examples/Showcase/`: a real iOS consumer, a browsable catalog with a demo per item, the theme tuning panel, and the capture route for item screenshots
+- `Examples/TodoCounter/`: a consumer with a different architecture (the Composable Architecture), the package by URL at the published tag, items installed with the Homebrew tool, and a customized preset theme
 - `swiftui-registry generate catalog | showcase-manifest | site-data`: the derived catalog, Showcase manifest, and website data, all from metadata
 - `Website/`: the registry website, a Next.js static export built with shadcn/ui that reads only the generated `content/registry.json`; `npm run deploy` publishes it to Cloudflare Workers as static assets (`Website/wrangler.jsonc`), and `.github/workflows/pages.yml` can deploy the same export to GitHub Pages
 - `Scripts/capture_previews.py`: per-item light and dark captures from the Showcase on the pinned simulator

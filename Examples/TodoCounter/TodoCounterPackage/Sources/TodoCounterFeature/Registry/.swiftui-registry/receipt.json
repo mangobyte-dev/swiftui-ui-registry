@@ -1,0 +1,169 @@
+{
+  "files": {
+    "RegistryBadge.swift": {
+      "base": "bases/d2c9ac15caa37b6a8d992908df2bae92cbf1f88a0a246a7122f2e7e198b5024d.base",
+      "installedDigest": "sha256:4b5523b206c9545263e2cd4ca3dad071dabe33f4d2107e47eadf5f80dc55f5a5",
+      "item": "badge",
+      "sourceDigest": "sha256:803efa01ff74b6b56135263296cf9940a7dac32e53d7ba0a563a02991b6630f5",
+      "version": "0.3.1"
+    },
+    "RegistryButtonStyle.swift": {
+      "base": "bases/a314683b53d284671d9132d9c92f6349d1d80fdc372a8fbb9636baec5da3c809.base",
+      "installedDigest": "sha256:4499c081f433c6653ee47a83eba0c9a37802445614c30c716db2033664165f78",
+      "item": "button",
+      "sourceDigest": "sha256:4499c081f433c6653ee47a83eba0c9a37802445614c30c716db2033664165f78",
+      "version": "0.5.0"
+    },
+    "RegistryCardStyle.swift": {
+      "base": "bases/d37825ac79fff2b2bf1402a97c8c621c6d5bf0b09ad1b1a623e4b269279cbcc6.base",
+      "installedDigest": "sha256:81cd02993afae28407c955a05609bae2ce0770da4dc55e56c2bb3c305214ffb1",
+      "item": "card",
+      "sourceDigest": "sha256:81cd02993afae28407c955a05609bae2ce0770da4dc55e56c2bb3c305214ffb1",
+      "version": "0.2.0"
+    },
+    "RegistryCheckboxToggleStyle.swift": {
+      "base": "bases/84ef61e84e290159ebfd98ceb45adbe2c83371f33abc11c357b1d2e38db16213.base",
+      "installedDigest": "sha256:66ac20e80830fc44880e1fbd8aa5fbbba6e1af71063ba9e55a88308382a68ec8",
+      "item": "checkbox",
+      "sourceDigest": "sha256:66ac20e80830fc44880e1fbd8aa5fbbba6e1af71063ba9e55a88308382a68ec8",
+      "version": "0.3.0"
+    },
+    "RegistryEmptyStateModifier.swift": {
+      "base": "bases/0fa5e256e67ba2b8faf6ff3535e44ba0bfbecd0e754ab7a92bb7e0d562a574f6.base",
+      "installedDigest": "sha256:366c24f2a03b996d2e5785e925c656fab3e02cdd978d5fc1948a449d75dbbdf7",
+      "item": "empty",
+      "sourceDigest": "sha256:366c24f2a03b996d2e5785e925c656fab3e02cdd978d5fc1948a449d75dbbdf7",
+      "version": "0.1.0"
+    },
+    "RegistryInputStyle.swift": {
+      "base": "bases/66c24a2324bc206ee6b03a7ba2dfead5fe1cec8f6eb52595c4ddc2131308bad9.base",
+      "installedDigest": "sha256:b37a707c2aff4a896e67d19fc096e5d7c4d0e516deb419cbcc81f5c3575e3a0e",
+      "item": "input",
+      "sourceDigest": "sha256:b37a707c2aff4a896e67d19fc096e5d7c4d0e516deb419cbcc81f5c3575e3a0e",
+      "version": "0.5.0"
+    },
+    "RegistrySeparatorModifier.swift": {
+      "base": "bases/bb9d9cd74969a7587102a28109791c2ca2b6c3bb70a7995c3bed3fec91467b25.base",
+      "installedDigest": "sha256:4f9e773ce35fc7bf29a6e73a684342844a09ac9e586326b99fe4cedb7f3cea0a",
+      "item": "separator",
+      "sourceDigest": "sha256:4f9e773ce35fc7bf29a6e73a684342844a09ac9e586326b99fe4cedb7f3cea0a",
+      "version": "0.2.0"
+    }
+  },
+  "items": {
+    "badge": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.3.1"
+    },
+    "button": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.5.0"
+    },
+    "card": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.2.0"
+    },
+    "checkbox": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.3.0"
+    },
+    "empty": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
+    "input": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.5.0"
+    },
+    "separator": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.2.0"
+    }
+  },
+  "registry": "SwiftUIRegistry",
+  "schemaVersion": 1
+}

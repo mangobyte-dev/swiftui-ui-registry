@@ -1,0 +1,10 @@
+# gitleaks configuration, read by the CI secret scan (.github/workflows/ci.yml)
+
+title = "SwiftUIRegistry"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Commit 506da53 (Stage 5 slice 2) shipped the environment-variables preview card with the placeholder sk_live_51xxxxxxxx as sample text in the canonical source, the installed copy, and the receipt base. It was never a credential; 433659d replaced it with a neutral value and the commit stays in history unrewritten"
+commits = ["506da53f76406a5e105efcef610b1efe8c3a0dca"]

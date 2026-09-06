@@ -55,6 +55,7 @@ public struct PreviewWall02: View {
         ReceivingMethod()
         RecentTransactions()
         ReleaseCatalog()
+        RollerShades()
     }
 
     private var columns: [GridItem] {

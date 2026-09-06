@@ -121,10 +121,14 @@ public struct UIElements: View {
             }
             .toggleStyle(.registryCheckbox)
 
-            Toggle(isOn: $wifi) {
+            HStack {
                 Text("Wi-Fi")
+                Spacer()
+                Toggle("Wi-Fi", isOn: $wifi)
+                    .labelsHidden()
+                    .toggleStyle(.switch)
+                    .accessibilityLabel("Wi-Fi")
             }
-            .toggleStyle(.switch)
         }
     }
 

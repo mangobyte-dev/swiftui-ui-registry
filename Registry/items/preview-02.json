@@ -134,6 +134,10 @@
     {
       "source": "sources/blocks/Preview02/SocialLinks.swift",
       "target": "Preview02/SocialLinks.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/StockPerformance.swift",
+      "target": "Preview02/StockPerformance.swift"
     }
   ],
   "registryDependencies": [
@@ -155,7 +159,8 @@
     "select",
     "textarea",
     "progress",
-    "table"
+    "table",
+    "combobox"
   ],
   "packageDependencies": [
     {

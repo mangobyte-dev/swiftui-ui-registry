@@ -82,6 +82,10 @@
     {
       "source": "sources/blocks/Preview02/NotificationSettings.swift",
       "target": "Preview02/NotificationSettings.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/Payments.swift",
+      "target": "Preview02/Payments.swift"
     }
   ],
   "registryDependencies": [
@@ -98,7 +102,8 @@
     "empty",
     "accordion",
     "skeleton",
-    "checkbox"
+    "checkbox",
+    "breadcrumb"
   ],
   "packageDependencies": [
     {

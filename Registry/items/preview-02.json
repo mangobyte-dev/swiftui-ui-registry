@@ -1,0 +1,72 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "preview-02",
+  "kind": "block",
+  "description": "The second theme preview wall from shadcn's create page: realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a second screen of real UI.",
+  "usage": "PreviewWall02()",
+  "files": [
+    {
+      "source": "sources/blocks/Preview02/PreviewWall02.swift",
+      "target": "Preview02/PreviewWall02.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/AccountAccess.swift",
+      "target": "Preview02/AccountAccess.swift"
+    }
+  ],
+  "registryDependencies": [
+    "card",
+    "field",
+    "input",
+    "button",
+    "item"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "preview",
+    "theme",
+    "showcase",
+    "cards",
+    "create",
+    "shadcn",
+    "dashboard"
+  ],
+  "aliases": [
+    "theme-preview",
+    "create",
+    "wall",
+    "gallery"
+  ],
+  "accessibility": [
+    "The cards render in one ordered wall: an adaptive grid on a regular width and a plain, non-lazy VStack on a compact width, so every card exists in the hierarchy even off screen and the capture-route accessibility audit reaches all of them.",
+    "Every interactive control carries an accessibility label and every decorative SF Symbol is hidden, so the capture-route audit finds no unlabeled button, image, switch, text field, or slider on any card.",
+    "Each card is a native GroupBox on the shared card surface and composes native controls, so Dynamic Type, color scheme, and layout direction are respected without per-card handling."
+  ],
+  "preview": {
+    "source": "sources/blocks/Preview02/PreviewWall02.swift",
+    "name": "Preview Wall 02",
+    "screenshots": [
+      "docs/images/items/preview-02-light.png",
+      "docs/images/items/preview-02-dark.png"
+    ]
+  }
+}

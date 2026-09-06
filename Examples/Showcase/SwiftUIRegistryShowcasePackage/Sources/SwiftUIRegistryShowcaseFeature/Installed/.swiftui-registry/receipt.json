@@ -350,6 +350,20 @@
       "sourceDigest": "sha256:c098f96cb593a32b2ebf3ac404b8c6d1fc0aae05b4ae5ba39b01a60eab14f9b6",
       "version": "0.3.0"
     },
+    "Preview02/AccountAccess.swift": {
+      "base": "bases/9cb004cebd01e410a98c5c79158d3bd8e479c15860f4538253c0e1326ce2c0fe.base",
+      "installedDigest": "sha256:92ce39e97756665e8c27ee942d15a3ca98e591ec7727f8265a77297c7c317b88",
+      "item": "preview-02",
+      "sourceDigest": "sha256:92ce39e97756665e8c27ee942d15a3ca98e591ec7727f8265a77297c7c317b88",
+      "version": "0.1.0"
+    },
+    "Preview02/PreviewWall02.swift": {
+      "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
+      "installedDigest": "sha256:97dbf585069f0b126f6aea6c37380f29a325eba347f2ce3bf9c27b1cf36959ec",
+      "item": "preview-02",
+      "sourceDigest": "sha256:97dbf585069f0b126f6aea6c37380f29a325eba347f2ce3bf9c27b1cf36959ec",
+      "version": "0.1.0"
+    },
     "RegistryAccordionStyle.swift": {
       "base": "bases/41a84c6783a403ca9cf897c8da81322317ac76ec19288b7ffb112dd4d85023a2.base",
       "installedDigest": "sha256:0aa25e6fbc47b4812a7a434009028a66875c1a6668c7614df88ac8beed3a02e1",
@@ -1003,6 +1017,28 @@
         "button-group"
       ],
       "version": "0.3.0"
+    },
+    "preview-02": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "card",
+        "field",
+        "input",
+        "button",
+        "item"
+      ],
+      "version": "0.1.0"
     },
     "progress": {
       "packageDependencies": [

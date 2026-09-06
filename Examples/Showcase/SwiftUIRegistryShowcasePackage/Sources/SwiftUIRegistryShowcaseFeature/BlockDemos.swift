@@ -336,3 +336,11 @@ struct PreviewDemo: View {
         PreviewWall()
     }
 }
+
+/// The second theme preview wall. The capture route wraps it in a scroll view,
+/// so the demo is the block itself with no chrome of its own.
+struct Preview02Demo: View {
+    var body: some View {
+        PreviewWall02()
+    }
+}

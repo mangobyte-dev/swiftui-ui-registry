@@ -2,9 +2,9 @@
   "name": "SwiftUIRegistry",
   "repositoryURL": "https://github.com/mangobyte-dev/swiftui-ui-registry",
   "counts": {
-    "component": 31,
+    "component": 37,
     "block": 8,
-    "recipe": 18
+    "recipe": 25
   },
   "items": [
     {
@@ -320,6 +320,91 @@
       "requirements": []
     },
     {
+      "name": "attachment",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "Presents a file or image attachment as a row with square media, a name and detail, caller-owned actions, and a state line for idle, uploading, processing, failed, and completed uploads.",
+      "usage": "AttachmentRow(\n    name: Text(\"Statement-Aug-2026.pdf\"),\n    detail: Text(\"PDF document, 1.2 MB\"),\n    state: .uploading(progress: 0.68)\n) {\n    Image(systemName: \"doc.fill\")\n} actions: {\n    Button(\"Cancel\", systemImage: \"xmark\") {}\n        .labelStyle(.iconOnly)\n        .buttonStyle(.registryGhost)\n        .accessibilityLabel(\"Cancel upload\")\n}",
+      "docs": null,
+      "tags": [
+        "attachment",
+        "file",
+        "upload",
+        "row",
+        "media",
+        "shadcn"
+      ],
+      "aliases": [
+        "upload",
+        "file-row"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "item",
+        "progress",
+        "button",
+        "separator"
+      ],
+      "installOrder": [
+        {
+          "name": "avatar",
+          "version": "0.2.0"
+        },
+        {
+          "name": "separator",
+          "version": "0.2.0"
+        },
+        {
+          "name": "badge",
+          "version": "0.3.1"
+        },
+        {
+          "name": "item",
+          "version": "0.2.0"
+        },
+        {
+          "name": "progress",
+          "version": "0.2.0"
+        },
+        {
+          "name": "button",
+          "version": "0.5.0"
+        },
+        {
+          "name": "attachment",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "Every upload state names itself in text, a percent, Processing, a failure message, or Uploaded, so progress and outcome never rest on color or a bar alone.",
+        "The uploading percent is hidden from VoiceOver because the progress bar already reports its value, so the same fraction is not read twice.",
+        "Composes ItemRow, so the name and detail combine into one accessibility element while the trailing actions stay separately activatable.",
+        "The failed and completed states each pair their color with a symbol and a word, so the outcome is not carried by hue alone.",
+        "Requires the caller to label any icon-only action button and the thumbnail image, since neither derives an accessibility label from visible text."
+      ],
+      "sourcePath": "Registry/sources/components/AttachmentRow.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/AttachmentRow.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// The upload lifecycle of an ``AttachmentRow``. Every state names itself in\n/// text, so progress and outcome never rest on color or a bar alone.\npublic enum AttachmentState: Sendable, Equatable {\n    case idle\n    case uploading(progress: Double)\n    case processing\n    case failed(LocalizedStringResource)\n    case completed\n}\n\n/// A file or image attachment row: leading media clipped to a square, a name\n/// with optional detail, caller-owned trailing actions, and a state line that\n/// reports the upload lifecycle underneath. It composes ``ItemRow`` so the\n/// title and detail hierarchy, spacing, and minimum row height stay shared.\npublic struct AttachmentRow<Thumbnail: View, Actions: View>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let name: Text\n    private let detail: Text?\n    private let state: AttachmentState\n    private let thumbnail: Thumbnail\n    private let actions: Actions\n\n    public init(\n        name: Text,\n        detail: Text? = nil,\n        state: AttachmentState = .idle,\n        @ViewBuilder thumbnail: () -> Thumbnail,\n        @ViewBuilder actions: () -> Actions\n    ) {\n        self.name = name\n        self.detail = detail\n        self.state = state\n        self.thumbnail = thumbnail()\n        self.actions = actions()\n    }\n\n    public var body: some View {\n        VStack(alignment: .leading, spacing: theme.metrics.compactSpacing) {\n            ItemRow(title: name, description: detail) {\n                thumbnail\n                    .frame(width: 44, height: 44)\n                    .clipShape(\n                        RoundedRectangle(\n                            cornerRadius: theme.metrics.controlRadius,\n                            style: .continuous\n                        )\n                    )\n            } accessory: {\n                actions\n            }\n\n            stateLine\n        }\n    }\n\n    @ViewBuilder\n    private var stateLine: some View {\n        switch state {\n        case .idle:\n            EmptyView()\n\n        case let .uploading(progress):\n            HStack(spacing: theme.metrics.compactSpacing) {\n                ProgressView(value: progress)\n                    .progressViewStyle(.registryLinear)\n                Text(progress, format: .percent.precision(.fractionLength(0)))\n                    .font(.footnote)\n                    .monospacedDigit()\n                    .foregroundStyle(.secondary)\n                    // The bar already reports its value; the digits are visual.\n                    .accessibilityHidden(true)\n            }\n\n        case .processing:\n            HStack(spacing: theme.metrics.compactSpacing) {\n                ProgressView()\n                    .controlSize(.small)\n                Text(\"Processing\")\n                    .font(.footnote)\n                    .foregroundStyle(.secondary)\n            }\n\n        case let .failed(message):\n            Label {\n                Text(message)\n            } icon: {\n                Image(systemName: \"exclamationmark.triangle.fill\")\n            }\n            .font(.footnote)\n            .foregroundStyle(theme.negative)\n\n        case .completed:\n            Label {\n                Text(\"Uploaded\")\n            } icon: {\n                Image(systemName: \"checkmark.circle.fill\")\n            }\n            .font(.footnote)\n            .foregroundStyle(theme.positive)\n        }\n    }\n}\n\npublic extension AttachmentRow where Thumbnail == EmptyView {\n    init(\n        name: Text,\n        detail: Text? = nil,\n        state: AttachmentState = .idle,\n        @ViewBuilder actions: () -> Actions\n    ) {\n        self.init(\n            name: name,\n            detail: detail,\n            state: state,\n            thumbnail: { EmptyView() },\n            actions: actions\n        )\n    }\n}\n\npublic extension AttachmentRow where Actions == EmptyView {\n    init(\n        name: Text,\n        detail: Text? = nil,\n        state: AttachmentState = .idle,\n        @ViewBuilder thumbnail: () -> Thumbnail\n    ) {\n        self.init(\n            name: name,\n            detail: detail,\n            state: state,\n            thumbnail: thumbnail,\n            actions: { EmptyView() }\n        )\n    }\n}\n\npublic extension AttachmentRow where Thumbnail == EmptyView, Actions == EmptyView {\n    init(\n        name: Text,\n        detail: Text? = nil,\n        state: AttachmentState = .idle\n    ) {\n        self.init(\n            name: name,\n            detail: detail,\n            state: state,\n            thumbnail: { EmptyView() },\n            actions: { EmptyView() }\n        )\n    }\n}\n\nprivate struct AttachmentRowPreview: View {\n    @Environment(\\.registryTheme) private var theme\n\n    var body: some View {\n        VStack(spacing: 0) {\n            AttachmentRow(\n                name: Text(\"Statement-Aug-2026.pdf\"),\n                detail: Text(\"PDF document, 1.2 MB\"),\n                state: .uploading(progress: 0.68)\n            ) {\n                thumbnail(\"doc.fill\")\n            } actions: {\n                Button(\"Cancel upload\", systemImage: \"xmark\") {}\n                    .labelStyle(.iconOnly)\n                    .buttonStyle(.registryGhost)\n                    .controlSize(.small)\n                    .accessibilityLabel(\"Cancel upload\")\n            }\n\n            Divider().registrySeparator()\n\n            AttachmentRow(\n                name: Text(\"Receipt.heic\"),\n                detail: Text(\"Image, 3.4 MB\"),\n                state: .processing,\n                thumbnail: { thumbnail(\"photo.fill\") }\n            )\n\n            Divider().registrySeparator()\n\n            AttachmentRow(\n                name: Text(\"Contract.docx\"),\n                detail: Text(\"Word document, 84 KB\"),\n                state: .failed(\"Upload failed. Check your connection.\")\n            ) {\n                thumbnail(\"doc.text.fill\")\n            } actions: {\n                Button(\"Retry\") {}\n                    .buttonStyle(.registryOutline)\n                    .controlSize(.small)\n                    .accessibilityLabel(\"Retry upload\")\n            }\n\n            Divider().registrySeparator()\n\n            AttachmentRow(\n                name: Text(\"Logo.png\"),\n                detail: Text(\"Image, 512 KB\"),\n                state: .completed,\n                thumbnail: { thumbnail(\"photo.fill\") }\n            )\n\n            Divider().registrySeparator()\n\n            AttachmentRow(\n                name: Text(\"Notes.txt\"),\n                detail: Text(\"Text file, 2 KB\"),\n                state: .idle,\n                thumbnail: { thumbnail(\"doc.plaintext.fill\") }\n            )\n        }\n        .padding(.horizontal, theme.metrics.standardSpacing)\n        .padding(.vertical, theme.metrics.compactSpacing)\n        .registrySurface()\n        .padding()\n    }\n\n    private func thumbnail(_ systemImage: String) -> some View {\n        Image(systemName: systemImage)\n            .font(.title3)\n            .foregroundStyle(.secondary)\n            .frame(maxWidth: .infinity, maxHeight: .infinity)\n            .background(theme.surface)\n            .accessibilityHidden(true)\n    }\n}\n\n#Preview(\"Attachment Row\") {\n    AttachmentRowPreview().tint(.indigo)\n}\n\n#Preview(\"Attachment Row Dark\") {\n    AttachmentRowPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Attachment Row Right to Left\") {\n    AttachmentRowPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Attachment Row Accessibility Size\") {\n    AttachmentRowPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Attachment Row",
+      "screenshots": {
+        "light": "/images/items/attachment-light.png",
+        "dark": "/images/items/attachment-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
       "name": "auth-form",
       "kind": "block",
       "version": "0.3.1",
@@ -564,6 +649,62 @@
       ]
     },
     {
+      "name": "bubble",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, leaving alignment to the message row.",
+      "usage": "Text(\"Are we still on for Thursday?\")\n    .registryBubble(.incoming)\n\nText(\"Yes, 6pm works.\")\n    .registryBubble(.outgoing)",
+      "docs": null,
+      "tags": [
+        "bubble",
+        "chat",
+        "message",
+        "conversation",
+        "modifier",
+        "shadcn"
+      ],
+      "aliases": [
+        "chat-bubble",
+        "speech-bubble"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [],
+      "installOrder": [
+        {
+          "name": "bubble",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "Wraps its text freely and never truncates, so a long message stays fully readable and grows with Dynamic Type.",
+        "Adds no accessibility element of its own; the wrapped Text keeps its semantics and reading order.",
+        "Incoming and outgoing bubbles carry no stroke and rest on fill alone; the outgoing fill is the tint with the theme's onAccent label, which the caller keeps legible against the accent.",
+        "The muted variant drops the fill for a border hairline, so a system line reads as distinct from a spoken turn without relying on color.",
+        "Inherits layout direction, so the bubble's padding and continuous corners follow the caller's locale."
+      ],
+      "sourcePath": "Registry/sources/components/RegistryBubbleModifier.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryBubbleModifier.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// The conversational role of a bubble. Each variant carries its own fill and\n/// text treatment; the message row, not the bubble, owns alignment.\npublic enum RegistryBubbleVariant: Sendable {\n    case incoming\n    case outgoing\n    case muted\n}\n\npublic extension View {\n    /// Wraps text content in a conversation bubble. Incoming and outgoing\n    /// bubbles take their depth from the fill and draw no stroke; the muted\n    /// variant is a hairline outline for system lines instead.\n    func registryBubble(_ variant: RegistryBubbleVariant = .incoming) -> some View {\n        modifier(RegistryBubbleModifier(variant: variant))\n    }\n}\n\nprivate struct RegistryBubbleModifier: ViewModifier {\n    @Environment(\\.registryTheme) private var theme\n\n    let variant: RegistryBubbleVariant\n\n    func body(content: Content) -> some View {\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.cardRadius, style: .continuous)\n\n        content\n            .foregroundStyle(foregroundStyle)\n            .padding(.horizontal, theme.metrics.standardSpacing)\n            .padding(.vertical, theme.metrics.compactSpacing)\n            .background(backgroundStyle, in: shape)\n            .overlay {\n                shape.stroke(\n                    borderStyle,\n                    lineWidth: variant == .muted ? theme.metrics.borderWidth : 0\n                )\n            }\n    }\n\n    private var foregroundStyle: AnyShapeStyle {\n        switch variant {\n        case .incoming:\n            AnyShapeStyle(Color.primary)\n        case .outgoing:\n            AnyShapeStyle(theme.onAccent)\n        case .muted:\n            AnyShapeStyle(Color.secondary)\n        }\n    }\n\n    private var backgroundStyle: AnyShapeStyle {\n        switch variant {\n        case .incoming:\n            AnyShapeStyle(theme.surface)\n        case .outgoing:\n            AnyShapeStyle(TintShapeStyle())\n        case .muted:\n            AnyShapeStyle(Color.clear)\n        }\n    }\n\n    private var borderStyle: Color {\n        variant == .muted ? theme.border : .clear\n    }\n}\n\nprivate struct RegistryBubblePreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            Text(\"Are we still on for Thursday?\")\n                .registryBubble(.incoming)\n\n            Text(\"Yes, 6pm works. I will bring the documents.\")\n                .registryBubble(.outgoing)\n\n            Text(\"Maya added Omar to the conversation.\")\n                .registryBubble(.muted)\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Bubble Variants\") {\n    RegistryBubblePreview().tint(.indigo)\n}\n\n#Preview(\"Bubble Dark\") {\n    RegistryBubblePreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Bubble Right to Left\") {\n    RegistryBubblePreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Bubble Accessibility Size\") {\n    RegistryBubblePreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Bubble Variants",
+      "screenshots": {
+        "light": "/images/items/bubble-light.png",
+        "dark": "/images/items/bubble-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
       "name": "button",
       "kind": "component",
       "version": "0.5.0",
@@ -620,7 +761,7 @@
     {
       "name": "button-group",
       "kind": "component",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Lays out every native button in a ControlGroup side by side with one registry button variant, keeping the caller's Button controls, roles, and labels.",
       "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
       "docs": null,
@@ -647,7 +788,7 @@
         },
         {
           "name": "button-group",
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       ],
       "accessibility": [
@@ -658,7 +799,7 @@
       ],
       "sourcePath": "Registry/sources/components/RegistryButtonGroupStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryButtonGroupStyle.swift",
-      "source": "import SwiftUI\n\n/// Lays out every native button of a `ControlGroup` side by side with one registry button\n/// treatment. Measured on iOS 27, `ControlGroup(configuration)` draws the system capsule and\n/// ignores the button style, so the style owns the row and the buttons keep their variant,\n/// destructive role, labels, and control size.\npublic struct RegistryButtonGroupStyle: ControlGroupStyle {\n    @Environment(\\.registryTheme) private var theme\n\n    private let variant: RegistryButtonStyle.Variant\n\n    public init(_ variant: RegistryButtonStyle.Variant = .secondary) {\n        self.variant = variant\n    }\n\n    public func makeBody(configuration: Configuration) -> some View {\n        HStack(spacing: theme.metrics.compactSpacing) {\n            configuration.content\n                .buttonStyle(RegistryButtonStyle(variant))\n        }\n        .accessibilityElement(children: .contain)\n    }\n}\n\npublic extension ControlGroupStyle where Self == RegistryButtonGroupStyle {\n    static var registryButtons: RegistryButtonGroupStyle {\n        RegistryButtonGroupStyle()\n    }\n}\n\nprivate struct RegistryButtonGroupStylePreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 16) {\n            ControlGroup(\"Editor actions\") {\n                Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n                Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n                Button(\"Share\", systemImage: \"square.and.arrow.up\") {}\n            }\n            .labelStyle(.iconOnly)\n            .controlGroupStyle(.registryButtons)\n\n            ControlGroup(\"Document actions\") {\n                Button(\"Save\") {}\n                Button(\"Duplicate\") {}\n                Button(\"Delete\", role: .destructive) {}\n            }\n            .controlGroupStyle(RegistryButtonGroupStyle(.outline))\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Button Group\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n}\n\n#Preview(\"Button Group Dark\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .preferredColorScheme(.dark)\n}\n\n#Preview(\"Button Group Right to Left\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Button Group Accessibility Size\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// Lays out every native button of a `ControlGroup` side by side with one registry button\n/// treatment. Measured on iOS 27, `ControlGroup(configuration)` draws the system capsule and\n/// ignores the button style, so the style owns the row and the buttons keep their variant,\n/// destructive role, labels, and control size.\npublic struct RegistryButtonGroupStyle: ControlGroupStyle {\n    @Environment(\\.registryTheme) private var theme\n\n    private let variant: RegistryButtonStyle.Variant\n\n    public init(_ variant: RegistryButtonStyle.Variant = .secondary) {\n        self.variant = variant\n    }\n\n    public func makeBody(configuration: Configuration) -> some View {\n        HStack(spacing: theme.metrics.compactSpacing) {\n            configuration.content\n                .buttonStyle(RegistryButtonStyle(variant))\n        }\n        .accessibilityElement(children: .contain)\n    }\n}\n\npublic extension ControlGroupStyle where Self == RegistryButtonGroupStyle {\n    static var registryButtons: RegistryButtonGroupStyle {\n        RegistryButtonGroupStyle()\n    }\n}\n\nprivate struct RegistryButtonGroupStylePreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 16) {\n            ControlGroup(\"Editor actions\") {\n                Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n                Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n                Button(\"Share\", systemImage: \"square.and.arrow.up\") {}\n            }\n            .labelStyle(.iconOnly)\n            .controlGroupStyle(.registryButtons)\n\n            ControlGroup(\"Document actions\") {\n                Button(\"Save\") {}\n                Button(\"Duplicate\") {}\n                Button(\"Delete\", role: .destructive) {}\n            }\n            .controlGroupStyle(RegistryButtonGroupStyle(.outline))\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Button Group\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n}\n\n#Preview(\"Button Group Dark\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .preferredColorScheme(.dark)\n}\n\n#Preview(\"Button Group Right to Left\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Button Group Accessibility Size\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Button Group",
       "screenshots": {
         "light": "/images/items/button-group-light.png",
@@ -774,6 +915,47 @@
       ]
     },
     {
+      "name": "carousel",
+      "kind": "recipe",
+      "version": "0.1.0",
+      "description": "Native guidance for a paging horizontal ScrollView of cards with scrollTargetBehavior and containerRelativeFrame.",
+      "usage": "ScrollView(.horizontal) {\n    HStack(spacing: 12) {\n        ForEach(cards) { card in\n            VStack(alignment: .leading, spacing: 8) {\n                Label(card.title, systemImage: card.systemImage)\n                    .font(.subheadline.weight(.semibold))\n                Text(card.amount, format: .currency(code: \"KWD\"))\n                    .font(.title.monospacedDigit())\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .padding()\n            .registrySurface()\n            .containerRelativeFrame(.horizontal)\n            .accessibilityElement(children: .combine)\n            .accessibilityLabel(\"\\(card.title) card\")\n        }\n    }\n    .scrollTargetLayout()\n}\n.scrollTargetBehavior(.paging)",
+      "docs": "Lay cards in a horizontal `ScrollView`, mark the row with `.scrollTargetLayout()`, and page with `.scrollTargetBehavior(.paging)`; `containerRelativeFrame(.horizontal)` sizes each page to the viewport. For a page control instead, use a `TabView` with `.tabViewStyle(.page)`. The system supplies the paging, the indicators, and the Reduce Motion behavior, so the registry adds no wrapper. Watch the page width: a card must fill the container relative frame or paging stops on partial cards.",
+      "tags": [
+        "carousel",
+        "paging",
+        "scroll",
+        "cards",
+        "guidance"
+      ],
+      "aliases": [
+        "slider-carousel",
+        "swiper"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [],
+      "installOrder": [],
+      "accessibility": [
+        "Paging scroll views are native and support VoiceOver page scrolling and the three-finger scroll gesture.",
+        "Give each page an accessibility label; a card combined from several texts should read as one element."
+      ],
+      "sourcePath": null,
+      "sourceURL": null,
+      "source": null,
+      "previewName": null,
+      "screenshots": {
+        "light": "/images/items/carousel-light.png",
+        "dark": "/images/items/carousel-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": []
+    },
+    {
       "name": "chart",
       "kind": "component",
       "version": "0.1.1",
@@ -831,6 +1013,47 @@
           "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
         }
       ]
+    },
+    {
+      "name": "chart-tooltip",
+      "kind": "recipe",
+      "version": "0.1.0",
+      "description": "Native guidance for a Swift Charts selection annotation with chartXSelection and a RuleMark tooltip.",
+      "usage": "@State private var selectedMonth: String?\n\nvar selected: MonthlyBalance? {\n    balances.first { $0.month == selectedMonth }\n}\n\nChart {\n    ForEach(balances) { row in\n        BarMark(\n            x: .value(\"Month\", row.month),\n            y: .value(\"Balance\", row.amount)\n        )\n        .foregroundStyle(TintShapeStyle())\n    }\n    if let selected {\n        RuleMark(x: .value(\"Month\", selected.month))\n            .foregroundStyle(.secondary)\n            .annotation(position: .top) {\n                Text(selected.amount, format: .currency(code: \"KWD\"))\n                    .font(.footnote.monospacedDigit())\n                    .padding(6)\n                    .registrySurface()\n            }\n    }\n}\n.chartXSelection(value: $selectedMonth)\n.registryChart()",
+      "docs": "Bind `.chartXSelection(value:)` to the mark's category type and, when a value is selected, add a `RuleMark(x:)` with an `.annotation(position: .top)` that shows the figure on a small registry surface. Swift Charts drives the selection from tap and drag; the registry adds only the themed chart treatment through `.registryChart()`, and a single-series mark takes the accent explicitly with `.foregroundStyle(TintShapeStyle())` because Swift Charts draws one series in its own default color otherwise. Keep the annotation content short so it does not overflow the plot. Watch the selection type: it must match the mark's x value type or nothing selects.",
+      "tags": [
+        "chart-tooltip",
+        "chart",
+        "selection",
+        "annotation",
+        "guidance"
+      ],
+      "aliases": [
+        "chart-selection",
+        "data-tooltip"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [],
+      "installOrder": [],
+      "accessibility": [
+        "Swift Charts exposes each mark to VoiceOver through its audio graph and value descriptions.",
+        "The selected value is shown as visible text, not by color alone."
+      ],
+      "sourcePath": null,
+      "sourceURL": null,
+      "source": null,
+      "previewName": null,
+      "screenshots": {
+        "light": "/images/items/chart-tooltip-light.png",
+        "dark": "/images/items/chart-tooltip-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": []
     },
     {
       "name": "checkbox",
@@ -1241,6 +1464,47 @@
       "screenshots": {
         "light": "/images/items/context-menu-light.png",
         "dark": "/images/items/context-menu-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": []
+    },
+    {
+      "name": "date-picker",
+      "kind": "recipe",
+      "version": "0.1.0",
+      "description": "Native guidance for a compact DatePicker over a closed range with a presets Menu setting the binding.",
+      "usage": "@State private var date = Date.now\n\nDatePicker(\"Statement date\", selection: $date, in: range, displayedComponents: .date)\n    .datePickerStyle(.compact)\n\nMenu(\"Presets\") {\n    Button(\"Today\") { date = .now }\n    Button(\"Tomorrow\") { date = .now.addingTimeInterval(60 * 60 * 24) }\n    Button(\"Next week\") { date = .now.addingTimeInterval(60 * 60 * 24 * 7) }\n}\n.accessibilityLabel(\"Date presets\")",
+      "docs": "Use `DatePicker` in the `.compact` style with a `ClosedRange<Date>` so people cannot pick outside the allowed dates, and offer a `Menu` of common choices that writes the binding directly. The `calendar` recipe covers the graphical style for month-at-a-glance selection. The compact control is a single tap target the system lays out, so the registry adds no wrapper. Watch the range: an empty or reversed range traps the picker at one date.",
+      "tags": [
+        "date-picker",
+        "date",
+        "calendar",
+        "presets",
+        "guidance"
+      ],
+      "aliases": [
+        "date-field",
+        "date-input"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [],
+      "installOrder": [],
+      "accessibility": [
+        "The DatePicker exposes its title as its accessibility label and reads the selected date.",
+        "Label the presets Menu so its purpose is clear without relying on the visible glyph."
+      ],
+      "sourcePath": null,
+      "sourceURL": null,
+      "source": null,
+      "previewName": null,
+      "screenshots": {
+        "light": "/images/items/date-picker-light.png",
+        "dark": "/images/items/date-picker-dark.png"
       },
       "wideScreenshots": {
         "light": null,
@@ -1722,6 +1986,47 @@
       ]
     },
     {
+      "name": "input-otp",
+      "kind": "recipe",
+      "version": "0.1.0",
+      "description": "Native guidance for a one-time-code TextField that autofills from Messages and Mail instead of a boxed control.",
+      "usage": "@State private var code = \"\"\n\nTextField(\"One-time code\", text: $code)\n    .textContentType(.oneTimeCode)\n    .keyboardType(.numberPad)\n    .textFieldStyle(.registryInput)\n    .font(.title2.monospacedDigit())\n    .accessibilityLabel(\"Verification code\")\n    .onChange(of: code) { _, newValue in\n        code = String(newValue.filter(\\.isNumber).prefix(6))\n    }\n\nButton(\"Verify\") { }\n    .buttonStyle(.registry)\n    .disabled(code.count < 6)",
+      "docs": "A single `TextField` with `.textContentType(.oneTimeCode)` lets the system offer the code from Messages and Mail above the keyboard, and `.keyboardType(.numberPad)` keeps entry numeric. A six-box field would imitate a control Apple already supplies and would lose that autofill. The `onChange` handler keeps at most six digits so paste and autofill stay clean. Watch the content type: without `.oneTimeCode` the system will not surface the code.",
+      "tags": [
+        "input-otp",
+        "otp",
+        "verification-code",
+        "one-time-code",
+        "guidance"
+      ],
+      "aliases": [
+        "otp",
+        "pin-code"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [],
+      "installOrder": [],
+      "accessibility": [
+        "The field carries an explicit accessibility label because its title shows only as placeholder text on iOS.",
+        "The monospaced-digit font keeps entered digits legible at large Dynamic Type sizes."
+      ],
+      "sourcePath": null,
+      "sourceURL": null,
+      "source": null,
+      "previewName": null,
+      "screenshots": {
+        "light": "/images/items/input-otp-light.png",
+        "dark": "/images/items/input-otp-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": []
+    },
+    {
       "name": "item",
       "kind": "component",
       "version": "0.2.0",
@@ -1937,6 +2242,248 @@
       "screenshots": {
         "light": "/images/items/macro-progress-light.png",
         "dark": "/images/items/macro-progress-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
+      "name": "marker",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "Treats a Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.",
+      "usage": "Text(\"Today\")\n    .registryMarker(.separator)\n\nText(\"Maya joined the conversation\")\n    .registryMarker()\n\nText(\"Delivered 09:41\")\n    .registryMarker(.status)",
+      "docs": null,
+      "tags": [
+        "marker",
+        "conversation",
+        "chat",
+        "timeline",
+        "divider",
+        "shadcn"
+      ],
+      "aliases": [
+        "system-message",
+        "divider-label",
+        "conversation-note"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "separator"
+      ],
+      "installOrder": [
+        {
+          "name": "separator",
+          "version": "0.2.0"
+        },
+        {
+          "name": "marker",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "The status variant hides its leading clock symbol from VoiceOver, so only the caller's words are spoken.",
+        "The separator variant draws its two rules as decoration, so assistive technology reads only the label between them.",
+        "Every variant keeps its text on one line and scales it down before it wraps, so a marker never breaks across lines.",
+        "Uses system text styles, so a marker grows with Dynamic Type and follows the caller's layout direction."
+      ],
+      "sourcePath": "Registry/sources/components/RegistryMarkerModifier.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryMarkerModifier.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// The kind of inline conversation marker applied by ``SwiftUI/View/registryMarker(_:)``.\npublic enum RegistryMarkerVariant: Sendable {\n    /// A quiet system note centered in the timeline, such as \"Maya joined the conversation\".\n    case note\n    /// A compact pill with a leading clock, such as \"Delivered 09:41\".\n    case status\n    /// A labelled rule between messages, such as a \"Today\" date break.\n    case separator\n}\n\npublic extension View {\n    /// Treats the receiver's text as an inline conversation marker. Use it on a\n    /// `Text` between messages: `.note` for a system line, `.status` for a\n    /// delivery pill, `.separator` for a labelled date rule. The text stays on\n    /// one line and scales down before it wraps.\n    func registryMarker(_ variant: RegistryMarkerVariant = .note) -> some View {\n        modifier(RegistryMarkerModifier(variant: variant))\n    }\n}\n\nprivate struct RegistryMarkerModifier: ViewModifier {\n    @Environment(\\.registryTheme) private var theme\n\n    let variant: RegistryMarkerVariant\n\n    @ViewBuilder\n    func body(content: Content) -> some View {\n        switch variant {\n        case .note:\n            content\n                .font(.footnote)\n                .foregroundStyle(.secondary)\n                .lineLimit(1)\n                .minimumScaleFactor(0.8)\n                .frame(maxWidth: .infinity, alignment: .center)\n                .padding(.vertical, theme.metrics.compactSpacing)\n\n        case .status:\n            let shape = RoundedRectangle(cornerRadius: theme.metrics.compactRadius, style: .continuous)\n            HStack(spacing: theme.metrics.compactSpacing / 2) {\n                Image(systemName: \"clock\")\n                    .accessibilityHidden(true)\n                content\n            }\n            .font(.caption)\n            .foregroundStyle(.secondary)\n            .lineLimit(1)\n            .minimumScaleFactor(0.8)\n            .padding(.horizontal, theme.metrics.compactSpacing)\n            .padding(.vertical, theme.metrics.compactSpacing / 2)\n            .background(theme.surface, in: shape)\n            .overlay {\n                shape.stroke(theme.border, lineWidth: theme.metrics.borderWidth)\n            }\n            // The pill sizes to its content, then centers in the row.\n            .frame(maxWidth: .infinity, alignment: .center)\n\n        case .separator:\n            HStack(spacing: theme.metrics.compactSpacing) {\n                rule\n                content\n                    .font(.caption)\n                    .foregroundStyle(.secondary)\n                    .lineLimit(1)\n                    .minimumScaleFactor(0.8)\n                rule\n            }\n            .padding(.vertical, theme.metrics.compactSpacing)\n        }\n    }\n\n    // A Divider draws vertically inside an HStack, so wrap it in a VStack to\n    // draw it as a horizontal rule, then let registrySeparator stretch it to\n    // fill each side of the label.\n    private var rule: some View {\n        VStack {\n            Divider().registrySeparator()\n        }\n    }\n}\n\nprivate struct RegistryMarkerModifierPreview: View {\n    @Environment(\\.registryTheme) private var theme\n\n    var body: some View {\n        VStack(spacing: theme.metrics.standardSpacing) {\n            Text(\"Today\")\n                .registryMarker(.separator)\n\n            Text(\"Maya joined the conversation\")\n                .registryMarker(.note)\n\n            Text(\"Your card was frozen by support\")\n                .registryMarker()\n\n            Text(\"Delivered 09:41\")\n                .registryMarker(.status)\n        }\n        .padding()\n        .frame(maxWidth: .infinity)\n    }\n}\n\n#Preview(\"Marker\") {\n    RegistryMarkerModifierPreview().tint(.indigo)\n}\n\n#Preview(\"Marker Dark\") {\n    RegistryMarkerModifierPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Marker Right to Left\") {\n    RegistryMarkerModifierPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Marker Accessibility Size\") {\n    RegistryMarkerModifierPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Marker",
+      "screenshots": {
+        "light": "/images/items/marker-light.png",
+        "dark": "/images/items/marker-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
+      "name": "menubar",
+      "kind": "recipe",
+      "version": "0.1.0",
+      "description": "Native guidance for scene-level commands with CommandMenu, which iPadOS and macOS place in the menu bar.",
+      "usage": "WindowGroup {\n    RootView()\n}\n.commands {\n    CommandMenu(\"Account\") {\n        Button(\"Sign Out\") { }\n            .keyboardShortcut(\"q\", modifiers: [.command, .shift])\n    }\n}",
+      "docs": "Declare a `commands` block on the `WindowGroup` scene and add a `CommandMenu` with keyboard shortcuts; iPadOS and macOS place it in the system menu bar. A desktop menu bar is never drawn on iPhone, so the on-screen iPhone form of the same actions is a toolbar `Menu`. Commands are a `Scene` modifier and cannot be declared inside a view. Watch the placement: put the `commands` block on the scene, not a view, or it will not compile.",
+      "tags": [
+        "menubar",
+        "commands",
+        "keyboard-shortcuts",
+        "menu-bar",
+        "guidance"
+      ],
+      "aliases": [
+        "menu-bar",
+        "command-menu"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [],
+      "installOrder": [],
+      "accessibility": [
+        "Menu bar commands carry keyboard shortcuts and are reachable by full keyboard access on iPadOS and macOS.",
+        "The iPhone toolbar Menu is a labeled control that lists the same buttons."
+      ],
+      "sourcePath": null,
+      "sourceURL": null,
+      "source": null,
+      "previewName": null,
+      "screenshots": {
+        "light": "/images/items/menubar-light.png",
+        "dark": "/images/items/menubar-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": []
+    },
+    {
+      "name": "message",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "Composes one conversation turn with an optional author and timestamp header, the content in a bubble, an optional status line, and side-based alignment.",
+      "usage": "MessageRow(\n    author: Text(\"Maya\"),\n    timestamp: Text(\"09:41\"),\n    status: Text(\"Delivered\")\n) {\n    Avatar(initials: \"MK\", accessibilityLabel: Text(\"Maya Khalid\"))\n} content: {\n    Text(\"Are we still on for Thursday?\")\n}\n\nMessageRow {\n    Text(\"Yes, 6pm works.\")\n}\n.registryVariant(.outgoing)",
+      "docs": null,
+      "tags": [
+        "message",
+        "chat",
+        "conversation",
+        "row",
+        "bubble",
+        "shadcn"
+      ],
+      "aliases": [
+        "chat-message",
+        "conversation-row"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "avatar",
+        "bubble"
+      ],
+      "installOrder": [
+        {
+          "name": "avatar",
+          "version": "0.2.0"
+        },
+        {
+          "name": "bubble",
+          "version": "0.1.0"
+        },
+        {
+          "name": "message",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "Combines the header (author and timestamp) with the message bubble into one accessibility element for plain text content; the status line stays a separate element.",
+        "When the content holds controls, wrap the combined element with .contain instead of .combine at the call site so buttons and links remain separate, activatable elements.",
+        "Places the avatar leading for an incoming turn and omits it for an outgoing turn, so the side conveys direction without relying on color.",
+        "Caps the bubble column at 320 points so a long turn wraps instead of filling the row, and the whole row follows the caller's layout direction.",
+        "The avatar carries its own required accessibility label from the caller; the row never derives one from visible content."
+      ],
+      "sourcePath": "Registry/sources/components/MessageRow.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/MessageRow.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// The conversational side of a ``MessageRow``. An incoming turn sits leading\n/// with its avatar; an outgoing turn sits trailing with no avatar.\npublic enum MessageRowVariant: Sendable {\n    case incoming\n    case outgoing\n}\n\n/// One turn in a conversation: an optional header (author and timestamp), the\n/// message content in a bubble, and an optional status line. The row owns\n/// alignment, the header and status hierarchy, and the bubble treatment; the\n/// caller owns the avatar and the message content.\npublic struct MessageRow<Avatar: View, Content: View>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let author: Text?\n    private let timestamp: Text?\n    private let status: Text?\n    private var variant: MessageRowVariant = .incoming\n    private let avatar: Avatar\n    private let content: Content\n\n    /// - Parameters:\n    ///   - author: Optional name shown in the header above the bubble.\n    ///   - timestamp: Optional time shown beside the author.\n    ///   - status: Optional delivery line shown under the bubble, such as \"Delivered\".\n    ///   - avatar: The caller-owned avatar, shown only for an incoming turn.\n    ///   - content: The message content placed inside the bubble.\n    public init(\n        author: Text? = nil,\n        timestamp: Text? = nil,\n        status: Text? = nil,\n        @ViewBuilder avatar: () -> Avatar,\n        @ViewBuilder content: () -> Content\n    ) {\n        self.author = author\n        self.timestamp = timestamp\n        self.status = status\n        self.avatar = avatar()\n        self.content = content()\n    }\n\n    /// Sets the conversational side. Defaults to incoming.\n    public func registryVariant(_ variant: MessageRowVariant) -> Self {\n        var copy = self\n        copy.variant = variant\n        return copy\n    }\n\n    public var body: some View {\n        HStack(alignment: .bottom, spacing: theme.metrics.compactSpacing) {\n            switch variant {\n            case .incoming:\n                avatar\n                column\n                Spacer(minLength: 0)\n            case .outgoing:\n                Spacer(minLength: 0)\n                column\n            }\n        }\n    }\n\n    private var columnAlignment: HorizontalAlignment {\n        variant == .incoming ? .leading : .trailing\n    }\n\n    private var column: some View {\n        VStack(alignment: columnAlignment, spacing: theme.metrics.compactSpacing / 2) {\n            // The header and the bubble read as one turn for plain text\n            // content. When the content holds controls, switch this to\n            // .contain at the call site so buttons stay activatable.\n            VStack(alignment: columnAlignment, spacing: theme.metrics.compactSpacing / 2) {\n                header\n                content.registryBubble(variant == .incoming ? .incoming : .outgoing)\n            }\n            .accessibilityElement(children: .combine)\n\n            if let status {\n                status\n                    .font(.caption2)\n                    .foregroundStyle(.secondary)\n            }\n        }\n        // A turn never fills the row: cap the column so a long message wraps.\n        .frame(maxWidth: 320, alignment: variant == .incoming ? .leading : .trailing)\n    }\n\n    @ViewBuilder\n    private var header: some View {\n        if author != nil || timestamp != nil {\n            HStack(spacing: theme.metrics.compactSpacing) {\n                if let author {\n                    author.font(.caption.weight(.semibold))\n                }\n                if let timestamp {\n                    timestamp\n                        .font(.caption)\n                        .foregroundStyle(.secondary)\n                }\n            }\n        }\n    }\n}\n\npublic extension MessageRow where Avatar == EmptyView {\n    /// A turn with no avatar, the common shape for an outgoing message.\n    init(\n        author: Text? = nil,\n        timestamp: Text? = nil,\n        status: Text? = nil,\n        @ViewBuilder content: () -> Content\n    ) {\n        self.init(\n            author: author,\n            timestamp: timestamp,\n            status: status,\n            avatar: { EmptyView() },\n            content: content\n        )\n    }\n}\n\nprivate struct MessageRowPreview: View {\n    var body: some View {\n        VStack(spacing: 16) {\n            MessageRow(\n                author: Text(verbatim: \"Maya Khalid\"),\n                timestamp: Text(verbatim: \"09:41\"),\n                status: Text(\"Delivered\")\n            ) {\n                Avatar(initials: \"MK\", accessibilityLabel: Text(verbatim: \"Maya Khalid\"))\n            } content: {\n                Text(\"Are we still on for Thursday?\")\n            }\n\n            MessageRow(timestamp: Text(verbatim: \"09:42\"), status: Text(\"Delivered\")) {\n                Text(\"Yes, 6pm works. I will bring the documents.\")\n            }\n            .registryVariant(.outgoing)\n\n            // A grouped pair: an incoming turn answered by an outgoing turn.\n            VStack(spacing: 4) {\n                MessageRow {\n                    Avatar(initials: \"OA\", accessibilityLabel: Text(verbatim: \"Omar Ali\"))\n                } content: {\n                    Text(\"Should I book the room?\")\n                }\n                MessageRow {\n                    Text(\"Please do.\")\n                }\n                .registryVariant(.outgoing)\n            }\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Message Row\") {\n    MessageRowPreview().tint(.indigo)\n}\n\n#Preview(\"Message Row Dark\") {\n    MessageRowPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Message Row Right to Left\") {\n    MessageRowPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Message Row Accessibility Size\") {\n    MessageRowPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Message Row",
+      "screenshots": {
+        "light": "/images/items/message-light.png",
+        "dark": "/images/items/message-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
+      "name": "message-scroller",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "A chat scroll container that starts at the newest turn, follows streamed replies while the reader is at the bottom, holds a scrolled-up reader in place, and requests history at the top.",
+      "usage": "MessageScroller(position: $position, isFollowing: $isFollowing) {\n    ForEach(messages) { message in\n        MessageRow {\n            Text(message.text)\n        }\n        .registryVariant(message.isMine ? .outgoing : .incoming)\n        .id(message.id)\n    }\n}",
+      "docs": null,
+      "tags": [
+        "chat",
+        "scroll",
+        "conversation",
+        "messages",
+        "container",
+        "shadcn"
+      ],
+      "aliases": [
+        "chat-scroll",
+        "conversation-view",
+        "chat-list"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "message",
+        "avatar"
+      ],
+      "installOrder": [
+        {
+          "name": "avatar",
+          "version": "0.2.0"
+        },
+        {
+          "name": "bubble",
+          "version": "0.1.0"
+        },
+        {
+          "name": "message",
+          "version": "0.1.0"
+        },
+        {
+          "name": "message-scroller",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "Keeps a native vertical ScrollView, so VoiceOver's scroll and the three-finger scroll gesture work unchanged; the container hides no content.",
+        "Starts pinned to the newest turn through the bottom default anchor, so the most recent message is the first the reader lands on.",
+        "Keeps the newest turn visible while the reader is within 8 points of the bottom, and leaves a reader who scrolled up in place when new turns stream in.",
+        "Requests history through onReachTop once per content height when the reader nears within 40 points of the top, re-arming after a prepend grows the content.",
+        "Reading order follows the caller's row order; give each row a stable .id so scrollPosition can move the reader to a specific message."
+      ],
+      "sourcePath": "Registry/sources/components/MessageScroller.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/MessageScroller.swift",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A chat scroll container. It starts pinned to the newest turn, keeps the\n/// newest turn visible while the reader stays at the bottom, leaves a reader who\n/// scrolled up in place when new turns stream in, asks the caller to load\n/// history when the reader reaches the top, and keeps the visible turns in\n/// place while that history is prepended. The reader's position and the\n/// following state stay with the caller through bindings.\npublic struct MessageScroller<ID: Hashable & Sendable, Content: View>: View {\n    @Environment(\\.registryTheme) private var theme\n\n    @Binding private var position: ID?\n    @Binding private var isFollowing: Bool\n    private let onReachTop: (() -> Void)?\n    private let content: Content\n\n    // The content height that last fired onReachTop, so history loads once per\n    // height: a prepend grows the content and re-arms the request.\n    @State private var lastReachTopHeight: CGFloat?\n    // True from a history request until the content grows, so the prepend\n    // anchors to the bottom and the turns the reader was looking at stay put.\n    @State private var isLoadingHistory = false\n\n    /// Points from the content bottom within which the reader counts as following.\n    private let followThreshold: CGFloat = 8\n    /// Points from the content top within which a history load is requested.\n    private let reachTopThreshold: CGFloat = 40\n\n    /// - Parameters:\n    ///   - position: The message id to scroll to; the container writes it back as the reader scrolls.\n    ///   - isFollowing: True while the reader is at the bottom; the container keeps this current.\n    ///   - onReachTop: Called once per content height when the reader nears the top, to load history.\n    ///   - content: The rows, each carrying a stable `.id`, laid out newest last.\n    public init(\n        position: Binding<ID?>,\n        isFollowing: Binding<Bool>,\n        onReachTop: (() -> Void)? = nil,\n        @ViewBuilder content: () -> Content\n    ) {\n        self._position = position\n        self._isFollowing = isFollowing\n        self.onReachTop = onReachTop\n        self.content = content()\n    }\n\n    public var body: some View {\n        ScrollView(.vertical) {\n            LazyVStack(spacing: theme.metrics.compactSpacing) {\n                content\n            }\n            .scrollTargetLayout()\n        }\n        .scrollPosition(id: $position, anchor: .bottom)\n        .defaultScrollAnchor(.bottom)\n        .defaultScrollAnchor(isFollowing || isLoadingHistory ? .bottom : .top, for: .sizeChanges)\n        .onScrollGeometryChange(for: Bool.self) { geometry in\n            isNearBottom(geometry)\n        } action: { _, nearBottom in\n            if isFollowing != nearBottom {\n                isFollowing = nearBottom\n            }\n        }\n        .onScrollGeometryChange(for: ReachTopState.self) { geometry in\n            ReachTopState(\n                isNearTop: isNearTop(geometry),\n                contentHeight: geometry.contentSize.height\n            )\n        } action: { old, state in\n            if isLoadingHistory, state.contentHeight > old.contentHeight {\n                isLoadingHistory = false\n            }\n            guard let onReachTop, state.isNearTop else { return }\n            guard lastReachTopHeight != state.contentHeight else { return }\n            lastReachTopHeight = state.contentHeight\n            isLoadingHistory = true\n            onReachTop()\n        }\n    }\n\n    private func isNearBottom(_ geometry: ScrollGeometry) -> Bool {\n        let visibleBottom = geometry.contentOffset.y + geometry.containerSize.height\n        return geometry.contentSize.height - visibleBottom <= followThreshold\n    }\n\n    private func isNearTop(_ geometry: ScrollGeometry) -> Bool {\n        // At the top the content offset equals the negative top inset.\n        geometry.contentOffset.y + geometry.contentInsets.top <= reachTopThreshold\n    }\n}\n\n// The transform value for the top-reach observer: history loads once per\n// content height, so the height rides along with the near-top flag.\nprivate struct ReachTopState: Equatable {\n    var isNearTop: Bool\n    var contentHeight: CGFloat\n}\n\nprivate struct MessageScrollerPreview: View {\n    @State private var position: Int?\n    @State private var isFollowing = true\n\n    var body: some View {\n        MessageScroller(position: $position, isFollowing: $isFollowing) {\n            ForEach(0 ..< 12, id: \\.self) { index in\n                messageRow(index)\n                    .id(index)\n            }\n        }\n        .frame(height: 360)\n        .padding()\n    }\n\n    @ViewBuilder\n    private func messageRow(_ index: Int) -> some View {\n        if index.isMultiple(of: 3) {\n            MessageRow {\n                Avatar(initials: \"OA\", accessibilityLabel: Text(verbatim: \"Omar Ali\"))\n            } content: {\n                Text(\"Message number \\(index + 1) in the thread.\")\n            }\n        } else if index.isMultiple(of: 2) {\n            MessageRow {\n                Text(\"Reply number \\(index + 1).\")\n            }\n            .registryVariant(.outgoing)\n        } else {\n            MessageRow(author: Text(verbatim: \"Omar Ali\")) {\n                Avatar(initials: \"OA\", accessibilityLabel: Text(verbatim: \"Omar Ali\"))\n            } content: {\n                Text(\"Another line, number \\(index + 1).\")\n            }\n        }\n    }\n}\n\n#Preview(\"Message Scroller\") {\n    MessageScrollerPreview().tint(.indigo)\n}\n\n#Preview(\"Message Scroller Dark\") {\n    MessageScrollerPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Message Scroller Right to Left\") {\n    MessageScrollerPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Message Scroller Accessibility Size\") {\n    MessageScrollerPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Message Scroller",
+      "screenshots": {
+        "light": "/images/items/message-scroller-light.png",
+        "dark": "/images/items/message-scroller-dark.png"
       },
       "wideScreenshots": {
         "light": null,
@@ -2284,7 +2831,7 @@
         },
         {
           "name": "button-group",
-          "version": "0.3.0"
+          "version": "0.3.1"
         },
         {
           "name": "preview",
@@ -2587,10 +3134,10 @@
     {
       "name": "scroll-area",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "description": "Native guidance for scrollable content with content margins, indicator visibility, and clipping left to ScrollView.",
-      "usage": "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()",
-      "docs": "Compose blocks inside a native `ScrollView` and tune edges with `.contentMargins`, `.scrollIndicators`, and `.scrollClipDisabled`. Scrolling, bounce, and keyboard avoidance are system behavior; registry blocks deliberately never own a scroll view.",
+      "usage": "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()\n.scrollEdgeEffectStyle(.soft, for: .top)",
+      "docs": "Compose blocks inside a native `ScrollView` and tune edges with `.contentMargins`, `.scrollIndicators`, and `.scrollClipDisabled`. Scrolling, bounce, and keyboard avoidance are system behavior; registry blocks deliberately never own a scroll view. The scroll edge effect set with `.scrollEdgeEffectStyle` is the system's transition between content and the Liquid Glass control layer, in place of a background (HIG Layout).",
       "tags": [
         "scroll",
         "scroll-view",
@@ -2806,12 +3353,53 @@
       ]
     },
     {
-      "name": "sidebar",
+      "name": "sheet",
       "kind": "recipe",
       "version": "0.1.0",
+      "description": "Native guidance for a side sheet with inspector on iPad that adapts to a sheet on iPhone.",
+      "usage": "@State private var isShowingDetails = false\n\nNavigationStack {\n    List {\n        LabeledContent(\"Merchant\", value: \"Mishmash Bakery\")\n        LabeledContent(\"Amount\", value: \"KWD 8.750\")\n    }\n    .navigationTitle(\"Transaction\")\n    .toolbar {\n        ToolbarItem(placement: .topBarTrailing) {\n            Button(\"Details\", systemImage: \"sidebar.trailing\") {\n                isShowingDetails.toggle()\n            }\n            .accessibilityLabel(\"Toggle details\")\n        }\n    }\n    .inspector(isPresented: $isShowingDetails) {\n        List {\n            LabeledContent(\"Category\", value: \"Dining\")\n            LabeledContent(\"Card\", value: \"Visa 4321\")\n            LabeledContent(\"Status\", value: \"Cleared\")\n        }\n        .inspectorColumnWidth(min: 240, ideal: 280, max: 360)\n    }\n}",
+      "docs": "`.inspector(isPresented:)` shows a trailing column on iPadOS and a sheet on iPhone, sized with `.inspectorColumnWidth(min:ideal:max:)`. The `dialog` and `drawer` recipes cover the plain sheet; this recipe adds the inspector form. The registry measured on iOS 27 that an inspector attached to a tab's navigation stack stopped text-field focus from advancing (docs/component-roadmap.md, Open deferrals), so attach it above a stack or keep to `.sheet` when a tab holds text fields. Watch that caveat before placing an inspector inside a tabbed flow.",
+      "tags": [
+        "sheet",
+        "inspector",
+        "side-sheet",
+        "detail-panel",
+        "guidance"
+      ],
+      "aliases": [
+        "inspector",
+        "side-panel"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [],
+      "installOrder": [],
+      "accessibility": [
+        "The inspector toggle is a labeled button, and the panel content is reachable by VoiceOver.",
+        "On iPhone the inspector adapts to a sheet with the system dismiss affordance."
+      ],
+      "sourcePath": null,
+      "sourceURL": null,
+      "source": null,
+      "previewName": null,
+      "screenshots": {
+        "light": "/images/items/sheet-light.png",
+        "dark": "/images/items/sheet-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": []
+    },
+    {
+      "name": "sidebar",
+      "kind": "recipe",
+      "version": "0.2.0",
       "description": "Native guidance for a sidebar layout with NavigationSplitView and a selection-bound List on iPad.",
-      "usage": "@State private var selection: String? = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n} detail: {\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}",
-      "docs": "Use `NavigationSplitView` with a selection-bound `List` for the sidebar; the system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack.",
+      "usage": "@State private var selection: String? = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}",
+      "docs": "Use `NavigationSplitView` with a selection-bound `List` for the sidebar; the system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack. On iPadOS people can drag the divider within the `navigationSplitViewColumnWidth` bounds, and iPhone ignores them.",
       "tags": [
         "sidebar",
         "navigation",
@@ -3201,6 +3789,69 @@
       ]
     },
     {
+      "name": "toast",
+      "kind": "component",
+      "version": "0.1.0",
+      "description": "Presents a transient status toast over content with informational, positive, and destructive variants, an optional caller-run action, and swipe, tap, or timed dismissal.",
+      "usage": "@State private var toast: RegistryToast?\n\nCardDetail()\n    .registryToast($toast)\n\n// Present a destructive toast with an undo action:\ntoast = RegistryToast(\n    title: \"Message deleted\",\n    variant: .destructive,\n    action: RegistryToast.Action(label: \"Undo\") { restoreMessage() }\n)",
+      "docs": null,
+      "tags": [
+        "toast",
+        "snackbar",
+        "notification",
+        "feedback",
+        "status",
+        "shadcn"
+      ],
+      "aliases": [
+        "snackbar",
+        "sonner",
+        "notification-banner"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [
+        "button"
+      ],
+      "installOrder": [
+        {
+          "name": "button",
+          "version": "0.5.0"
+        },
+        {
+          "name": "toast",
+          "version": "0.1.0"
+        }
+      ],
+      "accessibility": [
+        "Each variant pairs its own symbol with its color, so informational, positive, and destructive meaning never rests on color alone.",
+        "When a toast appears it posts a VoiceOver announcement built from the title and message, so the update is spoken without moving focus away from the current task.",
+        "The title and message combine into one accessibility element, while the optional action button and the close control stay separate, activatable elements.",
+        "The close control carries a Dismiss label and the leading symbol is hidden from VoiceOver, so the tone reaches assistive technology through the title and message text.",
+        "Under Reduce Motion the enter and exit collapse to a fade with no slide, and the title scales down before it wraps while the message wraps to at most two lines."
+      ],
+      "sourcePath": "Registry/sources/components/RegistryToastModifier.swift",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryToastModifier.swift",
+      "source": "import Accessibility\nimport Foundation\nimport SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// The status semantics of a ``RegistryToast``. Each variant pairs a symbol\n/// with its color so the meaning never rests on color alone.\npublic enum RegistryToastVariant: Sendable {\n    case informational\n    case positive\n    case destructive\n}\n\n/// A transient status message presented over content and dismissed by time, a\n/// swipe down, or the close control. iOS has no native toast, so this fills the\n/// gap while keeping presentation caller-owned: the caller holds the optional\n/// binding and sets it to present.\npublic struct RegistryToast: Identifiable {\n    /// A caller-run button rendered inside the toast. Running it dismisses the\n    /// toast after the action performs.\n    public struct Action {\n        public let label: LocalizedStringResource\n        public let perform: @MainActor () -> Void\n\n        public init(\n            label: LocalizedStringResource,\n            perform: @escaping @MainActor () -> Void\n        ) {\n            self.label = label\n            self.perform = perform\n        }\n    }\n\n    public let id: UUID\n    /// The headline, always visible and kept to one line.\n    public let title: LocalizedStringResource\n    /// Optional supporting copy that may wrap to two lines.\n    public let message: LocalizedStringResource?\n    /// Overrides the variant's default symbol.\n    public let systemImage: String?\n    /// The semantic tone. Defaults to informational.\n    public let variant: RegistryToastVariant\n    /// An optional caller-run button, such as Undo or Retry.\n    public let action: Action?\n\n    public init(\n        id: UUID = UUID(),\n        title: LocalizedStringResource,\n        message: LocalizedStringResource? = nil,\n        systemImage: String? = nil,\n        variant: RegistryToastVariant = .informational,\n        action: Action? = nil\n    ) {\n        self.id = id\n        self.title = title\n        self.message = message\n        self.systemImage = systemImage\n        self.variant = variant\n        self.action = action\n    }\n}\n\npublic extension View {\n    /// Presents the bound toast over this view, aligned to the bottom safe\n    /// area. Set the binding to a value to present and to `nil` to dismiss; the\n    /// toast also dismisses itself after `duration`, on a swipe down, or when\n    /// the close control is tapped.\n    func registryToast(\n        _ toast: Binding<RegistryToast?>,\n        duration: Duration = .seconds(4)\n    ) -> some View {\n        modifier(RegistryToastModifier(toast: toast, duration: duration))\n    }\n}\n\nprivate struct RegistryToastModifier: ViewModifier {\n    @Environment(\\.registryTheme) private var theme\n    @Environment(\\.accessibilityReduceMotion) private var reduceMotion\n\n    @Binding var toast: RegistryToast?\n    let duration: Duration\n\n    func body(content: Content) -> some View {\n        content\n            .overlay(alignment: .bottom) {\n                if let toast {\n                    RegistryToastCard(toast: toast, onDismiss: dismiss)\n                        .padding(.horizontal, theme.metrics.standardSpacing)\n                        .padding(.bottom, theme.metrics.standardSpacing)\n                        .transition(transition)\n                }\n            }\n            .animation(animation, value: toast?.id)\n            .task(id: toast?.id) {\n                guard let toast else { return }\n                announce(toast)\n                do {\n                    try await Task.sleep(for: duration)\n                } catch {\n                    // Cancelled because a new toast replaced this one or it was\n                    // dismissed early; the replacement runs its own timer.\n                    return\n                }\n                if self.toast?.id == toast.id {\n                    dismiss()\n                }\n            }\n    }\n\n    private func dismiss() {\n        toast = nil\n    }\n\n    private func announce(_ toast: RegistryToast) {\n        var spoken = String(localized: toast.title)\n        if let message = toast.message {\n            spoken += \". \" + String(localized: message)\n        }\n        AccessibilityNotification.Announcement(spoken).post()\n    }\n\n    // Move-from-bottom plus opacity, reduced to opacity only under Reduce\n    // Motion so nothing slides for a motion-sensitive user.\n    private var transition: AnyTransition {\n        reduceMotion\n            ? .opacity\n            : .move(edge: .bottom).combined(with: .opacity)\n    }\n\n    private var animation: Animation {\n        reduceMotion\n            ? .easeInOut(duration: 0.2)\n            : .spring(response: 0.4, dampingFraction: 0.85)\n    }\n}\n\nprivate struct RegistryToastCard: View {\n    @Environment(\\.registryTheme) private var theme\n\n    let toast: RegistryToast\n    let onDismiss: () -> Void\n\n    var body: some View {\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)\n\n        HStack(alignment: .top, spacing: theme.metrics.compactSpacing) {\n            Image(systemName: toast.systemImage ?? defaultSystemImage)\n                .font(.body.weight(.semibold))\n                .foregroundStyle(toneStyle)\n                .accessibilityHidden(true)\n\n            VStack(alignment: .leading, spacing: theme.metrics.compactSpacing / 2) {\n                VStack(alignment: .leading, spacing: theme.metrics.compactSpacing / 2) {\n                    Text(toast.title)\n                        .font(.subheadline.weight(.semibold))\n                        // The title never wraps; it scales down before it does.\n                        .lineLimit(1)\n                        .minimumScaleFactor(0.8)\n                    if let message = toast.message {\n                        Text(message)\n                            .font(.footnote)\n                            .foregroundStyle(.secondary)\n                            .lineLimit(2)\n                    }\n                }\n                .accessibilityElement(children: .combine)\n\n                if let action = toast.action {\n                    Button {\n                        action.perform()\n                        onDismiss()\n                    } label: {\n                        Text(action.label)\n                    }\n                    .buttonStyle(.registryLink)\n                    .controlSize(.small)\n                }\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n\n            Button {\n                onDismiss()\n            } label: {\n                Image(systemName: \"xmark\")\n            }\n            .buttonStyle(.registryGhost)\n            .controlSize(.small)\n            .accessibilityLabel(\"Dismiss\")\n        }\n        .padding(theme.metrics.standardSpacing)\n        .background(theme.surface, in: shape)\n        .overlay {\n            shape.stroke(theme.border, lineWidth: theme.metrics.borderWidth)\n        }\n        .gesture(\n            DragGesture(minimumDistance: 10)\n                .onEnded { value in\n                    if value.translation.height > 0 {\n                        onDismiss()\n                    }\n                }\n        )\n    }\n\n    private var defaultSystemImage: String {\n        switch toast.variant {\n        case .informational: \"info.circle.fill\"\n        case .positive: \"checkmark.circle.fill\"\n        case .destructive: \"exclamationmark.triangle.fill\"\n        }\n    }\n\n    private var toneStyle: AnyShapeStyle {\n        switch toast.variant {\n        case .informational: AnyShapeStyle(TintShapeStyle())\n        case .positive: AnyShapeStyle(theme.positive)\n        case .destructive: AnyShapeStyle(theme.negative)\n        }\n    }\n}\n\nprivate struct RegistryToastPreview: View {\n    @State private var toast: RegistryToast? = RegistryToast(\n        title: \"Card frozen\",\n        message: \"Unfreeze it any time from the card's settings.\",\n        variant: .positive,\n        action: RegistryToast.Action(label: \"Undo\") {}\n    )\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            ForEach(0..<5, id: \\.self) { index in\n                HStack(spacing: 12) {\n                    Circle()\n                        .fill(.secondary.opacity(0.2))\n                        .frame(width: 36, height: 36)\n                    VStack(alignment: .leading, spacing: 6) {\n                        Text(\"Placeholder row \\(index + 1)\")\n                            .font(.subheadline)\n                        Text(\"Supporting detail text\")\n                            .font(.caption)\n                            .foregroundStyle(.secondary)\n                    }\n                    Spacer()\n                }\n            }\n            Spacer()\n        }\n        .padding()\n        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)\n        // A long duration keeps the toast on screen for previews and capture.\n        .registryToast($toast, duration: .seconds(3600))\n    }\n}\n\n#Preview(\"Toast\") {\n    RegistryToastPreview().tint(.indigo)\n}\n\n#Preview(\"Toast Dark\") {\n    RegistryToastPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Toast Right to Left\") {\n    RegistryToastPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Toast Accessibility Size\") {\n    RegistryToastPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "previewName": "Toast",
+      "screenshots": {
+        "light": "/images/items/toast-light.png",
+        "dark": "/images/items/toast-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": [
+        {
+          "instruction": "add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations",
+          "manifest": "// Package.swift\ndependencies: [\n    .package(url: \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", .upToNextMinor(from: \"0.1.0\"))\n]\n\n// In the consuming target's dependencies:\n.product(name: \"SwiftUIRegistryFoundations\", package: \"swiftui-ui-registry\")",
+          "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
+        }
+      ]
+    },
+    {
       "name": "toggle",
       "kind": "component",
       "version": "0.2.0",
@@ -3415,6 +4066,47 @@
           "xcode": "In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target"
         }
       ]
+    },
+    {
+      "name": "typography",
+      "kind": "recipe",
+      "version": "0.1.0",
+      "description": "Native guidance for Apple's eleven text styles as the type scale with weight, design, and monospaced digits.",
+      "usage": "VStack(alignment: .leading, spacing: 8) {\n    Text(\"Balance\")\n        .font(.title2.weight(.semibold))\n    Text(amount, format: .currency(code: \"KWD\"))\n        .font(.largeTitle)\n        .monospacedDigit()\n    Text(\"Updated today\")\n        .font(.footnote)\n        .foregroundStyle(.secondary)\n}\n.fontDesign(.rounded)",
+      "docs": "Apple's eleven text styles from `.largeTitle` to `.caption2` are the type scale, and they scale with Dynamic Type. Regular through Bold is the legible weight range, and one `.fontDesign` change at the root sets the whole typographic voice. Use `.monospacedDigit()` where figures must align, such as currency. Watch weights below Regular: they thin out and fail legibility at small sizes.",
+      "tags": [
+        "typography",
+        "text-styles",
+        "font",
+        "type-scale",
+        "guidance"
+      ],
+      "aliases": [
+        "text-styles",
+        "type-scale"
+      ],
+      "platforms": [
+        "iOS 26.0+"
+      ],
+      "dependencies": [],
+      "installOrder": [],
+      "accessibility": [
+        "Text styles scale with Dynamic Type, including the accessibility sizes, without hardcoded point sizes.",
+        "Keep weights in the Regular through Bold range so text stays legible at small sizes."
+      ],
+      "sourcePath": null,
+      "sourceURL": null,
+      "source": null,
+      "previewName": null,
+      "screenshots": {
+        "light": "/images/items/typography-light.png",
+        "dark": "/images/items/typography-dark.png"
+      },
+      "wideScreenshots": {
+        "light": null,
+        "dark": null
+      },
+      "requirements": []
     }
   ],
   "presets": [

@@ -28,16 +28,17 @@ ScrollView {
 .contentMargins(.horizontal, 16, for: .scrollContent)
 .scrollIndicators(.hidden)
 .scrollClipDisabled()
+.scrollEdgeEffectStyle(.soft, for: .top)
 ```
 
 ## Why native is enough
 
-Compose blocks inside a native `ScrollView` and tune edges with `.contentMargins`, `.scrollIndicators`, and `.scrollClipDisabled`. Scrolling, bounce, and keyboard avoidance are system behavior; registry blocks deliberately never own a scroll view.
+Compose blocks inside a native `ScrollView` and tune edges with `.contentMargins`, `.scrollIndicators`, and `.scrollClipDisabled`. Scrolling, bounce, and keyboard avoidance are system behavior; registry blocks deliberately never own a scroll view. The scroll edge effect set with `.scrollEdgeEffectStyle` is the system's transition between content and the Liquid Glass control layer, in place of a background (HIG Layout).
 
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.2.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Native scroll views support VoiceOver page scrolling and the three-finger scroll gesture.

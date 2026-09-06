@@ -40,6 +40,12 @@ enum ItemDemos {
         case "breadcrumb": AnyView(BreadcrumbDemo())
         case "combobox": AnyView(ComboboxDemo())
         case "chart": AnyView(ChartDemo())
+        case "bubble": AnyView(BubbleDemo())
+        case "message": AnyView(MessageDemo())
+        case "message-scroller": AnyView(MessageScrollerDemo())
+        case "toast": AnyView(ToastDemo())
+        case "attachment": AnyView(AttachmentDemo())
+        case "marker": AnyView(MarkerDemo())
         // Blocks
         case "finance-overview": AnyView(FinanceDemo())
         case "nutrition-overview": AnyView(NutritionDemo())
@@ -68,6 +74,13 @@ enum ItemDemos {
         case "scroll-area": AnyView(ScrollAreaRecipe())
         case "sidebar": AnyView(SidebarRecipe())
         case "tooltip": AnyView(TooltipRecipe())
+        case "carousel": AnyView(CarouselRecipe())
+        case "chart-tooltip": AnyView(ChartTooltipRecipe())
+        case "date-picker": AnyView(DatePickerRecipe())
+        case "input-otp": AnyView(InputOTPRecipe())
+        case "menubar": AnyView(MenubarRecipe())
+        case "sheet": AnyView(SheetRecipe())
+        case "typography": AnyView(TypographyRecipe())
         // Not a registry item: the theme preview is the `preview` block's wall, captured per preset for the website's Create and Themes pages
         case "theme-preview": AnyView(PreviewWall())
         default: nil

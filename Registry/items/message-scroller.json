@@ -1,0 +1,65 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "message-scroller",
+  "kind": "component",
+  "description": "A chat scroll container that starts at the newest turn, follows streamed replies while the reader is at the bottom, holds a scrolled-up reader in place, and requests history at the top.",
+  "usage": "MessageScroller(position: $position, isFollowing: $isFollowing) {\n    ForEach(messages) { message in\n        MessageRow {\n            Text(message.text)\n        }\n        .registryVariant(message.isMine ? .outgoing : .incoming)\n        .id(message.id)\n    }\n}",
+  "files": [
+    {
+      "source": "sources/components/MessageScroller.swift",
+      "target": "MessageScroller.swift"
+    }
+  ],
+  "registryDependencies": [
+    "message",
+    "avatar"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "chat",
+    "scroll",
+    "conversation",
+    "messages",
+    "container",
+    "shadcn"
+  ],
+  "aliases": [
+    "chat-scroll",
+    "conversation-view",
+    "chat-list"
+  ],
+  "accessibility": [
+    "Keeps a native vertical ScrollView, so VoiceOver's scroll and the three-finger scroll gesture work unchanged; the container hides no content.",
+    "Starts pinned to the newest turn through the bottom default anchor, so the most recent message is the first the reader lands on.",
+    "Keeps the newest turn visible while the reader is within 8 points of the bottom, and leaves a reader who scrolled up in place when new turns stream in.",
+    "Requests history through onReachTop once per content height when the reader nears within 40 points of the top, re-arming after a prepend grows the content.",
+    "Reading order follows the caller's row order; give each row a stable .id so scrollPosition can move the reader to a specific message."
+  ],
+  "preview": {
+    "source": "sources/components/MessageScroller.swift",
+    "name": "Message Scroller",
+    "screenshots": [
+      "docs/images/items/message-scroller-light.png",
+      "docs/images/items/message-scroller-dark.png"
+    ]
+  }
+}

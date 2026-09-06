@@ -1,0 +1,66 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "attachment",
+  "kind": "component",
+  "description": "Presents a file or image attachment as a row with square media, a name and detail, caller-owned actions, and a state line for idle, uploading, processing, failed, and completed uploads.",
+  "usage": "AttachmentRow(\n    name: Text(\"Statement-Aug-2026.pdf\"),\n    detail: Text(\"PDF document, 1.2 MB\"),\n    state: .uploading(progress: 0.68)\n) {\n    Image(systemName: \"doc.fill\")\n} actions: {\n    Button(\"Cancel\", systemImage: \"xmark\") {}\n        .labelStyle(.iconOnly)\n        .buttonStyle(.registryGhost)\n        .accessibilityLabel(\"Cancel upload\")\n}",
+  "files": [
+    {
+      "source": "sources/components/AttachmentRow.swift",
+      "target": "AttachmentRow.swift"
+    }
+  ],
+  "registryDependencies": [
+    "item",
+    "progress",
+    "button",
+    "separator"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "attachment",
+    "file",
+    "upload",
+    "row",
+    "media",
+    "shadcn"
+  ],
+  "aliases": [
+    "upload",
+    "file-row"
+  ],
+  "accessibility": [
+    "Every upload state names itself in text, a percent, Processing, a failure message, or Uploaded, so progress and outcome never rest on color or a bar alone.",
+    "The uploading percent is hidden from VoiceOver because the progress bar already reports its value, so the same fraction is not read twice.",
+    "Composes ItemRow, so the name and detail combine into one accessibility element while the trailing actions stay separately activatable.",
+    "The failed and completed states each pair their color with a symbol and a word, so the outcome is not carried by hue alone.",
+    "Requires the caller to label any icon-only action button and the thumbnail image, since neither derives an accessibility label from visible text."
+  ],
+  "preview": {
+    "source": "sources/components/AttachmentRow.swift",
+    "name": "Attachment Row",
+    "screenshots": [
+      "docs/images/items/attachment-light.png",
+      "docs/images/items/attachment-dark.png"
+    ]
+  }
+}

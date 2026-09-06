@@ -45,6 +45,13 @@
     "items/context-menu.json",
     "items/dropdown-menu.json",
     "items/tooltip.json",
+    "items/carousel.json",
+    "items/chart-tooltip.json",
+    "items/date-picker.json",
+    "items/input-otp.json",
+    "items/menubar.json",
+    "items/sheet.json",
+    "items/typography.json",
     "items/calendar.json",
     "items/collapsible.json",
     "items/scroll-area.json",
@@ -59,6 +66,12 @@
     "items/combobox.json",
     "items/chart.json",
     "items/preview.json",
-    "items/preview-02.json"
+    "items/preview-02.json",
+    "items/bubble.json",
+    "items/message.json",
+    "items/message-scroller.json",
+    "items/attachment.json",
+    "items/marker.json",
+    "items/toast.json"
   ]
 }

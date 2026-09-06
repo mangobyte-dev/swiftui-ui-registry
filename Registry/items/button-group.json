@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.3.0",
+  "version": "0.3.1",
   "name": "button-group",
   "kind": "component",
   "description": "Lays out every native button in a ControlGroup side by side with one registry button variant, keeping the caller's Button controls, roles, and labels.",

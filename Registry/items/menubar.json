@@ -1,0 +1,40 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "menubar",
+  "kind": "recipe",
+  "description": "Native guidance for scene-level commands with CommandMenu, which iPadOS and macOS place in the menu bar.",
+  "usage": "WindowGroup {\n    RootView()\n}\n.commands {\n    CommandMenu(\"Account\") {\n        Button(\"Sign Out\") { }\n            .keyboardShortcut(\"q\", modifiers: [.command, .shift])\n    }\n}",
+  "docs": "Declare a `commands` block on the `WindowGroup` scene and add a `CommandMenu` with keyboard shortcuts; iPadOS and macOS place it in the system menu bar. A desktop menu bar is never drawn on iPhone, so the on-screen iPhone form of the same actions is a toolbar `Menu`. Commands are a `Scene` modifier and cannot be declared inside a view. Watch the placement: put the `commands` block on the scene, not a view, or it will not compile.",
+  "files": [],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "menubar",
+    "commands",
+    "keyboard-shortcuts",
+    "menu-bar",
+    "guidance"
+  ],
+  "aliases": [
+    "menu-bar",
+    "command-menu"
+  ],
+  "accessibility": [
+    "Menu bar commands carry keyboard shortcuts and are reachable by full keyboard access on iPadOS and macOS.",
+    "The iPhone toolbar Menu is a labeled control that lists the same buttons."
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/menubar-light.png",
+      "docs/images/items/menubar-dark.png"
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftUIRegistryFoundations
 
 /// Lays out every native button of a `ControlGroup` side by side with one registry button
 /// treatment. Measured on iOS 27, `ControlGroup(configuration)` draws the system capsule and

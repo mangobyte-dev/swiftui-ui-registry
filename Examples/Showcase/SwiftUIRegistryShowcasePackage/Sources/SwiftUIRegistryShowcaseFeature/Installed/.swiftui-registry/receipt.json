@@ -7,6 +7,13 @@
       "sourceDigest": "sha256:affc421f7ea23ab79a79ff8436a2717306d4990874226876966c8dea0e872b60",
       "version": "0.2.1"
     },
+    "AttachmentRow.swift": {
+      "base": "bases/38be4e5a3a371e7653353805fc188336435291c35197d664ade59881838570e4.base",
+      "installedDigest": "sha256:10afdf815cac40fcee7009dd0d465e3cc6895dddb69462463271106135fa0a0b",
+      "item": "attachment",
+      "sourceDigest": "sha256:10afdf815cac40fcee7009dd0d465e3cc6895dddb69462463271106135fa0a0b",
+      "version": "0.1.0"
+    },
     "AuthForm.swift": {
       "base": "bases/b808915e7c307350d015763d2cb828270f25868f16345bd7122b187337a9d83f.base",
       "installedDigest": "sha256:e1606a6a417d74bd257e1cf7d386391e2fd5db482304593d8f74dd18368b833c",
@@ -97,6 +104,20 @@
       "item": "macro-progress",
       "sourceDigest": "sha256:bc39758f36c8d5927330edfe6c13ddbfcf8f85f0be1cd29c4eef05c0539c5d3d",
       "version": "0.4.0"
+    },
+    "MessageRow.swift": {
+      "base": "bases/bfa16d9e58481d731a3715556285ebe1c1295ec9877590be92cd3d946f2ad616.base",
+      "installedDigest": "sha256:d95605fec7010782cca178a5540af2e47a76f3fc746c4cd97aaccd61b15b70a1",
+      "item": "message",
+      "sourceDigest": "sha256:d95605fec7010782cca178a5540af2e47a76f3fc746c4cd97aaccd61b15b70a1",
+      "version": "0.1.0"
+    },
+    "MessageScroller.swift": {
+      "base": "bases/f7b3d1afbe043f75dc9ef304e8c80aad0242d68cb0f3fb49a1394be6809e0409.base",
+      "installedDigest": "sha256:35abc7fc9824173f5d259343220f08f1fd91a65066ab59377469e5df4c052b2f",
+      "item": "message-scroller",
+      "sourceDigest": "sha256:35abc7fc9824173f5d259343220f08f1fd91a65066ab59377469e5df4c052b2f",
+      "version": "0.1.0"
     },
     "MetricCard.swift": {
       "base": "bases/72e69e8c35a9ff94342e2eb0ca362ef1edd41c34a3587ae393844d00ca45e247.base",
@@ -616,12 +637,19 @@
       "sourceDigest": "sha256:803efa01ff74b6b56135263296cf9940a7dac32e53d7ba0a563a02991b6630f5",
       "version": "0.3.1"
     },
+    "RegistryBubbleModifier.swift": {
+      "base": "bases/b15993938c5c6e4dfd198111944107c82a4945a20bd0a7ee8d6b80633049bf25.base",
+      "installedDigest": "sha256:b09f9b829c93229989505a19a8f3e7b0cfc555e499ccf7b6a4ad3adee6b5bdbd",
+      "item": "bubble",
+      "sourceDigest": "sha256:b09f9b829c93229989505a19a8f3e7b0cfc555e499ccf7b6a4ad3adee6b5bdbd",
+      "version": "0.1.0"
+    },
     "RegistryButtonGroupStyle.swift": {
       "base": "bases/db7fdc3c6784bc96f933530ea493c2024cac082f8e63aaf7cf8373dc2e7c22b5.base",
-      "installedDigest": "sha256:70b38ddc29a3d23bcaeaf3fdcb2129cb577df2ba2470796810beb3f14a434fe1",
+      "installedDigest": "sha256:09558e2c34a55417afb4e7c556c3fd30a40b518eb1194f4b93f809f30460142c",
       "item": "button-group",
-      "sourceDigest": "sha256:70b38ddc29a3d23bcaeaf3fdcb2129cb577df2ba2470796810beb3f14a434fe1",
-      "version": "0.3.0"
+      "sourceDigest": "sha256:09558e2c34a55417afb4e7c556c3fd30a40b518eb1194f4b93f809f30460142c",
+      "version": "0.3.1"
     },
     "RegistryButtonStyle.swift": {
       "base": "bases/a314683b53d284671d9132d9c92f6349d1d80fdc372a8fbb9636baec5da3c809.base",
@@ -679,6 +707,13 @@
       "sourceDigest": "sha256:d2ddf444d907b2df248d8e0e0765c906169eee1fb02690741fc84102da04b0f6",
       "version": "0.2.0"
     },
+    "RegistryMarkerModifier.swift": {
+      "base": "bases/7b953879d949c4e411e1345859dacaabee744056d45e3c564985bdf93fcbbc35.base",
+      "installedDigest": "sha256:e33cfcc4a6a9e5124038d6c09d250d98c64dff61c040288f6aaa45c3f6b9de70",
+      "item": "marker",
+      "sourceDigest": "sha256:e33cfcc4a6a9e5124038d6c09d250d98c64dff61c040288f6aaa45c3f6b9de70",
+      "version": "0.1.0"
+    },
     "RegistryProgressViewStyle.swift": {
       "base": "bases/7e913d7bc5cadc9661e485c4d840908f32942a4cbe3ff7fdafd0f4b017b7497e.base",
       "installedDigest": "sha256:f38bff047d1b9bedcf600ac3a0047378b99a8e7161e47331a3e66276bd226427",
@@ -720,6 +755,13 @@
       "item": "textarea",
       "sourceDigest": "sha256:0238e7a5a79ace4a599c9148ec347c8e612119b144b72c047ceb40c2e10b4129",
       "version": "0.4.0"
+    },
+    "RegistryToastModifier.swift": {
+      "base": "bases/87c59e78860855d4270fa443a51de419b5463b01561d25a2b9226e7f5fad879f.base",
+      "installedDigest": "sha256:8fcc35919a7946066961f0aa23b032943bdf1aaa4fae6dda539c6c406cc035d8",
+      "item": "toast",
+      "sourceDigest": "sha256:8fcc35919a7946066961f0aa23b032943bdf1aaa4fae6dda539c6c406cc035d8",
+      "version": "0.1.0"
     },
     "RegistryToggleGroupModifier.swift": {
       "base": "bases/ca52356b91430d7163321866f41475fcbde3004f0fe8f57edf95b6084bf935d8.base",
@@ -812,6 +854,26 @@
       ],
       "version": "0.2.0"
     },
+    "attachment": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "item",
+        "progress",
+        "button"
+      ],
+      "version": "0.1.0"
+    },
     "auth-form": {
       "packageDependencies": [
         {
@@ -880,6 +942,22 @@
       "registryDependencies": [],
       "version": "0.1.0"
     },
+    "bubble": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
     "button": {
       "packageDependencies": [
         {
@@ -912,7 +990,7 @@
       "registryDependencies": [
         "button"
       ],
-      "version": "0.3.0"
+      "version": "0.3.1"
     },
     "card": {
       "packageDependencies": [
@@ -1182,6 +1260,59 @@
       "registryDependencies": [],
       "version": "0.4.0"
     },
+    "marker": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "separator"
+      ],
+      "version": "0.1.0"
+    },
+    "message": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "avatar",
+        "bubble"
+      ],
+      "version": "0.1.0"
+    },
+    "message-scroller": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.1.0"
+    },
     "metric-card": {
       "packageDependencies": [
         {
@@ -1427,6 +1558,24 @@
       ],
       "registryDependencies": [],
       "version": "0.4.0"
+    },
+    "toast": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "version": "0.1.0"
     },
     "toggle": {
       "packageDependencies": [

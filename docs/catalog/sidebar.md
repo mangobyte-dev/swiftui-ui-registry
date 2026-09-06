@@ -21,6 +21,7 @@ NavigationSplitView {
         Label("Cards", systemImage: "creditcard").tag("cards")
     }
     .navigationTitle("Bank")
+    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
 } detail: {
     if selection == "activity" { ActivityScreen() } else { CardsScreen() }
 }
@@ -28,12 +29,12 @@ NavigationSplitView {
 
 ## Why native is enough
 
-Use `NavigationSplitView` with a selection-bound `List` for the sidebar; the system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack.
+Use `NavigationSplitView` with a selection-bound `List` for the sidebar; the system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack. On iPadOS people can drag the divider within the `navigationSplitViewColumnWidth` bounds, and iPhone ignores them.
 
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.2.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Sidebar rows are native list cells with selection semantics.

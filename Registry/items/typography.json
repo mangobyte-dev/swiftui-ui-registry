@@ -1,0 +1,40 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "typography",
+  "kind": "recipe",
+  "description": "Native guidance for Apple's eleven text styles as the type scale with weight, design, and monospaced digits.",
+  "usage": "VStack(alignment: .leading, spacing: 8) {\n    Text(\"Balance\")\n        .font(.title2.weight(.semibold))\n    Text(amount, format: .currency(code: \"KWD\"))\n        .font(.largeTitle)\n        .monospacedDigit()\n    Text(\"Updated today\")\n        .font(.footnote)\n        .foregroundStyle(.secondary)\n}\n.fontDesign(.rounded)",
+  "docs": "Apple's eleven text styles from `.largeTitle` to `.caption2` are the type scale, and they scale with Dynamic Type. Regular through Bold is the legible weight range, and one `.fontDesign` change at the root sets the whole typographic voice. Use `.monospacedDigit()` where figures must align, such as currency. Watch weights below Regular: they thin out and fail legibility at small sizes.",
+  "files": [],
+  "registryDependencies": [],
+  "packageDependencies": [],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "typography",
+    "text-styles",
+    "font",
+    "type-scale",
+    "guidance"
+  ],
+  "aliases": [
+    "text-styles",
+    "type-scale"
+  ],
+  "accessibility": [
+    "Text styles scale with Dynamic Type, including the accessibility sizes, without hardcoded point sizes.",
+    "Keep weights in the Regular through Bold range so text stays legible at small sizes."
+  ],
+  "preview": {
+    "screenshots": [
+      "docs/images/items/typography-light.png",
+      "docs/images/items/typography-dark.png"
+    ]
+  }
+}

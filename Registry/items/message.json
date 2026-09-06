@@ -1,0 +1,64 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "message",
+  "kind": "component",
+  "description": "Composes one conversation turn with an optional author and timestamp header, the content in a bubble, an optional status line, and side-based alignment.",
+  "usage": "MessageRow(\n    author: Text(\"Maya\"),\n    timestamp: Text(\"09:41\"),\n    status: Text(\"Delivered\")\n) {\n    Avatar(initials: \"MK\", accessibilityLabel: Text(\"Maya Khalid\"))\n} content: {\n    Text(\"Are we still on for Thursday?\")\n}\n\nMessageRow {\n    Text(\"Yes, 6pm works.\")\n}\n.registryVariant(.outgoing)",
+  "files": [
+    {
+      "source": "sources/components/MessageRow.swift",
+      "target": "MessageRow.swift"
+    }
+  ],
+  "registryDependencies": [
+    "avatar",
+    "bubble"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "message",
+    "chat",
+    "conversation",
+    "row",
+    "bubble",
+    "shadcn"
+  ],
+  "aliases": [
+    "chat-message",
+    "conversation-row"
+  ],
+  "accessibility": [
+    "Combines the header (author and timestamp) with the message bubble into one accessibility element for plain text content; the status line stays a separate element.",
+    "When the content holds controls, wrap the combined element with .contain instead of .combine at the call site so buttons and links remain separate, activatable elements.",
+    "Places the avatar leading for an incoming turn and omits it for an outgoing turn, so the side conveys direction without relying on color.",
+    "Caps the bubble column at 320 points so a long turn wraps instead of filling the row, and the whole row follows the caller's layout direction.",
+    "The avatar carries its own required accessibility label from the caller; the row never derives one from visible content."
+  ],
+  "preview": {
+    "source": "sources/components/MessageRow.swift",
+    "name": "Message Row",
+    "screenshots": [
+      "docs/images/items/message-light.png",
+      "docs/images/items/message-dark.png"
+    ]
+  }
+}

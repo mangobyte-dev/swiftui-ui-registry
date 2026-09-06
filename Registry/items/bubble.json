@@ -1,0 +1,61 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "bubble",
+  "kind": "component",
+  "description": "Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, leaving alignment to the message row.",
+  "usage": "Text(\"Are we still on for Thursday?\")\n    .registryBubble(.incoming)\n\nText(\"Yes, 6pm works.\")\n    .registryBubble(.outgoing)",
+  "files": [
+    {
+      "source": "sources/components/RegistryBubbleModifier.swift",
+      "target": "RegistryBubbleModifier.swift"
+    }
+  ],
+  "registryDependencies": [],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "bubble",
+    "chat",
+    "message",
+    "conversation",
+    "modifier",
+    "shadcn"
+  ],
+  "aliases": [
+    "chat-bubble",
+    "speech-bubble"
+  ],
+  "accessibility": [
+    "Wraps its text freely and never truncates, so a long message stays fully readable and grows with Dynamic Type.",
+    "Adds no accessibility element of its own; the wrapped Text keeps its semantics and reading order.",
+    "Incoming and outgoing bubbles carry no stroke and rest on fill alone; the outgoing fill is the tint with the theme's onAccent label, which the caller keeps legible against the accent.",
+    "The muted variant drops the fill for a border hairline, so a system line reads as distinct from a spoken turn without relying on color.",
+    "Inherits layout direction, so the bubble's padding and continuous corners follow the caller's locale."
+  ],
+  "preview": {
+    "source": "sources/components/RegistryBubbleModifier.swift",
+    "name": "Bubble Variants",
+    "screenshots": [
+      "docs/images/items/bubble-light.png",
+      "docs/images/items/bubble-dark.png"
+    ]
+  }
+}

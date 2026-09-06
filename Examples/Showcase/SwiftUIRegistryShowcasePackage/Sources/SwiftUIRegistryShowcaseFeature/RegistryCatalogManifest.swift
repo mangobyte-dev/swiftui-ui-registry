@@ -62,6 +62,15 @@ enum RegistryCatalogManifest {
             tags: ["aspect-ratio", "layout", "media", "native", "guidance"]
         ),
         CatalogEntry(
+            name: "attachment",
+            kind: "component",
+            version: "0.1.0",
+            description: "Presents a file or image attachment as a row with square media, a name and detail, caller-owned actions, and a state line for idle, uploading, processing, failed, and completed uploads.",
+            usage: "AttachmentRow(\n    name: Text(\"Statement-Aug-2026.pdf\"),\n    detail: Text(\"PDF document, 1.2 MB\"),\n    state: .uploading(progress: 0.68)\n) {\n    Image(systemName: \"doc.fill\")\n} actions: {\n    Button(\"Cancel\", systemImage: \"xmark\") {}\n        .labelStyle(.iconOnly)\n        .buttonStyle(.registryGhost)\n        .accessibilityLabel(\"Cancel upload\")\n}",
+            dependencies: ["item", "progress", "button", "separator"],
+            tags: ["attachment", "file", "upload", "row", "media", "shadcn"]
+        ),
+        CatalogEntry(
             name: "auth-form",
             kind: "block",
             version: "0.3.1",
@@ -98,6 +107,15 @@ enum RegistryCatalogManifest {
             tags: ["breadcrumb", "navigation", "trail", "hierarchy", "path", "shadcn"]
         ),
         CatalogEntry(
+            name: "bubble",
+            kind: "component",
+            version: "0.1.0",
+            description: "Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, leaving alignment to the message row.",
+            usage: "Text(\"Are we still on for Thursday?\")\n    .registryBubble(.incoming)\n\nText(\"Yes, 6pm works.\")\n    .registryBubble(.outgoing)",
+            dependencies: [],
+            tags: ["bubble", "chat", "message", "conversation", "modifier", "shadcn"]
+        ),
+        CatalogEntry(
             name: "button",
             kind: "component",
             version: "0.5.0",
@@ -109,7 +127,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "button-group",
             kind: "component",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "Lays out every native button in a ControlGroup side by side with one registry button variant, keeping the caller's Button controls, roles, and labels.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
             dependencies: ["button"],
@@ -134,6 +152,15 @@ enum RegistryCatalogManifest {
             tags: ["card", "group-box", "surface", "container", "style"]
         ),
         CatalogEntry(
+            name: "carousel",
+            kind: "recipe",
+            version: "0.1.0",
+            description: "Native guidance for a paging horizontal ScrollView of cards with scrollTargetBehavior and containerRelativeFrame.",
+            usage: "ScrollView(.horizontal) {\n    HStack(spacing: 12) {\n        ForEach(cards) { card in\n            VStack(alignment: .leading, spacing: 8) {\n                Label(card.title, systemImage: card.systemImage)\n                    .font(.subheadline.weight(.semibold))\n                Text(card.amount, format: .currency(code: \"KWD\"))\n                    .font(.title.monospacedDigit())\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .padding()\n            .registrySurface()\n            .containerRelativeFrame(.horizontal)\n            .accessibilityElement(children: .combine)\n            .accessibilityLabel(\"\\(card.title) card\")\n        }\n    }\n    .scrollTargetLayout()\n}\n.scrollTargetBehavior(.paging)",
+            dependencies: [],
+            tags: ["carousel", "paging", "scroll", "cards", "guidance"]
+        ),
+        CatalogEntry(
             name: "chart",
             kind: "component",
             version: "0.1.1",
@@ -141,6 +168,15 @@ enum RegistryCatalogManifest {
             usage: "Chart(data) { row in\n    BarMark(\n        x: .value(\"Month\", row.month),\n        y: .value(\"Visits\", row.visits)\n    )\n    .foregroundStyle(by: .value(\"Channel\", row.channel))\n    .position(by: .value(\"Channel\", row.channel))\n}\n.registryChart()\n.frame(height: 180)",
             dependencies: [],
             tags: ["chart", "charts", "graph", "bar", "line", "pie", "shadcn"]
+        ),
+        CatalogEntry(
+            name: "chart-tooltip",
+            kind: "recipe",
+            version: "0.1.0",
+            description: "Native guidance for a Swift Charts selection annotation with chartXSelection and a RuleMark tooltip.",
+            usage: "@State private var selectedMonth: String?\n\nvar selected: MonthlyBalance? {\n    balances.first { $0.month == selectedMonth }\n}\n\nChart {\n    ForEach(balances) { row in\n        BarMark(\n            x: .value(\"Month\", row.month),\n            y: .value(\"Balance\", row.amount)\n        )\n        .foregroundStyle(TintShapeStyle())\n    }\n    if let selected {\n        RuleMark(x: .value(\"Month\", selected.month))\n            .foregroundStyle(.secondary)\n            .annotation(position: .top) {\n                Text(selected.amount, format: .currency(code: \"KWD\"))\n                    .font(.footnote.monospacedDigit())\n                    .padding(6)\n                    .registrySurface()\n            }\n    }\n}\n.chartXSelection(value: $selectedMonth)\n.registryChart()",
+            dependencies: [],
+            tags: ["chart-tooltip", "chart", "selection", "annotation", "guidance"]
         ),
         CatalogEntry(
             name: "checkbox",
@@ -195,6 +231,15 @@ enum RegistryCatalogManifest {
             usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}",
             dependencies: [],
             tags: ["context-menu", "long-press", "actions", "menu", "guidance"]
+        ),
+        CatalogEntry(
+            name: "date-picker",
+            kind: "recipe",
+            version: "0.1.0",
+            description: "Native guidance for a compact DatePicker over a closed range with a presets Menu setting the binding.",
+            usage: "@State private var date = Date.now\n\nDatePicker(\"Statement date\", selection: $date, in: range, displayedComponents: .date)\n    .datePickerStyle(.compact)\n\nMenu(\"Presets\") {\n    Button(\"Today\") { date = .now }\n    Button(\"Tomorrow\") { date = .now.addingTimeInterval(60 * 60 * 24) }\n    Button(\"Next week\") { date = .now.addingTimeInterval(60 * 60 * 24 * 7) }\n}\n.accessibilityLabel(\"Date presets\")",
+            dependencies: [],
+            tags: ["date-picker", "date", "calendar", "presets", "guidance"]
         ),
         CatalogEntry(
             name: "dialog",
@@ -278,6 +323,15 @@ enum RegistryCatalogManifest {
             tags: ["input", "group", "search", "accessory", "text-field", "shadcn"]
         ),
         CatalogEntry(
+            name: "input-otp",
+            kind: "recipe",
+            version: "0.1.0",
+            description: "Native guidance for a one-time-code TextField that autofills from Messages and Mail instead of a boxed control.",
+            usage: "@State private var code = \"\"\n\nTextField(\"One-time code\", text: $code)\n    .textContentType(.oneTimeCode)\n    .keyboardType(.numberPad)\n    .textFieldStyle(.registryInput)\n    .font(.title2.monospacedDigit())\n    .accessibilityLabel(\"Verification code\")\n    .onChange(of: code) { _, newValue in\n        code = String(newValue.filter(\\.isNumber).prefix(6))\n    }\n\nButton(\"Verify\") { }\n    .buttonStyle(.registry)\n    .disabled(code.count < 6)",
+            dependencies: [],
+            tags: ["input-otp", "otp", "verification-code", "one-time-code", "guidance"]
+        ),
+        CatalogEntry(
             name: "item",
             kind: "component",
             version: "0.2.0",
@@ -312,6 +366,42 @@ enum RegistryCatalogManifest {
             usage: "MacroProgress(\n    \"Protein\",\n    value: Text(\"96 g\"),\n    target: Text(\"130 g\"),\n    progress: 96.0 / 130.0,\n    systemImage: \"fish.fill\"\n)\n.registryTint(.indigo)",
             dependencies: [],
             tags: ["nutrition", "health", "progress", "macronutrients"]
+        ),
+        CatalogEntry(
+            name: "marker",
+            kind: "component",
+            version: "0.1.0",
+            description: "Treats a Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.",
+            usage: "Text(\"Today\")\n    .registryMarker(.separator)\n\nText(\"Maya joined the conversation\")\n    .registryMarker()\n\nText(\"Delivered 09:41\")\n    .registryMarker(.status)",
+            dependencies: ["separator"],
+            tags: ["marker", "conversation", "chat", "timeline", "divider", "shadcn"]
+        ),
+        CatalogEntry(
+            name: "menubar",
+            kind: "recipe",
+            version: "0.1.0",
+            description: "Native guidance for scene-level commands with CommandMenu, which iPadOS and macOS place in the menu bar.",
+            usage: "WindowGroup {\n    RootView()\n}\n.commands {\n    CommandMenu(\"Account\") {\n        Button(\"Sign Out\") { }\n            .keyboardShortcut(\"q\", modifiers: [.command, .shift])\n    }\n}",
+            dependencies: [],
+            tags: ["menubar", "commands", "keyboard-shortcuts", "menu-bar", "guidance"]
+        ),
+        CatalogEntry(
+            name: "message",
+            kind: "component",
+            version: "0.1.0",
+            description: "Composes one conversation turn with an optional author and timestamp header, the content in a bubble, an optional status line, and side-based alignment.",
+            usage: "MessageRow(\n    author: Text(\"Maya\"),\n    timestamp: Text(\"09:41\"),\n    status: Text(\"Delivered\")\n) {\n    Avatar(initials: \"MK\", accessibilityLabel: Text(\"Maya Khalid\"))\n} content: {\n    Text(\"Are we still on for Thursday?\")\n}\n\nMessageRow {\n    Text(\"Yes, 6pm works.\")\n}\n.registryVariant(.outgoing)",
+            dependencies: ["avatar", "bubble"],
+            tags: ["message", "chat", "conversation", "row", "bubble", "shadcn"]
+        ),
+        CatalogEntry(
+            name: "message-scroller",
+            kind: "component",
+            version: "0.1.0",
+            description: "A chat scroll container that starts at the newest turn, follows streamed replies while the reader is at the bottom, holds a scrolled-up reader in place, and requests history at the top.",
+            usage: "MessageScroller(position: $position, isFollowing: $isFollowing) {\n    ForEach(messages) { message in\n        MessageRow {\n            Text(message.text)\n        }\n        .registryVariant(message.isMine ? .outgoing : .incoming)\n        .id(message.id)\n    }\n}",
+            dependencies: ["message", "avatar"],
+            tags: ["chat", "scroll", "conversation", "messages", "container", "shadcn"]
         ),
         CatalogEntry(
             name: "metric-card",
@@ -388,9 +478,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "scroll-area",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.2.0",
             description: "Native guidance for scrollable content with content margins, indicator visibility, and clipping left to ScrollView.",
-            usage: "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()",
+            usage: "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()\n.scrollEdgeEffectStyle(.soft, for: .top)",
             dependencies: [],
             tags: ["scroll", "scroll-view", "margins", "indicators", "guidance"]
         ),
@@ -422,11 +512,20 @@ enum RegistryCatalogManifest {
             tags: ["settings", "preferences", "section", "toggle", "form"]
         ),
         CatalogEntry(
-            name: "sidebar",
+            name: "sheet",
             kind: "recipe",
             version: "0.1.0",
+            description: "Native guidance for a side sheet with inspector on iPad that adapts to a sheet on iPhone.",
+            usage: "@State private var isShowingDetails = false\n\nNavigationStack {\n    List {\n        LabeledContent(\"Merchant\", value: \"Mishmash Bakery\")\n        LabeledContent(\"Amount\", value: \"KWD 8.750\")\n    }\n    .navigationTitle(\"Transaction\")\n    .toolbar {\n        ToolbarItem(placement: .topBarTrailing) {\n            Button(\"Details\", systemImage: \"sidebar.trailing\") {\n                isShowingDetails.toggle()\n            }\n            .accessibilityLabel(\"Toggle details\")\n        }\n    }\n    .inspector(isPresented: $isShowingDetails) {\n        List {\n            LabeledContent(\"Category\", value: \"Dining\")\n            LabeledContent(\"Card\", value: \"Visa 4321\")\n            LabeledContent(\"Status\", value: \"Cleared\")\n        }\n        .inspectorColumnWidth(min: 240, ideal: 280, max: 360)\n    }\n}",
+            dependencies: [],
+            tags: ["sheet", "inspector", "side-sheet", "detail-panel", "guidance"]
+        ),
+        CatalogEntry(
+            name: "sidebar",
+            kind: "recipe",
+            version: "0.2.0",
             description: "Native guidance for a sidebar layout with NavigationSplitView and a selection-bound List on iPad.",
-            usage: "@State private var selection: String? = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n} detail: {\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}",
+            usage: "@State private var selection: String? = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}",
             dependencies: [],
             tags: ["sidebar", "navigation", "split-view", "ipad", "guidance"]
         ),
@@ -494,6 +593,15 @@ enum RegistryCatalogManifest {
             tags: ["textarea", "text-editor", "multiline", "form", "modifier"]
         ),
         CatalogEntry(
+            name: "toast",
+            kind: "component",
+            version: "0.1.0",
+            description: "Presents a transient status toast over content with informational, positive, and destructive variants, an optional caller-run action, and swipe, tap, or timed dismissal.",
+            usage: "@State private var toast: RegistryToast?\n\nCardDetail()\n    .registryToast($toast)\n\n// Present a destructive toast with an undo action:\ntoast = RegistryToast(\n    title: \"Message deleted\",\n    variant: .destructive,\n    action: RegistryToast.Action(label: \"Undo\") { restoreMessage() }\n)",
+            dependencies: ["button"],
+            tags: ["toast", "snackbar", "notification", "feedback", "status", "shadcn"]
+        ),
+        CatalogEntry(
             name: "toggle",
             kind: "component",
             version: "0.2.0",
@@ -528,6 +636,15 @@ enum RegistryCatalogManifest {
             usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)",
             dependencies: [],
             tags: ["transaction", "row", "finance", "activity"]
+        ),
+        CatalogEntry(
+            name: "typography",
+            kind: "recipe",
+            version: "0.1.0",
+            description: "Native guidance for Apple's eleven text styles as the type scale with weight, design, and monospaced digits.",
+            usage: "VStack(alignment: .leading, spacing: 8) {\n    Text(\"Balance\")\n        .font(.title2.weight(.semibold))\n    Text(amount, format: .currency(code: \"KWD\"))\n        .font(.largeTitle)\n        .monospacedDigit()\n    Text(\"Updated today\")\n        .font(.footnote)\n        .foregroundStyle(.secondary)\n}\n.fontDesign(.rounded)",
+            dependencies: [],
+            tags: ["typography", "text-styles", "font", "type-scale", "guidance"]
         ),
     ]
 

@@ -72,7 +72,7 @@ The registry costs nothing at runtime against the hand-written styles; those two
 
 Version 0, an honest prototype:
 
-- 50 items: 26 installable components, 6 blocks, and 18 recipes, generated into `docs/catalog/` and the website's data file
+- Every item, generated into `docs/catalog/` and the website's data file; the counts live there, not here
 - `SwiftUIRegistryFoundations` is a small pre-1.0 package: accent, on-accent, surface, border, positive, negative, disabled opacity, and metrics, with six presets and one root modifier
 - Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, captured screenshots, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates

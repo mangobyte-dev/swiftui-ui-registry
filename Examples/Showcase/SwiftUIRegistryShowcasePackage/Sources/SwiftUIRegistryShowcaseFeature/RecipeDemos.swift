@@ -295,6 +295,7 @@ struct ScrollAreaRecipe: View {
         .contentMargins(.horizontal, 16, for: .scrollContent)
         .scrollIndicators(.hidden)
         .scrollClipDisabled()
+        .scrollEdgeEffectStyle(.soft, for: .top)
         .frame(height: 420)
         .registrySurface()
     }
@@ -310,6 +311,7 @@ struct SidebarRecipe: View {
                 Label("Cards", systemImage: "creditcard").tag("cards")
             }
             .navigationTitle("Bank")
+            .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
         } detail: {
             if selection == "activity" { ActivityScreen() } else { CardsScreen() }
         }

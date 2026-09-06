@@ -114,6 +114,10 @@
     {
       "source": "sources/blocks/Preview/SkeletonLoading.swift",
       "target": "Preview/SkeletonLoading.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/SleepReport.swift",
+      "target": "Preview/SleepReport.swift"
     }
   ],
   "registryDependencies": [

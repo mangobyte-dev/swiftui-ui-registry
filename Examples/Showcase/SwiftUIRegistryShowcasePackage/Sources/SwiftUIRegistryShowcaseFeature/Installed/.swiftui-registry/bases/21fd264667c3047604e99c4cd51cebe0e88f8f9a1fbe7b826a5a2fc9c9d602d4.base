@@ -41,6 +41,7 @@ public struct PreviewWall: View {
             ShippingAddress()
             Shortcuts()
             SkeletonLoading()
+            SleepReport()
         }
     }
 

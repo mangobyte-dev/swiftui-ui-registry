@@ -98,6 +98,10 @@
     {
       "source": "sources/blocks/Preview/PieChartCard.swift",
       "target": "Preview/PieChartCard.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/ReportBug.swift",
+      "target": "Preview/ReportBug.swift"
     }
   ],
   "registryDependencies": [
@@ -119,7 +123,8 @@
     "input",
     "table",
     "kbd",
-    "progress"
+    "progress",
+    "select"
   ],
   "packageDependencies": [
     {

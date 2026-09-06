@@ -126,6 +126,10 @@
     {
       "source": "sources/blocks/Preview02/SavingsTargets.swift",
       "target": "Preview02/SavingsTargets.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/SidebarNav.swift",
+      "target": "Preview02/SidebarNav.swift"
     }
   ],
   "registryDependencies": [

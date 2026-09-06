@@ -30,6 +30,7 @@ public struct PreviewWall02: View {
     @ViewBuilder
     private var cards: some View {
         AccountAccess()
+        AlbumCard()
     }
 
     private var columns: [GridItem] {

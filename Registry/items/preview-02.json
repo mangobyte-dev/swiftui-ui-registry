@@ -94,6 +94,10 @@
     {
       "source": "sources/blocks/Preview02/PowerUsage.swift",
       "target": "Preview02/PowerUsage.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/Preferences.swift",
+      "target": "Preview02/Preferences.swift"
     }
   ],
   "registryDependencies": [

@@ -50,6 +50,7 @@ public struct PreviewWall02: View {
         Payments()
         PayoutThreshold()
         PowerUsage()
+        Preferences()
     }
 
     private var columns: [GridItem] {

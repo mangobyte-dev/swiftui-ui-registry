@@ -61,6 +61,7 @@ public struct PreviewWall02: View {
         SidebarNav()
         SocialLinks()
         StockPerformance()
+        SyncingState()
     }
 
     private var columns: [GridItem] {

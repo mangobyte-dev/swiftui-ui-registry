@@ -138,6 +138,10 @@
     {
       "source": "sources/blocks/Preview02/StockPerformance.swift",
       "target": "Preview02/StockPerformance.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/SyncingState.swift",
+      "target": "Preview02/SyncingState.swift"
     }
   ],
   "registryDependencies": [
@@ -160,7 +164,8 @@
     "textarea",
     "progress",
     "table",
-    "combobox"
+    "combobox",
+    "spinner"
   ],
   "packageDependencies": [
     {

@@ -146,6 +146,10 @@
     {
       "source": "sources/blocks/Preview02/TransferFunds.swift",
       "target": "Preview02/TransferFunds.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/UpcomingPayments.swift",
+      "target": "Preview02/UpcomingPayments.swift"
     }
   ],
   "registryDependencies": [

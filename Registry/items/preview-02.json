@@ -90,6 +90,10 @@
     {
       "source": "sources/blocks/Preview02/PayoutThreshold.swift",
       "target": "Preview02/PayoutThreshold.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/PowerUsage.swift",
+      "target": "Preview02/PowerUsage.swift"
     }
   ],
   "registryDependencies": [
@@ -109,7 +113,8 @@
     "checkbox",
     "breadcrumb",
     "select",
-    "textarea"
+    "textarea",
+    "progress"
   ],
   "packageDependencies": [
     {

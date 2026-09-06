@@ -49,6 +49,7 @@ public struct PreviewWall02: View {
         NotificationSettings()
         Payments()
         PayoutThreshold()
+        PowerUsage()
     }
 
     private var columns: [GridItem] {

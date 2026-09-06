@@ -490,11 +490,18 @@
       "sourceDigest": "sha256:8fc5310f2fe32cf5bbd82df09314444906abb708c1e19ecd91d9e8e9d44b7500",
       "version": "0.1.0"
     },
+    "Preview02/PowerUsage.swift": {
+      "base": "bases/d253ea098e32afa6fe531c9af8af0b054acc182c4f227086ded16304dabd82f1.base",
+      "installedDigest": "sha256:e67da12a68c54800f96cd84204009419aee88cf372fe199a36da70abe0f05f79",
+      "item": "preview-02",
+      "sourceDigest": "sha256:e67da12a68c54800f96cd84204009419aee88cf372fe199a36da70abe0f05f79",
+      "version": "0.1.0"
+    },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
-      "installedDigest": "sha256:34f53ed2caf1950aed99b25d1664207a6e4f0e2ad135e6591e0e4a57923a9cb8",
+      "installedDigest": "sha256:979a5ef84498d682dc369cc4fd37ea2a48642d73deffddf242afb90275b93a0f",
       "item": "preview-02",
-      "sourceDigest": "sha256:34f53ed2caf1950aed99b25d1664207a6e4f0e2ad135e6591e0e4a57923a9cb8",
+      "sourceDigest": "sha256:979a5ef84498d682dc369cc4fd37ea2a48642d73deffddf242afb90275b93a0f",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -1181,7 +1188,8 @@
         "checkbox",
         "breadcrumb",
         "select",
-        "textarea"
+        "textarea",
+        "progress"
       ],
       "version": "0.1.0"
     },

@@ -122,6 +122,10 @@
     {
       "source": "sources/blocks/Preview/StyleOverview.swift",
       "target": "Preview/StyleOverview.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/TypographySpecimen.swift",
+      "target": "Preview/TypographySpecimen.swift"
     }
   ],
   "registryDependencies": [

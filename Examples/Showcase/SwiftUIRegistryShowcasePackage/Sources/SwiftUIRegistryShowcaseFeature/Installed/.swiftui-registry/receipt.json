@@ -483,11 +483,18 @@
       "sourceDigest": "sha256:353aefe711c8ab988d9973dc342a318b43898f078eec781e22573c4a7ced09de",
       "version": "0.1.0"
     },
+    "Preview02/PayoutThreshold.swift": {
+      "base": "bases/3733272b6f598b9dbe2c6c98717e8b535ac8e7aa2875f2314f344a59a4f279fe.base",
+      "installedDigest": "sha256:8fc5310f2fe32cf5bbd82df09314444906abb708c1e19ecd91d9e8e9d44b7500",
+      "item": "preview-02",
+      "sourceDigest": "sha256:8fc5310f2fe32cf5bbd82df09314444906abb708c1e19ecd91d9e8e9d44b7500",
+      "version": "0.1.0"
+    },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
-      "installedDigest": "sha256:f02dc23978aec815c0551cffc07ed619cbbc55458be3705036af4392dc2b8846",
+      "installedDigest": "sha256:34f53ed2caf1950aed99b25d1664207a6e4f0e2ad135e6591e0e4a57923a9cb8",
       "item": "preview-02",
-      "sourceDigest": "sha256:f02dc23978aec815c0551cffc07ed619cbbc55458be3705036af4392dc2b8846",
+      "sourceDigest": "sha256:34f53ed2caf1950aed99b25d1664207a6e4f0e2ad135e6591e0e4a57923a9cb8",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -1172,7 +1179,9 @@
         "accordion",
         "skeleton",
         "checkbox",
-        "breadcrumb"
+        "breadcrumb",
+        "select",
+        "textarea"
       ],
       "version": "0.1.0"
     },

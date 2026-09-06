@@ -39,6 +39,7 @@ public struct PreviewWall02: View {
         DividendIncome()
         EmptyConnectBank()
         EmptyDistributeTrack()
+        EmptyExploreCatalog()
     }
 
     private var columns: [GridItem] {

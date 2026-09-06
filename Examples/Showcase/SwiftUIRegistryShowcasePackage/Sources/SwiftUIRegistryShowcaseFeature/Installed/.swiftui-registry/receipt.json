@@ -355,252 +355,252 @@
       "installedDigest": "sha256:92ce39e97756665e8c27ee942d15a3ca98e591ec7727f8265a77297c7c317b88",
       "item": "preview-02",
       "sourceDigest": "sha256:92ce39e97756665e8c27ee942d15a3ca98e591ec7727f8265a77297c7c317b88",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/AlbumCard.swift": {
       "base": "bases/7c5e174fc722155c3f41659866713af7143670679efaa8cf240196f699962423.base",
       "installedDigest": "sha256:c09b46168d8d52651f5f7fe03e5fcad17d0f33dc180b33b5c9a4e983ab40dc89",
       "item": "preview-02",
       "sourceDigest": "sha256:c09b46168d8d52651f5f7fe03e5fcad17d0f33dc180b33b5c9a4e983ab40dc89",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/CardOverview.swift": {
       "base": "bases/851a9c7e3c50827a10e199a36d4bcae62809977711c46f104e3c4b516f87404f.base",
       "installedDigest": "sha256:b9b4a7c4e4fd5e89340cf67b10086b16e839ae2e2d0027baad601a9263aafbeb",
       "item": "preview-02",
       "sourceDigest": "sha256:b9b4a7c4e4fd5e89340cf67b10086b16e839ae2e2d0027baad601a9263aafbeb",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/CatalogToolbar.swift": {
       "base": "bases/fdb86ba4abf7ad997eb85956b0e7c495873dbb4112b514f06a6c8aad0ba8d4ca.base",
       "installedDigest": "sha256:d68c1d750806f5dadd18bf192ce6f9baa8004e71fdd67d71fa5a157d04340c61",
       "item": "preview-02",
       "sourceDigest": "sha256:d68c1d750806f5dadd18bf192ce6f9baa8004e71fdd67d71fa5a157d04340c61",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/ClaimableBalance.swift": {
       "base": "bases/b388f0e941ebde81ef22203642b5beac2ffb10210f6452e52d1e43ee10feb635.base",
       "installedDigest": "sha256:2efc7a93cb61ee7f24614feac60e7c0fd1c258a1d47760bbd4cdacfffe97a911",
       "item": "preview-02",
       "sourceDigest": "sha256:2efc7a93cb61ee7f24614feac60e7c0fd1c258a1d47760bbd4cdacfffe97a911",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/ContributionHistory.swift": {
       "base": "bases/f0d6dd46ed900591ee8a807d2cfd681ddd4829f9e2d8e28dca6b8a78b51e8709.base",
       "installedDigest": "sha256:f3e6bba23140d604a46dc5e76406178b6845255159b308d4189aff1b407e63af",
       "item": "preview-02",
       "sourceDigest": "sha256:f3e6bba23140d604a46dc5e76406178b6845255159b308d4189aff1b407e63af",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/CoverArt.swift": {
       "base": "bases/8a141d237c42a8d34c08e61690c56418c8cc83c58a5f8c581bc8b25fddc6643a.base",
       "installedDigest": "sha256:ed35e83c31228a6d7c27093c07dedf105e1b0295d57a88a38db11566b0030d82",
       "item": "preview-02",
       "sourceDigest": "sha256:ed35e83c31228a6d7c27093c07dedf105e1b0295d57a88a38db11566b0030d82",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/DividendIncome.swift": {
       "base": "bases/4b056b1ab93e7f249e1ecf27f768a55422c681853c6fcf559ffe4264067ffcf6.base",
       "installedDigest": "sha256:b77553bab52edeb2ecab1f2795880bf8c5ff7ed49d4e2bdc9afbb3ea0854d24f",
       "item": "preview-02",
       "sourceDigest": "sha256:b77553bab52edeb2ecab1f2795880bf8c5ff7ed49d4e2bdc9afbb3ea0854d24f",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/EmptyConnectBank.swift": {
       "base": "bases/962bb46382080f4c508f8e82cc35544c94c3ec72665e719d2b853dae82fc38f0.base",
       "installedDigest": "sha256:27f010dd64447da719a99416cc5a062d214797017a37ec71276c5d46ae5ef4bd",
       "item": "preview-02",
       "sourceDigest": "sha256:27f010dd64447da719a99416cc5a062d214797017a37ec71276c5d46ae5ef4bd",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/EmptyDistributeTrack.swift": {
       "base": "bases/ec8c51de2cd050723cfefa64b46a2771e6bd1248fc7121198695ab71b342cfa3.base",
       "installedDigest": "sha256:a2397f832f5fec22c94296d74ffcfc600a44fdd3d136a46bdc29dea6ebdb98cb",
       "item": "preview-02",
       "sourceDigest": "sha256:a2397f832f5fec22c94296d74ffcfc600a44fdd3d136a46bdc29dea6ebdb98cb",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/EmptyExploreCatalog.swift": {
       "base": "bases/bc2e05cf09c2bdd9ebd94eaf048ccc073233829af4a21df3686b7a2019fdb83c.base",
       "installedDigest": "sha256:9a07a23646b26a355855e0bc98effd227147d95d51e31d2d4fc7ba8d1ff62bf2",
       "item": "preview-02",
       "sourceDigest": "sha256:9a07a23646b26a355855e0bc98effd227147d95d51e31d2d4fc7ba8d1ff62bf2",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/Faq.swift": {
       "base": "bases/0add2b3f9ecc70e9d27ecd923a832b5574d1345390ebf5f484e9d48bfeb0c39c.base",
       "installedDigest": "sha256:f8836edfebe773e961c1c93ad73dd134bc3d6c508f860c39582549f0391a9156",
       "item": "preview-02",
       "sourceDigest": "sha256:f8836edfebe773e961c1c93ad73dd134bc3d6c508f860c39582549f0391a9156",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/FrontDoor.swift": {
       "base": "bases/30dc8f284266efb155ff179b7d30044738bb23b3cf744cb8581045eee70e3eb3.base",
       "installedDigest": "sha256:37daf13635c31a49d47616edee811d85565bc5922a418d3b1b261cba9f741835",
       "item": "preview-02",
       "sourceDigest": "sha256:37daf13635c31a49d47616edee811d85565bc5922a418d3b1b261cba9f741835",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/IndexInvesting.swift": {
       "base": "bases/0f08766e76c723f873bd547a339e4fd98f8f41fbb2d5df578824fa9ebb15ad0e.base",
       "installedDigest": "sha256:fc53d363f0c64da04a89aa892ca7f7b570a0374524fb5b75f75658ac876ed241",
       "item": "preview-02",
       "sourceDigest": "sha256:fc53d363f0c64da04a89aa892ca7f7b570a0374524fb5b75f75658ac876ed241",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/KitchenIsland.swift": {
       "base": "bases/0c1a45b5199c545533dff08c85cb409505286cbf926d1b43ea2e57487a904d83.base",
       "installedDigest": "sha256:b85998e3fd426525fa5a93738dac6e9e299acdc6721bc1aaf39196fc57966104",
       "item": "preview-02",
       "sourceDigest": "sha256:b85998e3fd426525fa5a93738dac6e9e299acdc6721bc1aaf39196fc57966104",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/LoadingCard.swift": {
       "base": "bases/679b7def760d84c38e46dd0e6d249c83482780266d7cb0f2c1d9ab5ec8dcc938.base",
       "installedDigest": "sha256:efb94ce27b62b490922a32ef5ea4933c26ad34bd62177bd37547df15305655e4",
       "item": "preview-02",
       "sourceDigest": "sha256:efb94ce27b62b490922a32ef5ea4933c26ad34bd62177bd37547df15305655e4",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/NewMilestone.swift": {
       "base": "bases/16272b102d7a87663915d6f15059f5ca3d38c9fb2eceb848341bfab6555071c2.base",
       "installedDigest": "sha256:7cefde01ddc18247f1a1cf820d6d132c0b9112b12382d04d6dfc5cc81a979bb1",
       "item": "preview-02",
       "sourceDigest": "sha256:7cefde01ddc18247f1a1cf820d6d132c0b9112b12382d04d6dfc5cc81a979bb1",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/NotificationSettings.swift": {
       "base": "bases/ab07554f43ba48d0a523baa5ebdc9d429601c6381df8fdcd078e691561c8a103.base",
       "installedDigest": "sha256:d1e23c3807ba854d2688987eb6d59b8f1ab42d2a25aaefebab2cdc49e9d99c9a",
       "item": "preview-02",
       "sourceDigest": "sha256:d1e23c3807ba854d2688987eb6d59b8f1ab42d2a25aaefebab2cdc49e9d99c9a",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/Payments.swift": {
       "base": "bases/e98f589144276dab7a549bdb27e36ffc57bd2dee04221a956261f7b0c6e0edc6.base",
       "installedDigest": "sha256:353aefe711c8ab988d9973dc342a318b43898f078eec781e22573c4a7ced09de",
       "item": "preview-02",
       "sourceDigest": "sha256:353aefe711c8ab988d9973dc342a318b43898f078eec781e22573c4a7ced09de",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/PayoutThreshold.swift": {
       "base": "bases/3733272b6f598b9dbe2c6c98717e8b535ac8e7aa2875f2314f344a59a4f279fe.base",
       "installedDigest": "sha256:8fc5310f2fe32cf5bbd82df09314444906abb708c1e19ecd91d9e8e9d44b7500",
       "item": "preview-02",
       "sourceDigest": "sha256:8fc5310f2fe32cf5bbd82df09314444906abb708c1e19ecd91d9e8e9d44b7500",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/PowerUsage.swift": {
       "base": "bases/d253ea098e32afa6fe531c9af8af0b054acc182c4f227086ded16304dabd82f1.base",
       "installedDigest": "sha256:e67da12a68c54800f96cd84204009419aee88cf372fe199a36da70abe0f05f79",
       "item": "preview-02",
       "sourceDigest": "sha256:e67da12a68c54800f96cd84204009419aee88cf372fe199a36da70abe0f05f79",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/Preferences.swift": {
       "base": "bases/a6cb1d498118eff07d7745c1d488c76ebd34d396d2e1802e2e42f99be02cc02b.base",
       "installedDigest": "sha256:ddd6b6515e005811d4504e826929e27ea07a2e99408988acf905e9479fea8e96",
       "item": "preview-02",
       "sourceDigest": "sha256:ddd6b6515e005811d4504e826929e27ea07a2e99408988acf905e9479fea8e96",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
       "installedDigest": "sha256:d7bcc0bfd370bc3d66220ef0761b621aac6314f14fcc903b4cd0e3c3eb66b3e4",
       "item": "preview-02",
       "sourceDigest": "sha256:d7bcc0bfd370bc3d66220ef0761b621aac6314f14fcc903b4cd0e3c3eb66b3e4",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/QrConnect.swift": {
       "base": "bases/79952a904c54737481a052b65d04b7410f3f18d95eda0c36ebddbf5b5571b8b7.base",
       "installedDigest": "sha256:88c8f605b8a427b2f1ca89fe60b8840af99024f17e407b87154cae926e55303d",
       "item": "preview-02",
       "sourceDigest": "sha256:88c8f605b8a427b2f1ca89fe60b8840af99024f17e407b87154cae926e55303d",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/ReceivingMethod.swift": {
       "base": "bases/ecf5883bbe3934635d3deba1784ac030d7acef7df3b214953ef091da0163585d.base",
       "installedDigest": "sha256:fcc828c668d76a5fa331f13585d47b0cca0d0f52c95312f1b037c09da94d1d61",
       "item": "preview-02",
       "sourceDigest": "sha256:fcc828c668d76a5fa331f13585d47b0cca0d0f52c95312f1b037c09da94d1d61",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/RecentTransactions.swift": {
       "base": "bases/8e2608a24e4e6ea9b2ac88e78c8272e14ed4db1a7a17d13bef7c443626275237.base",
       "installedDigest": "sha256:2aaebaf361dafc65bf807bd0bc4039617f22daf25512ce0e1976dbc0b25c74f4",
       "item": "preview-02",
       "sourceDigest": "sha256:2aaebaf361dafc65bf807bd0bc4039617f22daf25512ce0e1976dbc0b25c74f4",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/ReleaseCatalog.swift": {
       "base": "bases/ae705f28a360bbb7ce60e84625e5cdc20f7c758b434aa7bf5d83928ac6465a92.base",
       "installedDigest": "sha256:558800feea75e3d3e2ecafe8cb7132d343cda847936f08a7df0c3cb01bb0b84d",
       "item": "preview-02",
       "sourceDigest": "sha256:558800feea75e3d3e2ecafe8cb7132d343cda847936f08a7df0c3cb01bb0b84d",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/RollerShades.swift": {
       "base": "bases/be34e4404f9f121f2e9a1a3ed7bed04fc54818ebd29b45105e6f0d69628f8698.base",
       "installedDigest": "sha256:848e44ac616c5d890d36cbf6355f1597aec26922f48f8927f788fe4fb9229206",
       "item": "preview-02",
       "sourceDigest": "sha256:848e44ac616c5d890d36cbf6355f1597aec26922f48f8927f788fe4fb9229206",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/SavingsProgress.swift": {
       "base": "bases/f7b43a159879f42772f568c46327ce6bd16fd85181685400c395d4819ce4875e.base",
       "installedDigest": "sha256:152ca0dfea3ba9f527ac40272211a244668a2cc25d56813be4184894df4df13a",
       "item": "preview-02",
       "sourceDigest": "sha256:152ca0dfea3ba9f527ac40272211a244668a2cc25d56813be4184894df4df13a",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/SavingsTargets.swift": {
       "base": "bases/667c1237a58c17bbb550202dfebe16155fd199aa1a45e876e6baebcea13117ff.base",
       "installedDigest": "sha256:e53ef48a48f5288395b0d1bf4394ed7510c55020717e887d47568a9930be67eb",
       "item": "preview-02",
       "sourceDigest": "sha256:e53ef48a48f5288395b0d1bf4394ed7510c55020717e887d47568a9930be67eb",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/SidebarNav.swift": {
       "base": "bases/2ad32a195b76bde4f5df947a477f0b5cb91dc5cfaae5a0e71d5b72df7f584617.base",
       "installedDigest": "sha256:df65af483db88232b7c8b5125f217bb456841818bf7174a3541bb2b841950696",
       "item": "preview-02",
       "sourceDigest": "sha256:df65af483db88232b7c8b5125f217bb456841818bf7174a3541bb2b841950696",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/SocialLinks.swift": {
       "base": "bases/caf1adf332c05edbdc112d7cc8a28f36046f95adb6964fa8ce3b90f85a4b9908.base",
       "installedDigest": "sha256:8c962246729e0d75470c54ba0d321f1a95a7304153b58a3b2dc0c2e6423021b7",
       "item": "preview-02",
       "sourceDigest": "sha256:8c962246729e0d75470c54ba0d321f1a95a7304153b58a3b2dc0c2e6423021b7",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/StockPerformance.swift": {
       "base": "bases/cdd05ba8e5e2218e43833aaffd9c726f514e3e4f916a6ec1c5d13127060ccaf1.base",
       "installedDigest": "sha256:9617c35627ec873eb0c74eb43a922cfa8deb33798bace156ffe86ae4970747a9",
       "item": "preview-02",
       "sourceDigest": "sha256:9617c35627ec873eb0c74eb43a922cfa8deb33798bace156ffe86ae4970747a9",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/SyncingState.swift": {
       "base": "bases/55be08c2c74607d9a23f19e4825e7569a6f0dbc044ca44acec4ac0af57150919.base",
       "installedDigest": "sha256:8c44575d8f225f8a476dcd99810a9731029971f29564531287e4c8adbd68c5ae",
       "item": "preview-02",
       "sourceDigest": "sha256:8c44575d8f225f8a476dcd99810a9731029971f29564531287e4c8adbd68c5ae",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/TransferFunds.swift": {
       "base": "bases/05b3b2acb805439f2ab6f5475688e7b554b0924f2cf0f4dc58421c9d7a97582a.base",
       "installedDigest": "sha256:68fd68e2d16d5742b83d82a9191d1fcf61232f3ed28a4745a79e4a4ac3518924",
       "item": "preview-02",
       "sourceDigest": "sha256:68fd68e2d16d5742b83d82a9191d1fcf61232f3ed28a4745a79e4a4ac3518924",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "Preview02/UpcomingPayments.swift": {
       "base": "bases/9985e8256e3839b460e73160061fc7d19ed18554030f47c37177a3b9402afb78.base",
       "installedDigest": "sha256:545e9ded18720d559d4fc0153a15e74a450926beb7a23606469b48c3bcaa881f",
       "item": "preview-02",
       "sourceDigest": "sha256:545e9ded18720d559d4fc0153a15e74a450926beb7a23606469b48c3bcaa881f",
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "RegistryAccordionStyle.swift": {
       "base": "bases/41a84c6783a403ca9cf897c8da81322317ac76ec19288b7ffb112dd4d85023a2.base",
@@ -1292,7 +1292,7 @@
         "combobox",
         "spinner"
       ],
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     "progress": {
       "packageDependencies": [

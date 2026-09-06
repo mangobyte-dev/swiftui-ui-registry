@@ -102,6 +102,10 @@
     {
       "source": "sources/blocks/Preview/ReportBug.swift",
       "target": "Preview/ReportBug.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/ShippingAddress.swift",
+      "target": "Preview/ShippingAddress.swift"
     }
   ],
   "registryDependencies": [

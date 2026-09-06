@@ -38,6 +38,7 @@ public struct PreviewWall: View {
             ObservabilityCard()
             PieChartCard()
             ReportBug()
+            ShippingAddress()
         }
     }
 

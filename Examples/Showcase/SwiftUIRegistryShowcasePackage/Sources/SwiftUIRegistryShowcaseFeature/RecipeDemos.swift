@@ -159,9 +159,9 @@ struct ContextMenuRecipe: View {
                 title: Text("Mishmash Bakery"),
                 subtitle: Text("Today, 09:41"),
                 amount: Text(-8.75, format: .currency(code: "KWD")),
-                systemImage: "cup.and.saucer.fill",
-                tone: .negative
+                systemImage: "cup.and.saucer.fill"
             )
+            .registryTone(.negative)
             .contextMenu {
                 Button("Add note", systemImage: "square.and.pencil") { }
                 Button("Share", systemImage: "square.and.arrow.up") { }

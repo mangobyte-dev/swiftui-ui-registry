@@ -190,9 +190,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "context-menu",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Native guidance for long-press actions with .contextMenu using labeled, role-tagged buttons.",
-            usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\",\n    tone: .negative\n)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}",
+            usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}",
             dependencies: [],
             tags: ["context-menu", "long-press", "actions", "menu", "guidance"]
         ),
@@ -253,7 +253,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "finance-overview",
             kind: "block",
-            version: "0.4.1",
+            version: "0.4.2",
             description: "Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.",
             usage: "FinanceOverview(\n    \"Overview\",\n    balanceTitle: \"Available balance\",\n    balance: Text(12_480.32, format: .currency(code: \"USD\")),\n    changeTitle: \"Monthly change\",\n    change: Text(0.082, format: .percent),\n    sectionTitle: \"Recent activity\",\n    transactions: [\n        FinanceTransactionItem(\n            id: \"salary\",\n            title: Text(\"Salary\"),\n            subtitle: Text(\"Yesterday\"),\n            amount: Text(2_450, format: .currency(code: \"KWD\")),\n            systemImage: \"building.columns.fill\",\n            tone: .positive\n        )\n    ],\n    onSelect: { id in }\n)",
             dependencies: ["metric-card", "transaction-row", "empty"],
@@ -523,9 +523,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "transaction-row",
             kind: "component",
-            version: "0.4.1",
+            version: "0.5.0",
             description: "Displays prepared transaction content while leaving selection to a native Button at the call site.",
-            usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\",\n    tone: .negative\n)",
+            usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)",
             dependencies: [],
             tags: ["transaction", "row", "finance", "activity"]
         ),

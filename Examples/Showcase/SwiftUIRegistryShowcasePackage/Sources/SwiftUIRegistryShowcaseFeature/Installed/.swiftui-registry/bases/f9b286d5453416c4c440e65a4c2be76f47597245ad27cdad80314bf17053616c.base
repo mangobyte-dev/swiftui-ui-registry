@@ -130,9 +130,9 @@ private struct FinanceOverviewContent<ID: Hashable>: View {
                                     title: transaction.title,
                                     subtitle: transaction.subtitle,
                                     amount: transaction.amount,
-                                    systemImage: transaction.systemImage,
-                                    tone: transaction.tone
+                                    systemImage: transaction.systemImage
                                 )
+                                .registryTone(transaction.tone)
                                 .padding(.vertical, theme.metrics.standardSpacing)
                             }
                             .buttonStyle(.plain)

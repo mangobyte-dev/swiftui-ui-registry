@@ -17,9 +17,9 @@ TransactionRow(
     title: Text("Mishmash Bakery"),
     subtitle: Text("Today, 09:41"),
     amount: Text(-8.75, format: .currency(code: "KWD")),
-    systemImage: "cup.and.saucer.fill",
-    tone: .negative
+    systemImage: "cup.and.saucer.fill"
 )
+.registryTone(.negative)
 .contextMenu {
     Button("Add note", systemImage: "square.and.pencil") { }
     Button("Share", systemImage: "square.and.arrow.up") { }
@@ -35,7 +35,7 @@ Attach secondary actions to a row with `.contextMenu` and native `Button`s with 
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Context menus are exposed through the VoiceOver actions rotor.

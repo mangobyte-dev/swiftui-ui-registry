@@ -1,11 +1,11 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "context-menu",
   "kind": "recipe",
   "description": "Native guidance for long-press actions with .contextMenu using labeled, role-tagged buttons.",
-  "usage": "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\",\n    tone: .negative\n)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}",
+  "usage": "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}",
   "docs": "Attach secondary actions to a row with `.contextMenu` and native `Button`s with symbols and roles. The system renders the Liquid Glass menu, the preview, and haptics; keep the same actions reachable elsewhere because a long press is not discoverable on its own.",
   "files": [],
   "registryDependencies": [],

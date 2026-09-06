@@ -1,11 +1,11 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.4.1",
+  "version": "0.5.0",
   "name": "transaction-row",
   "kind": "component",
   "description": "Displays prepared transaction content while leaving selection to a native Button at the call site.",
-  "usage": "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\",\n    tone: .negative\n)",
+  "usage": "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)",
   "files": [
     {
       "source": "sources/components/TransactionRow.swift",

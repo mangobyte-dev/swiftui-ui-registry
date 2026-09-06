@@ -375,17 +375,17 @@ struct TransactionRowDemo: View {
                 title: Text("Mishmash Bakery"),
                 subtitle: Text("Today, 09:41"),
                 amount: Text(-8.75, format: .currency(code: "KWD")),
-                systemImage: "cup.and.saucer.fill",
-                tone: .negative
+                systemImage: "cup.and.saucer.fill"
             )
+            .registryTone(.negative)
             Divider().registrySeparator()
             TransactionRow(
                 title: Text("Salary"),
                 subtitle: Text("Yesterday"),
                 amount: Text(2_450, format: .currency(code: "KWD")),
-                systemImage: "building.columns.fill",
-                tone: .positive
+                systemImage: "building.columns.fill"
             )
+            .registryTone(.positive)
             Divider().registrySeparator()
             TransactionRow(
                 title: Text("Pending transfer"),

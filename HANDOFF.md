@@ -1,41 +1,43 @@
-# Handoff: after the Create page, preset codes, and the persistent tuning panel
+# Handoff: after Stage 5, the theme preview wall
 
-Written 2026-09-05 at the end of the create session. State lives in `docs/component-roadmap.md` (Current state, Open deferrals, Backlog items 16 and 17, and the Audit section); this file is the brief, not a second home for state
+Written 2026-09-06 at the end of the Stage 5 run. State lives in `docs/component-roadmap.md` (Current state, Open deferrals, the Stage 5 section with its exit-criteria evidence, and the Backlog); this file is the brief, not a second home for state
 
 ---
 
-I am Mo, the owner of SwiftUIRegistry. The registry now has its counterpart of shadcn's `/create`: preset codes that the website's Create page, the Showcase's tuning panel, `Scripts/preset.py`, and the MCP server all speak, and the tuning panel stays beside the catalog on device. Everything is committed and `main` is pushed (2026-09-05); the website is deployed to https://swiftui-registry.mangobytekw.workers.dev with the Create page live. The `0.1.0` tag is still local, so declared floors do not resolve until it is pushed. Read `AGENTS.md`, then Backlog items 16 and 17 and the Open deferrals in `docs/component-roadmap.md`
+I am Mo, the owner of SwiftUIRegistry. Stage 5 recreated everything shadcn's `/create` page previews: the five primitives it lacked (`field`, `chart`, `table`, `combobox`, `breadcrumb`) and the two walls, `preview` (33 cards) and `preview-02` (35 cards), each an installable block whose cards compose registry items and native controls with neutral sample data. The six theme captures and the website's Create and Themes pages now show the wall's first screen per preset. The placement rule for presentation choices (a `registry`-prefixed trailing call, never an initializer parameter) is in `AGENTS.md`. Everything is pushed and the site is deployed. Read `AGENTS.md`, then the Stage 5 section of the roadmap
 
 ## What is waiting for me
 
-1. Replace the two visual references from the final suite run's kept attachments, reviewed first, then re-run the suite. The reviewed candidates are at `/private/tmp/claude-501/-Users-developer-Projects-swiftui-cn/7db8cc48-cfcb-4ea2-8c09-ebfba8bf4c18/scratchpad/review-2026-09-05` (`auth-light.png`, `nutrition-light.png`, alongside the Amber preset captures and the Create page screenshot); the copy commands are listed under "Reference replacement" below. Until then `auth-light` (2.67 percent, stale since the audit) and `nutrition-light` (1.53 percent) fail their visual assertion because those blocks reach the accent strip; the other 17 UI tests and 7 Showcase unit tests pass
-2. Decide the owner items in the Audit section's "Deferred, with the reason": the `button-group` item that renders as the stock capsule, the checkbox double dim, the bare dividers and the native button in the two Stage 1 blocks, the wash opacities, the preview guard convention, preview strings in consumer catalogs, and the bundle policy for package installs
-3. Try the Create page and the panel yourself: `Website/` at `/create?preset=a13GkaOXWwIa` (Amber), then in the Showcase tap Tune in the strip, Import, and paste the code; `python3 Scripts/preset.py apply a13GkaOXWwIa --destination <folder>` writes the theme file a consumer owns
+1. Replace the two visual references, reviewed first, then re-run the suite. `auth-light` (2.67 percent, stale since the audit) and `nutrition-light` (1.53 percent) fail only because their blocks reach the accent strip above the tab bar; the other 17 UI tests and the 7 Showcase unit tests pass on every run. The reviewed candidates are exported next to this session's final result bundle at `/private/tmp/claude-501/-Users-developer-Projects-swiftui-cn/7db8cc48-cfcb-4ea2-8c09-ebfba8bf4c18/scratchpad/final5-attachments` (`auth-light.png`, `nutrition-light.png`); the copy commands are under "Reference replacement" below
+2. Decide the GitHub Pages workflow: `.github/workflows/pages.yml` fails at its deploy step on every push because Pages is not enabled for the repository; enable Pages with the GitHub Actions source, or delete the workflow since Cloudflare Workers is the deploy path
+3. The owner decisions from the audit still stand in the roadmap's "Deferred, with the reason"
+4. Next stage, when I say go: the Swift CLI, recorded in Backlog item 11 as a rewrite of the whole Python path (installer, validator, receipts and merge, search, presets, MCP) with command parity and the same receipts on disk as the exit criteria; nothing has started
+5. argent 0.24.0 is available and was not installed
 
 ## Reference replacement
 
-After reviewing each exported image (they are the real screens with the strip above the tab bar):
+After reviewing each candidate (they are the real screens with the strip above the three-tab bar):
 
 ```sh
-OUT=/private/tmp/claude-501/-Users-developer-Projects-swiftui-cn/7db8cc48-cfcb-4ea2-8c09-ebfba8bf4c18/scratchpad/review-2026-09-05   # or re-export: xcrun xcresulttool export attachments --path <final-suite.xcresult> --output-path "$OUT"
+OUT=/private/tmp/claude-501/-Users-developer-Projects-swiftui-cn/7db8cc48-cfcb-4ea2-8c09-ebfba8bf4c18/scratchpad/final5-attachments
 cd Examples/Showcase/SwiftUIRegistryShowcaseUITests/ReferenceImages
 for name in auth nutrition; do
   cp "$OUT/$name-light.png" "$name-light.png"
 done
 ```
 
-`docs/visual-testing.md` already carries the GOLDEN-CHANGE note dated 2026-09-05 for this replacement
+`docs/visual-testing.md` carries the GOLDEN-CHANGE note dated 2026-09-05 for this replacement
 
-## Adopted: one placement rule for presentation choices (2026-09-06)
+## Facts measured this run
 
-Adopted 2026-09-06: presentation choices a composed registry view owns now use `registry`-prefixed copy-and-return methods (`registryVariant`, `registryTone`, `registryTint`); the rule lives in `AGENTS.md` ("Rules") and `docs/architecture.md` (composition), and the deferral is closed in `docs/component-roadmap.md`
-
-## Facts measured this session
-
-- `inspector(isPresented:)` on a tab's navigation stack stops `@FocusState` moves in the auth form on iOS 27 even while nothing is presented; the iPad column is a plain `HStack` sibling instead (`CatalogRoot.swift`)
-- argent's `describe` returns an empty tree for this app on the pinned iPhone 17 while it works on the iPad Pro 13-inch, and argent taps do not land on that iPad; XcodeBuildMCP's `snapshot_ui` and `tap` work on the iPhone. The panel's behavior is proven by the UI suite, not by argent
-- The system colors the Create page draws were resolved on the pinned iOS 27 simulator with `Color.resolve(in:)` (identical to `UIColor.system*`), 2026-09-05; the table is in `Website/lib/preset.ts`
+- The iPad Pro 13-inch simulator used for the wide captures was set to ar_SA, which put Hijri dates and spaced currency into the first wall captures; every capture now launches with `-AppleLanguages (en) -AppleLocale en_US` and the iPad is set to en_US for its status bar date (pins in `AGENTS.md`)
+- XcodeBuildMCP keeps a session profile; a worker running `test_sim` while the `ipad-qa` profile was active reported 13 false tab-bar failures. Check the active profile before any simulator test, or run `xcodebuild` with an explicit destination
+- The full UI suite now takes about 27 minutes on the pinned iPhone because the demo walk audits both non-lazy walls (68 cards); run subsets with `-only-testing` for slice gates and the full suite once per push
+- `inspector(isPresented:)` on a tab's navigation stack stops the auth form's Return key from moving focus on iOS 27 even while nothing is presented; the iPad column is a plain `HStack` sibling
+- The item capture route is one screen tall, so a wall's capture shows its first screen; the audit covers every card because the compact wall is a non-lazy `VStack`
+- argent's `describe` returns an empty tree for this app on the pinned iPhone and its taps do not land on the iPad; XcodeBuildMCP's `snapshot_ui` and `tap` work on the iPhone, and the UI suite is the proof
+- A local commit-msg hook (swarmforge) appends "By specifier." to every commit message; it is harmless and outside the repository
 
 ## Rules that still bind
 
-Everything in `AGENTS.md`; no em dashes; do not push, tag, or deploy without the owner; never write into `ReferenceImages/` from an agent session
+Everything in `AGENTS.md`; no em dashes; do not push, tag, or deploy without the owner (the owner authorized push and deploy for this run on 2026-09-06); never write into `ReferenceImages/` from an agent session; no large agent fan-outs, one Opus 4.8 worker per slice

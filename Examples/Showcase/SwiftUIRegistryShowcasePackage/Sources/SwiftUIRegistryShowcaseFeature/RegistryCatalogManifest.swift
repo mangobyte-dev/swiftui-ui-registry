@@ -109,8 +109,8 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "button-group",
             kind: "component",
-            version: "0.2.1",
-            description: "Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.",
+            version: "0.3.0",
+            description: "Lays out every native button in a ControlGroup side by side with one registry button variant, keeping the caller's Button controls, roles, and labels.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
             dependencies: ["button"],
             tags: ["button", "control-group", "action", "style"]

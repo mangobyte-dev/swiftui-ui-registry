@@ -47,7 +47,8 @@ extension Commands {
           "button-group", ["button", "button-group"], "RegistryButtonGroupStyle.swift",
           [
             "public struct RegistryButtonGroupStyle: ControlGroupStyle",
-            "ControlGroup(configuration)",
+            "HStack(spacing: theme.metrics.compactSpacing)", "configuration.content",
+            "RegistryButtonStyle(variant)",
           ], "struct RegistryButtonGroup: View"
         ),
         (

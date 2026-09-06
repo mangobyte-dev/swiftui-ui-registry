@@ -33,7 +33,7 @@ One installable style, modifier, or view each
 - [badge](badge.md): Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.
 - [breadcrumb](breadcrumb.md): A horizontal navigation trail of links with chevron separators and a current page, collapsing middle crumbs into an overflow menu when they do not fit; a component because iOS has no native breadcrumb control.
 - [button](button.md): Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.
-- [button-group](button-group.md): Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.
+- [button-group](button-group.md): Lays out every native button in a ControlGroup side by side with one registry button variant, keeping the caller's Button controls, roles, and labels.
 - [card](card.md): Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.
 - [chart](chart.md): Styles a native Swift Charts Chart to the theme: a series palette derived from the accent on the foreground style scale, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.
 - [checkbox](checkbox.md): Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.

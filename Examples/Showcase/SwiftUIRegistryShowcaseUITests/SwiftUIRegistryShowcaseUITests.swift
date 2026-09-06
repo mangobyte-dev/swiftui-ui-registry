@@ -33,13 +33,20 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         let tabButton = app.tabBars.buttons[tab]
         XCTAssertTrue(tabButton.waitForExistence(timeout: 5), "The \(tab) tab must exist.")
         tabButton.tap()
+        // On a fresh launch the list can still be rendering; swiping before its first row
+        // exists scrolls past the target and the lookup fails (seen twice on 2026-09-05 and
+        // 2026-09-06 under machine load).
+        let firstRow = app.descendants(matching: .any)
+            .matching(NSPredicate(format: "identifier BEGINSWITH %@", "catalog.item."))
+            .firstMatch
+        XCTAssertTrue(firstRow.waitForExistence(timeout: 5), "The \(tab) list must render before it is searched.")
         let row = app.descendants(matching: .any)
             .matching(identifier: "catalog.item.\(name)")
             .firstMatch
         for _ in 0..<10 where !row.exists {
             app.swipeUp()
         }
-        XCTAssertTrue(row.waitForExistence(timeout: 3), "The \(name) row must be listed under \(tab).")
+        XCTAssertTrue(row.waitForExistence(timeout: 5), "The \(name) row must be listed under \(tab).")
         row.tap()
         XCTAssertTrue(
             app.navigationBars[name].waitForExistence(timeout: 5),
@@ -566,7 +573,7 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
         // Clearing restores the sections; selecting runs caller code.
         app.buttons["Clear search"].tap()
-        XCTAssertTrue(transfer.waitForExistence(timeout: 2))
+        XCTAssertTrue(transfer.waitForExistence(timeout: 5))
         transfer.tap()
         XCTAssertTrue(app.staticTexts["Ran transfer."].waitForExistence(timeout: 2))
 

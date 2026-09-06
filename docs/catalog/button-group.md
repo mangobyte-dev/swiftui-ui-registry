@@ -2,7 +2,7 @@
 
 # button-group
 
-Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.
+Lays out every native button in a ControlGroup side by side with one registry button variant, keeping the caller's Button controls, roles, and labels.
 
 ![button-group preview](../images/items/button-group-light.png)
 
@@ -47,11 +47,11 @@ ControlGroup {
 ## Details
 
 - Kind: component
-- Version: 0.2.1
+- Version: 0.3.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [button-group](button-group.md) 0.2.1
+- Installs in order: [button](button.md) 0.5.0, [button-group](button-group.md) 0.3.0
 - Accessibility contract:
-  - Retains native Button controls and the ControlGroup container supplied by the caller.
+  - Retains the caller's native Button controls and exposes the row as one accessibility container.
   - Keeps each button's visible or derived accessibility label and role.
   - Inherits layout direction, control size, enabled state, and Dynamic Type behavior.
   - Requires callers to provide labels for icon-only buttons through native Button initializers.

@@ -1,7 +1,12 @@
 import SwiftUI
 
-/// Applies one registry button treatment to every control in a native `ControlGroup`.
+/// Lays out every native button of a `ControlGroup` side by side with one registry button
+/// treatment. Measured on iOS 27, `ControlGroup(configuration)` draws the system capsule and
+/// ignores the button style, so the style owns the row and the buttons keep their variant,
+/// destructive role, labels, and control size.
 public struct RegistryButtonGroupStyle: ControlGroupStyle {
+    @Environment(\.registryTheme) private var theme
+
     private let variant: RegistryButtonStyle.Variant
 
     public init(_ variant: RegistryButtonStyle.Variant = .secondary) {
@@ -9,8 +14,11 @@ public struct RegistryButtonGroupStyle: ControlGroupStyle {
     }
 
     public func makeBody(configuration: Configuration) -> some View {
-        ControlGroup(configuration)
-            .buttonStyle(RegistryButtonStyle(variant))
+        HStack(spacing: theme.metrics.compactSpacing) {
+            configuration.content
+                .buttonStyle(RegistryButtonStyle(variant))
+        }
+        .accessibilityElement(children: .contain)
     }
 }
 

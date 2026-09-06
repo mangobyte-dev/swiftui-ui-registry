@@ -506,9 +506,9 @@
     },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
-      "installedDigest": "sha256:2eb5f71db7785345b5bedf827130431100c078a5a20f9698803088b39d33bce8",
+      "installedDigest": "sha256:d95fcfb1abc192f43d941107603438e45291897dff43500b905dfe13a833094c",
       "item": "preview-02",
-      "sourceDigest": "sha256:2eb5f71db7785345b5bedf827130431100c078a5a20f9698803088b39d33bce8",
+      "sourceDigest": "sha256:d95fcfb1abc192f43d941107603438e45291897dff43500b905dfe13a833094c",
       "version": "0.2.0"
     },
     "Preview02/QrConnect.swift": {
@@ -537,6 +537,13 @@
       "installedDigest": "sha256:558800feea75e3d3e2ecafe8cb7132d343cda847936f08a7df0c3cb01bb0b84d",
       "item": "preview-02",
       "sourceDigest": "sha256:558800feea75e3d3e2ecafe8cb7132d343cda847936f08a7df0c3cb01bb0b84d",
+      "version": "0.2.0"
+    },
+    "Preview02/RollerShades.swift": {
+      "base": "bases/be34e4404f9f121f2e9a1a3ed7bed04fc54818ebd29b45105e6f0d69628f8698.base",
+      "installedDigest": "sha256:848e44ac616c5d890d36cbf6355f1597aec26922f48f8927f788fe4fb9229206",
+      "item": "preview-02",
+      "sourceDigest": "sha256:848e44ac616c5d890d36cbf6355f1597aec26922f48f8927f788fe4fb9229206",
       "version": "0.2.0"
     },
     "RegistryAccordionStyle.swift": {

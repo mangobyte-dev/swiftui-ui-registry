@@ -114,6 +114,10 @@
     {
       "source": "sources/blocks/Preview02/ReleaseCatalog.swift",
       "target": "Preview02/ReleaseCatalog.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/RollerShades.swift",
+      "target": "Preview02/RollerShades.swift"
     }
   ],
   "registryDependencies": [

@@ -354,7 +354,7 @@ Not run: captures, because no item's look changed. Backlog item 11 closes with t
 
 ### Phase D evidence (2026-09-06)
 
-Phase D is the implementation unit titled `Implement Stage 6 Phase D release snapshot cache and distribution`, based on the Phase C commits; consult git for its hash. It has not been pushed
+Local commit: `5b7047d Implement Stage 6 Phase D release snapshot cache and distribution`, based on `f95ba7c`. It has not been pushed
 
 The tool works from any directory. `LocalRegistrySource` resolves `--registry <path>` first, then the nearest enclosing clone, then `ReleaseSnapshot`: the GitHub tag archive of the pinned `RegistryRelease.version` (`0.1.0`, the same constant behind `--version` and the MCP `serverInfo`), unpacked by `tar --strip-components=1` into `~/Library/Caches/swiftui-registry/registries/0.1.0/` beside a `snapshot.json` manifest that records the version, the URL, and the injected clock's `fetchedAt`. A valid cache (manifest version and `Registry/registry.json` present) serves every command without a request; `--refresh` downloads into a staging directory, replaces the cache only after the archive proved to hold a registry, and rewrites the manifest; a failed download or unpack removes the staging directory, keeps the previous cache, and exits 2 naming the URL, the cause, and `--registry`. `--refresh` reaches only the cache and the update stamp; `install --force` reaches only owned source; both may be combined; neither the override nor a clone is affected by `--refresh`. The fetch is announced on stderr. The download, unpack, and tags requests are dependencies (`RegistryDownloader`, `RegistryArchive`, `ReleaseTags`) whose test values throw, so no test reaches the network by accident; the live downloader uses an ephemeral `URLSession` so URLCache never writes into the tool's cache directory or remembers a 404
 
@@ -370,7 +370,7 @@ Not tested, because they need the owner's publishing actions: a real snapshot do
 
 ### Continuation checkpoint (2026-09-06)
 
-The owner authorized continuing until Phases A through D are complete, and all four are. Phase A is local commit `4746b66`; the handoff documentation checkpoint is `7b2bca1`; Phase B is `41c2bd8`; Phase C is `3e5b53c` with its roadmap follow-up `f95ba7c`; Phase D is the implementation unit named above. Consult git for any work after this checkpoint. Nothing has been pushed. What remains is the owner's publishing sequence under Open deferrals; do not repeat or replace the passing implementations. Keep `OrderedJSON` for publishing and MCP insertion order, and `JSON.rendered` for sorted receipts and search
+The owner authorized continuing until Phases A through D are complete, and all four are. Phase A is local commit `4746b66`; the handoff documentation checkpoint is `7b2bca1`; Phase B is `41c2bd8`; Phase C is `3e5b53c` with its roadmap follow-up `f95ba7c`; Phase D is `5b7047d`. Consult git for any work after this checkpoint. Nothing has been pushed. What remains is the owner's publishing sequence under Open deferrals; do not repeat or replace the passing implementations. Keep `OrderedJSON` for publishing and MCP insertion order, and `JSON.rendered` for sorted receipts and search
 
 The Phase D requirements (resolution order, the cache and its clock, `--refresh` against `--force`, the notice, the release workflow, and the formula template) are met as recorded in the Phase D evidence; the publishing actions remain outside this session's authorization and are listed as owner steps
 

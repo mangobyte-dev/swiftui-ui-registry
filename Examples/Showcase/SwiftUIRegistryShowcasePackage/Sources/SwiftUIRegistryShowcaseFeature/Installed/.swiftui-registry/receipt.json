@@ -371,11 +371,18 @@
       "sourceDigest": "sha256:b9b4a7c4e4fd5e89340cf67b10086b16e839ae2e2d0027baad601a9263aafbeb",
       "version": "0.1.0"
     },
+    "Preview02/CatalogToolbar.swift": {
+      "base": "bases/fdb86ba4abf7ad997eb85956b0e7c495873dbb4112b514f06a6c8aad0ba8d4ca.base",
+      "installedDigest": "sha256:d68c1d750806f5dadd18bf192ce6f9baa8004e71fdd67d71fa5a157d04340c61",
+      "item": "preview-02",
+      "sourceDigest": "sha256:d68c1d750806f5dadd18bf192ce6f9baa8004e71fdd67d71fa5a157d04340c61",
+      "version": "0.1.0"
+    },
     "Preview02/PreviewWall02.swift": {
       "base": "bases/b04be442f19f04e6095876f23a3cf43bd6b5e5df104cc45d091cab651730339d.base",
-      "installedDigest": "sha256:9e49ba390094a138fb070a4c02affea324615932f198bd21db8b870f56bd9811",
+      "installedDigest": "sha256:857c9acc79d468eac85a9576fcadd5f08e6ac83dd422ffee6337b0bc763c37c9",
       "item": "preview-02",
-      "sourceDigest": "sha256:9e49ba390094a138fb070a4c02affea324615932f198bd21db8b870f56bd9811",
+      "sourceDigest": "sha256:857c9acc79d468eac85a9576fcadd5f08e6ac83dd422ffee6337b0bc763c37c9",
       "version": "0.1.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -1053,7 +1060,9 @@
         "item",
         "badge",
         "separator",
-        "chart"
+        "chart",
+        "input-group",
+        "toggle-group"
       ],
       "version": "0.1.0"
     },

@@ -22,6 +22,10 @@
     {
       "source": "sources/blocks/Preview02/CardOverview.swift",
       "target": "Preview02/CardOverview.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/CatalogToolbar.swift",
+      "target": "Preview02/CatalogToolbar.swift"
     }
   ],
   "registryDependencies": [
@@ -32,7 +36,9 @@
     "item",
     "badge",
     "separator",
-    "chart"
+    "chart",
+    "input-group",
+    "toggle-group"
   ],
   "packageDependencies": [
     {

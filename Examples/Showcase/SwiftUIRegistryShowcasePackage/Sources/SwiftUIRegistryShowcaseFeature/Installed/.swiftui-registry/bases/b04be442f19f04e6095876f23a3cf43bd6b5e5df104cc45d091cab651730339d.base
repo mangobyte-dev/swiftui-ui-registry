@@ -32,6 +32,7 @@ public struct PreviewWall02: View {
         AccountAccess()
         AlbumCard()
         CardOverview()
+        CatalogToolbar()
     }
 
     private var columns: [GridItem] {

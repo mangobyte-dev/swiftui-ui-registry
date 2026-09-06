@@ -50,6 +50,10 @@
     {
       "source": "sources/blocks/Preview02/EmptyDistributeTrack.swift",
       "target": "Preview02/EmptyDistributeTrack.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/EmptyExploreCatalog.swift",
+      "target": "Preview02/EmptyExploreCatalog.swift"
     }
   ],
   "registryDependencies": [

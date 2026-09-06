@@ -47,6 +47,7 @@ public struct PreviewWall: View {
             UIElements()
             UsageCard()
             Visitors()
+            WeeklyFitnessSummary()
         }
     }
 

@@ -86,6 +86,10 @@
     {
       "source": "sources/blocks/Preview02/Payments.swift",
       "target": "Preview02/Payments.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/PayoutThreshold.swift",
+      "target": "Preview02/PayoutThreshold.swift"
     }
   ],
   "registryDependencies": [
@@ -103,7 +107,9 @@
     "accordion",
     "skeleton",
     "checkbox",
-    "breadcrumb"
+    "breadcrumb",
+    "select",
+    "textarea"
   ],
   "packageDependencies": [
     {

@@ -48,6 +48,7 @@ public struct PreviewWall02: View {
         NewMilestone()
         NotificationSettings()
         Payments()
+        PayoutThreshold()
     }
 
     private var columns: [GridItem] {

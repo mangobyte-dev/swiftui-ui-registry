@@ -30,6 +30,10 @@
     {
       "source": "sources/blocks/Preview02/ClaimableBalance.swift",
       "target": "Preview02/ClaimableBalance.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/ContributionHistory.swift",
+      "target": "Preview02/ContributionHistory.swift"
     }
   ],
   "registryDependencies": [

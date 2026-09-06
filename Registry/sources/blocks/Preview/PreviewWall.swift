@@ -37,6 +37,7 @@ public struct PreviewWall: View {
             NotFound()
             ObservabilityCard()
             PieChartCard()
+            ReportBug()
         }
     }
 

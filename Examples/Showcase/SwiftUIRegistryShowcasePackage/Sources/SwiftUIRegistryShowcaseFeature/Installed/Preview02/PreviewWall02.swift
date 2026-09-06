@@ -58,6 +58,7 @@ public struct PreviewWall02: View {
         RollerShades()
         SavingsProgress()
         SavingsTargets()
+        SidebarNav()
     }
 
     private var columns: [GridItem] {

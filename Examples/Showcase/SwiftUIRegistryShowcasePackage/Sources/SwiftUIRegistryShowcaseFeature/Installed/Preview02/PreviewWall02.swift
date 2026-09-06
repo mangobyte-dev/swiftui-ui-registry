@@ -40,6 +40,7 @@ public struct PreviewWall02: View {
         EmptyConnectBank()
         EmptyDistributeTrack()
         EmptyExploreCatalog()
+        Faq()
     }
 
     private var columns: [GridItem] {

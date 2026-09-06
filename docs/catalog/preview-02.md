@@ -43,7 +43,7 @@ PreviewWall02()
 - Kind: block
 - Version: 0.1.0
 - Platforms: iOS 26.0+
-- Installs in order: [card](card.md) 0.2.0, [input](input.md) 0.5.0, [field](field.md) 0.1.0, [button](button.md) 0.5.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [chart](chart.md) 0.1.1, [input-group](input-group.md) 0.2.0, [toggle](toggle.md) 0.2.0, [toggle-group](toggle-group.md) 0.2.0, [empty](empty.md) 0.1.0, [preview-02](preview-02.md) 0.1.0
+- Installs in order: [card](card.md) 0.2.0, [input](input.md) 0.5.0, [field](field.md) 0.1.0, [button](button.md) 0.5.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [chart](chart.md) 0.1.1, [input-group](input-group.md) 0.2.0, [toggle](toggle.md) 0.2.0, [toggle-group](toggle-group.md) 0.2.0, [empty](empty.md) 0.1.0, [accordion](accordion.md) 0.2.0, [preview-02](preview-02.md) 0.1.0
 - Accessibility contract:
   - The cards render in one ordered wall: an adaptive grid on a regular width and a plain, non-lazy VStack on a compact width, so every card exists in the hierarchy even off screen and the capture-route accessibility audit reaches all of them.
   - Every interactive control carries an accessibility label and every decorative SF Symbol is hidden, so the capture-route audit finds no unlabeled button, image, switch, text field, or slider on any card.
@@ -61,3 +61,4 @@ PreviewWall02()
   - [sources/blocks/Preview02/EmptyConnectBank.swift](../../Registry/sources/blocks/Preview02/EmptyConnectBank.swift)
   - [sources/blocks/Preview02/EmptyDistributeTrack.swift](../../Registry/sources/blocks/Preview02/EmptyDistributeTrack.swift)
   - [sources/blocks/Preview02/EmptyExploreCatalog.swift](../../Registry/sources/blocks/Preview02/EmptyExploreCatalog.swift)
+  - [sources/blocks/Preview02/Faq.swift](../../Registry/sources/blocks/Preview02/Faq.swift)

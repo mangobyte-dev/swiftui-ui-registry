@@ -19,7 +19,7 @@ Compositions of components. Installing one installs its whole closure
 - [command-search](command-search.md): Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.
 - [finance-overview](finance-overview.md): Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.
 - [nutrition-overview](nutrition-overview.md): Composes prepared energy and macronutrient values into an embeddable nutrition overview.
-- [preview](preview.md): The theme preview wall from shadcn's create page: an adaptive grid of realistic product cards built from registry components and native controls, so a theme can be judged against a screen of real UI.
+- [preview](preview.md): The finished theme preview wall from shadcn's create page: 33 realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a screen of real UI.
 - [settings-section](settings-section.md): Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
 
 ## Components (31)

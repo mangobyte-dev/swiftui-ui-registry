@@ -1,10 +1,10 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "preview",
   "kind": "block",
-  "description": "The theme preview wall from shadcn's create page: an adaptive grid of realistic product cards built from registry components and native controls, so a theme can be judged against a screen of real UI.",
+  "description": "The finished theme preview wall from shadcn's create page: 33 realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a screen of real UI.",
   "usage": "PreviewWall()",
   "files": [
     {
@@ -202,8 +202,9 @@
     "gallery"
   ],
   "accessibility": [
+    "All 33 cards render in one ordered wall: an adaptive grid on a regular width and a plain, non-lazy VStack on a compact width, so every card exists in the hierarchy even off screen and the capture-route accessibility audit reaches all of them.",
     "Every interactive control carries an accessibility label and every decorative SF Symbol is hidden, so the capture-route audit finds no unlabeled button, image, switch, text field, or slider on any card.",
-    "Avatars read the person or account name as their label, never the drawn initials.",
+    "Avatars read the person or account name as their label, and charts, usage gauges, and shortcut keycaps carry spoken labels rather than raw glyphs.",
     "Actions that open a dialog use a native alert or sheet, so the decision keeps the system's modal semantics and focus handling.",
     "Each card is a native GroupBox on the shared card surface and composes native controls, so Dynamic Type, color scheme, and layout direction are respected without per-card handling."
   ],

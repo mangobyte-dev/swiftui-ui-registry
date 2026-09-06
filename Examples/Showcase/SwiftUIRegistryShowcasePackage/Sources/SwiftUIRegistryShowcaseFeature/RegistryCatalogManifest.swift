@@ -352,8 +352,8 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "preview",
             kind: "block",
-            version: "0.2.0",
-            description: "The theme preview wall from shadcn's create page: an adaptive grid of realistic product cards built from registry components and native controls, so a theme can be judged against a screen of real UI.",
+            version: "0.3.0",
+            description: "The finished theme preview wall from shadcn's create page: 33 realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a screen of real UI.",
             usage: "PreviewWall()",
             dependencies: ["card", "item", "alert", "badge", "button", "chart", "empty", "avatar", "combobox", "separator", "field", "input-group", "spinner", "checkbox", "textarea", "input", "table", "kbd", "progress", "select", "skeleton", "button-group"],
             tags: ["preview", "theme", "showcase", "cards", "create", "shadcn", "dashboard"]

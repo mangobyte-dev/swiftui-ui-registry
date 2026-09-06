@@ -436,7 +436,7 @@ Each decision binds the slice it names; the evidence and the finding numbers are
 Each slice is one commit or a few, delivered end to end: source, metadata with usage and accessibility notes, previews, demo, captures on iPhone and iPad, generators, tests, and the documents. Status words: `open`, `in progress <date>`, `done <date>` with evidence, `blocked` with the blocker
 
 1. `done 2026-09-06` Research record: `docs/research-stage-7.md` and this section's decisions filled in from it. Evidence: the record holds 43 sourced findings across the four hub topics, three Point-Free arcs, eleven HIG pages read from Apple's JSON endpoints, the shadcn repository at commit `5c7072d`, Radix, Material, the 77-study award-app grammar, the three owner-supplied sources (Layers, Swift Algorithms, Emil Kowalski's `apple-design` skill), and the owner-requested pain-point section drawn from the Swift forums, four articles, Hacker News, Threads, and GitHub metadata for eight libraries, plus five surfaced conflicts with their resolutions; the eight decisions below are copied from it
-2. `open` The shadcn inventory: every component, block, chart, theme, CLI command, registry feature, MCP tool, and Create-page option shadcn offers today, fetched from ui.shadcn.com, in a matrix against this registry's 57 items and the tool, with a disposition per row: present, component, block, recipe, tool feature, or not applicable to iOS with the reason. The matrix lives in this section
+2. `done 2026-09-06` The shadcn inventory: every component, block, chart, theme, CLI command, registry feature, MCP tool, and Create-page option shadcn offers today, fetched from ui.shadcn.com, in a matrix against this registry's 57 items and the tool, with a disposition per row: present, component, block, recipe, tool feature, or not applicable to iOS with the reason. The matrix lives in this section. Evidence: the matrix below, 134 rows from the repository at `5c7072d` (85 present, 6 component, 3 block, 9 recipe, 10 tool feature, 21 not applicable), each native claim checked against the iOS 27.0 SDK index or the `Charts.swiftmodule` interface, and the appendix marked as the superseded 2026-08-29 capture; a fresh-context verifier refuted nothing at a blocking level and its four citation fixes (the `sonner` set, the fourteenth item type, the template count, the `scrollPosition` version) are applied
 3. `open` Parity, part one: the rows dispositioned `component` or `recipe`, each under the value gate and the placement rule, iPhone and iPad captures, demos, accessibility notes
 4. `open` Parity, part two: the rows dispositioned `block` and `tool feature` (for example `diff` and `update` already exist; missing CLI or MCP affordances shadcn has get a Swift equivalent only when the value is real)
 5. `open` iPad: every item and block verified at regular width on the iPad Pro 13-inch (the `IPAD_UDID` simulator in `Scripts/capture_previews.py`, with `--blocks` extended to components), pointer hover and keyboard focus where a native control has them, a `NavigationSplitView` recipe and a sidebar block if the value gate allows, the Showcase UI suite run on iPad as well as iPhone
@@ -460,9 +460,194 @@ Each slice is one commit or a few, delivered end to end: source, metadata with u
 
 `AGENTS.md` in full; the placement rule for presentation choices; the value gate; captures from the pinned simulators only; visual references never replaced; the preset format's append-only rule with a new version letter; no assistant trailers in commit messages; no history rewrites; workers on Claude Opus 4.8, at most three at once; the orchestrator commits
 
+### The shadcn inventory matrix (2026-09-06)
+
+Captured from the shadcn/ui repository at commit `5c7072d` (2026-09-06), the source behind ui.shadcn.com, with the counts and file paths recorded in `docs/research-stage-7.md` (F4.2, SH-1). Every row carries one disposition: `present` (the registry already has it, named), `component`, `block`, `recipe` (to build, under the value gate and the placement rule), `tool feature` (for the tool or the studio), or `not applicable` with the reason. Native availability comes from the iOS 27.0 SDK index (`docs/research-stage-7.md`, KH-5) or, for Swift Charts, from the SDK's `Charts.swiftmodule` interface. The appendix at the end of this file is the 2026-08-29 capture kept as an archive; this matrix supersedes its dispositions
+
+Components, 65 rows (the union of the base, radix, and aria documentation sets: radix carries all 65, base lacks `sonner`, and aria lacks `menubar` and `navigation-menu`). A row is a `component` when its value is one reusable view or treatment even if it draws registry items inside (attachment, message, marker), and a `block` when it is a screen-sized composition a consumer installs whole (dashboard, signup, questionnaire):
+
+| shadcn | Disposition | Registry item, or the reason |
+|---|---|---|
+| accordion | present | `accordion` |
+| alert | present | `alert` |
+| alert-dialog | present | `alert-dialog` recipe |
+| aspect-ratio | present | `aspect-ratio` recipe |
+| attachment | component | a file or image attachment row with media, metadata, upload state, and actions; no native control; composes `item`, `progress`, and `button` (slice 3) |
+| avatar | present | `avatar` |
+| badge | present | `badge` |
+| breadcrumb | present | `breadcrumb` |
+| bubble | component | a conversation bubble treatment with variants and alignment; no native control (slice 3) |
+| button | present | `button` |
+| button-group | present | `button-group` |
+| calendar | present | `calendar` recipe |
+| card | present | `card` |
+| carousel | recipe | a horizontal `ScrollView` with `scrollTargetBehavior(.paging)` (17.0) or `TabView` in the page style (14.0); Apple supplies the paging, indicators, and Reduce Motion behavior |
+| chart | present | `chart` (`BarMark`, `LineMark`, `AreaMark`, `SectorMark`) |
+| checkbox | present | `checkbox` |
+| collapsible | present | `collapsible` recipe |
+| combobox | present | `combobox` |
+| command | present | `command` |
+| context-menu | present | `context-menu` recipe |
+| data-table | present | `table`; sorting, filtering, and paging stay with the caller, and `Table` (16.0) is the native alternative on iPad |
+| date-picker | recipe | `DatePicker` in the compact style with a range or presets at the call site; the `calendar` recipe covers the graphical style |
+| dialog | present | `dialog` recipe |
+| direction | present | `direction` recipe |
+| drawer | present | `drawer` recipe |
+| dropdown-menu | present | `dropdown-menu` recipe |
+| empty | present | `empty` |
+| field | present | `field` |
+| hover-card | not applicable | hover is a pointer-only affordance; the iPadOS pointer applies content effects and opens nothing (HIG Pointing devices); the `popover` recipe covers a preview on tap |
+| input | present | `input` |
+| input-group | present | `input-group` |
+| input-otp | recipe | `TextField` with `textContentType(.oneTimeCode)` (13.0) and a number pad; the system autofills the code, and a six-box field would imitate a control Apple supplies |
+| item | present | `item` |
+| kbd | present | `kbd` |
+| label | present | `label` |
+| marker | component | an inline conversation marker with note, status, and labeled-separator variants as a `registry` text modifier; composes `separator` (slice 3) |
+| menubar | recipe | `commands { CommandMenu }` (14.0), which iPadOS and macOS place in their menu bars; never draw a desktop menu bar on iPhone |
+| message | component | a message composition of `avatar`, a bubble, header, body, and footer with alignment (slice 3) |
+| message-scroller | component | a chat container that anchors to the newest turn, follows a streamed reply, and loads history without jumping, on `defaultScrollAnchor` (17.0) and `scrollPosition` (17.0); the logic beyond the native anchor is what earns the item (slice 3) |
+| native-select | present | `native-select` recipe |
+| navigation-menu | not applicable | a website's link collection; iOS navigates with tab bars, sidebars, and toolbars (HIG Tab bars, Sidebars), covered by the `sidebar` recipe and D2's `sidebarAdaptable` addition |
+| pagination | not applicable | numbered pages are a web table idiom; iOS lists load on scroll, and paged content uses the page style `TabView` or paging scroll behavior in the `carousel` recipe |
+| popover | present | `popover` recipe |
+| progress | present | `progress` |
+| questionnaire | block | a multi-step questionnaire with single-choice, multiple-choice, freeform, and skippable steps, composing `field`, the `radio-group` recipe, `toggle-group`, `textarea`, `progress`, and `button` (slice 4) |
+| radio-group | present | `radio-group` recipe |
+| resizable | recipe | `navigationSplitViewColumnWidth(min:ideal:max:)` on `NavigationSplitView` columns, added to the `sidebar` recipe; iPadOS resizes the columns and no drag handle is drawn on iPhone |
+| scroll-area | present | `scroll-area` recipe |
+| select | present | `select` |
+| separator | present | `separator` |
+| sheet | recipe | a side sheet is `inspector(isPresented:)` on iPad and `.sheet` on iPhone; the `dialog` and `drawer` recipes cover the sheet, this recipe adds the inspector and its iOS 27 focus caveat (Open deferrals) |
+| sidebar | present | `sidebar` recipe, gaining `sidebarAdaptable` under D2 |
+| skeleton | present | `skeleton` |
+| slider | present | `slider` recipe |
+| sonner | not applicable | a second toast library; the `toast` row below is the one item |
+| spinner | present | `spinner` |
+| switch | present | `switch` recipe |
+| table | present | `table` |
+| tabs | present | `tabs` recipe |
+| textarea | present | `textarea` |
+| toast | component | a transient status presenter with a queue, auto-dismiss, a VoiceOver announcement, and a Reduce Motion path; iOS has no toast control, and `toast` is the recorded search miss (Backlog 4) (slice 3) |
+| toggle | present | `toggle` |
+| toggle-group | present | `toggle-group` |
+| tooltip | present | `tooltip` recipe |
+| typography | recipe | Apple's eleven text styles are the type scale (HIG Typography); the recipe lists them with `font(_:)`, `fontDesign(_:)` (16.1), `fontWidth(_:)` (16.0), and `monospacedDigit()` (15.0) |
+
+Blocks, 30 items in 6 rows:
+
+| shadcn | Disposition | Registry item, or the reason |
+|---|---|---|
+| dashboard-01 | block | a dashboard of `metric-card`, `chart`, and `table` on the content surface at a regular width; the sidebar stays the app's (slice 4) |
+| login-01 to login-05 | present | `auth-form`; the four alternate layouts are web page compositions (split panes, hero images) that an app lays out at its call site |
+| signup-01 to signup-05 | block | `signup-form`: name, email, password, confirmation, and terms over `field`, `input`, `checkbox`, and `button`; the alternates are the same web layouts (slice 4) |
+| sidebar-01 to sidebar-16 | present | `sidebar` recipe; the sixteen variants (collapsible to icons, floating, inset, submenus) are web layouts, and iPadOS owns collapse and width through `NavigationSplitView` and `sidebarAdaptable` (HIG Sidebars); D2 keeps a sidebar block out unless the value gate passes |
+| preview, preview-02 | present | `preview`, `preview-02` |
+| preview-03 | not applicable | a placeholder in the source at `5c7072d` (`registry/bases/base/blocks/preview-03/index.tsx` renders the text "Preview 03") |
+
+Charts, 7 types with 70 examples:
+
+| shadcn | Disposition | Registry item, or the reason |
+|---|---|---|
+| area (10) | present | `chart`, `AreaMark` |
+| bar (10) | present | `chart`, `BarMark` |
+| line (10) | present | `chart`, `LineMark` |
+| pie (11) | present | `chart`, `SectorMark` |
+| radar (14) | not applicable | the iOS 27.0 `Charts.swiftmodule` interface declares no radar mark (0 matches for `struct RadarMark`; `SectorMark` and `RuleMark` are present) |
+| radial (6) | present | a radial bar is `SectorMark` with an inner radius, a call-site choice on `chart` |
+| tooltip (9) | recipe | `chartXSelection(value:)` and `chartOverlay` (both in the interface) draw a selection annotation; slice 3 decides whether `chart` gains a themed annotation treatment once two demos need it |
+
+Themes, styles, and the Create page, 14 rows:
+
+| shadcn | Disposition | Registry item, or the reason |
+|---|---|---|
+| 17 accent themes | present | six presets, 14 named accents, and a custom light and dark accent in the preset code (`docs/registry-spec.md`, "Preset codes") |
+| 7 neutral base colors | not applicable | iOS neutrals are the system backgrounds and labels, which adapt to appearance and Increase Contrast (HIG Color); a tinted neutral scale is not added (F4.1) |
+| 8 styles | tool feature | density presets as bundles of the existing metrics (D4, slice 7) |
+| chart color | tool feature | a chart palette choice (D4, slice 7) |
+| 26 fonts, heading font | tool feature | font design in the code, a custom family only in the Swift export and the theme package (D4, slice 7); web font loading has no iOS counterpart |
+| 5 icon libraries | not applicable | SF Symbols |
+| 3 component libraries (Base UI, React Aria, Radix) | not applicable | the web needs a behavior library under its components; SwiftUI is the one base |
+| 5 radii | present | `compactRadius`, `controlRadius`, `cardRadius` |
+| 4 menu colors, 2 menu accents | not applicable | menus, sheets, and popovers are system presentations on Liquid Glass and take no app background (HIG Materials; LG-1) |
+| rtl | present | `layoutDirection` from the environment and the `direction` recipe; captures run in en_US and the demo walk covers RTL structurally |
+| pointer | not applicable | a web cursor switch |
+| 11 template values (next, vite, start, laravel, react-router, astro, and a monorepo variant of each but laravel) | tool feature | folded into the `init` row below (slice 4) |
+| Copy Preset, Open Preset, Random, Reset, Share | present | the Create page and the tuning panel (Copy Code, Import, Random, Reset, `?preset=`) |
+| Get Code (project form) | tool feature | the `init` row below |
+
+CLI, 13 commands:
+
+| shadcn | Disposition | Registry item, or the reason |
+|---|---|---|
+| add | present | `install`, with `--plan`, `--diff`, `--update`, `--force` |
+| apply | present | `preset apply` |
+| build | present | `validate` and the three `generate` subcommands |
+| diff | present | `install --diff` |
+| docs | tool feature | print an item's description, usage, accessibility contract, and files to the terminal, the CLI face of `describe_item` (slice 4) |
+| eject | not applicable | registry items are already source-owned |
+| info | tool feature | print a destination's receipt: installed items, versions, and modified files (slice 4) |
+| init | tool feature | write the package requirement and `RegistryTheme+App.swift` into a consumer in one step; `Examples/TodoCounter` proved the manual steps, and slice 4 decides whether one command is worth owning |
+| mcp | present | `mcp` |
+| migrate | not applicable | there are no library or icon migrations; `install --update` carries registry updates |
+| preset | present | `preset decode`, `url`, `apply`, `resolve`, `random` |
+| search | present | `search` with `--kind`, `--platform`, `--target-version`, `--format` |
+| view | tool feature | print an item's canonical source before installing; folded into the `docs` row |
+
+Registry features, 12 rows (`registry-item.json` fields, the registry docs, and the 14 item types):
+
+| shadcn | Disposition | Registry item, or the reason |
+|---|---|---|
+| name, description, type, registryDependencies, files, docs, categories, dependencies | present | `name`, `description`, `kind`, `registryDependencies`, `files`, `docs`, `tags` and `aliases`, `packageDependencies` |
+| $schema, registry.json | present | `schemaVersion` with `Registry/schema.json`, `Registry/registry.json` |
+| title, author, meta | not applicable | a single-author registry whose name is its title |
+| devDependencies, tailwind, cssVars, css, envVars, font | not applicable | web build inputs; the preset code carries the theme |
+| item types block, component | present | `block`, `component`, and the registry's own `recipe` |
+| item types theme, style | tool feature | slice 6 decides whether a theme becomes a kind; D3 recommends no |
+| item types lib, hook, page, file, base, font, example, internal, ui, item | not applicable | web packaging types and the generic `item`; the Showcase demos are the examples |
+| dynamic search | present | `search`, `search_items` |
+| health | present | `validate` |
+| GitHub-hosted registry | present | the pinned tag snapshot fetched on first use |
+| namespaces, authentication, registry index | not applicable | deferred by the Later section until real adoption |
+| open in v0 | not applicable | a web product |
+
+MCP tools, 7 rows:
+
+| shadcn | Disposition | Registry item, or the reason |
+|---|---|---|
+| get_project_registries | not applicable | one registry, resolved by `--registry`, the enclosing clone, or the snapshot |
+| list_items_in_registries | present | `search_items` with no query lists every item (an empty term set is a subset of every index) |
+| search_items_in_registries | present | `search_items` |
+| view_items_in_registries | present | `describe_item`, which returns each file's content |
+| get_item_examples_from_registries | present | `describe_item` returns the `usage` snippet; the Showcase demo is the compiled example |
+| get_add_command_for_items | present | `plan_install` prints the closure, targets, package requirements, and integration steps |
+| get_audit_checklist | present | the installer's manual integration steps and `diff_item` |
+
+Forms, helpers, and utilities, 4 rows:
+
+| shadcn | Disposition | Registry item, or the reason |
+|---|---|---|
+| forms (react-hook-form, TanStack Form, Formisch, Next) | not applicable | native `Form` with the `field` item; validation stays with the caller |
+| helpers (AI SDK, TanStack AI) | not applicable | web runtime helpers |
+| scroll-fade | recipe | the system scroll edge effect, `scrollEdgeEffectStyle` (26.0), added to the `scroll-area` recipe (HIG Layout, "use a scroll edge effect") |
+| shimmer | present | `skeleton` |
+
+Registry items with no shadcn row, 7 (the other 50 appear above):
+
+| Registry item | Disposition | Nearest shadcn row, and why the registry has it |
+|---|---|---|
+| `activity-feed` | present | the Stage 3 screen that named `alert`, `avatar`, `skeleton`, `empty`, `accordion`, and `item`; shadcn has no feed block |
+| `command-search` | present | the Stage 4 screen behind `command`, `kbd`, and `input-group`; shadcn's `command` is the component only |
+| `finance-overview`, `nutrition-overview` | present | the Stage 2 proof dashboards; `dashboard-01` above is the block that adds `chart` and `table` |
+| `macro-progress` | present | a nutrition progress composition over `progress`; a domain fixture, not parity |
+| `settings-section` | present | the Stage 2 settings screen; shadcn ships no settings block |
+| `transaction-row` | present | a finance row over `item`; a domain fixture, not parity |
+
+Disposition counts across the 134 rows: present 85, component 6, block 3, recipe 9, tool feature 10, not applicable 21
+
 ## Later
 
-Complex data, presentation guidance, and messaging proceed only on evidence from named adopters. Native sheets, alerts, menus, navigation, scroll views, and split views are recipes by default, not installable wrappers. Finance and nutrition remain proof fixtures; illustrative domains do not count as adoption evidence
+Complex data, presentation guidance, and messaging proceed only on evidence from named adopters; for the messaging rows in the Stage 7 matrix the named adopter is the owner's seeFood app, whose Chat screen is measured in the award-app study (`docs/research-stage-7.md`, ADA-1, move 23). Native sheets, alerts, menus, navigation, scroll views, and split views are recipes by default, not installable wrappers. Finance and nutrition remain proof fixtures; illustrative domains do not count as adoption evidence
 
 Deferred until real adoption proves the need: hosted registry services beyond the pinned release snapshots authorized in Stage 6, namespaces, authentication, federation, marketplace and multi-author workflows, automatic `.xcodeproj` mutation, macOS/watchOS/tvOS/visionOS claims, and a typography/color/elevation token framework beyond the bounded fields Stage 7's Create studio adds under decision D4 (one font design, surface levels, two optional color pairs, a chart palette choice, each still subject to the two-consumer rule). The local MCP adapter and release snapshot distribution are part of the authorized Swift CLI rewrite, not deferred services
 
@@ -472,7 +657,7 @@ Implement one dependency-closed vertical slice at a time. Each merged slice incl
 
 ## Appendix: shadcn inventory reference
 
-The tables below are research input captured for mapping purposes. They are not a build queue and carry no delivery commitment; an entry becomes work only when a Stage 2 or later slice names it
+The tables below are research input captured for mapping purposes. They are not a build queue and carry no delivery commitment; an entry becomes work only when a Stage 2 or later slice names it. The dispositions in the Stage 7 inventory matrix (2026-09-06) supersede the mappings below, which stay as the 2026-08-29 capture
 
 The inventory was captured on 2026-08-29 with shadcn CLI 4.19.0:
 

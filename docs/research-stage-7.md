@@ -102,7 +102,7 @@ Apple's Human Interface Guidelines pages render client-side, so every HIG quotat
 | menu color | default, inverted, default-translucent, inverted-translucent | 4 |
 | menu accent | subtle, bold | 2 |
 | switches | rtl, pointer | 2 |
-| template | next, next-monorepo, start, react-router, vite, vite-monorepo, react-router-monorepo, start-monorepo, astro, astro-monorepo, and more in the schema | 10+ |
+| template | next, vite, start, laravel, react-router, astro, each but laravel also as a monorepo variant (`app/(app)/(create)/lib/templates.ts`) | 11 |
 
   The preset code encodes ten of these (style, baseColor, theme, chartColor, iconLibrary, font, fontHeading, radius, menuAccent, menuColor; `app/(app)/(create)/lib/preset-code.ts`). The changelog frames the purpose: "Your config doesn't just change colors, it rewrites the component code to match your setup" (`apps/v4/content/docs/changelog/2025-12-shadcn-create.mdx`, 2025-12-12). The CLI's commands are add, apply, build, diff, docs, eject, info, init, mcp, migrate, preset, search, and view (`packages/shadcn/src/commands/`; SH-1). What shadcn leaves to the platform: nothing about typography or icons, because the web platform ships neither; it therefore carries 26 fonts and 5 icon libraries that iOS gets from SF Pro and SF Symbols
 

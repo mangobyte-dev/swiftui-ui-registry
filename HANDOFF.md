@@ -4,7 +4,7 @@ Read [AGENTS.md](AGENTS.md), [philosophy](docs/philosophy.md), [architecture](do
 
 ## Owner steps before anything else ships
 
-1. Push `main` (five or more local commits ahead of `origin/main`) and the local `0.1.0` tag. The tag makes `Package.swift` floors resolve and lets the tool's snapshot download succeed; on 2026-09-06 that download answered HTTP 404
+1. Push `main` (seven local commits ahead of `origin/main`, `4746b66` through the Phase D hash record) and the local `0.1.0` tag. The tag makes `Package.swift` floors resolve and lets the tool's snapshot download succeed; on 2026-09-06 that download answered HTTP 404
 2. Publish a GitHub release for `0.1.0`; `.github/workflows/release.yml` builds the universal binary on `macos-26` and uploads `swiftui-registry-macos-universal.tar.gz` and its `.sha256` to the release
 3. Create `mangobyte-dev/homebrew-tap`, copy `Distribution/homebrew/swiftui-registry.rb` to `Formula/swiftui-registry.rb`, replace the zero `sha256` with the uploaded checksum, and tag the tap `swiftui-registry-0.1.0` so the tool's update notice sees it
 4. Only then document `brew install mangobyte-dev/tap/swiftui-registry` in the README, the catalog index template (`CatalogGenerator.swift`) with a regeneration, and the website copy

@@ -104,6 +104,6 @@ Dependencies only point down. Registry source cannot import application architec
 
 - One monolithic UI package: undermines source ownership and progressive adoption
 - Copy every foundation file with every item: creates duplicated theme contracts
-- A production CLI now: validates packaging polish before validating product UI
+- A production CLI before the product slices: would have validated packaging polish before product UI. The Stage 6 owner decision now authorizes the rewrite; status and evidence live in `docs/component-roadmap.md`
 - Generic Button, Toggle, Slider, List, or navigation wrapper views: hide Apple primitives instead of styling them through native protocols and modifiers
 - Mandatory TCA, MVVM, Observation model, or persistence type: leaks application architecture into presentation

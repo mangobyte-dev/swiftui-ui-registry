@@ -8,7 +8,7 @@ A component does not replace a native control. `Button`, `TextField`, `Toggle`, 
 
 ## Current state
 
-Updated 2026-09-05. This section and the per-stage Status lines are the only home of stage status; status text in any other file is a pointer here
+Updated 2026-09-06. This section and the per-stage Status lines are the only home of stage status; status text in any other file is a pointer here
 
 - Stage 1: complete, closed 2026-08-31 with findings F-001 through F-024 resolved (`STAGE_ONE_VALIDATION.md`)
 - Stage 1.5: complete. The clean-room trial ran 2026-08-31 and all six recorded defects were fixed the same day (`docs/clean-room-trial.md`)
@@ -23,6 +23,7 @@ Updated 2026-09-05. This section and the per-stage Status lines are the only hom
 - First consumer outside `Examples/Showcase`: the seeFood app installed settings-section, select, separator, button, and input on 2026-09-01 through a local path dependency, with the receipt in its destination; the published URL remains unexercised because no tag exists
 - Audit (2026-09-05): every canonical file, the foundations, and the Showcase harness were reviewed against SwiftUI best practice; 18 commits fixed the verified findings and the rest are owner decisions. Findings, evidence, and the closing count are in the Audit section below
 - Placement rule for presentation choices (2026-09-06): the three composed views that carried a presentation choice in their initializer (`InlineAlert` variant, `TransactionRow` tone, `MacroProgress` tint) now take it as a `registry`-prefixed copy-and-return method (`registryVariant`, `registryTone`, `registryTint`); the rule is written in `AGENTS.md` and `docs/architecture.md`, and this closes the matching open deferral
+- Stage 6: the Swift CLI rewrite is in progress. Phase A delivers the engine and consumer commands; phase evidence and remaining work are in the Stage 6 section below
 - Current catalog counts and per-item pages live in the generated `docs/catalog/index.md` and the website, not in prose here
 
 ### Open deferrals
@@ -53,7 +54,7 @@ The honest list of what would bite the first outside adopter and what was left t
 8. Xcode-project clean-room trial: install a block into a scratch Xcode app, build, customize, update. Status: done 2026-09-05, recorded as Trial 2 in `docs/clean-room-trial.md`; no registry defects, one scaffold defect outside the registry
 9. Website blocks story: iPad captures and a full-width block page. Status: done 2026-09-05; `capture_previews.py --blocks` captures every block on the iOS 27 iPad Pro 13-inch and each block page shows the wide layout under On iPad
 10. MCP adapter over the registry JSON (search, plan, install) for agents inside consuming apps. Status: done 2026-09-05; `Scripts/mcp_server.py` is a dependency-free stdio server tested end to end over JSON-RPC
-11. A Swift CLI or SwiftPM plugin so adopters do not need Python. Status: deferred 2026-09-05 with reasons: macOS ships Python 3 with the Xcode command line tools, and a second installer would fork the single validator and the receipt logic the doctrine keeps in one place; revisit if an adopter reports Python as a blocker. Owner decision 2026-09-06: it becomes the stage after Stage 5, a Swift rewrite of the whole Python path (installer, validator, receipts and merge, search, presets, MCP) rather than a second installer, with command parity and the same receipts on disk as the exit criteria; nothing starts before Stage 5 lands
+11. A Swift CLI so adopters do not need Python. Owner decision 2026-09-06: Stage 6 rewrites the whole Python path (installer, validator, receipts and merge, search, presets, MCP, and generators), with command parity and the same receipts on disk as the exit criteria. Status: in progress; Phase A evidence and the Phase B through D boundary are in the Stage 6 section. Python remains until the Swift tool proves the complete path; there is no second permanent installer
 12. Usage-snippet compile proof for installable items independent of the Showcase demos. Status: closed 2026-09-05: snippets reference caller state (`$email`, `rows`, `onSelect`) that a generic wrapper cannot supply without per-item fixtures, which would duplicate the demos; the demos remain the compile proof and the walk proves each exists
 13. iOS 26 simulator runtime for floor evidence. Status: open, needs a multi-gigabyte download on the owner's machine
 14. Custom domain for the Worker plus `X-Robots-Tag: noindex` on the workers.dev host. Status: open, needs the owner's domain
@@ -295,6 +296,30 @@ The wall is two blocks totaling 68 cards: `preview` (block, 0.3.0, 34 source fil
 Both blocks install with their full closures. `python3 Scripts/install.py preview --plan --destination /tmp/registry-plan-check` resolves a 23-item closure (22 components plus the block), writes 56 files, and exits 0; the same for `preview-02` resolves a 24-item closure (23 components plus the block), writes 59 files, and exits 0. Every card was audited for accessibility by `testEveryRegistryItemHasADemoInTheCaptureRoute`, which walks the non-lazy compact wall on the pinned iPhone; slices 4 through 7 record it passing with zero unlabeled controls on every card of both walls. The five primitives ship like any other item, with versions `field` 0.1.0, `chart` 0.1.1, `table` 0.1.0, `combobox` 0.1.0, and `breadcrumb` 0.1.0, each carrying metadata, a preview, a demo, captures, and accessibility notes
 
 The Create page and the Themes page show the wall's first screen per preset from those captures, and the CSS token board stands in for a code that matches no preset (`Website/components/create-studio.tsx`, `Website/app/themes/page.tsx`). On device the browsable `preview` block demo is `PreviewWall` itself (`BlockDemos.PreviewDemo`), so the tuning panel, kept beside the catalog, previews the same wall live over it
+
+## Stage 6: Swift command-line rewrite
+
+**Status: In progress**
+
+The owner requested one phase per pull of work. Phase A supplies the engine and consumer commands; Phase B adds MCP and the three generators, Phase C removes the consumer Python path and changes documentation, website commands, and CI, and Phase D supplies cached release snapshots and distribution. `Scripts/capture_previews.py` remains Python because it automates simulator captures and has no consumer role
+
+### Phase A evidence (2026-09-06)
+
+The root package has a SwiftUI-free `RegistryKit` library and a `swiftui-registry` executable. `validate`, `search`, all five install modes, and `preset decode | url | apply | resolve | random` use Swift implementations. `SwiftUIRegistryFoundations` and all Showcase source remain unchanged. `docs/cli-migration.md` records the dependency, codec-sharing, effect, and diagnostic decisions
+
+`Scripts/check_swift_parity.py` passed 794 real subprocess pairs against a temporary registry clone. It compared stdout, stderr, exit status, and complete destination trees, including receipts, source digests, installed digests, base paths, base bytes, and conflict artifacts. It exercised every catalog item, the search filters, every preset vector, negative and large random seeds, unknown items, both directions of Python and Swift receipt interoperability, clean merges, conflicted updates, and force cleanup. It normalizes temporary destination paths in output only; file bytes are compared directly
+
+The RegistryKit Swift Testing suite passed 18 tests, including 45 captured validator cases from the unchanged Python suite, 106 Python unified-diff cases, all 26 shared preset vectors, receipt damage, missing bases and targets, symlink escape, untracked collision, recipe refusal, and full-closure conflict preflight. Inline snapshots pin command output and complete directory trees after installation, a clean merge, and a conflict. The console dependency captures the real command output without redirecting the test runner's descriptors
+
+`swift build`, `swift test --filter RegistryKitTests`, and `swift build -c release` passed with Swift 6.4. Both validators passed. All 106 Python tests remain green. The three Python generators regenerated with no tracked output changes. `make format-check` passed. Showcase built on the pinned iPhone 17 simulator; the build emitted one AppIntents metadata-extraction warning because it has no AppIntents.framework dependency, with no Swift compiler warnings or errors
+
+Not run: the Showcase UI suite and captures, because no Showcase or registry UI source changed; the website typecheck and build, because no website source changed. The existing auth-light and nutrition-light references remain untouched. The package's new executable is a macOS tool, not a new supported platform claim for registry items
+
+### Remaining phase gates
+
+- Phase B: implement the seven MCP tools and the three generators, extend the subprocess proof to their complete output, and run the unchanged MCP tests against the Swift subprocess
+- Phase C: port the remaining catalog and UI-source contract tests, remove the consumer scripts and Python tests, migrate shared preset vectors, update the publishing verification path and commands, and close Backlog item 11 only when the full replacement meets its exit criteria
+- Phase D: release snapshot cache with explicit registry and force handling, injected cache clock, update notice from tap tags, universal release workflow, Homebrew formula template, and install documentation after the owner creates the tap repository
 
 ## Later
 

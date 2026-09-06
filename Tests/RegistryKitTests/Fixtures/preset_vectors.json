@@ -1,0 +1,534 @@
+{
+  "about": "Pinned preset codes every codec must reproduce: Scripts/preset.py, Website/lib/preset.ts, and the Showcase's ThemePreset.swift. Written once from Scripts/preset.py; a change here is a format change and needs a new version letter (see the rules in Scripts/preset.py).",
+  "alphabet": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+  "version": "a",
+  "maxLength": 22,
+  "vectors": [
+    {
+      "name": "System: RegistryTheme() with every default",
+      "code": "a13GkaOXWwIC",
+      "tuning": {
+        "accent": "system",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Graphite: ink accent, background label, 0.05 surface, 0.10 border",
+      "code": "a13GkaOXWxLl",
+      "tuning": {
+        "accent": "ink",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.05,
+        "borderOpacity": 0.1,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Indigo",
+      "code": "a13GkaOXWwIF",
+      "tuning": {
+        "accent": "indigo",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Rose: the pink accent",
+      "code": "a13GkaOXWwIH",
+      "tuning": {
+        "accent": "pink",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Emerald: the green accent",
+      "code": "a13GkaOXWwIL",
+      "tuning": {
+        "accent": "green",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Amber: yellow accent with a dark label",
+      "code": "a13GkaOXWwIa",
+      "tuning": {
+        "accent": "yellow",
+        "darkLabelOnAccent": true,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Every field at its first value packs to zero",
+      "code": "a0",
+      "tuning": {
+        "accent": "system",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.0,
+        "borderOpacity": 0.0,
+        "borderWidth": 0.5,
+        "emphasizedBorderWidth": 1.0,
+        "compactRadius": 0.0,
+        "controlRadius": 0.0,
+        "cardRadius": 0.0,
+        "compactSpacing": 4.0,
+        "standardSpacing": 8.0,
+        "sectionSpacing": 12.0,
+        "controlHorizontalPadding": 8.0,
+        "disabledOpacity": 0.2
+      }
+    },
+    {
+      "name": "Every field at its last value, with a dark custom accent",
+      "code": "a75B36b5WTBzh82b4AdK",
+      "tuning": {
+        "accent": "custom",
+        "darkLabelOnAccent": true,
+        "surfaceOpacity": 0.2,
+        "borderOpacity": 0.3,
+        "borderWidth": 3.0,
+        "emphasizedBorderWidth": 4.0,
+        "compactRadius": 12.0,
+        "controlRadius": 22.0,
+        "cardRadius": 32.0,
+        "compactSpacing": 16.0,
+        "standardSpacing": 32.0,
+        "sectionSpacing": 48.0,
+        "controlHorizontalPadding": 24.0,
+        "disabledOpacity": 0.8,
+        "customAccent": "#FFFFFF",
+        "customAccentDark": "#FFFFFF"
+      }
+    },
+    {
+      "name": "Custom accent without a dark accent",
+      "code": "a15Ul4iYx8h6j6HW",
+      "tuning": {
+        "accent": "custom",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5,
+        "customAccent": "#5957D6",
+        "customAccentDark": null
+      }
+    },
+    {
+      "name": "Custom accent with a separate dark accent",
+      "code": "a31pYKckrfIlnjjlOmQI",
+      "tuning": {
+        "accent": "custom",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5,
+        "customAccent": "#5957D6",
+        "customAccentDark": "#6D7CFF"
+      }
+    },
+    {
+      "name": "Showcase default tuning: indigo on the foundation metrics",
+      "code": "a13GkaOXWwIF",
+      "tuning": {
+        "accent": "indigo",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Tuned metrics off the defaults",
+      "code": "aYhj7FaL6lP",
+      "tuning": {
+        "accent": "teal",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.1,
+        "borderOpacity": 0.16,
+        "borderWidth": 1.5,
+        "emphasizedBorderWidth": 3.0,
+        "compactRadius": 4.0,
+        "controlRadius": 12.0,
+        "cardRadius": 24.0,
+        "compactSpacing": 6.0,
+        "standardSpacing": 20.0,
+        "sectionSpacing": 32.0,
+        "controlHorizontalPadding": 16.0,
+        "disabledOpacity": 0.35
+      }
+    },
+    {
+      "name": "Accent system on the foundation metrics",
+      "code": "a13GkaOXWwIC",
+      "tuning": {
+        "accent": "system",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent ink on the foundation metrics",
+      "code": "a13GkaOXWwID",
+      "tuning": {
+        "accent": "ink",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent blue on the foundation metrics",
+      "code": "a13GkaOXWwIE",
+      "tuning": {
+        "accent": "blue",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent indigo on the foundation metrics",
+      "code": "a13GkaOXWwIF",
+      "tuning": {
+        "accent": "indigo",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent purple on the foundation metrics",
+      "code": "a13GkaOXWwIG",
+      "tuning": {
+        "accent": "purple",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent pink on the foundation metrics",
+      "code": "a13GkaOXWwIH",
+      "tuning": {
+        "accent": "pink",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent red on the foundation metrics",
+      "code": "a13GkaOXWwII",
+      "tuning": {
+        "accent": "red",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent orange on the foundation metrics",
+      "code": "a13GkaOXWwIJ",
+      "tuning": {
+        "accent": "orange",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent yellow on the foundation metrics",
+      "code": "a13GkaOXWwIK",
+      "tuning": {
+        "accent": "yellow",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent green on the foundation metrics",
+      "code": "a13GkaOXWwIL",
+      "tuning": {
+        "accent": "green",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent mint on the foundation metrics",
+      "code": "a13GkaOXWwIM",
+      "tuning": {
+        "accent": "mint",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent teal on the foundation metrics",
+      "code": "a13GkaOXWwIN",
+      "tuning": {
+        "accent": "teal",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent cyan on the foundation metrics",
+      "code": "a13GkaOXWwIO",
+      "tuning": {
+        "accent": "cyan",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    },
+    {
+      "name": "Accent brown on the foundation metrics",
+      "code": "a13GkaOXWwIP",
+      "tuning": {
+        "accent": "brown",
+        "darkLabelOnAccent": false,
+        "surfaceOpacity": 0.055,
+        "borderOpacity": 0.08,
+        "borderWidth": 1.0,
+        "emphasizedBorderWidth": 2.0,
+        "compactRadius": 6.0,
+        "controlRadius": 8.0,
+        "cardRadius": 16.0,
+        "compactSpacing": 8.0,
+        "standardSpacing": 16.0,
+        "sectionSpacing": 24.0,
+        "controlHorizontalPadding": 12.0,
+        "disabledOpacity": 0.5
+      }
+    }
+  ]
+}

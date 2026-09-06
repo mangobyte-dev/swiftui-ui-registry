@@ -1,0 +1,532 @@
+[
+  {
+    "owned": "alpha\ngamma\nbeta\nbeta\nbeta\nalpha\nalpha\n",
+    "incoming": "alpha\nnew\ngamma\n\nalpha\nnew\nbeta\nbeta\nalpha\nalpha\n\nalpha\nalpha\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,7 +1,14 @@\n alpha\n+new\n gamma\n-beta\n+\n+alpha\n+new\n beta\n beta\n alpha\n alpha\n+\n+alpha\n+alpha\n+new\n"
+  },
+  {
+    "owned": "alpha\nalpha\n\nalpha\ngamma\ngamma\ngamma\nalpha\n\nalpha\n\nalpha\ngamma\ngamma\nbeta\nalpha\nalpha\nbeta\ngamma\nalpha\nbeta\n",
+    "incoming": "alpha\nalpha\n\nalpha\nalpha\nalpha\nnew\ngamma\nalpha\n\nalpha\n\n\n\ngamma\ngamma\nbeta\nalpha\nnew\nalpha\nbeta\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -2,20 +2,20 @@\n alpha\n \n alpha\n-gamma\n-gamma\n+alpha\n+alpha\n+new\n gamma\n alpha\n \n alpha\n \n-alpha\n+\n+\n gamma\n gamma\n beta\n alpha\n+new\n alpha\n beta\n-gamma\n-alpha\n-beta\n"
+  },
+  {
+    "owned": "alpha\nbeta\nalpha\ngamma\n\ngamma\nalpha\nbeta\ngamma\nbeta\n\n\n\nbeta\ngamma\nbeta\nbeta\ngamma\n\n\n",
+    "incoming": "alpha\nbeta\nalpha\n\nalpha\n\nbeta\ngamma\nbeta\n\nnew\ngamma\nbeta\nbeta\ngamma\n\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,17 +1,14 @@\n alpha\n beta\n alpha\n-gamma\n \n-gamma\n alpha\n+\n beta\n gamma\n beta\n \n-\n-\n-beta\n+new\n gamma\n beta\n beta\n"
+  },
+  {
+    "owned": "gamma\ngamma\nalpha\ngamma\n\nbeta\n\nalpha\ngamma\nbeta\nalpha\ngamma\nbeta\nbeta\ngamma\nbeta\nalpha\ngamma\n\nalpha\nalpha\ngamma\ngamma\nbeta\nalpha\nbeta\nalpha\nalpha\n\nalpha\nbeta\nbeta\n\nbeta\n",
+    "incoming": "gamma\ngamma\nalpha\ngamma\n\nbeta\n\nalpha\ngamma\nbeta\nalpha\ngamma\nbeta\nbeta\ngamma\nbeta\nnew\n\n\n\n\nalpha\ngamma\ngamma\nbeta\nalpha\nbeta\nalpha\nalpha\n\nalpha\nbeta\nnew\nnew\nnew\nbeta\n\nnew\nbeta\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -14,10 +14,11 @@\n beta\n gamma\n beta\n-alpha\n-gamma\n+new\n \n-alpha\n+\n+\n+\n alpha\n gamma\n gamma\n@@ -29,6 +30,10 @@\n \n alpha\n beta\n+new\n+new\n+new\n beta\n \n+new\n beta\n"
+  },
+  {
+    "owned": "beta\nalpha\nalpha\n",
+    "incoming": "beta\nalpha\nnew\nnew\nnew\n\nalpha\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,3 +1,8 @@\n beta\n alpha\n+new\n+new\n+new\n+\n alpha\n+alpha\n"
+  },
+  {
+    "owned": "gamma\nalpha\nbeta\nbeta\nbeta\n\nbeta\n\nbeta\ngamma\n\nbeta\nalpha\n\nalpha\nalpha\nalpha\nalpha\nbeta\nbeta\n\n\n\nbeta\n\n",
+    "incoming": "gamma\n\nbeta\n\nbeta\ngamma\n\nalpha\nalpha\nalpha\nalpha\nalpha\nalpha\nbeta\nbeta\n\n\nnew\nnew\nalpha\nbeta\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,17 +1,12 @@\n gamma\n-alpha\n-beta\n-beta\n-beta\n \n beta\n \n beta\n gamma\n \n-beta\n alpha\n-\n+alpha\n alpha\n alpha\n alpha\n@@ -20,6 +15,8 @@\n beta\n \n \n-\n+new\n+new\n+alpha\n beta\n \n"
+  },
+  {
+    "owned": "beta\nalpha\nalpha\nbeta\nalpha\nalpha\nbeta\n\nalpha\nbeta\nalpha\nalpha\n\ngamma\ngamma\nbeta\ngamma\nbeta\ngamma\n\nbeta\ngamma\n\ngamma\nalpha\nalpha\n\nalpha\nalpha\nbeta\ngamma\nbeta\n",
+    "incoming": "\nnew\nalpha\nalpha\nbeta\nalpha\nalpha\nbeta\n\nalpha\n\nbeta\nalpha\nalpha\n\ngamma\ngamma\nbeta\ngamma\nbeta\ngamma\n\nbeta\ngamma\ngamma\nnew\nalpha\n\nalpha\nalpha\nbeta\ngamma\nbeta\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,4 +1,5 @@\n-beta\n+\n+new\n alpha\n alpha\n beta\n@@ -7,6 +8,7 @@\n beta\n \n alpha\n+\n beta\n alpha\n alpha\n@@ -20,9 +22,8 @@\n \n beta\n gamma\n-\n gamma\n-alpha\n+new\n alpha\n \n alpha\n"
+  },
+  {
+    "owned": "beta\ngamma\n\ngamma\nalpha\nalpha\n\ngamma\nalpha\nalpha\ngamma\nbeta\ngamma\nbeta\n\n\nalpha\nalpha\nalpha\nbeta\nalpha\n",
+    "incoming": "beta\nalpha\nnew\ngamma\nalpha\nalpha\nalpha\n\n\ngamma\nalpha\nalpha\n\n\nnew\nalpha\ngamma\nbeta\n\n\nalpha\nalpha\nalpha\nbeta\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,15 +1,19 @@\n beta\n+alpha\n+new\n gamma\n+alpha\n+alpha\n+alpha\n+\n \n gamma\n alpha\n alpha\n \n-gamma\n+\n+new\n alpha\n-alpha\n-gamma\n-beta\n gamma\n beta\n \n"
+  },
+  {
+    "owned": "gamma\n\nbeta\ngamma\nbeta\nalpha\n\nalpha\n\nbeta\nbeta\n",
+    "incoming": "alpha\nnew\n\nbeta\nalpha\n\n\nalpha\nnew\n\nbeta\nbeta\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,11 +1,12 @@\n-gamma\n+alpha\n+new\n \n-beta\n-gamma\n beta\n alpha\n \n+\n alpha\n+new\n \n beta\n beta\n"
+  },
+  {
+    "owned": "alpha\n\n",
+    "incoming": "alpha\n\nalpha\n\nnew\n\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,2 +1,8 @@\n alpha\n \n+alpha\n+\n+new\n+\n+alpha\n+\n"
+  },
+  {
+    "owned": "\ngamma\nbeta\nbeta\n\n\nbeta\ngamma\n\nalpha\ngamma\ngamma\nbeta\n\ngamma\n\n\n\nbeta\n\n",
+    "incoming": "\nalpha\ngamma\nbeta\nbeta\n\ngamma\n\nnew\nalpha\ngamma\ngamma\nbeta\n\n\n\nnew\n\nnew\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,20 +1,20 @@\n \n+alpha\n gamma\n beta\n beta\n \n-\n-beta\n gamma\n \n+new\n alpha\n gamma\n gamma\n beta\n \n-gamma\n \n \n+new\n \n-beta\n-\n+new\n+new\n"
+  },
+  {
+    "owned": "\nbeta\nbeta\nalpha\nalpha\n\nbeta\nbeta\n\nalpha\nbeta\nalpha\n\nbeta\n\ngamma\n\n\n\nbeta\n\n\ngamma\nbeta\ngamma\n\nbeta\ngamma\n\nalpha\ngamma\n",
+    "incoming": "\nalpha\nalpha\n\nbeta\nbeta\nnew\nnew\n\nalpha\nalpha\n\nalpha\n\nbeta\n\n\ngamma\nbeta\ngamma\n\nbeta\ngamma\n\nalpha\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,21 +1,16 @@\n \n-beta\n-beta\n alpha\n alpha\n \n beta\n beta\n+new\n+new\n \n alpha\n-beta\n alpha\n \n-beta\n-\n-gamma\n-\n-\n+alpha\n \n beta\n \n"
+  },
+  {
+    "owned": "alpha\n\n\nalpha\ngamma\ngamma\n\n\nbeta\n\nbeta\ngamma\n\n\nalpha\n\ngamma\n\nbeta\n\nbeta\nalpha\n\nalpha\nalpha\n\nbeta\n\nbeta\nalpha\ngamma\n\ngamma\nbeta\n\ngamma\ngamma\n",
+    "incoming": "alpha\n\nalpha\ngamma\ngamma\n\n\nbeta\n\nbeta\ngamma\n\nalpha\n\ngamma\n\nbeta\n\nbeta\nalpha\n\n\nalpha\nalpha\nalpha\nalpha\n\nbeta\n\nbeta\nalpha\ngamma\n\ngamma\nbeta\n\ngamma\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,5 +1,4 @@\n alpha\n-\n \n alpha\n gamma\n@@ -11,7 +10,6 @@\n beta\n gamma\n \n-\n alpha\n \n gamma\n@@ -21,6 +19,9 @@\n beta\n alpha\n \n+\n+alpha\n+alpha\n alpha\n alpha\n \n"
+  },
+  {
+    "owned": "beta\n\nalpha\nbeta\n\ngamma\ngamma\nbeta\nalpha\nbeta\ngamma\nalpha\nalpha\ngamma\n\n",
+    "incoming": "beta\n\nnew\nalpha\n\nalpha\nbeta\n\ngamma\ngamma\nbeta\nalpha\nbeta\ngamma\nalpha\nnew\ngamma\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,4 +1,7 @@\n beta\n+\n+new\n+alpha\n \n alpha\n beta\n@@ -10,6 +13,6 @@\n beta\n gamma\n alpha\n-alpha\n+new\n gamma\n \n"
+  },
+  {
+    "owned": "beta\ngamma\n\n\n\ngamma\ngamma\nbeta\nalpha\ngamma\n\nbeta\n\n\ngamma\nalpha\n\ngamma\nbeta\n\nbeta\ngamma\ngamma\ngamma\ngamma\ngamma\nalpha\n",
+    "incoming": "beta\ngamma\n\n\n\ngamma\ngamma\n\nnew\nalpha\ngamma\n\nbeta\n\n\nalpha\n\nnew\ngamma\nbeta\n\nalpha\nnew\nnew\ngamma\nalpha\n\nnew\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -5,23 +5,25 @@\n \n gamma\n gamma\n-beta\n+\n+new\n alpha\n gamma\n \n beta\n \n \n+alpha\n+\n+new\n+gamma\n+beta\n+\n+alpha\n+new\n+new\n gamma\n alpha\n \n-gamma\n-beta\n-\n-beta\n-gamma\n-gamma\n-gamma\n-gamma\n-gamma\n+new\n alpha\n"
+  },
+  {
+    "owned": "\ngamma\ngamma\ngamma\nbeta\nalpha\nbeta\ngamma\nalpha\nbeta\nbeta\nbeta\n\ngamma\ngamma\nalpha\nbeta\ngamma\nbeta\ngamma\nbeta\ngamma\n",
+    "incoming": "alpha\n\nnew\nalpha\nbeta\ngamma\nalpha\nbeta\nnew\nnew\nalpha\ngamma\ngamma\nalpha\nbeta\nalpha\nalpha\nnew\ngamma\nbeta\ngamma\nbeta\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,20 +1,21 @@\n+alpha\n \n-gamma\n-gamma\n-gamma\n-beta\n+new\n alpha\n beta\n gamma\n alpha\n beta\n-beta\n-beta\n-\n+new\n+new\n+alpha\n gamma\n gamma\n alpha\n beta\n+alpha\n+alpha\n+new\n gamma\n beta\n gamma\n"
+  },
+  {
+    "owned": "alpha\nbeta\nbeta\ngamma\n",
+    "incoming": "new\ngamma\n\nalpha\n\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,4 +1,7 @@\n+new\n+gamma\n+\n alpha\n-beta\n-beta\n-gamma\n+\n+alpha\n+\n"
+  },
+  {
+    "owned": "alpha\nbeta\nbeta\nbeta\nalpha\nbeta\nalpha\n\n\n\ngamma\nalpha\nbeta\ngamma\ngamma\n\n",
+    "incoming": "alpha\nbeta\nalpha\nbeta\nnew\n\n\nbeta\nalpha\n\n\n\ngamma\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,8 +1,10 @@\n alpha\n beta\n+alpha\n beta\n-beta\n-alpha\n+new\n+\n+\n beta\n alpha\n \n@@ -10,7 +12,3 @@\n \n gamma\n alpha\n-beta\n-gamma\n-gamma\n-\n"
+  },
+  {
+    "owned": "\ngamma\n\n\nalpha\nalpha\n\ngamma\ngamma\nalpha\nalpha\nbeta\nalpha\ngamma\nalpha\nbeta\n\n\ngamma\n",
+    "incoming": "\ngamma\n\n\nalpha\nalpha\n\ngamma\nalpha\n\nalpha\nnew\nalpha\nalpha\n\nbeta\nalpha\ngamma\nalpha\nbeta\n\n\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -6,9 +6,13 @@\n alpha\n \n gamma\n-gamma\n+alpha\n+\n+alpha\n+new\n alpha\n alpha\n+\n beta\n alpha\n gamma\n"
+  },
+  {
+    "owned": "alpha\n\n\nalpha\nbeta\ngamma\n\n\nalpha\nbeta\ngamma\nbeta\ngamma\n\n\nalpha\nalpha\nbeta\nbeta\ngamma\nalpha\n\nalpha\nbeta\nalpha\n\nalpha\nbeta\n\ngamma\ngamma\n\n",
+    "incoming": "\nalpha\nalpha\nalpha\nalpha\n\n\nalpha\nbeta\n\nalpha\nalpha\ngamma\n\n\nalpha\nalpha\nbeta\nbeta\ngamma\nalpha\n\nalpha\nbeta\n\n\nalpha\nbeta\n\ngamma\nnew\nalpha\n\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,15 +1,15 @@\n+\n+alpha\n+alpha\n+alpha\n alpha\n \n \n alpha\n beta\n-gamma\n-\n \n alpha\n-beta\n-gamma\n-beta\n+alpha\n gamma\n \n \n@@ -22,11 +22,13 @@\n \n alpha\n beta\n-alpha\n+\n \n alpha\n beta\n \n gamma\n-gamma\n+new\n+alpha\n \n+\n"
+  },
+  {
+    "owned": "\n\ngamma\nbeta\nbeta\n\nbeta\n\nalpha\ngamma\n\n\n\nbeta\n\nalpha\nbeta\ngamma\nalpha\n\nalpha\n\nalpha\nbeta\n\nbeta\nalpha\n\ngamma\ngamma\n\nalpha\ngamma\n\ngamma\n",
+    "incoming": "\nbeta\nbeta\n\nbeta\n\nalpha\ngamma\n\n\n\nbeta\n\nnew\n\nalpha\nbeta\ngamma\nalpha\n\nalpha\n\nalpha\nbeta\n\nbeta\n\ngamma\ngamma\n\nalpha\ngamma\n\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,6 +1,4 @@\n \n-\n-gamma\n beta\n beta\n \n@@ -13,6 +11,8 @@\n \n beta\n \n+new\n+\n alpha\n beta\n gamma\n@@ -24,7 +24,6 @@\n beta\n \n beta\n-alpha\n \n gamma\n gamma\n"
+  },
+  {
+    "owned": "gamma\ngamma\ngamma\n",
+    "incoming": "\n\nnew\nnew\nnew\nalpha\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,3 +1,7 @@\n-gamma\n-gamma\n-gamma\n+\n+\n+new\n+new\n+new\n+alpha\n+alpha\n"
+  },
+  {
+    "owned": "gamma\nbeta\nalpha\n\ngamma\ngamma\n\ngamma\n\ngamma\nbeta\n\n\nalpha\nbeta\n\ngamma\ngamma\ngamma\nalpha\n\ngamma\nalpha\nalpha\n\ngamma\nbeta\ngamma\nbeta\n",
+    "incoming": "gamma\nbeta\nalpha\n\ngamma\n\ngamma\n\ngamma\nbeta\n\n\nalpha\nbeta\n\ngamma\ngamma\ngamma\nalpha\n\n\nalpha\nalpha\n\nnew\n\nalpha\nbeta\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -2,7 +2,6 @@\n beta\n alpha\n \n-gamma\n gamma\n \n gamma\n@@ -19,11 +18,12 @@\n gamma\n alpha\n \n-gamma\n+\n alpha\n alpha\n \n-gamma\n+new\n+\n+alpha\n beta\n gamma\n-beta\n"
+  },
+  {
+    "owned": "beta\nbeta\ngamma\ngamma\nbeta\ngamma\n\ngamma\ngamma\nalpha\n\n",
+    "incoming": "beta\nalpha\nnew\nbeta\ngamma\nalpha\n\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,11 +1,9 @@\n beta\n+alpha\n+new\n beta\n-gamma\n-gamma\n-beta\n-gamma\n-\n-gamma\n gamma\n alpha\n \n+alpha\n+\n"
+  },
+  {
+    "owned": "gamma\nbeta\nalpha\n\ngamma\n\nalpha\nbeta\nalpha\nalpha\ngamma\n\nalpha\nalpha\nbeta\nbeta\n\n\ngamma\n\nbeta\n\nalpha\n\n\ngamma\nalpha\ngamma\nbeta\n\n\nbeta\ngamma\nalpha\ngamma\ngamma\nalpha\n\ngamma\n",
+    "incoming": "gamma\nbeta\nalpha\nnew\n\ngamma\n\n\nalpha\nbeta\nalpha\nalpha\ngamma\n\nnew\n\nbeta\n\n\ngamma\n\nbeta\n\nalpha\n\n\ngamma\nalpha\ngamma\nbeta\n\n\nbeta\ngamma\nalpha\ngamma\ngamma\nalpha\n\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,8 +1,10 @@\n gamma\n beta\n alpha\n+new\n \n gamma\n+\n \n alpha\n beta\n@@ -10,9 +12,8 @@\n alpha\n gamma\n \n-alpha\n-alpha\n-beta\n+new\n+\n beta\n \n \n"
+  },
+  {
+    "owned": "beta\nbeta\ngamma\nbeta\nalpha\nalpha\nbeta\nalpha\ngamma\nbeta\ngamma\nalpha\nbeta\ngamma\nalpha\nbeta\n\n",
+    "incoming": "beta\nalpha\nalpha\n\nbeta\ngamma\nbeta\nalpha\nalpha\nbeta\nalpha\ngamma\nbeta\ngamma\nalpha\nbeta\ngamma\n\nalpha\nalpha\n\n\nbeta\n\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,4 +1,7 @@\n beta\n+alpha\n+alpha\n+\n beta\n gamma\n beta\n@@ -12,6 +15,12 @@\n alpha\n beta\n gamma\n+\n alpha\n+alpha\n+\n+\n beta\n \n+alpha\n+\n"
+  },
+  {
+    "owned": "\nalpha\nalpha\ngamma\nbeta\nalpha\nbeta\ngamma\ngamma\n\ngamma\n\n\nalpha\nalpha\nbeta\n\n\nbeta\n\ngamma\n\n\n\nalpha\ngamma\n\ngamma\ngamma\ngamma\nbeta\n",
+    "incoming": "\nalpha\nalpha\nnew\n\ngamma\nbeta\ngamma\n\ngamma\n\n\nnew\nalpha\nalpha\nbeta\n\n\nbeta\n\nnew\n\n\nalpha\ngamma\n\ngamma\ngamma\ngamma\nbeta\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,16 +1,16 @@\n \n alpha\n alpha\n+new\n+\n gamma\n beta\n-alpha\n-beta\n-gamma\n gamma\n \n gamma\n \n \n+new\n alpha\n alpha\n beta\n@@ -18,8 +18,7 @@\n \n beta\n \n-gamma\n-\n+new\n \n \n alpha\n"
+  },
+  {
+    "owned": "alpha\nbeta\nbeta\n\nbeta\nalpha\ngamma\ngamma\nalpha\ngamma\nbeta\n\nalpha\ngamma\nalpha\nbeta\ngamma\ngamma\ngamma\ngamma\nalpha\nbeta\n",
+    "incoming": "alpha\nnew\nbeta\nalpha\nnew\n\nbeta\nalpha\ngamma\ngamma\nalpha\ngamma\nbeta\n\nalpha\nnew\nalpha\nbeta\ngamma\ngamma\ngamma\ngamma\nalpha\nbeta\n\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,6 +1,8 @@\n alpha\n+new\n beta\n-beta\n+alpha\n+new\n \n beta\n alpha\n@@ -11,7 +13,7 @@\n beta\n \n alpha\n-gamma\n+new\n alpha\n beta\n gamma\n@@ -20,3 +22,5 @@\n gamma\n alpha\n beta\n+\n+\n"
+  },
+  {
+    "owned": "gamma\n\n\n\n\n",
+    "incoming": "gamma\n\n\nnew\nnew\nnew\nalpha\n\nnew\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,5 +1,10 @@\n gamma\n \n \n+new\n+new\n+new\n+alpha\n \n-\n+new\n+new\n"
+  },
+  {
+    "owned": "gamma\nalpha\nalpha\n\n\nbeta\nbeta\n\nbeta\ngamma\nalpha\n\nalpha\n\nalpha\n\nalpha\ngamma\n",
+    "incoming": "new\n\n\n\nbeta\nbeta\n\nbeta\nalpha\n\nalpha\n\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,18 +1,13 @@\n-gamma\n-alpha\n-alpha\n+new\n+\n \n \n beta\n beta\n \n beta\n-gamma\n alpha\n \n alpha\n \n alpha\n-\n-alpha\n-gamma\n"
+  },
+  {
+    "owned": "\nalpha\n\ngamma\ngamma\nbeta\ngamma\nbeta\nalpha\nalpha\nbeta\ngamma\ngamma\nbeta\nbeta\nalpha\nbeta\ngamma\nbeta\nbeta\nbeta\nalpha\nbeta\n\n\n\ngamma\n",
+    "incoming": "\nalpha\n\ngamma\nbeta\nalpha\nalpha\nbeta\ngamma\ngamma\nbeta\nnew\nnew\nalpha\nalpha\nalpha\nalpha\nbeta\ngamma\nbeta\nalpha\nbeta\n\n\n\ngamma\nnew\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,9 +1,6 @@\n \n alpha\n \n-gamma\n-gamma\n-beta\n gamma\n beta\n alpha\n@@ -12,12 +9,14 @@\n gamma\n gamma\n beta\n-beta\n+new\n+new\n+alpha\n+alpha\n+alpha\n alpha\n beta\n gamma\n-beta\n-beta\n beta\n alpha\n beta\n@@ -25,3 +24,5 @@\n \n \n gamma\n+new\n+alpha\n"
+  },
+  {
+    "owned": "alpha\n\nbeta\ngamma\n\nbeta\nalpha\n\nalpha\ngamma\nalpha\nbeta\nalpha\nbeta\n\n\nbeta\ngamma\ngamma\ngamma\n\n\ngamma\nalpha\ngamma\nalpha\ngamma\nalpha\n\n",
+    "incoming": "alpha\n\nbeta\ngamma\n\nbeta\nalpha\n\nalpha\nbeta\nalpha\nbeta\n\n\nbeta\ngamma\ngamma\n\nalpha\nnew\ngamma\n\n\ngamma\nalpha\ngamma\nalpha\ngamma\nalpha\n\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -7,8 +7,6 @@\n alpha\n \n alpha\n-gamma\n-alpha\n beta\n alpha\n beta\n@@ -17,6 +15,9 @@\n beta\n gamma\n gamma\n+\n+alpha\n+new\n gamma\n \n \n@@ -27,3 +28,5 @@\n gamma\n alpha\n \n+alpha\n+\n"
+  },
+  {
+    "owned": "gamma\nalpha\ngamma\ngamma\nbeta\nbeta\ngamma\n\nbeta\nbeta\nbeta\nbeta\nalpha\ngamma\nalpha\nalpha\ngamma\nbeta\n\nbeta\nbeta\nbeta\nbeta\n\nalpha\n\ngamma\n",
+    "incoming": "gamma\nalpha\ngamma\ngamma\nbeta\n\ngamma\n\nbeta\nbeta\nbeta\nbeta\nalpha\ngamma\nalpha\n\nbeta\n\nbeta\nbeta\nalpha\n\nalpha\nnew\nnew\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -3,7 +3,7 @@\n gamma\n gamma\n beta\n-beta\n+\n gamma\n \n beta\n@@ -13,15 +13,15 @@\n alpha\n gamma\n alpha\n-alpha\n-gamma\n+\n beta\n \n beta\n beta\n-beta\n-beta\n+alpha\n \n alpha\n+new\n+new\n+alpha\n \n-gamma\n"
+  },
+  {
+    "owned": "alpha\n\ngamma\nalpha\nalpha\ngamma\nalpha\nbeta\ngamma\n\nbeta\n\nalpha\nbeta\n\ngamma\n",
+    "incoming": "new\nalpha\n\ngamma\nnew\ngamma\nnew\nalpha\nnew\ngamma\n\nbeta\n\nalpha\nbeta\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,11 +1,12 @@\n+new\n alpha\n \n gamma\n+new\n+gamma\n+new\n alpha\n-alpha\n-gamma\n-alpha\n-beta\n+new\n gamma\n \n beta\n@@ -13,4 +14,3 @@\n alpha\n beta\n \n-gamma\n"
+  },
+  {
+    "owned": "alpha\nalpha\nalpha\ngamma\nbeta\nbeta\n\nalpha\ngamma\nbeta\ngamma\nalpha\nalpha\nbeta\n\n\nalpha\nalpha\n\nalpha\nbeta\nbeta\ngamma\n\nalpha\ngamma\nbeta\n\n",
+    "incoming": "alpha\nalpha\nnew\n\nalpha\ngamma\nbeta\ngamma\nalpha\nalpha\nbeta\n\n\n\nnew\n\nalpha\n\nalpha\ngamma\nbeta\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,9 +1,6 @@\n alpha\n alpha\n-alpha\n-gamma\n-beta\n-beta\n+new\n \n alpha\n gamma\n@@ -14,13 +11,10 @@\n beta\n \n \n-alpha\n-alpha\n+\n+new\n \n alpha\n-beta\n-beta\n-gamma\n \n alpha\n gamma\n"
+  },
+  {
+    "owned": "gamma\nbeta\nalpha\ngamma\ngamma\nbeta\n\n\nbeta\nbeta\nalpha\n\nalpha\ngamma\nbeta\nalpha\nbeta\nalpha\ngamma\ngamma\n\n\ngamma\nalpha\nbeta\ngamma\ngamma\nalpha\ngamma\ngamma\nalpha\ngamma\n\n\n\n\ngamma\n",
+    "incoming": "gamma\nbeta\nalpha\ngamma\ngamma\nnew\nalpha\n\n\n\nalpha\nalpha\nnew\nalpha\n\nalpha\nalpha\ngamma\nbeta\nalpha\nbeta\nalpha\nalpha\n\n\ngamma\nalpha\nbeta\ngamma\ngamma\nalpha\ngamma\ngamma\nalpha\nalpha\nnew\ngamma\n\n\n\n\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -3,21 +3,24 @@\n alpha\n gamma\n gamma\n-beta\n+new\n+alpha\n \n \n-beta\n-beta\n+\n+alpha\n+alpha\n+new\n alpha\n \n+alpha\n alpha\n gamma\n beta\n alpha\n beta\n alpha\n-gamma\n-gamma\n+alpha\n \n \n gamma\n@@ -29,6 +32,8 @@\n gamma\n gamma\n alpha\n+alpha\n+new\n gamma\n \n \n"
+  },
+  {
+    "owned": "\ngamma\nalpha\nalpha\n\ngamma\nbeta\nalpha\nbeta\n\nalpha\nbeta\nalpha\nbeta\ngamma\ngamma\n\nalpha\nbeta\n\ngamma\ngamma\n\nalpha\nbeta\ngamma\n\ngamma\ngamma\nbeta\nalpha\nalpha\nbeta\n\n\nalpha\ngamma\ngamma\n\n",
+    "incoming": "\ngamma\nalpha\nalpha\nalpha\nnew\ngamma\nbeta\nnew\nalpha\nbeta\nalpha\nnew\n\nalpha\ngamma\ngamma\n\nalpha\nbeta\n\ngamma\ngamma\nnew\nalpha\nbeta\ngamma\n\ngamma\ngamma\nbeta\nalpha\nalpha\nbeta\n\n\nalpha\ngamma\ngamma\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -2,16 +2,17 @@\n gamma\n alpha\n alpha\n-\n+alpha\n+new\n gamma\n beta\n-alpha\n-beta\n-\n+new\n alpha\n beta\n alpha\n-beta\n+new\n+\n+alpha\n gamma\n gamma\n \n@@ -20,7 +21,7 @@\n \n gamma\n gamma\n-\n+new\n alpha\n beta\n gamma\n"
+  },
+  {
+    "owned": "beta\n\nalpha\ngamma\ngamma\n\nbeta\nalpha\n",
+    "incoming": "beta\nalpha\nnew\n\nbeta\n\nnew\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,8 +1,8 @@\n+beta\n+alpha\n+new\n+\n beta\n \n-alpha\n-gamma\n-gamma\n-\n-beta\n-alpha\n+new\n+new\n"
+  },
+  {
+    "owned": "beta\ngamma\nbeta\nbeta\ngamma\nbeta\ngamma\ngamma\nalpha\ngamma\nbeta\ngamma\nbeta\ngamma\nalpha\nbeta\nbeta\nbeta\ngamma\nalpha\nalpha\nalpha\nalpha\ngamma\nbeta\n\nalpha\n\ngamma\ngamma\n\nbeta\n\n",
+    "incoming": "beta\ngamma\nbeta\nbeta\ngamma\nbeta\ngamma\ngamma\nalpha\n\nalpha\ngamma\nbeta\ngamma\nalpha\nbeta\nbeta\nbeta\ngamma\nnew\nalpha\n\nnew\nalpha\nalpha\nalpha\nalpha\ngamma\nbeta\n\nalpha\nalpha\nnew\ngamma\ngamma\n\nbeta\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -7,8 +7,8 @@\n gamma\n gamma\n alpha\n-gamma\n-beta\n+\n+alpha\n gamma\n beta\n gamma\n@@ -17,6 +17,10 @@\n beta\n beta\n gamma\n+new\n+alpha\n+\n+new\n alpha\n alpha\n alpha\n@@ -25,7 +29,8 @@\n beta\n \n alpha\n-\n+alpha\n+new\n gamma\n gamma\n \n"
+  },
+  {
+    "owned": "\nbeta\nbeta\nalpha\nalpha\ngamma\n\n\nbeta\nbeta\ngamma\ngamma\nbeta\nbeta\n\n\n\n",
+    "incoming": "\nalpha\nalpha\ngamma\n\n\nnew\nalpha\n\nnew\nnew\nalpha\nbeta\nalpha\n\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,17 +1,16 @@\n \n-beta\n-beta\n alpha\n alpha\n gamma\n \n \n+new\n+alpha\n+\n+new\n+new\n+alpha\n beta\n-beta\n-gamma\n-gamma\n-beta\n-beta\n+alpha\n \n \n-\n"
+  },
+  {
+    "owned": "gamma\nalpha\n\nalpha\nbeta\ngamma\ngamma\nalpha\n\n\ngamma\nalpha\nbeta\nalpha\n\ngamma\ngamma\ngamma\nbeta\nbeta\n\nalpha\nalpha\nalpha\nbeta\n",
+    "incoming": "alpha\n\ngamma\nalpha\n\nalpha\nalpha\n\n\nalpha\n\n\ngamma\nalpha\nbeta\nalpha\n\ngamma\n\n\nalpha\nbeta\n\nalpha\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,10 +1,12 @@\n+alpha\n+\n gamma\n alpha\n \n alpha\n-beta\n-gamma\n-gamma\n+alpha\n+\n+\n alpha\n \n \n@@ -14,12 +16,11 @@\n alpha\n \n gamma\n-gamma\n-gamma\n-beta\n+\n+\n+alpha\n beta\n \n alpha\n alpha\n-alpha\n-beta\n+\n"
+  },
+  {
+    "owned": "gamma\nalpha\n\ngamma\nbeta\nalpha\n\nbeta\n\nbeta\nbeta\nalpha\nalpha\nbeta\nalpha\n\ngamma\n\nbeta\n\nbeta\n\n\nalpha\nbeta\nbeta\n",
+    "incoming": "gamma\nalpha\n\ngamma\nbeta\nalpha\n\nalpha\n\n\nbeta\nalpha\nalpha\nbeta\nalpha\n\ngamma\n\n\n\nnew\nnew\nalpha\nalpha\nbeta\nbeta\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -5,9 +5,9 @@\n beta\n alpha\n \n-beta\n+alpha\n \n-beta\n+\n beta\n alpha\n alpha\n@@ -16,11 +16,11 @@\n \n gamma\n \n-beta\n-\n-beta\n \n \n+new\n+new\n+alpha\n alpha\n beta\n beta\n"
+  },
+  {
+    "owned": "gamma\n\ngamma\ngamma\ngamma\nalpha\n\n\ngamma\nbeta\ngamma\nalpha\ngamma\nalpha\ngamma\n\ngamma\n\nbeta\nbeta\ngamma\ngamma\nbeta\nalpha\nbeta\nbeta\nalpha\nbeta\nbeta\nalpha\nalpha\n",
+    "incoming": "gamma\n\ngamma\ngamma\ngamma\nalpha\n\n\nbeta\ngamma\nalpha\ngamma\nalpha\ngamma\ngamma\n\nbeta\nbeta\ngamma\n\nnew\ngamma\nbeta\nalpha\nbeta\nbeta\n\nalpha\n\nnew\nbeta\nbeta\nalpha\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -6,25 +6,28 @@\n alpha\n \n \n-gamma\n beta\n gamma\n alpha\n gamma\n alpha\n gamma\n-\n gamma\n \n beta\n beta\n gamma\n+\n+new\n gamma\n beta\n alpha\n beta\n beta\n+\n alpha\n+\n+new\n beta\n beta\n alpha\n"
+  },
+  {
+    "owned": "beta\nalpha\n\n\nbeta\ngamma\nalpha\nalpha\ngamma\nalpha\ngamma\ngamma\n\n\nbeta\n\ngamma\nbeta\nalpha\ngamma\nbeta\n\ngamma\nbeta\nalpha\ngamma\n",
+    "incoming": "beta\nalpha\n\n\nalpha\nnew\nnew\n\nalpha\ngamma\nalpha\nalpha\nalpha\ngamma\n\n\nbeta\n\ngamma\nbeta\nalpha\ngamma\nbeta\n\ngamma\nbeta\nalpha\n\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -2,13 +2,15 @@\n alpha\n \n \n-beta\n+alpha\n+new\n+new\n+\n+alpha\n gamma\n alpha\n alpha\n-gamma\n alpha\n-gamma\n gamma\n \n \n@@ -23,4 +25,5 @@\n gamma\n beta\n alpha\n-gamma\n+\n+\n"
+  },
+  {
+    "owned": "gamma\nalpha\ngamma\ngamma\nbeta\nalpha\nalpha\n\ngamma\nbeta\n\ngamma\nalpha\ngamma\ngamma\nbeta\nbeta\nbeta\n\nbeta\n\n",
+    "incoming": "gamma\nalpha\ngamma\ngamma\nbeta\nalpha\nalpha\n\ngamma\nbeta\n\ngamma\nalpha\ngamma\ngamma\nbeta\n\n\nalpha\nbeta\nnew\nbeta\n\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -14,8 +14,12 @@\n gamma\n gamma\n beta\n+\n+\n+alpha\n beta\n+new\n beta\n \n-beta\n+alpha\n \n"
+  },
+  {
+    "owned": "gamma\n\nalpha\nbeta\n\nalpha\n\nalpha\n\nbeta\n",
+    "incoming": "gamma\n\nalpha\nbeta\nalpha\n\n\nnew\nalpha\nalpha\n\n\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -2,9 +2,12 @@\n \n alpha\n beta\n-\n alpha\n \n+\n+new\n+alpha\n alpha\n \n-beta\n+\n+new\n"
+  },
+  {
+    "owned": "\nalpha\ngamma\n\n",
+    "incoming": "\nalpha\n\n\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,4 +1,5 @@\n \n alpha\n-gamma\n \n+\n+\n"
+  },
+  {
+    "owned": "",
+    "incoming": "\nnew\nnew\nnew\n\n\nnew\nnew\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -0,0 +1,9 @@\n+\n+new\n+new\n+new\n+\n+\n+new\n+new\n+alpha\n"
+  },
+  {
+    "owned": "alpha\nbeta\nalpha\n\n\nbeta\nbeta\nalpha\nbeta\ngamma\nbeta\ngamma\ngamma\nbeta\ngamma\nbeta\nbeta\n\ngamma\ngamma\nalpha\nbeta\n\n\nalpha\ngamma\n\ngamma\n",
+    "incoming": "alpha\nbeta\nalpha\n\n\nnew\nnew\nalpha\nalpha\nbeta\nalpha\nbeta\ngamma\nbeta\ngamma\ngamma\nbeta\ngamma\nalpha\nbeta\n\ngamma\ngamma\nalpha\nbeta\nalpha\nnew\n\nalpha\n\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -3,7 +3,10 @@\n alpha\n \n \n-beta\n+new\n+new\n+alpha\n+alpha\n beta\n alpha\n beta\n@@ -13,16 +16,16 @@\n gamma\n beta\n gamma\n-beta\n+alpha\n beta\n \n gamma\n gamma\n alpha\n beta\n-\n+alpha\n+new\n \n alpha\n-gamma\n \n gamma\n"
+  },
+  {
+    "owned": "gamma\nalpha\nbeta\nalpha\ngamma\n\nalpha\nalpha\nbeta\nbeta\n\nbeta\ngamma\ngamma\nalpha\nbeta\nbeta\nalpha\n\nbeta\nbeta\n\nbeta\ngamma\ngamma\n\n\ngamma\n",
+    "incoming": "gamma\nalpha\nbeta\nalpha\ngamma\n\nalpha\nalpha\nbeta\nalpha\n\ngamma\ngamma\n\nbeta\nbeta\n\nbeta\ngamma\ngamma\n\n\ngamma\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -7,15 +7,10 @@\n alpha\n alpha\n beta\n-beta\n+alpha\n \n-beta\n gamma\n gamma\n-alpha\n-beta\n-beta\n-alpha\n \n beta\n beta\n@@ -26,3 +21,4 @@\n \n \n gamma\n+new\n"
+  },
+  {
+    "owned": "\ngamma\nbeta\nbeta\ngamma\nbeta\n\nbeta\n\ngamma\ngamma\n\n\n\nbeta\ngamma\nbeta\nbeta\n\nbeta\nalpha\nalpha\nalpha\nalpha\nalpha\n\nbeta\nbeta\nalpha\nbeta\nalpha\nbeta\n\ngamma\nalpha\n",
+    "incoming": "beta\nbeta\ngamma\nbeta\n\nbeta\n\ngamma\ngamma\nnew\n\nbeta\ngamma\nbeta\nbeta\n\nbeta\nalpha\nalpha\n\nbeta\nbeta\nalpha\nbeta\nnew\nnew\nnew\n\ngamma\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,5 +1,3 @@\n-\n-gamma\n beta\n beta\n gamma\n@@ -9,8 +7,7 @@\n \n gamma\n gamma\n-\n-\n+new\n \n beta\n gamma\n@@ -20,16 +17,14 @@\n beta\n alpha\n alpha\n-alpha\n-alpha\n-alpha\n \n beta\n beta\n alpha\n beta\n-alpha\n-beta\n+new\n+new\n+new\n \n gamma\n alpha\n"
+  },
+  {
+    "owned": "gamma\n\nalpha\ngamma\n\n\nbeta\nbeta\ngamma\nalpha\nalpha\nalpha\n\n\n\n\nalpha\nalpha\nbeta\nalpha\n\n\n",
+    "incoming": "gamma\n\nalpha\ngamma\n\nnew\nnew\nbeta\n\nalpha\nalpha\n\n\n\n\nalpha\nalpha\nbeta\nalpha\n\nnew\n\n\n\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -3,11 +3,10 @@\n alpha\n gamma\n \n+new\n+new\n+beta\n \n-beta\n-beta\n-gamma\n-alpha\n alpha\n alpha\n \n@@ -19,4 +18,8 @@\n beta\n alpha\n \n+new\n \n+\n+\n+\n"
+  },
+  {
+    "owned": "alpha\ngamma\nbeta\nbeta\n\ngamma\n\nbeta\nalpha\ngamma\nalpha\nalpha\n\nbeta\nalpha\ngamma\n\ngamma\nalpha\ngamma\n\n\nbeta\ngamma\n\n",
+    "incoming": "alpha\nalpha\nnew\nalpha\n\nbeta\nbeta\n\ngamma\n\nbeta\nalpha\ngamma\nalpha\nalpha\n\n\n\ngamma\nalpha\ngamma\n\n\nalpha\nalpha\nnew\nbeta\ngamma\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,5 +1,8 @@\n alpha\n-gamma\n+alpha\n+new\n+alpha\n+\n beta\n beta\n \n@@ -11,15 +14,16 @@\n alpha\n alpha\n \n-beta\n-alpha\n-gamma\n+\n \n gamma\n alpha\n gamma\n \n \n+alpha\n+alpha\n+new\n beta\n gamma\n \n"
+  },
+  {
+    "owned": "beta\nalpha\nbeta\n\n\n\n",
+    "incoming": "beta\nalpha\n\nnew\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,6 +1,5 @@\n beta\n alpha\n-beta\n \n+new\n \n-\n"
+  },
+  {
+    "owned": "beta\ngamma\ngamma\ngamma\n\nbeta\nalpha\nbeta\n\ngamma\n",
+    "incoming": "beta\ngamma\ngamma\nnew\nnew\nalpha\n\nalpha\n\nnew\n\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,10 +1,12 @@\n beta\n gamma\n gamma\n-gamma\n+new\n+new\n+alpha\n \n-beta\n alpha\n-beta\n+\n+new\n \n gamma\n"
+  },
+  {
+    "owned": "gamma\nbeta\n\ngamma\nbeta\n\ngamma\ngamma\n\nbeta\ngamma\n\ngamma\n\ngamma\nalpha\nbeta\nbeta\nalpha\n",
+    "incoming": "gamma\nbeta\n\nalpha\nnew\nbeta\n\n\nnew\nbeta\ngamma\n\nbeta\nbeta\nalpha\n\n\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,19 +1,18 @@\n gamma\n beta\n \n-gamma\n+alpha\n+new\n beta\n \n-gamma\n+\n+new\n+beta\n gamma\n \n beta\n-gamma\n-\n-gamma\n-\n-gamma\n-alpha\n-beta\n beta\n alpha\n+\n+\n+\n"
+  },
+  {
+    "owned": "alpha\ngamma\nalpha\nalpha\nbeta\ngamma\nbeta\nalpha\n\ngamma\n\nalpha\nalpha\nalpha\ngamma\nbeta\nbeta\n\ngamma\n\n\nbeta\ngamma\nalpha\n\nalpha\ngamma\n\nalpha\nalpha\nbeta\ngamma\ngamma\ngamma\n",
+    "incoming": "alpha\ngamma\nalpha\nalpha\nbeta\ngamma\nbeta\nalpha\n\ngamma\n\nalpha\nalpha\nalpha\ngamma\nbeta\nbeta\n\ngamma\n\nnew\nalpha\n\nalpha\ngamma\n\nalpha\n\nnew\ngamma\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -18,17 +18,14 @@\n \n gamma\n \n-\n-beta\n-gamma\n+new\n alpha\n \n alpha\n gamma\n \n alpha\n-alpha\n-beta\n+\n+new\n gamma\n gamma\n-gamma\n"
+  },
+  {
+    "owned": "beta\nbeta\ngamma\n\n\nbeta\n\nbeta\nbeta\n\n\nalpha\nbeta\n\n\n",
+    "incoming": "beta\nbeta\ngamma\n\nalpha\nalpha\nnew\n\nbeta\nbeta\n\n\n\nnew\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -2,14 +2,15 @@\n beta\n gamma\n \n-\n-beta\n+alpha\n+alpha\n+new\n \n beta\n beta\n \n \n+\n+new\n alpha\n-beta\n \n-\n"
+  },
+  {
+    "owned": "beta\ngamma\nalpha\nbeta\ngamma\nalpha\nbeta\ngamma\nalpha\nbeta\ngamma\nbeta\n\n\nbeta\n\n\nbeta\n\nbeta\nbeta\n\ngamma\nbeta\nbeta\ngamma\n\nalpha\ngamma\n",
+    "incoming": "new\nnew\nalpha\nbeta\ngamma\nalpha\nbeta\ngamma\n\ngamma\nbeta\n\nalpha\n\nalpha\n\nbeta\n\nbeta\nbeta\n\ngamma\nbeta\nbeta\nalpha\ngamma\n\nalpha\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,19 +1,18 @@\n-beta\n-gamma\n+new\n+new\n alpha\n beta\n gamma\n alpha\n beta\n gamma\n-alpha\n-beta\n+\n gamma\n beta\n \n+alpha\n \n-beta\n-\n+alpha\n \n beta\n \n@@ -23,6 +22,7 @@\n gamma\n beta\n beta\n+alpha\n gamma\n \n alpha\n"
+  },
+  {
+    "owned": "\n\nalpha\nalpha\ngamma\ngamma\nalpha\n\nbeta\n\n",
+    "incoming": "\nnew\nalpha\ngamma\nalpha\nnew\n\nnew\n\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,10 +1,10 @@\n \n-\n-alpha\n+new\n alpha\n gamma\n-gamma\n alpha\n+new\n \n-beta\n+new\n \n+new\n"
+  },
+  {
+    "owned": "gamma\nbeta\ngamma\ngamma\ngamma\ngamma\nalpha\nbeta\n\nalpha\ngamma\nbeta\nbeta\nbeta\nbeta\ngamma\nbeta\n\n\nbeta\ngamma\n\n\n\nalpha\nalpha\n\ngamma\ngamma\n\n\ngamma\nalpha\nalpha\n",
+    "incoming": "gamma\nbeta\ngamma\ngamma\ngamma\ngamma\nnew\nnew\nnew\nalpha\ngamma\nbeta\nbeta\nnew\nalpha\nalpha\ngamma\nbeta\n\n\n\nbeta\ngamma\n\n\n\nalpha\nalpha\n\ngamma\ngamma\n\nnew\nnew\n\nalpha\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -4,17 +4,19 @@\n gamma\n gamma\n gamma\n-alpha\n-beta\n-\n+new\n+new\n+new\n alpha\n gamma\n beta\n beta\n-beta\n-beta\n+new\n+alpha\n+alpha\n gamma\n beta\n+\n \n \n beta\n@@ -28,7 +30,8 @@\n gamma\n gamma\n \n+new\n+new\n \n-gamma\n alpha\n alpha\n"
+  },
+  {
+    "owned": "alpha\n\nbeta\nbeta\ngamma\nbeta\ngamma\nalpha\ngamma\ngamma\nalpha\ngamma\nbeta\nalpha\n\ngamma\nbeta\n\nalpha\nalpha\nalpha\nbeta\n\nalpha\nbeta\nbeta\n\nalpha\nalpha\n",
+    "incoming": "alpha\n\nbeta\nalpha\nalpha\ngamma\nbeta\ngamma\nalpha\ngamma\ngamma\nalpha\n\nbeta\nalpha\n\nbeta\n\nalpha\nalpha\nalpha\nbeta\nnew\nalpha\nalpha\nbeta\nbeta\n\nalpha\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,7 +1,8 @@\n alpha\n \n beta\n-beta\n+alpha\n+alpha\n gamma\n beta\n gamma\n@@ -9,18 +10,18 @@\n gamma\n gamma\n alpha\n-gamma\n+\n beta\n alpha\n \n-gamma\n beta\n \n alpha\n alpha\n alpha\n beta\n-\n+new\n+alpha\n alpha\n beta\n beta\n"
+  },
+  {
+    "owned": "alpha\nbeta\n\ngamma\n",
+    "incoming": "\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,4 +1,2 @@\n-alpha\n-beta\n \n-gamma\n+new\n"
+  },
+  {
+    "owned": "gamma\n",
+    "incoming": "\nnew\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1 +1,3 @@\n-gamma\n+\n+new\n+alpha\n"
+  },
+  {
+    "owned": "beta\n\nalpha\nalpha\nalpha\nalpha\ngamma\nbeta\nalpha\nalpha\n\ngamma\n\n\n\nalpha\nbeta\ngamma\nalpha\ngamma\nalpha\nbeta\nbeta\n",
+    "incoming": "beta\n\nnew\nalpha\n\nalpha\nalpha\nalpha\nnew\ngamma\nbeta\nalpha\n\nnew\nnew\n\ngamma\n\n\n\nalpha\nbeta\nalpha\n\ngamma\nalpha\ngamma\nalpha\nbeta\nbeta\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,13 +1,18 @@\n beta\n+\n+new\n+alpha\n \n alpha\n alpha\n alpha\n-alpha\n+new\n gamma\n beta\n alpha\n-alpha\n+\n+new\n+new\n \n gamma\n \n@@ -15,6 +20,8 @@\n \n alpha\n beta\n+alpha\n+\n gamma\n alpha\n gamma\n"
+  },
+  {
+    "owned": "gamma\ngamma\nbeta\ngamma\nbeta\ngamma\nalpha\nalpha\ngamma\n\ngamma\nalpha\ngamma\nalpha\n\n\ngamma\nalpha\n\nbeta\ngamma\nbeta\ngamma\nalpha\nalpha\nbeta\nalpha\nalpha\nalpha\nbeta\nalpha\n",
+    "incoming": "gamma\ngamma\nnew\nalpha\nnew\ngamma\nalpha\ngamma\n\ngamma\nalpha\ngamma\nalpha\n\n\nbeta\nnew\n\ngamma\nalpha\nalpha\nbeta\nalpha\nalpha\nalpha\nbeta\nalpha\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,10 +1,9 @@\n gamma\n gamma\n-beta\n+new\n+alpha\n+new\n gamma\n-beta\n-gamma\n-alpha\n alpha\n gamma\n \n@@ -14,12 +13,9 @@\n alpha\n \n \n-gamma\n-alpha\n+beta\n+new\n \n-beta\n-gamma\n-beta\n gamma\n alpha\n alpha\n@@ -29,3 +25,4 @@\n alpha\n beta\n alpha\n+new\n"
+  },
+  {
+    "owned": "\ngamma\ngamma\ngamma\n",
+    "incoming": "\nnew\nnew\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,4 +1,4 @@\n \n-gamma\n-gamma\n-gamma\n+new\n+new\n+\n"
+  },
+  {
+    "owned": "",
+    "incoming": "new\nnew\n\nalpha\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -0,0 +1,5 @@\n+new\n+new\n+\n+alpha\n+alpha\n"
+  },
+  {
+    "owned": "alpha\nbeta\n\nalpha\nalpha\n\nbeta\nbeta\ngamma\ngamma\ngamma\n\ngamma\ngamma\n\ngamma\nbeta\nalpha\nbeta\nbeta\nalpha\nbeta\nalpha\nbeta\n\n\ngamma\n\nalpha\ngamma\nbeta\n\ngamma\n\ngamma\nalpha\nalpha\n",
+    "incoming": "alpha\nbeta\n\nalpha\nalpha\n\nbeta\nbeta\ngamma\ngamma\n\n\ngamma\nnew\nnew\ngamma\nnew\nbeta\nalpha\nbeta\n\nnew\n\nbeta\nalpha\nbeta\n\n\nnew\ngamma\nbeta\n\ngamma\n\ngamma\nalpha\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -8,25 +8,25 @@\n beta\n gamma\n gamma\n-gamma\n+\n \n gamma\n+new\n+new\n gamma\n-\n-gamma\n+new\n beta\n alpha\n beta\n-beta\n-alpha\n+\n+new\n+\n beta\n alpha\n beta\n \n \n-gamma\n-\n-alpha\n+new\n gamma\n beta\n \n"
+  },
+  {
+    "owned": "beta\nalpha\nalpha\nalpha\nbeta\nbeta\n",
+    "incoming": "new\nnew\n\nnew\nnew\nalpha\n\nalpha\nalpha\nalpha\nbeta\nbeta\nnew\nalpha\nnew\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,6 +1,16 @@\n-beta\n+new\n+new\n+\n+new\n+new\n+alpha\n+\n alpha\n alpha\n alpha\n beta\n beta\n+new\n+alpha\n+new\n+alpha\n"
+  },
+  {
+    "owned": "gamma\nbeta\nbeta\ngamma\ngamma\n\nbeta\nalpha\nbeta\ngamma\n\n",
+    "incoming": "gamma\nbeta\nnew\n\n\n\nnew\nnew\n\nnew\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,11 +1,11 @@\n gamma\n beta\n-beta\n-gamma\n-gamma\n+new\n \n-beta\n-alpha\n-beta\n-gamma\n \n+\n+new\n+new\n+\n+new\n+new\n"
+  },
+  {
+    "owned": "beta\nalpha\ngamma\nalpha\n\ngamma\nbeta\nbeta\nalpha\nbeta\nbeta\ngamma\nalpha\nbeta\n\ngamma\nbeta\nbeta\nbeta\ngamma\ngamma\nalpha\ngamma\nbeta\nbeta\n\ngamma\nbeta\n\nalpha\nalpha\nalpha\nbeta\nbeta\nalpha\n\nalpha\ngamma\n",
+    "incoming": "beta\nalpha\ngamma\nalpha\n\n\nalpha\nalpha\nalpha\nnew\ngamma\nalpha\nbeta\n\ngamma\nbeta\nbeta\nbeta\ngamma\ngamma\nalpha\ngamma\nbeta\nbeta\n\ngamma\nbeta\n\nalpha\nalpha\nalpha\nbeta\nbeta\nalpha\n\nalpha\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -3,12 +3,11 @@\n gamma\n alpha\n \n-gamma\n-beta\n-beta\n+\n alpha\n-beta\n-beta\n+alpha\n+alpha\n+new\n gamma\n alpha\n beta\n"
+  },
+  {
+    "owned": "\n\ngamma\nbeta\ngamma\nbeta\nbeta\n\ngamma\ngamma\n",
+    "incoming": "\n\n\ngamma\nbeta\ngamma\nbeta\nalpha\nnew\nbeta\n\ngamma\ngamma\n\nnew\nnew\n\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,10 +1,18 @@\n+\n \n \n gamma\n beta\n gamma\n beta\n+alpha\n+new\n beta\n \n gamma\n gamma\n+\n+new\n+new\n+\n+alpha\n"
+  },
+  {
+    "owned": "\nalpha\ngamma\nbeta\nbeta\nalpha\ngamma\ngamma\nalpha\nalpha\nalpha\n\n\n\nbeta\n\n\n\ngamma\n\nalpha\n",
+    "incoming": "alpha\nnew\nbeta\nalpha\ngamma\ngamma\nalpha\nalpha\nalpha\n\n\n\nbeta\nnew\ngamma\n\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,7 +1,5 @@\n-\n alpha\n-gamma\n-beta\n+new\n beta\n alpha\n gamma\n@@ -13,9 +11,7 @@\n \n \n beta\n-\n-\n-\n+new\n gamma\n \n alpha\n"
+  },
+  {
+    "owned": "\nalpha\n\nbeta\n\nbeta\nalpha\nalpha\ngamma\nbeta\nbeta\n\ngamma\ngamma\ngamma\nbeta\nalpha\nalpha\n\n\nbeta\nalpha\ngamma\nalpha\n\nalpha\ngamma\n\nbeta\nalpha\nalpha\nbeta\nbeta\ngamma\nalpha\n\nalpha\ngamma\n",
+    "incoming": "\nalpha\n\nbeta\n\nbeta\nalpha\nalpha\ngamma\nbeta\nbeta\nnew\nalpha\nalpha\ngamma\nbeta\nalpha\nalpha\nalpha\n\n\nbeta\nalpha\ngamma\nalpha\n\nalpha\n\nalpha\nalpha\ngamma\n\nbeta\nalpha\nalpha\nbeta\nbeta\ngamma\nalpha\n\nalpha\ngamma\nnew\nalpha\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -9,11 +9,12 @@\n gamma\n beta\n beta\n-\n-gamma\n-gamma\n+new\n+alpha\n+alpha\n gamma\n beta\n+alpha\n alpha\n alpha\n \n@@ -23,6 +24,9 @@\n gamma\n alpha\n \n+alpha\n+\n+alpha\n alpha\n gamma\n \n@@ -36,3 +40,6 @@\n \n alpha\n gamma\n+new\n+alpha\n+alpha\n"
+  },
+  {
+    "owned": "\nbeta\nalpha\n\n\n\nbeta\n\ngamma\nalpha\n\nalpha\nbeta\nalpha\n\nbeta\nbeta\nbeta\nbeta\nbeta\nalpha\n\n",
+    "incoming": "new\nalpha\nnew\nbeta\nnew\n\nnew\n\n\nbeta\n\ngamma\nalpha\n\n\nalpha\nalpha\n\nbeta\nbeta\nbeta\nbeta\nbeta\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,7 +1,10 @@\n+new\n+alpha\n+new\n+beta\n+new\n \n-beta\n-alpha\n-\n+new\n \n \n beta\n@@ -9,8 +12,8 @@\n gamma\n alpha\n \n+\n alpha\n-beta\n alpha\n \n beta\n"
+  },
+  {
+    "owned": "alpha\ngamma\ngamma\n\ngamma\n\n\n\nalpha\nbeta\ngamma\n\nbeta\n\nalpha\n\ngamma\nbeta\nalpha\n\ngamma\ngamma\nalpha\ngamma\ngamma\ngamma\ngamma\n\nalpha\nbeta\nbeta\ngamma\n\ngamma\ngamma\n\n",
+    "incoming": "alpha\ngamma\ngamma\n\n\n\n\nalpha\ngamma\n\nbeta\n\nnew\n\ngamma\nbeta\nalpha\n\ngamma\ngamma\nalpha\ngamma\ngamma\ngamma\n\nalpha\nnew\n\nalpha\nbeta\nbeta\ngamma\n\ngamma\ngamma\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -2,17 +2,15 @@\n gamma\n gamma\n \n-gamma\n \n \n \n alpha\n-beta\n gamma\n \n beta\n \n-alpha\n+new\n \n gamma\n beta\n@@ -24,7 +22,9 @@\n gamma\n gamma\n gamma\n-gamma\n+\n+alpha\n+new\n \n alpha\n beta\n"
+  },
+  {
+    "owned": "\nalpha\n",
+    "incoming": "\n\n\n\n\nalpha\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,2 +1,7 @@\n+\n+\n+\n+\n \n alpha\n+alpha\n"
+  },
+  {
+    "owned": "alpha\n\nalpha\nbeta\nbeta\nbeta\nbeta\nbeta\ngamma\n\nalpha\nalpha\n\nbeta\nbeta\nalpha\nbeta\ngamma\n",
+    "incoming": "alpha\n\nalpha\nbeta\nbeta\nbeta\nbeta\nbeta\ngamma\nalpha\nalpha\nalpha\n\nbeta\nnew\nalpha\n\nnew\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -7,12 +7,13 @@\n beta\n beta\n gamma\n-\n+alpha\n alpha\n alpha\n \n beta\n-beta\n+new\n alpha\n-beta\n-gamma\n+\n+new\n+new\n"
+  },
+  {
+    "owned": "gamma\ngamma\ngamma\ngamma\nbeta\nbeta\nbeta\nalpha\n\ngamma\nbeta\nalpha\n\ngamma\ngamma\n\n\n",
+    "incoming": "gamma\ngamma\ngamma\ngamma\nbeta\nnew\nalpha\nbeta\n\ngamma\n\ngamma\n\n\n\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -3,15 +3,14 @@\n gamma\n gamma\n beta\n+new\n+alpha\n beta\n-beta\n-alpha\n \n gamma\n-beta\n-alpha\n \n-gamma\n gamma\n \n \n+\n+alpha\n"
+  },
+  {
+    "owned": "beta\ngamma\nbeta\ngamma\n\n",
+    "incoming": "new\nnew\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,5 +1,3 @@\n-beta\n-gamma\n-beta\n-gamma\n-\n+new\n+new\n+new\n"
+  },
+  {
+    "owned": "\n\nbeta\ngamma\nbeta\nalpha\n\ngamma\nbeta\ngamma\nalpha\nalpha\n\ngamma\nbeta\nbeta\nbeta\n\nalpha\nbeta\n\n",
+    "incoming": "\nbeta\ngamma\nbeta\nalpha\n\ngamma\nbeta\ngamma\nalpha\nalpha\nbeta\nbeta\nbeta\n\nalpha\nnew\nbeta\nalpha\nalpha\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,4 +1,3 @@\n-\n \n beta\n gamma\n@@ -10,12 +9,13 @@\n gamma\n alpha\n alpha\n-\n-gamma\n beta\n beta\n beta\n \n alpha\n+new\n beta\n-\n+alpha\n+alpha\n+new\n"
+  },
+  {
+    "owned": "beta\nalpha\n\ngamma\nbeta\nalpha\nalpha\ngamma\ngamma\n\ngamma\n\nbeta\ngamma\n\ngamma\nbeta\nbeta\n\n",
+    "incoming": "new\nalpha\n\n\n\ngamma\nbeta\nalpha\ngamma\ngamma\n\ngamma\n\n\n\nbeta\ngamma\n\ngamma\nbeta\nbeta\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,14 +1,17 @@\n-beta\n+new\n alpha\n+\n+\n \n gamma\n beta\n-alpha\n alpha\n gamma\n gamma\n \n gamma\n+\n+\n \n beta\n gamma\n"
+  },
+  {
+    "owned": "alpha\n",
+    "incoming": "alpha\nalpha\n\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1 +1,4 @@\n alpha\n+alpha\n+\n+new\n"
+  },
+  {
+    "owned": "alpha\n\nbeta\nbeta\ngamma\nbeta\ngamma\n",
+    "incoming": "alpha\n\nbeta\nalpha\nnew\nnew\nbeta\ngamma\nbeta\nnew\nnew\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,7 +1,12 @@\n alpha\n \n beta\n+alpha\n+new\n+new\n beta\n gamma\n beta\n-gamma\n+new\n+new\n+new\n"
+  },
+  {
+    "owned": "\ngamma\ngamma\n\nalpha\nalpha\nbeta\nalpha\ngamma\ngamma\ngamma\n\nalpha\nalpha\n",
+    "incoming": "\ngamma\ngamma\n\nalpha\nalpha\n\nalpha\ngamma\ngamma\ngamma\n\nalpha\nnew\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -4,11 +4,12 @@\n \n alpha\n alpha\n-beta\n+\n alpha\n gamma\n gamma\n gamma\n \n alpha\n-alpha\n+new\n+new\n"
+  },
+  {
+    "owned": "\ngamma\n\n\n\nbeta\nalpha\nbeta\nalpha\nbeta\nalpha\n\n\n\nbeta\n\ngamma\nalpha\nbeta\n\n\nalpha\n\n\nalpha\n",
+    "incoming": "\ngamma\n\nalpha\n\n\n\nbeta\nalpha\nbeta\nalpha\nbeta\nalpha\n\n\n\nalpha\nbeta\n\n\n\nnew\n\n\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,5 +1,7 @@\n \n gamma\n+\n+alpha\n \n \n \n@@ -12,14 +14,12 @@\n \n \n \n-beta\n-\n-gamma\n alpha\n beta\n \n \n-alpha\n+\n+new\n \n \n alpha\n"
+  },
+  {
+    "owned": "",
+    "incoming": "\nnew\nalpha\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -0,0 +1,4 @@\n+\n+new\n+alpha\n+alpha\n"
+  },
+  {
+    "owned": "\nalpha\nalpha\n\n\nalpha\nalpha\n",
+    "incoming": "alpha\n\n\nalpha\n\nnew\nnew\n\nalpha\n\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,7 +1,11 @@\n-\n-alpha\n alpha\n \n \n alpha\n+\n+new\n+new\n+\n alpha\n+\n+\n"
+  },
+  {
+    "owned": "gamma\nalpha\nalpha\nbeta\n\nbeta\n\nalpha\ngamma\nbeta\nbeta\nalpha\n\nbeta\n\nbeta\ngamma\nalpha\n\nalpha\nalpha\n\n\nbeta\n\nalpha\nalpha\n\n\nbeta\nbeta\nbeta\nalpha\n\ngamma\n",
+    "incoming": "gamma\nalpha\nalpha\nbeta\n\nbeta\n\nalpha\n\n\n\nbeta\n\nbeta\n\nbeta\ngamma\nalpha\nalpha\nalpha\n\nalpha\nalpha\n\n\nbeta\n\nalpha\nalpha\n\n\nbeta\nbeta\nbeta\n\n\n\n\n\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -6,15 +6,17 @@\n beta\n \n alpha\n-gamma\n+\n+\n+\n beta\n-beta\n-alpha\n \n beta\n \n beta\n gamma\n+alpha\n+alpha\n alpha\n \n alpha\n@@ -30,6 +32,9 @@\n beta\n beta\n beta\n-alpha\n+\n+\n+\n+\n \n gamma\n"
+  },
+  {
+    "owned": "beta\nbeta\ngamma\nalpha\ngamma\n\n\ngamma\n\nalpha\nalpha\nalpha\n\nbeta\nalpha\nalpha\nbeta\ngamma\nbeta\ngamma\ngamma\nbeta\n",
+    "incoming": "beta\nnew\n\nbeta\ngamma\nalpha\ngamma\n\n\ngamma\n\nnew\n\nalpha\n\n\n\nalpha\nalpha\n\nbeta\nalpha\nalpha\nbeta\ngamma\n\nbeta\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,4 +1,6 @@\n beta\n+new\n+\n beta\n gamma\n alpha\n@@ -7,7 +9,12 @@\n \n gamma\n \n+new\n+\n alpha\n+\n+\n+\n alpha\n alpha\n \n@@ -16,7 +23,5 @@\n alpha\n beta\n gamma\n+\n beta\n-gamma\n-gamma\n-beta\n"
+  },
+  {
+    "owned": "",
+    "incoming": "",
+    "diff": ""
+  },
+  {
+    "owned": "\ngamma\n",
+    "incoming": "alpha\n\nnew\n\ngamma\nnew\nnew\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,2 +1,9 @@\n+alpha\n+\n+new\n \n gamma\n+new\n+new\n+alpha\n+\n"
+  },
+  {
+    "owned": "alpha\nbeta\n\n\nalpha\ngamma\nbeta\nbeta\ngamma\ngamma\ngamma\ngamma\nbeta\n\nalpha\nalpha\ngamma\n\nbeta\nbeta\nalpha\ngamma\n\nalpha\n\ngamma\ngamma\nalpha\ngamma\n\n\nalpha\ngamma\n",
+    "incoming": "alpha\nbeta\n\n\nnew\ngamma\ngamma\ngamma\n\n\nalpha\nalpha\ngamma\n\nbeta\nbeta\nalpha\ngamma\n\nalpha\n\ngamma\ngamma\nalpha\ngamma\n\n\nalpha\ngamma\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -2,15 +2,11 @@\n beta\n \n \n-alpha\n-gamma\n-beta\n-beta\n+new\n gamma\n gamma\n gamma\n-gamma\n-beta\n+\n \n alpha\n alpha\n"
+  },
+  {
+    "owned": "alpha\nalpha\nalpha\nalpha\nbeta\ngamma\nalpha\nbeta\ngamma\n\n\n\n\n\ngamma\nalpha\n\nalpha\nalpha\nalpha\nalpha\n",
+    "incoming": "alpha\nalpha\n\nnew\nbeta\nnew\ngamma\n\n\n\n\n\nalpha\n\nnew\nalpha\nalpha\n\nnew\n\nnew\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,21 +1,21 @@\n alpha\n alpha\n-alpha\n-alpha\n+\n+new\n beta\n-gamma\n-alpha\n-beta\n+new\n gamma\n \n \n \n \n \n-gamma\n alpha\n \n+new\n alpha\n alpha\n-alpha\n-alpha\n+\n+new\n+\n+new\n"
+  },
+  {
+    "owned": "alpha\nbeta\nalpha\nalpha\nalpha\n\nalpha\ngamma\nbeta\ngamma\nbeta\n\nbeta\nbeta\nbeta\nbeta\ngamma\nbeta\nalpha\nbeta\nalpha\n\nalpha\n",
+    "incoming": "alpha\nbeta\nalpha\n\nnew\nalpha\ngamma\nbeta\n\nbeta\nalpha\nalpha\n\n\nbeta\ngamma\nbeta\nalpha\nbeta\nalpha\n\nalpha\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,18 +1,17 @@\n alpha\n beta\n alpha\n+\n+new\n alpha\n-alpha\n-\n-alpha\n-gamma\n-beta\n gamma\n beta\n \n beta\n-beta\n-beta\n+alpha\n+alpha\n+\n+\n beta\n gamma\n beta\n"
+  },
+  {
+    "owned": "beta\ngamma\ngamma\n\nbeta\nalpha\ngamma\nbeta\nbeta\n\ngamma\ngamma\nbeta\ngamma\n\n\n\ngamma\ngamma\n\nalpha\nbeta\nalpha\ngamma\nbeta\nbeta\ngamma\nalpha\nalpha\nalpha\nalpha\n\nbeta\nalpha\ngamma\n\nbeta\n",
+    "incoming": "beta\ngamma\ngamma\n\nbeta\nalpha\ngamma\nbeta\n\n\nalpha\n\n\n\n\ngamma\ngamma\n\nalpha\nbeta\nalpha\n\n\nbeta\ngamma\nalpha\nalpha\nalpha\nalpha\n\nbeta\nalpha\ngamma\n\nbeta\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -6,12 +6,10 @@\n alpha\n gamma\n beta\n-beta\n \n-gamma\n-gamma\n-beta\n-gamma\n+\n+alpha\n+\n \n \n \n@@ -21,8 +19,8 @@\n alpha\n beta\n alpha\n-gamma\n-beta\n+\n+\n beta\n gamma\n alpha\n"
+  },
+  {
+    "owned": "alpha\nbeta\n\nbeta\nalpha\ngamma\ngamma\nbeta\nalpha\nbeta\ngamma\n\n\n\nalpha\nalpha\ngamma\nalpha\ngamma\ngamma\nbeta\n\n",
+    "incoming": "alpha\nbeta\n\nbeta\nalpha\ngamma\ngamma\nbeta\ngamma\nalpha\nalpha\n\n\n\nalpha\nalpha\nalpha\nnew\ngamma\nalpha\n\n\nbeta\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -6,17 +6,19 @@\n gamma\n gamma\n beta\n+gamma\n alpha\n-beta\n-gamma\n+alpha\n \n \n \n alpha\n alpha\n+alpha\n+new\n gamma\n alpha\n-gamma\n-gamma\n+\n+\n beta\n \n"
+  },
+  {
+    "owned": "beta\nbeta\nbeta\ngamma\nalpha\nbeta\n\ngamma\nalpha\n\n\n\nbeta\n",
+    "incoming": "new\nbeta\nbeta\ngamma\n\ngamma\nalpha\nnew\n\nbeta\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,13 +1,10 @@\n-beta\n+new\n beta\n beta\n gamma\n-alpha\n-beta\n \n gamma\n alpha\n-\n-\n+new\n \n beta\n"
+  },
+  {
+    "owned": "alpha\ngamma\nalpha\nbeta\n\n\n\nbeta\nbeta\n\nbeta\nbeta\ngamma\nbeta\ngamma\n\nalpha\nbeta\n\n\nbeta\nalpha\nalpha\nbeta\n\nbeta\nalpha\nbeta\n\nalpha\nalpha\nalpha\n\nbeta\nalpha\n\n\ngamma\n",
+    "incoming": "alpha\ngamma\nnew\nalpha\nalpha\n\n\n\nalpha\nnew\nbeta\nbeta\n\nbeta\nbeta\ngamma\nbeta\ngamma\nalpha\nnew\nnew\n\nalpha\nbeta\n\n\nbeta\nalpha\nalpha\nbeta\n\nbeta\nalpha\nbeta\n\nalpha\nalpha\nalpha\n\nbeta\nalpha\n\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,10 +1,13 @@\n alpha\n gamma\n+new\n alpha\n-beta\n+alpha\n \n \n \n+alpha\n+new\n beta\n beta\n \n@@ -13,6 +16,9 @@\n gamma\n beta\n gamma\n+alpha\n+new\n+new\n \n alpha\n beta\n@@ -34,5 +40,3 @@\n beta\n alpha\n \n-\n-gamma\n"
+  },
+  {
+    "owned": "x\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\ntail\n",
+    "incoming": "x\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nend\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -248,4 +248,4 @@\n x\n x\n x\n-tail\n+end\n"
+  },
+  {
+    "owned": "first\r\nlast",
+    "incoming": "first\r\nnew",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,2 +1,2 @@\n first\r\n-last+new"
+  },
+  {
+    "owned": "a\rb\u2028c\n",
+    "incoming": "a\rb\u2028x\n",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1,3 +1,3 @@\n a\r b\u2028-c\n+x\n"
+  },
+  {
+    "owned": "",
+    "incoming": "x",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -0,0 +1 @@\n+x"
+  },
+  {
+    "owned": "x",
+    "incoming": "",
+    "diff": "--- owned/File.swift\n+++ incoming/File.swift\n@@ -1 +0,0 @@\n-x"
+  },
+  {
+    "owned": "same",
+    "incoming": "same",
+    "diff": ""
+  }
+]

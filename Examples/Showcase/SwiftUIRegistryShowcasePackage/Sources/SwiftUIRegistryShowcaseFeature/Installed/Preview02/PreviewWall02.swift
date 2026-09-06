@@ -41,6 +41,7 @@ public struct PreviewWall02: View {
         EmptyDistributeTrack()
         EmptyExploreCatalog()
         Faq()
+        FrontDoor()
     }
 
     private var columns: [GridItem] {

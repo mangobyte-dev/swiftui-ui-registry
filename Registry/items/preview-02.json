@@ -58,6 +58,10 @@
     {
       "source": "sources/blocks/Preview02/Faq.swift",
       "target": "Preview02/Faq.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/FrontDoor.swift",
+      "target": "Preview02/FrontDoor.swift"
     }
   ],
   "registryDependencies": [

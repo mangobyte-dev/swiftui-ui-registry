@@ -39,6 +39,7 @@ public struct PreviewWall: View {
             PieChartCard()
             ReportBug()
             ShippingAddress()
+            Shortcuts()
         }
     }
 

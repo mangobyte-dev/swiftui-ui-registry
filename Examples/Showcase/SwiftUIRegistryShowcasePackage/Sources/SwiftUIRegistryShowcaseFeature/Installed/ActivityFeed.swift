@@ -155,12 +155,13 @@ public struct ActivityFeed<ID: Hashable>: View {
     private func noticeView(_ notice: ActivityNotice) -> some View {
         // One alert type whichever way the caller decides, so the notice
         // keeps its identity when a dismiss handler comes or goes.
-        InlineAlert(notice.title, message: notice.message, variant: notice.variant) {
+        InlineAlert(notice.title, message: notice.message) {
             if let onDismissNotice {
                 Button("Dismiss", action: onDismissNotice)
                     .buttonStyle(.registryGhost)
             }
         }
+        .registryVariant(notice.variant)
     }
 
     private func rows(_ items: [ActivityItem<ID>]) -> some View {

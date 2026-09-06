@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "name": "activity-feed",
   "kind": "block",
   "description": "Composes inline alert, avatar, item row, skeleton, empty state, and accordion treatments into an activity feed with caller-owned loading, items, notice, and selection.",

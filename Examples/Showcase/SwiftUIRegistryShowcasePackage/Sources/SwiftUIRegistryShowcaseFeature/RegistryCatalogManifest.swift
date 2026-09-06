@@ -28,7 +28,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "activity-feed",
             kind: "block",
-            version: "0.2.0",
+            version: "0.2.1",
             description: "Composes inline alert, avatar, item row, skeleton, empty state, and accordion treatments into an activity feed with caller-owned loading, items, notice, and selection.",
             usage: "ActivityFeed(\n    \"Activity\",\n    notice: ActivityNotice(\"Card delivery delayed\", message: Text(\"Arrives Thursday.\")),\n    onDismissNotice: { },\n    items: [\n        ActivityItem(\n            id: \"bakery\",\n            title: Text(\"Mishmash Bakery\"),\n            detail: Text(\"Card payment of KWD 8.750\"),\n            timestamp: Text(\"09:41\"),\n            initials: \"MB\",\n            senderName: Text(\"Mishmash Bakery\"),\n            isUnread: true\n        )\n    ],\n    earlierItems: [],\n    isLoading: false,\n    onSelect: { id in }\n)",
             dependencies: ["alert", "avatar", "item", "skeleton", "empty", "accordion", "separator", "button"],
@@ -37,9 +37,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "alert",
             kind: "component",
-            version: "0.1.1",
+            version: "0.2.0",
             description: "Composes an inline, non-modal status message with informational, positive, and destructive variants and optional caller-owned actions.",
-            usage: "InlineAlert(\n    \"Card delivery delayed\",\n    message: Text(\"Your new card now arrives on Thursday.\")\n)\n\nInlineAlert(\n    \"Payment failed\",\n    message: Text(\"The card on file was declined.\"),\n    variant: .destructive\n) {\n    Button(\"Retry\") {}\n        .buttonStyle(.registry)\n}",
+            usage: "InlineAlert(\n    \"Card delivery delayed\",\n    message: Text(\"Your new card now arrives on Thursday.\")\n)\n\nInlineAlert(\n    \"Payment failed\",\n    message: Text(\"The card on file was declined.\")\n) {\n    Button(\"Retry\") {}\n        .buttonStyle(.registry)\n}\n.registryVariant(.destructive)",
             dependencies: ["button"],
             tags: ["alert", "banner", "notice", "feedback", "status", "shadcn"]
         ),

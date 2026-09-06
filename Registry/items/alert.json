@@ -1,11 +1,11 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "name": "alert",
   "kind": "component",
   "description": "Composes an inline, non-modal status message with informational, positive, and destructive variants and optional caller-owned actions.",
-  "usage": "InlineAlert(\n    \"Card delivery delayed\",\n    message: Text(\"Your new card now arrives on Thursday.\")\n)\n\nInlineAlert(\n    \"Payment failed\",\n    message: Text(\"The card on file was declined.\"),\n    variant: .destructive\n) {\n    Button(\"Retry\") {}\n        .buttonStyle(.registry)\n}",
+  "usage": "InlineAlert(\n    \"Card delivery delayed\",\n    message: Text(\"Your new card now arrives on Thursday.\")\n)\n\nInlineAlert(\n    \"Payment failed\",\n    message: Text(\"The card on file was declined.\")\n) {\n    Button(\"Retry\") {}\n        .buttonStyle(.registry)\n}\n.registryVariant(.destructive)",
   "files": [
     {
       "source": "sources/components/InlineAlert.swift",

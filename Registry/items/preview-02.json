@@ -70,6 +70,10 @@
     {
       "source": "sources/blocks/Preview02/KitchenIsland.swift",
       "target": "Preview02/KitchenIsland.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/LoadingCard.swift",
+      "target": "Preview02/LoadingCard.swift"
     }
   ],
   "registryDependencies": [
@@ -84,7 +88,8 @@
     "input-group",
     "toggle-group",
     "empty",
-    "accordion"
+    "accordion",
+    "skeleton"
   ],
   "packageDependencies": [
     {

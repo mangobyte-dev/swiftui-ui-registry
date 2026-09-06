@@ -110,6 +110,10 @@
     {
       "source": "sources/blocks/Preview02/RecentTransactions.swift",
       "target": "Preview02/RecentTransactions.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/ReleaseCatalog.swift",
+      "target": "Preview02/ReleaseCatalog.swift"
     }
   ],
   "registryDependencies": [

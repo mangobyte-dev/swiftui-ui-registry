@@ -43,6 +43,31 @@ The value gate: an installable item must add a meaningful reusable treatment or 
 
 4. Compose through the item's public API; the exact snippet is on its catalog page and in the Showcase
 
+## Why use the registry?
+
+The same todo and counter app was built three times on the same reducers, the Composable Architecture features in `Examples/TodoCounter`, changing only the UI layer: the registry items the app installed and owns, stock SwiftUI with no styling, and the registry's design rewritten by hand without the registry. `-ui plain` and `-ui handmade` launch the alternatives; the registry layer is the default
+
+| Registry | Stock, no styling | Same design by hand |
+| --- | --- | --- |
+| ![Todos on the registry layer](docs/images/comparison/todos-registry.png) | ![Todos on stock controls](docs/images/comparison/todos-plain.png) | ![Todos on the handmade layer](docs/images/comparison/todos-handmade.png) |
+
+Measured on 2026-09-06 on the iPhone 17 simulator, iOS 27, with `Examples/TodoCounter/count-lines.py` (non-blank, non-comment lines; the installed count includes the items' previews) and the app's performance tests:
+
+| | Registry | Stock, no styling | Same design by hand |
+| --- | --- | --- | --- |
+| Lines you write | 223 in 4 files | 154 in 3 files | 585 in 11 files |
+| Lines you own but did not write | 651 in 7 installed items | 0 | 0 |
+| Style protocols and modifiers you implement | none | none | ButtonStyle, TextFieldStyle through its underscored `_body`, GroupBoxStyle, ToggleStyle, three ViewModifiers, an environment key, and a theme with 8 colors and 9 metrics |
+| Look | the design, themed coral from a preset code | stock controls | the same design; the todos capture is byte-identical to the registry's |
+| Change the accent everywhere | one value in `RegistryTheme+App.swift`, or a new preset code | not available | one value, once the theme plumbing exists |
+| When the design system improves | `swiftui-registry install --update` merges upstream into your copy and keeps your edits | nothing to update | you port every change by hand |
+| Accessibility built in | required labels for icon-only controls, 44 pt hit sizes, boxes that scale with text, a VoiceOver switch representation, RTL and Dynamic Type previews | whatever stock gives | you must know it and write it again |
+| App launch, `XCTApplicationLaunchMetric`, 5 runs | 2.97 s | 2.99 s | 2.98 s |
+| Add 5 tasks, complete them, clear, `XCTClockMetric`, 3 runs | 9.17 s | 15.59 s | 9.16 s |
+| Skills needed | SwiftUI basics and one command | SwiftUI basics | style protocols, environment plumbing, Dynamic Type, accessibility, dark-mode color, RTL |
+
+The registry costs nothing at runtime against the hand-written styles; those two rows are within noise. The stock layer's slower interaction is the system switch's animation under UI automation, not rendering. What the registry buys is the 585 lines and the skills behind them, once per project, and an update path afterwards. The method, the three layers, and the tests are in [Examples/TodoCounter/README.md](Examples/TodoCounter/README.md)
+
 ## Status
 
 Version 0, an honest prototype:

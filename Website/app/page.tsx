@@ -5,7 +5,57 @@ import { CodeBlock } from "@/components/code-block"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { KINDS, asset, itemsOfKind, registry } from "@/lib/registry"
+
+const COMPARISON_LAYERS = [
+  { slug: "registry", title: "Registry" },
+  { slug: "plain", title: "Stock, no styling" },
+  { slug: "handmade", title: "Same design by hand" },
+]
+
+const COMPARISON_ROWS: { label: string; values: [string, string, string] }[] = [
+  { label: "Lines you write", values: ["223 in 4 files", "154 in 3 files", "585 in 11 files"] },
+  { label: "Lines you own but did not write", values: ["651 in 7 installed items", "0", "0"] },
+  {
+    label: "Style protocols and modifiers you implement",
+    values: [
+      "none",
+      "none",
+      "ButtonStyle, TextFieldStyle through its underscored _body, GroupBoxStyle, ToggleStyle, three ViewModifiers, an environment key, and a theme with 8 colors and 9 metrics",
+    ],
+  },
+  {
+    label: "Look",
+    values: ["the design, themed coral from a preset code", "stock controls", "the same design; the todos capture is byte-identical"],
+  },
+  {
+    label: "Change the accent everywhere",
+    values: ["one value in RegistryTheme+App.swift, or a new preset code", "not available", "one value, once the theme plumbing exists"],
+  },
+  {
+    label: "When the design system improves",
+    values: ["install --update merges upstream into your copy and keeps your edits", "nothing to update", "you port every change by hand"],
+  },
+  {
+    label: "Accessibility built in",
+    values: [
+      "required labels for icon-only controls, 44 pt hit sizes, boxes that scale with text, a VoiceOver switch representation, RTL and Dynamic Type previews",
+      "whatever stock gives",
+      "you must know it and write it again",
+    ],
+  },
+  { label: "App launch, XCTApplicationLaunchMetric, 5 runs", values: ["2.97 s", "2.99 s", "2.98 s"] },
+  { label: "Add 5 tasks, complete them, clear, XCTClockMetric, 3 runs", values: ["9.17 s", "15.59 s", "9.16 s"] },
+  {
+    label: "Skills needed",
+    values: [
+      "SwiftUI basics and one command",
+      "SwiftUI basics",
+      "style protocols, environment plumbing, Dynamic Type, accessibility, dark-mode color, RTL",
+    ],
+  },
+]
 
 const PACKAGE_SNIPPET = `// Package.swift
 dependencies: [
@@ -111,6 +161,60 @@ export default function HomePage() {
             </Card>
           </li>
         </ol>
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <h2 className="text-2xl font-semibold tracking-tight">Why use the registry?</h2>
+          <p className="text-muted-foreground">
+            The same todo and counter app, three UI layers over the same reducers: the registry items the app owns,
+            stock SwiftUI with no styling, and the registry&apos;s design rewritten by hand. Measured on 2026-09-06 on
+            the iPhone 17 simulator, iOS 27; the method and the tests are in the repository&apos;s Examples/TodoCounter.
+          </p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {COMPARISON_LAYERS.map((layer) => (
+            <figure key={layer.slug} className="flex flex-col gap-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={asset(`/images/comparison/todos-${layer.slug}.png`)}
+                alt={`Todos on the ${layer.title.toLowerCase()} layer`}
+                className="h-auto w-full rounded-xl border shadow-sm"
+              />
+              <figcaption className="text-sm font-medium">{layer.title}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <div className="overflow-x-auto rounded-lg border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-56"></TableHead>
+                {COMPARISON_LAYERS.map((layer) => (
+                  <TableHead key={layer.slug}>{layer.title}</TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {COMPARISON_ROWS.map((row) => (
+                <TableRow key={row.label}>
+                  <TableCell className="font-medium">{row.label}</TableCell>
+                  {row.values.map((value, index) => (
+                    <TableCell key={index} className="whitespace-normal align-top">
+                      {value}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          The registry costs nothing at runtime against the hand-written styles; those two columns are within noise.
+          The stock layer&apos;s slower interaction is the system switch&apos;s animation under UI automation, not
+          rendering. What the registry buys is the 585 lines and the skills behind them, once per project, and an
+          update path afterwards.
+        </p>
       </section>
 
       <section className="flex flex-col gap-4">

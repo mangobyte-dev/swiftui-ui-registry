@@ -98,7 +98,7 @@ public struct SiteDataGenerator {
     try fs.createDirectory(parentDirectory(output))
     try fs.write(Data(text.utf8), to: output)
     var count = 0
-    for folder in ["items", "themes", "blocks"] {
+    for folder in ["items", "themes", "blocks", "comparison"] {
       let source = root + "/docs/images/" + folder
       let target = images + "/" + folder
       try fs.remove(target)

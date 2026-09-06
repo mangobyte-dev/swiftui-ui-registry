@@ -406,13 +406,12 @@ struct AlertDemo: View {
             )
             InlineAlert(
                 "Import complete",
-                message: Text("124 transactions were added."),
-                variant: .positive
+                message: Text("124 transactions were added.")
             )
+            .registryVariant(.positive)
             InlineAlert(
                 "Payment failed",
-                message: Text("The card on file was declined."),
-                variant: .destructive
+                message: Text("The card on file was declined.")
             ) {
                 ViewThatFits(in: .horizontal) {
                     HStack {
@@ -429,6 +428,7 @@ struct AlertDemo: View {
                     }
                 }
             }
+            .registryVariant(.destructive)
         }
     }
 }

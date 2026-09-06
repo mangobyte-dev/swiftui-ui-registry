@@ -2,10 +2,10 @@
   "files": {
     "ActivityFeed.swift": {
       "base": "bases/b57c6c9a7eeddc0d5af2a8d1c3a3b2404a88e22ee7f4847c99624a7e29e4dc35.base",
-      "installedDigest": "sha256:9040213fecde9f9c6a881f5907a4ae2375d7d65722295bfe85e5cbfeb83381f3",
+      "installedDigest": "sha256:affc421f7ea23ab79a79ff8436a2717306d4990874226876966c8dea0e872b60",
       "item": "activity-feed",
-      "sourceDigest": "sha256:9040213fecde9f9c6a881f5907a4ae2375d7d65722295bfe85e5cbfeb83381f3",
-      "version": "0.2.0"
+      "sourceDigest": "sha256:affc421f7ea23ab79a79ff8436a2717306d4990874226876966c8dea0e872b60",
+      "version": "0.2.1"
     },
     "AuthForm.swift": {
       "base": "bases/b808915e7c307350d015763d2cb828270f25868f16345bd7122b187337a9d83f.base",
@@ -72,10 +72,10 @@
     },
     "InlineAlert.swift": {
       "base": "bases/ea8c868eda9aec86e5cd2571ffc9a41b5baccc19ce3f9847eb287a16dc368901.base",
-      "installedDigest": "sha256:cd346c73b16a71dc0d79768e4b25cf63e4fcbf6714e19ff8da3fb53ffac2f3c5",
+      "installedDigest": "sha256:008475e2801c998c5129b7fc12bd3ae011009a0131452eb5ec163e7e389a9c68",
       "item": "alert",
-      "sourceDigest": "sha256:cd346c73b16a71dc0d79768e4b25cf63e4fcbf6714e19ff8da3fb53ffac2f3c5",
-      "version": "0.1.1"
+      "sourceDigest": "sha256:008475e2801c998c5129b7fc12bd3ae011009a0131452eb5ec163e7e389a9c68",
+      "version": "0.2.0"
     },
     "InputGroup.swift": {
       "base": "bases/39bb43f0f12caa8503b581f1bad9025c5e1b4ec0920f535456e88ab3b8b99abe.base",
@@ -631,7 +631,7 @@
         "separator",
         "button"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     "alert": {
       "packageDependencies": [
@@ -649,7 +649,7 @@
       "registryDependencies": [
         "button"
       ],
-      "version": "0.1.1"
+      "version": "0.2.0"
     },
     "auth-form": {
       "packageDependencies": [

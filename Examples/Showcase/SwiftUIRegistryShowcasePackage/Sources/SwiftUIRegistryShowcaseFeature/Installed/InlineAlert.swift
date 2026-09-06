@@ -18,28 +18,32 @@ public struct InlineAlert<Actions: View>: View {
 
     private let title: LocalizedStringResource
     private let message: Text?
-    private let variant: InlineAlertVariant
+    private var variant: InlineAlertVariant = .informational
     private let systemImage: String?
     private let actions: Actions
 
     /// - Parameters:
     ///   - title: The headline, always visible.
     ///   - message: Optional supporting copy prepared by the caller.
-    ///   - variant: Semantic tone; defaults to informational.
     ///   - systemImage: Overrides the variant's default symbol.
     ///   - actions: Optional caller-owned buttons rendered under the copy.
     public init(
         _ title: LocalizedStringResource,
         message: Text? = nil,
-        variant: InlineAlertVariant = .informational,
         systemImage: String? = nil,
         @ViewBuilder actions: () -> Actions
     ) {
         self.title = title
         self.message = message
-        self.variant = variant
         self.systemImage = systemImage
         self.actions = actions()
+    }
+
+    /// Sets the semantic tone. Defaults to informational.
+    public func registryVariant(_ variant: InlineAlertVariant) -> Self {
+        var copy = self
+        copy.variant = variant
+        return copy
     }
 
     public var body: some View {
@@ -114,13 +118,11 @@ public extension InlineAlert where Actions == EmptyView {
     init(
         _ title: LocalizedStringResource,
         message: Text? = nil,
-        variant: InlineAlertVariant = .informational,
         systemImage: String? = nil
     ) {
         self.init(
             title,
             message: message,
-            variant: variant,
             systemImage: systemImage,
             actions: { EmptyView() }
         )
@@ -137,14 +139,13 @@ private struct InlineAlertPreview: View {
 
             InlineAlert(
                 "Import complete",
-                message: Text("124 transactions were added."),
-                variant: .positive
+                message: Text("124 transactions were added.")
             )
+            .registryVariant(.positive)
 
             InlineAlert(
                 "Payment failed",
-                message: Text("The card on file was declined."),
-                variant: .destructive
+                message: Text("The card on file was declined.")
             ) {
                 // Buttons never wrap, so the call site stacks them when the
                 // row cannot fit, such as at accessibility text sizes.
@@ -163,6 +164,7 @@ private struct InlineAlertPreview: View {
                     }
                 }
             }
+            .registryVariant(.destructive)
         }
         .padding()
     }

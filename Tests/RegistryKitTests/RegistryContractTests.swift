@@ -133,7 +133,7 @@ extension Commands {
       let kinds = registry.items.mapValues { $0["kind"].text }
       #expect(Set(kinds.filter { $0.value == "recipe" }.keys) == recipeNames)
       #expect(kinds.values.filter { $0 == "component" }.count == 37)
-      #expect(kinds.values.filter { $0 == "block" }.count == 8)
+      #expect(kinds.values.filter { $0 == "block" }.count == 11)
     }
   }
 

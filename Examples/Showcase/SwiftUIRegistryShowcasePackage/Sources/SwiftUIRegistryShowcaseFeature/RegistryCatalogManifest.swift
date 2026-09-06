@@ -233,6 +233,15 @@ enum RegistryCatalogManifest {
             tags: ["context-menu", "long-press", "actions", "menu", "guidance"]
         ),
         CatalogEntry(
+            name: "dashboard",
+            kind: "block",
+            version: "0.1.0",
+            description: "Composes metric cards, a themed Swift Charts bar chart, and a data table into an analytics dashboard with caller-owned values and optional row selection.",
+            usage: "Dashboard(\n    \"Analytics\",\n    metrics: [\n        DashboardMetric(\n            title: \"Revenue\",\n            value: Text(48_200, format: .currency(code: \"USD\")),\n            detail: Text(\"Up 12% this month\"),\n            systemImage: \"dollarsign.circle.fill\"\n        )\n    ],\n    chartTitle: \"Visitors by channel\",\n    points: [\n        DashboardSeriesPoint(id: \"jan-direct\", category: \"Jan\", series: \"Direct\", value: 186)\n    ],\n    tableTitle: \"Recent invoices\",\n    rows: [\n        DashboardRow(\n            id: \"1041\",\n            title: Text(\"Invoice 1041\"),\n            detail: Text(\"Northwind Trading\"),\n            status: Text(\"Paid\"),\n            amount: Text(1_240, format: .currency(code: \"USD\"))\n        )\n    ],\n    onSelect: { id in }\n)",
+            dependencies: ["metric-card", "chart", "table"],
+            tags: ["dashboard", "analytics", "overview", "chart", "table", "metrics", "shadcn"]
+        ),
+        CatalogEntry(
             name: "date-picker",
             kind: "recipe",
             version: "0.1.0",
@@ -467,6 +476,15 @@ enum RegistryCatalogManifest {
             tags: ["progress", "progress-view", "linear", "loading", "style"]
         ),
         CatalogEntry(
+            name: "questionnaire",
+            kind: "block",
+            version: "0.1.0",
+            description: "Composes the registry field, checkbox, textarea, progress, button, and card treatments into a caller-driven multi-step questionnaire with single-choice, multiple-choice, freeform, and skippable steps.",
+            usage: "@State private var currentStep = 0\n@State private var answers: [String: QuestionnaireAnswer] = [:]\n\nQuestionnaire(\n    \"Set up your profile\",\n    steps: [\n        QuestionnaireStep(\n            id: \"goal\",\n            title: \"What is your main goal?\",\n            kind: .singleChoice([\n                QuestionnaireOption(id: \"save\", title: \"Save more\"),\n                QuestionnaireOption(id: \"invest\", title: \"Start investing\")\n            ])\n        )\n    ],\n    currentStep: $currentStep,\n    answers: $answers,\n    onFinish: { }\n)",
+            dependencies: ["field", "checkbox", "textarea", "progress", "button", "card"],
+            tags: ["questionnaire", "survey", "form", "multi-step", "shadcn"]
+        ),
+        CatalogEntry(
             name: "radio-group",
             kind: "recipe",
             version: "0.3.0",
@@ -528,6 +546,15 @@ enum RegistryCatalogManifest {
             usage: "@State private var selection: String? = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}",
             dependencies: [],
             tags: ["sidebar", "navigation", "split-view", "ipad", "guidance"]
+        ),
+        CatalogEntry(
+            name: "signup-form",
+            kind: "block",
+            version: "0.1.0",
+            description: "Composes registry input, button, card, and checkbox treatments into a sign-up form with caller-owned fields, validation messages, terms acceptance, and submission state.",
+            usage: "SignUpForm(\n    \"Create your account\",\n    name: $name,\n    nameError: nameError,\n    email: $email,\n    emailError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    confirmation: $confirmation,\n    confirmationError: confirmationError,\n    acceptsTerms: $acceptsTerms,\n    termsError: termsError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Already have an account?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
+            dependencies: ["input", "button", "card", "checkbox"],
+            tags: ["sign-up", "registration", "form", "validation", "autofill", "shadcn"]
         ),
         CatalogEntry(
             name: "skeleton",

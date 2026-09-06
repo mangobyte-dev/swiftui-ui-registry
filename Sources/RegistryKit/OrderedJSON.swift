@@ -1,31 +1,34 @@
 import Foundation
 
 /// Publishing and MCP preserve Python's insertion order; receipts deliberately sort keys.
-indirect enum OrderedJSON: Sendable, ExpressibleByDictionaryLiteral, ExpressibleByArrayLiteral,
-  ExpressibleByStringLiteral, ExpressibleByBooleanLiteral, ExpressibleByNilLiteral
+public indirect enum OrderedJSON: Sendable, ExpressibleByDictionaryLiteral,
+  ExpressibleByArrayLiteral, ExpressibleByStringLiteral, ExpressibleByBooleanLiteral,
+  ExpressibleByNilLiteral
 {
   case object([(String, OrderedJSON)])
   case array([OrderedJSON])
   case scalar(JSON)
   case numberToken(String)
 
-  init(dictionaryLiteral elements: (String, OrderedJSON)...) { self = .object(elements) }
-  init(arrayLiteral elements: OrderedJSON...) { self = .array(elements) }
-  init(stringLiteral value: String) { self = .scalar(.string(value)) }
-  init(booleanLiteral value: Bool) { self = .scalar(.bool(value)) }
-  init(nilLiteral: ()) { self = .scalar(.null) }
-  init(_ value: JSON) {
+  public init(dictionaryLiteral elements: (String, OrderedJSON)...) { self = .object(elements) }
+  public init(arrayLiteral elements: OrderedJSON...) { self = .array(elements) }
+  public init(stringLiteral value: String) { self = .scalar(.string(value)) }
+  public init(booleanLiteral value: Bool) { self = .scalar(.bool(value)) }
+  public init(nilLiteral: ()) { self = .scalar(.null) }
+  public init(_ value: JSON) {
     switch value {
     case .object(let fields): self = .object(fields.keys.sorted().map { ($0, Self(fields[$0]!)) })
     case .array(let values): self = .array(values.map(Self.init))
     default: self = .scalar(value)
     }
   }
-  static func string(_ value: String) -> Self { .scalar(.string(value)) }
-  static func fields(_ value: JSON, _ keys: [String]) -> Self {
+  public static func string(_ value: String) -> Self { .scalar(.string(value)) }
+  public static func fields(_ value: JSON, _ keys: [String]) -> Self {
     .object(keys.map { ($0, Self(value[$0])) })
   }
-  subscript(_ key: String) -> Self {
+  public var array: [OrderedJSON]? { if case .array(let value) = self { value } else { nil } }
+  public var string: String? { if case .scalar(.string(let value)) = self { value } else { nil } }
+  public subscript(_ key: String) -> Self {
     get {
       guard case .object(let fields) = self else { return nil }
       return fields.first { $0.0 == key }?.1 ?? nil
@@ -40,7 +43,7 @@ indirect enum OrderedJSON: Sendable, ExpressibleByDictionaryLiteral, Expressible
       self = .object(fields)
     }
   }
-  func rendered(pretty: Bool = true, ascii: Bool = true, level: Int = 0) -> String {
+  public func rendered(pretty: Bool = true, ascii: Bool = true, level: Int = 0) -> String {
     let pad = pretty ? String(repeating: " ", count: level * 2) : ""
     let next = pretty ? pad + "  " : ""
     let newline = pretty ? "\n" : ""
@@ -65,7 +68,7 @@ indirect enum OrderedJSON: Sendable, ExpressibleByDictionaryLiteral, Expressible
   }
 
   /// Validate with the shared JSON decoder, then retain source order and numeric spelling.
-  static func read(_ data: Data) throws -> Self {
+  public static func read(_ data: Data) throws -> Self {
     _ = try JSON.read(data)
     let bytes = Array(data)
     var index = 0

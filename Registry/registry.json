@@ -72,6 +72,9 @@
     "items/message-scroller.json",
     "items/attachment.json",
     "items/marker.json",
-    "items/toast.json"
+    "items/toast.json",
+    "items/questionnaire.json",
+    "items/dashboard.json",
+    "items/signup-form.json"
   ]
 }

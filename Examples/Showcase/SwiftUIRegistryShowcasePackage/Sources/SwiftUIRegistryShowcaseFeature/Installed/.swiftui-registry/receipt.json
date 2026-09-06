@@ -56,6 +56,13 @@
       "sourceDigest": "sha256:b1360c4c528432b440e5b7a7420df9157e5ae60dd4096dd5d3c122c060a68af5",
       "version": "0.2.0"
     },
+    "Dashboard.swift": {
+      "base": "bases/945127ff24c38e79dfecbe4ac9a826e68322b0f24e6c536c8fe958883dd272c6.base",
+      "installedDigest": "sha256:e605f48abcb04430625f35b0db20a7ef6e384517541db88825c721d737574b27",
+      "item": "dashboard",
+      "sourceDigest": "sha256:e605f48abcb04430625f35b0db20a7ef6e384517541db88825c721d737574b27",
+      "version": "0.1.0"
+    },
     "DataTable.swift": {
       "base": "bases/9c688bb3f46b32b93fcf941f8ad31a7dc06f3436863b4a73656dd267b4c44a97.base",
       "installedDigest": "sha256:d55f7c5f1112b5ede47d2b63997999d28324aefc89ad03c44f9d2c37e44b2958",
@@ -623,6 +630,13 @@
       "sourceDigest": "sha256:545e9ded18720d559d4fc0153a15e74a450926beb7a23606469b48c3bcaa881f",
       "version": "0.3.0"
     },
+    "Questionnaire.swift": {
+      "base": "bases/c7c327db8c8470c1547c081ccb42253d00625f65ead205d73c9d9ec43933d3e7.base",
+      "installedDigest": "sha256:db78e93c98649a874611f2fc3a78f3cf44e696995d3a7586dcae667eb06869bf",
+      "item": "questionnaire",
+      "sourceDigest": "sha256:db78e93c98649a874611f2fc3a78f3cf44e696995d3a7586dcae667eb06869bf",
+      "version": "0.1.0"
+    },
     "RegistryAccordionStyle.swift": {
       "base": "bases/41a84c6783a403ca9cf897c8da81322317ac76ec19288b7ffb112dd4d85023a2.base",
       "installedDigest": "sha256:0aa25e6fbc47b4812a7a434009028a66875c1a6668c7614df88ac8beed3a02e1",
@@ -783,6 +797,13 @@
       "item": "settings-section",
       "sourceDigest": "sha256:681fafa2bf2144dd354ca8d7f8b1e484351d9d4aa2212f991d19df019f7aac0e",
       "version": "0.1.1"
+    },
+    "SignUpForm.swift": {
+      "base": "bases/19e1f1284a2c6fa9fc87143ab4ab4c48922c83a66c50ca0cadfac3015210b13f.base",
+      "installedDigest": "sha256:d2adce0b49237094317106c72aac80eade99ddb6c59b10ab28cb4fcbba8a5bbd",
+      "item": "signup-form",
+      "sourceDigest": "sha256:d2adce0b49237094317106c72aac80eade99ddb6c59b10ab28cb4fcbba8a5bbd",
+      "version": "0.1.0"
     },
     "TransactionRow.swift": {
       "base": "bases/bb175adeaac2e6443042b5ae547edcdaea4daec1487cb932a128b37b41cb221d.base",
@@ -1103,6 +1124,26 @@
         "kbd"
       ],
       "version": "0.2.0"
+    },
+    "dashboard": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "metric-card",
+        "chart",
+        "table"
+      ],
+      "version": "0.1.0"
     },
     "empty": {
       "packageDependencies": [
@@ -1441,6 +1482,29 @@
       "registryDependencies": [],
       "version": "0.2.0"
     },
+    "questionnaire": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "field",
+        "checkbox",
+        "textarea",
+        "progress",
+        "button",
+        "card"
+      ],
+      "version": "0.1.0"
+    },
     "select": {
       "packageDependencies": [
         {
@@ -1492,6 +1556,27 @@
         "button"
       ],
       "version": "0.1.1"
+    },
+    "signup-form": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.1.0"
+          }
+        }
+      ],
+      "registryDependencies": [
+        "input",
+        "button",
+        "card",
+        "checkbox"
+      ],
+      "version": "0.1.0"
     },
     "skeleton": {
       "packageDependencies": [

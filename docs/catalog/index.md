@@ -2,7 +2,7 @@
 
 # SwiftUIRegistry catalog
 
-70 items you copy into your app and own. Install the `swiftui-registry` tool with `brew install mangobyte-dev/tap/swiftui-registry`; it fetches the pinned registry snapshot on first use, and `--registry <path to a clone>` points it at a checkout instead. Components and blocks install with one command:
+73 items you copy into your app and own. Install the `swiftui-registry` tool with `brew install mangobyte-dev/tap/swiftui-registry`; it fetches the pinned registry snapshot on first use, and `--registry <path to a clone>` points it at a checkout instead. Components and blocks install with one command:
 
 ```sh
 swiftui-registry install <name> --destination Sources/YourFeature/Components
@@ -10,18 +10,21 @@ swiftui-registry install <name> --destination Sources/YourFeature/Components
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-## Blocks (8)
+## Blocks (11)
 
 Compositions of components. Installing one installs its whole closure
 
 - [activity-feed](activity-feed.md): Composes inline alert, avatar, item row, skeleton, empty state, and accordion treatments into an activity feed with caller-owned loading, items, notice, and selection.
 - [auth-form](auth-form.md): Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.
 - [command-search](command-search.md): Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.
+- [dashboard](dashboard.md): Composes metric cards, a themed Swift Charts bar chart, and a data table into an analytics dashboard with caller-owned values and optional row selection.
 - [finance-overview](finance-overview.md): Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.
 - [nutrition-overview](nutrition-overview.md): Composes prepared energy and macronutrient values into an embeddable nutrition overview.
 - [preview](preview.md): The finished theme preview wall from shadcn's create page: 33 realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a screen of real UI.
 - [preview-02](preview-02.md): The finished second theme preview wall from shadcn's create page: 35 realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a second screen of real UI.
+- [questionnaire](questionnaire.md): Composes the registry field, checkbox, textarea, progress, button, and card treatments into a caller-driven multi-step questionnaire with single-choice, multiple-choice, freeform, and skippable steps.
 - [settings-section](settings-section.md): Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
+- [signup-form](signup-form.md): Composes registry input, button, card, and checkbox treatments into a sign-up form with caller-owned fields, validation messages, terms acceptance, and submission state.
 
 ## Components (37)
 

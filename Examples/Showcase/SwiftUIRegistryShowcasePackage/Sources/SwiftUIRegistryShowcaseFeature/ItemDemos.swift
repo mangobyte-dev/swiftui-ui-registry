@@ -53,8 +53,11 @@ enum ItemDemos {
         case "settings-section": AnyView(SettingsDemo())
         case "activity-feed": AnyView(ActivityFeedDemo())
         case "command-search": AnyView(CommandSearchDemo())
+        case "questionnaire": AnyView(QuestionnaireDemo())
         case "preview": AnyView(PreviewDemo())
         case "preview-02": AnyView(Preview02Demo())
+        case "dashboard": AnyView(DashboardDemo())
+        case "signup-form": AnyView(SignUpDemo())
         // Recipes
         case "aspect-ratio": AnyView(AspectRatioRecipe())
         case "direction": AnyView(DirectionRecipe())

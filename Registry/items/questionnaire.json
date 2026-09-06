@@ -1,0 +1,68 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "questionnaire",
+  "kind": "block",
+  "description": "Composes the registry field, checkbox, textarea, progress, button, and card treatments into a caller-driven multi-step questionnaire with single-choice, multiple-choice, freeform, and skippable steps.",
+  "usage": "@State private var currentStep = 0\n@State private var answers: [String: QuestionnaireAnswer] = [:]\n\nQuestionnaire(\n    \"Set up your profile\",\n    steps: [\n        QuestionnaireStep(\n            id: \"goal\",\n            title: \"What is your main goal?\",\n            kind: .singleChoice([\n                QuestionnaireOption(id: \"save\", title: \"Save more\"),\n                QuestionnaireOption(id: \"invest\", title: \"Start investing\")\n            ])\n        )\n    ],\n    currentStep: $currentStep,\n    answers: $answers,\n    onFinish: { }\n)",
+  "files": [
+    {
+      "source": "sources/blocks/Questionnaire.swift",
+      "target": "Questionnaire.swift"
+    }
+  ],
+  "registryDependencies": [
+    "field",
+    "checkbox",
+    "textarea",
+    "progress",
+    "button",
+    "card"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.1.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "questionnaire",
+    "survey",
+    "form",
+    "multi-step",
+    "shadcn"
+  ],
+  "aliases": [
+    "survey",
+    "onboarding-questions",
+    "wizard"
+  ],
+  "accessibility": [
+    "The card title carries the header accessibility trait so VoiceOver can reach the questionnaire heading directly.",
+    "The step counter reads as 'Step N of M' in monospaced digits, and the ProgressView carries an explicit 'Progress' accessibility label with the completed fraction as its value.",
+    "Each step is a Field whose visible label is the step title: single choice is a native inline Picker whose options stay reachable as native picker rows, multiple choice is a column of checkbox Toggles each labeled by its option title, and freeform is a TextEditor whose accessibility label is the step's prompt.",
+    "Advancing or stepping back posts an AccessibilityNotification.Announcement of the new step's title so VoiceOver states where the caller landed.",
+    "The Back, Skip, and Next or Finish buttons each carry an explicit accessibility label; Next stays disabled until the step has an answer unless the step is skippable, and the button row reflows from a row to a column through ViewThatFits so labels never truncate under Dynamic Type."
+  ],
+  "preview": {
+    "source": "sources/blocks/Questionnaire.swift",
+    "name": "Questionnaire",
+    "screenshots": [
+      "docs/images/items/questionnaire-light.png",
+      "docs/images/items/questionnaire-dark.png"
+    ]
+  }
+}

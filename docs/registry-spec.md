@@ -96,7 +96,7 @@ The tool finds the registry in a fixed order: `--registry <path>`, then a clone 
 
 1. Search item metadata by name, kind, tags, platform, and minimum version with `swiftui-registry search`
 2. Read the dependency closure and package requirements
-3. Inspect preview and accessibility notes
+3. Read the usage snippet, accessibility notes, dependency closure, package requirements, and canonical source with `swiftui-registry describe <item>`
 4. Preview the installation with `swiftui-registry install <item> --plan --destination <path>`, a read-only mode that prints the ordered closure, per-target statuses, package requirements, collisions, and manual integration steps, and writes nothing
 5. Install the item sources
 6. Compose through the public initializer rather than rewriting the item from memory

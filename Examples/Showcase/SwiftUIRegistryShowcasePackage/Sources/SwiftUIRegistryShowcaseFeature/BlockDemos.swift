@@ -329,6 +329,87 @@ struct CommandSearchDemo: View {
     }
 }
 
+/// Caller-owned step index and answers for the questionnaire block. Four steps
+/// exercise every kind: a single choice, a multiple choice, a skippable
+/// freeform, and a final single choice. On finish the demo renders a summary of
+/// the collected answers so UI tests can prove answers flow through caller state.
+struct QuestionnaireDemo: View {
+    @State private var currentStep = 0
+    @State private var answers: [String: QuestionnaireAnswer] = [:]
+    @State private var didFinish = false
+
+    private let steps: [QuestionnaireStep] = [
+        QuestionnaireStep(
+            id: "goal",
+            title: "What is your main goal?",
+            description: "Pick the one that fits best.",
+            kind: .singleChoice([
+                QuestionnaireOption(id: "save", title: "Save more"),
+                QuestionnaireOption(id: "invest", title: "Start investing"),
+                QuestionnaireOption(id: "budget", title: "Stick to a budget"),
+            ])
+        ),
+        QuestionnaireStep(
+            id: "interests",
+            title: "Which topics interest you?",
+            description: "Choose any that apply.",
+            kind: .multipleChoice([
+                QuestionnaireOption(id: "cards", title: "Cards and payments"),
+                QuestionnaireOption(id: "savings", title: "Savings accounts"),
+                QuestionnaireOption(id: "loans", title: "Financing"),
+            ])
+        ),
+        QuestionnaireStep(
+            id: "notes",
+            title: "Anything else?",
+            kind: .freeform(prompt: "Tell us what matters to you"),
+            isSkippable: true
+        ),
+        QuestionnaireStep(
+            id: "contact",
+            title: "How should we reach you?",
+            kind: .singleChoice([
+                QuestionnaireOption(id: "email", title: "Email"),
+                QuestionnaireOption(id: "sms", title: "Text message"),
+            ])
+        ),
+    ]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Questionnaire(
+                "Set up your profile",
+                steps: steps,
+                currentStep: $currentStep,
+                answers: $answers,
+                onFinish: { didFinish = true }
+            )
+
+            if didFinish {
+                Text("Answers: \(summary)")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private var summary: String {
+        steps.compactMap { step in
+            switch answers[step.id] {
+            case .single(let id):
+                return "\(step.id)=\(id)"
+            case .multiple(let ids):
+                return "\(step.id)=\(ids.sorted().joined(separator: ","))"
+            case .freeform(let text):
+                return text.isEmpty ? nil : "\(step.id)=\(text)"
+            case nil:
+                return nil
+            }
+        }
+        .joined(separator: "; ")
+    }
+}
+
 /// The theme preview wall. The capture route wraps it in a scroll view, so the
 /// demo is the block itself with no chrome of its own.
 struct PreviewDemo: View {
@@ -342,5 +423,170 @@ struct PreviewDemo: View {
 struct Preview02Demo: View {
     var body: some View {
         PreviewWall02()
+    }
+}
+
+/// Realistic neutral analytics data with no real brands, and a caller-owned
+/// selection action so the invoice titles are selectable at the call site.
+struct DashboardDemo: View {
+    var body: some View {
+        Dashboard(
+            "Analytics",
+            metrics: metrics,
+            chartTitle: "Visitors by channel",
+            points: points,
+            tableTitle: "Recent invoices",
+            rows: rows,
+            onSelect: { _ in }
+        )
+    }
+
+    private var metrics: [DashboardMetric] {
+        [
+            DashboardMetric(
+                title: "Revenue",
+                value: Text(48_200, format: .currency(code: "USD")),
+                detail: Text("Up 12% this month"),
+                systemImage: "dollarsign.circle.fill"
+            ),
+            DashboardMetric(
+                title: "Active users",
+                value: Text(3_182, format: .number),
+                detail: Text("Up 4% this week"),
+                systemImage: "person.2.fill"
+            ),
+            DashboardMetric(
+                title: "Conversion",
+                value: Text(0.061, format: .percent.precision(.fractionLength(1))),
+                systemImage: "chart.line.uptrend.xyaxis"
+            )
+        ]
+    }
+
+    private var points: [DashboardSeriesPoint] {
+        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+        let direct: [Double] = [186, 205, 237, 173, 209, 264]
+        let referral: [Double] = [80, 130, 120, 190, 150, 172]
+        var result: [DashboardSeriesPoint] = []
+        for (index, month) in months.enumerated() {
+            result.append(
+                DashboardSeriesPoint(id: "\(month)-direct", category: month, series: "Direct", value: direct[index])
+            )
+            result.append(
+                DashboardSeriesPoint(id: "\(month)-referral", category: month, series: "Referral", value: referral[index])
+            )
+        }
+        return result
+    }
+
+    private var rows: [DashboardRow<String>] {
+        [
+            DashboardRow(
+                id: "1041",
+                title: Text("Invoice 1041"),
+                detail: Text("Northwind Trading"),
+                status: Text("Paid"),
+                amount: Text(1_240, format: .currency(code: "USD"))
+            ),
+            DashboardRow(
+                id: "1042",
+                title: Text("Invoice 1042"),
+                detail: Text("Harbor Logistics"),
+                status: Text("Pending"),
+                amount: Text(880, format: .currency(code: "USD"))
+            ),
+            DashboardRow(
+                id: "1043",
+                title: Text("Invoice 1043"),
+                detail: Text("Meridian Studio"),
+                status: Text("Paid"),
+                amount: Text(2_150, format: .currency(code: "USD"))
+            ),
+            DashboardRow(
+                id: "1044",
+                title: Text("Invoice 1044"),
+                detail: Text("Cedar Supply"),
+                status: Text("Overdue"),
+                amount: Text(430, format: .currency(code: "USD"))
+            ),
+            DashboardRow(
+                id: "1045",
+                title: Text("Invoice 1045"),
+                detail: Text("Atlas Freight"),
+                status: Text("Pending"),
+                amount: Text(1_675, format: .currency(code: "USD"))
+            )
+        ]
+    }
+}
+
+/// Local validation and a fake submit that flips `isSubmitting` and then reports
+/// a form error, so UI tests can exercise validation and disabled states
+/// deterministically without networking.
+struct SignUpDemo: View {
+    @State private var name = ""
+    @State private var email = ""
+    @State private var password = ""
+    @State private var confirmation = ""
+    @State private var acceptsTerms = false
+    @State private var nameError: LocalizedStringResource?
+    @State private var emailError: LocalizedStringResource?
+    @State private var passwordError: LocalizedStringResource?
+    @State private var confirmationError: LocalizedStringResource?
+    @State private var termsError: LocalizedStringResource?
+    @State private var formError: LocalizedStringResource?
+    @State private var isSubmitting = false
+
+    var body: some View {
+        SignUpForm(
+            "Create your account",
+            name: $name,
+            nameError: nameError,
+            email: $email,
+            emailError: emailError,
+            password: $password,
+            passwordError: passwordError,
+            confirmation: $confirmation,
+            confirmationError: confirmationError,
+            acceptsTerms: $acceptsTerms,
+            termsError: termsError,
+            formError: formError,
+            isSubmitting: isSubmitting,
+            secondaryActionTitle: "Already have an account?",
+            onSecondaryAction: {},
+            onSubmit: submit
+        )
+        // The fake submission is a task tied to the view, so it is cancelled
+        // if the screen goes away mid-flight instead of writing into it.
+        .task(id: isSubmitting) {
+            guard isSubmitting else { return }
+            // Two seconds keeps the submitting window long enough for the UI
+            // tests to observe the disabled controls deterministically.
+            do {
+                try await Task.sleep(for: .seconds(2))
+            } catch {
+                return
+            }
+            isSubmitting = false
+            formError = "We could not create your account. Try again."
+        }
+    }
+
+    private func submit() {
+        nameError = name.isEmpty ? "Enter your name" : nil
+        emailError = email.contains("@") ? nil : "Enter a valid email address"
+        passwordError = password.count >= 8 ? nil : "Use at least 8 characters"
+        confirmationError = confirmation == password && !confirmation.isEmpty
+            ? nil
+            : "Passwords do not match"
+        termsError = acceptsTerms ? nil : "Accept the terms to continue"
+        formError = nil
+        guard nameError == nil,
+              emailError == nil,
+              passwordError == nil,
+              confirmationError == nil,
+              termsError == nil
+        else { return }
+        isSubmitting = true
     }
 }

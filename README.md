@@ -166,6 +166,18 @@ swiftui-registry install finance-overview \
 
 `--diff` prints a unified diff of each receipt-backed owned file against the canonical registry source. It exits 0 when every file is identical and 1 when differences exist, and it requires an existing installation receipt. Run it before `--update` to see exactly what local customization is at stake
 
+```sh
+swiftui-registry describe activity-feed
+```
+
+`describe` prints an item before installing it: the name, kind, and version, the description, the call-site usage snippet, the accessibility notes, and, for an installable item, the ordered install closure, the package requirements, and the file targets. `--source` appends each file's canonical content, `--format json` prints the same payload the MCP `describe_item` tool returns, and a recipe reports its native guidance instead of an install closure
+
+```sh
+swiftui-registry info --destination path/to/YourTarget/Components
+```
+
+`info` reads the receipt already in a destination and reports each installed item with its owned files marked up-to-date, modified, or missing against the digest recorded at install time, ending in a summary count. It never touches the registry, so a consumer can audit an installation without a clone, and it exits 2 when the destination holds no receipt
+
 ### MCP server
 
 `swiftui-registry mcp` exposes the same operations (search, describe, plan, diff, install, plus the preset tools) as MCP tools over stdio. Register the Homebrew-installed binary in your MCP client, for example Claude Code's `.mcp.json`; add `"--registry", "/path/to/clone"` to the arguments to serve a checkout instead of the pinned snapshot:

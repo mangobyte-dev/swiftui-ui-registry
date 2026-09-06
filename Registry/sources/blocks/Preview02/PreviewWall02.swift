@@ -63,6 +63,7 @@ public struct PreviewWall02: View {
         StockPerformance()
         SyncingState()
         TransferFunds()
+        UpcomingPayments()
     }
 
     private var columns: [GridItem] {

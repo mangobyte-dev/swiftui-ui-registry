@@ -62,6 +62,10 @@
     {
       "source": "sources/blocks/Preview02/FrontDoor.swift",
       "target": "Preview02/FrontDoor.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/IndexInvesting.swift",
+      "target": "Preview02/IndexInvesting.swift"
     }
   ],
   "registryDependencies": [

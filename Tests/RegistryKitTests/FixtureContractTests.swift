@@ -6,7 +6,7 @@ import Testing
     .deletingLastPathComponent()
   for (fixture, canonical) in [
     ("schema.json", "Registry/schema.json"),
-    ("preset_vectors.json", "Tests/RegistryTests/preset_vectors.json"),
+    ("preset_vectors.json", "Registry/preset_vectors.json"),
   ] {
     let copy = try #require(
       Bundle.module.url(forResource: fixture, withExtension: nil, subdirectory: "Fixtures"))

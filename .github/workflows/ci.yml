@@ -11,30 +11,32 @@ permissions:
 jobs:
   registry:
     name: Registry gate
-    runs-on: ubuntu-latest
+    # The swiftui-registry tool is a macOS Swift package (CryptoKit, Synchronization); the
+    # image's default Xcode builds it, and Node runs the website codec check inside swift test
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          python-version: "3.12"
-      - run: python3 Scripts/validate.py
-      - run: python3 Scripts/generate_catalog.py
-      - run: python3 Scripts/generate_showcase_manifest.py
-      - run: python3 Scripts/generate_site_data.py
+          node-version: 22
+      - run: swift build
+      - run: swift run swiftui-registry validate
+      - run: swift run swiftui-registry generate catalog
+      - run: swift run swiftui-registry generate showcase-manifest
+      - run: swift run swiftui-registry generate site-data
       - name: Generated files must be committed
         run: git diff --exit-code -- docs/catalog Examples/Showcase Website/content
-      - run: python3 -m unittest discover Tests/RegistryTests
+      - run: swift test
+      - run: make format-check
 
   website:
     name: Website
-    runs-on: ubuntu-latest
+    runs-on: macos-26
     needs: registry
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
-        with:
-          python-version: "3.12"
-      - run: python3 Scripts/generate_site_data.py
+      - name: Export registry data and captures for the site
+        run: swift run swiftui-registry generate site-data
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22

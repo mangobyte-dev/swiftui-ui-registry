@@ -4,7 +4,7 @@ extension MCPServer {
   static let instructions =
     "Search the registry, describe an item to read its usage snippet and source, plan an install to see the dependency closure and target writes, then install. Installs copy Swift source into the destination and write a receipt; they never edit project files. Recipes are native guidance and install nothing. A preset code from the website's /create page or the Showcase's tuning panel describes a RegistryTheme; apply_preset writes it as RegistryTheme+App.swift next to the installed items."
   static let tools: OrderedJSON = {
-    // Protocol declarations ported verbatim from Scripts/mcp_server.py.
+    // Protocol declarations carried over unchanged from the former Python server; MCPTests pins the wire shape.
     try! OrderedJSON.read(
       Data(
         #"""

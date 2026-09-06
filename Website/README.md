@@ -1,9 +1,9 @@
 # SwiftUIRegistry website
 
-The registry's website: a Next.js static export built with shadcn/ui. It reads only `content/registry.json`, which `python3 Scripts/generate_site_data.py` (run from the repository root) writes from the validated registry along with the captures under `public/images/`. Never edit that JSON or those images by hand; regenerate them
+The registry's website: a Next.js static export built with shadcn/ui. It reads only `content/registry.json`, which `swift run swiftui-registry generate site-data` (run from the repository root) writes from the validated registry along with the captures under `public/images/`. Never edit that JSON or those images by hand; regenerate them
 
 ```sh
-python3 Scripts/generate_site_data.py   # from the repository root
+swift run swiftui-registry generate site-data   # from the repository root
 cd Website
 npm ci
 npm run dev          # http://localhost:3000

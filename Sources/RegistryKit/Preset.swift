@@ -189,7 +189,7 @@ public enum Preset {
     }
     lines += [
       "", "// swiftui-registry preset \(code)", "// \(url(code))",
-      "// Written by `python3 Scripts/preset.py apply`. Edit freely; `preset.py resolve` reads it back into a code.",
+      "// Written by `swiftui-registry preset apply`. Edit freely; `swiftui-registry preset resolve` reads it back into a code.",
       "", "extension RegistryTheme {",
       "    /// Apply once at the scene root: `ContentView().registryTheme(.app)`.",
       "    static let app = \(body[0])",

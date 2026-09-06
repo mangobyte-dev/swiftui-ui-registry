@@ -2,9 +2,9 @@
 
 **Verification run** (from AGENTS.md, cheapest first; name anything skipped)
 
-- [ ] `python3 Scripts/validate.py`
+- [ ] `swift run swiftui-registry validate`
 - [ ] Generators rerun: catalog, Showcase manifest, site data
-- [ ] `python3 -m unittest discover Tests/RegistryTests`
+- [ ] `swift test` and `make format-check`
 - [ ] Showcase builds; UI suite run if the change is visible
 - [ ] Item recaptured with `Scripts/capture_previews.py` if its look changed
 

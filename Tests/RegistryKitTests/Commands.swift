@@ -59,7 +59,7 @@ import Testing
         next steps:
           1. Add each package requirement above to the consuming project; the installer never edits project files
           2. Ensure the destination folder is a member of the consuming build target
-          3. Run: python3 Scripts/install.py example --destination /app
+          3. Run: swiftui-registry install example --destination /app
         plan only: nothing was written
 
         """

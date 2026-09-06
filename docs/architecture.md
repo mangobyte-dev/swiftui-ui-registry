@@ -24,13 +24,12 @@ This is a hypothesis exercised by finance and nutrition, not a claim of universa
 - `Registry/items/`: machine-readable item declarations
 - `Registry/sources/components/`: canonical copied styles, focused modifiers, and reusable compositions
 - `Registry/sources/blocks/`: canonical copied block source
-- `Scripts/install.py`: dependency resolution, receipts, installation, and conflict-aware updates
-- `Scripts/search.py`: deterministic developer and agent discovery over registry metadata
+- `Sources/RegistryKit/` and `Sources/SwiftUIRegistryCLI/`: the `swiftui-registry` tool, a SwiftUI-free engine (validation, dependency resolution, receipts, installation and conflict-aware updates, search, preset codes, the MCP server, the generators) behind an ArgumentParser executable
 - `Examples/Showcase/`: a real iOS consumer, a browsable catalog with a demo per item, the theme tuning panel, and the capture route for item screenshots
-- `Scripts/generate_catalog.py`, `Scripts/generate_showcase_manifest.py`, `Scripts/generate_site_data.py`: the derived catalog, Showcase manifest, and website data, all from metadata
+- `swiftui-registry generate catalog | showcase-manifest | site-data`: the derived catalog, Showcase manifest, and website data, all from metadata
 - `Website/`: the registry website, a Next.js static export built with shadcn/ui that reads only the generated `content/registry.json`; `npm run deploy` publishes it to Cloudflare Workers as static assets (`Website/wrangler.jsonc`), and `.github/workflows/pages.yml` can deploy the same export to GitHub Pages
 - `Scripts/capture_previews.py`: per-item light and dark captures from the Showcase on the pinned simulator
-- `Tests/RegistryTests/`: registry and overwrite behavior
+- `Tests/RegistryKitTests/`: the tool's command, installer, validator, preset, MCP, and generator contracts, with the captured fixtures and the website codec check under `Fixtures/`
 
 ## View boundaries
 
@@ -50,13 +49,13 @@ The composed block does not own a `ScrollView`, navigation container, or maximum
 
 Six presets (`system`, `graphite`, `indigo`, `rose`, `emerald`, `amber`) are plain `static let` values and starting points, not a theme engine. `graphite` is the ink-on-paper look: primary-colored accent with a background-colored label. `amber` is the light accent whose dark label proves `onAccent` earns its place
 
-This is deliberately smaller than a full token system. Repeated colors and metrics use semantic tokens rather than hardcoded values, but a token enters foundations only after two real registry items need the exact same meaning (`Tests/RegistryTests/test_installer.py` names every token's two consumers). A style or modifier remains source-owned until two items use the exact same treatment
+This is deliberately smaller than a full token system. Repeated colors and metrics use semantic tokens rather than hardcoded values, but a token enters foundations only after two real registry items need the exact same meaning (`everyFoundationTokenHasTwoSemanticConsumers` in `Tests/RegistryKitTests/RegistryContractTests.swift` names every token's two consumers). A style or modifier remains source-owned until two items use the exact same treatment
 
 The Showcase's tuning panel is the theme creator, and it stays beside the catalog rather than on a tab of its own: an inspector column on iPad and, on iPhone, a sheet the catalog remains interactive under (`presentationBackgroundInteraction`), with the named accents in a strip above the tab bar (`tabViewBottomAccessory`), so a slider move shows on whichever demo is open. It offers every token as a live control, presets one tap away, Copy Swift for the exact `RegistryTheme` initializer to paste at a root, Copy Code for the theme as a preset code, and Import to load either back into the knobs. A custom accent can carry a separate dark value, exported as a dynamic `UIColor`. The panel's model lives in the Showcase, not in foundations, so the package stays a value type with no persistence
 
 The theme preview is the `preview` block's wall. `ItemDemos`'s `theme-preview` case renders `PreviewWall`, so `capture_previews.py --themes` and `--preset` capture a screen of realistic product UI per preset rather than one representative strip, and the browsable `preview` block demo is that same view, so the tuning panel previews the wall live over it. The Create page and the Themes page show that wall's first screen per preset on iPhone 17, while the CSS token board stands in for a custom code that matches no preset
 
-A preset code (`docs/registry-spec.md`, "Preset codes") is the theme as one short string that the website's Create page, the Showcase, `Scripts/preset.py`, and the MCP server all read and write; `preset.py apply` turns it into `RegistryTheme+App.swift` for a consumer, and `capture_previews.py --preset` renders any code on the pinned simulator. The Create page shows the tokens as a CSS board and, when the code is one of the six presets, the real capture; it never claims to render SwiftUI
+A preset code (`docs/registry-spec.md`, "Preset codes") is the theme as one short string that the website's Create page, the Showcase, `swiftui-registry preset`, and the MCP server all read and write; `swiftui-registry preset apply` turns it into `RegistryTheme+App.swift` for a consumer, and `capture_previews.py --preset` renders any code on the pinned simulator. The Create page shows the tokens as a CSS board and, when the code is one of the six presets, the real capture; it never claims to render SwiftUI
 
 ## Compatibility policy
 
@@ -84,9 +83,9 @@ Three derived surfaces present the same metadata, and none is hand-edited: the m
 
 ## Discovery policy
 
-`Scripts/search.py` is a deterministic adapter over the existing JSON. It filters kind and platform compatibility, requires every query term to match indexed metadata, and emits stable JSON results with the information an agent needs before installation
+`swiftui-registry search` is a deterministic adapter over the existing JSON. It filters kind and platform compatibility, requires every query term to match indexed metadata, and emits stable JSON results with the information an agent needs before installation
 
-Search remains a local script; `Scripts/mcp_server.py` is a thin stdio adapter over the same code so an agent inside a consuming app can search, plan, and install without leaving its editor. A hosted adapter becomes useful only when distribution, authentication, or catalog scale varies independently from local metadata
+Search remains local; `swiftui-registry mcp` is a thin stdio adapter over the same engine so an agent inside a consuming app can search, plan, and install without leaving its editor. A hosted adapter becomes useful only when distribution, authentication, or catalog scale varies independently from local metadata
 
 ## Platform decision
 

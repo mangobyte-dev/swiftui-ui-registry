@@ -1,16 +1,16 @@
-# Handoff: Swift CLI rewrite
+# Handoff: Swift CLI rewrite, Phase D
 
 Read [AGENTS.md](AGENTS.md), [philosophy](docs/philosophy.md), [architecture](docs/architecture.md), and the full [registry specification](docs/registry-spec.md), in that order. Then read [the roadmap, Stage 6](docs/component-roadmap.md#stage-6-swift-command-line-rewrite) for the checkpoint, commit evidence, next actions, phase gates, and unresolved work. The roadmap is the only home for stage status and plans
 
-Read [the migration contract](docs/cli-migration.md) for package boundaries, compatibility exceptions, effect injection, and the Showcase codec decision. Read [fixture provenance](Tests/RegistryKitTests/Fixtures/README.md) before changing an expectation. Python is the byte oracle during the overlap; an unexplained snapshot update is not parity evidence
+Read [the migration contract](docs/cli-migration.md) for package boundaries, compatibility exceptions, effect injection, and the Showcase codec decision. Read [fixture provenance](Tests/RegistryKitTests/Fixtures/README.md) before changing an expectation. The Python oracle is gone since Phase C; the inline snapshots and captured fixtures under `Tests/RegistryKitTests/` are the byte contract, and an unexplained snapshot update is not evidence
 
 ## Session instructions
 
-The owner authorized completing all four phases with local commits, without further confirmation. Do not push, tag, deploy, create the tap repository, or replace visual references. Do not inherit the previous Stage 5 session's publishing authorization. Do not use subagents or run remote workflows. Creating the requested CI and release workflow files is part of the implementation
+The owner authorized completing all four phases with local commits, without further confirmation. Phases A through C are done. Do not push, tag, deploy, create the tap repository, or replace visual references. Do not inherit the previous Stage 5 session's publishing authorization. Do not use subagents or run remote workflows. Creating the requested release workflow and formula template files is part of the implementation
 
-Use absolute paths in shell commands and set the working directory explicitly. Do not use `cd` in concurrent commands. Write no em dashes or heading-ending periods. Read the actual Swift interface or the mirrored Python source before calling an unfamiliar API. Preserve raw SwiftUI controls, source ownership, and the four document classes in AGENTS.md
+Use absolute paths in shell commands and set the working directory explicitly. Do not use `cd` in concurrent commands. Write no em dashes or heading-ending periods. Read the actual Swift interface before calling an unfamiliar API. Preserve raw SwiftUI controls, source ownership, and the four document classes in AGENTS.md
 
-Every commit must pass the scope-appropriate verification loop. Record the commit hash and title, command outcomes, exact parity coverage, decisions, and omissions in the roadmap. End each commit message with:
+Every commit must pass the scope-appropriate verification loop. Record the commit hash and title, command outcomes, decisions, and omissions in the roadmap. End each commit message with:
 
 ```text
 Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
@@ -29,31 +29,25 @@ git -C /Users/developer/Projects/swiftui-cn log -5 --oneline
 git -C /Users/developer/Projects/swiftui-cn diff --stat
 ```
 
-Follow the roadmap's Stage 6 continuation checkpoint rather than replaying completed Phases A and B. No chat history is required. Temporary logs are supporting evidence only; committed tests, fixtures, and the parity script reproduce the proof
+Follow the roadmap's Stage 6 continuation checkpoint and its Phase D paragraphs rather than replaying completed Phases A through C. No chat history is required. Temporary logs are supporting evidence only; committed tests and fixtures reproduce the proof
 
 ## Verification commands
 
-Run sequentially from the root, cheapest first. Keep the Python checks until Phase C removes that path. Run the Swift generators as well and compare their bytes before changing generated command examples
+Run sequentially from the root, cheapest first. `swift test` needs `git` on PATH for the merge adapter and Node 22 for the website codec check
 
 ```sh
 swift build --package-path /Users/developer/Projects/swiftui-cn
-swift test --package-path /Users/developer/Projects/swiftui-cn --filter RegistryKitTests
-python3 -m unittest discover -s /Users/developer/Projects/swiftui-cn/Tests/RegistryTests
-python3 /Users/developer/Projects/swiftui-cn/Scripts/validate.py
 swift run --package-path /Users/developer/Projects/swiftui-cn swiftui-registry validate --registry /Users/developer/Projects/swiftui-cn
-python3 /Users/developer/Projects/swiftui-cn/Scripts/generate_catalog.py
-python3 /Users/developer/Projects/swiftui-cn/Scripts/generate_showcase_manifest.py
-python3 /Users/developer/Projects/swiftui-cn/Scripts/generate_site_data.py
 swift run --package-path /Users/developer/Projects/swiftui-cn swiftui-registry generate catalog --registry /Users/developer/Projects/swiftui-cn
 swift run --package-path /Users/developer/Projects/swiftui-cn swiftui-registry generate showcase-manifest --registry /Users/developer/Projects/swiftui-cn
 swift run --package-path /Users/developer/Projects/swiftui-cn swiftui-registry generate site-data --registry /Users/developer/Projects/swiftui-cn
 git -C /Users/developer/Projects/swiftui-cn diff --exit-code -- docs/catalog Examples/Showcase Website/content Website/public/images
-python3 /Users/developer/Projects/swiftui-cn/Scripts/check_swift_parity.py
+swift test --package-path /Users/developer/Projects/swiftui-cn
 make -C /Users/developer/Projects/swiftui-cn format-check
 git -C /Users/developer/Projects/swiftui-cn diff --check
 ```
 
-Use `swift build --package-path /Users/developer/Projects/swiftui-cn --show-bin-path` to discover the binary directory rather than assuming an architecture-specific `.build` path. Also build with `-c release` for release changes
+Use `swift build --package-path /Users/developer/Projects/swiftui-cn --show-bin-path` to discover the binary directory rather than assuming an architecture-specific `.build` path. Also build with `-c release` for release changes; `.build/release/swiftui-registry` is the release binary SwiftPM links
 
 After touching Showcase, build it on the pinned simulator:
 
@@ -73,21 +67,23 @@ Read `Website/AGENTS.md` before changing website files. After touching Website, 
 
 ```sh
 npm run typecheck
+npm run lint
 npm run build
 ```
 
 ## Source navigation
 
-| Concern | Implementation and oracle |
+| Concern | Implementation and tests |
 |---|---|
-| Real argument parsing and output | `Sources/SwiftUIRegistryCLI/Main.swift`, `PresetCommand.swift`; `Tests/RegistryKitTests/CommandSupport.swift` parses and runs the real root command |
-| Validation and resolution | `Sources/RegistryKit/Validation.swift`, `Registry.swift`; `Scripts/registry_validation.py`, `Tests/RegistryTests/test_validation.py` |
-| Ownership and merge | `Sources/RegistryKit/Installer.swift`, `SourceComparison.swift`; `Scripts/install.py`, `Tests/RegistryTests/test_installer.py` |
-| Effects | `Sources/RegistryKit/FileSystem.swift`, `Console.swift`; `Tests/RegistryKitTests/InMemoryFileSystem.swift` |
-| Search and preset codec | `Sources/RegistryKit/Registry.swift`, `Preset.swift`, `PresetRandom.swift`; `Scripts/search.py`, `preset.py` and their Python tests |
-| MCP wire contract | `Sources/RegistryKit/MCPServer.swift`, `MCPTools.swift`, `RegistryInput.swift`; `Scripts/mcp_server.py`, `Tests/RegistryTests/test_mcp_server.py`, `Tests/RegistryKitTests/MCPTests.swift` |
-| Generator byte contracts | `Sources/RegistryKit/CatalogGenerator.swift`, `ShowcaseManifestGenerator.swift`, `SiteDataGenerator.swift`, `OrderedJSON.swift`; the three Python generators and `Tests/RegistryKitTests/GeneratorTests.swift` |
-| Shared codec vectors | `Tests/RegistryTests/preset_vectors.json`, `preset_vectors_check.ts`, `Tests/RegistryKitTests/Fixtures/preset_vectors.json`, Showcase `ThemePreset.swift` |
+| Real argument parsing and output | `Sources/SwiftUIRegistryCLI/Main.swift`, `PresetCommand.swift`, `Generate.swift`, `MCP.swift`; `Tests/RegistryKitTests/CommandSupport.swift` parses and runs the real root command |
+| Registry selection and effects | `Sources/RegistryKit/FileSystem.swift` (`LocalRegistrySource` finds `Registry/registry.json` upward from the working directory; Phase D adds the cached release snapshot after the explicit `--registry` path), `Console.swift`, `RegistryInput.swift`; `Tests/RegistryKitTests/InMemoryFileSystem.swift`, `RepositorySupport.swift` |
+| Validation and resolution | `Sources/RegistryKit/Validation.swift`, `Registry.swift`; `ValidationTests.swift` with `Fixtures/validation-cases.json`, `RegistryContractTests.swift` |
+| Ownership and merge | `Sources/RegistryKit/Installer.swift`, `SourceComparison.swift`; `Commands.swift`, `InstallerSafetyTests.swift` with `Fixtures/diff-cases.json` |
+| Search and preset codec | `Sources/RegistryKit/Registry.swift`, `Preset.swift`, `PresetRandom.swift`; `PresetTests.swift`, `PresetCommandSnapshots.swift`, `PresetContractTests.swift`, the Showcase's `ThemePreset.swift` and `ThemePresetTests` |
+| MCP wire contract | `Sources/RegistryKit/MCPServer.swift`, `MCPTools.swift`; `MCPTests.swift` (inline wire snapshots), `MCPContractTests.swift` (real catalog) |
+| Generator byte contracts | `Sources/RegistryKit/CatalogGenerator.swift`, `ShowcaseManifestGenerator.swift`, `SiteDataGenerator.swift`, `OrderedJSON.swift`; `GeneratorTests.swift` |
+| Shared codec vectors | `Registry/preset_vectors.json`; `Tests/RegistryKitTests/Fixtures/preset_vectors.json` (byte copy), `Fixtures/preset-vectors-check.ts` (website codec under Node), `Website/lib/preset.ts` |
+| Captures | `Scripts/capture_previews.py`, the one remaining Python script, which lists items and checks a preset code through the built tool (`--tool`) |
 | Release reference | `pointfreeco/pfw` commit `854b491`: `Sources/pfw/Main.swift`, `Install.swift`, `Dependencies/FileSystem.swift`, `Tests/pfwTests/InstallTests.swift`, `Tests/pfwTests/Internal/AssertComand.swift`, `.github/workflows/release.yml` |
 
-The reference checkout used during implementation is `/tmp/swiftui-registry-stage6-pfw`; recreate it from `https://github.com/pointfreeco/pfw` at the pinned commit if absent. Treat it as a design reference, not a runtime dependency. Its central store, symlinks, login, redirect server, and ZIP dependency do not belong in this source-copying registry
+The Python originals and the 1,184-comparison parity oracle are in git history at `41c2bd8` if a byte question needs the source. The reference checkout used during implementation is `/tmp/swiftui-registry-stage6-pfw`; recreate it from `https://github.com/pointfreeco/pfw` at the pinned commit if absent. Treat it as a design reference, not a runtime dependency. Its central store, symlinks, login, redirect server, and ZIP dependency do not belong in this source-copying registry

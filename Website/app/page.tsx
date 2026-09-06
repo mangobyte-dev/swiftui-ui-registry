@@ -105,7 +105,7 @@ export default function HomePage() {
               <CardContent>
                 <CodeBlock
                   language="bash"
-                  code="python3 Scripts/install.py auth-form --destination Sources/YourFeature/Components"
+                  code="swiftui-registry install auth-form --destination Sources/YourFeature/Components"
                 />
               </CardContent>
             </Card>

@@ -12,15 +12,15 @@ Only the latest revision on `main` is supported until the project publishes vers
 
 ## What is in scope
 
-- The installer and its update path (`Scripts/install.py`): path traversal, symlink escapes, receipt tampering, and anything that lets a registry item write outside the chosen destination
-- The validator, search, and generators under `Scripts/`
+- The installer and its update path (`swiftui-registry install`, `Sources/RegistryKit/Installer.swift`): path traversal, symlink escapes, receipt tampering, and anything that lets a registry item write outside the chosen destination
+- The validator, search, preset, MCP, and generator commands of the `swiftui-registry` tool under `Sources/`
 - Registry source under `Registry/sources/` that could compromise a consuming app
 - The website under `Website/` and its deployment configuration
 - The Showcase app and its UI tests
 
 ## How the project defends itself
 
-- Registry items are plain Swift source copied by a script that refuses unsafe paths and never edits project files; consumers review the source they install
+- Registry items are plain Swift source copied by a tool that refuses unsafe paths and never edits project files; consumers review the source they install
 - Every commit is scanned for secrets with gitleaks before it is pushed; the history contains none
 - Website dependencies are audited with `npm audit` and updated by Dependabot; the site is a static export with no server code, served with restrictive security headers
 - Workflows run with read-only tokens and pin every action to a commit hash

@@ -126,7 +126,7 @@ export default function ThemesPage() {
           Tune in the strip above the tab bar. The panel stays beside the catalog, an inspector on iPad and a
           sheet the catalog remains interactive under on iPhone, so every demo shows the change as you make
           it. Copy Code puts the theme on the pasteboard as a preset code the{" "}
-          <Link href="/create/">Create page</Link> and <code>Scripts/preset.py</code> both read. The preset
+          <Link href="/create/">Create page</Link> and <code>swiftui-registry preset</code> both read. The preset
           captures above are the first screen of the{" "}
           <Link href="/items/preview/">theme preview wall</Link> (the <code>preview</code> block, 33 cards)
           rendered under each preset on iPhone 17.

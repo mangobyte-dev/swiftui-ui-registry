@@ -172,7 +172,7 @@ struct Install: ParsableCommand {
       "  1. Add each package requirement above to the consuming project; the installer never edits project files"
     )
     print("  2. Ensure the destination folder is a member of the consuming build target")
-    print("  3. Run: python3 Scripts/install.py \(item) --destination \(destination)")
+    print("  3. Run: swiftui-registry install \(item) --destination \(destination)")
     print("plan only: nothing was written")
   }
 }

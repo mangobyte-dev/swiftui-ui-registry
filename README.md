@@ -30,12 +30,12 @@ The value gate: an installable item must add a meaningful reusable treatment or 
 
    Presets: `.system` (inherits your app tint), `.graphite`, `.indigo`, `.rose`, `.emerald`, `.amber`. To make your own, open the Showcase's Tune tab, move the sliders, and tap Copy Swift; it exports the exact `RegistryTheme(...)` initializer
 
-3. Install items from a clone of this repository; every `python3 Scripts/...` command runs from the root of that clone:
+3. Install items with the `swiftui-registry` tool from a clone of this repository. From the root of that clone, `swift run swiftui-registry <command>` builds and runs it; or build it once with `swift build -c release`, put `.build/release/swiftui-registry` on your PATH, and pass `--registry /path/to/clone` from anywhere:
 
    ```sh
-   python3 Scripts/search.py activity --kind block --format names
-   python3 Scripts/install.py activity-feed --destination path/to/YourTarget/Components --plan
-   python3 Scripts/install.py activity-feed --destination path/to/YourTarget/Components
+   swift run swiftui-registry search activity --kind block --format names
+   swift run swiftui-registry install activity-feed --destination path/to/YourTarget/Components --plan
+   swift run swiftui-registry install activity-feed --destination path/to/YourTarget/Components
    ```
 
    The installer resolves the dependency closure, copies exact source, writes `.swiftui-registry/receipt.json`, and prints the package requirement. It never edits project files; make the destination folder a member of your build target
@@ -51,7 +51,7 @@ Version 0, an honest prototype:
 - Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, captured screenshots, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates
 - The Showcase compiles every installable item and every recipe snippet at the iOS 26 floor, with pinned visual contract checks for the blocks and an accessibility-audited demo walk over all 50 items
-- Not yet: hosted registry, MCP server, Xcode project mutation, platforms beyond iOS, or a published version tag. Stage status and open deferrals live in one place, `docs/component-roadmap.md`, Current state
+- Not yet: hosted registry, Xcode project mutation, platforms beyond iOS, a Homebrew formula, or a published version tag. Stage status and open deferrals live in one place, `docs/component-roadmap.md`, Current state
 
 ## Showcase screenshots
 
@@ -70,13 +70,13 @@ Dark captures sit beside every light one under `docs/images/items/`, and the web
 Search is local, deterministic, and JSON-first:
 
 ```sh
-python3 Scripts/search.py nutrition dashboard \
+swiftui-registry search nutrition dashboard \
   --kind block \
   --platform iOS \
   --target-version 26.0
 ```
 
-Results include dependency closure inputs, package requirements, accessibility notes, preview paths, and compatibility metadata. Search does not require a model, MCP server, account, or hosted registry
+Results include dependency closure inputs, package requirements, accessibility notes, preview paths, and compatibility metadata. Search does not require a model, MCP server, account, or hosted registry. Every `swiftui-registry` command below runs as `swift run swiftui-registry ...` from the root of a clone, or as the built binary with `--registry /path/to/clone`
 
 ## Install
 
@@ -95,7 +95,7 @@ dependencies: [
 The `package:` argument is the SwiftPM package identity for the URL, its last path component without `.git`. In an Xcode app project instead, choose File > Add Package Dependency, enter the same URL with the Up to Next Minor Version rule from 0.1.0, and add the `SwiftUIRegistryFoundations` product to your app target. Then run:
 
 ```sh
-python3 Scripts/install.py finance-overview \
+swiftui-registry install finance-overview \
   --destination path/to/YourTarget/Components
 ```
 
@@ -106,7 +106,7 @@ Verify the install by building the consuming target for an iOS Simulator destina
 ## Update owned source
 
 ```sh
-python3 Scripts/install.py finance-overview \
+swiftui-registry install finance-overview \
   --destination path/to/YourTarget/Components \
   --update
 ```
@@ -125,7 +125,7 @@ The updater never silently resolves a conflict or replaces a customized file
 Both inspection flags are read-only and write nothing, so an agent can preview and audit an installation before touching the destination:
 
 ```sh
-python3 Scripts/install.py finance-overview \
+swiftui-registry install finance-overview \
   --destination path/to/YourTarget/Components \
   --plan
 ```
@@ -133,7 +133,7 @@ python3 Scripts/install.py finance-overview \
 `--plan` resolves the item like a real install and prints the ordered dependency closure with versions and kinds, every target write with its status (`new`, `up-to-date`, `modified-would-require-force`, `would-merge`), the actionable package requirements, preflight collisions, and the manual integration steps. For a recipe it prints the native guidance and states nothing installs
 
 ```sh
-python3 Scripts/install.py finance-overview \
+swiftui-registry install finance-overview \
   --destination path/to/YourTarget/Components \
   --diff
 ```
@@ -142,14 +142,14 @@ python3 Scripts/install.py finance-overview \
 
 ### MCP server
 
-`Scripts/mcp_server.py` exposes the same operations (search, describe, plan, diff, install) as MCP tools over stdio with no dependencies beyond Python. Register it in your MCP client, for example Claude Code's `.mcp.json`:
+`swiftui-registry mcp` exposes the same operations (search, describe, plan, diff, install, plus the preset tools) as MCP tools over stdio. Build the tool once with `swift build -c release` in your clone, then register the binary in your MCP client, for example Claude Code's `.mcp.json`:
 
 ```json
 {
   "mcpServers": {
     "swiftui-registry": {
-      "command": "python3",
-      "args": ["/path/to/swiftui-cn/Scripts/mcp_server.py"]
+      "command": "/path/to/swiftui-cn/.build/release/swiftui-registry",
+      "args": ["mcp", "--registry", "/path/to/swiftui-cn"]
     }
   }
 }
@@ -184,12 +184,11 @@ Select the `SwiftUIRegistryShowcase` scheme and run. The Components, Blocks, and
 ## Verify
 
 ```sh
-python3 Scripts/validate.py
-python3 Scripts/generate_catalog.py
-python3 Scripts/generate_showcase_manifest.py
-python3 Scripts/generate_site_data.py
-python3 -m unittest discover Tests/RegistryTests
-xcodebuildmcp swift-package test --package-path .
+swift run swiftui-registry validate
+swift run swiftui-registry generate catalog
+swift run swiftui-registry generate showcase-manifest
+swift run swiftui-registry generate site-data
+swift test
 xcodebuildmcp simulator test \
   --workspace-path Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace \
   --scheme SwiftUIRegistryShowcase \
@@ -203,7 +202,8 @@ The simulator suite walks every item's demo, verifies the blocks' behavior (focu
 - Swift tools 6.2 or newer
 - iOS 26 or newer
 - Xcode capable of building Swift 6.2 packages
-- Python 3.8 or newer for every `Scripts/` command
+- Node 22 for the website and for the website codec check inside `swift test`
+- Python 3 only for `Scripts/capture_previews.py`, the maintainer's simulator capture script
 - Git when an update needs a three-way merge
 
 The repository is currently verified with Xcode 27.0 and Swift 6.4. The registry targets iOS 26 and above: items inherit Liquid Glass natively, carry no pre-26 compatibility styling, and intentionally avoid 27-only APIs so the floor remains iOS 26
@@ -221,7 +221,7 @@ The repository is currently verified with Xcode 27.0 and Swift 6.4. The registry
 
 ## Deliberate boundaries
 
-Version 0 does not edit Xcode projects, add package dependencies, host registry content, or expose an MCP server. It also does not claim macOS, watchOS, tvOS, visionOS, or physical-device verification. Those boundaries keep the experiment focused on product composition, source ownership, deterministic discovery, and safe updates
+Version 0 does not edit Xcode projects, add package dependencies, or host registry content. It also does not claim macOS, watchOS, tvOS, visionOS, or physical-device verification. Those boundaries keep the experiment focused on product composition, source ownership, deterministic discovery, and safe updates
 
 ## Security and conduct
 

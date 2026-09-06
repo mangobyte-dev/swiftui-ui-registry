@@ -7,7 +7,7 @@ public struct ValidationIssue: Equatable, Sendable, CustomStringConvertible {
   public var description: String { "\(location): \(message)" }
 }
 
-/// The Swift mirror of registry_validation.py. All structural rules live here.
+/// The single structural validator; every consumer loads the registry through it. All structural rules live here.
 public struct RegistryValidator {
   @Dependency(\.registryFileSystem) var fs
   public init() {}

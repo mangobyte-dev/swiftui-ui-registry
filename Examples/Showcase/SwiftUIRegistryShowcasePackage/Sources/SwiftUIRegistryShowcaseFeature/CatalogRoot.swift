@@ -128,7 +128,7 @@ struct ItemDetailScreen: View {
                 } else {
                     DetailSection("Install") {
                         CodeBlock(
-                            "python3 Scripts/install.py \(entry.name) --destination Sources/YourFeature/Components"
+                            "swiftui-registry install \(entry.name) --destination Sources/YourFeature/Components"
                         )
                     }
                 }

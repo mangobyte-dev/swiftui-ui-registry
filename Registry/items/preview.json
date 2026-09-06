@@ -118,6 +118,10 @@
     {
       "source": "sources/blocks/Preview/SleepReport.swift",
       "target": "Preview/SleepReport.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/StyleOverview.swift",
+      "target": "Preview/StyleOverview.swift"
     }
   ],
   "registryDependencies": [

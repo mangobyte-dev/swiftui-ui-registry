@@ -106,6 +106,10 @@
     {
       "source": "sources/blocks/Preview/ShippingAddress.swift",
       "target": "Preview/ShippingAddress.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/Shortcuts.swift",
+      "target": "Preview/Shortcuts.swift"
     }
   ],
   "registryDependencies": [

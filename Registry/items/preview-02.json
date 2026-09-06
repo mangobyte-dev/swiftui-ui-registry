@@ -106,6 +106,10 @@
     {
       "source": "sources/blocks/Preview02/ReceivingMethod.swift",
       "target": "Preview02/ReceivingMethod.swift"
+    },
+    {
+      "source": "sources/blocks/Preview02/RecentTransactions.swift",
+      "target": "Preview02/RecentTransactions.swift"
     }
   ],
   "registryDependencies": [
@@ -126,7 +130,8 @@
     "breadcrumb",
     "select",
     "textarea",
-    "progress"
+    "progress",
+    "table"
   ],
   "packageDependencies": [
     {

@@ -620,8 +620,8 @@
     {
       "name": "button-group",
       "kind": "component",
-      "version": "0.2.1",
-      "description": "Styles every native button in a ControlGroup with one registry button variant while retaining the system group container.",
+      "version": "0.3.0",
+      "description": "Lays out every native button in a ControlGroup side by side with one registry button variant, keeping the caller's Button controls, roles, and labels.",
       "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
       "docs": null,
       "tags": [
@@ -647,18 +647,18 @@
         },
         {
           "name": "button-group",
-          "version": "0.2.1"
+          "version": "0.3.0"
         }
       ],
       "accessibility": [
-        "Retains native Button controls and the ControlGroup container supplied by the caller.",
+        "Retains the caller's native Button controls and exposes the row as one accessibility container.",
         "Keeps each button's visible or derived accessibility label and role.",
         "Inherits layout direction, control size, enabled state, and Dynamic Type behavior.",
         "Requires callers to provide labels for icon-only buttons through native Button initializers."
       ],
       "sourcePath": "Registry/sources/components/RegistryButtonGroupStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryButtonGroupStyle.swift",
-      "source": "import SwiftUI\n\n/// Applies one registry button treatment to every control in a native `ControlGroup`.\npublic struct RegistryButtonGroupStyle: ControlGroupStyle {\n    private let variant: RegistryButtonStyle.Variant\n\n    public init(_ variant: RegistryButtonStyle.Variant = .secondary) {\n        self.variant = variant\n    }\n\n    public func makeBody(configuration: Configuration) -> some View {\n        ControlGroup(configuration)\n            .buttonStyle(RegistryButtonStyle(variant))\n    }\n}\n\npublic extension ControlGroupStyle where Self == RegistryButtonGroupStyle {\n    static var registryButtons: RegistryButtonGroupStyle {\n        RegistryButtonGroupStyle()\n    }\n}\n\nprivate struct RegistryButtonGroupStylePreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 16) {\n            ControlGroup(\"Editor actions\") {\n                Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n                Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n                Button(\"Share\", systemImage: \"square.and.arrow.up\") {}\n            }\n            .labelStyle(.iconOnly)\n            .controlGroupStyle(.registryButtons)\n\n            ControlGroup(\"Document actions\") {\n                Button(\"Save\") {}\n                Button(\"Duplicate\") {}\n                Button(\"Delete\", role: .destructive) {}\n            }\n            .controlGroupStyle(RegistryButtonGroupStyle(.outline))\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Button Group\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n}\n\n#Preview(\"Button Group Dark\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .preferredColorScheme(.dark)\n}\n\n#Preview(\"Button Group Right to Left\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Button Group Accessibility Size\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import SwiftUI\n\n/// Lays out every native button of a `ControlGroup` side by side with one registry button\n/// treatment. Measured on iOS 27, `ControlGroup(configuration)` draws the system capsule and\n/// ignores the button style, so the style owns the row and the buttons keep their variant,\n/// destructive role, labels, and control size.\npublic struct RegistryButtonGroupStyle: ControlGroupStyle {\n    @Environment(\\.registryTheme) private var theme\n\n    private let variant: RegistryButtonStyle.Variant\n\n    public init(_ variant: RegistryButtonStyle.Variant = .secondary) {\n        self.variant = variant\n    }\n\n    public func makeBody(configuration: Configuration) -> some View {\n        HStack(spacing: theme.metrics.compactSpacing) {\n            configuration.content\n                .buttonStyle(RegistryButtonStyle(variant))\n        }\n        .accessibilityElement(children: .contain)\n    }\n}\n\npublic extension ControlGroupStyle where Self == RegistryButtonGroupStyle {\n    static var registryButtons: RegistryButtonGroupStyle {\n        RegistryButtonGroupStyle()\n    }\n}\n\nprivate struct RegistryButtonGroupStylePreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 16) {\n            ControlGroup(\"Editor actions\") {\n                Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n                Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n                Button(\"Share\", systemImage: \"square.and.arrow.up\") {}\n            }\n            .labelStyle(.iconOnly)\n            .controlGroupStyle(.registryButtons)\n\n            ControlGroup(\"Document actions\") {\n                Button(\"Save\") {}\n                Button(\"Duplicate\") {}\n                Button(\"Delete\", role: .destructive) {}\n            }\n            .controlGroupStyle(RegistryButtonGroupStyle(.outline))\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Button Group\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n}\n\n#Preview(\"Button Group Dark\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .preferredColorScheme(.dark)\n}\n\n#Preview(\"Button Group Right to Left\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Button Group Accessibility Size\") {\n    RegistryButtonGroupStylePreview()\n        .tint(.indigo)\n        .dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Button Group",
       "screenshots": {
         "light": "/images/items/button-group-light.png",
@@ -2284,7 +2284,7 @@
         },
         {
           "name": "button-group",
-          "version": "0.2.1"
+          "version": "0.3.0"
         },
         {
           "name": "preview",

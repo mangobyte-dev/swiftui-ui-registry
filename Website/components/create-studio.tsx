@@ -65,12 +65,19 @@ export function CreateStudio() {
   const appearance: Appearance = chosenAppearance ?? (resolvedTheme === "dark" ? "dark" : "light")
   const code = encodePreset(tuning)
 
+  // WebKit throws a SecurityError past 100 history.replaceState calls per 10 seconds, and the
+  // App Router mirrors each of ours with one of its own, so a dragged slider would cross the
+  // limit in seconds and the throw from the router's own call lands on the error screen. The
+  // address bar is rewritten once the tuning settles instead.
   React.useEffect(() => {
-    try {
-      window.history.replaceState(null, "", `?preset=${code}`)
-    } catch {
-      // A sandboxed preview cannot rewrite the address; the code stays visible on the page.
-    }
+    const timer = window.setTimeout(() => {
+      try {
+        window.history.replaceState(null, "", `?preset=${code}`)
+      } catch {
+        // A sandboxed preview cannot rewrite the address; the code stays visible on the page.
+      }
+    }, 400)
+    return () => window.clearTimeout(timer)
   }, [code])
 
   return (

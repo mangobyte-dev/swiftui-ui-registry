@@ -40,6 +40,8 @@ A component may own transient `@State` when its interaction is self-contained. S
 
 Generic structural containers accept caller content with `@ViewBuilder`. Interactive appearance uses the matching SwiftUI style protocol. Independent optional behavior uses a focused `ViewModifier` instead of expanding the component initializer
 
+A presentation choice a composed registry view owns follows the same placement rule as its primitives. The initializer carries what the view is: content, bindings, actions, and required accessibility input. A choice the view owns (variant, tone, tint, and any future size or emphasis) is a copy-and-return method on the view, `registry`-prefixed for discoverability and applied before generic SwiftUI modifiers, as in `InlineAlert("...") { }.registryVariant(.positive)`, `TransactionRow(...).registryTone(.negative)`, and `MacroProgress(...).registryTint(.orange)`; the method returns `Self` from a mutated copy and the default stays the initializer's former default. Native controls keep their presentation in a `registry` style (`.buttonStyle(.registryOutline)`), text treatments in a `registry` modifier with a variant argument (`registryBadge(.positive)`), the theme in the environment (`registryTheme(_:)`), and sizes through Apple's `controlSize`; a `ViewModifier` is for optional decorations that do not reach a component's internal layout
+
 The composed block does not own a `ScrollView`, navigation container, or maximum width. Those are application composition decisions. The showcase demonstrates a readable iPad width at its call site
 
 ## Foundations

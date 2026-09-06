@@ -53,6 +53,7 @@ public struct PreviewWall02: View {
         Preferences()
         QrConnect()
         ReceivingMethod()
+        RecentTransactions()
     }
 
     private var columns: [GridItem] {

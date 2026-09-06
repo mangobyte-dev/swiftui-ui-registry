@@ -23,7 +23,7 @@ Updated 2026-09-06. This section and the per-stage Status lines are the only hom
 - First consumer outside `Examples/Showcase`: the seeFood app installed settings-section, select, separator, button, and input on 2026-09-01 through a local path dependency, with the receipt in its destination; the published URL remains unexercised because no tag exists
 - Audit (2026-09-05): every canonical file, the foundations, and the Showcase harness were reviewed against SwiftUI best practice; 18 commits fixed the verified findings and the rest are owner decisions. Findings, evidence, and the closing count are in the Audit section below
 - Placement rule for presentation choices (2026-09-06): the three composed views that carried a presentation choice in their initializer (`InlineAlert` variant, `TransactionRow` tone, `MacroProgress` tint) now take it as a `registry`-prefixed copy-and-return method (`registryVariant`, `registryTone`, `registryTint`); the rule is written in `AGENTS.md` and `docs/architecture.md`, and this closes the matching open deferral
-- Stage 6: the Swift CLI rewrite is in progress. Phase A delivers the engine and consumer commands; phase evidence and remaining work are in the Stage 6 section below
+- Stage 6: the Swift CLI rewrite is in progress. Phases A and B deliver the engine, consumer commands, MCP, and generators; phase evidence and remaining work are in the Stage 6 section below
 - Current catalog counts and per-item pages live in the generated `docs/catalog/index.md` and the website, not in prose here
 
 ### Open deferrals
@@ -54,7 +54,7 @@ The honest list of what would bite the first outside adopter and what was left t
 8. Xcode-project clean-room trial: install a block into a scratch Xcode app, build, customize, update. Status: done 2026-09-05, recorded as Trial 2 in `docs/clean-room-trial.md`; no registry defects, one scaffold defect outside the registry
 9. Website blocks story: iPad captures and a full-width block page. Status: done 2026-09-05; `capture_previews.py --blocks` captures every block on the iOS 27 iPad Pro 13-inch and each block page shows the wide layout under On iPad
 10. MCP adapter over the registry JSON (search, plan, install) for agents inside consuming apps. Status: done 2026-09-05; `Scripts/mcp_server.py` is a dependency-free stdio server tested end to end over JSON-RPC
-11. A Swift CLI so adopters do not need Python. Owner decision 2026-09-06: Stage 6 rewrites the whole Python path (installer, validator, receipts and merge, search, presets, MCP, and generators), with command parity and the same receipts on disk as the exit criteria. Status: in progress; Phase A evidence and the Phase B through D boundary are in the Stage 6 section. Python remains until the Swift tool proves the complete path; there is no second permanent installer
+11. A Swift CLI so adopters do not need Python. Owner decision 2026-09-06: Stage 6 rewrites the whole Python path (installer, validator, receipts and merge, search, presets, MCP, and generators), with command parity and the same receipts on disk as the exit criteria. Status: in progress; Phase A and B evidence and the Phase C through D boundary are in the Stage 6 section. Python remains until the Swift tool proves the complete path; there is no second permanent installer
 12. Usage-snippet compile proof for installable items independent of the Showcase demos. Status: closed 2026-09-05: snippets reference caller state (`$email`, `rows`, `onSelect`) that a generic wrapper cannot supply without per-item fixtures, which would duplicate the demos; the demos remain the compile proof and the walk proves each exists
 13. iOS 26 simulator runtime for floor evidence. Status: open, needs a multi-gigabyte download on the owner's machine
 14. Custom domain for the Worker plus `X-Robots-Tag: noindex` on the workers.dev host. Status: open, needs the owner's domain
@@ -317,19 +317,27 @@ The RegistryKit Swift Testing suite passed 18 tests, including 45 captured valid
 
 Not run: the Showcase UI suite and captures, because no Showcase or registry UI source changed; the website typecheck and build, because no website source changed. The existing auth-light and nutrition-light references remain untouched. The package's new executable is a macOS tool, not a new supported platform claim for registry items
 
+### Phase B evidence (2026-09-06)
+
+`RegistryKit` now owns the seven MCP tools and all three generators. `MCPServer.swift` calls the same installer, search, and preset operations as the consumer commands. `RegistryInput` and `RegistryConsole` supply stdio effects; home expansion belongs to the filesystem dependency. `OrderedJSON` preserves insertion order and preset numeric spelling without changing sorted receipt and search output. No package dependency was added
+
+The complete subprocess oracle passed 1,184 comparisons: the original 794 consumer-command pairs plus 390 Phase B comparisons. Phase B checks all catalog items through describe, plan, install, repeat install, and diff; all preset vectors through describe and apply; protocol negotiation, notification silence, parse errors, invalid arguments, recipes, edited-source and theme refusals, and forced replacement. It compares exact JSON-RPC wire bytes, including nested formatted text, and complete destination trees. Two persistent-process comparisons keep stdin open and prove responses arrive before EOF and metadata edits are reloaded
+
+The three generator comparisons include every catalog page, stale Markdown cleanup, preservation of unrelated files, both Showcase manifests, website JSON, and all 142 copied images. Both Python and Swift regenerated the repository outputs with no tracked drift. Templates and generated command examples intentionally still mention Python so Phase B changes no published bytes
+
+The unchanged `test_mcp_server.py` passed all four tests against the Swift subprocess. The external harness substitutes only `[sys.executable, str(SERVER)]` with the built binary, `mcp`, and the explicit registry root; the test file and its assertions are unmodified
+
+`swift build`, `swift build -c release`, and `swift test --filter RegistryKitTests` passed with 23 Swift tests. New tests pin all seven successful MCP responses as inline wire snapshots, protocol refusals, real generator command output, in-memory metadata reload and home expansion, source and usage contracts for generated pages, and full byte-equality drift. All 106 Python tests, both validators, `make format-check`, and whitespace checks passed
+
+The Showcase and website source and generated bytes are unchanged, so their builds, UI suite, and captures were not repeated. `auth-light` and `nutrition-light` references remain untouched. Phase C still owns Python removal, remaining source-contract test ports, command migration, and CI; Phase D still owns the cache and distribution
+
 ### Continuation checkpoint (2026-09-06)
 
-The owner explicitly authorized continuing until Phases A through D are complete. At this checkpoint Phase A is committed, the tree was clean before the handoff documentation update, and Phase B has only been inspected. No MCP or generator Swift implementation has been written. There are no running builds, tests, or agents to resume. Recheck the live tree before relying on this checkpoint
+The owner authorized continuing until Phases A through D are complete. Phase A is local commit `4746b66`; the handoff documentation checkpoint is `7b2bca1`. Phase B is the implementation unit titled `Implement Stage 6 Phase B MCP and generator parity`. Consult git for its hash and any work after this checkpoint. Nothing has been pushed. The next implementation unit is Phase C; do not repeat or replace the passing Phase A and B implementations
 
-The next implementation unit is Phase B. Read the complete Python MCP server and all three generators alongside their tests before writing their Swift equivalents. Add the protocol and generators to RegistryKit and keep the executable as argument parsing and transport/output. Extend the existing parity script before changing any Python command examples in generated output
+Before changing generated examples in Phase C, change the Swift generator templates and regenerate all three outputs. Keep `OrderedJSON` for publishing and MCP insertion order, and `JSON.rendered` for sorted receipts and search. The deletion gate is the complete oracle evidence above, not merely semantic JSON equivalence
 
-Ordered JSON needs an explicit decision: `JSON.rendered(keys:)` orders only the top-level object, while Python's MCP wire responses, nested tool text, and site data preserve dictionary insertion order. Do not assume sorted JSON or semantic JSON equality satisfies the byte contract. Preset JSON also deliberately retains integral float spelling. Preserve the currently passing sorted receipt and search layouts when adding ordered rendering
-
-`test_mcp_server.py` hardcodes `[sys.executable, str(SERVER)]`. To run its assertions unchanged against Swift, use an external harness that substitutes only that subprocess launch with the built executable plus `mcp`; do not weaken or rewrite its assertions. Record that launch substitution explicitly. Add separate complete JSON-RPC wire parity for initialization versions, all seven tools, notifications, parse errors, invalid parameters, registry refusals, recipes, preset errors, and filesystem side effects
-
-The three generators must compare every catalog Markdown file, both Showcase manifest Swift files, website JSON, and every copied image. Include stale-output cleanup, item sorting, relative image links, recipe handling, and source text. Preserve Python-generated headers during Phase B. In Phase C change the generator implementation first, then regenerate outputs so new Swift command examples have documented provenance
-
-Before Phase C deletion, port every remaining Python assertion, including the installer tests that inspect canonical Swift APIs and theme behavior. Phase A's 18 Swift tests and its subprocess sweep are evidence for that phase, not a claim that all 106 Python test methods have been individually ported. Keep the captured negative validation and diff fixtures with their provenance
+Before Phase C deletion, port every remaining Python assertion, including the installer tests that inspect canonical Swift APIs and theme behavior. The three generator test modules are already ported in `GeneratorTests.swift`. Phase A's 18 Swift tests and its subprocess sweep are evidence for that phase, not a claim that all 106 Python test methods have been individually ported. Keep the captured negative validation and diff fixtures with their provenance
 
 Move the shared preset vectors and TypeScript checker out of `Tests/RegistryTests` before deleting that directory, and update every reader, including Showcase resources and fixture freshness tests. `Scripts/capture_previews.py` imports `Installer`, `RegistryError`, and `is_preset_code` from the consumer scripts. Adapt it to the Swift CLI before deleting those modules; do not leave a broken exception merely because captures remain Python
 
@@ -341,11 +349,13 @@ Provide the universal macOS release build workflow and `swiftui-registry` formul
 
 ### Reproducible evidence and local logs
 
-The verification commands and source map are in `HANDOFF.md`. Phase A also passed the full root `swift test`: five Foundations tests and 18 RegistryKit tests. The subprocess oracle is `Scripts/check_swift_parity.py`; build first, then let it discover the binary directory or pass `--binary /absolute/path/to/swiftui-registry`. It compares 794 command pairs, not just parsed JSON
+The verification commands and source map are in `HANDOFF.md`. Phase A also passed the full root `swift test`: five Foundations tests and 18 RegistryKit tests. The subprocess oracle is `Scripts/check_swift_parity.py`; build first, then let it discover the binary directory or pass `--binary /absolute/path/to/swiftui-registry`. It compares 1,184 command and response pairs after Phase B, not just parsed JSON
 
 Supporting Phase A logs are `/tmp/swiftui-registry-stage6-final-build.log`, `final-tests.log`, `package-tests.log`, `final-parity.log`, `release-build.log`, `showcase-build.log`, and `format-check.log`, all with the same `/tmp/swiftui-registry-stage6-` prefix. These temporary files are not required to continue. The complete Showcase build log was `/Users/developer/Library/Developer/XcodeBuildMCP/workspaces/swiftui-cn-13dead7d9e93/logs/build_sim_2026-09-06T10-06-31-290Z_pid22783_a0f34d20.log`
 
 The Showcase build generated an untracked workspace `xcshareddata/swiftpm/Package.resolved`; the session removed that generated file after verification. Do not commit an incidental workspace lockfile without reviewing whether the change requires it. No visual references or installed Showcase source changed during Phase A
+
+Phase B logs are `/tmp/swiftui-registry-stage6-b-build.log`, `b-tests.log`, `b-python.log`, `b-full-parity.log`, `b-python-generators.log`, `b-swift-generators.log`, and `b-release.log`, each using the same `/tmp/swiftui-registry-stage6-` prefix. Reproduce the checks rather than depending on temporary logs
 
 ### Handoff documentation verification (2026-09-06)
 
@@ -357,8 +367,7 @@ No tool implementation, generated bytes, Showcase sources, or website sources ch
 
 ### Remaining phase gates
 
-- Phase B: implement the seven MCP tools and the three generators, extend the subprocess proof to their complete output, and run the unchanged MCP tests against the Swift subprocess
-- Phase C: port the remaining catalog and UI-source contract tests, remove the consumer scripts and Python tests, migrate shared preset vectors, update the publishing verification path and commands, and close Backlog item 11 only when the full replacement meets its exit criteria
+- Phase C: port the remaining UI-source and consumer contract tests, remove the consumer scripts and Python tests, migrate shared preset vectors, update the publishing verification path and commands, and close Backlog item 11 only when the full replacement meets its exit criteria
 - Phase D: release snapshot cache with explicit registry and force handling, injected cache clock, update notice from tap tags, universal release workflow, Homebrew formula template, and install documentation after the owner creates the tap repository
 
 ## Later

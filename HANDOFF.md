@@ -29,11 +29,11 @@ git -C /Users/developer/Projects/swiftui-cn log -5 --oneline
 git -C /Users/developer/Projects/swiftui-cn diff --stat
 ```
 
-Follow the roadmap's Stage 6 continuation checkpoint rather than replaying completed Phase A. No chat history is required. Temporary logs are supporting evidence only; committed tests, fixtures, and the parity script reproduce the proof
+Follow the roadmap's Stage 6 continuation checkpoint rather than replaying completed Phases A and B. No chat history is required. Temporary logs are supporting evidence only; committed tests, fixtures, and the parity script reproduce the proof
 
 ## Verification commands
 
-Run sequentially from the root, cheapest first. Keep the Python checks until Phase C removes that path. Use the Swift generator commands once implemented and compare their bytes before changing generated command examples
+Run sequentially from the root, cheapest first. Keep the Python checks until Phase C removes that path. Run the Swift generators as well and compare their bytes before changing generated command examples
 
 ```sh
 swift build --package-path /Users/developer/Projects/swiftui-cn
@@ -44,6 +44,9 @@ swift run --package-path /Users/developer/Projects/swiftui-cn swiftui-registry v
 python3 /Users/developer/Projects/swiftui-cn/Scripts/generate_catalog.py
 python3 /Users/developer/Projects/swiftui-cn/Scripts/generate_showcase_manifest.py
 python3 /Users/developer/Projects/swiftui-cn/Scripts/generate_site_data.py
+swift run --package-path /Users/developer/Projects/swiftui-cn swiftui-registry generate catalog --registry /Users/developer/Projects/swiftui-cn
+swift run --package-path /Users/developer/Projects/swiftui-cn swiftui-registry generate showcase-manifest --registry /Users/developer/Projects/swiftui-cn
+swift run --package-path /Users/developer/Projects/swiftui-cn swiftui-registry generate site-data --registry /Users/developer/Projects/swiftui-cn
 git -C /Users/developer/Projects/swiftui-cn diff --exit-code -- docs/catalog Examples/Showcase Website/content Website/public/images
 python3 /Users/developer/Projects/swiftui-cn/Scripts/check_swift_parity.py
 make -C /Users/developer/Projects/swiftui-cn format-check
@@ -82,8 +85,8 @@ npm run build
 | Ownership and merge | `Sources/RegistryKit/Installer.swift`, `SourceComparison.swift`; `Scripts/install.py`, `Tests/RegistryTests/test_installer.py` |
 | Effects | `Sources/RegistryKit/FileSystem.swift`, `Console.swift`; `Tests/RegistryKitTests/InMemoryFileSystem.swift` |
 | Search and preset codec | `Sources/RegistryKit/Registry.swift`, `Preset.swift`, `PresetRandom.swift`; `Scripts/search.py`, `preset.py` and their Python tests |
-| MCP wire contract | `Scripts/mcp_server.py`, `Tests/RegistryTests/test_mcp_server.py` |
-| Generator byte contracts | `Scripts/generate_catalog.py`, `generate_showcase_manifest.py`, `generate_site_data.py` and their three Python test files |
+| MCP wire contract | `Sources/RegistryKit/MCPServer.swift`, `MCPTools.swift`, `RegistryInput.swift`; `Scripts/mcp_server.py`, `Tests/RegistryTests/test_mcp_server.py`, `Tests/RegistryKitTests/MCPTests.swift` |
+| Generator byte contracts | `Sources/RegistryKit/CatalogGenerator.swift`, `ShowcaseManifestGenerator.swift`, `SiteDataGenerator.swift`, `OrderedJSON.swift`; the three Python generators and `Tests/RegistryKitTests/GeneratorTests.swift` |
 | Shared codec vectors | `Tests/RegistryTests/preset_vectors.json`, `preset_vectors_check.ts`, `Tests/RegistryKitTests/Fixtures/preset_vectors.json`, Showcase `ThemePreset.swift` |
 | Release reference | `pointfreeco/pfw` commit `854b491`: `Sources/pfw/Main.swift`, `Install.swift`, `Dependencies/FileSystem.swift`, `Tests/pfwTests/InstallTests.swift`, `Tests/pfwTests/Internal/AssertComand.swift`, `.github/workflows/release.yml` |
 

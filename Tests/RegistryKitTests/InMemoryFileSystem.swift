@@ -10,6 +10,10 @@ final class InMemoryFileSystem: FileSystem, Sendable {
   }
   let storage = Mutex<[String: Entry]>(["/": .directory])
   var currentDirectory: String { "/registry" }
+  func expandUser(_ path: String) -> String {
+    if path == "~" { return "/home/test" }
+    return path.hasPrefix("~/") ? "/home/test/" + path.dropFirst(2) : path
+  }
   func resolve(_ path: String) -> String {
     var components: [String] = []
     let path = path.hasPrefix("/") ? path : currentDirectory + "/" + path

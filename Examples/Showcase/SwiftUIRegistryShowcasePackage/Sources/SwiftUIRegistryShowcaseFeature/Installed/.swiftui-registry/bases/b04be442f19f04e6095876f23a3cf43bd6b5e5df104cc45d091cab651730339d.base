@@ -35,6 +35,7 @@ public struct PreviewWall02: View {
         CatalogToolbar()
         ClaimableBalance()
         ContributionHistory()
+        CoverArt()
     }
 
     private var columns: [GridItem] {

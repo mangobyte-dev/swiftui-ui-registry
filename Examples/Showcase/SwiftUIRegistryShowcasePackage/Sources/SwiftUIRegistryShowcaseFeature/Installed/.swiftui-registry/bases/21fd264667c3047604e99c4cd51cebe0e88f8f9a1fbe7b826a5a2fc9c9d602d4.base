@@ -40,6 +40,7 @@ public struct PreviewWall: View {
             ReportBug()
             ShippingAddress()
             Shortcuts()
+            SkeletonLoading()
         }
     }
 

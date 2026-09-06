@@ -268,9 +268,9 @@
     },
     "Preview/PreviewWall.swift": {
       "base": "bases/21fd264667c3047604e99c4cd51cebe0e88f8f9a1fbe7b826a5a2fc9c9d602d4.base",
-      "installedDigest": "sha256:e13a94a5da4085cd050eaad6fd89ecc5d1cd490c36fdc0ff5d227cbbb80060ca",
+      "installedDigest": "sha256:34785fdad63634bf7c00069c51d3b6182e855647fc7e061633d6d7c1cad2dc52",
       "item": "preview",
-      "sourceDigest": "sha256:e13a94a5da4085cd050eaad6fd89ecc5d1cd490c36fdc0ff5d227cbbb80060ca",
+      "sourceDigest": "sha256:34785fdad63634bf7c00069c51d3b6182e855647fc7e061633d6d7c1cad2dc52",
       "version": "0.2.0"
     },
     "Preview/ReportBug.swift": {
@@ -320,6 +320,13 @@
       "installedDigest": "sha256:6a68ff6654cfc543e05725e4025ae8390bc073dfdf1c90300cc509613e658d7e",
       "item": "preview",
       "sourceDigest": "sha256:6a68ff6654cfc543e05725e4025ae8390bc073dfdf1c90300cc509613e658d7e",
+      "version": "0.2.0"
+    },
+    "Preview/UIElements.swift": {
+      "base": "bases/4c481b4f3c8ea8903b4f2520802ff7306e549f354b037a50ffe9c0d5f3d495ce.base",
+      "installedDigest": "sha256:94f32c256316d3d76e1e3c0045e435c5daeb95788c7760b154caf68745f42a6d",
+      "item": "preview",
+      "sourceDigest": "sha256:94f32c256316d3d76e1e3c0045e435c5daeb95788c7760b154caf68745f42a6d",
       "version": "0.2.0"
     },
     "RegistryAccordionStyle.swift": {
@@ -971,7 +978,8 @@
         "kbd",
         "progress",
         "select",
-        "skeleton"
+        "skeleton",
+        "button-group"
       ],
       "version": "0.2.0"
     },

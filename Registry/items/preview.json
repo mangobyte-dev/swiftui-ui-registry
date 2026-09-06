@@ -126,6 +126,10 @@
     {
       "source": "sources/blocks/Preview/TypographySpecimen.swift",
       "target": "Preview/TypographySpecimen.swift"
+    },
+    {
+      "source": "sources/blocks/Preview/UIElements.swift",
+      "target": "Preview/UIElements.swift"
     }
   ],
   "registryDependencies": [
@@ -149,7 +153,8 @@
     "kbd",
     "progress",
     "select",
-    "skeleton"
+    "skeleton",
+    "button-group"
   ],
   "packageDependencies": [
     {

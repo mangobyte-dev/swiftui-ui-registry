@@ -44,6 +44,7 @@ public struct PreviewWall: View {
             SleepReport()
             StyleOverview()
             TypographySpecimen()
+            UIElements()
         }
     }
 

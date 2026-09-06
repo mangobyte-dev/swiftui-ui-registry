@@ -138,7 +138,7 @@ function PreviewPanel({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={asset(capture)} alt={`${matched?.name} preset captured on iPhone 17, ${appearance}`} className="w-full rounded-xl border shadow-lg" />
             <figcaption className={cn("text-center text-xs", appearance === "dark" ? "text-neutral-400" : "text-neutral-500")}>
-              This code is the {matched?.name} preset; above is its capture from the Showcase.
+              This code is the {matched?.name} preset; above is the theme preview wall&apos;s first screen under it, captured on iPhone 17.
             </figcaption>
           </figure>
         ) : null}

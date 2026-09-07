@@ -6,9 +6,9 @@ import Testing
 @testable import RegistryKit
 
 private let cacheRoot = "/home/test/Library/Caches/swiftui-registry"
-private let snapshotDirectory = cacheRoot + "/registries/0.1.0"
+private let snapshotDirectory = cacheRoot + "/registries/" + RegistryRelease.version
 private let notice =
-  "\nswiftui-registry 0.2.0 is available. Run 'brew update && brew upgrade swiftui-registry' to install.\n"
+  "\nswiftui-registry 0.3.0 is available. Run 'brew update && brew upgrade swiftui-registry' to install.\n"
 
 /// An empty working directory outside any clone, so resolution reaches the snapshot.
 private func workspace() throws -> InMemoryFileSystem {
@@ -71,7 +71,7 @@ extension Commands {
       try populateRegistry(fs, at: directory)
     }
     let fetching =
-      "Fetching the swiftui-registry 0.1.0 registry snapshot from \(RegistryRelease.archiveURL) into \(snapshotDirectory)\n"
+      "Fetching the swiftui-registry \(RegistryRelease.version) registry snapshot from \(RegistryRelease.archiveURL) into \(snapshotDirectory)\n"
     try withSnapshot(fs, download: download, extract: extract) {
       let validated = try command(["validate"])
       #expect(validated.code == 0)
@@ -83,7 +83,7 @@ extension Commands {
           {
             "fetchedAt": "\(fixedNow.formatted(.iso8601))",
             "url": "\(RegistryRelease.archiveURL)",
-            "version": "0.1.0"
+            "version": "\(RegistryRelease.version)"
           }
 
           """)
@@ -120,7 +120,8 @@ extension Commands {
       if damage == "version" {
         try fs.put(snapshotDirectory + "/snapshot.json", "{\"version\": \"0.0.9\"}")
       } else {
-        try fs.put(snapshotDirectory + "/snapshot.json", "{\"version\": \"0.1.0\"}")
+        try fs.put(
+          snapshotDirectory + "/snapshot.json", "{\"version\": \"\(RegistryRelease.version)\"}")
         try fs.remove(snapshotDirectory + "/Registry/registry.json")
       }
       let downloads = Mutex(0)
@@ -147,7 +148,7 @@ extension Commands {
       #expect(result.code == 2)
       #expect(
         result.stderr.hasSuffix(
-          "No registry clone was found, and the 0.1.0 snapshot could not be downloaded from \(url): offline. Pass --registry <path to a clone>\n"
+          "No registry clone was found, and the \(RegistryRelease.version) snapshot could not be downloaded from \(url): offline. Pass --registry <path to a clone>\n"
         ))
     }
     let online = RegistryDownloader { _ in Data("tarball".utf8) }
@@ -157,7 +158,7 @@ extension Commands {
       #expect(result.code == 2)
       #expect(
         result.stderr.hasSuffix(
-          "The 0.1.0 snapshot from \(url) could not be unpacked: it does not contain Registry/registry.json. Pass --registry <path to a clone>\n"
+          "The \(RegistryRelease.version) snapshot from \(url) could not be unpacked: it does not contain Registry/registry.json. Pass --registry <path to a clone>\n"
         ))
       #expect(!fs.exists("/work/Components"))
     }
@@ -176,7 +177,7 @@ extension Commands {
   @Test func updateNoticeFollowsTheTapTagsAndThrottlesByTheClock() throws {
     let fs = try fixture()
     let requests = Mutex(0)
-    let tags = Mutex(["swiftui-registry-0.2.0", "swiftui-registry-0.1.0"])
+    let tags = Mutex(["swiftui-registry-0.3.0", "swiftui-registry-" + RegistryRelease.version])
     let stamp = cacheRoot + "/update-check.json"
     func install(at date: Date, _ extra: [String] = []) throws -> CommandOutput {
       try withDependencies {
@@ -199,7 +200,7 @@ extension Commands {
         try readText(fs, stamp) == """
           {
             "checkedAt": "\(fixedNow.formatted(.iso8601))",
-            "latest": "0.2.0"
+            "latest": "0.3.0"
           }
 
           """)
@@ -208,16 +209,16 @@ extension Commands {
       #expect(second.stdout == "up-to-date: example\n" + notice)
       #expect(requests.withLock { $0 } == 1)
       // A day later it asks again; the current version prints nothing.
-      tags.withLock { $0 = ["swiftui-registry-0.1.0"] }
+      tags.withLock { $0 = ["swiftui-registry-" + RegistryRelease.version] }
       let third = try install(at: fixedNow.addingTimeInterval(25 * 3600))
       #expect(third.stdout == "up-to-date: example\n")
       #expect(requests.withLock { $0 } == 2)
       // --refresh asks regardless of the stamp.
-      tags.withLock { $0 = ["swiftui-registry-0.3.0", "swiftui-registry-0.2.0"] }
+      tags.withLock { $0 = ["swiftui-registry-0.4.0", "swiftui-registry-0.3.0"] }
       let forced = try install(at: fixedNow.addingTimeInterval(25 * 3600 + 60), ["--refresh"])
       #expect(
         forced.stdout.hasSuffix(
-          "\nswiftui-registry 0.3.0 is available. Run 'brew update && brew upgrade swiftui-registry' to install.\n"
+          "\nswiftui-registry 0.4.0 is available. Run 'brew update && brew upgrade swiftui-registry' to install.\n"
         ))
       #expect(requests.withLock { $0 } == 3)
       // Tags without the tool's prefix mean no release; the stamp records that.
@@ -256,13 +257,14 @@ extension Commands {
 
 @Test func liveArchiveStripsTheTagDirectoryAndReportsBadInput() throws {
   try withTemporaryDirectory { directory in
-    let tree = directory + "/swiftui-ui-registry-0.1.0/Registry"
+    let tree = directory + "/swiftui-ui-registry-" + RegistryRelease.version + "/Registry"
     try FileManager.default.createDirectory(atPath: tree, withIntermediateDirectories: true)
     try "{}\n".write(toFile: tree + "/registry.json", atomically: true, encoding: .utf8)
     let pack = Process()
     pack.executableURL = URL(fileURLWithPath: "/usr/bin/tar")
     pack.arguments = [
-      "czf", directory + "/archive.tgz", "-C", directory, "swiftui-ui-registry-0.1.0",
+      "czf", directory + "/archive.tgz", "-C", directory,
+      "swiftui-ui-registry-" + RegistryRelease.version,
     ]
     try pack.run()
     pack.waitUntilExit()

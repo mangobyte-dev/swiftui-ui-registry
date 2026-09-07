@@ -60,7 +60,7 @@ On conflict: state beats archives, the more recent dated record wins between arc
 - Captures launch the app with `-AppleLanguages (en) -AppleLocale en_US`, so dates, currency, and the calendar in an image never depend on a simulator's region; the iPad Pro 13-inch used for the wide block captures is set to en_US as well because the status bar date comes from the device (it was ar_SA until 2026-09-06)
 - Toolchain: Xcode 27.0, Swift 6.4. No iOS 26 simulator runtime is installed, so floor-26 claims rest on compilation plus iOS 27 runtime evidence
 - CI builds the tool on GitHub's `macos-26` image with its default Xcode 26.6 (`.github/workflows/ci.yml`); the package declares Swift tools 6.2. That runner has not executed a push yet, so the first green run is the owner's evidence
-- Package identity for consumers: `swiftui-ui-registry` at github.com/mangobyte-dev/swiftui-ui-registry. No tag is published yet; the first must be `0.1.0` so declared floors resolve (`docs/registry-spec.md`)
+- Package identity for consumers: `swiftui-ui-registry` at github.com/mangobyte-dev/swiftui-ui-registry. Tags `0.1.0` (2026-09-06) and `0.2.0` (2026-09-07) are published with GitHub releases and the Homebrew tap; an item that reads a foundations field added in `0.2.0` declares that floor (`chart` does), the rest keep `0.1.0` (`docs/registry-spec.md`)
 
 ## Verification
 

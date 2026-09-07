@@ -6,17 +6,34 @@ import SwiftUIRegistryFoundations
 import UIKit
 #endif
 
-/// A categorical color palette derived from the theme accent, for charts with
-/// more than one series. The first color is the accent itself; the rest rotate
-/// the accent's hue so the series stay distinct yet cohesive with the theme.
-/// A custom chart legend or a series label should read its colors from here so
-/// it matches the plot.
+/// A categorical color palette for charts with more than one series, chosen by
+/// the theme's ``RegistryTheme/chartPalette``: tints derived from the accent, a
+/// fixed spectrum, or a gray ramp. A custom chart legend or a series label should
+/// read its colors from here so it matches the plot.
 public enum RegistryChartPalette {
     // Hue rotations, in degrees, applied to the accent for each series. The
     // first series is the accent unchanged.
     private static let hueOffsets: [Double] = [0, 30, 60, 90, 120, -30]
 
+    // A fixed six-hue set, used when the theme opts out of accent-derived tints.
+    private static let spectrum: [Color] = [.blue, .orange, .green, .pink, .purple, .teal]
+
+    // Six gray levels off the primary color, so they follow the color scheme.
+    private static let monochrome: [Color] = [1, 0.82, 0.64, 0.46, 0.3, 0.16].map {
+        Color.primary.opacity($0)
+    }
+
     public static func colors(for theme: RegistryTheme, colorScheme: ColorScheme) -> [Color] {
+        switch theme.chartPalette {
+        case .spectrum: return spectrum
+        case .monochrome: return monochrome
+        case .accent: return accentTints(for: theme, colorScheme: colorScheme)
+        }
+    }
+
+    // The accent itself, then rotations of its hue so the series stay distinct
+    // yet cohesive with the theme.
+    private static func accentTints(for theme: RegistryTheme, colorScheme: ColorScheme) -> [Color] {
         let base = theme.accent ?? Color.accentColor
 
         #if canImport(UIKit)

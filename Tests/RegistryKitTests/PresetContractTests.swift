@@ -22,10 +22,11 @@ private func vector(named prefix: String) throws -> PresetVector {
   #expect(Preset.accents.count <= 1 << accentBits)
   for field in Preset.fields { #expect(field.count <= 1 << field.bits, "\(field.key)") }
   #expect(vectorDocument["alphabet"].text == String(Preset.alphabet))
-  #expect(vectorDocument["version"] == "a")
-  #expect(vectorDocument["maxLength"] == 22)
-  #expect(Preset.isCode("a" + String(repeating: "0", count: 21)))
-  #expect(!Preset.isCode("a" + String(repeating: "0", count: 22)))
+  #expect(vectorDocument["version"] == "b")
+  #expect(vectorDocument["maxLength"] == 48)
+  #expect(Preset.isCode("a" + String(repeating: "0", count: 47)))
+  #expect(!Preset.isCode("a" + String(repeating: "0", count: 48)))
+  #expect(Preset.isCode("b" + String(repeating: "0", count: 47)))
   #expect(try Preset.encode(Preset.defaultTuning) == presetVectors[0].code)
 }
 
@@ -114,6 +115,79 @@ private func vector(named prefix: String) throws -> PresetVector {
   let inkFile = try Preset.themeFile(ink, code: "a0")
   #expect(inkFile.contains("import UIKit"))
   #expect(inkFile.contains("static let app = RegistryTheme("))
+}
+
+@Test func versionBAppendsTheCreateStudioFieldsAfterTheACustomBlock() throws {
+  // Craft raw b codes with the a portion at its defaults so the appended fields
+  // can be set to values encode itself would never produce, proving the layout.
+  func craft(font: Int, step: Int, chart: Int) -> String {
+    var writer = Preset.PresetBits()
+    writer.write(0, width: 4)  // accent system
+    writer.write(0, width: 1)  // no dark label
+    for field in Preset.fields {
+      let index = Int(
+        ((Preset.defaultTuning[field.key].number! - field.minimum) / field.step).rounded())
+      writer.write(index, width: field.bits)
+    }
+    writer.write(font, width: 2)
+    writer.write(step, width: 3)
+    writer.write(chart, width: 2)
+    return "b" + writer.base62()
+  }
+  // The reserved chartPalette index 3 has no value, so the code is invalid rather
+  // than clamped; index 2 (monochrome) is the last valid one.
+  #expect(Preset.decode(craft(font: 0, step: 0, chart: 3)) == nil)
+  let monochrome = try #require(Preset.decode(craft(font: 0, step: 0, chart: 2)))
+  #expect(monochrome["chartPalette"] == "monochrome")
+  // A b code whose appended fields are all default decodes to the a defaults and
+  // re-encodes to the a code, so an unchanged tuning never gains a b code.
+  let allDefault = craft(font: 0, step: 0, chart: 0)
+  let decoded = try #require(Preset.decode(allDefault))
+  #expect(decoded["fontDesign"] == "default")
+  #expect(decoded["surfaceStep"] == 0.02)
+  #expect(decoded["chartPalette"] == "accent")
+  #expect(decoded["background"] == .null)
+  #expect(try Preset.encode(decoded) == presetVectors[0].code)
+  #expect(presetVectors[0].code.first == "a")
+  // An a code decodes without the b keys, so the a shape and its Swift are unchanged.
+  let aTuning = try #require(Preset.decode(presetVectors[0].code))
+  #expect(aTuning.object?["fontDesign"] == nil)
+  #expect(aTuning.object?["chartPalette"] == nil)
+  // Encode rejects an unknown value for an appended enum field.
+  var badFont = Preset.defaultTuning
+  badFont["fontDesign"] = "cursive"
+  #expect(throws: RegistryError.self) { try Preset.encode(badFont) }
+  var badPalette = Preset.defaultTuning
+  badPalette["chartPalette"] = "rainbow"
+  #expect(throws: RegistryError.self) { try Preset.encode(badPalette) }
+}
+
+@Test func swiftExportsEachAppendedFieldOnlyWhenItLeavesTheDefault() throws {
+  // The rounded, elevation, and spectrum vectors each print one appended line.
+  let rounded = try Preset.swiftSource(vector(named: "Rounded").tuning)
+  #expect(rounded.contains("fontDesign: .rounded,"))
+  #expect(!rounded.contains("surfaceStep:"))
+  #expect(!rounded.contains("chartPalette:"))
+  let elevation = try Preset.swiftSource(vector(named: "Elevation").tuning)
+  #expect(elevation.contains("surfaceStep: 0.04,"))
+  let spectrum = try Preset.swiftSource(vector(named: "Spectrum chart").tuning)
+  #expect(spectrum.contains("chartPalette: .spectrum,"))
+  // A color pair with a dark value exports the dynamic UIColor form, dark first.
+  let pair = try Preset.swiftSource(vector(named: "Background pair").tuning)
+  #expect(pair.contains("background: Color(uiColor: UIColor { traits in"))
+  #expect(pair.contains("? UIColor(red: 0.078, green: 0.067, blue: 0.051, alpha: 1)"))
+  #expect(pair.contains(": UIColor(red: 0.969, green: 0.949, blue: 0.918, alpha: 1)"))
+  // A single-value color pair exports the plain Color form and needs no UIKit.
+  let single = try Preset.swiftSource(vector(named: "Foreground pair without dark").tuning)
+  #expect(single.contains("foreground: Color(red: 0.106, green: 0.106, blue: 0.122),"))
+  #expect(
+    !(try Preset.themeFile(vector(named: "Foreground pair without dark").tuning, code: "b0"))
+      .contains("import UIKit"))
+  // An a vector prints none of the appended lines.
+  let system = try Preset.swiftSource(vector(named: "System").tuning)
+  for marker in ["fontDesign:", "surfaceStep:", "chartPalette:", "background:", "foreground:"] {
+    #expect(!system.contains(marker), "\(marker)")
+  }
 }
 
 @Test func websiteCodecReproducesEveryVector() throws {

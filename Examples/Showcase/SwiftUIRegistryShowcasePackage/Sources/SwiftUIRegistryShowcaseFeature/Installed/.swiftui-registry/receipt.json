@@ -681,10 +681,10 @@
     },
     "RegistryChart.swift": {
       "base": "bases/d30352e1a86b8dc6487fb81b1536b1d2d7936ed4c6c35783195f2dce859d221d.base",
-      "installedDigest": "sha256:26272376cff4d8608d45a768d4a0262c62215975f5bf9f7cab834c46f209e7db",
+      "installedDigest": "sha256:3e6bb82f386f45af0b38113f8b0c2ba0239dd595745f7831aec8a73f6673ff48",
       "item": "chart",
-      "sourceDigest": "sha256:26272376cff4d8608d45a768d4a0262c62215975f5bf9f7cab834c46f209e7db",
-      "version": "0.1.1"
+      "sourceDigest": "sha256:3e6bb82f386f45af0b38113f8b0c2ba0239dd595745f7831aec8a73f6673ff48",
+      "version": "0.1.2"
     },
     "RegistryCheckboxToggleStyle.swift": {
       "base": "bases/84ef61e84e290159ebfd98ceb45adbe2c83371f33abc11c357b1d2e38db16213.base",
@@ -1043,7 +1043,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     "checkbox": {
       "packageDependencies": [

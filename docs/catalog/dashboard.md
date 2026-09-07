@@ -68,7 +68,7 @@ Dashboard(
 - Kind: block
 - Version: 0.1.0
 - Platforms: iOS 26.0+
-- Installs in order: [metric-card](metric-card.md) 0.2.1, [chart](chart.md) 0.1.1, [separator](separator.md) 0.2.0, [table](table.md) 0.1.0, [dashboard](dashboard.md) 0.1.0
+- Installs in order: [metric-card](metric-card.md) 0.2.1, [chart](chart.md) 0.1.2, [separator](separator.md) 0.2.0, [table](table.md) 0.1.0, [dashboard](dashboard.md) 0.1.0
 - Accessibility contract:
   - The screen title and both section titles (chart and table) carry the header accessibility trait, so VoiceOver users can move between sections by heading.
   - The metric tiles combine their title, value, and detail into one VoiceOver element and treat the SF Symbol as decorative (from metric-card), and lay out as a row or a column through ViewThatFits so they follow Dynamic Type and the available width.

@@ -90,4 +90,45 @@ struct RegistryThemeTests {
         #expect(mango.metrics.sectionSpacing == 28)
         #expect(mango.disabledOpacity == 0.4)
     }
+
+    // The Create studio fields default so every existing initializer call keeps
+    // the old shape: a theme named the old way carries the old values and the new
+    // fields at their defaults.
+    @Test func `A theme built without the Create studio fields keeps the old shape`() {
+        let theme = RegistryTheme(accent: .indigo)
+
+        #expect(theme.accent == .indigo)
+        #expect(theme.onAccent == .white)
+        #expect(theme.surface == .primary.opacity(0.055))
+        #expect(theme.border == .primary.opacity(0.08))
+        #expect(theme.disabledOpacity == 0.5)
+        #expect(theme.metrics == RegistryMetrics())
+        #expect(theme.fontDesign == nil)
+        #expect(theme.surfaceOpacity == 0.055)
+        #expect(theme.surfaceStep == 0.02)
+        #expect(theme.chartPalette == .accent)
+        #expect(theme.background == nil)
+        #expect(theme.foreground == nil)
+        #expect(theme.secondaryForeground == nil)
+    }
+
+    // Elevation is a ladder off the surface opacity: regular is the surface, each
+    // step changes the opacity by surfaceStep, and it never leaves 0 through 1.
+    @Test func `The elevation ladder steps surface opacity and clamps at zero`() {
+        let theme = RegistryTheme(
+            surface: .primary.opacity(0.5),
+            surfaceOpacity: 0.5,
+            surfaceStep: 0.25
+        )
+
+        #expect(theme.surface(at: .regular) == theme.surface)
+        #expect(theme.surface(at: .regular) == .primary.opacity(0.5))
+        #expect(theme.surface(at: .low) == .primary.opacity(0.25))
+        #expect(theme.surface(at: .lowest) == .primary.opacity(0))
+        #expect(theme.surface(at: .high) == .primary.opacity(0.75))
+
+        // A shallow base cannot step below zero.
+        let shallow = RegistryTheme(surfaceOpacity: 0.25, surfaceStep: 0.25)
+        #expect(shallow.surface(at: .lowest) == .primary.opacity(0))
+    }
 }

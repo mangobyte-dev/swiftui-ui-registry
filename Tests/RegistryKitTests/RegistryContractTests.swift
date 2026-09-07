@@ -224,7 +224,14 @@ extension Commands {
     let foundations = try repositoryText("Sources/SwiftUIRegistryFoundations/RegistryTheme.swift")
     let tokens = Set(
       foundations.matches(of: /public (?:var|static let) (\w+):/).map { String($0.1) }
-    ).subtracting(["metrics", "presets", "name", "theme", "id"])
+    ).subtracting([
+      "metrics", "presets", "name", "theme", "id",
+      // The Create studio fields (D4, slice 7) are theme inputs the root modifier
+      // applies once, not per-item semantic tokens, so they are outside the
+      // two-consumer token inventory; chartPalette is read only by the chart item.
+      "fontDesign", "surfaceOpacity", "surfaceStep", "chartPalette", "background", "foreground",
+      "secondaryForeground",
+    ])
     #expect(Set(contract.keys) == tokens)
     try withRepository {
       let registry = try Registry(root: repositoryRoot)

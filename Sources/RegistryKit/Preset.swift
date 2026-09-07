@@ -38,8 +38,18 @@ public enum Preset {
     "compactSpacing": 8.0, "standardSpacing": 16.0, "sectionSpacing": 24.0,
     "controlHorizontalPadding": 12.0, "disabledOpacity": 0.5,
   ]
+  // Version b appends these after the a layout (and its custom accent block), in
+  // this order. fontDesign and chartPalette store a value index; surfaceStep
+  // stores an index into a value list, not a grid, so its default is at index 0.
+  static let fontDesigns = ["default", "rounded", "serif", "monospaced"]  // 2 bits
+  static let surfaceSteps = [0.02, 0.00, 0.01, 0.03, 0.04, 0.05, 0.06, 0.07]  // 3 bits
+  static let chartPalettes = ["accent", "spectrum", "monochrome"]  // 2 bits, index 3 invalid
+  static let colorPairs = [
+    ("background", "backgroundDark"), ("foreground", "foregroundDark"),
+    ("secondaryForeground", "secondaryForegroundDark"),
+  ]
   public static func isCode(_ code: String) -> Bool {
-    (2...22).contains(code.count) && code.first == "a"
+    (2...48).contains(code.count) && (code.first == "a" || code.first == "b")
       && code.dropFirst().allSatisfy { alphabet.contains($0) }
   }
   public static func code(in text: String) -> String? {
@@ -51,17 +61,11 @@ public enum Preset {
   }
   public static func decode(_ code: String) -> JSON? {
     guard isCode(code) else { return nil }
-    // The contract ignores unknown high bits. Wrapping arithmetic also accepts
-    // 21 base62 digits whose complete integer exceeds UInt128.
-    var bits: UInt128 = 0
-    for character in code.dropFirst() {
-      bits = bits &* 62 &+ UInt128(alphabet.firstIndex(of: character)!)
-    }
-    func read(_ width: Int) -> Int {
-      let value = Int(bits & ((UInt128(1) << width) - 1))
-      bits >>= width
-      return value
-    }
+    // A version b code with every field set exceeds 128 bits, so the packed value
+    // is an arbitrary-width little-endian integer read sequentially; high bits
+    // past the known fields are ignored, so an older layout tolerates a newer code.
+    var reader = PresetBits(base62: code.dropFirst())
+    func read(_ width: Int) -> Int { reader.read(width) }
     let accent = read(4)
     guard accent < accents.count else { return nil }
     var tuning: JSON = [
@@ -78,6 +82,24 @@ public enum Preset {
       tuning["customAccent"] = .string(hex(read(24)))
       tuning["customAccentDark"] = read(1) == 1 ? .string(hex(read(24))) : .null
     }
+    // Version b appends the new fields; an a code stops here with the a shape,
+    // and its higher bits, if any, are ignored.
+    if code.first == "b" {
+      tuning["fontDesign"] = .string(fontDesigns[read(2)])
+      tuning["surfaceStep"] = .number(surfaceSteps[read(3)])
+      let chart = read(2)
+      guard chart < chartPalettes.count else { return nil }
+      tuning["chartPalette"] = .string(chartPalettes[chart])
+      for (light, dark) in colorPairs {
+        if read(1) == 1 {
+          tuning[light] = .string(hex(read(24)))
+          tuning[dark] = read(1) == 1 ? .string(hex(read(24))) : .null
+        } else {
+          tuning[light] = .null
+          tuning[dark] = .null
+        }
+      }
+    }
     return tuning
   }
   public static func encode(_ tuning: JSON) throws -> String {
@@ -85,12 +107,11 @@ public enum Preset {
       throw RegistryError(
         "accent must be one of \(accents.joined(separator: ", ")), not '\(tuning["accent"].text)'")
     }
-    var bits = UInt128(accent)
-    var offset = 4
+    var writer = PresetBits()
+    writer.write(accent, width: 4)
     guard tuning["darkLabelOnAccent"] == .bool(true) || tuning["darkLabelOnAccent"] == .bool(false)
     else { throw RegistryError("darkLabelOnAccent must be one of False, True") }
-    if tuning["darkLabelOnAccent"] == .bool(true) { bits |= 1 << offset }
-    offset += 1
+    writer.write(tuning["darkLabelOnAccent"] == .bool(true) ? 1 : 0, width: 1)
     for field in fields {
       guard let number = tuning[field.key].number, number.isFinite else {
         throw RegistryError("\(field.key) must be a number")
@@ -100,24 +121,112 @@ public enum Preset {
         min(
           Double(field.count - 1), ((number - field.minimum) / field.step).rounded(.toNearestOrEven)
         ))
-      bits |= UInt128(value) << offset
-      offset += field.bits
+      writer.write(Int(value), width: field.bits)
     }
     if accent == 14 {
-      bits |= UInt128(try rgb(tuning["customAccent"].text)) << offset
-      offset += 24
+      writer.write(try rgb(tuning["customAccent"].text), width: 24)
       if let dark = tuning["customAccentDark"].string, !dark.isEmpty {
-        bits |= 1 << offset
-        offset += 1
-        bits |= UInt128(try rgb(dark)) << offset
+        writer.write(1, width: 1)
+        writer.write(try rgb(dark), width: 24)
+      } else {
+        writer.write(0, width: 1)
       }
     }
-    var digits: [Character] = []
-    repeat {
-      digits.append(alphabet[Int(bits % 62)])
-      bits /= 62
-    } while bits > 0
-    return "a" + String(digits.reversed())
+    // Version b appends the new fields; when every one is at its default the bits
+    // are zero and the code is written as a, so an unchanged tuning keeps its a code.
+    let fontIndex = try index(tuning["fontDesign"].string, in: fontDesigns, field: "fontDesign")
+    let chartIndex = try index(
+      tuning["chartPalette"].string, in: chartPalettes, field: "chartPalette")
+    let stepIndex =
+      tuning["surfaceStep"].number.map { step in
+        surfaceSteps.indices.min {
+          abs(surfaceSteps[$0] - step) < abs(surfaceSteps[$1] - step)
+        } ?? 0
+      } ?? 0
+    var appended = fontIndex != 0 || stepIndex != 0 || chartIndex != 0
+    writer.write(fontIndex, width: 2)
+    writer.write(stepIndex, width: 3)
+    writer.write(chartIndex, width: 2)
+    for (light, dark) in colorPairs {
+      if let color = tuning[light].string, !color.isEmpty {
+        appended = true
+        writer.write(1, width: 1)
+        writer.write(try rgb(color), width: 24)
+        if let darkColor = tuning[dark].string, !darkColor.isEmpty {
+          writer.write(1, width: 1)
+          writer.write(try rgb(darkColor), width: 24)
+        } else {
+          writer.write(0, width: 1)
+        }
+      } else {
+        writer.write(0, width: 1)
+      }
+    }
+    return (appended ? "b" : "a") + writer.base62()
+  }
+  /// The packed preset value as an arbitrary-width little-endian integer over
+  /// base-256 limbs, so a full version b code (more than 128 bits) neither
+  /// overflows nor loses a field. Fields are written and read LSB first, and the
+  /// base62 form matches the version a packing byte for byte.
+  struct PresetBits {
+    private var limbs: [UInt8] = []
+    private var cursor = 0
+    init() {}
+    init(base62 digits: Substring) {
+      for character in digits {
+        let digit = Preset.alphabet.firstIndex(of: character) ?? 0
+        var carry = digit
+        for i in limbs.indices {
+          let value = Int(limbs[i]) * 62 + carry
+          limbs[i] = UInt8(value & 0xff)
+          carry = value >> 8
+        }
+        while carry > 0 {
+          limbs.append(UInt8(carry & 0xff))
+          carry >>= 8
+        }
+      }
+    }
+    mutating func write(_ value: Int, width: Int) {
+      for i in 0..<width where (value >> i) & 1 == 1 {
+        let bit = cursor + i
+        while limbs.count <= bit / 8 { limbs.append(0) }
+        limbs[bit / 8] |= UInt8(1 << (bit % 8))
+      }
+      cursor += width
+    }
+    mutating func read(_ width: Int) -> Int {
+      var value = 0
+      for i in 0..<width {
+        let bit = cursor + i
+        if bit / 8 < limbs.count, (limbs[bit / 8] >> (bit % 8)) & 1 == 1 { value |= 1 << i }
+      }
+      cursor += width
+      return value
+    }
+    func base62() -> String {
+      var value = limbs
+      var digits: [Character] = []
+      repeat {
+        var remainder = 0
+        for i in stride(from: value.count - 1, through: 0, by: -1) {
+          let current = (remainder << 8) + Int(value[i])
+          value[i] = UInt8(current / 62)
+          remainder = current % 62
+        }
+        digits.append(Preset.alphabet[remainder])
+        while value.last == 0 { value.removeLast() }
+      } while !value.isEmpty
+      return String(digits.reversed())
+    }
+  }
+  static func index(_ value: String?, in values: [String], field: String) throws -> Int {
+    guard let value else { return 0 }
+    guard let index = values.firstIndex(of: value) else {
+      throw RegistryError(
+        "\(field) must be one of \(values.joined(separator: ", ")), not '\(value)'")
+    }
+    return index
   }
   static func rgb(_ color: String) throws -> Int {
     guard matches(color, "^#[0-9A-Fa-f]{6}$"), let bits = Int(color.dropFirst(), radix: 16) else {
@@ -159,8 +268,33 @@ public enum Preset {
     lines += [
       "    onAccent: \(onAccent),", "    surface: .primary.opacity(\(decimal("surfaceOpacity"))),",
       "    border: .primary.opacity(\(decimal("borderOpacity"))),",
-      "    disabledOpacity: \(decimal("disabledOpacity")),", "    metrics: RegistryMetrics(",
+      "    disabledOpacity: \(decimal("disabledOpacity")),",
     ]
+    // Version b fields print only when non-default, so an a-shaped tuning exports
+    // the same Swift it always did.
+    if let font = tuning["fontDesign"].string, font != "default" {
+      lines.append("    fontDesign: .\(font),")
+    }
+    if let step = tuning["surfaceStep"].number, step != 0.02 {
+      lines.append("    surfaceStep: \(String(format: "%.2f", step)),")
+    }
+    if let palette = tuning["chartPalette"].string, palette != "accent" {
+      lines.append("    chartPalette: .\(palette),")
+    }
+    for (light, dark) in colorPairs {
+      guard let value = tuning[light].string, !value.isEmpty else { continue }
+      if let darkValue = tuning[dark].string, !darkValue.isEmpty {
+        lines += [
+          "    \(light): Color(uiColor: UIColor { traits in",
+          "        traits.userInterfaceStyle == .dark",
+          "            ? \(try color(darkValue, ui: true))",
+          "            : \(try color(value, ui: true))", "    }),",
+        ]
+      } else {
+        lines.append("    \(light): \(try color(value, ui: false)),")
+      }
+    }
+    lines.append("    metrics: RegistryMetrics(")
     let metrics = [
       "compactSpacing", "standardSpacing", "sectionSpacing", "controlHorizontalPadding",
       "borderWidth", "emphasizedBorderWidth", "compactRadius", "controlRadius", "cardRadius",
@@ -169,6 +303,17 @@ public enum Preset {
       lines.append("        \(key): \(points(key))\(key == metrics.last ? "" : ",")")
     }
     return lines + ["    )", ")"]
+  }
+  // Whether the Swift export uses the dynamic UIColor(uiColor:) form, which needs UIKit:
+  // the ink label, a custom accent pair, or any color field carrying a dark value.
+  static func exportNeedsUIKit(_ tuning: JSON) -> Bool {
+    if tuning["accent"] == "ink" { return true }
+    if tuning["accent"] == "custom", let dark = tuning["customAccentDark"].string, !dark.isEmpty {
+      return true
+    }
+    return colorPairs.contains { light, dark in
+      (tuning[light].string?.isEmpty == false) && (tuning[dark].string?.isEmpty == false)
+    }
   }
   public static func swiftSource(_ tuning: JSON) throws -> String {
     var lines = try initializerLines(tuning)
@@ -182,9 +327,7 @@ public enum Preset {
   public static func themeFile(_ tuning: JSON, code: String) throws -> String {
     let body = try initializerLines(tuning)
     var lines = ["import SwiftUI", "import SwiftUIRegistryFoundations"]
-    if tuning["accent"] == "ink"
-      || (tuning["accent"] == "custom" && tuning["customAccentDark"].string != nil)
-    {
+    if exportNeedsUIKit(tuning) {
       lines.append("import UIKit")
     }
     lines += [
@@ -261,6 +404,30 @@ public enum Preset {
         tuning[field.key] = .number(number)
       }
     }
+    // Version b fields; absent lines leave the a shape, which encodes to an a code.
+    if let word = captures("fontDesign:\\s*\\.([a-zA-Z]+)", flat).first?.first {
+      tuning["fontDesign"] = .string(word)
+    }
+    if let value = captures("surfaceStep:\\s*([0-9.]+)", flat).first?.first,
+      let number = Double(value)
+    {
+      tuning["surfaceStep"] = .number(number)
+    }
+    if let word = captures("chartPalette:\\s*\\.([a-zA-Z]+)", flat).first?.first {
+      tuning["chartPalette"] = .string(word)
+    }
+    for (light, dark) in colorPairs {
+      let dynamic = captures(
+        "\(light):\\s*Color\\(uiColor: UIColor \\{ traits in\\s*traits\\.userInterfaceStyle == \\.dark\\s*\\? UIColor\\("
+          + channels + ", alpha: 1\\)\\s*: UIColor\\(" + channels + ", alpha: 1\\)", flat)
+      if let values = dynamic.first {
+        tuning[dark] = hexChannels(Array(values[0..<3]))
+        tuning[light] = hexChannels(Array(values[3..<6]))
+      } else if let values = captures("\(light):\\s*Color\\(" + channels, flat).first {
+        tuning[light] = hexChannels(values)
+        tuning[dark] = .null
+      }
+    }
     return tuning
   }
   public static func resolveFile(_ path: String) throws -> String {
@@ -292,9 +459,15 @@ public enum Preset {
   }
   public static func description(_ code: String, json: Bool = false) throws -> String {
     guard let tuning = decode(code) else { throw RegistryError("invalid preset code: \(code)") }
+    let version = String(code.prefix(1))
+    let appendedKeys = [
+      "fontDesign", "surfaceStep", "chartPalette", "background", "backgroundDark", "foreground",
+      "foregroundDark", "secondaryForeground", "secondaryForegroundDark",
+    ]
     let keys =
       ["accent", "darkLabelOnAccent"] + fields.map(\.key)
       + (tuning["accent"] == "custom" ? ["customAccent", "customAccentDark"] : [])
+      + appendedKeys.filter { tuning.object?[$0] != nil }
     func value(_ key: String) -> String {
       if let number = tuning[key].number { return String(number) }
       return tuning[key].rendered()
@@ -302,12 +475,12 @@ public enum Preset {
     if json {
       let body = keys.map { "    \"\($0)\": \(value($0))" }.joined(separator: ",\n")
       return
-        "{\n  \"code\": \"\(code)\",\n  \"version\": \"a\",\n  \"tuning\": {\n\(body)\n  },\n  \"swift\": \(try JSON.string(swiftSource(tuning)).rendered()),\n  \"url\": \(JSON.string(url(code)).rendered())\n}"
+        "{\n  \"code\": \"\(code)\",\n  \"version\": \"\(version)\",\n  \"tuning\": {\n\(body)\n  },\n  \"swift\": \(try JSON.string(swiftSource(tuning)).rendered()),\n  \"url\": \(JSON.string(url(code)).rendered())\n}"
     }
     func row(_ key: String, _ value: String) -> String {
       "  " + key + String(repeating: " ", count: max(0, 26 - key.count)) + value
     }
-    var lines = ["Preset", row("code", code), row("version", "a")]
+    var lines = ["Preset", row("code", code), row("version", version)]
     for key in keys {
       lines.append(row(key, tuning[key] == .null ? "none" : tuning[key].string ?? value(key)))
     }

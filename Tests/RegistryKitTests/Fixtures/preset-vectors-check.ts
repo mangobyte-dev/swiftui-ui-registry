@@ -19,7 +19,7 @@ for (const vector of document.vectors) {
 }
 results.push({
   name: "invalid",
-  rejected: ["", "a", "b13GkaOXWwIC", "a13GkaOXWwI-", "a" + "z".repeat(22), "aF"].map((code) => decodePreset(code) === null),
+  rejected: ["", "a", "c13GkaOXWwIC", "a13GkaOXWwI-", "a" + "z".repeat(48), "aF"].map((code) => decodePreset(code) === null),
   isCode: ["a0", "--preset a13GkaOXWwIC", " a13GkaOXWwIC ", "zz"].map((text) => presetCodeIn(text)),
   bareIsCode: isPresetCode("a13GkaOXWwIC"),
 })

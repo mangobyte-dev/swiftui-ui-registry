@@ -18,9 +18,13 @@ struct TuningPanel: View {
                 PresetsSection(tuning: $tuning)
                 ExportSection(tuning: tuning)
                 AccentSection(tuning: $tuning)
+                TypographySection(tuning: $tuning)
                 SurfaceSection(tuning: $tuning)
+                ChartSection(tuning: $tuning)
+                DensitySection(tuning: $tuning)
                 RadiusSection(tuning: $tuning)
                 SpacingSection(tuning: $tuning)
+                ColorsSection(tuning: $tuning)
                 StateSection(tuning: $tuning)
                 EnvironmentSection(tuning: $tuning)
             }
@@ -149,16 +153,202 @@ private struct AccentSection: View {
     }
 }
 
+private struct TypographySection: View {
+    @Binding var tuning: ThemeTuning
+
+    var body: some View {
+        Section("Typography") {
+            Picker("Font design", selection: $tuning.fontDesign) {
+                ForEach(ThemeTuning.FontDesign.allCases) { Text($0.title).tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .accessibilityIdentifier("tuning.fontDesign")
+            TypeScalePreview(design: tuning.fontDesign.design)
+        }
+    }
+}
+
+/// Apple's eleven text styles rendered in the chosen design, a read-only scale.
+/// No custom point sizes: the styles come from the system, so Dynamic Type keeps
+/// scaling them.
+private struct TypeScalePreview: View {
+    let design: Font.Design?
+
+    private static let styles: [(style: Font.TextStyle, name: String)] = [
+        (.largeTitle, "Large Title"), (.title, "Title"), (.title2, "Title 2"),
+        (.title3, "Title 3"), (.headline, "Headline"), (.subheadline, "Subheadline"),
+        (.body, "Body"), (.callout, "Callout"), (.footnote, "Footnote"),
+        (.caption, "Caption"), (.caption2, "Caption 2"),
+    ]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            ForEach(Self.styles, id: \.name) { entry in
+                Text(entry.name)
+                    .font(.system(entry.style, design: design ?? .default))
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 4)
+        .accessibilityIdentifier("tuning.typeScale")
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Type scale, eleven text styles")
+    }
+}
+
+private struct ChartSection: View {
+    @Binding var tuning: ThemeTuning
+
+    var body: some View {
+        Section("Chart") {
+            Picker("Chart palette", selection: $tuning.chartPalette) {
+                ForEach(ThemeTuning.ChartPalette.allCases) { Text($0.title).tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .accessibilityIdentifier("tuning.chartPalette")
+        }
+    }
+}
+
+/// Density is a bundle of the spacing, padding, and radius metrics, not a stored
+/// field. Selecting one writes those knobs; Custom appears only while the knobs
+/// match no bundle.
+private struct DensitySection: View {
+    @Binding var tuning: ThemeTuning
+
+    private var selection: Binding<ThemeTuning.Density?> {
+        Binding(
+            get: { tuning.matchingDensity },
+            set: { newValue in
+                if let newValue {
+                    withAnimation(.snappy) { tuning.apply(density: newValue) }
+                }
+            }
+        )
+    }
+
+    var body: some View {
+        Section("Density") {
+            Picker("Density", selection: selection) {
+                ForEach(ThemeTuning.Density.allCases) { Text($0.title).tag(Optional($0)) }
+                if tuning.matchingDensity == nil {
+                    Text("Custom").tag(ThemeTuning.Density?.none)
+                }
+            }
+            .pickerStyle(.segmented)
+            .accessibilityIdentifier("tuning.density")
+        }
+    }
+}
+
+private struct ColorsSection: View {
+    @Binding var tuning: ThemeTuning
+
+    var body: some View {
+        Section("Colors") {
+            ColorPairRows(
+                name: "Background",
+                identifier: "background",
+                isOn: $tuning.hasBackground,
+                color: $tuning.backgroundColor,
+                hasDark: $tuning.hasBackgroundDark,
+                darkColor: $tuning.backgroundDarkColor
+            )
+            ColorPairRows(
+                name: "Foreground",
+                identifier: "foreground",
+                isOn: $tuning.hasForeground,
+                color: $tuning.foregroundColor,
+                hasDark: $tuning.hasForegroundDark,
+                darkColor: $tuning.foregroundDarkColor
+            )
+            ColorPairRows(
+                name: "Secondary foreground",
+                identifier: "secondaryForeground",
+                isOn: $tuning.hasSecondaryForeground,
+                color: $tuning.secondaryForegroundColor,
+                hasDark: $tuning.hasSecondaryForegroundDark,
+                darkColor: $tuning.secondaryForegroundDarkColor
+            )
+        }
+    }
+}
+
+/// One optional color pair, built to match the accent's custom pair rows: an on
+/// switch, a light color, and an optional separate dark color.
+private struct ColorPairRows: View {
+    let name: String
+    let identifier: String
+    @Binding var isOn: Bool
+    @Binding var color: Color
+    @Binding var hasDark: Bool
+    @Binding var darkColor: Color
+
+    var body: some View {
+        Toggle(isOn: $isOn.animation(.snappy)) { Text(name) }
+            .accessibilityIdentifier("tuning.\(identifier)")
+        if isOn {
+            ColorPicker(selection: $color, supportsOpacity: false) { Text("\(name) color") }
+                .accessibilityIdentifier("tuning.\(identifier)Color")
+            Toggle(isOn: $hasDark.animation(.snappy)) { Text("Separate dark \(name.lowercased())") }
+                .accessibilityIdentifier("tuning.\(identifier)Dark")
+            if hasDark {
+                ColorPicker(selection: $darkColor, supportsOpacity: false) { Text("\(name) in dark") }
+                    .accessibilityIdentifier("tuning.\(identifier)DarkColor")
+            }
+        }
+    }
+}
+
 private struct SurfaceSection: View {
     @Binding var tuning: ThemeTuning
 
     var body: some View {
         Section("Surface") {
             TuningSlider("Surface opacity", value: $tuning.surfaceOpacity, in: 0...0.2, step: 0.005, fraction: 3)
+            TuningSlider("Surface step", value: $tuning.surfaceStep, in: 0...0.07, step: 0.01, fraction: 2)
+                .accessibilityIdentifier("tuning.surfaceStep")
+            SurfaceLadderPreview(opacity: tuning.surfaceOpacity, step: tuning.surfaceStep)
             TuningSlider("Border opacity", value: $tuning.borderOpacity, in: 0...0.3, step: 0.01, fraction: 2)
             TuningSlider("Border width", value: $tuning.borderWidth, in: 0.5...3, step: 0.5, fraction: 1)
             TuningSlider("Emphasized border", value: $tuning.emphasizedBorderWidth, in: 1...4, step: 0.5, fraction: 1)
         }
+    }
+}
+
+/// The four elevation levels the surface step produces, drawn as swatches: the
+/// regular surface opacity, one step below and two below it, and one above,
+/// each clamped to a visible range, so the step's effect is legible at a glance.
+private struct SurfaceLadderPreview: View {
+    let opacity: Double
+    let step: Double
+
+    private var levels: [(name: String, opacity: Double)] {
+        [("Lowest", opacity - 2 * step), ("Low", opacity - step), ("Regular", opacity), ("High", opacity + step)]
+            .map { ($0.0, min(1, max(0, $0.1))) }
+    }
+
+    var body: some View {
+        HStack(spacing: 8) {
+            ForEach(levels, id: \.name) { level in
+                VStack(spacing: 4) {
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(.primary.opacity(level.opacity))
+                        .frame(height: 40)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .strokeBorder(.separator)
+                        }
+                    Text(level.name)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .padding(.vertical, 4)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Elevation ladder: lowest, low, regular, and high surface levels")
     }
 }
 

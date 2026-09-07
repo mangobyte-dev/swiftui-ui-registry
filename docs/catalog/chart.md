@@ -50,7 +50,7 @@ Chart(data) { row in
 ## Details
 
 - Kind: component
-- Version: 0.1.1
+- Version: 0.1.2
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
@@ -58,4 +58,5 @@ Chart(data) { row in
   - Series are named in the legend below the plot, so the chart does not rely on color alone; the legend reads the same palette as the plot.
   - Axis value labels use footnote text at secondary emphasis, and grid lines and ticks use the theme border, so the chrome respects Dynamic Type and the color scheme.
   - A mark colored by a category reads the accent-derived palette, whose first color is the accent and whose others rotate its hue to stay distinct; a single-series mark takes the accent explicitly with foregroundStyle(TintShapeStyle()) or a RegistryChartPalette color, since Swift Charts otherwise draws one series in its own default color.
+  - The series palette follows the theme's chartPalette: accent-derived tints, a fixed spectrum, or a gray ramp; the spectrum and gray options keep the categories distinct when the accent has too little chroma to rotate, and every option follows the color scheme.
 - Source: [sources/components/RegistryChart.swift](../../Registry/sources/components/RegistryChart.swift), with the `Chart` Xcode preview

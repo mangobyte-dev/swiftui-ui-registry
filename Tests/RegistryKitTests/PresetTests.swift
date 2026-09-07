@@ -78,8 +78,11 @@ extension Commands {
 
 @Test func presetBoundsAndParser() throws {
   for code in [
-    "", "a", "b13GkaOXWwIC", "a13GkaOXWwI-", "a" + String(repeating: "z", count: 22), "aF",
+    "", "a", "c13GkaOXWwIC", "a13GkaOXWwI-", "a" + String(repeating: "z", count: 48), "aF",
   ] { #expect(Preset.decode(code) == nil) }
+  // A b code with the same digits as an a code is valid: it reads the a portion,
+  // then the absent appended bits as their defaults.
+  #expect(Preset.decode("b13GkaOXWwIC") != nil)
   #expect(Preset.code(in: "--preset a13GkaOXWwIC") == "a13GkaOXWwIC")
   var tuning = Preset.defaultTuning
   tuning["cardRadius"] = 18.3

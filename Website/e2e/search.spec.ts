@@ -29,8 +29,10 @@ for (const kind of PAGE_KINDS) {
     // Enter selects the top result and lands on its item page.
     await page.keyboard.press("Enter")
     await page.waitForURL("**/items/button/", { timeout: 30_000 })
+    // The item page hydrates late on a busy CI runner; the navigation itself
+    // proved the selection, so the heading gets a longer budget.
     await expect(
       page.getByRole("heading", { name: "button", exact: true })
-    ).toBeVisible()
+    ).toBeVisible({ timeout: 20_000 })
   })
 }

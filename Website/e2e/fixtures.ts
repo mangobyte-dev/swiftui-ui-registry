@@ -23,6 +23,20 @@ function isStaticHostReset(text: string): boolean {
   )
 }
 
+// The second documented exception. Chromium warns "The resource ... was
+// preloaded using link preload but not used within a few seconds" for the home
+// page's three comparison images (out/index.html carries their preload links,
+// and the router's prefetch of the home route injects them into other pages),
+// a performance hint about images below the fold, not a defect: the images
+// exist and render. It surfaced only on the slow CI runner (2026-09-07). Any
+// other preload warning still fails the test.
+function isBelowTheFoldPreloadHint(text: string): boolean {
+  return (
+    text.includes("was preloaded using link preload but not used") &&
+    text.includes("/images/comparison/todos-")
+  )
+}
+
 /** Records console errors, warnings, and uncaught page errors for a test. */
 class ConsoleWatch {
   readonly problems: string[] = []
@@ -31,7 +45,7 @@ class ConsoleWatch {
       const type = message.type()
       if (type !== "error" && type !== "warning") return
       const text = message.text()
-      if (isStaticHostReset(text)) return
+      if (isStaticHostReset(text) || isBelowTheFoldPreloadHint(text)) return
       this.problems.push(`console.${type}: ${text}`)
     })
     page.on("pageerror", (error) => {

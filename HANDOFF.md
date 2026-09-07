@@ -50,3 +50,44 @@ Stay inside the seven workstreams of Stage 7. Do not add dependencies without a 
 ## Morning report
 
 Written by the loop when it stops. Lead with what shipped, then what is blocked and why, then the two or three things the owner should look at first
+
+### 2026-09-07, the Stage 7 run
+
+Ran from 21:31 on 2026-09-06 to 11:10 on 2026-09-07 as one `/loop` session (one restart at about 06:20 wiped the temporary folder and cost a suite rerun). Every slice is `done`; `0.2.0` is published: tag, GitHub release with the universal binary, the tap at 0.2.0, `brew upgrade` verified, the live snapshot fetched.
+
+| Slice | Commit | What shipped |
+|---|---|---|
+| 1 Research record | 57f7c90 | `docs/research-stage-7.md`: 43 sourced findings, decisions D1 to D8, the pain-point section |
+| 2 Inventory | daccc4b | 134 shadcn rows dispositioned in the roadmap matrix |
+| 3 Parity, part one | 64f206d | 6 components (attachment, bubble, marker, message, message-scroller, toast), 7 recipes, catalog 70 |
+| 4 Parity, part two | e2ab086 | 3 blocks (dashboard, signup-form, questionnaire), `describe` and `info` commands, catalog 73 |
+| 5 iPad | bd9881c, fb88f2c | 146 iPad captures on every item page, pointer effect restored on button, checkbox, accordion, breadcrumb, the sidebar recipe with `sidebarAdaptable`, the UI suite on the iPad destination |
+| 6 MANGO | 9358c8e | `.mango` preset, code `a74hGF01CVunaG0vzZJG`, a Showcase demo with two owned copies, Themes and Create entries, `docs/mango.md` |
+| 7 Create studio | 324cfe6 (with slice 8) | preset format `b`: font design, elevation ladder, chart palette, background and foreground pairs; the studio, the tuning panel, and the three codecs updated together; 7 new vectors, every `a` code unchanged |
+| 8 Website e2e | 324cfe6 | Playwright in Chromium and WebKit iPhone: 35 passed, 1 skipped, console clean, both 2026-09-06 crashes as regression tests, a CI `e2e` job |
+| 9 Skills | d9116da | `Skills/swiftui-registry`, `-theming`, `-authoring`, mirrored to `~/.claude/skills/` |
+| 10 Release 0.2.0 | bc5e852, tag at 676e41c | version constant, chart floor 0.2.0, formula, tests; release `0.2.0` with the binary and its sha256, tap tag `swiftui-registry-0.2.0`, brew upgrade 0.1.0 to 0.2.0, website redeployed |
+
+| Verification at the end | Result |
+|---|---|
+| `swift test` | 70 RegistryKit and 8 foundations tests pass |
+| Showcase package tests | 16 pass on the iPhone simulator |
+| UI suite, iPhone 17 | 20 tests, 1 skipped (the iPad-only pointer test), 2 failures: the stale `auth-light` and `nutrition-light` references you own |
+| UI suite, iPad Pro 13-inch | 20 tests, 0 failures, 1 measured skip (Return-key focus, simulator state), no idle timeout with animations off |
+| Playwright | 35 passed, 1 skipped (the WebKit-only replaceState test on Chromium) |
+| Website | typecheck, lint, build, deployed at https://swiftui-registry.mangobytekw.workers.dev |
+| CI | green on 676e41c (registry gate, website, end-to-end, secret scan); the first e2e run failed on runner speed and was fixed in 676e41c |
+
+| Blocked or deferred | Why | Where recorded |
+|---|---|---|
+| Two stale visual references | `auth-light` 2.69 percent and `nutrition-light` 1.53 percent; replacing a reference is your call | Open deferrals |
+| iPad simulator idle stall | the iOS 27.0 iPad simulator stops reporting animations idle after keyboard input; investigated (not the pointer, not hoverEffect, not the keyboard language); the suite passes `-disable-animations` on the iPad and the stalls are gone | Open deferrals, fb88f2c |
+| iPad Return-key focus | after a few launches the simulator dismisses the keyboard on Return; the same committed build passes first after a boot; the test reports it as a measured skip on iPad only, the iPhone asserts it | Open deferrals, 324cfe6 |
+| `warning` semantic | not added: no two items adopted it in slice 7 (D4) | slice 7 evidence |
+| Slices 7 and 8 share one commit | a staging error merged them under the slice 8 subject; history is not rewritten | slice 7 evidence |
+
+Look at these first:
+
+1. The Create studio on your phone: https://swiftui-registry.mangobytekw.workers.dev/create/?preset=b3spZukjxUN1w5qQy4eQI (MANGO with rounded type and the spectrum chart, a `b` code) and the Themes page's MANGO section.
+2. `docs/mango.md`, the template a team follows, and `Skills/` (the three skills are live in `~/.claude/skills/`).
+3. The two stale references under Open deferrals: decide whether to replace them (GOLDEN-CHANGE) or fix the blocks.

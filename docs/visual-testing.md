@@ -18,7 +18,7 @@ The contract is pinned to a light-mode iPhone 17 running iOS 27.0. Native contro
 
 Semantic UI assertions remain separate. The image check protects layout, hierarchy, surfaces, color distribution, and major typography without treating the changing clock as product output
 
-The pixel comparison runs on the iPhone pin only, since the references are iPhone screens by contract; the iPad destination attaches its screenshots as evidence and skips the comparison, while every semantic assertion in the same test still runs on iPad. The iPad simulator's intermittent idle stall after keyboard input, and the one test that reports it as a measured skip, are recorded in the roadmap's Open deferrals
+The pixel comparison runs on the iPhone pin only, since the references are iPhone screens by contract; the iPad destination attaches its screenshots as evidence and skips the comparison, while every semantic assertion in the same test still runs on iPad. The iPad simulator's intermittent idle stall after keyboard input, the one test that reports it as a measured skip, and the `-disable-animations` launch flag the suite passes on the iPad destination to avoid it are recorded in the roadmap's Open deferrals
 
 ## Approved references
 

@@ -13,7 +13,7 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     @MainActor
     private func launchCatalog(_ arguments: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["-default-tuning"] + arguments
+        app.launchArguments = catalogLaunchArguments + arguments
         app.launch()
         return app
     }
@@ -21,8 +21,20 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     @MainActor
     private func relaunchCatalog(_ app: XCUIApplication, _ arguments: [String]) {
         app.terminate()
-        app.launchArguments = ["-default-tuning"] + arguments
+        app.launchArguments = catalogLaunchArguments + arguments
         app.launch()
+    }
+
+    /// The iPad destination turns UIKit animations off in the app under test:
+    /// the iOS 27.0 iPad simulator intermittently never reports the keyboard's
+    /// animation as complete, and XCTest then waits its full idle timeout on
+    /// every later step (the roadmap's Open deferrals record the measurements).
+    /// The iPhone pin keeps animations on, as the references were recorded.
+    @MainActor
+    private var catalogLaunchArguments: [String] {
+        UIDevice.current.userInterfaceIdiom == .pad
+            ? ["-default-tuning", "-disable-animations"]
+            : ["-default-tuning"]
     }
 
     /// Opens one item's detail from its kind tab. Rows carry the

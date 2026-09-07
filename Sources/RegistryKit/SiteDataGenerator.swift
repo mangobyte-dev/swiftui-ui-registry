@@ -55,13 +55,20 @@ public struct SiteDataGenerator {
         try recipe ? [] : registry.packageRequirements(name).map(packageDescription))
       return result
     }
-    let presets: [(String, String, String)] = [
-      ("System", "system", "Inherits the app tint. The default."),
-      ("Graphite", "graphite", "Ink on paper: primary accent, background label."),
-      ("Indigo", "indigo", "The Showcase's own accent."),
-      ("Rose", "rose", "Warm and friendly."),
-      ("Emerald", "emerald", "Growth and confirmation."),
-      ("Amber", "amber", "A light accent that proves the on-accent token."),
+    // Name, slug, blurb, and the preset code pinned for that preset in
+    // Registry/preset_vectors.json (GeneratorTests checks the codes agree).
+    let presets: [(String, String, String, String)] = [
+      ("System", "system", "Inherits the app tint. The default.", "a13GkaOXWwIC"),
+      ("Graphite", "graphite", "Ink on paper: primary accent, background label.", "a13GkaOXWxLl"),
+      ("Indigo", "indigo", "The Showcase's own accent.", "a13GkaOXWwIF"),
+      ("Rose", "rose", "Warm and friendly.", "a13GkaOXWwIH"),
+      ("Emerald", "emerald", "Growth and confirmation.", "a13GkaOXWwIL"),
+      ("Amber", "amber", "A light accent that proves the on-accent token.", "a13GkaOXWwIa"),
+      (
+        "Mango", "mango",
+        "MangoByte's sample design system: strokeless, generous, one warm accent.",
+        "a74hGF01CVunaG0vzZJG"
+      ),
     ]
     let output: OrderedJSON = [
       "name": .string(registry.name), "repositoryURL": .string(Self.repositoryURL),
@@ -75,10 +82,14 @@ public struct SiteDataGenerator {
         }),
       "items": .array(items),
       "presets": .array(
-        presets.map { name, slug, blurb in
+        presets.map { name, slug, blurb, code in
           [
             "name": .string(name), "slug": .string(slug), "blurb": .string(blurb),
+            "code": .string(code),
             "screenshots": imagePaths(folder: "themes", stem: slug),
+            // A preset with its own Showcase scene (MANGO) captured through
+            // `capture_previews.py --scene <slug>-demo`; empty for the rest.
+            "demoScreenshots": imagePaths(folder: "themes", stem: slug + "-demo"),
           ]
         }),
     ]

@@ -123,6 +123,32 @@ public extension RegistryTheme {
     /// A light accent that needs a dark label; proves ``onAccent`` earns its place.
     static let amber = RegistryTheme(accent: .yellow, onAccent: .black)
 
+    /// MangoByte's sample design system, the worked example of building one on
+    /// the registry. It demonstrates three brand choices at once: a custom
+    /// accent that carries separate light and dark values (the mango, lightened
+    /// so a dark label stays legible on black), no visible stroke with depth from
+    /// a surface luminance step instead (``border`` opacity zero over a heavier
+    /// ``surface``), and generous radii with one more step of section spacing.
+    /// The matching preset code carries the same knobs.
+    static let mango = RegistryTheme(
+        accent: mangoAccent,
+        onAccent: .black,
+        surface: .primary.opacity(0.07),
+        border: .primary.opacity(0),
+        disabledOpacity: 0.4,
+        metrics: RegistryMetrics(
+            compactSpacing: 8,
+            standardSpacing: 16,
+            sectionSpacing: 28,
+            controlHorizontalPadding: 16,
+            borderWidth: 1,
+            emphasizedBorderWidth: 2,
+            compactRadius: 10,
+            controlRadius: 14,
+            cardRadius: 24
+        )
+    )
+
     /// Every preset in display order.
     static let presets: [RegistryThemePreset] = [
         RegistryThemePreset(name: "System", theme: .system),
@@ -131,7 +157,30 @@ public extension RegistryTheme {
         RegistryThemePreset(name: "Rose", theme: .rose),
         RegistryThemePreset(name: "Emerald", theme: .emerald),
         RegistryThemePreset(name: "Amber", theme: .amber),
+        RegistryThemePreset(name: "Mango", theme: .mango),
     ]
+
+    /// The mango accent as a dynamic color: a warm orange in light appearance
+    /// that lightens for dark so the dark label stays legible on black. Built
+    /// per platform like ``systemBackground``, the shape a preset code's custom
+    /// accent pair exports.
+    private static var mangoAccent: Color {
+        #if canImport(UIKit)
+        Color(uiColor: UIColor { traits in
+            traits.userInterfaceStyle == .dark
+                ? UIColor(red: 1, green: 0.722, blue: 0.302, alpha: 1)
+                : UIColor(red: 1, green: 0.627, blue: 0.2, alpha: 1)
+        })
+        #elseif canImport(AppKit)
+        Color(nsColor: NSColor(name: nil) { appearance in
+            appearance.bestMatch(from: [.aqua, .darkAqua]) == .darkAqua
+                ? NSColor(srgbRed: 1, green: 0.722, blue: 0.302, alpha: 1)
+                : NSColor(srgbRed: 1, green: 0.627, blue: 0.2, alpha: 1)
+        })
+        #else
+        Color(red: 1, green: 0.627, blue: 0.2)
+        #endif
+    }
 
     /// The platform window background, used as the label on a primary-colored accent.
     private static var systemBackground: Color {

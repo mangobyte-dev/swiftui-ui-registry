@@ -10,7 +10,7 @@ The whole system is one loop: edit canonical source in `Registry/sources/` and m
 
 Each kind of fact lives in exactly one place. Four document classes:
 
-- Contracts, which rules come from: this file, `docs/philosophy.md` (why), `docs/architecture.md` (how), `docs/registry-spec.md` (data and installer contract), `docs/visual-testing.md` (visual evidence rules)
+- Contracts, which rules come from: this file, `docs/philosophy.md` (why), `docs/architecture.md` (how), `docs/registry-spec.md` (data and installer contract), `docs/visual-testing.md` (visual evidence rules), `docs/mango.md` (the design-system template)
 - State, the only home of stage status, open deferrals, and plans: `docs/component-roadmap.md`. A status claim in any other file is a pointer, not a second source
 - Generated, never hand-edited: `docs/catalog/` (markdown catalog), `Website/content/registry.json` and `Website/public/images/` (the website's data and captures; the site itself is Next.js with shadcn/ui under `Website/`), `Examples/Showcase/.../RegistryCatalogManifest.swift` and `Examples/Showcase/SwiftUIRegistryShowcaseUITests/RegistryItemNames.swift` (the Showcase manifest), and `docs/images/items/` and `docs/images/themes/` (captures). Current item counts and per-item pages live there, not in prose
 - Archives, closed dated records kept as evidence, not updated: `STAGE_ONE_VALIDATION.md`, `GENERAL_DIRECTION_REVIEW.md`, `docs/clean-room-trial.md`, `docs/research.md`, `tasks/`. `HANDOFF.md` is the brief for the next session and points here for state

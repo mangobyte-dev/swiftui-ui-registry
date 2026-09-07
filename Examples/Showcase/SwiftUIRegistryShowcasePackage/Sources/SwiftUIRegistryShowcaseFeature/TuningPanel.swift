@@ -82,6 +82,13 @@ private struct PresetsSection: View {
             }
             .scrollIndicators(.hidden)
             .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+
+            // The MANGO sample design system, the worked example of building one
+            // on the registry. The panel lives in a NavigationStack, so this pushes.
+            NavigationLink("See MANGO") {
+                MangoDemo()
+            }
+            .accessibilityIdentifier("tuning.mango")
         }
     }
 }

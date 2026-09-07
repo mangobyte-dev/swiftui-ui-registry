@@ -310,6 +310,7 @@ export const PRESETS: { name: string; slug: string; tuning: PresetTuning }[] = [
   { name: "Rose", slug: "rose", tuning: { ...DEFAULT_TUNING, accent: "pink" } },
   { name: "Emerald", slug: "emerald", tuning: { ...DEFAULT_TUNING, accent: "green" } },
   { name: "Amber", slug: "amber", tuning: { ...DEFAULT_TUNING, accent: "yellow", darkLabelOnAccent: true } },
+  { name: "Mango", slug: "mango", tuning: { ...DEFAULT_TUNING, accent: "custom", customAccent: "#FFA033", customAccentDark: "#FFB84D", darkLabelOnAccent: true, surfaceOpacity: 0.07, borderOpacity: 0, compactRadius: 10, controlRadius: 14, cardRadius: 24, sectionSpacing: 28, controlHorizontalPadding: 16, disabledOpacity: 0.4 } },
 ]
 
 export function presetMatching(tuning: PresetTuning): (typeof PRESETS)[number] | undefined {

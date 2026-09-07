@@ -51,6 +51,7 @@ const TOKENS: [string, string, string][] = [
 ]
 
 export default function ThemesPage() {
+  const mango = registry.presets.find((preset) => preset.slug === "mango")
   return (
     <div className="flex flex-col gap-12">
       <header className="flex flex-col gap-3">
@@ -107,6 +108,58 @@ export default function ThemesPage() {
           ))}
         </div>
       </section>
+
+      {mango ? (
+        <section className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-2xl font-semibold tracking-tight">MANGO, a design system built on the registry</h2>
+            <p className="text-muted-foreground">
+              The worked example of a brand on these items, and the template for building yours.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+            <div className="flex flex-col gap-4">
+              <p className="max-w-[62ch] text-sm leading-relaxed">
+                MANGO makes three choices and applies them once at the scene root: rounded type through{" "}
+                <code>.fontDesign(.rounded)</code>, strokeless surfaces (border opacity zero, depth from a surface
+                step), and one accent spent on the primary action. Two items are owned copies with edits, the
+                button style with press feedback on a critically damped spring and the metric card with tabular
+                digits. The preset is <code>.mango</code>, the code below opens it in Create, and the template
+                document walks a team through doing the same for their brand.
+              </p>
+              <CodeBlock code={`ContentView()\n    .registryTheme(.mango)\n    .fontDesign(.rounded)`} />
+              <CodeBlock code={`swiftui-registry preset apply ${mango.code} --destination Sources/YourFeature/Components`} />
+              <p className="text-sm text-muted-foreground">
+                <Link href={`/create/?preset=${mango.code}`}>Open MANGO in Create</Link>
+                {" · "}
+                <a href={`${registry.repositoryURL}/blob/main/docs/mango.md`} target="_blank" rel="noreferrer">
+                  Read the template, docs/mango.md
+                </a>
+              </p>
+            </div>
+            {mango.demoScreenshots.light ? (
+              <div className="overflow-hidden rounded-xl border bg-muted">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={asset(mango.demoScreenshots.light)}
+                  alt="The MANGO demo in the Showcase, light"
+                  loading="lazy"
+                  className="w-full dark:hidden"
+                />
+                {mango.demoScreenshots.dark ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={asset(mango.demoScreenshots.dark)}
+                    alt="The MANGO demo in the Showcase, dark"
+                    loading="lazy"
+                    className="hidden w-full dark:block"
+                  />
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
 
       <section className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">

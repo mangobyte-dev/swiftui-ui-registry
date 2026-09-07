@@ -69,7 +69,25 @@ struct RegistryThemeTests {
         let names = RegistryTheme.presets.map(\.name)
         #expect(Set(names).count == names.count)
         #expect(names.first == "System")
+        #expect(names.last == "Mango")
         #expect(RegistryTheme.preset(named: "graphite")?.accent == .primary)
+        #expect(RegistryTheme.preset(named: "mango")?.onAccent == .black)
         #expect(RegistryTheme.preset(named: "no such preset") == nil)
+    }
+
+    // MANGO is the sample design system, not an accent swap: its identity is a
+    // strokeless surface over a heavier fill, generous radii, one more step of
+    // section spacing, and a dark label on the warm accent. A preset that only
+    // changed the accent would fail the border, surface, and radius checks.
+    @Test func `The mango preset is strokeless with generous radii and a dark label`() {
+        let mango = RegistryTheme.mango
+        #expect(mango.accent != nil)
+        #expect(mango.onAccent == .black)
+        #expect(mango.border == .primary.opacity(0))
+        #expect(mango.surface == .primary.opacity(0.07))
+        #expect(mango.metrics.cardRadius == 24)
+        #expect(mango.metrics.controlRadius == 14)
+        #expect(mango.metrics.sectionSpacing == 28)
+        #expect(mango.disabledOpacity == 0.4)
     }
 }

@@ -355,7 +355,9 @@ struct ThemeTuning: Codable, Equatable {
     // MARK: Presets
 
     /// Loads a foundation preset's accent choice into the knobs, keeping the
-    /// tuned metrics.
+    /// tuned metrics. MANGO is the exception: its strokeless surface and
+    /// generous radii are part of its identity, so its case decodes the whole
+    /// tuning from its preset code, keeping only the environment switches.
     mutating func apply(presetNamed name: String) {
         switch name {
         case "System": accent = .system; darkLabelOnAccent = false
@@ -364,6 +366,13 @@ struct ThemeTuning: Codable, Equatable {
         case "Rose": accent = .pink; darkLabelOnAccent = false
         case "Emerald": accent = .green; darkLabelOnAccent = false
         case "Amber": accent = .yellow; darkLabelOnAccent = true
+        case "Mango":
+            // MANGO carries its own metrics, not only an accent, so decode its
+            // pinned preset code (Registry/preset_vectors.json) over self to
+            // load every knob while keeping the environment switches.
+            if let mango = ThemeTuning(presetCode: "a74hGF01CVunaG0vzZJG", base: self) {
+                self = mango
+            }
         default: break
         }
     }

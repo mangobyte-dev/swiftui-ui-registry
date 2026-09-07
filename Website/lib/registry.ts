@@ -28,7 +28,9 @@ export type ThemePreset = {
   name: string
   slug: string
   blurb: string
+  code: string
   screenshots: { light: string | null; dark: string | null }
+  demoScreenshots: { light: string | null; dark: string | null }
 }
 
 export type Registry = {

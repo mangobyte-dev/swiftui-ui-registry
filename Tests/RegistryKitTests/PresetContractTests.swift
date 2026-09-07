@@ -67,6 +67,24 @@ private func vector(named prefix: String) throws -> PresetVector {
   #expect(custom.contains("accent: Color(red: 0.349, green: 0.341, blue: 0.839),"))
 }
 
+@Test func mangoDecodesStrokelessWithASeparateDarkAccentPair() throws {
+  // MANGO's identity is strokeless (border opacity zero) and a light and dark
+  // accent that differ. A decoder that clamped the zero border back to the
+  // default, dropped the dark accent, or reused the light one would still pass
+  // the round-trip yet fail here.
+  let mango = try vector(named: "Mango")
+  let decoded = try #require(Preset.decode(mango.code))
+  #expect(decoded["accent"] == "custom")
+  #expect(decoded["darkLabelOnAccent"] == .bool(true))
+  #expect(decoded["borderOpacity"] == 0.0)
+  #expect(decoded["customAccent"] == "#FFA033")
+  #expect(decoded["customAccentDark"] == "#FFB84D")
+  #expect(decoded["customAccent"] != decoded["customAccentDark"])
+  let swift = try Preset.swiftSource(mango.tuning)
+  #expect(swift.contains("accent: Color(uiColor: UIColor { traits in"))
+  #expect(swift.contains("border: .primary.opacity(0.000),"))
+}
+
 @Test func swiftParsesBackWhatItWritesForEveryShape() throws {
   for vector in presetVectors {
     let file = try Preset.themeFile(vector.tuning, code: vector.code)
@@ -183,5 +201,20 @@ extension Commands {
       #expect(try random() == first)
       #expect(Preset.decode(first) != nil)
     }
+  }
+}
+
+@Test func siteDataCarriesEveryPresetCodeAsPinned() throws {
+  // The website's Themes and Create pages read each preset's code from the
+  // generated site data, whose table keeps the codes as literals; a preset
+  // added or re-encoded without updating that table would ship a stale code.
+  let site = try withRepository {
+    try JSON.read(Data(try SiteDataGenerator(root: repositoryRoot).render().utf8))
+  }
+  let presets = try #require(site["presets"].array)
+  #expect(presets.count == 7)
+  for preset in presets {
+    let name = preset["name"].text
+    #expect(preset["code"].text == (try vector(named: name)).code, Comment(rawValue: name))
   }
 }

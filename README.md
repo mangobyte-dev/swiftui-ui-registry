@@ -28,7 +28,7 @@ The value gate: an installable item must add a meaningful reusable treatment or 
        .registryTheme(.graphite)
    ```
 
-   Presets: `.system` (inherits your app tint), `.graphite`, `.indigo`, `.rose`, `.emerald`, `.amber`. To make your own, open the Showcase's Tune tab, move the sliders, and tap Copy Swift; it exports the exact `RegistryTheme(...)` initializer
+   Presets: `.system` (inherits your app tint), `.graphite`, `.indigo`, `.rose`, `.emerald`, `.amber`, and `.mango`, the sample design system whose template is [docs/mango.md](docs/mango.md). To make your own, open the Showcase's Tune tab, move the sliders, and tap Copy Swift; it exports the exact `RegistryTheme(...)` initializer
 
 3. Install the `swiftui-registry` tool with Homebrew, then install items from any directory. The tool fetches the pinned `0.1.0` registry snapshot from the published tag on first use, caches it under `~/Library/Caches/swiftui-registry`, and reuses it (`--refresh` fetches again). From a clone, `swift run swiftui-registry <command>` runs the same tool against that clone:
 
@@ -73,7 +73,7 @@ The registry costs nothing at runtime against the hand-written styles; those two
 Version 0, an honest prototype:
 
 - Every item, generated into `docs/catalog/` and the website's data file; the counts live there, not here
-- `SwiftUIRegistryFoundations` is a small pre-1.0 package: accent, on-accent, surface, border, positive, negative, disabled opacity, and metrics, with six presets and one root modifier
+- `SwiftUIRegistryFoundations` is a small pre-1.0 package: accent, on-accent, surface, border, positive, negative, disabled opacity, and metrics, with seven presets and one root modifier
 - Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, captured screenshots, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates
 - The Showcase compiles every installable item and every recipe snippet at the iOS 26 floor, with pinned visual contract checks for the blocks and an accessibility-audited demo walk over all 50 items
@@ -258,6 +258,7 @@ The repository is currently verified with Xcode 27.0 and Swift 6.4. The registry
 - [Research](docs/research.md)
 - [Registry specification](docs/registry-spec.md)
 - [Visual testing](docs/visual-testing.md)
+- [MANGO design system](docs/mango.md)
 - [Contributing](CONTRIBUTING.md)
 
 ## Deliberate boundaries

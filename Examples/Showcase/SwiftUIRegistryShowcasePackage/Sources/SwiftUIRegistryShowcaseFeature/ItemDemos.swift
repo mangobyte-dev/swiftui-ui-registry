@@ -86,6 +86,8 @@ enum ItemDemos {
         case "typography": AnyView(TypographyRecipe())
         // Not a registry item: the theme preview is the `preview` block's wall, captured per preset for the website's Create and Themes pages
         case "theme-preview": AnyView(PreviewWall())
+        // Not a registry item: the MANGO demo, captured for the website's Themes page
+        case "mango-demo": AnyView(MangoDemo())
         default: nil
         }
     }

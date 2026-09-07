@@ -14,7 +14,8 @@ Usage (from the repository root):
 
     python3 Scripts/capture_previews.py            # every item, light and dark
     python3 Scripts/capture_previews.py badge card # a subset
-    python3 Scripts/capture_previews.py --themes   # the theme presets page
+    python3 Scripts/capture_previews.py --themes   # the theme presets page (or --themes Mango for one preset)
+    python3 Scripts/capture_previews.py --scene mango-demo   # a Showcase scene that is not an item, into docs/images/themes
     python3 Scripts/capture_previews.py --ipad     # every item on the iPad, into docs/images/ipad
     python3 Scripts/capture_previews.py --blocks   # the blocks only, on the iPad, same folder
     python3 Scripts/capture_previews.py --preset a13GkaOXWwIa --output /tmp/presets  # one preset code, both appearances
@@ -51,7 +52,7 @@ IPAD_OUTPUT = REPOSITORY_ROOT / "docs" / "images" / "ipad"
 # The iOS 27 iPad Pro 13-inch (M5) used for the iPad captures on this machine.
 IPAD_UDID = "FF62F68C-7D96-4073-B0CC-865A9D3B0A41"
 APPEARANCES = ("light", "dark")
-THEME_PRESETS = ("System", "Graphite", "Indigo", "Rose", "Emerald", "Amber")
+THEME_PRESETS = ("System", "Graphite", "Indigo", "Rose", "Emerald", "Amber", "Mango")
 # No top margin: the demo starts at the safe-area edge, right under the Dynamic Island.
 TOP_MARGIN_POINTS = 0
 BOTTOM_MARGIN_POINTS = 12
@@ -253,6 +254,7 @@ def main() -> int:
     parser.add_argument("--themes", action="store_true", help="Capture the theme presets instead of items")
     parser.add_argument("--ipad", action="store_true", help="Capture the named items (every item by default) on the iPad into docs/images/ipad")
     parser.add_argument("--blocks", action="store_true", help="Capture only the blocks on the iPad into docs/images/ipad (--ipad limited to blocks)")
+    parser.add_argument("--scene", metavar="NAME", help="Capture a Showcase scene that is not an item (its -item route) into docs/images/themes")
     parser.add_argument("--preset", metavar="CODE", help="Capture the theme preview under a preset code instead of items")
     parser.add_argument("--output", type=Path, help="Folder for --preset captures; required with --preset")
     parser.add_argument("--no-metadata", action="store_true", help="Do not write preview.screenshots")
@@ -266,9 +268,15 @@ def main() -> int:
     except RuntimeError as error:
         parser.error(str(error))
     names = arguments.items or sorted(kinds)
-    unknown = [name for name in names if name not in kinds]
-    if unknown:
-        parser.error(f"unknown items: {', '.join(unknown)}")
+    if arguments.themes:
+        presets = arguments.items or list(THEME_PRESETS)
+        unknown = [preset for preset in presets if preset not in THEME_PRESETS]
+        if unknown:
+            parser.error(f"unknown presets: {', '.join(unknown)} (known: {', '.join(THEME_PRESETS)})")
+    elif not arguments.scene:
+        unknown = [name for name in names if name not in kinds]
+        if unknown:
+            parser.error(f"unknown items: {', '.join(unknown)}")
     if arguments.preset and not is_preset_code(tool, arguments.preset):
         parser.error(f"invalid preset code: {arguments.preset}")
     if arguments.preset and arguments.output is None:
@@ -297,8 +305,13 @@ def main() -> int:
                     preset=arguments.preset, scratch=scratch,
                 )
                 print(f"captured {destination}")
+        elif arguments.scene:
+            for appearance in APPEARANCES:
+                destination = THEME_OUTPUT / f"{arguments.scene}-{appearance}.png"
+                capture(arguments.udid, arguments.scene, appearance, destination, scratch=scratch)
+                print(f"captured {destination.relative_to(REPOSITORY_ROOT)}")
         elif arguments.themes:
-            for preset in THEME_PRESETS:
+            for preset in presets:
                 for appearance in APPEARANCES:
                     destination = THEME_OUTPUT / f"{preset.lower()}-{appearance}.png"
                     capture(

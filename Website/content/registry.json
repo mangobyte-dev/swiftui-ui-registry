@@ -4371,54 +4371,98 @@
       "name": "System",
       "slug": "system",
       "blurb": "Inherits the app tint. The default.",
+      "code": "a13GkaOXWwIC",
       "screenshots": {
         "light": "/images/themes/system-light.png",
         "dark": "/images/themes/system-dark.png"
+      },
+      "demoScreenshots": {
+        "light": null,
+        "dark": null
       }
     },
     {
       "name": "Graphite",
       "slug": "graphite",
       "blurb": "Ink on paper: primary accent, background label.",
+      "code": "a13GkaOXWxLl",
       "screenshots": {
         "light": "/images/themes/graphite-light.png",
         "dark": "/images/themes/graphite-dark.png"
+      },
+      "demoScreenshots": {
+        "light": null,
+        "dark": null
       }
     },
     {
       "name": "Indigo",
       "slug": "indigo",
       "blurb": "The Showcase's own accent.",
+      "code": "a13GkaOXWwIF",
       "screenshots": {
         "light": "/images/themes/indigo-light.png",
         "dark": "/images/themes/indigo-dark.png"
+      },
+      "demoScreenshots": {
+        "light": null,
+        "dark": null
       }
     },
     {
       "name": "Rose",
       "slug": "rose",
       "blurb": "Warm and friendly.",
+      "code": "a13GkaOXWwIH",
       "screenshots": {
         "light": "/images/themes/rose-light.png",
         "dark": "/images/themes/rose-dark.png"
+      },
+      "demoScreenshots": {
+        "light": null,
+        "dark": null
       }
     },
     {
       "name": "Emerald",
       "slug": "emerald",
       "blurb": "Growth and confirmation.",
+      "code": "a13GkaOXWwIL",
       "screenshots": {
         "light": "/images/themes/emerald-light.png",
         "dark": "/images/themes/emerald-dark.png"
+      },
+      "demoScreenshots": {
+        "light": null,
+        "dark": null
       }
     },
     {
       "name": "Amber",
       "slug": "amber",
       "blurb": "A light accent that proves the on-accent token.",
+      "code": "a13GkaOXWwIa",
       "screenshots": {
         "light": "/images/themes/amber-light.png",
         "dark": "/images/themes/amber-dark.png"
+      },
+      "demoScreenshots": {
+        "light": null,
+        "dark": null
+      }
+    },
+    {
+      "name": "Mango",
+      "slug": "mango",
+      "blurb": "MangoByte's sample design system: strokeless, generous, one warm accent.",
+      "code": "a74hGF01CVunaG0vzZJG",
+      "screenshots": {
+        "light": "/images/themes/mango-light.png",
+        "dark": "/images/themes/mango-dark.png"
+      },
+      "demoScreenshots": {
+        "light": "/images/themes/mango-demo-light.png",
+        "dark": "/images/themes/mango-demo-dark.png"
       }
     }
   ]

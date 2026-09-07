@@ -61,7 +61,7 @@ Questionnaire(
 - Kind: block
 - Version: 0.1.0
 - Platforms: iOS 26.0+
-- Installs in order: [input](input.md) 0.5.0, [field](field.md) 0.1.0, [checkbox](checkbox.md) 0.3.0, [textarea](textarea.md) 0.4.0, [progress](progress.md) 0.2.0, [button](button.md) 0.5.0, [card](card.md) 0.2.0, [questionnaire](questionnaire.md) 0.1.0
+- Installs in order: [input](input.md) 0.5.0, [field](field.md) 0.1.0, [checkbox](checkbox.md) 0.3.1, [textarea](textarea.md) 0.4.0, [progress](progress.md) 0.2.0, [button](button.md) 0.5.1, [card](card.md) 0.2.0, [questionnaire](questionnaire.md) 0.1.0
 - Accessibility contract:
   - The card title carries the header accessibility trait so VoiceOver can reach the questionnaire heading directly.
   - The step counter reads as 'Step N of M' in monospaced digits, and the ProgressView carries an explicit 'Progress' accessibility label with the completed fraction as its value.

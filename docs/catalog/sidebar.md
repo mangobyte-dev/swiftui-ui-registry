@@ -14,6 +14,7 @@ Nothing to install. Copy the snippet below
 
 ```swift
 @State private var selection: String? = "activity"
+@State private var tab = "activity"
 
 NavigationSplitView {
     List(selection: $selection) {
@@ -23,20 +24,32 @@ NavigationSplitView {
     .navigationTitle("Bank")
     .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
 } detail: {
+    // A visually rich detail extends under the sidebar instead of stopping at its edge
+    ActivityBanner()
+        .backgroundExtensionEffect()
     if selection == "activity" { ActivityScreen() } else { CardsScreen() }
 }
+
+// The HIG's first choice on iPad: a tab bar people can switch to a sidebar
+TabView(selection: $tab) {
+    Tab("Activity", systemImage: "bell", value: "activity") { ActivityScreen() }
+    Tab("Cards", systemImage: "creditcard", value: "cards") { CardsScreen() }
+}
+.tabViewStyle(.sidebarAdaptable)
 ```
 
 ## Why native is enough
 
-Use `NavigationSplitView` with a selection-bound `List` for the sidebar; the system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack. On iPadOS people can drag the divider within the `navigationSplitViewColumnWidth` bounds, and iPhone ignores them.
+Use `NavigationSplitView` with a selection-bound `List` for the sidebar; the system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack. On iPadOS people can drag the divider within the `navigationSplitViewColumnWidth` bounds, and iPhone ignores them. Consider a tab bar first: a `TabView` in the `.sidebarAdaptable` style opens as a tab bar or a sidebar, lets people switch between them, and adapts to the window width, which the HIG names as the first choice for iPad navigation; keep `NavigationSplitView` for a sidebar-only layout. Visually rich detail content, such as a header image or gradient, extends beneath the sidebar with `backgroundExtensionEffect()` (26.0) instead of stopping at the column edge, which is the HIG's guidance for sidebars over content.
 
 ## Details
 
 - Kind: recipe
-- Version: 0.2.0
+- Version: 0.3.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Sidebar rows are native list cells with selection semantics.
   - The column toggle button is system-provided and labeled.
   - Selection state stays caller-owned through the binding.
+  - The convertible tab bar's switch between tab bar and sidebar is a system control with its own label, and the tabs keep native tab semantics in both forms.
+  - The background extension effect only mirrors pixels beneath the sidebar; it adds no accessibility element and hides nothing.

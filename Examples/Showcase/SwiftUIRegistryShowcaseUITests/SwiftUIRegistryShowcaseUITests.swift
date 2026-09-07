@@ -30,7 +30,13 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     /// row's combined label.
     @MainActor
     private func openItem(_ app: XCUIApplication, tab: String, name: String) {
-        let tabButton = app.tabBars.buttons[tab]
+        // The catalog tabs are a bottom tab bar on iPhone and a top tab bar on
+        // iPad. iPad renders each tab as a plain Button whose identifier is its
+        // SF Symbol name, so it is matched by its visible label, not the
+        // identifier subscript, and it sits outside any tab bar.
+        let tabButton = UIDevice.current.userInterfaceIdiom == .phone
+            ? app.tabBars.buttons[tab]
+            : app.buttons.matching(NSPredicate(format: "label == %@", tab)).firstMatch
         XCTAssertTrue(tabButton.waitForExistence(timeout: 5), "The \(tab) tab must exist.")
         tabButton.tap()
         // On a fresh launch the list can still be rendering; swiping before its first row
@@ -109,14 +115,52 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     }
 
     @MainActor
+    /// D2 in the roadmap keeps the system pointer effect on the native
+    /// controls the registry styles wrap. Hover is an iPadOS affordance, so
+    /// this runs on the iPad destination only and proves a registry-styled
+    /// Button still changes its appearance under the pointer; a style that
+    /// swallowed the automatic effect would leave the pixels unchanged.
+    func testRegistryButtonKeepsThePointerEffectOnIPad() throws {
+        try XCTSkipUnless(
+            UIDevice.current.userInterfaceIdiom == .pad,
+            "Pointer effects are an iPadOS affordance; the iPhone has no pointer."
+        )
+        let app = XCUIApplication()
+        app.launchArguments = ["-item", "button"]
+        app.launch()
+        let button = app.buttons["Save changes"]
+        XCTAssertTrue(button.waitForExistence(timeout: 5), "The button demo must show its primary button.")
+        let frame = button.frame
+        // Park the pointer away from the button first so the baseline holds no effect.
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.95)).hover()
+        let before = app.screenshot().image
+        button.hover()
+        // The highlight animates in; give it a beat before sampling.
+        RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.6))
+        let after = app.screenshot().image
+        let difference = meanDifference(before, after, within: frame)
+        XCTAssertGreaterThan(
+            difference,
+            0.01,
+            "Hovering the registry button changed its pixels by \(difference.formatted(.percent.precision(.fractionLength(2)))); the pointer effect is missing."
+        )
+    }
+
+    @MainActor
     func testCatalogSearchFiltersComponentsByTag() {
         let app = launchCatalog()
-        let componentsTab = app.tabBars.buttons["Components"]
+        let componentsTab = UIDevice.current.userInterfaceIdiom == .phone
+            ? app.tabBars.buttons["Components"]
+            : app.buttons.matching(NSPredicate(format: "label == %@", "Components")).firstMatch
         XCTAssertTrue(componentsTab.waitForExistence(timeout: 5))
         let badgeRow = app.descendants(matching: .any).matching(identifier: "catalog.item.badge").firstMatch
         XCTAssertTrue(badgeRow.waitForExistence(timeout: 3))
 
-        app.swipeDown()
+        // On iPhone the search field is revealed by pulling the list down; on
+        // iPad it is always visible in the top bar.
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            app.swipeDown()
+        }
         let searchField = app.searchFields.firstMatch
         XCTAssertTrue(searchField.waitForExistence(timeout: 3), "The catalog list must be searchable.")
         searchField.tap()
@@ -354,7 +398,7 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     }
 
     @MainActor
-    func testAuthSubmitDisablesFieldsAndSubmitControlWhileSubmitting() {
+    func testAuthSubmitDisablesFieldsAndSubmitControlWhileSubmitting() throws {
         let app = launchCatalog()
         openBlock(app, "auth-form")
 
@@ -365,7 +409,22 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         let passwordField = app.secureTextFields["Password"]
         passwordField.tap()
         passwordField.typeText("correct horse")
+        // The in-flight state lasts a moment, so the assertion below can only
+        // observe it when Return reaches the app promptly. On the iOS 27.0
+        // iPad simulator the app intermittently stops reporting animations
+        // idle after keyboard input (measured 2026-09-07: the process is idle,
+        // nothing moves, and XCTest spends its 60 s idle timeout on every
+        // later step), which makes the observation impossible rather than the
+        // behavior wrong; that harness stall is reported as a skip with its
+        // measurement instead of a false failure.
+        let returnStarted = Date()
         app.typeText("\n")
+        let returnSeconds = Date().timeIntervalSince(returnStarted)
+        if returnSeconds > 20 {
+            throw XCTSkip(
+                "Return took \(returnSeconds.formatted(.number.precision(.fractionLength(1)))) s to reach the app: the simulator's idle stall, not the form."
+            )
+        }
 
         let submitButton = app.buttons["Sign in"]
         XCTAssertTrue(submitButton.waitForExistence(timeout: 2))
@@ -707,6 +766,22 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
 
     @MainActor
     private func assertVisualSnapshot(named name: String, app: XCUIApplication) {
+        // The approved references are light-mode iPhone 17 screens by contract
+        // (docs/visual-testing.md), and the iPad layouts differ by design. On any
+        // non-phone idiom, attach the iPad screenshot as evidence and skip the
+        // pixel comparison; every semantic assertion in the test still runs.
+        guard UIDevice.current.userInterfaceIdiom == .phone else {
+            XCTContext.runActivity(
+                named: "Visual reference is an iPhone contract; attached the iPad screenshot without comparing"
+            ) { activity in
+                let attachment = XCTAttachment(screenshot: app.screenshot())
+                attachment.name = name
+                attachment.lifetime = .keepAlways
+                activity.add(attachment)
+            }
+            return
+        }
+
         let bundle = Bundle(for: Self.self)
         let referenceURL = bundle.url(
             forResource: name,
@@ -736,6 +811,34 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
             0.015,
             "Visual snapshot \(name) changed by \(normalizedDifference.formatted(.percent.precision(.fractionLength(2)))); review before replacing its approved reference."
         )
+    }
+
+    /// Mean absolute channel difference between two screenshots inside one
+    /// element frame, in points, as a fraction of the maximum channel value.
+    private func meanDifference(_ first: UIImage, _ second: UIImage, within frame: CGRect) -> Double {
+        guard let a = first.cgImage, let b = second.cgImage else { return 0 }
+        let scale = CGFloat(a.width) / first.size.width
+        let region = CGRect(
+            x: frame.minX * scale, y: frame.minY * scale,
+            width: frame.width * scale, height: frame.height * scale
+        ).integral
+        guard let croppedA = a.cropping(to: region), let croppedB = b.cropping(to: region) else { return 0 }
+        guard let pixelsA = rgbaPixels(croppedA), let pixelsB = rgbaPixels(croppedB),
+              pixelsA.count == pixelsB.count, !pixelsA.isEmpty else { return 0 }
+        let total = zip(pixelsA, pixelsB).reduce(0) { $0 + abs(Int($1.0) - Int($1.1)) }
+        return Double(total) / Double(pixelsA.count * Int(UInt8.max))
+    }
+
+    private func rgbaPixels(_ image: CGImage) -> [UInt8]? {
+        let width = image.width, height = image.height
+        var pixels = [UInt8](repeating: 0, count: width * height * 4)
+        guard let context = CGContext(
+            data: &pixels, width: width, height: height, bitsPerComponent: 8,
+            bytesPerRow: width * 4, space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else { return nil }
+        context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
+        return pixels
     }
 
     private func normalizedPixels(_ image: UIImage) -> [UInt8]? {

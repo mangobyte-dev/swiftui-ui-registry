@@ -19,7 +19,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "accordion",
             kind: "component",
-            version: "0.2.0",
+            version: "0.2.1",
             description: "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.",
             usage: "@State private var isExpanded = false\n\nDisclosureGroup(\"How do I freeze my card?\", isExpanded: $isExpanded) {\n    Text(\"Open the card, then choose Freeze.\")\n}\n.disclosureGroupStyle(.registryAccordion)",
             dependencies: ["separator"],
@@ -100,7 +100,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "breadcrumb",
             kind: "component",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "A horizontal navigation trail of links with chevron separators and a current page, collapsing middle crumbs into an overflow menu when they do not fit; a component because iOS has no native breadcrumb control.",
             usage: "Breadcrumb([\n    BreadcrumbItem(Text(\"Home\"), action: { path = NavigationPath() }),\n    BreadcrumbItem(Text(\"Library\"), action: { path.removeLast() }),\n    BreadcrumbItem(Text(\"Payments\"))\n])",
             dependencies: [],
@@ -118,7 +118,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "button",
             kind: "component",
-            version: "0.5.0",
+            version: "0.5.1",
             description: "Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nButton(\"Save changes\") {}\n    .buttonStyle(.registry)\n\nButton(\"Cancel\") {}\n    .buttonStyle(.registryOutline)\n\nButton(\"Delete\", role: .destructive) {}\n    .buttonStyle(.registry)",
             dependencies: [],
@@ -181,7 +181,7 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "checkbox",
             kind: "component",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.",
             usage: "@State private var accepted = false\n\nToggle(\"Accept terms\", isOn: $accepted)\n    .toggleStyle(.registryCheckbox)",
             dependencies: [],
@@ -541,9 +541,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "sidebar",
             kind: "recipe",
-            version: "0.2.0",
+            version: "0.3.0",
             description: "Native guidance for a sidebar layout with NavigationSplitView and a selection-bound List on iPad.",
-            usage: "@State private var selection: String? = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}",
+            usage: "@State private var selection: String? = \"activity\"\n@State private var tab = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    // A visually rich detail extends under the sidebar instead of stopping at its edge\n    ActivityBanner()\n        .backgroundExtensionEffect()\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}\n\n// The HIG's first choice on iPad: a tab bar people can switch to a sidebar\nTabView(selection: $tab) {\n    Tab(\"Activity\", systemImage: \"bell\", value: \"activity\") { ActivityScreen() }\n    Tab(\"Cards\", systemImage: \"creditcard\", value: \"cards\") { CardsScreen() }\n}\n.tabViewStyle(.sidebarAdaptable)",
             dependencies: [],
             tags: ["sidebar", "navigation", "split-view", "ipad", "guidance"]
         ),

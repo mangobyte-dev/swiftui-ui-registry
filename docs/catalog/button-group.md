@@ -49,7 +49,7 @@ ControlGroup {
 - Kind: component
 - Version: 0.3.1
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [button-group](button-group.md) 0.3.1
+- Installs in order: [button](button.md) 0.5.1, [button-group](button-group.md) 0.3.1
 - Accessibility contract:
   - Retains the caller's native Button controls and exposes the row as one accessibility container.
   - Keeps each button's visible or derived accessibility label and role.

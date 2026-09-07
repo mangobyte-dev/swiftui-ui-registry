@@ -18,6 +18,8 @@ The contract is pinned to a light-mode iPhone 17 running iOS 27.0. Native contro
 
 Semantic UI assertions remain separate. The image check protects layout, hierarchy, surfaces, color distribution, and major typography without treating the changing clock as product output
 
+The pixel comparison runs on the iPhone pin only, since the references are iPhone screens by contract; the iPad destination attaches its screenshots as evidence and skips the comparison, while every semantic assertion in the same test still runs on iPad. The iPad simulator's intermittent idle stall after keyboard input, and the one test that reports it as a measured skip, are recorded in the roadmap's Open deferrals
+
 ## Approved references
 
 - `finance-light.png`
@@ -43,7 +45,7 @@ GOLDEN-CHANGE (2026-09-05): `command-light.png` was added for the Stage 4 block.
 
 ## Item captures
 
-Every capture launches the app with `-AppleLanguages (en) -AppleLocale en_US`, so the locale is part of the capture rather than of the simulator; the iPad used for the wide block captures is also set to en_US because the status bar date is the device's own (its region was ar_SA until 2026-09-06, which put Hijri dates and spaced currency into the first wall captures). Per-item light and dark images under `docs/images/items/` and the preset images under `docs/images/themes/` are documentation captures produced by `Scripts/capture_previews.py` from the Showcase's `-item` launch on the same pinned simulator. They feed the catalog and the website (copied into `Website/public/images/` by the site-data generator) and are human review evidence, not test baselines
+Every capture launches the app with `-AppleLanguages (en) -AppleLocale en_US`, so the locale is part of the capture rather than of the simulator; the iPad Pro 13-inch used for the item captures is also set to en_US because the status bar date is the device's own (its region was ar_SA until 2026-09-06, which put Hijri dates and spaced currency into the first wall captures). Per-item light and dark images under `docs/images/items/` and the preset images under `docs/images/themes/` are documentation captures produced by `Scripts/capture_previews.py` from the Showcase's `-item` launch on the same pinned simulator. The iPad captures of every item, light and dark, live under `docs/images/ipad/`, produced by `Scripts/capture_previews.py --ipad` on the iPad Pro 13-inch; the site-data generator copies them into `Website/public/images/ipad/` and each item page shows them under On iPad. They feed the catalog and the website (copied into `Website/public/images/` by the site-data generator) and are human review evidence, not test baselines
 
 GOLDEN-CHANGE (2026-09-05, threshold): the comparison moved from 96 by 192 at 2 percent to 192 by 384 at 1.5 percent so a whole tab bar or navigation bar can no longer hide inside the tolerance. All five references passed at the new setting without recapture
 

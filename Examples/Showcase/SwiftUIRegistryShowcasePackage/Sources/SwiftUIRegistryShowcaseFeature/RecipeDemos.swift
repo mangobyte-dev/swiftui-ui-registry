@@ -303,8 +303,24 @@ struct ScrollAreaRecipe: View {
 
 struct SidebarRecipe: View {
     @State private var selection: String? = "activity"
+    @State private var tab = "activity"
 
     var body: some View {
+        VStack(spacing: 16) {
+            splitView
+            // The HIG's first choice on iPad: a tab bar people can switch to a sidebar
+            TabView(selection: $tab) {
+                Tab("Activity", systemImage: "bell", value: "activity") { ActivityScreen() }
+                Tab("Cards", systemImage: "creditcard", value: "cards") { CardsScreen() }
+            }
+            .tabViewStyle(.sidebarAdaptable)
+            .frame(height: 300)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .registrySurface()
+        }
+    }
+
+    private var splitView: some View {
         NavigationSplitView {
             List(selection: $selection) {
                 Label("Activity", systemImage: "bell").tag("activity")
@@ -313,11 +329,29 @@ struct SidebarRecipe: View {
             .navigationTitle("Bank")
             .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
         } detail: {
-            if selection == "activity" { ActivityScreen() } else { CardsScreen() }
+            VStack(spacing: 0) {
+                // A visually rich detail extends under the sidebar instead of stopping at its edge
+                ActivityBanner()
+                    .backgroundExtensionEffect()
+                if selection == "activity" { ActivityScreen() } else { CardsScreen() }
+            }
         }
         .frame(height: 360)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .registrySurface()
+    }
+}
+
+private struct ActivityBanner: View {
+    var body: some View {
+        LinearGradient(colors: [.indigo.opacity(0.6), .mint.opacity(0.6)], startPoint: .leading, endPoint: .trailing)
+            .frame(height: 96)
+            .overlay(alignment: .bottomLeading) {
+                Text("Overview")
+                    .font(.title2.bold())
+                    .padding()
+            }
+            .accessibilityHidden(true)
     }
 }
 

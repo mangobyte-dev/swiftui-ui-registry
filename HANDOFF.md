@@ -40,7 +40,7 @@ Stay inside the seven workstreams of Stage 7. Do not add dependencies without a 
 |---|---|
 | Registry items and sources | `Registry/items/*.json`, `Registry/sources/components/`, `Registry/sources/blocks/`, the schema and the preset vectors under `Registry/` |
 | The tool | `Sources/RegistryKit/` (validator, installer, search, presets, MCP, generators, snapshot cache), `Sources/SwiftUIRegistryCLI/`; tests and captured fixtures in `Tests/RegistryKitTests/` |
-| Showcase | `Examples/Showcase/`, demos in `ItemDemos.swift`, `ComponentDemos.swift`, `BlockDemos.swift`, `RecipeDemos.swift`; the UI suite and its visual references; iPad captures through `Scripts/capture_previews.py --blocks` on the iPad Pro 13-inch (M5) whose UDID is `IPAD_UDID` in that script |
+| Showcase | `Examples/Showcase/`, demos in `ItemDemos.swift`, `ComponentDemos.swift`, `BlockDemos.swift`, `RecipeDemos.swift`; the UI suite and its visual references; iPad captures through `Scripts/capture_previews.py --ipad` (every item, or the named ones; `--blocks` limits it to blocks) on the iPad Pro 13-inch (M5) whose UDID is `IPAD_UDID` in that script |
 | Captures | `Scripts/capture_previews.py` on the pinned iPhone 17 and the iPad Pro 13-inch, then the three generators |
 | Website | `Website/` (Next.js 16, shadcn/ui base-nova; read `Website/AGENTS.md` first); the preset codec `Website/lib/preset.ts`; the Create page `Website/components/create-studio.tsx`; search `Website/components/search-command.tsx` and `Website/lib/search.ts` |
 | Example consumer | `Examples/TodoCounter/` with its three UI layers and the comparison |

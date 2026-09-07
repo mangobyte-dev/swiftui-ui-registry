@@ -50,7 +50,7 @@ Button("Delete", role: .destructive) {}
 ## Details
 
 - Kind: component
-- Version: 0.5.0
+- Version: 0.5.1
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
@@ -58,4 +58,5 @@ Button("Delete", role: .destructive) {}
   - Maintains a minimum 44 by 44 point interaction area across control sizes.
   - Uses system text styles and keeps the label on one line: it never wraps or breaks, scaling down slightly before truncating, so the call site provides room with a full-width frame or a stacked layout at large text sizes.
   - Reads the enabled state from the environment and preserves the native ButtonRole: a destructive role draws the negative fill in the primary variant and negative label text in the outline, secondary, ghost, and link variants, alongside the caller's label.
+  - On iPad the style keeps SwiftUI's automatic pointer effect through hoverEffect(), because a custom ButtonStyle otherwise drops it; measured on the iOS 27 iPad simulator with an XCTest hover, the button's pixels did not change until the effect was restored.
 - Source: [sources/components/RegistryButtonStyle.swift](../../Registry/sources/components/RegistryButtonStyle.swift), with the `Button Variants` Xcode preview

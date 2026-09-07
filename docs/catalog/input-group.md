@@ -58,7 +58,7 @@ InputGroup {
 - Kind: component
 - Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [input-group](input-group.md) 0.2.0
+- Installs in order: [button](button.md) 0.5.1, [input-group](input-group.md) 0.2.0
 - Accessibility contract:
   - The field stays a native TextField or SecureField; give it an explicit accessibilityLabel because the title is placeholder text only.
   - Hide a decorative leading accessory with accessibilityHidden(true); an informational prefix stays visible and the field's accessibilityLabel carries its meaning. A trailing registry button keeps its own label and 44 point hit area.

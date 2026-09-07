@@ -52,7 +52,7 @@ ControlGroup {
 - Kind: component
 - Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [toggle](toggle.md) 0.2.0, [toggle-group](toggle-group.md) 0.2.0
+- Installs in order: [button](button.md) 0.5.1, [toggle](toggle.md) 0.2.0, [toggle-group](toggle-group.md) 0.2.0
 - Accessibility contract:
   - Retains each native Toggle's independent state and activation behavior.
   - Keeps all selection bindings caller-owned.

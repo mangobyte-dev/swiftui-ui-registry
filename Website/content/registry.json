@@ -10,7 +10,7 @@
     {
       "name": "accordion",
       "kind": "component",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.",
       "usage": "@State private var isExpanded = false\n\nDisclosureGroup(\"How do I freeze my card?\", isExpanded: $isExpanded) {\n    Text(\"Open the card, then choose Freeze.\")\n}\n.disclosureGroupStyle(.registryAccordion)",
       "docs": null,
@@ -40,26 +40,27 @@
         },
         {
           "name": "accordion",
-          "version": "0.2.0"
+          "version": "0.2.1"
         }
       ],
       "accessibility": [
         "Preserves the native DisclosureGroup binding; the header is a plain Button that toggles isExpanded.",
         "Reports Expanded or Collapsed as the header's accessibility value; no selection trait is added, so VoiceOver speaks one state word.",
         "The chevron is decorative and hidden; the header keeps the 44 point minimum height.",
-        "Tapping the header animates expansion with the snappy curve and switches to an immediate change under Reduce Motion; a caller that changes isExpanded programmatically chooses its own animation."
+        "Tapping the header animates expansion with the snappy curve and switches to an immediate change under Reduce Motion; a caller that changes isExpanded programmatically chooses its own animation.",
+        "On iPad the header keeps a pointer effect: the plain button style drops the automatic one, so the header asks for it back with hoverEffect and the system picks the shape."
       ],
       "sourcePath": "Registry/sources/components/RegistryAccordionStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryAccordionStyle.swift",
-      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A row-like treatment for native `DisclosureGroup`: a full-width header that\n/// toggles expansion, a trailing chevron, and content revealed beneath a\n/// hairline. The content keeps the caller's own styling. Stack several groups\n/// with separators for an accordion.\npublic struct RegistryAccordionStyle: DisclosureGroupStyle {\n    @Environment(\\.accessibilityReduceMotion) private var reduceMotion\n    @Environment(\\.registryTheme) private var theme\n\n    public init() {}\n\n    public func makeBody(configuration: Configuration) -> some View {\n        VStack(alignment: .leading, spacing: 0) {\n            Button {\n                if reduceMotion {\n                    configuration.isExpanded.toggle()\n                } else {\n                    withAnimation(.snappy) {\n                        configuration.isExpanded.toggle()\n                    }\n                }\n            } label: {\n                HStack(spacing: theme.metrics.compactSpacing) {\n                    configuration.label\n                        .font(.body.weight(.medium))\n                        .frame(maxWidth: .infinity, alignment: .leading)\n                    Image(systemName: \"chevron.down\")\n                        .font(.footnote.weight(.semibold))\n                        .foregroundStyle(.secondary)\n                        .rotationEffect(.degrees(configuration.isExpanded ? 180 : 0))\n                        .accessibilityHidden(true)\n                }\n                .padding(.vertical, theme.metrics.standardSpacing)\n                .frame(minHeight: RegistryMetrics.minimumHitSize)\n                .contentShape(Rectangle())\n            }\n            .buttonStyle(.plain)\n            .accessibilityValue(\n                configuration.isExpanded\n                    ? Text(\"Expanded\", comment: \"VoiceOver value of an open accordion header; never drawn on screen\")\n                    : Text(\"Collapsed\", comment: \"VoiceOver value of a closed accordion header; never drawn on screen\")\n            )\n\n            if configuration.isExpanded {\n                configuration.content\n                    .frame(maxWidth: .infinity, alignment: .leading)\n                    .padding(.bottom, theme.metrics.standardSpacing)\n            }\n        }\n    }\n}\n\npublic extension DisclosureGroupStyle where Self == RegistryAccordionStyle {\n    static var registryAccordion: RegistryAccordionStyle { RegistryAccordionStyle() }\n}\n\nprivate struct RegistryAccordionStylePreview: View {\n    @Environment(\\.registryTheme) private var theme\n    @State private var isFirstExpanded = true\n    @State private var isSecondExpanded = false\n\n    var body: some View {\n        VStack(spacing: 0) {\n            DisclosureGroup(\"Is my card contactless?\", isExpanded: $isFirstExpanded) {\n                Text(\"Yes. Hold it near the terminal until it confirms the payment.\")\n                    .font(.subheadline)\n                    .foregroundStyle(.secondary)\n            }\n\n            Divider().registrySeparator()\n\n            DisclosureGroup(\"How do I freeze my card?\", isExpanded: $isSecondExpanded) {\n                Text(\"Open the card, then choose Freeze. Unfreeze the same way.\")\n                    .font(.subheadline)\n                    .foregroundStyle(.secondary)\n            }\n        }\n        .disclosureGroupStyle(.registryAccordion)\n        .padding(.horizontal, theme.metrics.standardSpacing)\n        .registrySurface()\n        .padding()\n    }\n}\n\n#Preview(\"Accordion\") {\n    RegistryAccordionStylePreview().tint(.indigo)\n}\n\n#Preview(\"Accordion Dark\") {\n    RegistryAccordionStylePreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Accordion Right to Left\") {\n    RegistryAccordionStylePreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Accordion Accessibility Size\") {\n    RegistryAccordionStylePreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A row-like treatment for native `DisclosureGroup`: a full-width header that\n/// toggles expansion, a trailing chevron, and content revealed beneath a\n/// hairline. The content keeps the caller's own styling. Stack several groups\n/// with separators for an accordion.\npublic struct RegistryAccordionStyle: DisclosureGroupStyle {\n    @Environment(\\.accessibilityReduceMotion) private var reduceMotion\n    @Environment(\\.registryTheme) private var theme\n\n    public init() {}\n\n    public func makeBody(configuration: Configuration) -> some View {\n        VStack(alignment: .leading, spacing: 0) {\n            Button {\n                if reduceMotion {\n                    configuration.isExpanded.toggle()\n                } else {\n                    withAnimation(.snappy) {\n                        configuration.isExpanded.toggle()\n                    }\n                }\n            } label: {\n                HStack(spacing: theme.metrics.compactSpacing) {\n                    configuration.label\n                        .font(.body.weight(.medium))\n                        .frame(maxWidth: .infinity, alignment: .leading)\n                    Image(systemName: \"chevron.down\")\n                        .font(.footnote.weight(.semibold))\n                        .foregroundStyle(.secondary)\n                        .rotationEffect(.degrees(configuration.isExpanded ? 180 : 0))\n                        .accessibilityHidden(true)\n                }\n                .padding(.vertical, theme.metrics.standardSpacing)\n                .frame(minHeight: RegistryMetrics.minimumHitSize)\n                .contentShape(Rectangle())\n            }\n            .buttonStyle(.plain)\n            // The plain style carries no pointer effect on iPad; ask for the automatic one.\n            .hoverEffect()\n            .accessibilityValue(\n                configuration.isExpanded\n                    ? Text(\"Expanded\", comment: \"VoiceOver value of an open accordion header; never drawn on screen\")\n                    : Text(\"Collapsed\", comment: \"VoiceOver value of a closed accordion header; never drawn on screen\")\n            )\n\n            if configuration.isExpanded {\n                configuration.content\n                    .frame(maxWidth: .infinity, alignment: .leading)\n                    .padding(.bottom, theme.metrics.standardSpacing)\n            }\n        }\n    }\n}\n\npublic extension DisclosureGroupStyle where Self == RegistryAccordionStyle {\n    static var registryAccordion: RegistryAccordionStyle { RegistryAccordionStyle() }\n}\n\nprivate struct RegistryAccordionStylePreview: View {\n    @Environment(\\.registryTheme) private var theme\n    @State private var isFirstExpanded = true\n    @State private var isSecondExpanded = false\n\n    var body: some View {\n        VStack(spacing: 0) {\n            DisclosureGroup(\"Is my card contactless?\", isExpanded: $isFirstExpanded) {\n                Text(\"Yes. Hold it near the terminal until it confirms the payment.\")\n                    .font(.subheadline)\n                    .foregroundStyle(.secondary)\n            }\n\n            Divider().registrySeparator()\n\n            DisclosureGroup(\"How do I freeze my card?\", isExpanded: $isSecondExpanded) {\n                Text(\"Open the card, then choose Freeze. Unfreeze the same way.\")\n                    .font(.subheadline)\n                    .foregroundStyle(.secondary)\n            }\n        }\n        .disclosureGroupStyle(.registryAccordion)\n        .padding(.horizontal, theme.metrics.standardSpacing)\n        .registrySurface()\n        .padding()\n    }\n}\n\n#Preview(\"Accordion\") {\n    RegistryAccordionStylePreview().tint(.indigo)\n}\n\n#Preview(\"Accordion Dark\") {\n    RegistryAccordionStylePreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Accordion Right to Left\") {\n    RegistryAccordionStylePreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Accordion Accessibility Size\") {\n    RegistryAccordionStylePreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Accordion",
       "screenshots": {
         "light": "/images/items/accordion-light.png",
         "dark": "/images/items/accordion-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/accordion-ipad-light.png",
+        "dark": "/images/ipad/accordion-ipad-dark.png"
       },
       "requirements": [
         {
@@ -106,7 +107,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "alert",
@@ -138,7 +139,7 @@
         },
         {
           "name": "accordion",
-          "version": "0.2.0"
+          "version": "0.2.1"
         },
         {
           "name": "activity-feed",
@@ -162,8 +163,8 @@
         "dark": "/images/items/activity-feed-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/activity-feed-ipad-light.png",
-        "dark": "/images/blocks/activity-feed-ipad-dark.png"
+        "light": "/images/ipad/activity-feed-ipad-light.png",
+        "dark": "/images/ipad/activity-feed-ipad-dark.png"
       },
       "requirements": [
         {
@@ -203,7 +204,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "alert",
@@ -225,8 +226,8 @@
         "dark": "/images/items/alert-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/alert-ipad-light.png",
+        "dark": "/images/ipad/alert-ipad-dark.png"
       },
       "requirements": [
         {
@@ -275,8 +276,8 @@
         "dark": "/images/items/alert-dialog-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/alert-dialog-ipad-light.png",
+        "dark": "/images/ipad/alert-dialog-ipad-dark.png"
       },
       "requirements": []
     },
@@ -314,8 +315,8 @@
         "dark": "/images/items/aspect-ratio-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/aspect-ratio-ipad-light.png",
+        "dark": "/images/ipad/aspect-ratio-ipad-dark.png"
       },
       "requirements": []
     },
@@ -370,7 +371,7 @@
         },
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "attachment",
@@ -393,8 +394,8 @@
         "dark": "/images/items/attachment-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/attachment-ipad-light.png",
+        "dark": "/images/ipad/attachment-ipad-dark.png"
       },
       "requirements": [
         {
@@ -439,7 +440,7 @@
         },
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "card",
@@ -468,8 +469,8 @@
         "dark": "/images/items/auth-form-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/auth-form-ipad-light.png",
-        "dark": "/images/blocks/auth-form-ipad-dark.png"
+        "light": "/images/ipad/auth-form-ipad-light.png",
+        "dark": "/images/ipad/auth-form-ipad-dark.png"
       },
       "requirements": [
         {
@@ -524,8 +525,8 @@
         "dark": "/images/items/avatar-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/avatar-ipad-light.png",
+        "dark": "/images/ipad/avatar-ipad-dark.png"
       },
       "requirements": [
         {
@@ -580,8 +581,8 @@
         "dark": "/images/items/badge-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/badge-ipad-light.png",
+        "dark": "/images/ipad/badge-ipad-dark.png"
       },
       "requirements": [
         {
@@ -594,7 +595,7 @@
     {
       "name": "breadcrumb",
       "kind": "component",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "A horizontal navigation trail of links with chevron separators and a current page, collapsing middle crumbs into an overflow menu when they do not fit; a component because iOS has no native breadcrumb control.",
       "usage": "Breadcrumb([\n    BreadcrumbItem(Text(\"Home\"), action: { path = NavigationPath() }),\n    BreadcrumbItem(Text(\"Library\"), action: { path.removeLast() }),\n    BreadcrumbItem(Text(\"Payments\"))\n])",
       "docs": null,
@@ -619,26 +620,27 @@
       "installOrder": [
         {
           "name": "breadcrumb",
-          "version": "0.1.0"
+          "version": "0.1.1"
         }
       ],
       "accessibility": [
         "The trail is one accessibility container labeled Breadcrumb; each link stays individually navigable and the current page carries the header trait rather than being a button.",
         "Chevron separators are decorative and hidden from accessibility; the overflow menu carries a Show more label and lists the collapsed crumbs as menu actions.",
         "Separators use chevron.forward, which mirrors automatically for a right-to-left layout, and the trail reverses with the layout direction.",
-        "Middle crumbs collapse into the overflow menu through ViewThatFits when the full trail does not fit the available width; links are compact inline targets, and native back navigation stays the primary path."
+        "Middle crumbs collapse into the overflow menu through ViewThatFits when the full trail does not fit the available width; links are compact inline targets, and native back navigation stays the primary path.",
+        "On iPad each link keeps a pointer effect: the plain button style drops the automatic one, so the link asks for it back with hoverEffect and the system picks the shape."
       ],
       "sourcePath": "Registry/sources/components/Breadcrumb.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/Breadcrumb.swift",
-      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// One crumb in a ``Breadcrumb`` trail: a title and an optional action. A crumb\n/// with an action is a link; the last crumb in the trail is always rendered as\n/// the current page, whether or not it carries an action.\npublic struct BreadcrumbItem {\n    public let title: Text\n    public let action: (() -> Void)?\n\n    public init(_ title: Text, action: (() -> Void)? = nil) {\n        self.title = title\n        self.action = action\n    }\n}\n\n/// A horizontal navigation trail: links separated by chevrons, ending in the\n/// current page. iOS has no native breadcrumb control, so this composition adds\n/// the reusable treatment, layout-direction aware separators, and, when the\n/// crumbs do not fit the available width, collapse of the middle crumbs into an\n/// overflow menu. Native back navigation stays the primary path; a breadcrumb\n/// is a secondary aid for wide layouts.\npublic struct Breadcrumb: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let items: [BreadcrumbItem]\n\n    public init(_ items: [BreadcrumbItem]) {\n        self.items = items\n    }\n\n    public var body: some View {\n        Group {\n            if items.count > 2 {\n                // Prefer the full trail, and collapse the middle crumbs into an\n                // overflow menu only when the full trail does not fit the width.\n                ViewThatFits(in: .horizontal) {\n                    trail(fullTrail)\n                    trail(collapsedTrail)\n                }\n            } else {\n                trail(fullTrail)\n            }\n        }\n        .accessibilityElement(children: .contain)\n        .accessibilityLabel(\"Breadcrumb\")\n    }\n\n    private func trail(_ crumbs: [Segment]) -> some View {\n        HStack(spacing: theme.metrics.compactSpacing) {\n            // A trail is rebuilt whole on each update, so position is its\n            // stable identity.\n            ForEach(Array(crumbs.enumerated()), id: \\.offset) { _, segment in\n                switch segment.content {\n                case let .crumb(item, isCurrent):\n                    crumb(item, isCurrent: isCurrent)\n                case .separator:\n                    separator\n                case let .overflow(middle):\n                    overflowMenu(middle)\n                }\n            }\n        }\n    }\n\n    @ViewBuilder\n    private func crumb(_ item: BreadcrumbItem, isCurrent: Bool) -> some View {\n        if isCurrent {\n            item.title\n                .font(.subheadline.weight(.medium))\n                .foregroundStyle(.primary)\n                .lineLimit(1)\n                .padding(.vertical, theme.metrics.compactSpacing / 2)\n                .accessibilityAddTraits(.isHeader)\n        } else if let action = item.action {\n            Button(action: action) {\n                item.title\n                    .font(.subheadline)\n                    .foregroundStyle(.secondary)\n                    .lineLimit(1)\n                    .padding(.vertical, theme.metrics.compactSpacing / 2)\n                    .contentShape(Rectangle())\n            }\n            .buttonStyle(.plain)\n        } else {\n            item.title\n                .font(.subheadline)\n                .foregroundStyle(.secondary)\n                .lineLimit(1)\n                .padding(.vertical, theme.metrics.compactSpacing / 2)\n        }\n    }\n\n    private var separator: some View {\n        // chevron.forward mirrors automatically for a right-to-left layout.\n        Image(systemName: \"chevron.forward\")\n            .font(.caption.weight(.semibold))\n            .foregroundStyle(.tertiary)\n            .accessibilityHidden(true)\n    }\n\n    private func overflowMenu(_ middle: [BreadcrumbItem]) -> some View {\n        Menu {\n            ForEach(Array(middle.enumerated()), id: \\.offset) { _, item in\n                Button {\n                    item.action?()\n                } label: {\n                    item.title\n                }\n            }\n        } label: {\n            Image(systemName: \"ellipsis\")\n                .font(.subheadline.weight(.semibold))\n                .foregroundStyle(.secondary)\n                .padding(.vertical, theme.metrics.compactSpacing / 2)\n        }\n        .accessibilityLabel(\"Show more\")\n    }\n\n    private var fullTrail: [Segment] {\n        var segments: [Segment] = []\n        for (index, item) in items.enumerated() {\n            segments.append(Segment(.crumb(item, isCurrent: index == items.count - 1)))\n            if index < items.count - 1 {\n                segments.append(Segment(.separator))\n            }\n        }\n        return segments\n    }\n\n    private var collapsedTrail: [Segment] {\n        let middle = Array(items[1..<(items.count - 1)])\n        return [\n            Segment(.crumb(items[0], isCurrent: false)),\n            Segment(.separator),\n            Segment(.overflow(middle)),\n            Segment(.separator),\n            Segment(.crumb(items[items.count - 1], isCurrent: true)),\n        ]\n    }\n\n    private struct Segment {\n        let content: Content\n\n        init(_ content: Content) {\n            self.content = content\n        }\n\n        enum Content {\n            case crumb(BreadcrumbItem, isCurrent: Bool)\n            case separator\n            case overflow([BreadcrumbItem])\n        }\n    }\n}\n\nprivate struct BreadcrumbPreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 32) {\n            Breadcrumb([\n                BreadcrumbItem(Text(\"Home\"), action: {}),\n                BreadcrumbItem(Text(\"Library\"), action: {}),\n                BreadcrumbItem(Text(\"Payments\")),\n            ])\n\n            // A long trail constrained in width collapses its middle crumbs\n            // into an overflow menu.\n            Breadcrumb([\n                BreadcrumbItem(Text(\"Home\"), action: {}),\n                BreadcrumbItem(Text(\"Accounts\"), action: {}),\n                BreadcrumbItem(Text(\"Cards\"), action: {}),\n                BreadcrumbItem(Text(\"Statements\"), action: {}),\n                BreadcrumbItem(Text(\"August 2026\")),\n            ])\n            .frame(width: 240, alignment: .leading)\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Breadcrumb\") {\n    BreadcrumbPreview().tint(.indigo)\n}\n\n#Preview(\"Breadcrumb Dark\") {\n    BreadcrumbPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Breadcrumb Right to Left\") {\n    BreadcrumbPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Breadcrumb Accessibility Size\") {\n    BreadcrumbPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// One crumb in a ``Breadcrumb`` trail: a title and an optional action. A crumb\n/// with an action is a link; the last crumb in the trail is always rendered as\n/// the current page, whether or not it carries an action.\npublic struct BreadcrumbItem {\n    public let title: Text\n    public let action: (() -> Void)?\n\n    public init(_ title: Text, action: (() -> Void)? = nil) {\n        self.title = title\n        self.action = action\n    }\n}\n\n/// A horizontal navigation trail: links separated by chevrons, ending in the\n/// current page. iOS has no native breadcrumb control, so this composition adds\n/// the reusable treatment, layout-direction aware separators, and, when the\n/// crumbs do not fit the available width, collapse of the middle crumbs into an\n/// overflow menu. Native back navigation stays the primary path; a breadcrumb\n/// is a secondary aid for wide layouts.\npublic struct Breadcrumb: View {\n    @Environment(\\.registryTheme) private var theme\n\n    private let items: [BreadcrumbItem]\n\n    public init(_ items: [BreadcrumbItem]) {\n        self.items = items\n    }\n\n    public var body: some View {\n        Group {\n            if items.count > 2 {\n                // Prefer the full trail, and collapse the middle crumbs into an\n                // overflow menu only when the full trail does not fit the width.\n                ViewThatFits(in: .horizontal) {\n                    trail(fullTrail)\n                    trail(collapsedTrail)\n                }\n            } else {\n                trail(fullTrail)\n            }\n        }\n        .accessibilityElement(children: .contain)\n        .accessibilityLabel(\"Breadcrumb\")\n    }\n\n    private func trail(_ crumbs: [Segment]) -> some View {\n        HStack(spacing: theme.metrics.compactSpacing) {\n            // A trail is rebuilt whole on each update, so position is its\n            // stable identity.\n            ForEach(Array(crumbs.enumerated()), id: \\.offset) { _, segment in\n                switch segment.content {\n                case let .crumb(item, isCurrent):\n                    crumb(item, isCurrent: isCurrent)\n                case .separator:\n                    separator\n                case let .overflow(middle):\n                    overflowMenu(middle)\n                }\n            }\n        }\n    }\n\n    @ViewBuilder\n    private func crumb(_ item: BreadcrumbItem, isCurrent: Bool) -> some View {\n        if isCurrent {\n            item.title\n                .font(.subheadline.weight(.medium))\n                .foregroundStyle(.primary)\n                .lineLimit(1)\n                .padding(.vertical, theme.metrics.compactSpacing / 2)\n                .accessibilityAddTraits(.isHeader)\n        } else if let action = item.action {\n            Button(action: action) {\n                item.title\n                    .font(.subheadline)\n                    .foregroundStyle(.secondary)\n                    .lineLimit(1)\n                    .padding(.vertical, theme.metrics.compactSpacing / 2)\n                    .contentShape(Rectangle())\n            }\n            .buttonStyle(.plain)\n            // The plain style carries no pointer effect on iPad; ask for the automatic one.\n            .hoverEffect()\n        } else {\n            item.title\n                .font(.subheadline)\n                .foregroundStyle(.secondary)\n                .lineLimit(1)\n                .padding(.vertical, theme.metrics.compactSpacing / 2)\n        }\n    }\n\n    private var separator: some View {\n        // chevron.forward mirrors automatically for a right-to-left layout.\n        Image(systemName: \"chevron.forward\")\n            .font(.caption.weight(.semibold))\n            .foregroundStyle(.tertiary)\n            .accessibilityHidden(true)\n    }\n\n    private func overflowMenu(_ middle: [BreadcrumbItem]) -> some View {\n        Menu {\n            ForEach(Array(middle.enumerated()), id: \\.offset) { _, item in\n                Button {\n                    item.action?()\n                } label: {\n                    item.title\n                }\n            }\n        } label: {\n            Image(systemName: \"ellipsis\")\n                .font(.subheadline.weight(.semibold))\n                .foregroundStyle(.secondary)\n                .padding(.vertical, theme.metrics.compactSpacing / 2)\n        }\n        .accessibilityLabel(\"Show more\")\n    }\n\n    private var fullTrail: [Segment] {\n        var segments: [Segment] = []\n        for (index, item) in items.enumerated() {\n            segments.append(Segment(.crumb(item, isCurrent: index == items.count - 1)))\n            if index < items.count - 1 {\n                segments.append(Segment(.separator))\n            }\n        }\n        return segments\n    }\n\n    private var collapsedTrail: [Segment] {\n        let middle = Array(items[1..<(items.count - 1)])\n        return [\n            Segment(.crumb(items[0], isCurrent: false)),\n            Segment(.separator),\n            Segment(.overflow(middle)),\n            Segment(.separator),\n            Segment(.crumb(items[items.count - 1], isCurrent: true)),\n        ]\n    }\n\n    private struct Segment {\n        let content: Content\n\n        init(_ content: Content) {\n            self.content = content\n        }\n\n        enum Content {\n            case crumb(BreadcrumbItem, isCurrent: Bool)\n            case separator\n            case overflow([BreadcrumbItem])\n        }\n    }\n}\n\nprivate struct BreadcrumbPreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 32) {\n            Breadcrumb([\n                BreadcrumbItem(Text(\"Home\"), action: {}),\n                BreadcrumbItem(Text(\"Library\"), action: {}),\n                BreadcrumbItem(Text(\"Payments\")),\n            ])\n\n            // A long trail constrained in width collapses its middle crumbs\n            // into an overflow menu.\n            Breadcrumb([\n                BreadcrumbItem(Text(\"Home\"), action: {}),\n                BreadcrumbItem(Text(\"Accounts\"), action: {}),\n                BreadcrumbItem(Text(\"Cards\"), action: {}),\n                BreadcrumbItem(Text(\"Statements\"), action: {}),\n                BreadcrumbItem(Text(\"August 2026\")),\n            ])\n            .frame(width: 240, alignment: .leading)\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Breadcrumb\") {\n    BreadcrumbPreview().tint(.indigo)\n}\n\n#Preview(\"Breadcrumb Dark\") {\n    BreadcrumbPreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Breadcrumb Right to Left\") {\n    BreadcrumbPreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Breadcrumb Accessibility Size\") {\n    BreadcrumbPreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Breadcrumb",
       "screenshots": {
         "light": "/images/items/breadcrumb-light.png",
         "dark": "/images/items/breadcrumb-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/breadcrumb-ipad-light.png",
+        "dark": "/images/ipad/breadcrumb-ipad-dark.png"
       },
       "requirements": [
         {
@@ -693,8 +695,8 @@
         "dark": "/images/items/bubble-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/bubble-ipad-light.png",
+        "dark": "/images/ipad/bubble-ipad-dark.png"
       },
       "requirements": [
         {
@@ -707,7 +709,7 @@
     {
       "name": "button",
       "kind": "component",
-      "version": "0.5.0",
+      "version": "0.5.1",
       "description": "Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.",
       "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nButton(\"Save changes\") {}\n    .buttonStyle(.registry)\n\nButton(\"Cancel\") {}\n    .buttonStyle(.registryOutline)\n\nButton(\"Delete\", role: .destructive) {}\n    .buttonStyle(.registry)",
       "docs": null,
@@ -729,26 +731,27 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         }
       ],
       "accessibility": [
         "Preserves native Button semantics and ButtonRole behavior.",
         "Maintains a minimum 44 by 44 point interaction area across control sizes.",
         "Uses system text styles and keeps the label on one line: it never wraps or breaks, scaling down slightly before truncating, so the call site provides room with a full-width frame or a stacked layout at large text sizes.",
-        "Reads the enabled state from the environment and preserves the native ButtonRole: a destructive role draws the negative fill in the primary variant and negative label text in the outline, secondary, ghost, and link variants, alongside the caller's label."
+        "Reads the enabled state from the environment and preserves the native ButtonRole: a destructive role draws the negative fill in the primary variant and negative label text in the outline, secondary, ghost, and link variants, alongside the caller's label.",
+        "On iPad the style keeps SwiftUI's automatic pointer effect through hoverEffect(), because a custom ButtonStyle otherwise drops it; measured on the iOS 27 iPad simulator with an XCTest hover, the button's pixels did not change until the effect was restored."
       ],
       "sourcePath": "Registry/sources/components/RegistryButtonStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryButtonStyle.swift",
-      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A shadcn-inspired treatment for native SwiftUI buttons.\npublic struct RegistryButtonStyle: ButtonStyle {\n    public enum Variant: Sendable {\n        case primary\n        case destructive\n        case outline\n        case secondary\n        case ghost\n        case link\n    }\n\n    @Environment(\\.controlSize) private var controlSize\n    @Environment(\\.isEnabled) private var isEnabled\n    @Environment(\\.registryTheme) private var theme\n\n    private let variant: Variant\n\n    public init(_ variant: Variant = .primary) {\n        self.variant = variant\n    }\n\n    public func makeBody(configuration: Configuration) -> some View {\n        let variant = resolvedVariant(for: configuration)\n        let isDestructiveRole = configuration.role == .destructive\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)\n\n        configuration.label\n            .font(font)\n            // A button label never wraps or breaks lines: it stays on one\n            // line, scales down a little under pressure, and the call site\n            // gives it room (a full-width frame, a stacked layout) instead.\n            .lineLimit(1)\n            .minimumScaleFactor(0.8)\n            .padding(.horizontal, horizontalPadding)\n            .padding(.vertical, verticalPadding)\n            .frame(minHeight: visualMinimumHeight)\n            .foregroundStyle(foregroundStyle(for: variant, isDestructiveRole: isDestructiveRole))\n            .background(backgroundStyle(for: variant, isPressed: configuration.isPressed), in: shape)\n            .overlay {\n                shape.stroke(\n                    borderStyle(for: variant, isDestructiveRole: isDestructiveRole),\n                    lineWidth: variant == .outline ? theme.metrics.borderWidth : 0\n                )\n            }\n            .underline(variant == .link)\n            .opacity(opacity(isPressed: configuration.isPressed))\n            .frame(\n                minWidth: RegistryMetrics.minimumHitSize,\n                minHeight: RegistryMetrics.minimumHitSize\n            )\n            .contentShape(Rectangle())\n    }\n}\n\npublic extension ButtonStyle where Self == RegistryButtonStyle {\n    static var registry: RegistryButtonStyle { RegistryButtonStyle() }\n    static var registryDestructive: RegistryButtonStyle { RegistryButtonStyle(.destructive) }\n    static var registryOutline: RegistryButtonStyle { RegistryButtonStyle(.outline) }\n    static var registrySecondary: RegistryButtonStyle { RegistryButtonStyle(.secondary) }\n    static var registryGhost: RegistryButtonStyle { RegistryButtonStyle(.ghost) }\n    static var registryLink: RegistryButtonStyle { RegistryButtonStyle(.link) }\n}\n\nprivate extension RegistryButtonStyle {\n    func resolvedVariant(for configuration: Configuration) -> Variant {\n        if variant == .primary, configuration.role == .destructive {\n            return .destructive\n        }\n        return variant\n    }\n\n    var font: Font {\n        switch controlSize {\n        case .mini:\n            .caption2.weight(.medium)\n        case .small:\n            .caption.weight(.medium)\n        case .regular:\n            .subheadline.weight(.medium)\n        case .large, .extraLarge:\n            .body.weight(.medium)\n        @unknown default:\n            .subheadline.weight(.medium)\n        }\n    }\n\n    var horizontalPadding: CGFloat {\n        switch controlSize {\n        case .mini:\n            8\n        case .small:\n            12\n        case .regular:\n            16\n        case .large:\n            20\n        case .extraLarge:\n            24\n        @unknown default:\n            16\n        }\n    }\n\n    var verticalPadding: CGFloat {\n        switch controlSize {\n        case .mini:\n            4\n        case .small:\n            6\n        case .regular:\n            8\n        case .large:\n            10\n        case .extraLarge:\n            12\n        @unknown default:\n            8\n        }\n    }\n\n    var visualMinimumHeight: CGFloat {\n        switch controlSize {\n        case .mini:\n            24\n        case .small:\n            32\n        case .regular:\n            36\n        case .large:\n            40\n        case .extraLarge:\n            44\n        @unknown default:\n            36\n        }\n    }\n\n    /// A destructive role inside a non-primary variant keeps that variant's\n    /// chrome and reads in the negative color, so an outline or ghost Delete\n    /// still signals what it does.\n    func foregroundStyle(for variant: Variant, isDestructiveRole: Bool) -> AnyShapeStyle {\n        switch variant {\n        case .primary:\n            AnyShapeStyle(theme.onAccent)\n        case .destructive:\n            // The negative fill is always dark enough for a white label; the\n            // accent may not be, which is why primary reads theme.onAccent.\n            AnyShapeStyle(Color.white)\n        case .outline, .secondary, .ghost:\n            AnyShapeStyle(isDestructiveRole ? theme.negative : Color.primary)\n        case .link:\n            isDestructiveRole ? AnyShapeStyle(theme.negative) : AnyShapeStyle(TintShapeStyle())\n        }\n    }\n\n    func backgroundStyle(for variant: Variant, isPressed: Bool) -> AnyShapeStyle {\n        switch variant {\n        case .primary:\n            AnyShapeStyle(TintShapeStyle())\n        case .destructive:\n            AnyShapeStyle(theme.negative)\n        case .secondary:\n            AnyShapeStyle(theme.surface)\n        case .outline, .ghost:\n            AnyShapeStyle(isPressed ? theme.surface : Color.clear)\n        case .link:\n            AnyShapeStyle(Color.clear)\n        }\n    }\n\n    func borderStyle(for variant: Variant, isDestructiveRole: Bool) -> Color {\n        guard variant == .outline else { return .clear }\n        return isDestructiveRole ? theme.negative : theme.border\n    }\n\n    func opacity(isPressed: Bool) -> Double {\n        guard isEnabled else { return theme.disabledOpacity }\n        return isPressed ? 0.82 : 1\n    }\n}\n\nprivate struct RegistryButtonStylePreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            Button(\"Default\") {}\n                .buttonStyle(.registry)\n\n            Button(\"Secondary\") {}\n                .buttonStyle(.registrySecondary)\n\n            Button(\"Outline\") {}\n                .buttonStyle(.registryOutline)\n\n            Button(\"Ghost\") {}\n                .buttonStyle(.registryGhost)\n\n            Button(\"Destructive\", role: .destructive) {}\n                .buttonStyle(.registry)\n\n            Button(\"Link\") {}\n                .buttonStyle(.registryLink)\n\n            Button(\"Disabled\") {}\n                .buttonStyle(.registry)\n                .disabled(true)\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Button Variants\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n}\n\n#Preview(\"Button Dark\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .preferredColorScheme(.dark)\n}\n\n#Preview(\"Button Right to Left\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Button Accessibility Size\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .dynamicTypeSize(.accessibility3)\n}\n\n#Preview(\"Button Sizes\") {\n    VStack(alignment: .leading, spacing: 12) {\n        ForEach(ControlSize.allCases, id: \\.self) { size in\n            Button(\"Save changes\") {}\n                .buttonStyle(.registry)\n                .controlSize(size)\n        }\n    }\n    .tint(.indigo)\n    .padding()\n}\n",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A shadcn-inspired treatment for native SwiftUI buttons.\npublic struct RegistryButtonStyle: ButtonStyle {\n    public enum Variant: Sendable {\n        case primary\n        case destructive\n        case outline\n        case secondary\n        case ghost\n        case link\n    }\n\n    @Environment(\\.controlSize) private var controlSize\n    @Environment(\\.isEnabled) private var isEnabled\n    @Environment(\\.registryTheme) private var theme\n\n    private let variant: Variant\n\n    public init(_ variant: Variant = .primary) {\n        self.variant = variant\n    }\n\n    public func makeBody(configuration: Configuration) -> some View {\n        let variant = resolvedVariant(for: configuration)\n        let isDestructiveRole = configuration.role == .destructive\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)\n\n        configuration.label\n            .font(font)\n            // A button label never wraps or breaks lines: it stays on one\n            // line, scales down a little under pressure, and the call site\n            // gives it room (a full-width frame, a stacked layout) instead.\n            .lineLimit(1)\n            .minimumScaleFactor(0.8)\n            .padding(.horizontal, horizontalPadding)\n            .padding(.vertical, verticalPadding)\n            .frame(minHeight: visualMinimumHeight)\n            .foregroundStyle(foregroundStyle(for: variant, isDestructiveRole: isDestructiveRole))\n            .background(backgroundStyle(for: variant, isPressed: configuration.isPressed), in: shape)\n            .overlay {\n                shape.stroke(\n                    borderStyle(for: variant, isDestructiveRole: isDestructiveRole),\n                    lineWidth: variant == .outline ? theme.metrics.borderWidth : 0\n                )\n            }\n            .underline(variant == .link)\n            .opacity(opacity(isPressed: configuration.isPressed))\n            .frame(\n                minWidth: RegistryMetrics.minimumHitSize,\n                minHeight: RegistryMetrics.minimumHitSize\n            )\n            .contentShape(Rectangle())\n            // A custom button style drops SwiftUI's automatic pointer effect on\n            // iPad (measured 2026-09-07: hovering changed nothing until this\n            // line), so the style asks for it back and the system picks the shape.\n            .hoverEffect()\n    }\n}\n\npublic extension ButtonStyle where Self == RegistryButtonStyle {\n    static var registry: RegistryButtonStyle { RegistryButtonStyle() }\n    static var registryDestructive: RegistryButtonStyle { RegistryButtonStyle(.destructive) }\n    static var registryOutline: RegistryButtonStyle { RegistryButtonStyle(.outline) }\n    static var registrySecondary: RegistryButtonStyle { RegistryButtonStyle(.secondary) }\n    static var registryGhost: RegistryButtonStyle { RegistryButtonStyle(.ghost) }\n    static var registryLink: RegistryButtonStyle { RegistryButtonStyle(.link) }\n}\n\nprivate extension RegistryButtonStyle {\n    func resolvedVariant(for configuration: Configuration) -> Variant {\n        if variant == .primary, configuration.role == .destructive {\n            return .destructive\n        }\n        return variant\n    }\n\n    var font: Font {\n        switch controlSize {\n        case .mini:\n            .caption2.weight(.medium)\n        case .small:\n            .caption.weight(.medium)\n        case .regular:\n            .subheadline.weight(.medium)\n        case .large, .extraLarge:\n            .body.weight(.medium)\n        @unknown default:\n            .subheadline.weight(.medium)\n        }\n    }\n\n    var horizontalPadding: CGFloat {\n        switch controlSize {\n        case .mini:\n            8\n        case .small:\n            12\n        case .regular:\n            16\n        case .large:\n            20\n        case .extraLarge:\n            24\n        @unknown default:\n            16\n        }\n    }\n\n    var verticalPadding: CGFloat {\n        switch controlSize {\n        case .mini:\n            4\n        case .small:\n            6\n        case .regular:\n            8\n        case .large:\n            10\n        case .extraLarge:\n            12\n        @unknown default:\n            8\n        }\n    }\n\n    var visualMinimumHeight: CGFloat {\n        switch controlSize {\n        case .mini:\n            24\n        case .small:\n            32\n        case .regular:\n            36\n        case .large:\n            40\n        case .extraLarge:\n            44\n        @unknown default:\n            36\n        }\n    }\n\n    /// A destructive role inside a non-primary variant keeps that variant's\n    /// chrome and reads in the negative color, so an outline or ghost Delete\n    /// still signals what it does.\n    func foregroundStyle(for variant: Variant, isDestructiveRole: Bool) -> AnyShapeStyle {\n        switch variant {\n        case .primary:\n            AnyShapeStyle(theme.onAccent)\n        case .destructive:\n            // The negative fill is always dark enough for a white label; the\n            // accent may not be, which is why primary reads theme.onAccent.\n            AnyShapeStyle(Color.white)\n        case .outline, .secondary, .ghost:\n            AnyShapeStyle(isDestructiveRole ? theme.negative : Color.primary)\n        case .link:\n            isDestructiveRole ? AnyShapeStyle(theme.negative) : AnyShapeStyle(TintShapeStyle())\n        }\n    }\n\n    func backgroundStyle(for variant: Variant, isPressed: Bool) -> AnyShapeStyle {\n        switch variant {\n        case .primary:\n            AnyShapeStyle(TintShapeStyle())\n        case .destructive:\n            AnyShapeStyle(theme.negative)\n        case .secondary:\n            AnyShapeStyle(theme.surface)\n        case .outline, .ghost:\n            AnyShapeStyle(isPressed ? theme.surface : Color.clear)\n        case .link:\n            AnyShapeStyle(Color.clear)\n        }\n    }\n\n    func borderStyle(for variant: Variant, isDestructiveRole: Bool) -> Color {\n        guard variant == .outline else { return .clear }\n        return isDestructiveRole ? theme.negative : theme.border\n    }\n\n    func opacity(isPressed: Bool) -> Double {\n        guard isEnabled else { return theme.disabledOpacity }\n        return isPressed ? 0.82 : 1\n    }\n}\n\nprivate struct RegistryButtonStylePreview: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            Button(\"Default\") {}\n                .buttonStyle(.registry)\n\n            Button(\"Secondary\") {}\n                .buttonStyle(.registrySecondary)\n\n            Button(\"Outline\") {}\n                .buttonStyle(.registryOutline)\n\n            Button(\"Ghost\") {}\n                .buttonStyle(.registryGhost)\n\n            Button(\"Destructive\", role: .destructive) {}\n                .buttonStyle(.registry)\n\n            Button(\"Link\") {}\n                .buttonStyle(.registryLink)\n\n            Button(\"Disabled\") {}\n                .buttonStyle(.registry)\n                .disabled(true)\n        }\n        .padding()\n    }\n}\n\n#Preview(\"Button Variants\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n}\n\n#Preview(\"Button Dark\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .preferredColorScheme(.dark)\n}\n\n#Preview(\"Button Right to Left\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Button Accessibility Size\") {\n    RegistryButtonStylePreview()\n        .tint(.indigo)\n        .dynamicTypeSize(.accessibility3)\n}\n\n#Preview(\"Button Sizes\") {\n    VStack(alignment: .leading, spacing: 12) {\n        ForEach(ControlSize.allCases, id: \\.self) { size in\n            Button(\"Save changes\") {}\n                .buttonStyle(.registry)\n                .controlSize(size)\n        }\n    }\n    .tint(.indigo)\n    .padding()\n}\n",
       "previewName": "Button Variants",
       "screenshots": {
         "light": "/images/items/button-light.png",
         "dark": "/images/items/button-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/button-ipad-light.png",
+        "dark": "/images/ipad/button-ipad-dark.png"
       },
       "requirements": [
         {
@@ -784,7 +787,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "button-group",
@@ -806,8 +809,8 @@
         "dark": "/images/items/button-group-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/button-group-ipad-light.png",
+        "dark": "/images/ipad/button-group-ipad-dark.png"
       },
       "requirements": [
         {
@@ -854,8 +857,8 @@
         "dark": "/images/items/calendar-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/calendar-ipad-light.png",
+        "dark": "/images/ipad/calendar-ipad-dark.png"
       },
       "requirements": []
     },
@@ -903,8 +906,8 @@
         "dark": "/images/items/card-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/card-ipad-light.png",
+        "dark": "/images/ipad/card-ipad-dark.png"
       },
       "requirements": [
         {
@@ -950,8 +953,8 @@
         "dark": "/images/items/carousel-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/carousel-ipad-light.png",
+        "dark": "/images/ipad/carousel-ipad-dark.png"
       },
       "requirements": []
     },
@@ -1003,8 +1006,8 @@
         "dark": "/images/items/chart-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/chart-ipad-light.png",
+        "dark": "/images/ipad/chart-ipad-dark.png"
       },
       "requirements": [
         {
@@ -1050,15 +1053,15 @@
         "dark": "/images/items/chart-tooltip-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/chart-tooltip-ipad-light.png",
+        "dark": "/images/ipad/chart-tooltip-ipad-dark.png"
       },
       "requirements": []
     },
     {
       "name": "checkbox",
       "kind": "component",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.",
       "usage": "@State private var accepted = false\n\nToggle(\"Accept terms\", isOn: $accepted)\n    .toggleStyle(.registryCheckbox)",
       "docs": null,
@@ -1079,26 +1082,27 @@
       "installOrder": [
         {
           "name": "checkbox",
-          "version": "0.3.0"
+          "version": "0.3.1"
         }
       ],
       "accessibility": [
         "Uses a native Toggle as its accessibility representation.",
         "Requires the caller's visible Toggle label and preserves the enabled state.",
         "Provides a 44-point minimum row height and does not communicate selection by color alone.",
-        "Inherits Dynamic Type for the label, the glyph, and the box, which scales with the body text style, and inherits layout direction."
+        "Inherits Dynamic Type for the label, the glyph, and the box, which scales with the body text style, and inherits layout direction.",
+        "On iPad the row keeps SwiftUI's automatic pointer effect through hoverEffect(), because the plain button style it builds on carries none."
       ],
       "sourcePath": "Registry/sources/components/RegistryCheckboxToggleStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryCheckboxToggleStyle.swift",
-      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A checkbox treatment for a native SwiftUI `Toggle` binding and label.\npublic struct RegistryCheckboxToggleStyle: ToggleStyle {\n    @Environment(\\.isEnabled) private var isEnabled\n    @Environment(\\.registryTheme) private var theme\n    // The box scales with the label's text so it never shrinks beside large type.\n    @ScaledMetric(relativeTo: .body) private var boxSize: CGFloat = 22\n\n    public init() {}\n\n    public func makeBody(configuration: Configuration) -> some View {\n        Button {\n            configuration.isOn.toggle()\n        } label: {\n            HStack(spacing: theme.metrics.compactSpacing) {\n                checkbox(configuration: configuration)\n                configuration.label\n                    .frame(maxWidth: .infinity, alignment: .leading)\n            }\n            .frame(minHeight: RegistryMetrics.minimumHitSize)\n            .contentShape(Rectangle())\n        }\n        .buttonStyle(.plain)\n        .opacity(isEnabled ? 1 : theme.disabledOpacity)\n        .accessibilityRepresentation {\n            Toggle(configuration)\n                .toggleStyle(.switch)\n        }\n    }\n\n    private func checkbox(configuration: Configuration) -> some View {\n        let isSelected = configuration.isOn || configuration.isMixed\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.compactRadius, style: .continuous)\n\n        return Image(systemName: configuration.isMixed ? \"minus\" : \"checkmark\")\n            .font(.caption2.weight(.bold))\n            .foregroundStyle(.tint)\n            .opacity(isSelected ? 1 : 0)\n            .frame(width: boxSize, height: boxSize)\n            .background(TintShapeStyle().opacity(isSelected ? 0.16 : 0), in: shape)\n            .overlay {\n                shape.stroke(\n                    isSelected ? AnyShapeStyle(TintShapeStyle()) : AnyShapeStyle(theme.border),\n                    lineWidth: theme.metrics.borderWidth\n                )\n            }\n            .accessibilityHidden(true)\n    }\n}\n\npublic extension ToggleStyle where Self == RegistryCheckboxToggleStyle {\n    static var registryCheckbox: RegistryCheckboxToggleStyle { RegistryCheckboxToggleStyle() }\n}\n\nprivate struct RegistryCheckboxToggleStylePreview: View {\n    private struct Channel: Identifiable {\n        let id: String\n        var isOn: Bool\n    }\n\n    @State private var accepted = true\n    @State private var updates = false\n    @State private var channels = [\n        Channel(id: \"push\", isOn: true),\n        Channel(id: \"email\", isOn: false)\n    ]\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            Toggle(\"Accept terms\", isOn: $accepted)\n            Toggle(\"Product updates\", isOn: $updates)\n            // Mixed state: a select-all row over channels that disagree.\n            Toggle(sources: $channels, isOn: \\.isOn) {\n                Text(\"All channels\")\n            }\n            Toggle(\"Unavailable option\", isOn: .constant(false))\n                .disabled(true)\n        }\n        .toggleStyle(.registryCheckbox)\n        .padding()\n    }\n}\n\n#Preview(\"Checkbox\") {\n    RegistryCheckboxToggleStylePreview().tint(.indigo)\n}\n\n#Preview(\"Checkbox Dark\") {\n    RegistryCheckboxToggleStylePreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Checkbox Right to Left\") {\n    RegistryCheckboxToggleStylePreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Checkbox Accessibility Size\") {\n    RegistryCheckboxToggleStylePreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import SwiftUI\nimport SwiftUIRegistryFoundations\n\n/// A checkbox treatment for a native SwiftUI `Toggle` binding and label.\npublic struct RegistryCheckboxToggleStyle: ToggleStyle {\n    @Environment(\\.isEnabled) private var isEnabled\n    @Environment(\\.registryTheme) private var theme\n    // The box scales with the label's text so it never shrinks beside large type.\n    @ScaledMetric(relativeTo: .body) private var boxSize: CGFloat = 22\n\n    public init() {}\n\n    public func makeBody(configuration: Configuration) -> some View {\n        Button {\n            configuration.isOn.toggle()\n        } label: {\n            HStack(spacing: theme.metrics.compactSpacing) {\n                checkbox(configuration: configuration)\n                configuration.label\n                    .frame(maxWidth: .infinity, alignment: .leading)\n            }\n            .frame(minHeight: RegistryMetrics.minimumHitSize)\n            .contentShape(Rectangle())\n        }\n        .buttonStyle(.plain)\n        // The plain style carries no pointer effect on iPad; ask for the automatic one.\n        .hoverEffect()\n        .opacity(isEnabled ? 1 : theme.disabledOpacity)\n        .accessibilityRepresentation {\n            Toggle(configuration)\n                .toggleStyle(.switch)\n        }\n    }\n\n    private func checkbox(configuration: Configuration) -> some View {\n        let isSelected = configuration.isOn || configuration.isMixed\n        let shape = RoundedRectangle(cornerRadius: theme.metrics.compactRadius, style: .continuous)\n\n        return Image(systemName: configuration.isMixed ? \"minus\" : \"checkmark\")\n            .font(.caption2.weight(.bold))\n            .foregroundStyle(.tint)\n            .opacity(isSelected ? 1 : 0)\n            .frame(width: boxSize, height: boxSize)\n            .background(TintShapeStyle().opacity(isSelected ? 0.16 : 0), in: shape)\n            .overlay {\n                shape.stroke(\n                    isSelected ? AnyShapeStyle(TintShapeStyle()) : AnyShapeStyle(theme.border),\n                    lineWidth: theme.metrics.borderWidth\n                )\n            }\n            .accessibilityHidden(true)\n    }\n}\n\npublic extension ToggleStyle where Self == RegistryCheckboxToggleStyle {\n    static var registryCheckbox: RegistryCheckboxToggleStyle { RegistryCheckboxToggleStyle() }\n}\n\nprivate struct RegistryCheckboxToggleStylePreview: View {\n    private struct Channel: Identifiable {\n        let id: String\n        var isOn: Bool\n    }\n\n    @State private var accepted = true\n    @State private var updates = false\n    @State private var channels = [\n        Channel(id: \"push\", isOn: true),\n        Channel(id: \"email\", isOn: false)\n    ]\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            Toggle(\"Accept terms\", isOn: $accepted)\n            Toggle(\"Product updates\", isOn: $updates)\n            // Mixed state: a select-all row over channels that disagree.\n            Toggle(sources: $channels, isOn: \\.isOn) {\n                Text(\"All channels\")\n            }\n            Toggle(\"Unavailable option\", isOn: .constant(false))\n                .disabled(true)\n        }\n        .toggleStyle(.registryCheckbox)\n        .padding()\n    }\n}\n\n#Preview(\"Checkbox\") {\n    RegistryCheckboxToggleStylePreview().tint(.indigo)\n}\n\n#Preview(\"Checkbox Dark\") {\n    RegistryCheckboxToggleStylePreview().tint(.indigo).preferredColorScheme(.dark)\n}\n\n#Preview(\"Checkbox Right to Left\") {\n    RegistryCheckboxToggleStylePreview().tint(.indigo).environment(\\.layoutDirection, .rightToLeft)\n}\n\n#Preview(\"Checkbox Accessibility Size\") {\n    RegistryCheckboxToggleStylePreview().tint(.indigo).dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Checkbox",
       "screenshots": {
         "light": "/images/items/checkbox-light.png",
         "dark": "/images/items/checkbox-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/checkbox-ipad-light.png",
+        "dark": "/images/ipad/checkbox-ipad-dark.png"
       },
       "requirements": [
         {
@@ -1144,8 +1148,8 @@
         "dark": "/images/items/collapsible-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/collapsible-ipad-light.png",
+        "dark": "/images/ipad/collapsible-ipad-dark.png"
       },
       "requirements": []
     },
@@ -1183,7 +1187,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "input-group",
@@ -1229,8 +1233,8 @@
         "dark": "/images/items/combobox-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/combobox-ipad-light.png",
+        "dark": "/images/ipad/combobox-ipad-dark.png"
       },
       "requirements": [
         {
@@ -1274,7 +1278,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "input-group",
@@ -1324,8 +1328,8 @@
         "dark": "/images/items/command-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/command-ipad-light.png",
+        "dark": "/images/ipad/command-ipad-dark.png"
       },
       "requirements": [
         {
@@ -1364,7 +1368,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "input-group",
@@ -1418,8 +1422,8 @@
         "dark": "/images/items/command-search-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/command-search-ipad-light.png",
-        "dark": "/images/blocks/command-search-ipad-dark.png"
+        "light": "/images/ipad/command-search-ipad-light.png",
+        "dark": "/images/ipad/command-search-ipad-dark.png"
       },
       "requirements": [
         {
@@ -1466,8 +1470,8 @@
         "dark": "/images/items/context-menu-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/context-menu-ipad-light.png",
+        "dark": "/images/ipad/context-menu-ipad-dark.png"
       },
       "requirements": []
     },
@@ -1538,8 +1542,8 @@
         "dark": "/images/items/dashboard-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/dashboard-ipad-light.png",
-        "dark": "/images/blocks/dashboard-ipad-dark.png"
+        "light": "/images/ipad/dashboard-ipad-light.png",
+        "dark": "/images/ipad/dashboard-ipad-dark.png"
       },
       "requirements": [
         {
@@ -1585,8 +1589,8 @@
         "dark": "/images/items/date-picker-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/date-picker-ipad-light.png",
+        "dark": "/images/ipad/date-picker-ipad-dark.png"
       },
       "requirements": []
     },
@@ -1627,8 +1631,8 @@
         "dark": "/images/items/dialog-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/dialog-ipad-light.png",
+        "dark": "/images/ipad/dialog-ipad-dark.png"
       },
       "requirements": []
     },
@@ -1666,8 +1670,8 @@
         "dark": "/images/items/direction-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/direction-ipad-light.png",
+        "dark": "/images/ipad/direction-ipad-dark.png"
       },
       "requirements": []
     },
@@ -1709,8 +1713,8 @@
         "dark": "/images/items/drawer-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/drawer-ipad-light.png",
+        "dark": "/images/ipad/drawer-ipad-dark.png"
       },
       "requirements": []
     },
@@ -1751,8 +1755,8 @@
         "dark": "/images/items/dropdown-menu-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/dropdown-menu-ipad-light.png",
+        "dark": "/images/ipad/dropdown-menu-ipad-dark.png"
       },
       "requirements": []
     },
@@ -1799,8 +1803,8 @@
         "dark": "/images/items/empty-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/empty-ipad-light.png",
+        "dark": "/images/ipad/empty-ipad-dark.png"
       },
       "requirements": [
         {
@@ -1862,8 +1866,8 @@
         "dark": "/images/items/field-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/field-ipad-light.png",
+        "dark": "/images/ipad/field-ipad-dark.png"
       },
       "requirements": [
         {
@@ -1931,8 +1935,8 @@
         "dark": "/images/items/finance-overview-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/finance-overview-ipad-light.png",
-        "dark": "/images/blocks/finance-overview-ipad-dark.png"
+        "light": "/images/ipad/finance-overview-ipad-light.png",
+        "dark": "/images/ipad/finance-overview-ipad-dark.png"
       },
       "requirements": [
         {
@@ -1988,8 +1992,8 @@
         "dark": "/images/items/input-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/input-ipad-light.png",
+        "dark": "/images/ipad/input-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2030,7 +2034,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "input-group",
@@ -2052,8 +2056,8 @@
         "dark": "/images/items/input-group-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/input-group-ipad-light.png",
+        "dark": "/images/ipad/input-group-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2099,8 +2103,8 @@
         "dark": "/images/items/input-otp-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/input-otp-ipad-light.png",
+        "dark": "/images/ipad/input-otp-ipad-dark.png"
       },
       "requirements": []
     },
@@ -2166,8 +2170,8 @@
         "dark": "/images/items/item-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/item-ipad-light.png",
+        "dark": "/images/ipad/item-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2220,8 +2224,8 @@
         "dark": "/images/items/kbd-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/kbd-ipad-light.png",
+        "dark": "/images/ipad/kbd-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2273,8 +2277,8 @@
         "dark": "/images/items/label-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/label-ipad-light.png",
+        "dark": "/images/ipad/label-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2322,8 +2326,8 @@
         "dark": "/images/items/macro-progress-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/macro-progress-ipad-light.png",
+        "dark": "/images/ipad/macro-progress-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2384,8 +2388,8 @@
         "dark": "/images/items/marker-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/marker-ipad-light.png",
+        "dark": "/images/ipad/marker-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2431,8 +2435,8 @@
         "dark": "/images/items/menubar-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/menubar-ipad-light.png",
+        "dark": "/images/ipad/menubar-ipad-dark.png"
       },
       "requirements": []
     },
@@ -2492,8 +2496,8 @@
         "dark": "/images/items/message-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/message-ipad-light.png",
+        "dark": "/images/ipad/message-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2564,8 +2568,8 @@
         "dark": "/images/items/message-scroller-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/message-scroller-ipad-light.png",
+        "dark": "/images/ipad/message-scroller-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2613,8 +2617,8 @@
         "dark": "/images/items/metric-card-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/metric-card-ipad-light.png",
+        "dark": "/images/ipad/metric-card-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2662,8 +2666,8 @@
         "dark": "/images/items/native-select-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/native-select-ipad-light.png",
+        "dark": "/images/ipad/native-select-ipad-dark.png"
       },
       "requirements": []
     },
@@ -2721,8 +2725,8 @@
         "dark": "/images/items/nutrition-overview-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/nutrition-overview-ipad-light.png",
-        "dark": "/images/blocks/nutrition-overview-ipad-dark.png"
+        "light": "/images/ipad/nutrition-overview-ipad-light.png",
+        "dark": "/images/ipad/nutrition-overview-ipad-dark.png"
       },
       "requirements": [
         {
@@ -2768,8 +2772,8 @@
         "dark": "/images/items/popover-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/popover-ipad-light.png",
+        "dark": "/images/ipad/popover-ipad-dark.png"
       },
       "requirements": []
     },
@@ -2845,7 +2849,7 @@
         },
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "alert",
@@ -2881,7 +2885,7 @@
         },
         {
           "name": "checkbox",
-          "version": "0.3.0"
+          "version": "0.3.1"
         },
         {
           "name": "textarea",
@@ -2932,8 +2936,8 @@
         "dark": "/images/items/preview-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/preview-ipad-light.png",
-        "dark": "/images/blocks/preview-ipad-dark.png"
+        "light": "/images/ipad/preview-ipad-light.png",
+        "dark": "/images/ipad/preview-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3006,7 +3010,7 @@
         },
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "avatar",
@@ -3046,7 +3050,7 @@
         },
         {
           "name": "accordion",
-          "version": "0.2.0"
+          "version": "0.2.1"
         },
         {
           "name": "skeleton",
@@ -3054,11 +3058,11 @@
         },
         {
           "name": "checkbox",
-          "version": "0.3.0"
+          "version": "0.3.1"
         },
         {
           "name": "breadcrumb",
-          "version": "0.1.0"
+          "version": "0.1.1"
         },
         {
           "name": "select",
@@ -3104,8 +3108,8 @@
         "dark": "/images/items/preview-02-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/preview-02-ipad-light.png",
-        "dark": "/images/blocks/preview-02-ipad-dark.png"
+        "light": "/images/ipad/preview-02-ipad-light.png",
+        "dark": "/images/ipad/preview-02-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3158,8 +3162,8 @@
         "dark": "/images/items/progress-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/progress-ipad-light.png",
+        "dark": "/images/ipad/progress-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3210,7 +3214,7 @@
         },
         {
           "name": "checkbox",
-          "version": "0.3.0"
+          "version": "0.3.1"
         },
         {
           "name": "textarea",
@@ -3222,7 +3226,7 @@
         },
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "card",
@@ -3249,8 +3253,8 @@
         "dark": "/images/items/questionnaire-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/questionnaire-ipad-light.png",
-        "dark": "/images/blocks/questionnaire-ipad-dark.png"
+        "light": "/images/ipad/questionnaire-ipad-light.png",
+        "dark": "/images/ipad/questionnaire-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3295,8 +3299,8 @@
         "dark": "/images/items/radio-group-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/radio-group-ipad-light.png",
+        "dark": "/images/ipad/radio-group-ipad-dark.png"
       },
       "requirements": []
     },
@@ -3336,8 +3340,8 @@
         "dark": "/images/items/scroll-area-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/scroll-area-ipad-light.png",
+        "dark": "/images/ipad/scroll-area-ipad-dark.png"
       },
       "requirements": []
     },
@@ -3384,8 +3388,8 @@
         "dark": "/images/items/select-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/select-ipad-light.png",
+        "dark": "/images/ipad/select-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3438,8 +3442,8 @@
         "dark": "/images/items/separator-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/separator-ipad-light.png",
+        "dark": "/images/ipad/separator-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3486,7 +3490,7 @@
         },
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "settings-section",
@@ -3510,8 +3514,8 @@
         "dark": "/images/items/settings-section-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/settings-section-ipad-light.png",
-        "dark": "/images/blocks/settings-section-ipad-dark.png"
+        "light": "/images/ipad/settings-section-ipad-light.png",
+        "dark": "/images/ipad/settings-section-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3557,18 +3561,18 @@
         "dark": "/images/items/sheet-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/sheet-ipad-light.png",
+        "dark": "/images/ipad/sheet-ipad-dark.png"
       },
       "requirements": []
     },
     {
       "name": "sidebar",
       "kind": "recipe",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "description": "Native guidance for a sidebar layout with NavigationSplitView and a selection-bound List on iPad.",
-      "usage": "@State private var selection: String? = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}",
-      "docs": "Use `NavigationSplitView` with a selection-bound `List` for the sidebar; the system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack. On iPadOS people can drag the divider within the `navigationSplitViewColumnWidth` bounds, and iPhone ignores them.",
+      "usage": "@State private var selection: String? = \"activity\"\n@State private var tab = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    // A visually rich detail extends under the sidebar instead of stopping at its edge\n    ActivityBanner()\n        .backgroundExtensionEffect()\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}\n\n// The HIG's first choice on iPad: a tab bar people can switch to a sidebar\nTabView(selection: $tab) {\n    Tab(\"Activity\", systemImage: \"bell\", value: \"activity\") { ActivityScreen() }\n    Tab(\"Cards\", systemImage: \"creditcard\", value: \"cards\") { CardsScreen() }\n}\n.tabViewStyle(.sidebarAdaptable)",
+      "docs": "Use `NavigationSplitView` with a selection-bound `List` for the sidebar; the system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack. On iPadOS people can drag the divider within the `navigationSplitViewColumnWidth` bounds, and iPhone ignores them. Consider a tab bar first: a `TabView` in the `.sidebarAdaptable` style opens as a tab bar or a sidebar, lets people switch between them, and adapts to the window width, which the HIG names as the first choice for iPad navigation; keep `NavigationSplitView` for a sidebar-only layout. Visually rich detail content, such as a header image or gradient, extends beneath the sidebar with `backgroundExtensionEffect()` (26.0) instead of stopping at the column edge, which is the HIG's guidance for sidebars over content.",
       "tags": [
         "sidebar",
         "navigation",
@@ -3578,7 +3582,8 @@
       ],
       "aliases": [
         "split-view",
-        "navigation-split-view"
+        "navigation-split-view",
+        "sidebar-adaptable"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -3588,7 +3593,9 @@
       "accessibility": [
         "Sidebar rows are native list cells with selection semantics.",
         "The column toggle button is system-provided and labeled.",
-        "Selection state stays caller-owned through the binding."
+        "Selection state stays caller-owned through the binding.",
+        "The convertible tab bar's switch between tab bar and sidebar is a system control with its own label, and the tabs keep native tab semantics in both forms.",
+        "The background extension effect only mirrors pixels beneath the sidebar; it adds no accessibility element and hides nothing."
       ],
       "sourcePath": null,
       "sourceURL": null,
@@ -3599,8 +3606,8 @@
         "dark": "/images/items/sidebar-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/sidebar-ipad-light.png",
+        "dark": "/images/ipad/sidebar-ipad-dark.png"
       },
       "requirements": []
     },
@@ -3640,7 +3647,7 @@
         },
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "card",
@@ -3648,7 +3655,7 @@
         },
         {
           "name": "checkbox",
-          "version": "0.3.0"
+          "version": "0.3.1"
         },
         {
           "name": "signup-form",
@@ -3674,8 +3681,8 @@
         "dark": "/images/items/signup-form-dark.png"
       },
       "wideScreenshots": {
-        "light": "/images/blocks/signup-form-ipad-light.png",
-        "dark": "/images/blocks/signup-form-ipad-dark.png"
+        "light": "/images/ipad/signup-form-ipad-light.png",
+        "dark": "/images/ipad/signup-form-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3730,8 +3737,8 @@
         "dark": "/images/items/skeleton-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/skeleton-ipad-light.png",
+        "dark": "/images/ipad/skeleton-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3776,8 +3783,8 @@
         "dark": "/images/items/slider-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/slider-ipad-light.png",
+        "dark": "/images/ipad/slider-ipad-dark.png"
       },
       "requirements": []
     },
@@ -3825,8 +3832,8 @@
         "dark": "/images/items/spinner-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/spinner-ipad-light.png",
+        "dark": "/images/ipad/spinner-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3873,8 +3880,8 @@
         "dark": "/images/items/switch-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/switch-ipad-light.png",
+        "dark": "/images/ipad/switch-ipad-dark.png"
       },
       "requirements": []
     },
@@ -3930,8 +3937,8 @@
         "dark": "/images/items/table-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/table-ipad-light.png",
+        "dark": "/images/ipad/table-ipad-dark.png"
       },
       "requirements": [
         {
@@ -3979,8 +3986,8 @@
         "dark": "/images/items/tabs-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/tabs-ipad-light.png",
+        "dark": "/images/ipad/tabs-ipad-dark.png"
       },
       "requirements": []
     },
@@ -4027,8 +4034,8 @@
         "dark": "/images/items/textarea-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/textarea-ipad-light.png",
+        "dark": "/images/ipad/textarea-ipad-dark.png"
       },
       "requirements": [
         {
@@ -4067,7 +4074,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "toast",
@@ -4090,8 +4097,8 @@
         "dark": "/images/items/toast-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/toast-ipad-light.png",
+        "dark": "/images/ipad/toast-ipad-dark.png"
       },
       "requirements": [
         {
@@ -4127,7 +4134,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "toggle",
@@ -4149,8 +4156,8 @@
         "dark": "/images/items/toggle-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/toggle-ipad-light.png",
+        "dark": "/images/ipad/toggle-ipad-dark.png"
       },
       "requirements": [
         {
@@ -4188,7 +4195,7 @@
       "installOrder": [
         {
           "name": "button",
-          "version": "0.5.0"
+          "version": "0.5.1"
         },
         {
           "name": "toggle",
@@ -4214,8 +4221,8 @@
         "dark": "/images/items/toggle-group-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/toggle-group-ipad-light.png",
+        "dark": "/images/ipad/toggle-group-ipad-dark.png"
       },
       "requirements": [
         {
@@ -4262,8 +4269,8 @@
         "dark": "/images/items/tooltip-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/tooltip-ipad-light.png",
+        "dark": "/images/ipad/tooltip-ipad-dark.png"
       },
       "requirements": []
     },
@@ -4306,8 +4313,8 @@
         "dark": "/images/items/transaction-row-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/transaction-row-ipad-light.png",
+        "dark": "/images/ipad/transaction-row-ipad-dark.png"
       },
       "requirements": [
         {
@@ -4353,8 +4360,8 @@
         "dark": "/images/items/typography-dark.png"
       },
       "wideScreenshots": {
-        "light": null,
-        "dark": null
+        "light": "/images/ipad/typography-ipad-light.png",
+        "dark": "/images/ipad/typography-ipad-dark.png"
       },
       "requirements": []
     }

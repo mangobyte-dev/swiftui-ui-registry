@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "name": "accordion",
   "kind": "component",
   "description": "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.",
@@ -50,7 +50,8 @@
     "Preserves the native DisclosureGroup binding; the header is a plain Button that toggles isExpanded.",
     "Reports Expanded or Collapsed as the header's accessibility value; no selection trait is added, so VoiceOver speaks one state word.",
     "The chevron is decorative and hidden; the header keeps the 44 point minimum height.",
-    "Tapping the header animates expansion with the snappy curve and switches to an immediate change under Reduce Motion; a caller that changes isExpanded programmatically chooses its own animation."
+    "Tapping the header animates expansion with the snappy curve and switches to an immediate change under Reduce Motion; a caller that changes isExpanded programmatically chooses its own animation.",
+    "On iPad the header keeps a pointer effect: the plain button style drops the automatic one, so the header asks for it back with hoverEffect and the system picks the shape."
   ],
   "preview": {
     "source": "sources/components/RegistryAccordionStyle.swift",

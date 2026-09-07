@@ -37,6 +37,8 @@ public struct RegistryAccordionStyle: DisclosureGroupStyle {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            // The plain style carries no pointer effect on iPad; ask for the automatic one.
+            .hoverEffect()
             .accessibilityValue(
                 configuration.isExpanded
                     ? Text("Expanded", comment: "VoiceOver value of an open accordion header; never drawn on screen")

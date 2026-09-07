@@ -48,7 +48,7 @@ Toggle("Bold", systemImage: "bold", isOn: $bold)
 - Kind: component
 - Version: 0.2.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [toggle](toggle.md) 0.2.0
+- Installs in order: [button](button.md) 0.5.1, [toggle](toggle.md) 0.2.0
 - Accessibility contract:
   - Retains native Toggle state and activation behavior.
   - Requires caller-supplied labels for icon-only controls.

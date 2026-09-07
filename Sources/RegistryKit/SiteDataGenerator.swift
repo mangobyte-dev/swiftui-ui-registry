@@ -50,7 +50,7 @@ public struct SiteDataGenerator {
             } ?? nil
           )
         })
-      result["wideScreenshots"] = imagePaths(folder: "blocks", stem: name + "-ipad")
+      result["wideScreenshots"] = imagePaths(folder: "ipad", stem: name + "-ipad")
       result["requirements"] = .array(
         try recipe ? [] : registry.packageRequirements(name).map(packageDescription))
       return result
@@ -98,7 +98,7 @@ public struct SiteDataGenerator {
     try fs.createDirectory(parentDirectory(output))
     try fs.write(Data(text.utf8), to: output)
     var count = 0
-    for folder in ["items", "themes", "blocks", "comparison"] {
+    for folder in ["items", "themes", "ipad", "comparison"] {
       let source = root + "/docs/images/" + folder
       let target = images + "/" + folder
       try fs.remove(target)

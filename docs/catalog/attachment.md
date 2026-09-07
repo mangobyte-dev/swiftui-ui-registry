@@ -54,7 +54,7 @@ AttachmentRow(
 - Kind: component
 - Version: 0.1.0
 - Platforms: iOS 26.0+
-- Installs in order: [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [progress](progress.md) 0.2.0, [button](button.md) 0.5.0, [attachment](attachment.md) 0.1.0
+- Installs in order: [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [progress](progress.md) 0.2.0, [button](button.md) 0.5.1, [attachment](attachment.md) 0.1.0
 - Accessibility contract:
   - Every upload state names itself in text, a percent, Processing, a failure message, or Uploaded, so progress and outcome never rest on color or a bar alone.
   - The uploading percent is hidden from VoiceOver because the progress bar already reports its value, so the same fraction is not read twice.

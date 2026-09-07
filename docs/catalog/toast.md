@@ -53,7 +53,7 @@ toast = RegistryToast(
 - Kind: component
 - Version: 0.1.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [toast](toast.md) 0.1.0
+- Installs in order: [button](button.md) 0.5.1, [toast](toast.md) 0.1.0
 - Accessibility contract:
   - Each variant pairs its own symbol with its color, so informational, positive, and destructive meaning never rests on color alone.
   - When a toast appears it posts a VoiceOver announcement built from the title and message, so the update is spoken without moving focus away from the current task.

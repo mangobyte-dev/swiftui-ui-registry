@@ -82,6 +82,8 @@ public struct Breadcrumb: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            // The plain style carries no pointer effect on iPad; ask for the automatic one.
+            .hoverEffect()
         } else {
             item.title
                 .font(.subheadline)

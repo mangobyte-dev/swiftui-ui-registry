@@ -15,7 +15,8 @@ Usage (from the repository root):
     python3 Scripts/capture_previews.py            # every item, light and dark
     python3 Scripts/capture_previews.py badge card # a subset
     python3 Scripts/capture_previews.py --themes   # the theme presets page
-    python3 Scripts/capture_previews.py --blocks   # every block on the iPad, wide layout
+    python3 Scripts/capture_previews.py --ipad     # every item on the iPad, into docs/images/ipad
+    python3 Scripts/capture_previews.py --blocks   # the blocks only, on the iPad, same folder
     python3 Scripts/capture_previews.py --preset a13GkaOXWwIa --output /tmp/presets  # one preset code, both appearances
 
 `--app` points at a built SwiftUIRegistryShowcase.app; without it the script
@@ -46,8 +47,8 @@ WORKSPACE = REPOSITORY_ROOT / "Examples" / "Showcase" / "SwiftUIRegistryShowcase
 SCHEME = "SwiftUIRegistryShowcase"
 OUTPUT = REPOSITORY_ROOT / "docs" / "images" / "items"
 THEME_OUTPUT = REPOSITORY_ROOT / "docs" / "images" / "themes"
-BLOCK_OUTPUT = REPOSITORY_ROOT / "docs" / "images" / "blocks"
-# The iOS 27 iPad Pro 13-inch (M5) used for the wide block captures on this machine.
+IPAD_OUTPUT = REPOSITORY_ROOT / "docs" / "images" / "ipad"
+# The iOS 27 iPad Pro 13-inch (M5) used for the iPad captures on this machine.
 IPAD_UDID = "FF62F68C-7D96-4073-B0CC-865A9D3B0A41"
 APPEARANCES = ("light", "dark")
 THEME_PRESETS = ("System", "Graphite", "Indigo", "Rose", "Emerald", "Amber")
@@ -250,7 +251,8 @@ def main() -> int:
     parser.add_argument("--app", type=Path, help="A built SwiftUIRegistryShowcase.app")
     parser.add_argument("--tool", type=Path, help="A built swiftui-registry binary (default: swift build -c release from this clone)")
     parser.add_argument("--themes", action="store_true", help="Capture the theme presets instead of items")
-    parser.add_argument("--blocks", action="store_true", help="Capture every block on the iPad into docs/images/blocks")
+    parser.add_argument("--ipad", action="store_true", help="Capture the named items (every item by default) on the iPad into docs/images/ipad")
+    parser.add_argument("--blocks", action="store_true", help="Capture only the blocks on the iPad into docs/images/ipad (--ipad limited to blocks)")
     parser.add_argument("--preset", metavar="CODE", help="Capture the theme preview under a preset code instead of items")
     parser.add_argument("--output", type=Path, help="Folder for --preset captures; required with --preset")
     parser.add_argument("--no-metadata", action="store_true", help="Do not write preview.screenshots")
@@ -272,7 +274,7 @@ def main() -> int:
     if arguments.preset and arguments.output is None:
         parser.error("--preset needs --output")
 
-    if arguments.blocks and arguments.udid == PINNED_UDID:
+    if (arguments.ipad or arguments.blocks) and arguments.udid == PINNED_UDID:
         arguments.udid = IPAD_UDID
     with tempfile.TemporaryDirectory() as directory:
         scratch = Path(directory)
@@ -280,11 +282,11 @@ def main() -> int:
         app = arguments.app or build_app(scratch / "DerivedData", arguments.udid)
         run(["xcrun", "simctl", "install", arguments.udid, str(app)])
 
-        if arguments.blocks:
-            blocks = [name for name in names if kinds[name] == "block"]
-            for name in blocks:
+        if arguments.ipad or arguments.blocks:
+            targets = [name for name in names if kinds[name] == "block"] if arguments.blocks else names
+            for name in targets:
                 for appearance in APPEARANCES:
-                    destination = BLOCK_OUTPUT / f"{name}-ipad-{appearance}.png"
+                    destination = IPAD_OUTPUT / f"{name}-ipad-{appearance}.png"
                     capture(arguments.udid, name, appearance, destination, scratch=scratch)
                     print(f"captured {destination.relative_to(REPOSITORY_ROOT)}")
         elif arguments.preset:

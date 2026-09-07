@@ -45,7 +45,7 @@ Breadcrumb([
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
@@ -53,4 +53,5 @@ Breadcrumb([
   - Chevron separators are decorative and hidden from accessibility; the overflow menu carries a Show more label and lists the collapsed crumbs as menu actions.
   - Separators use chevron.forward, which mirrors automatically for a right-to-left layout, and the trail reverses with the layout direction.
   - Middle crumbs collapse into the overflow menu through ViewThatFits when the full trail does not fit the available width; links are compact inline targets, and native back navigation stays the primary path.
+  - On iPad each link keeps a pointer effect: the plain button style drops the automatic one, so the link asks for it back with hoverEffect and the system picks the shape.
 - Source: [sources/components/Breadcrumb.swift](../../Registry/sources/components/Breadcrumb.swift), with the `Breadcrumb` Xcode preview

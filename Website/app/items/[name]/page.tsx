@@ -63,7 +63,7 @@ export default async function ItemPage({ params }: { params: Promise<Params> }) 
         <section className="flex flex-col gap-3">
           <h2 className="text-xl font-semibold tracking-tight">On iPad</h2>
           <p className="text-sm text-muted-foreground">
-            The same installed source at a regular width; the block adapts its rows and metrics without a separate layout.
+            The same installed source at a regular width; it adapts its layout without a separate design.
           </p>
           <div className="overflow-hidden rounded-xl border bg-muted">
             {/* eslint-disable-next-line @next/next/no-img-element */}

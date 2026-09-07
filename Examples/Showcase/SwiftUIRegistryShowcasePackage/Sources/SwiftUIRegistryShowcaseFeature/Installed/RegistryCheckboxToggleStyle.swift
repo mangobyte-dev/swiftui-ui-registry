@@ -23,6 +23,8 @@ public struct RegistryCheckboxToggleStyle: ToggleStyle {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        // The plain style carries no pointer effect on iPad; ask for the automatic one.
+        .hoverEffect()
         .opacity(isEnabled ? 1 : theme.disabledOpacity)
         .accessibilityRepresentation {
             Toggle(configuration)

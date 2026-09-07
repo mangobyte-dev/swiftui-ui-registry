@@ -30,10 +30,10 @@
     },
     "Breadcrumb.swift": {
       "base": "bases/00aa1d3117261e6ebcfe6cedb98c212262e4142e72015216d27181c2a9950dc5.base",
-      "installedDigest": "sha256:b26c66128e5ff98de21bc67e4cb7fb0b01e536405a6bc7e09eeb739e5c36e1e2",
+      "installedDigest": "sha256:9fbd09e809d0df2e59746c7dbb55e08de2eb2ed271ab60acaaba06d102eb0975",
       "item": "breadcrumb",
-      "sourceDigest": "sha256:b26c66128e5ff98de21bc67e4cb7fb0b01e536405a6bc7e09eeb739e5c36e1e2",
-      "version": "0.1.0"
+      "sourceDigest": "sha256:9fbd09e809d0df2e59746c7dbb55e08de2eb2ed271ab60acaaba06d102eb0975",
+      "version": "0.1.1"
     },
     "Combobox.swift": {
       "base": "bases/ee1324adc0e16e3d8dfbe47c2ec10d029728b0e55e77dbf3a3b01bc123eeeb8c.base",
@@ -639,10 +639,10 @@
     },
     "RegistryAccordionStyle.swift": {
       "base": "bases/41a84c6783a403ca9cf897c8da81322317ac76ec19288b7ffb112dd4d85023a2.base",
-      "installedDigest": "sha256:0aa25e6fbc47b4812a7a434009028a66875c1a6668c7614df88ac8beed3a02e1",
+      "installedDigest": "sha256:08c0a5307c4190469a24445d867baaa43f4f226b89408589a511bf18d96bc047",
       "item": "accordion",
-      "sourceDigest": "sha256:0aa25e6fbc47b4812a7a434009028a66875c1a6668c7614df88ac8beed3a02e1",
-      "version": "0.2.0"
+      "sourceDigest": "sha256:08c0a5307c4190469a24445d867baaa43f4f226b89408589a511bf18d96bc047",
+      "version": "0.2.1"
     },
     "RegistryBadge.swift": {
       "base": "bases/d2c9ac15caa37b6a8d992908df2bae92cbf1f88a0a246a7122f2e7e198b5024d.base",
@@ -667,10 +667,10 @@
     },
     "RegistryButtonStyle.swift": {
       "base": "bases/a314683b53d284671d9132d9c92f6349d1d80fdc372a8fbb9636baec5da3c809.base",
-      "installedDigest": "sha256:4499c081f433c6653ee47a83eba0c9a37802445614c30c716db2033664165f78",
+      "installedDigest": "sha256:dd13d7b7a4ecfb654ee54dccd1bae11ab33c46970a755e6f38cad550e0ed2f3e",
       "item": "button",
-      "sourceDigest": "sha256:4499c081f433c6653ee47a83eba0c9a37802445614c30c716db2033664165f78",
-      "version": "0.5.0"
+      "sourceDigest": "sha256:dd13d7b7a4ecfb654ee54dccd1bae11ab33c46970a755e6f38cad550e0ed2f3e",
+      "version": "0.5.1"
     },
     "RegistryCardStyle.swift": {
       "base": "bases/d37825ac79fff2b2bf1402a97c8c621c6d5bf0b09ad1b1a623e4b269279cbcc6.base",
@@ -688,10 +688,10 @@
     },
     "RegistryCheckboxToggleStyle.swift": {
       "base": "bases/84ef61e84e290159ebfd98ceb45adbe2c83371f33abc11c357b1d2e38db16213.base",
-      "installedDigest": "sha256:66ac20e80830fc44880e1fbd8aa5fbbba6e1af71063ba9e55a88308382a68ec8",
+      "installedDigest": "sha256:f9f869f450cfb894f45ad9153f8eb6c99967f1d94b54e9f47ff569d2811ede43",
       "item": "checkbox",
-      "sourceDigest": "sha256:66ac20e80830fc44880e1fbd8aa5fbbba6e1af71063ba9e55a88308382a68ec8",
-      "version": "0.3.0"
+      "sourceDigest": "sha256:f9f869f450cfb894f45ad9153f8eb6c99967f1d94b54e9f47ff569d2811ede43",
+      "version": "0.3.1"
     },
     "RegistryEmptyStateModifier.swift": {
       "base": "bases/0fa5e256e67ba2b8faf6ff3535e44ba0bfbecd0e754ab7a92bb7e0d562a574f6.base",
@@ -830,7 +830,7 @@
       "registryDependencies": [
         "separator"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     "activity-feed": {
       "packageDependencies": [
@@ -961,7 +961,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     "bubble": {
       "packageDependencies": [
@@ -993,7 +993,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.5.0"
+      "version": "0.5.1"
     },
     "button-group": {
       "packageDependencies": [
@@ -1059,7 +1059,7 @@
         }
       ],
       "registryDependencies": [],
-      "version": "0.3.0"
+      "version": "0.3.1"
     },
     "combobox": {
       "packageDependencies": [

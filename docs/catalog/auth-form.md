@@ -54,7 +54,7 @@ AuthForm(
 - Kind: block
 - Version: 0.3.1
 - Platforms: iOS 26.0+
-- Installs in order: [input](input.md) 0.5.0, [button](button.md) 0.5.0, [card](card.md) 0.2.0, [auth-form](auth-form.md) 0.3.1
+- Installs in order: [input](input.md) 0.5.0, [button](button.md) 0.5.1, [card](card.md) 0.2.0, [auth-form](auth-form.md) 0.3.1
 - Accessibility contract:
   - Both fields carry an explicit accessibilityLabel equal to their visible titles. Measured on iOS 27: the label-plus-prompt initializer alone exposes the title as placeholder text only, so a field with typed content would be unnamed without it.
   - Focus order is identity then password: the identity field submits with a Next return key that moves focus to the password field, and the password return key submits the form.

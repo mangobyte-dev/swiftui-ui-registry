@@ -60,7 +60,7 @@ SignUpForm(
 - Kind: block
 - Version: 0.1.0
 - Platforms: iOS 26.0+
-- Installs in order: [input](input.md) 0.5.0, [button](button.md) 0.5.0, [card](card.md) 0.2.0, [checkbox](checkbox.md) 0.3.0, [signup-form](signup-form.md) 0.1.0
+- Installs in order: [input](input.md) 0.5.0, [button](button.md) 0.5.1, [card](card.md) 0.2.0, [checkbox](checkbox.md) 0.3.1, [signup-form](signup-form.md) 0.1.0
 - Accessibility contract:
   - Each of the four fields carries an explicit accessibilityLabel equal to its visible title. Measured on iOS 27: the label-plus-prompt initializer alone exposes the title as placeholder text only, so a field with typed content would be unnamed without it.
   - Focus order runs name to email to password to confirmation: each field submits with a Next return key that advances focus, and the confirmation field's Go return key submits the form.

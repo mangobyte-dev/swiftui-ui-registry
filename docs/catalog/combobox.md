@@ -53,7 +53,7 @@ Combobox(
 - Kind: component
 - Version: 0.1.0
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.0, [input-group](input-group.md) 0.2.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [empty](empty.md) 0.1.0, [combobox](combobox.md) 0.1.0
+- Installs in order: [button](button.md) 0.5.1, [input-group](input-group.md) 0.2.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [empty](empty.md) 0.1.0, [combobox](combobox.md) 0.1.0
 - Accessibility contract:
   - The field carries the prompt as its explicit accessibility label and uses the search-and-filter query binding; each option is a native Button whose label is its title, addressable by title through Voice Control.
   - The selected option carries the isSelected trait and a checkmark; the option symbol is decorative and hidden.

@@ -46,12 +46,13 @@ DisclosureGroup("How do I freeze my card?", isExpanded: $isExpanded) {
 ## Details
 
 - Kind: component
-- Version: 0.2.0
+- Version: 0.2.1
 - Platforms: iOS 26.0+
-- Installs in order: [separator](separator.md) 0.2.0, [accordion](accordion.md) 0.2.0
+- Installs in order: [separator](separator.md) 0.2.0, [accordion](accordion.md) 0.2.1
 - Accessibility contract:
   - Preserves the native DisclosureGroup binding; the header is a plain Button that toggles isExpanded.
   - Reports Expanded or Collapsed as the header's accessibility value; no selection trait is added, so VoiceOver speaks one state word.
   - The chevron is decorative and hidden; the header keeps the 44 point minimum height.
   - Tapping the header animates expansion with the snappy curve and switches to an immediate change under Reduce Motion; a caller that changes isExpanded programmatically chooses its own animation.
+  - On iPad the header keeps a pointer effect: the plain button style drops the automatic one, so the header asks for it back with hoverEffect and the system picks the shape.
 - Source: [sources/components/RegistryAccordionStyle.swift](../../Registry/sources/components/RegistryAccordionStyle.swift), with the `Accordion` Xcode preview

@@ -5,8 +5,64 @@ A native-first registry of SwiftUI product UI that you copy into your app and ow
 Browse it three ways:
 
 - The website: `Website/`, a Next.js static site built with shadcn/ui. Every item has a page that leads with its rendered preview in light and dark, one install command, the usage snippet, and the full source. Live at https://swiftui-registry.mangobytekw.workers.dev (Cloudflare Workers static assets, `cd Website && npm run deploy`); run it locally with `cd Website && npm ci && npm run dev`
-- The Showcase app: `Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace`. Components, Blocks, and Recipes tabs with a live demo per item, and a Tune tab that turns every foundation token into a slider beside a preview and exports the Swift to paste
+- The Showcase app: `Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace`. Components, Blocks, and Recipes tabs with a live demo per item, and the design surface over them: a floating panel that turns every foundation token into a live control, selects the item you tap, and exports the Swift to paste
 - The markdown catalog: [docs/catalog/index.md](docs/catalog/index.md)
+
+## Five-minute quickstart
+
+Every command below is real; `swiftui-registry describe <item>` prints the same usage snippet the catalog page shows
+
+1. Add the package. In `Package.swift`:
+
+   ```swift
+   dependencies: [
+       .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.3.0"))
+   ],
+   // In your target's dependencies:
+   .product(name: "SwiftUIRegistryFoundations", package: "swiftui-ui-registry")
+   ```
+
+   In an Xcode project, File > Add Package Dependency with the same URL, Up to Next Minor Version from 0.3.0, and add the `SwiftUIRegistryFoundations` product to the app target
+
+2. Theme once, at the scene root:
+
+   ```swift
+   import SwiftUIRegistryFoundations
+
+   ContentView()
+       .registryTheme(.graphite)
+   ```
+
+3. Install an item into a folder your target compiles:
+
+   ```sh
+   brew install mangobyte-dev/tap/swiftui-registry
+   swiftui-registry install button --destination Sources/App/Components
+   ```
+
+   The tool copies `RegistryButtonStyle.swift`, writes `.swiftui-registry/receipt.json` beside it, and prints the package requirement (`from 0.3.0 up to the next minor version`, the floor every item declares)
+
+4. Use it as the snippet says:
+
+   ```swift
+   Button("Save changes") {}
+       .buttonStyle(.registry)
+
+   Button("Cancel") {}
+       .buttonStyle(.registryOutline)
+   ```
+
+5. Tune on the device. Add the `SwiftUIRegistryDesignSurface` product to the same target, import it, and apply `designSurface()` inside the theme call:
+
+   ```swift
+   import SwiftUIRegistryDesignSurface
+
+   ContentView()
+       .designSurface()
+       .registryTheme(.graphite)
+   ```
+
+   A debug build shows a draggable Tune button; the panel is a floating card over the live app. Tap Select, then any registry item, to scope the panel to the tokens that reach it; Copy Swift gives you the `RegistryTheme(...)` to paste back into step 2. A release build is unchanged
 
 ## Taxonomy
 
@@ -28,9 +84,9 @@ The value gate: an installable item must add a meaningful reusable treatment or 
        .registryTheme(.graphite)
    ```
 
-   Presets: `.system` (inherits your app tint), `.graphite`, `.indigo`, `.rose`, `.emerald`, `.amber`, and `.mango`, the sample design system whose template is [docs/mango.md](docs/mango.md). To make your own, open the Showcase's Tune tab, move the sliders, and tap Copy Swift; it exports the exact `RegistryTheme(...)` initializer
+   Presets: `.system` (inherits your app tint), `.graphite`, `.indigo`, `.rose`, `.emerald`, `.amber`, and `.mango`, the sample design system whose template is [docs/mango.md](docs/mango.md). To make your own, open the Showcase's Tune panel (or `designSurface()` in your own app), move the sliders, and tap Copy Swift; it exports the exact `RegistryTheme(...)` initializer
 
-3. Install the `swiftui-registry` tool with Homebrew, then install items from any directory. The tool fetches the pinned `0.1.0` registry snapshot from the published tag on first use, caches it under `~/Library/Caches/swiftui-registry`, and reuses it (`--refresh` fetches again). From a clone, `swift run swiftui-registry <command>` runs the same tool against that clone:
+3. Install the `swiftui-registry` tool with Homebrew, then install items from any directory. The tool fetches the registry snapshot of its own release tag (`0.3.0`) on first use, caches it under `~/Library/Caches/swiftui-registry`, and reuses it (`--refresh` fetches again). From a clone, `swift run swiftui-registry <command>` runs the same tool against that clone:
 
    ```sh
    brew install mangobyte-dev/tap/swiftui-registry
@@ -74,11 +130,11 @@ Version 0, an honest prototype:
 
 - Every item, generated into `docs/catalog/` and the website's data file; the counts live there, not here
 - `SwiftUIRegistryFoundations` is a small pre-1.0 package: accent, on-accent, surface, border, positive, negative, disabled opacity, and metrics, with seven presets and one root modifier
-- `SwiftUIRegistryDesignSurface` is an optional second product: add it and `.designSurface()` inside your theme call, and a debug build gets the Showcase's tuning panel on device, with the result persisted as `registry-tokens.json` and exported as a preset code any registry tool applies; a release build is unchanged
+- `SwiftUIRegistryDesignSurface` is an optional second product: add it, `import SwiftUIRegistryDesignSurface`, and apply `.designSurface()` inside your theme call. A debug build gets the tool in its own window over the whole app: a draggable Tune button, a floating, movable, resizable panel, tap-to-select with outlines, per-item knobs, and a page for your own token document; the result persists as `registry-tokens.json` and exports as a preset code any registry tool applies. A release build is unchanged
 - Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, captured screenshots, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates
 - The Showcase compiles every installable item and every recipe snippet at the iOS 26 floor, with pinned visual contract checks for the blocks and an accessibility-audited demo walk over every item
-- Published 2026-09-06: the `0.1.0` tag and GitHub release with the universal `swiftui-registry` binary, and the Homebrew tap `mangobyte-dev/tap`. Not yet: hosted registry, Xcode project mutation, or platforms beyond iOS. What shipped and the known limitations live in one place, `CHANGELOG.md`
+- Published: `0.1.0` (2026-09-06) and `0.2.0` (2026-09-07) as tags and GitHub releases with the universal `swiftui-registry` binary and the Homebrew tap `mangobyte-dev/tap`; `0.3.0` is the public beta of the design surface. Not yet: hosted registry, Xcode project mutation, or platforms beyond iOS. What shipped and the known limitations live in one place, `CHANGELOG.md`
 
 ## Showcase screenshots
 
@@ -112,14 +168,14 @@ The consumer first adds the `SwiftUIRegistryFoundations` package product. In a S
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.3.0"))
 ]
 
 // In the consuming target's dependencies:
 .product(name: "SwiftUIRegistryFoundations", package: "swiftui-ui-registry")
 ```
 
-The `package:` argument is the SwiftPM package identity for the URL, its last path component without `.git`. In an Xcode app project instead, choose File > Add Package Dependency, enter the same URL with the Up to Next Minor Version rule from 0.1.0, and add the `SwiftUIRegistryFoundations` product to your app target. Then run:
+The `package:` argument is the SwiftPM package identity for the URL, its last path component without `.git`. In an Xcode app project instead, choose File > Add Package Dependency, enter the same URL with the Up to Next Minor Version rule from 0.3.0, and add the `SwiftUIRegistryFoundations` product to your app target. Then run:
 
 ```sh
 swiftui-registry install finance-overview \
@@ -212,6 +268,39 @@ ActivityFeed(
 
 The block owns presentation composition. The caller owns value preparation, localization catalogs, navigation, state, persistence, scrolling, and container width
 
+## Tune on the device
+
+`designSurface()` is the plain form: the registry theme under tuning, persisted as `registry-tokens.json`. Two arguments extend it for an app's own design system:
+
+```swift
+ContentView()
+    .designSurface(
+        tokens: MyTokens.self,
+        knobs: ["button": [ItemKnob("padding", in: 0...32, shipped: 12)]]
+    )
+    .registryTheme(.app)
+```
+
+`MyTokens` conforms to `TokenDocument` (a shipped value, a file name, pages of `.number`, `.choice`, and `.color` knobs, and an `apply()` the surface calls after every change), and an item reads a knob with `environment.registryKnob("button", "padding", default: 12)`. `designSurface(isPresented:)` lets the app own the trigger, as the Showcase does from its accent strip
+
+An app that paints registry items from its own tokens uses the host overload, which compiles in every configuration:
+
+```swift
+ContentView()
+    .designSurface(
+        enabled: designMode,
+        tunesRegistryTheme: false,
+        itemTitle: { name in MyPieces.title(for: name) },
+        page: { name in MyPieces.page(for: name) },
+        panelEnvironment: { panel in panel.environment(\.myTokens, tokens) }
+    ) { chain in
+        MyPanelSections(chain: chain)
+    }
+    .registryTheme(myTheme)
+```
+
+`enabled` is the app's own switch, `tunesRegistryTheme: false` drops the theme sections, `panel` adds the app's sections under the screen and the selection, `page` pushes the app's own page when a pick lands on an item it has one for, `panelEnvironment` wraps the panel's stack so pushed pages read the app's environment, and `itemTitle` names rows and outlines. `chain` lists every tagged item under the last pick, innermost first, so the app can offer the row around a button as well as the button. Screens name themselves with `registryScreen(_:)`; every installed item already carries `registryItem(_:)`, the tag Select resolves
+
 ## Sample app
 
 ```sh
@@ -229,6 +318,7 @@ swift run swiftui-registry validate
 swift run swiftui-registry generate catalog
 swift run swiftui-registry generate showcase-manifest
 swift run swiftui-registry generate site-data
+swift run swiftui-registry generate item-tokens
 swift test
 xcodebuildmcp simulator test \
   --workspace-path Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace \

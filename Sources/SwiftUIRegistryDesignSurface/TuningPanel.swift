@@ -63,6 +63,7 @@ public struct TuningPanel<PresetsFooter: View>: View {
                 if shows(["disabledOpacity"]) { StateSection(tuning: $tuning) }
                 EnvironmentSection(tuning: $tuning)
             }
+            .accessibilityIdentifier("tuning.form")
             .navigationTitle("Tune")
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $isImporting) {

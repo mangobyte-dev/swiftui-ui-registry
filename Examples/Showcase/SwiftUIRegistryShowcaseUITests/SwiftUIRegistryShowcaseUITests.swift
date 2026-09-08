@@ -679,6 +679,28 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Copy Swift"].waitForExistence(timeout: 5), "The Tune button must present the panel.")
     }
 
+    /// The floating panel is a card the person resizes, so a row can sit below
+    /// its fold; scroll the panel's own form until the element is there.
+    @MainActor
+    private func revealInPanel(_ app: XCUIApplication, _ element: XCUIElement) {
+        let panel = app.descendants(matching: .any).matching(identifier: "tuning.form").firstMatch
+        // A row can exist while half clipped at the card's edge, and a tap on
+        // its center would then fall through to the app, so scroll until the
+        // panel's frame holds the whole element. A full swipe throws a Form
+        // row out of the tree, so the scroll is a short drag inside the card.
+        for _ in 0..<14 where !element.exists {
+            nudge(panel, up: true)
+        }
+    }
+
+    /// Scrolls the panel's form by a third of its height, up or down.
+    @MainActor
+    private func nudge(_ panel: XCUIElement, up: Bool) {
+        let from = panel.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: up ? 0.75 : 0.45))
+        let to = panel.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: up ? 0.45 : 0.75))
+        from.press(forDuration: 0.05, thenDragTo: to)
+    }
+
     @MainActor
     func testTuningPanelExportsTheSelectedPresetAsSwift() {
         let app = launchCatalog()
@@ -693,11 +715,13 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         // Swift section the panel renders from the same export string.
         XCTAssertTrue(app.buttons["Copy Swift"].exists)
         let swiftRow = app.buttons["Swift"]
+        revealInPanel(app, swiftRow)
         XCTAssertTrue(swiftRow.waitForExistence(timeout: 3), "The export must sit one tap below the presets.")
         swiftRow.tap()
         let export = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS %@", "accent: .primary")
         ).firstMatch
+        revealInPanel(app, export)
         XCTAssertTrue(export.waitForExistence(timeout: 3), "The Graphite preset must export its primary accent.")
         XCTAssertTrue(export.label.contains("RegistryTheme("), "The export must be the foundation initializer.")
         XCTAssertTrue(export.label.contains(".registryTheme(theme)"), "The export must show the one-line root setup.")
@@ -717,11 +741,13 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         app.buttons["Apply"].tap()
 
         let swiftRow = app.buttons["Swift"]
+        revealInPanel(app, swiftRow)
         XCTAssertTrue(swiftRow.waitForExistence(timeout: 3))
         swiftRow.tap()
         let export = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS %@", "cardRadius: 20")
         ).firstMatch
+        revealInPanel(app, export)
         XCTAssertTrue(export.waitForExistence(timeout: 3), "The imported card radius must round-trip into the export.")
         XCTAssertTrue(export.label.contains("accent: .pink"), "The rose preset name must map to its pink accent.")
         XCTAssertTrue(export.label.contains("disabledOpacity: 0.300"))
@@ -765,17 +791,19 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["7 tokens reach it"].waitForExistence(timeout: 3), "The scope must count the item's tokens.")
         // The Form only materializes rows on screen, so scroll the panel to its
         // end before asking which sections exist.
-        let panel = app.collectionViews.firstMatch
-        for _ in 0..<4 { panel.swipeUp() }
+        // The panel's own Form, not the catalog list behind it.
+        let panel = app.descendants(matching: .any).matching(identifier: "tuning.form").firstMatch
+        XCTAssertTrue(panel.waitForExistence(timeout: 3), "The panel's form must be identifiable.")
+        revealInPanel(app, app.staticTexts["Control"])
         XCTAssertTrue(app.staticTexts["Control"].waitForExistence(timeout: 3), "Radius reaches the button, so its section stays.")
         XCTAssertFalse(app.staticTexts["Control padding"].exists, "Spacing never reaches the button, so its section leaves.")
 
-        for _ in 0..<4 { panel.swipeDown() }
         let all = app.buttons["tuning.scope.all"]
+        for _ in 0..<6 where !all.exists { nudge(panel, up: false) }
         XCTAssertTrue(all.waitForExistence(timeout: 3))
         all.tap()
         XCTAssertFalse(scoped.waitForExistence(timeout: 1), "All tokens must clear the scope.")
-        for _ in 0..<4 { panel.swipeUp() }
+        revealInPanel(app, app.staticTexts["Control padding"])
         XCTAssertTrue(app.staticTexts["Control padding"].waitForExistence(timeout: 3), "The whole theme must return.")
     }
 
@@ -803,11 +831,13 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         app.buttons["Apply"].tap()
         XCTAssertTrue(app.staticTexts["a13GkaOXWxLl"].waitForExistence(timeout: 3), "An imported code must become the current code.")
         let swiftRow = app.buttons["Swift"]
+        revealInPanel(app, swiftRow)
         XCTAssertTrue(swiftRow.waitForExistence(timeout: 3))
         swiftRow.tap()
         let export = app.staticTexts.matching(
             NSPredicate(format: "label CONTAINS %@", "accent: .primary")
         ).firstMatch
+        revealInPanel(app, export)
         XCTAssertTrue(export.waitForExistence(timeout: 3), "The Graphite code must decode to the primary accent.")
         XCTAssertTrue(export.label.contains("surface: .primary.opacity(0.050)"), "The code must carry every knob, not only the accent.")
     }

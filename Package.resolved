@@ -1,5 +1,5 @@
 {
-  "originHash" : "f7a343883c4122af01ff115c615256cc55522692f01b7a265b30ca2accf0eb32",
+  "originHash" : "f6f444cbecd210065b7a709784769bc72e5bda35aaee09a95c46cae3072e2b1f",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "82440fa0a8b1c381a6d1e8e0fc7bbba53ec63204",
         "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections",
+      "state" : {
+        "revision" : "a0cb0954ecb21e4e31b0070e6ed5674e8556685a",
+        "version" : "1.6.0"
       }
     },
     {
@@ -56,6 +65,15 @@
       }
     },
     {
+      "identity" : "swift-identified-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-identified-collections",
+      "state" : {
+        "revision" : "322d9ffeeba85c9f7c4984b39422ec7cc3c56597",
+        "version" : "1.1.1"
+      }
+    },
+    {
       "identity" : "swift-issue-reporting",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-issue-reporting",
@@ -78,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-sharing",
       "state" : {
-        "revision" : "3552faf8a6c18ce896ec5a72bd8c34755f0f03e0",
-        "version" : "2.10.1"
+        "revision" : "8244fe63bf43e58188ab13851ad693eecf6a9e90",
+        "version" : "2.9.1"
       }
     },
     {
@@ -98,6 +116,15 @@
       "state" : {
         "revision" : "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
         "version" : "603.0.2"
+      }
+    },
+    {
+      "identity" : "xctest-dynamic-overlay",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
+      "state" : {
+        "revision" : "d9308ad679143c26a30dec52daefe82f54af2b82",
+        "version" : "1.13.1"
       }
     }
   ],

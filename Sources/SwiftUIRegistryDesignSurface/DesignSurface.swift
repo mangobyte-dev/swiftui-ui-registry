@@ -5,10 +5,10 @@ import SwiftUIRegistryFoundations
 
 public extension View {
     /// Turns this subtree into a design surface in debug builds: the theme the
-    /// shared tokens describe is applied here, the tuning panel stays beside the
-    /// content (a trailing column at regular width, a sheet the content remains
-    /// interactive under at compact width), and a floating Tune button opens
-    /// it. Every registry item below reads the tuned tokens from the environment
+    /// shared tokens describe is applied here, and the tool's own window puts
+    /// a draggable Tune button and a floating, movable, resizable panel over
+    /// the whole app, which stays live underneath on every tab, sheet, and
+    /// cover. Every registry item below reads the tuned tokens from the environment
     /// and updates as a knob moves; the tokens persist in `design-tokens.json`
     /// (``ThemeTuning/fileURL``) and leave through the panel's copy actions.
     ///
@@ -24,8 +24,8 @@ public extension View {
         #endif
     }
 
-    /// The surface with the host owning the panel's trigger through `isPresented`
-    /// instead of the floating button.
+    /// The surface with the host also driving the panel through `isPresented`;
+    /// the window's floating button stays.
     func designSurface(isPresented: Binding<Bool>) -> some View {
         #if DEBUG
         modifier(DesignSurfaceModifier(isPresented: isPresented, presetsFooter: EmptyView()))
@@ -49,83 +49,68 @@ public extension View {
 }
 
 #if DEBUG
-/// The panel is a plain sibling in an `HStack` at regular width, not
-/// `inspector(isPresented:)`: measured in the Showcase on iOS 27, that
-/// modifier on a tab's navigation stack stopped the auth form's Return key
-/// from moving focus even while nothing was presented.
+/// The tool lives in its own window (``DesignSurfaceWindow``): this modifier
+/// keeps what must sit in the app's tree, the tuned theme and environment
+/// switches, the item surface the tagged roots read, and the tap capture
+/// that resolves a selection to the innermost item. The button and the
+/// floating panel come from the window, so they cover every tab, sheet, and
+/// cover while the app stays live underneath.
 private struct DesignSurfaceModifier<PresetsFooter: View>: ViewModifier {
     let isPresented: Binding<Bool>?
     let presetsFooter: PresetsFooter
     @Shared(.designTokens) private var tuning
-    @State private var isPresentedLocally = false
-    @State private var selection = ItemSelection()
-    @Environment(\.horizontalSizeClass) private var sizeClass
-
-    private var presented: Binding<Bool> {
-        isPresented ?? $isPresentedLocally
-    }
+    private let state = DesignSurfaceState.shared
 
     func body(content: Content) -> some View {
-        HStack(spacing: 0) {
-            content
-                // Items report their frames and draw their selection ring only
-                // while the panel is up; one capture layer above the content
-                // resolves a tap to the innermost item so items never compete
-                // for the gesture and controls stay untouched when not selecting.
-                .environment(
-                    \.registryItemSurface,
-                    presented.wrappedValue ? RegistryItemSurface(selected: selection.item) : nil
-                )
-                .overlayPreferenceValue(RegistryItemAnchorsKey.self) { anchors in
-                    if selection.isSelecting {
-                        GeometryReader { proxy in
-                            Color.clear
-                                .contentShape(Rectangle())
-                                .onTapGesture(coordinateSpace: .local) { point in
-                                    let frames = anchors.map { (name: $0.name, frame: proxy[$0.bounds]) }
-                                    withAnimation(.snappy) {
-                                        selection.item = ItemSelection.pick(frames, at: point)
-                                        selection.isSelecting = false
-                                    }
+        content
+            // Items report their frames and draw their selection ring only
+            // while the panel is up; one capture layer above the content
+            // resolves a tap to the innermost item so items never compete
+            // for the gesture and controls stay untouched when not selecting.
+            .environment(
+                \.registryItemSurface,
+                state.isPresented ? RegistryItemSurface(selected: state.selection.item) : nil
+            )
+            .overlayPreferenceValue(RegistryItemAnchorsKey.self) { anchors in
+                if state.selection.isSelecting {
+                    GeometryReader { proxy in
+                        Color.clear
+                            .contentShape(Rectangle())
+                            .onTapGesture(coordinateSpace: .local) { point in
+                                let frames = anchors.map { (name: $0.name, frame: proxy[$0.bounds]) }
+                                withAnimation(.snappy) {
+                                    state.selection.item = ItemSelection.pick(frames, at: point)
+                                    state.selection.isSelecting = false
                                 }
-                                .accessibilityLabel("Tap a registry item to select it")
-                                .accessibilityAddTraits(.isButton)
-                        }
+                            }
+                            .accessibilityLabel("Tap a registry item to select it")
+                            .accessibilityAddTraits(.isButton)
                     }
                 }
-            if sizeClass == .regular && presented.wrappedValue {
-                Divider()
-                panel
-                    .frame(width: 380)
-                    .transition(.move(edge: .trailing))
             }
-        }
-        .overlay(alignment: .bottomTrailing) {
-            if isPresented == nil {
-                Button("Tune", systemImage: "slider.horizontal.3") {
-                    withAnimation(.snappy) { presented.wrappedValue.toggle() }
+            .registryTheme(tuning.theme)
+            .preferredColorScheme(tuning.preferredColorScheme)
+            .transformEnvironment(\.layoutDirection) { direction in
+                if tuning.rightToLeft { direction = .rightToLeft }
+            }
+            .transformEnvironment(\.dynamicTypeSize) { size in
+                if let tuned = tuning.dynamicTypeSize { size = tuned }
+            }
+            .onAppear {
+                if !(presetsFooter is EmptyView) { state.presetsFooter = AnyView(presetsFooter) }
+                if let isPresented {
+                    state.hostOwnsTrigger = true
+                    state.isPresented = isPresented.wrappedValue
                 }
-                .buttonStyle(.borderedProminent)
-                .padding()
+                DesignSurfaceWindow.shared.install()
             }
-        }
-        .sheet(isPresented: sizeClass == .compact ? presented : .constant(false)) {
-            panel
-                .presentationDetents([.medium, .large])
-                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-        }
-        .registryTheme(tuning.theme)
-        .preferredColorScheme(tuning.preferredColorScheme)
-        .transformEnvironment(\.layoutDirection) { direction in
-            if tuning.rightToLeft { direction = .rightToLeft }
-        }
-        .transformEnvironment(\.dynamicTypeSize) { size in
-            if let tuned = tuning.dynamicTypeSize { size = tuned }
-        }
-    }
-
-    private var panel: some View {
-        TuningPanel(tuning: Binding($tuning), selection: $selection) { presetsFooter }
+            // The host's binding and the tool's state agree in both directions.
+            .onChange(of: isPresented?.wrappedValue) { _, presented in
+                if let presented, presented != state.isPresented { state.isPresented = presented }
+            }
+            .onChange(of: state.isPresented) { _, presented in
+                if let isPresented, isPresented.wrappedValue != presented { isPresented.wrappedValue = presented }
+            }
     }
 }
 #endif

@@ -8,8 +8,8 @@ struct SwiftUIRegistryShowcaseApp: App {
         // A test-harness switch, never set by a person: the UI suite passes it
         // on the iPad destination, where the iOS 27.0 simulator's in-process
         // keyboard animation intermittently never reports completion and every
-        // later XCTest step waits its full idle timeout (docs/component-roadmap.md,
-        // Open deferrals). With UIKit animations off there is nothing to wait on.
+        // later XCTest step waits its full idle timeout (CHANGELOG.md, Known
+        // limitations). With UIKit animations off there is nothing to wait on.
         if ProcessInfo.processInfo.arguments.contains("-disable-animations") {
             UIView.setAnimationsEnabled(false)
         }

@@ -27,6 +27,7 @@ Updated 2026-09-06. This section and the per-stage Status lines are the only hom
 - Second consumer (2026-09-06): `Examples/TodoCounter`, a fresh Xcode project on the Composable Architecture with the package by URL at `0.1.0`, seven items installed with the Homebrew-installed tool, a preset theme applied and then customized into the code `a2nH36tnmJHJAMzm`, a locally edited badge that the receipt tracks, four `TestStore` tests and one simulator UI test, and the MCP server driven over stdio from its directory; its README lists every command. Later that day it gained two more UI layers over the same reducers, stock SwiftUI with no styling and the registry's design rewritten by hand, with the same UI flow on all three, launch and interaction metrics per layer, a capture test, and a line counter; the measured comparison (223 lines written and 651 owned against 154 stock and 585 by hand, equal launch and interaction cost between the registry and handmade layers) is the "Why use the registry?" section of the README and the website, with the captures under `docs/images/comparison/`
 - Current catalog counts and per-item pages live in the generated `docs/catalog/index.md` and the website, not in prose here
 - Stage 7: complete and published 2026-09-07 as release `0.2.0` (Published under Stage 7); planned 2026-09-06 as one overnight autonomous run (shadcn parity adapted to iOS and Liquid Glass, iPad, the MANGO sample design system, the Create studio's design-system options, developer-experience research, website end-to-end tests, and agent skills in the Point-Free format). The slices, their status words, and the exit criteria are in its section below; `HANDOFF.md` is the run brief
+- Stage 9 (planned 2026-09-08): seeFood's designer mode ported into the design surface product, six slices, the window first; the map, decisions, and slices are in its section below
 - Stage 8 (done 2026-09-08, three slices in one day): the design surface, the tuning panel liberated from the Showcase into the optional `SwiftUIRegistryDesignSurface` product any consumer app activates with `designSurface()`, persisted and exported as `design-tokens.json`, with tap-to-select scoping the panel by a generated item-to-token map; the plan, the decisions, and the evidence are in its section below. Owner's step: tag and release foundations `0.2.1`, the floor every installable item now declares
 
 ### Open deferrals
@@ -691,6 +692,37 @@ Status words as in Stage 7
 - A release build of the same app compiles with the modifier and renders as if it were absent
 - The Showcase's UI suite and codec tests pass unchanged in intent through the product
 - Every commit passed the scoped verification list and the roadmap records each slice's evidence
+
+## Stage 9: the designer mode, ported from seeFood
+
+**Status: planned 2026-09-08, owner's directive; slice 1 next**
+
+Owner's brief (2026-09-08, while testing Stage 8 in seeFood): "there is already a designer mode in seeFood. it should be ported to the registry"; the side column on iPad stays ("I like having everything on the side"); nothing reflected on the main app. seeFood's tool is the accepted architecture of its ADR 0015 (`seeFood/docs/adr/0015-the-owner-designs-in-the-app-with-a-floating-tuning-panel.md`): a passthrough `UIWindow` above the app with a draggable floating button and a bottom panel with three detents, screens that name themselves, every catalog piece reporting its frame, outlines and guides, per-component knobs and structure-as-data trees with per-part modifiers, notes per component and per screen, named presets, a version-3 JSON export with a prose summary, and import. Mapped 2026-09-08 (files and lines in the run log's tick 5): the engine is generic (`ThemeTokens`, `ComponentKnobs`, `ThemeStore`, `LayoutSpec`/`NodeStyle`/`LayoutView`, `TuningContext`, `TuningOverlay` with `PassthroughWindow`, `DesignNotes`, `ThemePresets`, `DesignExport`, the sliders), about 4,000 lines; the couplings are the closed `DesignReviewComponent` enum as the component identity, `Theme` statics and `MacroColor` for the tool's own chrome, the app-content default tables, and the export's app name
+
+Why nothing reflected in seeFood (measured on the iPhone 17 Pro simulator, 2026-09-08): the Stage 8 panel's theme does reach the registry items (the panel and the Settings rows share it, the code changed to `a13GkaOXWwIH` on Rose), but seeFood's screens are painted by seeFood's own tokens, its four heaviest registry copies read `Theme.knobs` by design, `CalendarRoot` applies `.tint(MacroColor.caloriesMid)` inside the surface so the accent never shows, and on iPhone the sheet covers the tab bar so the app cannot be walked while tuning. The port fixes the last through the window, and the token model through slice 3
+
+### Decisions
+
+- D1 One tool, two homes: the registry product owns the engine; seeFood keeps ADR 0015's behavior by adopting the product and deleting its copy at the end (slice 6), never by running two overlays
+- D2 The component identity is the registry item name plus, for an app's own pieces, a string the app registers; the closed enum does not port
+- D3 The token model is generic: the engine tunes a `Codable` token document the app declares (a protocol with pages and knobs), `RegistryTheme` tuning is one adapter shipped in the product, seeFood's `ThemeTokens` another kept in seeFood's bridge
+- D4 The tool's own chrome reads the tuned theme's accent, never an app color
+- D5 The iPad column stays; the window hosts it as a trailing panel, the iPhone gets the bottom panel with detents
+
+### Slices, in order
+
+1. `open` The window: `designSurface()` moves from a sheet and a sibling column to a passthrough window at `.alert + 1` with named hit regions, a draggable floating button that settles to a side and remembers its place, the bottom panel with three detents on iPhone and the trailing column on iPad, key-window handoff for text fields, and the app live underneath on every tab, sheet, and cover. Exit: in seeFood, switch tabs and open a sheet while the panel is up
+2. `open` Screen context: `registryScreen(_:)` names, item frames through the existing anchor preference plus `onGeometryChange` for pieces outside the surface's tree, the On this screen list, outlines with tap to tune and hold to comment, the 8 pt grid, 24 pt lines, and margin guides
+3. `open` Generic tokens and knobs: the token document protocol, pages, `TokenSlider` with inherit states, per-item knobs keyed by item name with shipped defaults and delete-on-default, autosave to the design tokens file, the `RegistryTheme` adapter, and seeFood's `ThemeTokens` adapter in its bridge
+4. `open` Structure as data: `LayoutSpec`, `LayoutNode`, `NodeStyle`, `LayoutView`, the structure editor and the part style page, adopted first by the registry items that already expose slots
+5. `open` Notes, presets, export, import: component and screen notes with the screen recorded, named presets, the version-3 export with the prose summary and the change list, import of a full export or bare tokens
+6. `open` seeFood adopts the product and removes `TuningOverlay`, `TuningPanel`, `TuningControls`, and the stores it no longer needs, keeping its default tables and the bridge
+
+### Exit criteria
+
+- seeFood's Design mode runs on the registry product with no feature lost against ADR 0015's list, and its own overlay files are gone
+- The Showcase runs the same tool over its catalog
+- Every slice passed the scoped verification list, the Showcase UI suite after visible changes, and a seeFood build
 
 ## Later
 

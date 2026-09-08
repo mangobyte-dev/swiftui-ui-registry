@@ -29,6 +29,10 @@ struct CatalogRoot: View {
             $tuning.withLock { $0 = tuned }
         } else if arguments.contains("-default-tuning") {
             $tuning.withLock { $0 = .default }
+            // The card a person dragged on this simulator would otherwise
+            // shape the suite (measured 2026-09-08: a small card left at the
+            // bottom put the On this screen rows out of reach).
+            DesignSurface.forgetRememberedLayout()
         }
     }()
 

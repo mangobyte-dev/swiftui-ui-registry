@@ -87,6 +87,23 @@ public extension View {
     }
 }
 
+public enum DesignSurface {
+    /// Forgets where the Tune button and the card were left, so the next
+    /// open uses the defaults again: the button at the trailing side, the
+    /// card above the bottom bar on a compact width and the trailing column
+    /// on a regular one. A host offers it as a reset, and a test harness
+    /// calls it at launch so a card a person moved never shapes a run.
+    @MainActor public static func forgetRememberedLayout() {
+        let defaults = UserDefaults.standard
+        for key in [
+            PanelGeometry.storageKey(regular: false), PanelGeometry.storageKey(regular: true),
+            "designSurface.button.y", "designSurface.button.trailing",
+        ] {
+            defaults.removeObject(forKey: key)
+        }
+    }
+}
+
 /// The callbacks tagged roots and named screens call, writing into the tool
 /// state; one value for the process, outside the generic modifier.
 private let surfaceReporter = RegistrySurfaceReporter(

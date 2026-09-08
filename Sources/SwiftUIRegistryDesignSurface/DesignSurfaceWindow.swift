@@ -39,15 +39,21 @@ final class DesignSurfaceWindow {
         window.rootViewController = host
         window.isHidden = false
         self.window = window
-        // The keyboard follows the key window, so the key window follows the
-        // field: a field in the app under the card takes it, a field in the
-        // panel takes it back. Decided from the editing notifications, never
-        // in hit testing, where a key change cancels the touch it is deciding
-        // (measured 2026-09-08: a row under the card stopped pushing).
+        // The app keeps the key window while the tool is up, so its own
+        // sheets and fields behave as if the tool were not there; the tool
+        // takes it only while it presents a sheet of its own or a field in
+        // its panel begins editing, and hands it back on the app's next field.
+        // Measured 2026-09-08: a field inside a sheet never takes focus in a
+        // window that is not key, and a key switch inside hit testing cancels
+        // the touch being decided.
         for name in [UITextField.textDidBeginEditingNotification, UITextView.textDidBeginEditingNotification] {
             NotificationCenter.default.addObserver(forName: name, object: nil, queue: .main) { note in
-                guard let view = note.object as? UIView, let fieldWindow = view.window else { return }
-                MainActor.assumeIsolated { DesignSurfaceWindow.shared.fieldBeganEditing(in: fieldWindow) }
+                // Delivered on the main queue; the object is the field itself.
+                nonisolated(unsafe) let object = note.object
+                MainActor.assumeIsolated {
+                    guard let view = object as? UIView, let fieldWindow = view.window else { return }
+                    DesignSurfaceWindow.shared.fieldBeganEditing(in: fieldWindow)
+                }
             }
         }
     }
@@ -67,8 +73,8 @@ final class DesignSurfaceWindow {
         return window.bounds.inset(by: window.safeAreaInsets)
     }
 
-    /// The keyboard follows the key window, so the overlay takes it while the
-    /// panel is up and the app gets it back on close.
+    /// Makes the overlay key (while it presents a sheet, or a field in its
+    /// panel edits) or gives the key back to the app's window.
     func setKey(_ key: Bool) {
         guard let window else { return }
         if key {
@@ -165,8 +171,10 @@ private struct DesignSurfaceOverlayRoot: View {
                 }
         }
         .onChange(of: state.isPresented) { _, presented in
-            DesignSurfaceWindow.shared.setKey(presented)
-            if !presented { DesignSurfaceWindow.shared.hitRects["panel"] = nil }
+            if !presented {
+                DesignSurfaceWindow.shared.setKey(false)
+                DesignSurfaceWindow.shared.hitRects["panel"] = nil
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification)) { note in
             state.keyboardFrame = (note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect) ?? .zero

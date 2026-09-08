@@ -122,7 +122,7 @@ public struct TuningPanel<PresetsFooter: View>: View {
             .onChange(of: selection?.wrappedValue.item) { _, item in
                 if item == nil { path = [] }
             }
-            .sheet(isPresented: $isImporting) {
+            .sheet(isPresented: $isImporting, onDismiss: { if showsScreen { DesignSurfaceWindow.shared.setKey(false) } }) {
                 ImportThemeSheet(text: $importText, failed: $importFailed, apply: applyImport)
             }
             .toolbar {
@@ -160,6 +160,8 @@ public struct TuningPanel<PresetsFooter: View>: View {
     private func beginImport() {
         importText = ""
         importFailed = false
+        // A field inside a sheet takes focus only in the key window.
+        if showsScreen { DesignSurfaceWindow.shared.setKey(true) }
         isImporting = true
     }
 

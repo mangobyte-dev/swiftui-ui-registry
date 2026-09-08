@@ -87,22 +87,35 @@ private struct DesignSurfaceOverlayRoot: View {
 
     var body: some View {
         ZStack {
+            if !state.isEnabled {
+                EmptyView()
+            } else {
+            if !state.guides.isEmpty {
+                GuideOverlay(guides: state.guides)
+            }
+            if state.isPresented && (state.showsOutlines || state.selection.isSelecting) {
+                OutlineOverlay()
+            }
+            if state.selection.isSelecting {
+                SelectCapture()
+            }
             // While Select is armed the card steps aside so every item on
             // the screen is tappable; it returns with the scope once picked.
             if state.isPresented && !state.selection.isSelecting {
                 FloatingPanel {
-                    TuningPanel(tuning: Binding($tuning), selection: selectionBinding) {
+                    TuningPanel(tuning: Binding($tuning), selection: selectionBinding, showsScreen: true) {
                         if let footer = state.presetsFooter { footer }
                     }
                 }
             }
-            if !state.hostOwnsTrigger {
+            // The card has its own collapse control, so the button steps out while it is up.
+            if !state.hostOwnsTrigger && !state.isPresented {
                 FloatingTuneButton()
+            }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .registryTheme(tuning.theme)
-        .preferredColorScheme(tuning.preferredColorScheme)
+        .tint(ToolChrome.accent)
         .onChange(of: state.isPresented) { _, presented in
             DesignSurfaceWindow.shared.setKey(presented)
             if !presented { DesignSurfaceWindow.shared.hitRects["panel"] = nil }
@@ -114,14 +127,123 @@ private struct DesignSurfaceOverlayRoot: View {
     }
 }
 
+/// While Select is armed the whole window takes the next tap and resolves it
+/// to the innermost reported frame, so items never compete for a gesture and
+/// a root inside a sheet is as selectable as one in the main tree.
+private struct SelectCapture: View {
+    private let state = DesignSurfaceState.shared
+
+    var body: some View {
+        Color.clear
+            .contentShape(Rectangle())
+            .onTapGesture(coordinateSpace: .global) { point in
+                let frames = state.frames.values.map { (name: $0.name, frame: $0.frame) }
+                let chain = ItemSelection.chain(frames, at: point)
+                withAnimation(.snappy) {
+                    state.selection.item = chain.first
+                    state.selection.chain = chain
+                    state.selection.isSelecting = false
+                }
+            }
+            .accessibilityLabel("Tap a registry item to select it")
+            .accessibilityAddTraits(.isButton)
+            .designSurfaceHitRegion("select")
+            .ignoresSafeArea()
+    }
+}
+
+/// Every reported frame as a labeled rectangle over the app, the selected
+/// one in the accent; a tap on an outline selects its item.
+private struct OutlineOverlay: View {
+    private let state = DesignSurfaceState.shared
+
+    var body: some View {
+        let accent = ToolChrome.accent
+        ZStack(alignment: .topLeading) {
+            ForEach(state.visibleItems, id: \.id) { item in
+                let isSelected = state.selection.item == item.name
+                // Outside the piece by 2 points, the name above it: the outline never covers
+                // what is being tuned.
+                Rectangle()
+                    .stroke(isSelected ? accent : accent.opacity(0.5), style: StrokeStyle(lineWidth: 1, dash: isSelected ? [4, 3] : []))
+                    .padding(-2)
+                    .overlay(alignment: .topLeading) {
+                        Text(state.title(item.name))
+                            .font(.caption2.weight(.semibold))
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 4)
+                            .background(isSelected ? accent : accent.opacity(0.6), in: Capsule())
+                            .fixedSize()
+                            .alignmentGuide(.top) { $0[.bottom] + 4 }
+                    }
+                    .frame(width: item.frame.width, height: item.frame.height)
+                    .offset(x: item.frame.minX, y: item.frame.minY)
+                    .allowsHitTesting(false)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .ignoresSafeArea()
+        .accessibilityHidden(true)
+    }
+}
+
+/// The design guides: an 8 point grid, 24 point lines, and the 16 and 24
+/// point margins, drawn once over the whole window and never touchable.
+private struct GuideOverlay: View {
+    let guides: DesignSurfaceState.Guides
+
+    var body: some View {
+        let accent = ToolChrome.accent
+        Canvas { context, size in
+            if guides.contains(.grid) {
+                var path = Path()
+                stride(from: 0, through: size.width, by: 8).forEach { x in
+                    path.move(to: CGPoint(x: x, y: 0)); path.addLine(to: CGPoint(x: x, y: size.height))
+                }
+                stride(from: 0, through: size.height, by: 8).forEach { y in
+                    path.move(to: CGPoint(x: 0, y: y)); path.addLine(to: CGPoint(x: size.width, y: y))
+                }
+                context.stroke(path, with: .color(accent.opacity(0.12)), lineWidth: 0.5)
+            }
+            if guides.contains(.lines) {
+                var path = Path()
+                stride(from: 0, through: size.height, by: 24).forEach { y in
+                    path.move(to: CGPoint(x: 0, y: y)); path.addLine(to: CGPoint(x: size.width, y: y))
+                }
+                context.stroke(path, with: .color(accent.opacity(0.3)), lineWidth: 0.5)
+            }
+            if guides.contains(.margins) {
+                var path = Path()
+                for x in [16.0, 24.0, size.width - 24, size.width - 16] {
+                    path.move(to: CGPoint(x: x, y: 0)); path.addLine(to: CGPoint(x: x, y: size.height))
+                }
+                context.stroke(path, with: .color(accent.opacity(0.5)), style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
+            }
+        }
+        .ignoresSafeArea()
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+}
+
 /// The draggable button that opens the panel. It settles to the nearer side
-/// after a drag and remembers its place.
+/// after a drag and remembers its place. A hold offers the outlines and the
+/// guides.
 private struct FloatingTuneButton: View {
     private let state = DesignSurfaceState.shared
     @AppStorage("designSurface.button.y") private var restingY = 0.72
     @AppStorage("designSurface.button.trailing") private var restingTrailing = true
     @State private var drag: CGSize = .zero
-    @Environment(\.registryTheme) private var theme
+
+    private var outlines: Binding<Bool> {
+        Binding(get: { state.showsOutlines }, set: { state.showsOutlines = $0 })
+    }
+
+    private func guide(_ guide: DesignSurfaceState.Guides) -> Binding<Bool> {
+        Binding(
+            get: { state.guides.contains(guide) },
+            set: { if $0 { state.guides.insert(guide) } else { state.guides.remove(guide) } })
+    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -139,6 +261,12 @@ private struct FloatingTuneButton: View {
             }
             .buttonStyle(.borderedProminent)
             .clipShape(Circle())
+            .contextMenu {
+                Toggle("Outline the pieces", systemImage: "rectangle.dashed", isOn: outlines)
+                Toggle("8 pt grid", systemImage: "grid", isOn: guide(.grid))
+                Toggle("24 pt lines", systemImage: "text.justify", isOn: guide(.lines))
+                Toggle("Margins", systemImage: "arrow.left.and.right", isOn: guide(.margins))
+            }
             .accessibilityLabel("Tune")
             .accessibilityIdentifier("designSurface.button")
             .shadow(radius: 8, y: 4)
@@ -167,6 +295,18 @@ private enum PanelMetrics {
     static let minimumSize = CGSize(width: 300, height: 260)
     static let columnWidth: CGFloat = 380
     static let snapDistance: CGFloat = 24
+    /// The part of the drag bar that always stays inside the safe area, so
+    /// the card can hang off any edge and still be pulled back.
+    static let grab = CGSize(width: 96, height: 44)
+}
+
+/// The tool's own look: fixed system values, never the tuned theme, so the
+/// panel holds still while a knob moves (owner, 2026-09-08).
+enum ToolChrome {
+    static let accent = Color(uiColor: .systemBlue)
+    static let cardRadius: CGFloat = 16
+    static let spacing: CGFloat = 12
+    static let compactSpacing: CGFloat = 8
 }
 
 /// The panel as a floating card: a drag bar moves it, a corner grip resizes
@@ -177,7 +317,6 @@ private struct FloatingPanel<Content: View>: View {
     @ViewBuilder let content: Content
     private let state = DesignSurfaceState.shared
     @Environment(\.horizontalSizeClass) private var sizeClass
-    @Environment(\.registryTheme) private var theme
     @AppStorage("designSurface.panel.compact") private var compactFrame = ""
     @AppStorage("designSurface.panel.regular") private var regularFrame = ""
     @State private var frame: CGRect = .zero
@@ -198,8 +337,8 @@ private struct FloatingPanel<Content: View>: View {
                 content
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: theme.metrics.cardRadius, style: .continuous))
-            .clipShape(RoundedRectangle(cornerRadius: theme.metrics.cardRadius, style: .continuous))
+            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: ToolChrome.cardRadius, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: ToolChrome.cardRadius, style: .continuous))
             .overlay(alignment: .bottomTrailing) { grip(area: area, current: current) }
             .shadow(radius: 16, y: 8)
             .frame(width: current.width, height: current.height)
@@ -226,8 +365,8 @@ private struct FloatingPanel<Content: View>: View {
             .buttonStyle(.plain)
             .accessibilityLabel("Collapse the tuning panel")
         }
-        .padding(.horizontal, theme.metrics.standardSpacing)
-        .padding(.vertical, theme.metrics.compactSpacing)
+        .padding(.horizontal, ToolChrome.spacing)
+        .padding(.vertical, ToolChrome.compactSpacing)
         .contentShape(Rectangle())
         .gesture(
             DragGesture(minimumDistance: 4, coordinateSpace: .global)
@@ -250,7 +389,7 @@ private struct FloatingPanel<Content: View>: View {
         Image(systemName: "arrow.up.left.and.arrow.down.right")
             .font(.caption.weight(.bold))
             .foregroundStyle(.secondary)
-            .padding(theme.metrics.compactSpacing)
+            .padding(ToolChrome.compactSpacing)
             .frame(minWidth: 44, minHeight: 44)
             .contentShape(Rectangle())
             .accessibilityLabel("Resize the tuning panel")
@@ -289,12 +428,16 @@ private struct FloatingPanel<Content: View>: View {
             width: area.width, height: height)
     }
 
+    /// The card may hang off the leading, trailing, and bottom edges so the
+    /// screen behind it can be seen; the drag bar's grab strip stays inside
+    /// the safe area, so it can always be pulled back.
     private func clamp(_ rect: CGRect, in area: CGRect) -> CGRect {
         var result = rect
         result.size.width = min(max(PanelMetrics.minimumSize.width, result.width), area.width)
         result.size.height = min(max(PanelMetrics.minimumSize.height, result.height), area.height)
-        result.origin.x = min(max(area.minX, result.origin.x), area.maxX - result.width)
-        result.origin.y = min(max(area.minY, result.origin.y), area.maxY - result.height)
+        let grab = PanelMetrics.grab
+        result.origin.x = min(max(area.minX - result.width + grab.width, result.origin.x), area.maxX - grab.width)
+        result.origin.y = min(max(area.minY, result.origin.y), area.maxY - grab.height)
         return result
     }
 

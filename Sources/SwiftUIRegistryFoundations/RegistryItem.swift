@@ -6,9 +6,12 @@ import SwiftUI
 public struct RegistryItemSurface: Equatable, Sendable {
     /// The name of the item the surface has selected, or `nil`.
     public var selected: String?
+    /// The label the selection ring shows for the selected item; the name by default.
+    public var selectedTitle: String?
 
-    public init(selected: String? = nil) {
+    public init(selected: String? = nil, selectedTitle: String? = nil) {
         self.selected = selected
+        self.selectedTitle = selectedTitle
     }
 }
 
@@ -33,8 +36,67 @@ public struct RegistryItemAnchorsKey: PreferenceKey {
     }
 }
 
+/// One tagged root's place on screen, reported to a surface as it changes:
+/// the instance (`id`), the item name, and the frame in the screen's global
+/// coordinates. Reported through the environment rather than a preference so
+/// a root inside a sheet or a cover, whose tree a preference never leaves,
+/// still reaches the surface.
+public struct RegistryItemReport: Sendable {
+    public let id: UUID
+    public let name: String
+    public let frame: CGRect
+
+    public init(id: UUID, name: String, frame: CGRect) {
+        self.id = id
+        self.name = name
+        self.frame = frame
+    }
+}
+
+/// The callbacks a design surface installs so tagged roots and named screens
+/// can report themselves. `nil`, the default, means no surface listens.
+public struct RegistrySurfaceReporter: Sendable {
+    public var itemChanged: @MainActor @Sendable (RegistryItemReport) -> Void
+    public var itemLeft: @MainActor @Sendable (UUID) -> Void
+    public var screenAppeared: @MainActor @Sendable (String) -> Void
+    public var screenLeft: @MainActor @Sendable (String) -> Void
+
+    public init(
+        itemChanged: @escaping @MainActor @Sendable (RegistryItemReport) -> Void,
+        itemLeft: @escaping @MainActor @Sendable (UUID) -> Void,
+        screenAppeared: @escaping @MainActor @Sendable (String) -> Void,
+        screenLeft: @escaping @MainActor @Sendable (String) -> Void
+    ) {
+        self.itemChanged = itemChanged
+        self.itemLeft = itemLeft
+        self.screenAppeared = screenAppeared
+        self.screenLeft = screenLeft
+    }
+}
+
 public extension EnvironmentValues {
     @Entry var registryItemSurface: RegistryItemSurface? = nil
+    @Entry var registrySurfaceReporter: RegistrySurfaceReporter? = nil
+}
+
+public extension View {
+    /// Names the screen this view is, so a design surface can title its
+    /// panel and its notes with it. Reported on appear and disappear; nested
+    /// names stack, the innermost visible one wins. Inert without a surface.
+    nonisolated func registryScreen(_ name: String) -> some View {
+        modifier(RegistryScreenModifier(name: name))
+    }
+}
+
+private struct RegistryScreenModifier: ViewModifier {
+    @Environment(\.registrySurfaceReporter) private var reporter
+    let name: String
+
+    func body(content: Content) -> some View {
+        content
+            .onAppear { reporter?.screenAppeared(name) }
+            .onDisappear { reporter?.screenLeft(name) }
+    }
 }
 
 public extension View {
@@ -51,8 +113,16 @@ public extension View {
 
 private struct RegistryItemModifier: ViewModifier {
     @Environment(\.registryItemSurface) private var surface
+    @Environment(\.registrySurfaceReporter) private var reporter
     @Environment(\.registryTheme) private var theme
+    @State private var token = UUID()
     let name: String
+
+    // Explicit so `registryItem(_:)` (nonisolated) can build it; the
+    // synthesized init is main-actor-isolated.
+    nonisolated init(name: String) {
+        self.name = name
+    }
 
     func body(content: Content) -> some View {
         content.overlay {
@@ -61,6 +131,12 @@ private struct RegistryItemModifier: ViewModifier {
                     .anchorPreference(key: RegistryItemAnchorsKey.self, value: .bounds) { bounds in
                         [RegistryItemAnchor(name: name, bounds: bounds)]
                     }
+                    .onGeometryChange(for: CGRect.self) { proxy in
+                        proxy.frame(in: .global)
+                    } action: { frame in
+                        reporter?.itemChanged(RegistryItemReport(id: token, name: name, frame: frame))
+                    }
+                    .onDisappear { reporter?.itemLeft(token) }
                     .overlay(alignment: .topLeading) {
                         if surface.selected == name {
                             selection
@@ -72,18 +148,23 @@ private struct RegistryItemModifier: ViewModifier {
         }
     }
 
+    /// A hairline ring 4 points outside the item and its name above it, so
+    /// nothing of the tool covers the piece being tuned (owner, 2026-09-08).
+    /// The tool's own blue, never the tuned accent, so the ring holds still.
     private var selection: some View {
-        let ring = RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)
-        let accent = theme.accent ?? Color.accentColor
-        return ring
-            .stroke(accent, lineWidth: theme.metrics.emphasizedBorderWidth)
+        let blue = Color(uiColor: .systemBlue)
+        return RoundedRectangle(cornerRadius: theme.metrics.controlRadius + 4, style: .continuous)
+            .stroke(blue, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
+            .padding(-4)
             .overlay(alignment: .topLeading) {
-                Text(name)
+                Text(surface?.selectedTitle ?? name)
                     .font(.caption2.weight(.semibold))
-                    .foregroundStyle(theme.onAccent)
-                    .padding(.horizontal, theme.metrics.compactSpacing / 2)
-                    .background(accent, in: Capsule())
-                    .offset(y: -theme.metrics.compactSpacing)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 4)
+                    .background(blue, in: Capsule())
+                    // One line, wider than a small item if need be.
+                    .fixedSize()
+                    .alignmentGuide(.top) { $0[.bottom] + 6 }
             }
     }
 }

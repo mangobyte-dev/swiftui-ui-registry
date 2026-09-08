@@ -74,7 +74,7 @@ Version 0, an honest prototype:
 
 - Every item, generated into `docs/catalog/` and the website's data file; the counts live there, not here
 - `SwiftUIRegistryFoundations` is a small pre-1.0 package: accent, on-accent, surface, border, positive, negative, disabled opacity, and metrics, with seven presets and one root modifier
-- `SwiftUIRegistryDesignSurface` is an optional second product: add it and `.designSurface()` inside your theme call, and a debug build gets the Showcase's tuning panel on device, with the result persisted as `design-tokens.json` and exported as a preset code any registry tool applies; a release build is unchanged
+- `SwiftUIRegistryDesignSurface` is an optional second product: add it and `.designSurface()` inside your theme call, and a debug build gets the Showcase's tuning panel on device, with the result persisted as `registry-tokens.json` and exported as a preset code any registry tool applies; a release build is unchanged
 - Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, captured screenshots, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates
 - The Showcase compiles every installable item and every recipe snippet at the iOS 26 floor, with pinned visual contract checks for the blocks and an accessibility-audited demo walk over all 50 items

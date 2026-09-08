@@ -97,6 +97,7 @@ struct CatalogList: View {
                 .accessibilityIdentifier("catalog.item.\(entry.name)")
             }
             .navigationTitle(title)
+            .registryScreen(title)
             .navigationDestination(for: CatalogEntry.self) { entry in
                 ItemDetailScreen(entry: entry)
             }
@@ -152,6 +153,8 @@ struct ItemDetailScreen: View {
             .frame(maxWidth: .infinity)
         }
         .navigationTitle(entry.name)
+        // The design surface titles its panel and its notes with the screen's name.
+        .registryScreen(entry.name)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

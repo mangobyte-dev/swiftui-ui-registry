@@ -13,19 +13,27 @@ public struct TuningPanel<PresetsFooter: View>: View {
     /// The item scope, when the host is a design surface: `nil` shows every
     /// section and no Select control, as the Showcase's previews and tests do.
     private let selection: Binding<ItemSelection>?
+    /// Shows the On this screen section from the tool state: the screen's
+    /// name, the items on it, and the outline switch. Off for a host that
+    /// embeds the panel without the window.
+    private let showsScreen: Bool
     @State private var isImporting = false
     @State private var importText = ""
     @State private var importFailed = false
+    /// The item names pushed as host pages.
+    @State private var path: [String] = []
 
     /// The panel over the tuning it edits. `presetsFooter` is the host's own
     /// row under the preset chips, such as a link to a sample design system.
     public init(
         tuning: Binding<ThemeTuning>,
         selection: Binding<ItemSelection>? = nil,
+        showsScreen: Bool = false,
         @ViewBuilder presetsFooter: () -> PresetsFooter
     ) {
         _tuning = tuning
         self.selection = selection
+        self.showsScreen = showsScreen
         self.presetsFooter = presetsFooter()
     }
 
@@ -36,6 +44,10 @@ public struct TuningPanel<PresetsFooter: View>: View {
         return Set(tokens)
     }
 
+    /// Off for a host that paints the items from its own tokens: the theme
+    /// sections would move nothing there.
+    private var tunesTheme: Bool { !showsScreen || DesignSurfaceState.shared.tunesTheme }
+
     /// Whether a section whose knobs are `tokens` reaches the selected item.
     private func shows(_ tokens: Set<String>) -> Bool {
         guard let scope else { return true }
@@ -43,35 +55,71 @@ public struct TuningPanel<PresetsFooter: View>: View {
     }
 
     public var body: some View {
-        NavigationStack {
+        if showsScreen, let wrap = DesignSurfaceState.shared.panelWrap {
+            wrap(AnyView(stack))
+        } else {
+            stack
+        }
+    }
+
+    private var stack: some View {
+        NavigationStack(path: $path) {
             Form {
+                if showsScreen, let selection {
+                    OnThisScreenSection(selection: selection)
+                }
                 if let selection, let item = selection.wrappedValue.item {
-                    ScopeSection(item: item, tokenCount: scope?.count ?? 0) {
-                        withAnimation(.snappy) { selection.wrappedValue.item = nil }
+                    // A host with its own tokens shows its own selection rows.
+                    if tunesTheme {
+                        ScopeSection(item: item, tokenCount: scope?.count ?? 0) {
+                            withAnimation(.snappy) { selection.wrappedValue.item = nil }
+                        }
+                    }
+                    if showsScreen {
+                        ItemKnobsSection(item: item)
                     }
                 }
-                PresetsSection(tuning: $tuning, footer: presetsFooter)
-                ExportSection(tuning: tuning)
-                AccentSection(tuning: $tuning)
-                TypographySection(tuning: $tuning)
-                if shows(PanelScope.surface) { SurfaceSection(tuning: $tuning) }
-                if shows(["chartPalette"]) { ChartSection(tuning: $tuning) }
-                if shows(PanelScope.radius.union(PanelScope.spacing)) { DensitySection(tuning: $tuning) }
-                if shows(PanelScope.radius) { RadiusSection(tuning: $tuning) }
-                if shows(PanelScope.spacing) { SpacingSection(tuning: $tuning) }
-                ColorsSection(tuning: $tuning)
-                if shows(["disabledOpacity"]) { StateSection(tuning: $tuning) }
-                EnvironmentSection(tuning: $tuning)
+                if showsScreen, let host = DesignSurfaceState.shared.hostTokens {
+                    HostTokensSection(store: host)
+                }
+                if showsScreen, let host = DesignSurfaceState.shared.hostSections {
+                    host(selection?.wrappedValue.chain ?? [])
+                }
+                if tunesTheme {
+                    PresetsSection(tuning: $tuning, footer: presetsFooter)
+                    ExportSection(tuning: tuning)
+                    AccentSection(tuning: $tuning)
+                    TypographySection(tuning: $tuning)
+                    if shows(PanelScope.surface) { SurfaceSection(tuning: $tuning) }
+                    if shows(["chartPalette"]) { ChartSection(tuning: $tuning) }
+                    if shows(PanelScope.radius.union(PanelScope.spacing)) { DensitySection(tuning: $tuning) }
+                    if shows(PanelScope.radius) { RadiusSection(tuning: $tuning) }
+                    if shows(PanelScope.spacing) { SpacingSection(tuning: $tuning) }
+                    ColorsSection(tuning: $tuning)
+                    if shows(["disabledOpacity"]) { StateSection(tuning: $tuning) }
+                    EnvironmentSection(tuning: $tuning)
+                }
             }
             .accessibilityIdentifier("tuning.form")
             .navigationTitle("Tune")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: String.self) { name in
+                if let page = DesignSurfaceState.shared.hostPage?(name) { page } else { Text(verbatim: name) }
+            }
+            // A pick lands on the innermost item the host has a page for.
+            .onChange(of: selection?.wrappedValue.chain ?? []) { _, chain in
+                guard showsScreen, let hostPage = DesignSurfaceState.shared.hostPage,
+                      let name = chain.first(where: { hostPage($0) != nil }) else { return }
+                path = [name]
+            }
             .sheet(isPresented: $isImporting) {
                 ImportThemeSheet(text: $importText, failed: $importFailed, apply: applyImport)
             }
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Reset", action: reset)
+                if tunesTheme {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Reset", action: reset)
+                    }
                 }
                 if let selection {
                     ToolbarItem(placement: .topBarLeading) {
@@ -83,11 +131,13 @@ public struct TuningPanel<PresetsFooter: View>: View {
                         .accessibilityAddTraits(selection.wrappedValue.isSelecting ? [.isSelected] : [])
                     }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Import", systemImage: "square.and.arrow.down", action: beginImport)
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    CopyButton("Copy Swift", text: tuning.swiftSource)
+                if tunesTheme {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Import", systemImage: "square.and.arrow.down", action: beginImport)
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        CopyButton("Copy Swift", text: tuning.swiftSource)
+                    }
                 }
             }
         }
@@ -119,6 +169,64 @@ extension TuningPanel where PresetsFooter == EmptyView {
     }
 }
 
+/// The selected item's own knobs, registered by the host, as sliders bound to
+/// the knob store; a value at its shipped default leaves the file.
+private struct ItemKnobsSection: View {
+    let item: String
+    private let knobs = DesignSurfaceState.shared.knobs
+
+    var body: some View {
+        let specs = knobs.knobs(for: item)
+        if !specs.isEmpty {
+            Section {
+                ForEach(specs) { knob in
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack {
+                            Text(knob.title)
+                            Spacer()
+                            Text(knobs.value(item, knob), format: .number.precision(.fractionLength(knob.step < 1 ? 2 : 0)))
+                                .monospacedDigit()
+                                .foregroundStyle(.secondary)
+                        }
+                        .font(.subheadline)
+                        Slider(
+                            value: Binding(
+                                get: { knobs.value(item, knob) },
+                                set: { knobs.set(item, knob, to: $0) }),
+                            in: knob.range, step: knob.step
+                        ) { Text(knob.title) }
+                        .accessibilityIdentifier("tuning.knob.\(item).\(knob.name)")
+                    }
+                }
+                Button("Reset these knobs") { knobs.reset(item) }
+                    .accessibilityIdentifier("tuning.knob.reset")
+            } header: {
+                Text("\(item) knobs")
+            }
+        }
+    }
+}
+
+/// The host's own token document: one row per page, each pushing the page's
+/// knobs, and a reset for the whole document.
+private struct HostTokensSection: View {
+    let store: any AnyTokenStore
+
+    var body: some View {
+        Section("App tokens") {
+            ForEach(Array(store.pageTitles.enumerated()), id: \.offset) { index, title in
+                NavigationLink(title) {
+                    Form { store.page(index) }
+                        .navigationTitle(title)
+                        .navigationBarTitleDisplayMode(.inline)
+                }
+                .accessibilityIdentifier("tuning.tokens.\(index)")
+            }
+            Button("Reset the app tokens", role: .destructive) { store.reset() }
+        }
+    }
+}
+
 /// The knobs each scoped section moves, as the token names the generated
 /// `RegistryItemTokens` map uses; a section shows when the selected item reads
 /// any of them. Accent, typography, and the color pairs reach every item
@@ -131,6 +239,53 @@ private enum PanelScope {
     static let spacing: Set<String> = [
         "compactSpacing", "standardSpacing", "sectionSpacing", "controlHorizontalPadding",
     ]
+}
+
+/// The screen under the tool and the registry items on it, top to bottom:
+/// a row selects its item, and the switch outlines every piece over the app.
+private struct OnThisScreenSection: View {
+    let selection: Binding<ItemSelection>
+    private let state = DesignSurfaceState.shared
+
+    var body: some View {
+        Section {
+            let items = state.visibleItemNames
+            if items.isEmpty {
+                Text("No registry item is on this screen.")
+                    .foregroundStyle(.secondary)
+            }
+            ForEach(items, id: \.name) { item in
+                Button {
+                    withAnimation(.snappy) {
+                        selection.wrappedValue.item = item.name
+                        selection.wrappedValue.chain = [item.name]
+                    }
+                } label: {
+                    HStack {
+                        Text(verbatim: state.title(item.name))
+                        if item.count > 1 {
+                            Text("\(item.count)").foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        if selection.wrappedValue.item == item.name {
+                            Image(systemName: "checkmark").foregroundStyle(.tint)
+                        }
+                    }
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isButton)
+                .accessibilityIdentifier("tuning.screen.\(item.name)")
+            }
+            Toggle("Outline the pieces", isOn: Binding(
+                get: { state.showsOutlines }, set: { state.showsOutlines = $0 }))
+                .accessibilityIdentifier("tuning.outlines")
+        } header: {
+            Text(state.screen ?? "On this screen")
+                .accessibilityIdentifier("tuning.screen")
+        }
+    }
 }
 
 /// The selected item's name and how many of the theme's tokens reach it, with

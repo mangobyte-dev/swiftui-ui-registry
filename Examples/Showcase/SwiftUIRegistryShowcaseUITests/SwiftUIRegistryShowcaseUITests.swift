@@ -688,7 +688,8 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         // its center would then fall through to the app, so scroll until the
         // panel's frame holds the whole element. A full swipe throws a Form
         // row out of the tree, so the scroll is a short drag inside the card.
-        for _ in 0..<14 where !element.exists {
+        // The whole form is several card heights tall; each step is a third of one.
+        for _ in 0..<30 where !element.exists {
             nudge(panel, up: true)
         }
     }
@@ -799,12 +800,34 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["Control padding"].exists, "Spacing never reaches the button, so its section leaves.")
 
         let all = app.buttons["tuning.scope.all"]
-        for _ in 0..<6 where !all.exists { nudge(panel, up: false) }
+        for _ in 0..<30 where !all.exists { nudge(panel, up: false) }
         XCTAssertTrue(all.waitForExistence(timeout: 3))
         all.tap()
         XCTAssertFalse(scoped.waitForExistence(timeout: 1), "All tokens must clear the scope.")
         revealInPanel(app, app.staticTexts["Control padding"])
         XCTAssertTrue(app.staticTexts["Control padding"].waitForExistence(timeout: 3), "The whole theme must return.")
+    }
+
+    /// The panel knows the screen it is looking at and the registry items on
+    /// it, reported by the tagged roots through the environment: the header
+    /// carries the screen's name, a row per visible item selects it, and the
+    /// list follows the screen behind the panel, so a designer never has to
+    /// find an item by hunting for it.
+    @MainActor
+    func testOnThisScreenNamesTheScreenAndListsItsItems() {
+        let app = launchCatalog()
+        openItem(app, tab: "Components", name: "button")
+        openTuning(app)
+
+        let screen = app.staticTexts["tuning.screen"]
+        XCTAssertTrue(screen.waitForExistence(timeout: 3), "The panel must name the screen.")
+        XCTAssertEqual(screen.label, "button", "The innermost named screen wins.")
+        let row = app.descendants(matching: .any).matching(identifier: "tuning.screen.button").firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 3), "The button demo's item must be listed.")
+        row.tap()
+        let scoped = app.staticTexts["tuning.scope.item"]
+        XCTAssertTrue(scoped.waitForExistence(timeout: 3), "A row must select its item.")
+        XCTAssertEqual(scoped.label, "button")
     }
 
     /// Codes from `Registry/preset_vectors.json`: Amber (yellow
@@ -829,7 +852,9 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         editor.tap()
         editor.typeText("--preset a13GkaOXWxLl")
         app.buttons["Apply"].tap()
-        XCTAssertTrue(app.staticTexts["a13GkaOXWxLl"].waitForExistence(timeout: 3), "An imported code must become the current code.")
+        let imported = app.staticTexts["a13GkaOXWxLl"]
+        revealInPanel(app, imported)
+        XCTAssertTrue(imported.waitForExistence(timeout: 3), "An imported code must become the current code.")
         let swiftRow = app.buttons["Swift"]
         revealInPanel(app, swiftRow)
         XCTAssertTrue(swiftRow.waitForExistence(timeout: 3))

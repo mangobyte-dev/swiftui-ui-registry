@@ -233,11 +233,11 @@ app in debug builds and keeps the tokens in one file the agent reads
    A debug build shows a floating Tune button; a release build returns the
    content unchanged (`Sources/SwiftUIRegistryDesignSurface/DesignSurface.swift`).
 3. Tune, then read the result: the panel's Copy Code gives the preset code, Copy
-   Swift the initializer, and `design-tokens.json` in the app's Documents folder
+   Swift the initializer, and `registry-tokens.json` in the app's Documents folder
    holds both the code and every knob. On a simulator:
 
    ```sh
-   cat "$(xcrun simctl get_app_container booted <bundle id> data)/Documents/design-tokens.json"
+   cat "$(xcrun simctl get_app_container booted <bundle id> data)/Documents/registry-tokens.json"
    ```
 
 4. Scope the panel to one item: tap Select in the panel, then tap the item on
@@ -246,6 +246,14 @@ app in debug builds and keeps the tokens in one file the agent reads
    brings the theme back.
 5. Push a theme onto the simulator from the agent's side by writing the file
    with only a code, `{"code": "a74hGF01CVunaG0vzZJG"}`; the surface loads it.
+
+6. Hand the surface your app's own tokens and knobs: conform your token value
+   to `TokenDocument` (shipped value, file name, pages of `.number`, `.choice`,
+   and `.color` knobs, and `apply()` that pushes the value into what your views
+   read), then `designSurface(tokens: MyTokens.self, knobs: ["button": [ItemKnob("padding", in: 0...32, shipped: 12)]])`.
+   The panel gains an App tokens section and, for a selected item, its knobs;
+   an item reads a knob with `environment.registryKnob("button", "padding", default: 12)`
+   (`docs/registry-spec.md`, Preset codes, the design tokens file).
 
 - **DO** feed the file's `code` to `swiftui-registry preset apply` or the MCP
   `apply_preset` to write `RegistryTheme+App.swift`; the code is the contract,

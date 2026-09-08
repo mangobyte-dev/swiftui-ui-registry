@@ -24,16 +24,54 @@ public struct RegistryItemAnchorsKey : SwiftUICore::PreferenceKey {
   public static func reduce(value: inout [SwiftUIRegistryFoundations::RegistryItemAnchor], nextValue: () -> [SwiftUIRegistryFoundations::RegistryItemAnchor])
   public typealias Value = [SwiftUIRegistryFoundations::RegistryItemAnchor]
 }
+public struct RegistryItemReport : Swift::Sendable {
+  public let id: Foundation::UUID
+  public let name: Swift::String
+  public let frame: CoreFoundation::CGRect
+  public init(id: Foundation::UUID, name: Swift::String, frame: CoreFoundation::CGRect)
+}
+public struct RegistrySurfaceReporter : Swift::Sendable {
+  public var itemChanged: @_Concurrency::MainActor @Sendable (SwiftUIRegistryFoundations::RegistryItemReport) -> Swift::Void
+  public var itemLeft: @_Concurrency::MainActor @Sendable (Foundation::UUID) -> Swift::Void
+  public var screenAppeared: @_Concurrency::MainActor @Sendable (Swift::String) -> Swift::Void
+  public var screenLeft: @_Concurrency::MainActor @Sendable (Swift::String) -> Swift::Void
+  public init(itemChanged: @escaping @_Concurrency::MainActor @Sendable (SwiftUIRegistryFoundations::RegistryItemReport) -> Swift::Void, itemLeft: @escaping @_Concurrency::MainActor @Sendable (Foundation::UUID) -> Swift::Void, screenAppeared: @escaping @_Concurrency::MainActor @Sendable (Swift::String) -> Swift::Void, screenLeft: @escaping @_Concurrency::MainActor @Sendable (Swift::String) -> Swift::Void)
+}
 extension SwiftUICore::EnvironmentValues {
   public var registryItemSurface: SwiftUIRegistryFoundations::RegistryItemSurface? {
     get
     set
     _modify
   }
+  public var registrySurfaceReporter: SwiftUIRegistryFoundations::RegistrySurfaceReporter? {
+    get
+    set
+    _modify
+  }
+}
+extension SwiftUICore::View {
+  nonisolated public func registryScreen(_ name: Swift::String) -> some SwiftUICore::View
+  
 }
 extension SwiftUICore::View {
   nonisolated public func registryItem(_ name: Swift::String) -> some SwiftUICore::View
   
+}
+public struct RegistryKnobs : Swift::Equatable, Swift::Sendable {
+  public var values: [Swift::String : [Swift::String : Swift::Double]]
+  public init(values: [Swift::String : [Swift::String : Swift::Double]] = [:])
+  public func value(_ item: Swift::String, _ knob: Swift::String, default fallback: Swift::Double) -> Swift::Double
+  public static func == (a: SwiftUIRegistryFoundations::RegistryKnobs, b: SwiftUIRegistryFoundations::RegistryKnobs) -> Swift::Bool
+}
+extension SwiftUICore::EnvironmentValues {
+  public var registryKnobs: SwiftUIRegistryFoundations::RegistryKnobs? {
+    get
+    set
+    _modify
+  }
+}
+extension SwiftUICore::EnvironmentValues {
+  public func registryKnob(_ item: Swift::String, _ knob: Swift::String, default fallback: Swift::Double) -> Swift::Double
 }
 public struct RegistryTheme : Swift::Sendable {
   public var accent: SwiftUICore::Color?

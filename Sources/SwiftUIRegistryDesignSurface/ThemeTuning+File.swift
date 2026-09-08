@@ -1,7 +1,7 @@
 #if canImport(UIKit)
 import Foundation
 
-/// The file shape of a tuning: the JSON `design-tokens.json` carries.
+/// The file shape of a tuning: the JSON `registry-tokens.json` carries.
 ///
 /// `tuning` holds the same keys `swiftui-registry preset decode --json` prints
 /// under its `tuning` object, every key always present and colors spelled

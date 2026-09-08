@@ -4,7 +4,7 @@ import Synchronization
 
 /// The pinned release the tool resolves against when no clone is at hand.
 public enum RegistryRelease {
-  public static let version = "0.2.0"
+  public static let version = "0.3.0"
   public static let repository = "mangobyte-dev/swiftui-ui-registry"
   public static let tap = "mangobyte-dev/homebrew-tap"
   /// Tap tags are `swiftui-registry-<version>`, the convention measured from pfw's `pfw-<version>`.
@@ -197,9 +197,22 @@ public struct UpdateNotice {
       try? fs.createDirectory(fs.expandUser(RegistryRelease.cacheDirectory))
       try? fs.write(Data((record.rendered() + "\n").utf8), to: stampPath)
     }
-    guard let latest, latest != RegistryRelease.version else { return nil }
+    guard let latest, Self.isNewer(latest, than: RegistryRelease.version) else { return nil }
     return
       "\nswiftui-registry \(latest) is available. Run 'brew update && brew upgrade swiftui-registry' to install."
+  }
+
+  /// A tap tag prompts an upgrade only when it is strictly newer than the running tool, so a tap
+  /// still on an older tag never advertises a downgrade. Numeric fields compare after zero-padding,
+  /// as the platform floors do; an unparseable tag is treated as not newer and stays silent.
+  static func isNewer(_ candidate: String, than current: String) -> Bool {
+    func fields(_ value: String) -> [Int]? {
+      let parts = value.split(separator: ".", omittingEmptySubsequences: false).map { Int($0) }
+      guard (1...3).contains(parts.count), parts.allSatisfy({ ($0 ?? -1) >= 0 }) else { return nil }
+      return parts.map { $0! } + Array(repeating: 0, count: 3 - parts.count)
+    }
+    guard let candidate = fields(candidate), let current = fields(current) else { return false }
+    return current.lexicographicallyPrecedes(candidate)
   }
 }
 

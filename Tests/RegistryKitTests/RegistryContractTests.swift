@@ -23,14 +23,6 @@ private func guidance(_ registry: Registry, _ name: String) -> String {
   return item["usage"].text + "\n\n" + item["docs"].text
 }
 
-private func stageOneNames() throws -> [String] {
-  let roadmap = try repositoryText("docs/component-roadmap.md")
-  let start = try #require(roadmap.range(of: "### Stage 1 mapping (built)"))
-  let end = try #require(roadmap.range(of: "### Forms and data entry candidates"))
-  return roadmap[start.upperBound..<end.lowerBound].matches(of: /\| `([^`]+)` \|/)
-    .map { String($0.1) }
-}
-
 extension Commands {
   @Test func nativeSeamsInstallInsteadOfWrapperViews() throws {
     try withRepository {
@@ -111,9 +103,9 @@ extension Commands {
     ]
     try withRepository {
       let registry = try Registry(root: repositoryRoot)
-      let names = try stageOneNames()
-      #expect(Set(names) == Set(markers.keys))
-      for name in names {
+      // The Stage 1 names are the keys of `markers`; the roadmap that once listed them
+      // left the repository for the beta (docs/component-roadmap.md moved out).
+      for name in markers.keys {
         let item = try #require(registry.items[name])
         let recipe = item["kind"] == "recipe"
         let evidence = recipe ? guidance(registry, name) : try previewSource(registry, name)
@@ -316,7 +308,7 @@ extension Commands {
               "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations",
               "requirement": "0.x",
               "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-              "swiftPM": ["kind": "upToNextMinor", "minimumVersion": "0.2.1"],
+              "swiftPM": ["kind": "upToNextMinor", "minimumVersion": "0.3.0"],
             ]
           ])
         #expect(
@@ -332,7 +324,7 @@ extension Commands {
         #expect(button.code == 0)
         #expect(
           button.stdout.contains(
-            "requires: add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations"
+            "requires: add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.3.0 up to the next minor version) and link product SwiftUIRegistryFoundations"
           ))
       }
     }
@@ -434,7 +426,7 @@ extension Commands {
           ))
         #expect(
           result.stdout.contains(
-            "  requires: add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations"
+            "  requires: add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.3.0 up to the next minor version) and link product SwiftUIRegistryFoundations"
           ))
         #expect(result.stdout.contains("  ok: no collisions"))
         #expect(result.stdout.contains("next steps:"))

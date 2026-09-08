@@ -27,7 +27,7 @@
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
       "swiftPM": {
         "kind": "upToNextMinor",
-        "minimumVersion": "0.2.1"
+        "minimumVersion": "0.3.0"
       }
     }
   ],

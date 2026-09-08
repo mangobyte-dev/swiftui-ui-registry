@@ -8,7 +8,7 @@ You will get an acknowledgement within 7 days and a fix or a decision within 30 
 
 ## Supported versions
 
-Only the latest revision on `main` is supported until the project publishes versioned releases
+The latest release tag (`0.3.0`) and the `main` branch are supported. Earlier tags (`0.1.0`, `0.2.0`) are not
 
 ## What is in scope
 

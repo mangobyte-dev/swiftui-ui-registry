@@ -32,7 +32,12 @@ final class DesignSurfaceState {
     /// that every pushed page reads (a pushed page never reads its link's).
     var panelWrap: ((AnyView) -> AnyView)?
 
-    func title(_ name: String) -> String { itemTitle?(name) ?? name }
+    /// The host's title for the item, or the name when the host has none or
+    /// answers with an empty string.
+    func title(_ name: String) -> String {
+        guard let title = itemTitle?(name), !title.isEmpty else { return name }
+        return title
+    }
     /// True when the host drives `isPresented` itself (the Showcase's accessory
     /// strip); the window then shows no floating button of its own.
     var hostOwnsTrigger = false
@@ -68,7 +73,14 @@ final class DesignSurfaceState {
     var visibleItems: [RegistryItemReport] {
         frames.values
             .filter { !$0.frame.isEmpty && (stage.isEmpty || $0.frame.intersects(stage)) }
-            .sorted { ($0.frame.minY, $0.frame.minX) < ($1.frame.minY, $1.frame.minX) }
+            // Top to bottom, then leading to trailing; a container that starts
+            // where its child starts lists before the child.
+            .sorted {
+                let (a, b) = ($0.frame, $1.frame)
+                if a.minY != b.minY { return a.minY < b.minY }
+                if a.minX != b.minX { return a.minX < b.minX }
+                return a.width * a.height > b.width * b.height
+            }
     }
 
     /// The items on screen by name, in the order their first instance appears,

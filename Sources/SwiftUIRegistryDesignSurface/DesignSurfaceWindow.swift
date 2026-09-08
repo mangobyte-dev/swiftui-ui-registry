@@ -39,6 +39,32 @@ final class DesignSurfaceWindow {
         window.rootViewController = host
         window.isHidden = false
         self.window = window
+        // The keyboard follows the key window, so the key window follows the
+        // field: a field in the app under the card takes it, a field in the
+        // panel takes it back. Decided from the editing notifications, never
+        // in hit testing, where a key change cancels the touch it is deciding
+        // (measured 2026-09-08: a row under the card stopped pushing).
+        for name in [UITextField.textDidBeginEditingNotification, UITextView.textDidBeginEditingNotification] {
+            NotificationCenter.default.addObserver(forName: name, object: nil, queue: .main) { note in
+                guard let view = note.object as? UIView, let fieldWindow = view.window else { return }
+                MainActor.assumeIsolated { DesignSurfaceWindow.shared.fieldBeganEditing(in: fieldWindow) }
+            }
+        }
+    }
+
+    /// A field took focus: the window that holds it becomes key.
+    func fieldBeganEditing(in fieldWindow: UIWindow) {
+        setKey(fieldWindow === window)
+    }
+
+    /// The window's safe area in window points, the region the card is
+    /// clamped into. Read from the window rather than a geometry reader,
+    /// whose reported insets depend on where it sits in the tree (measured
+    /// 2026-09-08: one placement put the strip under the status bar, another
+    /// stopped it a whole inset too low).
+    var safeAreaOnScreen: CGRect {
+        guard let window else { return .zero }
+        return window.bounds.inset(by: window.safeAreaInsets)
     }
 
     /// The keyboard follows the key window, so the overlay takes it while the
@@ -54,11 +80,7 @@ final class DesignSurfaceWindow {
 }
 
 /// A window whose hosting view claims every point, so hit testing is decided
-/// here by the named regions instead. The key window follows the touch: a
-/// tap in the app while the panel is up lets the app's own text fields take
-/// the keyboard, and a tap back on the panel returns it (measured need: with
-/// the overlay key, a field in the app under the card never opened the
-/// keyboard).
+/// here by the named regions instead.
 private final class PassthroughWindow: UIWindow {
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         // A sheet the panel presents (Import) owns the whole window while it
@@ -67,11 +89,7 @@ private final class PassthroughWindow: UIWindow {
             return super.hitTest(point, with: event)
         }
         let rects = DesignSurfaceWindow.shared.hitRects
-        guard rects.values.contains(where: { $0.contains(point) }) else {
-            if event?.type == .touches { DesignSurfaceWindow.shared.setKey(false) }
-            return nil
-        }
-        if event?.type == .touches { DesignSurfaceWindow.shared.setKey(true) }
+        guard rects.values.contains(where: { $0.contains(point) }) else { return nil }
         return super.hitTest(point, with: event)
     }
 }
@@ -133,12 +151,19 @@ private struct DesignSurfaceOverlayRoot: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(\.layoutDirection, .leftToRight)
         .tint(ToolChrome.accent)
-        .onGeometryChange(for: CGRect.self) { proxy in
-            proxy.frame(in: .global)
-        } action: { frame in
-            state.stage = frame
+        // The stage is the whole window; measured on a background layer so
+        // the layers above keep the safe area the card is clamped into
+        // (measured 2026-09-08: ignoring it on the root put the card's strip
+        // under the status bar).
+        .background {
+            Color.clear
+                .ignoresSafeArea()
+                .onGeometryChange(for: CGRect.self) { proxy in
+                    proxy.frame(in: .global)
+                } action: { frame in
+                    state.stage = frame
+                }
         }
-        .ignoresSafeArea()
         .onChange(of: state.isPresented) { _, presented in
             DesignSurfaceWindow.shared.setKey(presented)
             if !presented { DesignSurfaceWindow.shared.hitRects["panel"] = nil }
@@ -369,12 +394,13 @@ private struct FloatingPanel<Content: View>: View {
 
     var body: some View {
         GeometryReader { proxy in
-            let bounds = proxy.frame(in: .local)
-            let safe = proxy.safeAreaInsets
-            let area = CGRect(
-                x: safe.leading, y: safe.top,
-                width: bounds.width - safe.leading - safe.trailing,
-                height: bounds.height - safe.top - safe.bottom)
+            // The safe area in this reader's coordinates: the window's safe
+            // rect shifted by where the reader sits on screen.
+            let global = proxy.frame(in: .global)
+            let safe = DesignSurfaceWindow.shared.safeAreaOnScreen
+            let area = safe.isEmpty
+                ? proxy.frame(in: .local)
+                : safe.offsetBy(dx: -global.minX, dy: -global.minY)
             let current = frame == .zero ? PanelGeometry.defaultFrame(in: area, regular: isRegular) : frame
             // The keyboard covers the bottom of the card while a field in it
             // has focus; the content gets that much more bottom inset so the
@@ -406,6 +432,11 @@ private struct FloatingPanel<Content: View>: View {
                     ? PanelGeometry.column(in: new)
                     : PanelGeometry.clamp(frame, in: new, accessibility: accessibility)
             }
+            // A larger text size raises the minimum; the card grows to it.
+            .onChange(of: accessibility) { _, accessibility in
+                guard frame != .zero else { return }
+                frame = PanelGeometry.clamp(frame, in: area, accessibility: accessibility)
+            }
             // Each size class keeps its own frame (an iPad entering Split View).
             .onChange(of: isRegular) { _, regular in
                 frame = restored(in: area, regular: regular) ?? PanelGeometry.defaultFrame(in: area, regular: regular)
@@ -414,29 +445,40 @@ private struct FloatingPanel<Content: View>: View {
         .ignoresSafeArea(.keyboard)
     }
 
+    /// The handle and the collapse control side by side. The drag gesture
+    /// runs simultaneously over the whole bar, so the card can be pulled
+    /// back by whichever part of the strip is on screen, while the collapse
+    /// button keeps its own tap and its own accessibility frame (measured
+    /// 2026-09-08: a plain gesture on a labeled container gave the button the
+    /// bar's frame and a tap at its center landed on the spacer).
     private func dragBar(area: CGRect, current: CGRect) -> some View {
-        HStack {
-            Capsule().fill(.secondary).frame(width: 36, height: 5)
-            Spacer()
+        HStack(spacing: ToolChrome.spacing) {
+            HStack {
+                Capsule().fill(.secondary).frame(width: 36, height: 5)
+                Spacer(minLength: 0)
+            }
+            .frame(maxWidth: .infinity, minHeight: 44)
+            .contentShape(Rectangle())
+            .accessibilityElement()
+            .accessibilityLabel("Tuning panel drag bar")
+            .accessibilityHint("Drag to move the panel.")
+            .accessibilityIdentifier("designSurface.dragBar")
             Button {
                 withAnimation(ToolChrome.animation) { state.isPresented = false }
             } label: {
                 Image(systemName: "chevron.down.circle.fill")
                     .font(.title3)
                     .foregroundStyle(.secondary)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Collapse the tuning panel")
             .accessibilityIdentifier("designSurface.collapse")
         }
         .padding(.horizontal, ToolChrome.spacing)
-        .padding(.vertical, ToolChrome.compactSpacing)
         .contentShape(Rectangle())
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel("Tuning panel drag bar")
-        .accessibilityHint("Drag to move the panel.")
-        .accessibilityIdentifier("designSurface.dragBar")
-        .gesture(
+        .simultaneousGesture(
             DragGesture(minimumDistance: 4, coordinateSpace: .global)
                 .onChanged { value in
                     let start = moveStart ?? current.origin

@@ -101,7 +101,11 @@ public struct TuningPanel<PresetsFooter: View>: View {
                 }
             }
             .accessibilityIdentifier("tuning.form")
-            .navigationTitle("Tune")
+            // The floating card is its own label (the drag bar says so), and
+            // at its minimum width the four toolbar controls need the room a
+            // title would take (measured 2026-09-08: "Tune" truncated to "Tu"
+            // at 300 points); the embedded panel keeps its title.
+            .navigationTitle(showsScreen ? "" : "Tune")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: String.self) { name in
                 if let page = DesignSurfaceState.shared.hostPage?(name) { page } else { Text(verbatim: name) }
@@ -532,12 +536,12 @@ private struct ColorPairRows: View {
     @Binding var darkColor: Color
 
     var body: some View {
-        Toggle(isOn: $isOn.animation(.snappy)) { Text(name) }
+        Toggle(isOn: $isOn.animation(ToolChrome.animation)) { Text(name) }
             .accessibilityIdentifier("tuning.\(identifier)")
         if isOn {
             ColorPicker(selection: $color, supportsOpacity: false) { Text("\(name) color") }
                 .accessibilityIdentifier("tuning.\(identifier)Color")
-            Toggle(isOn: $hasDark.animation(.snappy)) { Text("Separate dark \(name.lowercased())") }
+            Toggle(isOn: $hasDark.animation(ToolChrome.animation)) { Text("Separate dark \(name.lowercased())") }
                 .accessibilityIdentifier("tuning.\(identifier)Dark")
             if hasDark {
                 ColorPicker(selection: $darkColor, supportsOpacity: false) { Text("\(name) in dark") }

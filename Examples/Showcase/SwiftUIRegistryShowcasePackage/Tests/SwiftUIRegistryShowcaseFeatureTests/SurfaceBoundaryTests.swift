@@ -121,6 +121,15 @@ struct SurfaceBoundaryTests {
         state.stage = .zero
     }
 
+    @Test func `A host title that is empty falls back to the item's name`() {
+        let state = DesignSurfaceState.shared
+        state.itemTitle = { $0 == "button" ? "" : "Row" }
+        #expect(state.title("button") == "button")
+        #expect(state.title("item") == "Row")
+        state.itemTitle = nil
+        #expect(state.title("button") == "button")
+    }
+
     // MARK: Motion
 
     @Test func `The tool moves without animation under Reduce Motion`() {

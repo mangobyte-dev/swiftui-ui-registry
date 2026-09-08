@@ -138,6 +138,12 @@ private struct DesignSurfaceModifier<PresetsFooter: View>: ViewModifier {
             .environment(\.registryKnobs, state.knobs.environmentValue)
             .modifier(TunedTheme(tuning: tunesTheme ? tuning : nil))
             .onAppear {
+                // A registry-tokens.json that fails to decode (edited by hand,
+                // or written by a newer version) leaves the defaults in place
+                // and is reported once; it is rewritten only when a knob moves.
+                if let error = $tuning.loadError {
+                    SurfaceLog.logger.error("registry-tokens.json did not decode, the defaults apply: \(error)")
+                }
                 state.isEnabled = enabled
                 state.tunesTheme = tunesTheme
                 state.hostSections = hostSections

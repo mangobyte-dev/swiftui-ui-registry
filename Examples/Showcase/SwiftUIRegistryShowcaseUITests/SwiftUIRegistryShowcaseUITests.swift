@@ -870,9 +870,14 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
     /// The card is positioned in window points and clamped into the safe
     /// area; a rotation changes that area, and a card that kept its portrait
     /// frame would hang its drag bar off the landscape screen, with no way
-    /// to pull it back. The strip must stay inside after each rotation.
+    /// to pull it back. The strip must stay inside after each rotation. The
+    /// Showcase rotates on iPad only (`Config/Shared.xcconfig`), so the iPhone
+    /// destination proves nothing here and skips.
     @MainActor
-    func testFloatingPanelStaysReachableAfterRotation() {
+    func testFloatingPanelStaysReachableAfterRotation() throws {
+        try XCTSkipUnless(
+            UIDevice.current.userInterfaceIdiom == .pad,
+            "The Showcase is portrait-only on iPhone; rotation is measured on the iPad destination.")
         let app = launchCatalog()
         openTuning(app)
         let dragBar = app.descendants(matching: .any).matching(identifier: "designSurface.dragBar").firstMatch

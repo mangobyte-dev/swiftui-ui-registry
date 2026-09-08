@@ -77,8 +77,8 @@ Version 0, an honest prototype:
 - `SwiftUIRegistryDesignSurface` is an optional second product: add it and `.designSurface()` inside your theme call, and a debug build gets the Showcase's tuning panel on device, with the result persisted as `registry-tokens.json` and exported as a preset code any registry tool applies; a release build is unchanged
 - Every item carries versioned JSON metadata: dependencies, actionable SwiftPM requirements, platforms, accessibility notes, previews, captured screenshots, and a usage snippet, all checked by one validator
 - The installer writes exact-content receipts and performs conflict-aware three-way updates
-- The Showcase compiles every installable item and every recipe snippet at the iOS 26 floor, with pinned visual contract checks for the blocks and an accessibility-audited demo walk over all 50 items
-- Published 2026-09-06: the `0.1.0` tag and GitHub release with the universal `swiftui-registry` binary, and the Homebrew tap `mangobyte-dev/tap`. Not yet: hosted registry, Xcode project mutation, or platforms beyond iOS. Stage status and open deferrals live in one place, `docs/component-roadmap.md`, Current state
+- The Showcase compiles every installable item and every recipe snippet at the iOS 26 floor, with pinned visual contract checks for the blocks and an accessibility-audited demo walk over every item
+- Published 2026-09-06: the `0.1.0` tag and GitHub release with the universal `swiftui-registry` binary, and the Homebrew tap `mangobyte-dev/tap`. Not yet: hosted registry, Xcode project mutation, or platforms beyond iOS. What shipped and the known limitations live in one place, `CHANGELOG.md`
 
 ## Showcase screenshots
 
@@ -255,8 +255,7 @@ The repository is currently verified with Xcode 27.0 and Swift 6.4. The registry
 - [Website source](Website/) and the [item catalog](docs/catalog/index.md)
 - [Philosophy](docs/philosophy.md)
 - [Architecture](docs/architecture.md)
-- [Component roadmap](docs/component-roadmap.md)
-- [Research](docs/research.md)
+- [Changelog](CHANGELOG.md)
 - [Registry specification](docs/registry-spec.md)
 - [Visual testing](docs/visual-testing.md)
 - [MANGO design system](docs/mango.md)

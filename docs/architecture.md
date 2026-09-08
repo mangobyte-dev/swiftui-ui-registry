@@ -10,7 +10,7 @@ consumer app
 └── owns copied component and block source
 ```
 
-The package boundary is intentionally shallow. `SwiftUIRegistryFoundations` contains only the stable environment contract, one shared surface modifier, and the design surface's item hook (`registryItem(_:)`, an environment value, and an anchor preference, all inert without a surface). Registry components and blocks are not package products. `SwiftUIRegistryDesignSurface` is a second, optional product for debug builds: the tuning panel and its preset codec moved there from the Showcase on 2026-09-08 behind a `designSurface()` modifier and a swift-sharing file store, so any consumer app can tune the tokens on device and export them as `design-tokens.json` and a preset code. Foundations does not depend on it, it never imports registry items, and a consumer that only wants items never adds it. Since Stage 9 the product is a window above the app (seeFood's Design mode, ported): foundations carries only the hooks the items and screens need (`registryItem(_:)`, `registryScreen(_:)`, the reporter, the knobs in the environment), all inert without a surface, while the tool itself, the token engine for a host's own document, the per-item knobs, and the panel live in the product
+The package boundary is intentionally shallow. `SwiftUIRegistryFoundations` contains only the stable environment contract, one shared surface modifier, and the design surface's item hook (`registryItem(_:)`, an environment value, and an anchor preference, all inert without a surface). Registry components and blocks are not package products. `SwiftUIRegistryDesignSurface` is a second, optional product for debug builds: the tuning panel and its preset codec moved there from the Showcase on 2026-09-08 behind a `designSurface()` modifier and a swift-sharing file store, so any consumer app can tune the tokens on device and export them as `registry-tokens.json` and a preset code. Foundations does not depend on it, it never imports registry items, and a consumer that only wants items never adds it. Since Stage 9 the product is a window above the app (seeFood's Design mode, ported): foundations carries only the hooks the items and screens need (`registryItem(_:)`, `registryScreen(_:)`, the reporter, the knobs in the environment), all inert without a surface, while the tool itself, the token engine for a host's own document, the per-item knobs, and the panel live in the product
 
 ## Why this split
 
@@ -32,6 +32,12 @@ This is a hypothesis exercised by finance and nutrition, not a claim of universa
 - `Scripts/capture_previews.py`: per-item light and dark captures from the Showcase on the pinned simulator
 - `Tests/RegistryKitTests/`: the tool's command, installer, validator, preset, MCP, and generator contracts, with the captured fixtures and the website codec check under `Fixtures/`
 
+## Running the tool
+
+The `swiftui-registry` tool runs three ways against the same engine. From a clone, `swift run swiftui-registry <command>` builds and runs it against that clone, and a release build lives at `.build/release/swiftui-registry`. Installed from the Homebrew tap it runs from any directory as `swiftui-registry <command>`. It finds the registry in a fixed order: the `--registry <absolute path>` override, then a clone enclosing the working directory (the nearest ancestor holding `Registry/registry.json`), then a cached snapshot of the pinned release fetched from the published tag on first use (`docs/registry-spec.md`, Agent usage)
+
+`RegistryKit` is the SwiftUI-free engine and imports no `SwiftUIRegistryFoundations`; its only direct dependencies are `swift-argument-parser` for the executable's parser, `swift-dependencies` for replaceable effects, and `swift-snapshot-testing` for the command and generator contracts. The executable owns argument parsing and output; the foundations target stays design tokens only
+
 ## View boundaries
 
 Registry APIs use prepared display values, bindings for caller-controlled state, and action closures. `Text` inputs preserve caller-selected format styles and localization context. IDs and actions communicate selection without requiring a store, observable model, router, or persistence type
@@ -52,7 +58,7 @@ Six presets (`system`, `graphite`, `indigo`, `rose`, `emerald`, `amber`) are pla
 
 This is deliberately smaller than a full token system. Repeated colors and metrics use semantic tokens rather than hardcoded values, but a token enters foundations only after two real registry items need the exact same meaning (`everyFoundationTokenHasTwoSemanticConsumers` in `Tests/RegistryKitTests/RegistryContractTests.swift` names every token's two consumers). A style or modifier remains source-owned until two items use the exact same treatment
 
-The Showcase's tuning panel is the theme creator, and it stays beside the catalog rather than on a tab of its own: an inspector column on iPad and, on iPhone, a sheet the catalog remains interactive under (`presentationBackgroundInteraction`), with the named accents in a strip above the tab bar (`tabViewBottomAccessory`), so a slider move shows on whichever demo is open. It offers every token as a live control, presets one tap away, Copy Swift for the exact `RegistryTheme` initializer to paste at a root, Copy Code for the theme as a preset code, and Import to load either back into the knobs. A custom accent can carry a separate dark value, exported as a dynamic `UIColor`. The panel's model lives in the Showcase, not in foundations, so the package stays a value type with no persistence
+The tuning panel is the theme creator, and since Stage 9 it opens from the Tune button in the accent strip above the tab bar (`tabViewBottomAccessory`) as a floating, movable, resizable card in the tool's own window over the app, not a sheet or an inspector column; the app stays live underneath, so a slider move shows on whichever demo is open. It offers every token as a live control, presets one tap away, Copy Swift for the exact `RegistryTheme` initializer to paste at a root, Copy Code for the theme as a preset code, and Import to load either back into the knobs. A custom accent can carry a separate dark value, exported as a dynamic `UIColor`. The panel, its model, and the tuned tokens live in the `SwiftUIRegistryDesignSurface` product, not in foundations and not in the Showcase, persisted as `registry-tokens.json` through swift-sharing
 
 The theme preview is the `preview` block's wall. `ItemDemos`'s `theme-preview` case renders `PreviewWall`, so `capture_previews.py --themes` and `--preset` capture a screen of realistic product UI per preset rather than one representative strip, and the browsable `preview` block demo is that same view, so the tuning panel previews the wall live over it. The Create page and the Themes page show that wall's first screen per preset on iPhone 17, while the CSS token board stands in for a custom code that matches no preset
 
@@ -60,7 +66,7 @@ A preset code (`docs/registry-spec.md`, "Preset codes") is the theme as one shor
 
 ## Compatibility policy
 
-Pre-1.0 foundations evolve by minor version: a patch release stays source compatible, a minor release may change the contract. Items therefore declare an `upToNextMinor` SwiftPM requirement from their known-good foundation floor, currently 0.1.0, the initial published contract (see `docs/registry-spec.md`). Copied source is verified against its declared platform floor and the recorded foundation range, and the install receipt records what was required at install time
+Pre-1.0 foundations evolve by minor version: a patch release stays source compatible, a minor release may change the contract. Items therefore declare an `upToNextMinor` SwiftPM requirement from their known-good foundation floor, currently `0.3.0`, the beta contract (see `docs/registry-spec.md`). Copied source is verified against its declared platform floor and the recorded foundation range, and the install receipt records what was required at install time
 
 ## Installation behavior
 
@@ -104,6 +110,6 @@ Dependencies only point down. Registry source cannot import application architec
 
 - One monolithic UI package: undermines source ownership and progressive adoption
 - Copy every foundation file with every item: creates duplicated theme contracts
-- A production CLI before the product slices: would have validated packaging polish before product UI. The Stage 6 owner decision now authorizes the rewrite; status and evidence live in `docs/component-roadmap.md`
+- A production CLI before the product slices: would have validated packaging polish before product UI. The Stage 6 owner decision authorized the rewrite, now the shipped `swiftui-registry` tool
 - Generic Button, Toggle, Slider, List, or navigation wrapper views: hide Apple primitives instead of styling them through native protocols and modifiers
 - Mandatory TCA, MVVM, Observation model, or persistence type: leaks application architecture into presentation

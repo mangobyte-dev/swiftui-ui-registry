@@ -7,7 +7,7 @@ The feature package depends only on `SwiftUIRegistryFoundations`. Product compon
 ## What it shows
 
 - Components, Blocks, Recipes: one searchable list per kind, generated from registry metadata (`RegistryCatalogManifest.swift`). Each item opens to its live demo, install command, usage snippet, and details. Demos are registered in `ItemDemos.swift` and compile each item's real usage snippet
-- Tune: every foundation token as a live control beside a preview, with presets, appearance, text size, and right-to-left switches, and Copy Swift for the exact `RegistryTheme` to paste once at an app root. The tuned theme is applied at the catalog root, which is how a consuming app adopts the registry
+- The tuning panel: the Tune button in the accent strip above the tab bar opens it as a floating card in the tool's own window over the catalog, every foundation token on a live control, with presets, appearance, text size, and right-to-left switches, and Copy Swift for the exact `RegistryTheme` to paste once at an app root. The tuned theme is applied at the catalog root, which is how a consuming app adopts the registry
 
 ## Launch arguments
 

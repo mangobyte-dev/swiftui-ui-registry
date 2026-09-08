@@ -1,41 +1,41 @@
 # MANGO
 
-MANGO is MangoByte's sample design system, built to prove a team can own a coherent brand on this registry without a theme engine. This document is two things at once: the record of what MANGO is, and the template another team follows to build the same for their brand. It runs in the Layers of Product Design order (the domain, then the conceptual model, then the surface) so the vocabulary is settled before any surface choice, because the most neglected layer is almost always the conceptual model (docs/research-stage-7.md, F6.1)
+MANGO is MangoByte's sample design system, built to prove a team can own a coherent brand on this registry without a theme engine. This document is two things at once: the record of what MANGO is, and the template another team follows to build the same for their brand. It runs in the Layers of Product Design order (the domain, then the conceptual model, then the surface) so the vocabulary is settled before any surface choice, because the most neglected layer is almost always the conceptual model
 
 ## Goal
 
-Six pain points recur in iOS design-system work, and MANGO exists to show the registry mechanism that answers each (docs/research-stage-7.md, F8.1 to F8.6, and D8 at line 157):
+Six pain points recur in iOS design-system work, and MANGO exists to show the registry mechanism that answers each:
 
-- Drift, the same primitives rebuilt with different padding, radii, and color every sprint (F8.1): answered by one `RegistryTheme` applied once at the scene root with `registryTheme(_:)`, its tokens read from the environment rather than from scattered constants (docs/architecture.md, Foundations)
-- Agent drift, three "add a settings screen" prompts producing three button styles (F8.2): answered by the item `usage` snippets, the `swiftui-registry mcp` server, and the skills, which hand an agent what the app already decided (docs/registry-spec.md, Agent usage)
-- No `MaterialTheme` equivalent, Apple shipping the environment but not the set-up-once contract (F8.3): answered by `RegistryTheme` in the environment plus a preset code that survives copy and paste (docs/registry-spec.md, Preset codes)
-- The `Color`-extension trap, tokens as `Color` statics that type-check into nonsense like `Color.brand.secondary` (F8.4): answered by tokens living on a theme value in the environment, never as `Color` statics (Sources/SwiftUIRegistryFoundations/RegistryTheme.swift)
-- Unmaintained libraries, every SwiftUI design-system package the research found archived or asking for a maintainer (F8.5): answered by source ownership with a receipt, a narrow foundations package pinned `upToNextMinor` from 0.1.0, and `--diff` and `--update` for auditing later change (docs/architecture.md, Installation behavior and Update policy)
-- Sameness, every app converging on one skin (F8.5, F8.6): answered by the Create studio and by MANGO itself as the worked brand built on the same items (docs/component-roadmap.md, D8)
+- Drift, the same primitives rebuilt with different padding, radii, and color every sprint: answered by one `RegistryTheme` applied once at the scene root with `registryTheme(_:)`, its tokens read from the environment rather than from scattered constants (docs/architecture.md, Foundations)
+- Agent drift, three "add a settings screen" prompts producing three button styles: answered by the item `usage` snippets, the `swiftui-registry mcp` server, and the skills, which hand an agent what the app already decided (docs/registry-spec.md, Agent usage)
+- No `MaterialTheme` equivalent, Apple shipping the environment but not the set-up-once contract: answered by `RegistryTheme` in the environment plus a preset code that survives copy and paste (docs/registry-spec.md, Preset codes)
+- The `Color`-extension trap, tokens as `Color` statics that type-check into nonsense like `Color.brand.secondary`: answered by tokens living on a theme value in the environment, never as `Color` statics (Sources/SwiftUIRegistryFoundations/RegistryTheme.swift)
+- Unmaintained libraries, every SwiftUI design-system package archived or asking for a maintainer: answered by source ownership with a receipt, a narrow foundations package pinned `upToNextMinor` from 0.3.0, and `--diff` and `--update` for auditing later change (docs/architecture.md, Installation behavior and Update policy)
+- Sameness, every app converging on one skin: answered by the Create studio and by MANGO itself as the worked brand built on the same items
 
 ## Domain
 
 MANGO stands in for MangoByte's client work: banking-adjacent apps for a Kuwaiti audience, bilingual in Arabic and English, so right-to-left is a first-class layout and never an afterthought (docs/philosophy.md, Accessible and adaptive by default, which names right-to-left alignment among the release requirements). A theme is the right unit for that brief because the accent, surfaces, radii, and spacing are exactly what a bank's brand guidelines pin down, while the controls stay Apple's own
 
-The brand character MANGO commits to is warmth, generosity, and calm: a mango-orange accent spent once per screen on what you can act on, generous radii and spacing, and a strokeless surface that reads as depth rather than division (docs/component-roadmap.md, D3; docs/research-stage-7.md, F5.2). Those three words are the emotion the surface layer has to reinforce, and every token below is chosen to serve one of them
+The brand character MANGO commits to is warmth, generosity, and calm: a mango-orange accent spent once per screen on what you can act on, generous radii and spacing, and a strokeless surface that reads as depth rather than division. Those three words are the emotion the surface layer has to reinforce, and every token below is chosen to serve one of them
 
 ## Conceptual model
 
-A design system on this registry is made of five things, and naming them before the surface is the point of the Layers order (docs/research-stage-7.md, F6.1):
+A design system on this registry is made of five things, and naming them before the surface is the point of the Layers order:
 
 - The theme value: a `RegistryTheme`, a small `Sendable` struct of an optional `accent`, `onAccent`, `surface`, `border`, `positive`, `negative`, `disabledOpacity`, and `RegistryMetrics` (Sources/SwiftUIRegistryFoundations/RegistryTheme.swift)
 - The environment: the theme is injected with `@Entry` and applied once with `registryTheme(_:)` at the scene root, which also tints Apple controls when the theme declares an accent (docs/architecture.md, Foundations)
-- The presets: plain `static let` starting points (`system`, `graphite`, `indigo`, `rose`, `emerald`, `amber`), not a theme engine; MANGO adds `mango` as a seventh (docs/component-roadmap.md, slice 6)
+- The presets: plain `static let` starting points (`system`, `graphite`, `indigo`, `rose`, `emerald`, `amber`), not a theme engine; MANGO adds `mango` as a seventh
 - The code: the theme as one short shareable string, the registry's counterpart of shadcn's `--preset` codes, that the tool, the Showcase, the website, and the MCP server all read and write (docs/registry-spec.md, Preset codes)
 - The owned copies: items copied into the app and tracked by a receipt, edited in place, audited with `--diff` (docs/architecture.md, Installation behavior)
 
-What it is not: a design system here is not a new item kind. A theme does not install as a `theme` item because the preset code already round-trips through the tool, the Showcase, the website, and the MCP server, and `RegistryTheme+App.swift` carries no receipt entry and the installer never touches it (docs/registry-spec.md, Preset codes, "The theme file is not a registry item"). shadcn ships `registry:theme` items only because CSS variables must be installed as files; a Swift value in the environment does not need that (docs/research-stage-7.md, D3)
+What it is not: a design system here is not a new item kind. A theme does not install as a `theme` item because the preset code already round-trips through the tool, the Showcase, the website, and the MCP server, and `RegistryTheme+App.swift` carries no receipt entry and the installer never touches it (docs/registry-spec.md, Preset codes, "The theme file is not a registry item"). shadcn ships `registry:theme` items only because CSS variables must be installed as files; a Swift value in the environment does not need that
 
 ## Surface
 
 ### Tokens
 
-Every custom color carries a light and dark pair so it stays readable on both grounds (docs/component-roadmap.md, D3). Values not listed inherit the `RegistryMetrics` and `RegistryTheme` defaults (Sources/SwiftUIRegistryFoundations/RegistryTheme.swift):
+Every custom color carries a light and dark pair so it stays readable on both grounds. Values not listed inherit the `RegistryMetrics` and `RegistryTheme` defaults (Sources/SwiftUIRegistryFoundations/RegistryTheme.swift):
 
 | Token | Value | Why |
 |---|---|---|
@@ -52,15 +52,15 @@ Every custom color carries a light and dark pair so it stays readable on both gr
 
 ### Typography
 
-MANGO applies `Font.Design.rounded` once at the root of a MANGO scene with `.fontDesign(.rounded)`, to match the generous radii (docs/component-roadmap.md, D3). This is not a theme field, so the preset code format does not change in this slice. Every value that can change carries `.monospacedDigit()` so digits do not shift width as they update (docs/research-stage-7.md, F5.3, "Set every number in tabular or monospaced digits")
+MANGO applies `Font.Design.rounded` once at the root of a MANGO scene with `.fontDesign(.rounded)`, to match the generous radii. This is not a theme field, so the preset code format does not change for it. Every value that can change carries `.monospacedDigit()` so digits do not shift width as they update
 
 ### The strokeless surface step
 
-MANGO sets `border` to `.primary.opacity(0)` and leans on `surface` at `0.07` for hierarchy: depth comes from a luminance step in the fill, not a hairline (docs/research-stage-7.md, F5.1, "depth is fill and elevation, never a stroke"; D3, border opacity zero). The `border` token stays in foundations for shadcn parity and for themes that do want a hairline; MANGO simply sets it to nothing (docs/research-stage-7.md, line 163)
+MANGO sets `border` to `.primary.opacity(0)` and leans on `surface` at `0.07` for hierarchy: depth comes from a luminance step in the fill, not a hairline. The `border` token stays in foundations for shadcn parity and for themes that do want a hairline; MANGO simply sets it to nothing
 
 ### Motion
 
-MANGO's motion is taken from Emil Kowalski's `apple-design` skill, the example this template uses to show the system extended with an outside skill (docs/component-roadmap.md, D3; docs/research-stage-7.md, F6.3). Three of its principles carry over to SwiftUI without translation:
+MANGO's motion is taken from Emil Kowalski's `apple-design` skill, the example this template uses to show the system extended with an outside skill. Three of its principles carry over to SwiftUI without translation:
 
 - Springs by damping and response, not duration: MANGO's default is `.spring(response: 0.4, dampingFraction: 1.0)`, critically damped with no overshoot, and `dampingFraction: 0.8` only after a gesture that carried momentum ("Start most UI at damping 1.0", "Add bounce (damping ~0.8) only when the gesture itself carried momentum"; apple-design skill, section 4, "Behavior over animation")
 - Feedback on press, not release: the button style scales to 0.97 on `isPressed`, applied on press ("Respond on pointer-down, not on release"; apple-design skill, section 1, "Response")

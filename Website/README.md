@@ -13,4 +13,4 @@ npm run build        # static export under out/
 
 Production is Cloudflare Workers static assets (`wrangler.jsonc`, worker `swiftui-registry`): `npm run deploy` builds and uploads `out/` to https://swiftui-registry.mangobytekw.workers.dev after `npx wrangler login`. `.github/workflows/pages.yml` is an alternative that deploys the same export to GitHub Pages with `NEXT_PUBLIC_BASE_PATH` set to the repository name
 
-Pages: `/` (hero, set-up-once steps, item cards), `/items/<name>/` (preview with light and dark captures, install command, usage, source, accessibility contract, details), `/themes/` (presets, the Tune tab export, the token table). Components come from shadcn/ui (`components/ui`); site components live in `components/`
+Pages: `/` (hero, set-up-once steps, item cards), `/items/<name>/` (preview with light and dark captures, install command, usage, source, accessibility contract, details), `/themes/` (presets, the tuning panel export, the token table). Components come from shadcn/ui (`components/ui`); site components live in `components/`

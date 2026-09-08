@@ -13,7 +13,8 @@ change (see "Scoping" below).
 - [ ] `swift run swiftui-registry generate catalog`
 - [ ] `swift run swiftui-registry generate showcase-manifest`
 - [ ] `swift run swiftui-registry generate site-data`
-- [ ] `git diff --exit-code -- docs/catalog Examples/Showcase Website/content`
+- [ ] `swift run swiftui-registry generate item-tokens`
+- [ ] `git diff --exit-code -- docs/catalog Examples/Showcase Website/content Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift`
 - [ ] `swift test`
 - [ ] `make format-check`
 - [ ] `swift run swiftui-registry search nutrition dashboard --kind block --platform iOS --target-version 26.0`
@@ -25,7 +26,7 @@ change (see "Scoping" below).
 
 ## Captures (a visible change to an item)
 
-- [ ] `python3 Scripts/capture_previews.py <item>` on the pinned simulator, then regenerate the three generators above
+- [ ] `python3 Scripts/capture_previews.py <item>` on the pinned simulator, then regenerate the four generators above
 
 ## Scoping (quoted from AGENTS.md)
 

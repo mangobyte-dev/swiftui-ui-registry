@@ -15,7 +15,7 @@ local catalog, prints the exact install plan, copies the source with a receipt,
 and audits or merges later change.
 
 This skill answers two of the recorded iOS design-system pain points
-(`docs/component-roadmap.md`, D8; `docs/mango.md`, Goal):
+(`docs/mango.md`, Goal):
 
 - Agent drift, three "add a settings screen" prompts producing three button
   styles: the item `usage` snippets, the `swiftui-registry mcp` server, and this
@@ -23,7 +23,7 @@ This skill answers two of the recorded iOS design-system pain points
   fixed public API instead of inventing one (`docs/registry-spec.md`, Agent usage).
 - Maintenance risk, the design-system package that goes unmaintained: source
   ownership with a receipt, a narrow foundations package pinned `upToNextMinor`
-  from `0.1.0`, and `--diff` and `--update` for auditing later change
+  from `0.3.0`, and `--diff` and `--update` for auditing later change
   (`docs/philosophy.md`, "Source ownership where change is expected";
   `docs/architecture.md`, Installation behavior and Update policy).
 
@@ -45,7 +45,7 @@ content (`docs/architecture.md`, Installation behavior). It prints one package
 line you act on, for example:
 
 ```text
-add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.3.0 up to the next minor version) and link product SwiftUIRegistryFoundations
 ```
 
 ## API interface
@@ -55,7 +55,7 @@ add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0
 - Every item's call-site `usage` snippet, quoted from its canonical source: `references/usage.md`
 
 Quote every registry API from these files, never from memory: API hallucination
-is unsolved (`docs/component-roadmap.md`, D6).
+is unsolved.
 
 ## How to find an item
 
@@ -323,8 +323,8 @@ editor (`docs/architecture.md`, Discovery policy).
 ## How to work from a clone or the snapshot
 
 The why: the tool finds the registry in a fixed order so the same command works
-inside a checkout and from an installed binary (`docs/cli-migration.md`,
-Resolution and distribution).
+inside a checkout and from an installed binary (`docs/architecture.md`,
+Running the tool).
 
 1. Resolution order: `--registry <path>` wins first, then a clone enclosing the
    working directory (the nearest ancestor holding `Registry/registry.json`),

@@ -14,7 +14,7 @@ once at the scene root, a short preset code that survives copy and paste, and a
 worked design system (MANGO) to extend.
 
 This skill answers two of the recorded iOS design-system pain points
-(`docs/component-roadmap.md`, D8; `docs/mango.md`, Goal):
+(`docs/mango.md`, Goal):
 
 - Drift, the same primitives rebuilt with different padding, radii, and color
   every sprint: one `RegistryTheme` applied once with `registryTheme(_:)`, its
@@ -23,7 +23,7 @@ This skill answers two of the recorded iOS design-system pain points
   Foundations; `docs/mango.md`, Goal, the `Color`-extension trap).
 - Sameness, every app converging on one skin: the preset code plus the Create
   studio and MANGO as the worked brand let a team build a distinct look on the
-  same items (`docs/mango.md`, Goal; `docs/component-roadmap.md`, D8).
+  same items (`docs/mango.md`, Goal).
 
 ## Quick start
 
@@ -181,25 +181,25 @@ Conceptual model). MANGO is the template a team follows for its own brand.
   MANGO customized in the Showcase).
 - **DO NOT** add a `theme` item kind; a preset code already round-trips through
   the tool, the Showcase, the website, and the MCP server, and the theme file is
-  by contract not a registry item (`docs/component-roadmap.md`, slice 6 decision).
+  by contract not a registry item (`docs/registry-spec.md`, Preset codes).
 
 ## How to use the Create studio and the tuning panel
 
 The why: the Create studio and the Showcase's tuning panel are the theme creator;
-the panel stays beside the catalog so a slider move shows on whichever demo is
-open (`docs/architecture.md`, Foundations).
+the panel floats over the catalog in the tool's own window so a slider move
+shows on whichever demo is open (`docs/architecture.md`, Foundations).
 
 1. Open the Create page at the code's URL to see the tokens as a CSS board and,
    for one of the presets, the real capture: `?preset=<code>` on the website (for
    example `https://swiftui-registry.mangobytekw.workers.dev/create?preset=a13GkaOXWwIF`,
    from `preset url` or `preset decode`).
-2. In the Showcase's Tune tab, move the sliders, then use the export actions:
+2. In the Showcase, tap Tune in the accent strip to open the tuning panel, move
+   the sliders, then use the export actions:
    Copy Swift for the exact `RegistryTheme(...)` initializer to paste at a root,
    Copy Code for the theme as a preset code, and Import to load either back into
    the knobs (`docs/architecture.md`, Foundations).
 3. Export a MANGO-style theme package from the Create studio's Export tab:
-   `RegistryTheme+App.swift` and `THEME.md`, with copy buttons and no downloads
-   (`docs/component-roadmap.md`, slice 7).
+   `RegistryTheme+App.swift` and `THEME.md`, with copy buttons and no downloads.
 
 - **DO** use Copy Swift when you want the initializer to paste, and Copy Code when
   you want the portable string.
@@ -214,8 +214,7 @@ the spacing that feels right) is tuned by looking at the real app, not the
 Showcase, and the result has to reach the agent that writes the next pass. The
 `SwiftUIRegistryDesignSurface` product puts the Showcase's tuning panel into any
 app in debug builds and keeps the tokens in one file the agent reads
-(`docs/registry-spec.md`, Preset codes, "The design tokens file";
-`docs/component-roadmap.md`, Stage 8).
+(`docs/registry-spec.md`, Preset codes, "The design tokens file").
 
 1. Add the second product beside foundations (same package, same rule) and link
    it to the app target: `.product(name: "SwiftUIRegistryDesignSurface", package: "swiftui-ui-registry")`.

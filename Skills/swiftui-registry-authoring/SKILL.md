@@ -12,10 +12,9 @@ metadata:
 Add a component, block, or recipe to the registry so it stays part of one
 coherent, maintainable catalog. This skill teaches the conceptual model (item,
 kind, dependency, receipt, code) before the surface, because naming those first
-is what keeps an addition consistent (`docs/component-roadmap.md`, D6;
-`docs/mango.md`, Conceptual model).
+is what keeps an addition consistent (`docs/mango.md`, Conceptual model).
 
-It answers two of the recorded pain points (`docs/component-roadmap.md`, D8):
+It answers two of the recorded pain points:
 
 - Sameness and sprawl: the value gate and the two-consumer rule stop the catalog
   filling with redundant wrappers, so each item earns its place (`docs/registry-spec.md`,
@@ -42,7 +41,7 @@ Read `AGENTS.md` in full before authoring; it is the contract this skill serves.
 - The scoped verification list as a checklist: `references/checklist.md`
 
 Quote every public API in a `usage` snippet from the item's real canonical source,
-never from memory (`AGENTS.md`, Rules; `docs/component-roadmap.md`, D6).
+never from memory (`AGENTS.md`, Rules).
 
 ## How to decide the kind
 
@@ -168,8 +167,7 @@ exact commands and scoping are in `references/checklist.md`.
 
 The why: an item is publishable only when it installs, compiles at its declared
 floor, and passes the demo walk's accessibility audit on both device classes
-(`docs/philosophy.md`, Compile and visually verified; `docs/component-roadmap.md`,
-Stage 7 exit criteria).
+(`docs/philosophy.md`, Compile and visually verified).
 
 1. Build the Showcase, then run the UI suite on the iPhone 17, iOS 27 simulator
    (UDID `1807166B-C557-4F6B-B177-D5F3F701CBD7`, `AGENTS.md`, Environment pins):

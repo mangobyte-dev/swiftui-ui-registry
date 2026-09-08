@@ -4,7 +4,10 @@ import Sharing
 import SwiftUIRegistryFoundations
 
 /// One tunable number an item exposes: its name in the item's source, the
-/// title the panel shows, its range and step, and the shipped default.
+/// title the panel shows, its range and step, and the shipped default. A step
+/// that is not positive becomes 1 and a shipped value outside the range is
+/// clamped into it, with a line in the log, so a host's slip never traps the
+/// slider in a build that ships.
 public struct ItemKnob: Identifiable, Sendable, Equatable {
     public let name: String
     public let title: String
@@ -17,8 +20,18 @@ public struct ItemKnob: Identifiable, Sendable, Equatable {
         self.name = name
         self.title = title ?? name
         self.range = range
-        self.step = step
-        self.shipped = shipped
+        if step > 0 {
+            self.step = step
+        } else {
+            SurfaceLog.logger.error("Knob \(name, privacy: .public): step \(step) is not positive; using 1")
+            self.step = 1
+        }
+        if range.contains(shipped) {
+            self.shipped = shipped
+        } else {
+            SurfaceLog.logger.error("Knob \(name, privacy: .public): shipped \(shipped) is outside \(range.lowerBound)...\(range.upperBound); clamped")
+            self.shipped = min(max(range.lowerBound, shipped), range.upperBound)
+        }
     }
 }
 

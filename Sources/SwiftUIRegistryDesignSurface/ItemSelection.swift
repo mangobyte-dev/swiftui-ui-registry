@@ -19,19 +19,24 @@ public struct ItemSelection: Equatable, Sendable {
 
     /// The item under a tap, the innermost of the tagged frames that contain
     /// the point: a button inside a block is the button, not the block. Ties
-    /// (equal areas) keep the first reported, which is the outer one in
-    /// preference order, so an item that fills its container exactly still
-    /// resolves to the container's child only when the child is smaller.
+    /// (equal areas) resolve by name, so an item that fills its container
+    /// exactly picks the same one on every tap whatever order the frames
+    /// arrive in.
     public static func pick(_ frames: [(name: String, frame: CGRect)], at point: CGPoint) -> String? {
         chain(frames, at: point).first
     }
 
     /// Every item under the point, innermost (smallest) first, each name once.
+    /// An empty frame contains nothing; a point outside every frame gives an
+    /// empty chain.
     public static func chain(_ frames: [(name: String, frame: CGRect)], at point: CGPoint) -> [String] {
         var seen: Set<String> = []
         return frames
-            .filter { $0.frame.contains(point) }
-            .sorted { $0.frame.width * $0.frame.height < $1.frame.width * $1.frame.height }
+            .filter { !$0.frame.isEmpty && $0.frame.contains(point) }
+            .sorted {
+                let (a, b) = ($0.frame.width * $0.frame.height, $1.frame.width * $1.frame.height)
+                return a == b ? $0.name < $1.name : a < b
+            }
             .compactMap { seen.insert($0.name).inserted ? $0.name : nil }
     }
 }

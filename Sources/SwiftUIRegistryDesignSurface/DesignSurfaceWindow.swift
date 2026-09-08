@@ -14,6 +14,9 @@ final class DesignSurfaceWindow {
     static let shared = DesignSurfaceWindow()
 
     private var window: PassthroughWindow?
+    /// The app's own window, which gets the keyboard back when a touch or a
+    /// close hands it over.
+    private weak var appWindow: UIWindow?
     /// The window's touchable regions in window points; a touch anywhere else
     /// reaches the app.
     var hitRects: [String: CGRect] = [:]
@@ -25,6 +28,7 @@ final class DesignSurfaceWindow {
         guard window == nil,
               let scene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first
         else { return }
+        appWindow = scene.keyWindow ?? scene.windows.first
         let window = PassthroughWindow(windowScene: scene)
         // Above the alert level: the Liquid Glass tab bar sat over the card at
         // `.alert + 1` on iOS 27 (measured on the iPhone 17 simulator).
@@ -37,20 +41,24 @@ final class DesignSurfaceWindow {
         self.window = window
     }
 
-    /// The overlay takes the key window while the panel is up, so its text
-    /// fields receive the keyboard; the app's window gets it back on close.
+    /// The keyboard follows the key window, so the overlay takes it while the
+    /// panel is up and the app gets it back on close.
     func setKey(_ key: Bool) {
         guard let window else { return }
         if key {
-            window.makeKey()
-        } else if let app = window.windowScene?.windows.first(where: { $0 !== window }) {
-            app.makeKey()
+            if !window.isKeyWindow { window.makeKey() }
+        } else if let app = appWindow ?? window.windowScene?.windows.first(where: { $0 !== window }) {
+            if !app.isKeyWindow { app.makeKey() }
         }
     }
 }
 
 /// A window whose hosting view claims every point, so hit testing is decided
-/// here by the named regions instead.
+/// here by the named regions instead. The key window follows the touch: a
+/// tap in the app while the panel is up lets the app's own text fields take
+/// the keyboard, and a tap back on the panel returns it (measured need: with
+/// the overlay key, a field in the app under the card never opened the
+/// keyboard).
 private final class PassthroughWindow: UIWindow {
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         // A sheet the panel presents (Import) owns the whole window while it
@@ -59,7 +67,11 @@ private final class PassthroughWindow: UIWindow {
             return super.hitTest(point, with: event)
         }
         let rects = DesignSurfaceWindow.shared.hitRects
-        guard rects.values.contains(where: { $0.contains(point) }) else { return nil }
+        guard rects.values.contains(where: { $0.contains(point) }) else {
+            if event?.type == .touches { DesignSurfaceWindow.shared.setKey(false) }
+            return nil
+        }
+        if event?.type == .touches { DesignSurfaceWindow.shared.setKey(true) }
         return super.hitTest(point, with: event)
     }
 }
@@ -80,9 +92,13 @@ extension View {
 }
 
 /// The overlay's content: the floating button, and the panel card while it
-/// is up. Reads the tuned theme so its chrome follows the knobs.
+/// is up. Its chrome is fixed (``ToolChrome``), never the tuned theme. Every
+/// layer is positioned in window points with a left origin, whatever the
+/// app's layout direction, because the reported frames are global; the card's
+/// own content reads the system direction again.
 private struct DesignSurfaceOverlayRoot: View {
     @Shared(.designTokens) private var tuning
+    @Environment(\.layoutDirection) private var direction
     private let state = DesignSurfaceState.shared
 
     var body: some View {
@@ -102,7 +118,7 @@ private struct DesignSurfaceOverlayRoot: View {
             // While Select is armed the card steps aside so every item on
             // the screen is tappable; it returns with the scope once picked.
             if state.isPresented && !state.selection.isSelecting {
-                FloatingPanel {
+                FloatingPanel(contentDirection: direction) {
                     TuningPanel(tuning: Binding($tuning), selection: selectionBinding, showsScreen: true) {
                         if let footer = state.presetsFooter { footer }
                     }
@@ -115,10 +131,23 @@ private struct DesignSurfaceOverlayRoot: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(\.layoutDirection, .leftToRight)
         .tint(ToolChrome.accent)
+        .onGeometryChange(for: CGRect.self) { proxy in
+            proxy.frame(in: .global)
+        } action: { frame in
+            state.stage = frame
+        }
+        .ignoresSafeArea()
         .onChange(of: state.isPresented) { _, presented in
             DesignSurfaceWindow.shared.setKey(presented)
             if !presented { DesignSurfaceWindow.shared.hitRects["panel"] = nil }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification)) { note in
+            state.keyboardFrame = (note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect) ?? .zero
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+            state.keyboardFrame = .zero
         }
     }
 
@@ -129,7 +158,8 @@ private struct DesignSurfaceOverlayRoot: View {
 
 /// While Select is armed the whole window takes the next tap and resolves it
 /// to the innermost reported frame, so items never compete for a gesture and
-/// a root inside a sheet is as selectable as one in the main tree.
+/// a root inside a sheet is as selectable as one in the main tree. A tap on
+/// nothing clears the selection and disarms Select.
 private struct SelectCapture: View {
     private let state = DesignSurfaceState.shared
 
@@ -139,7 +169,7 @@ private struct SelectCapture: View {
             .onTapGesture(coordinateSpace: .global) { point in
                 let frames = state.frames.values.map { (name: $0.name, frame: $0.frame) }
                 let chain = ItemSelection.chain(frames, at: point)
-                withAnimation(.snappy) {
+                withAnimation(ToolChrome.animation) {
                     state.selection.item = chain.first
                     state.selection.chain = chain
                     state.selection.isSelecting = false
@@ -253,7 +283,7 @@ private struct FloatingTuneButton: View {
             let restX = restingTrailing ? size.width - inset - diameter / 2 : inset + diameter / 2
             let restY = min(max(restingY, 0.1), 0.9) * size.height
             Button {
-                withAnimation(.snappy) { state.isPresented.toggle() }
+                withAnimation(ToolChrome.animation) { state.isPresented.toggle() }
             } label: {
                 Image(systemName: "slider.horizontal.3")
                     .font(.title3.weight(.semibold))
@@ -268,6 +298,7 @@ private struct FloatingTuneButton: View {
                 Toggle("Margins", systemImage: "arrow.left.and.right", isOn: guide(.margins))
             }
             .accessibilityLabel("Tune")
+            .accessibilityHint("Opens the design surface panel. Hold for outlines and guides.")
             .accessibilityIdentifier("designSurface.button")
             .shadow(radius: 8, y: 4)
             // Measured on the button itself: after `position` the view fills
@@ -280,7 +311,7 @@ private struct FloatingTuneButton: View {
                     .onEnded { value in
                         let x = restX + value.translation.width
                         let y = restY + value.translation.height
-                        withAnimation(.snappy) {
+                        withAnimation(ToolChrome.animation) {
                             restingTrailing = x > size.width / 2
                             restingY = Double(min(max(y / size.height, 0.1), 0.9))
                             drag = .zero
@@ -291,37 +322,50 @@ private struct FloatingTuneButton: View {
     }
 }
 
-private enum PanelMetrics {
-    static let minimumSize = CGSize(width: 300, height: 260)
-    static let columnWidth: CGFloat = 380
-    static let snapDistance: CGFloat = 24
-    /// The part of the drag bar that always stays inside the safe area, so
-    /// the card can hang off any edge and still be pulled back.
-    static let grab = CGSize(width: 96, height: 44)
-}
-
 /// The tool's own look: fixed system values, never the tuned theme, so the
-/// panel holds still while a knob moves (owner, 2026-09-08).
+/// panel holds still while a knob moves (owner, 2026-09-08). Its motion
+/// follows Reduce Motion: none when the setting is on.
 enum ToolChrome {
     static let accent = Color(uiColor: .systemBlue)
     static let cardRadius: CGFloat = 16
     static let spacing: CGFloat = 12
     static let compactSpacing: CGFloat = 8
+
+    @MainActor static var animation: Animation? {
+        animation(reduceMotion: UIAccessibility.isReduceMotionEnabled)
+    }
+
+    static func animation(reduceMotion: Bool) -> Animation? {
+        reduceMotion ? nil : .snappy
+    }
 }
 
 /// The panel as a floating card: a drag bar moves it, a corner grip resizes
 /// it, a chevron collapses it to the button, and dragging it against the
 /// trailing edge snaps it into a full-height side column. Its frame is
-/// remembered per size class.
+/// remembered per size class, re-clamped when the area changes (rotation),
+/// and restored when the size class changes; the rules are ``PanelGeometry``.
 private struct FloatingPanel<Content: View>: View {
+    /// The system layout direction for the card's content; the card itself
+    /// is positioned in window points.
+    let contentDirection: LayoutDirection
     @ViewBuilder let content: Content
     private let state = DesignSurfaceState.shared
     @Environment(\.horizontalSizeClass) private var sizeClass
-    @AppStorage("designSurface.panel.compact") private var compactFrame = ""
-    @AppStorage("designSurface.panel.regular") private var regularFrame = ""
+    @Environment(\.dynamicTypeSize) private var typeSize
+    @AppStorage(PanelGeometry.storageKey(regular: false)) private var compactFrame = ""
+    @AppStorage(PanelGeometry.storageKey(regular: true)) private var regularFrame = ""
     @State private var frame: CGRect = .zero
     @State private var moveStart: CGPoint?
     @State private var sizeStart: CGSize?
+
+    init(contentDirection: LayoutDirection, @ViewBuilder content: () -> Content) {
+        self.contentDirection = contentDirection
+        self.content = content()
+    }
+
+    private var isRegular: Bool { sizeClass == .regular }
+    private var accessibility: Bool { typeSize.isAccessibilitySize }
 
     var body: some View {
         GeometryReader { proxy in
@@ -331,11 +375,18 @@ private struct FloatingPanel<Content: View>: View {
                 x: safe.leading, y: safe.top,
                 width: bounds.width - safe.leading - safe.trailing,
                 height: bounds.height - safe.top - safe.bottom)
-            let current = frame == .zero ? defaultFrame(in: area) : frame
+            let current = frame == .zero ? PanelGeometry.defaultFrame(in: area, regular: isRegular) : frame
+            // The keyboard covers the bottom of the card while a field in it
+            // has focus; the content gets that much more bottom inset so the
+            // field can scroll above it and the card itself holds still.
+            let keyboard = state.keyboardFrame
+            let overlap = keyboard.isEmpty ? 0 : max(0, current.maxY - keyboard.minY)
             VStack(spacing: 0) {
                 dragBar(area: area, current: current)
                 content
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .safeAreaPadding(.bottom, overlap)
+                    .environment(\.layoutDirection, contentDirection)
             }
             .background(.regularMaterial, in: RoundedRectangle(cornerRadius: ToolChrome.cardRadius, style: .continuous))
             .clipShape(RoundedRectangle(cornerRadius: ToolChrome.cardRadius, style: .continuous))
@@ -345,7 +396,19 @@ private struct FloatingPanel<Content: View>: View {
             .designSurfaceHitRegion("panel")
             .position(x: current.midX, y: current.midY)
             .onAppear {
-                if frame == .zero { frame = restored(in: area) ?? defaultFrame(in: area) }
+                if frame == .zero { frame = restored(in: area) ?? PanelGeometry.defaultFrame(in: area, regular: isRegular) }
+            }
+            // Rotation: a column stays a column in the new area, any other
+            // frame is pulled back inside it.
+            .onChange(of: area) { old, new in
+                guard frame != .zero else { return }
+                frame = frame == PanelGeometry.column(in: old)
+                    ? PanelGeometry.column(in: new)
+                    : PanelGeometry.clamp(frame, in: new, accessibility: accessibility)
+            }
+            // Each size class keeps its own frame (an iPad entering Split View).
+            .onChange(of: isRegular) { _, regular in
+                frame = restored(in: area, regular: regular) ?? PanelGeometry.defaultFrame(in: area, regular: regular)
             }
         }
         .ignoresSafeArea(.keyboard)
@@ -356,7 +419,7 @@ private struct FloatingPanel<Content: View>: View {
             Capsule().fill(.secondary).frame(width: 36, height: 5)
             Spacer()
             Button {
-                withAnimation(.snappy) { state.isPresented = false }
+                withAnimation(ToolChrome.animation) { state.isPresented = false }
             } label: {
                 Image(systemName: "chevron.down.circle.fill")
                     .font(.title3)
@@ -364,10 +427,15 @@ private struct FloatingPanel<Content: View>: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Collapse the tuning panel")
+            .accessibilityIdentifier("designSurface.collapse")
         }
         .padding(.horizontal, ToolChrome.spacing)
         .padding(.vertical, ToolChrome.compactSpacing)
         .contentShape(Rectangle())
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Tuning panel drag bar")
+        .accessibilityHint("Drag to move the panel.")
+        .accessibilityIdentifier("designSurface.dragBar")
         .gesture(
             DragGesture(minimumDistance: 4, coordinateSpace: .global)
                 .onChanged { value in
@@ -375,11 +443,13 @@ private struct FloatingPanel<Content: View>: View {
                     moveStart = start
                     var moved = current
                     moved.origin = CGPoint(x: start.x + value.translation.width, y: start.y + value.translation.height)
-                    frame = clamp(moved, in: area)
+                    frame = PanelGeometry.clamp(moved, in: area, accessibility: accessibility)
                 }
                 .onEnded { _ in
                     moveStart = nil
-                    snapIfAtEdge(in: area)
+                    if let column = PanelGeometry.snapped(frame, in: area) {
+                        withAnimation(ToolChrome.animation) { frame = column }
+                    }
                     remember()
                 }
         )
@@ -393,6 +463,8 @@ private struct FloatingPanel<Content: View>: View {
             .frame(minWidth: 44, minHeight: 44)
             .contentShape(Rectangle())
             .accessibilityLabel("Resize the tuning panel")
+            .accessibilityHint("Drag to resize the panel.")
+            .accessibilityIdentifier("designSurface.grip")
             .gesture(
                 DragGesture(minimumDistance: 4, coordinateSpace: .global)
                     .onChanged { value in
@@ -400,9 +472,9 @@ private struct FloatingPanel<Content: View>: View {
                         sizeStart = start
                         var resized = current
                         resized.size = CGSize(
-                            width: max(PanelMetrics.minimumSize.width, start.width + value.translation.width),
-                            height: max(PanelMetrics.minimumSize.height, start.height + value.translation.height))
-                        frame = clamp(resized, in: area)
+                            width: start.width + value.translation.width,
+                            height: start.height + value.translation.height)
+                        frame = PanelGeometry.resized(resized, in: area, accessibility: accessibility)
                     }
                     .onEnded { _ in
                         sizeStart = nil
@@ -411,57 +483,15 @@ private struct FloatingPanel<Content: View>: View {
             )
     }
 
-    private func defaultFrame(in area: CGRect) -> CGRect {
-        if sizeClass == .regular {
-            return CGRect(
-                x: area.maxX - PanelMetrics.columnWidth, y: area.minY,
-                width: PanelMetrics.columnWidth, height: area.height)
-        }
-        // Above the app's bottom bar by a tab bar's height, so the whole card
-        // is reachable before the person moves it.
-        let barAllowance: CGFloat = 92
-        // Tall by default: the person shrinks it from the grip when the app
-        // needs the room, and a taller card keeps a whole section in reach.
-        let height = min(area.height * 0.72, 620)
-        return CGRect(
-            x: area.minX, y: area.maxY - barAllowance - height,
-            width: area.width, height: height)
-    }
-
-    /// The card may hang off the leading, trailing, and bottom edges so the
-    /// screen behind it can be seen; the drag bar's grab strip stays inside
-    /// the safe area, so it can always be pulled back.
-    private func clamp(_ rect: CGRect, in area: CGRect) -> CGRect {
-        var result = rect
-        result.size.width = min(max(PanelMetrics.minimumSize.width, result.width), area.width)
-        result.size.height = min(max(PanelMetrics.minimumSize.height, result.height), area.height)
-        let grab = PanelMetrics.grab
-        result.origin.x = min(max(area.minX - result.width + grab.width, result.origin.x), area.maxX - grab.width)
-        result.origin.y = min(max(area.minY, result.origin.y), area.maxY - grab.height)
-        return result
-    }
-
-    /// Dragged against the trailing edge, the card becomes the side column.
-    private func snapIfAtEdge(in area: CGRect) {
-        guard area.maxX - frame.maxX < PanelMetrics.snapDistance, area.width > PanelMetrics.columnWidth * 1.5 else { return }
-        withAnimation(.snappy) {
-            frame = CGRect(
-                x: area.maxX - PanelMetrics.columnWidth, y: area.minY,
-                width: PanelMetrics.columnWidth, height: area.height)
-        }
-    }
-
     private func remember() {
-        let text = [frame.minX, frame.minY, frame.width, frame.height].map { String(format: "%.1f", $0) }
-            .joined(separator: ",")
-        if sizeClass == .regular { regularFrame = text } else { compactFrame = text }
+        let text = PanelGeometry.encode(frame)
+        if isRegular { regularFrame = text } else { compactFrame = text }
     }
 
-    private func restored(in area: CGRect) -> CGRect? {
-        let text = sizeClass == .regular ? regularFrame : compactFrame
-        let parts = text.split(separator: ",").compactMap { Double($0) }
-        guard parts.count == 4 else { return nil }
-        return clamp(CGRect(x: parts[0], y: parts[1], width: parts[2], height: parts[3]), in: area)
+    private func restored(in area: CGRect, regular: Bool? = nil) -> CGRect? {
+        let text = (regular ?? isRegular) ? regularFrame : compactFrame
+        guard let frame = PanelGeometry.decode(text) else { return nil }
+        return PanelGeometry.clamp(frame, in: area, accessibility: accessibility)
     }
 }
 #endif

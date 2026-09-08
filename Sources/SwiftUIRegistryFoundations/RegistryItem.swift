@@ -15,27 +15,6 @@ public struct RegistryItemSurface: Equatable, Sendable {
     }
 }
 
-/// One item root's frame, reported to a surface through
-/// ``RegistryItemAnchorsKey`` so a tap can pick the innermost item under it
-/// without the items competing for the gesture.
-public struct RegistryItemAnchor {
-    public let name: String
-    public let bounds: Anchor<CGRect>
-
-    public init(name: String, bounds: Anchor<CGRect>) {
-        self.name = name
-        self.bounds = bounds
-    }
-}
-
-public struct RegistryItemAnchorsKey: PreferenceKey {
-    public static var defaultValue: [RegistryItemAnchor] { [] }
-
-    public static func reduce(value: inout [RegistryItemAnchor], nextValue: () -> [RegistryItemAnchor]) {
-        value += nextValue()
-    }
-}
-
 /// One tagged root's place on screen, reported to a surface as it changes:
 /// the instance (`id`), the item name, and the frame in the screen's global
 /// coordinates. Reported through the environment rather than a preference so
@@ -82,7 +61,8 @@ public extension EnvironmentValues {
 public extension View {
     /// Names the screen this view is, so a design surface can title its
     /// panel and its notes with it. Reported on appear and disappear; nested
-    /// names stack, the innermost visible one wins. Inert without a surface.
+    /// names stack, the innermost visible one wins. Inert without a surface,
+    /// and an empty name reports nothing.
     nonisolated func registryScreen(_ name: String) -> some View {
         modifier(RegistryScreenModifier(name: name))
     }
@@ -94,8 +74,8 @@ private struct RegistryScreenModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .onAppear { reporter?.screenAppeared(name) }
-            .onDisappear { reporter?.screenLeft(name) }
+            .onAppear { if !name.isEmpty { reporter?.screenAppeared(name) } }
+            .onDisappear { if !name.isEmpty { reporter?.screenLeft(name) } }
     }
 }
 
@@ -103,9 +83,9 @@ public extension View {
     /// Names the registry item whose root this view is, so a design surface
     /// can select it on device: while a surface is present the root reports
     /// its frame and draws a selection ring and its name when selected.
-    /// Without a surface the modifier adds nothing a user or a test can see.
-    /// Every installable item applies it once, at the end of its root view's
-    /// or style's modifier chain.
+    /// Without a surface the modifier adds nothing a user or a test can see,
+    /// and an empty name tags nothing. Every installable item applies it
+    /// once, at the end of its root view's or style's modifier chain.
     nonisolated func registryItem(_ name: String) -> some View {
         modifier(RegistryItemModifier(name: name))
     }
@@ -126,11 +106,8 @@ private struct RegistryItemModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content.overlay {
-            if let surface {
+            if let surface, !name.isEmpty {
                 Color.clear
-                    .anchorPreference(key: RegistryItemAnchorsKey.self, value: .bounds) { bounds in
-                        [RegistryItemAnchor(name: name, bounds: bounds)]
-                    }
                     .onGeometryChange(for: CGRect.self) { proxy in
                         proxy.frame(in: .global)
                     } action: { frame in
@@ -152,7 +129,7 @@ private struct RegistryItemModifier: ViewModifier {
     /// nothing of the tool covers the piece being tuned (owner, 2026-09-08).
     /// The tool's own blue, never the tuned accent, so the ring holds still.
     private var selection: some View {
-        let blue = Color(uiColor: .systemBlue)
+        let blue = Color.blue
         return RoundedRectangle(cornerRadius: theme.metrics.controlRadius + 4, style: .continuous)
             .stroke(blue, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
             .padding(-4)

@@ -72,7 +72,7 @@ public struct TuningPanel<PresetsFooter: View>: View {
                     // A host with its own tokens shows its own selection rows.
                     if tunesTheme {
                         ScopeSection(item: item, tokenCount: scope?.count ?? 0) {
-                            withAnimation(.snappy) { selection.wrappedValue.item = nil }
+                            withAnimation(ToolChrome.animation) { selection.wrappedValue.item = nil }
                         }
                     }
                     if showsScreen {
@@ -106,11 +106,17 @@ public struct TuningPanel<PresetsFooter: View>: View {
             .navigationDestination(for: String.self) { name in
                 if let page = DesignSurfaceState.shared.hostPage?(name) { page } else { Text(verbatim: name) }
             }
-            // A pick lands on the innermost item the host has a page for.
+            // A pick lands on the innermost item the host has a page for; an
+            // item without one leaves the panel on its form.
             .onChange(of: selection?.wrappedValue.chain ?? []) { _, chain in
                 guard showsScreen, let hostPage = DesignSurfaceState.shared.hostPage,
                       let name = chain.first(where: { hostPage($0) != nil }) else { return }
                 path = [name]
+            }
+            // Clearing the selection (All tokens, a pick on nothing) also
+            // leaves a pushed host page, which was about the selected item.
+            .onChange(of: selection?.wrappedValue.item) { _, item in
+                if item == nil { path = [] }
             }
             .sheet(isPresented: $isImporting) {
                 ImportThemeSheet(text: $importText, failed: $importFailed, apply: applyImport)
@@ -125,7 +131,7 @@ public struct TuningPanel<PresetsFooter: View>: View {
                     ToolbarItem(placement: .topBarLeading) {
                         // Arms the next tap on the content to pick the item under it.
                         Button("Select", systemImage: "scope") {
-                            withAnimation(.snappy) { selection.wrappedValue.isSelecting.toggle() }
+                            withAnimation(ToolChrome.animation) { selection.wrappedValue.isSelecting.toggle() }
                         }
                         .accessibilityIdentifier("tuning.select")
                         .accessibilityAddTraits(selection.wrappedValue.isSelecting ? [.isSelected] : [])
@@ -144,7 +150,7 @@ public struct TuningPanel<PresetsFooter: View>: View {
     }
 
     private func reset() {
-        withAnimation(.snappy) { tuning = .default }
+        withAnimation(ToolChrome.animation) { tuning = .default }
     }
 
     private func beginImport() {
@@ -158,7 +164,7 @@ public struct TuningPanel<PresetsFooter: View>: View {
             importFailed = true
             return
         }
-        withAnimation(.snappy) { tuning = parsed }
+        withAnimation(ToolChrome.animation) { tuning = parsed }
         isImporting = false
     }
 }
@@ -256,7 +262,7 @@ private struct OnThisScreenSection: View {
             }
             ForEach(items, id: \.name) { item in
                 Button {
-                    withAnimation(.snappy) {
+                    withAnimation(ToolChrome.animation) {
                         selection.wrappedValue.item = item.name
                         selection.wrappedValue.chain = [item.name]
                     }
@@ -320,7 +326,7 @@ private struct PresetsSection<Footer: View>: View {
                 HStack(spacing: 8) {
                     ForEach(RegistryTheme.presets) { preset in
                         Button(preset.name) {
-                            withAnimation(.snappy) { tuning.apply(presetNamed: preset.name) }
+                            withAnimation(ToolChrome.animation) { tuning.apply(presetNamed: preset.name) }
                         }
                         // A native style, not the registry button item: the
                         // panel is a package product and items are copied source.
@@ -377,7 +383,7 @@ private struct AccentSection: View {
                         custom: tuning.customAccent,
                         diameter: 36
                     ) {
-                        withAnimation(.snappy) { tuning.accent = accent }
+                        withAnimation(ToolChrome.animation) { tuning.accent = accent }
                     }
                 }
             }
@@ -462,7 +468,7 @@ private struct DensitySection: View {
             get: { tuning.matchingDensity },
             set: { newValue in
                 if let newValue {
-                    withAnimation(.snappy) { tuning.apply(density: newValue) }
+                    withAnimation(ToolChrome.animation) { tuning.apply(density: newValue) }
                 }
             }
         )

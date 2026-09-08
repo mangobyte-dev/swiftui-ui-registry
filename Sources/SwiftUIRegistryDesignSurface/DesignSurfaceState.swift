@@ -48,6 +48,12 @@ final class DesignSurfaceState {
 
     /// Every tagged root on screen right now, by instance, in global points.
     var frames: [UUID: RegistryItemReport] = [:]
+    /// The window's bounds, so a root scrolled out of view is not listed as
+    /// on this screen; empty until the overlay measures it.
+    var stage: CGRect = .zero
+    /// The keyboard's frame in window points while it is up, so the card's
+    /// content can scroll a field above it; empty otherwise.
+    var keyboardFrame: CGRect = .zero
     /// The named screens on stage, innermost last.
     var screens: [String] = []
     /// Draws every reported frame with its name over the app.
@@ -57,10 +63,11 @@ final class DesignSurfaceState {
     /// The screen the panel is looking at: the innermost named one.
     var screen: String? { screens.last }
 
-    /// The items on screen, top to bottom, one row per instance.
+    /// The items on screen, top to bottom, one row per instance: a reported
+    /// frame that is empty or lies outside the stage is not on screen.
     var visibleItems: [RegistryItemReport] {
         frames.values
-            .filter { !$0.frame.isEmpty }
+            .filter { !$0.frame.isEmpty && (stage.isEmpty || $0.frame.intersects(stage)) }
             .sorted { ($0.frame.minY, $0.frame.minX) < ($1.frame.minY, $1.frame.minX) }
     }
 

@@ -123,12 +123,20 @@ final class TokenStore<Document: TokenDocument>: AnyTokenStore {
     @Shared var document: Document
 
     /// The store over the document's file in Documents, or over `url` (a test's
-    /// temporary file).
+    /// temporary file). A file that fails to decode (written by a newer
+    /// version, or by hand) leaves the shipped document in place, is reported
+    /// once in the log, and is not rewritten until a knob moves.
     init(url: URL? = nil) {
         let url = url ?? URL.documentsDirectory.appending(component: Document.fileName)
         _document = Shared(wrappedValue: Document.shipped, .fileStorage(url, decoder: nil, encoder: ThemeTuning.fileEncoder))
+        if let error = $document.loadError {
+            SurfaceLog.logger.error("\(Document.fileName, privacy: .public) did not decode, the shipped tokens apply: \(error)")
+        }
         document.apply()
     }
+
+    /// Whether the file failed to decode when the store opened.
+    var loadFailed: Bool { $document.loadError != nil }
 
     var pageTitles: [String] { Document.pages.map(\.title) }
 
@@ -176,8 +184,12 @@ struct TokenPageView<Document: TokenDocument>: View {
                             }),
                         range: number.range, step: number.step)
                 case .choice(let keyPath, let options):
+                    // A value the options no longer list (an older file) stays
+                    // selectable rather than leaving the picker blank.
+                    let current = store.document[keyPath: keyPath]
+                    let shown = options.contains(current) ? options : options + [current]
                     Picker(knob.title, selection: store.binding(keyPath)) {
-                        ForEach(options, id: \.self) { Text($0).tag($0) }
+                        ForEach(shown, id: \.self) { Text($0).tag($0) }
                     }
                 case .color(let keyPath):
                     TokenColorRow(title: knob.title, value: store.binding(keyPath))

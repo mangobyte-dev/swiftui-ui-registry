@@ -867,6 +867,145 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertTrue(export.label.contains("surface: .primary.opacity(0.050)"), "The code must carry every knob, not only the accent.")
     }
 
+    /// The card is positioned in window points and clamped into the safe
+    /// area; a rotation changes that area, and a card that kept its portrait
+    /// frame would hang its drag bar off the landscape screen, with no way
+    /// to pull it back. The strip must stay inside after each rotation.
+    @MainActor
+    func testFloatingPanelStaysReachableAfterRotation() {
+        let app = launchCatalog()
+        openTuning(app)
+        let dragBar = app.descendants(matching: .any).matching(identifier: "designSurface.dragBar").firstMatch
+        XCTAssertTrue(dragBar.waitForExistence(timeout: 3), "The card must expose its drag bar.")
+        defer { XCUIDevice.shared.orientation = .portrait }
+        for orientation in [UIDeviceOrientation.landscapeLeft, .portrait, .landscapeRight, .portrait] {
+            XCUIDevice.shared.orientation = orientation
+            // The rotation animates; the clamp lands when the area settles.
+            let settled = app.wait(for: .runningForeground, timeout: 2)
+            XCTAssertTrue(settled)
+            XCTAssertTrue(dragBar.waitForExistence(timeout: 3))
+            let bar = dragBar.frame
+            let window = app.windows.firstMatch.frame
+            XCTAssertTrue(
+                window.insetBy(dx: -1, dy: -1).contains(CGPoint(x: bar.midX, y: bar.midY)),
+                "After rotating to \(orientation.rawValue) the drag bar \(bar) must be inside the window \(window)."
+            )
+            XCTAssertTrue(app.buttons["Copy Swift"].exists, "The panel must stay up through a rotation.")
+        }
+    }
+
+    /// Select arms the next tap; a tap that lands on nothing tagged must clear
+    /// the selection and disarm Select rather than leave the tool waiting or
+    /// keep a stale scope, so a designer can back out by tapping empty space.
+    @MainActor
+    func testAPickOnNothingClearsTheSelectionAndDisarmsSelect() {
+        let app = launchCatalog()
+        openItem(app, tab: "Components", name: "button")
+        openTuning(app)
+        let row = app.descendants(matching: .any).matching(identifier: "tuning.screen.button").firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 3))
+        row.tap()
+        let scoped = app.staticTexts["tuning.scope.item"]
+        XCTAssertTrue(scoped.waitForExistence(timeout: 3))
+
+        let select = app.buttons["tuning.select"]
+        XCTAssertTrue(select.waitForExistence(timeout: 3))
+        select.tap()
+        // The card steps aside while Select is armed, so the whole screen is
+        // the capture; the navigation bar holds no registry item.
+        let bar = app.navigationBars["button"]
+        XCTAssertTrue(bar.waitForExistence(timeout: 3))
+        bar.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+
+        XCTAssertTrue(app.buttons["Copy Swift"].waitForExistence(timeout: 3), "The card must return after the pick.")
+        XCTAssertFalse(scoped.waitForExistence(timeout: 1), "A pick on nothing must clear the selection.")
+        XCTAssertFalse(select.isSelected, "Select must be disarmed after the pick.")
+    }
+
+    /// Collapsing the card to the button and reopening it must keep what the
+    /// designer was doing: the selected item and its scope come back.
+    @MainActor
+    func testCollapsingAndReopeningThePanelKeepsTheSelection() {
+        let app = launchCatalog()
+        openItem(app, tab: "Components", name: "button")
+        openTuning(app)
+        let row = app.descendants(matching: .any).matching(identifier: "tuning.screen.button").firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 3))
+        row.tap()
+        XCTAssertTrue(app.staticTexts["tuning.scope.item"].waitForExistence(timeout: 3))
+
+        let collapse = app.buttons["designSurface.collapse"]
+        XCTAssertTrue(collapse.waitForExistence(timeout: 3), "The card must offer a collapse control.")
+        collapse.tap()
+        XCTAssertFalse(app.buttons["Copy Swift"].waitForExistence(timeout: 1), "Collapse must take the card down.")
+
+        openTuning(app)
+        let scoped = app.staticTexts["tuning.scope.item"]
+        XCTAssertTrue(scoped.waitForExistence(timeout: 3), "Reopening must restore the selection.")
+        XCTAssertEqual(scoped.label, "button")
+    }
+
+    /// The tool's own controls speak: VoiceOver reads a label for the drag
+    /// bar, the collapse control, the resize grip, Select, and every row and
+    /// slider in the card. An unlabeled control in the tool is a defect on
+    /// the same footing as one in an item.
+    @MainActor
+    func testEveryPanelControlSpeaksItsLabel() {
+        let app = launchCatalog()
+        openItem(app, tab: "Components", name: "button")
+        openTuning(app)
+        for (identifier, label) in [
+            ("designSurface.dragBar", "Tuning panel drag bar"),
+            ("designSurface.collapse", "Collapse the tuning panel"),
+            ("designSurface.grip", "Resize the tuning panel"),
+            ("tuning.select", "Select"),
+        ] {
+            let element = app.descendants(matching: .any).matching(identifier: identifier).firstMatch
+            XCTAssertTrue(element.waitForExistence(timeout: 3), "\(identifier) must be on the card.")
+            XCTAssertEqual(element.label, label, "\(identifier) must speak its label.")
+        }
+        let row = app.descendants(matching: .any).matching(identifier: "tuning.screen.button").firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 3))
+        XCTAssertTrue(row.label.contains("button"), "An On this screen row must speak the item's name.")
+
+        let unlabeled = NSPredicate(format: "label == ''")
+        let labeledFrames = app.descendants(matching: .any)
+            .matching(NSPredicate(format: "label != ''"))
+            .allElementsBoundByIndex
+            .map(\.frame)
+            .filter { $0.width > 0 && $0.height > 0 && $0.height < 200 }
+        for (kind, query) in [("button", app.buttons), ("switch", app.switches), ("slider", app.sliders), ("image", app.images)] {
+            let offenders = query.matching(unlabeled).allElementsBoundByIndex.filter { element in
+                let frame = element.frame
+                guard frame.width > 0, frame.height > 0 else { return false }
+                return !labeledFrames.contains { $0.insetBy(dx: -2, dy: -2).contains(frame) }
+            }
+            XCTAssertTrue(offenders.isEmpty, "The tool exposes a \(kind) without a label at \(offenders.map { $0.frame }).")
+        }
+    }
+
+    /// Opening and closing the card fifty times must not grow the app: the
+    /// card is rebuilt each time and its hit regions and reported frames are
+    /// released with it. The metric is attached as evidence; the growth is
+    /// read from the result bundle.
+    @MainActor
+    func testOpeningAndClosingThePanelFiftyTimesHoldsMemory() {
+        let app = launchCatalog()
+        openItem(app, tab: "Components", name: "button")
+        let tune = app.buttons["Tune"]
+        XCTAssertTrue(tune.waitForExistence(timeout: 5))
+        let options = XCTMeasureOptions()
+        options.iterationCount = 5
+        measure(metrics: [XCTMemoryMetric(application: app)], options: options) {
+            for _ in 0..<10 {
+                tune.tap()
+                XCTAssertTrue(app.buttons["designSurface.collapse"].waitForExistence(timeout: 3))
+                app.buttons["designSurface.collapse"].tap()
+                XCTAssertFalse(app.buttons["designSurface.collapse"].waitForExistence(timeout: 1))
+            }
+        }
+    }
+
     // MARK: - Helpers
 
     @MainActor

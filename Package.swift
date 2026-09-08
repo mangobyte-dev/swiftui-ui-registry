@@ -23,7 +23,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
-        .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.9.1"),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.9.1", traits: []),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.9"),
     ],
     targets: [

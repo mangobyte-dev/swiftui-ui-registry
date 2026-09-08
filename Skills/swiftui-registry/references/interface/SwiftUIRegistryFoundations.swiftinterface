@@ -9,20 +9,9 @@ import _StringProcessing
 import _SwiftConcurrencyShims
 public struct RegistryItemSurface : Swift::Equatable, Swift::Sendable {
   public var selected: Swift::String?
-  public init(selected: Swift::String? = nil)
+  public var selectedTitle: Swift::String?
+  public init(selected: Swift::String? = nil, selectedTitle: Swift::String? = nil)
   public static func == (a: SwiftUIRegistryFoundations::RegistryItemSurface, b: SwiftUIRegistryFoundations::RegistryItemSurface) -> Swift::Bool
-}
-public struct RegistryItemAnchor {
-  public let name: Swift::String
-  public let bounds: SwiftUICore::Anchor<CoreFoundation::CGRect>
-  public init(name: Swift::String, bounds: SwiftUICore::Anchor<CoreFoundation::CGRect>)
-}
-public struct RegistryItemAnchorsKey : SwiftUICore::PreferenceKey {
-  public static var defaultValue: [SwiftUIRegistryFoundations::RegistryItemAnchor] {
-    get
-  }
-  public static func reduce(value: inout [SwiftUIRegistryFoundations::RegistryItemAnchor], nextValue: () -> [SwiftUIRegistryFoundations::RegistryItemAnchor])
-  public typealias Value = [SwiftUIRegistryFoundations::RegistryItemAnchor]
 }
 public struct RegistryItemReport : Swift::Sendable {
   public let id: Foundation::UUID

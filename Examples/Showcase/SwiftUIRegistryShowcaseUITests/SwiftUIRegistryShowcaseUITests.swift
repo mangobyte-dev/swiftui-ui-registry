@@ -689,9 +689,19 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         // panel's frame holds the whole element. A full swipe throws a Form
         // row out of the tree, so the scroll is a short drag inside the card.
         // The whole form is several card heights tall; each step is a third of one.
-        for _ in 0..<30 where !element.exists {
+        for _ in 0..<30 where !isInsidePanel(element, panel) {
             nudge(panel, up: true)
         }
+    }
+
+    /// Whether the element's center, where a tap lands, is inside the card
+    /// and clear of its top bar and bottom edge; the center rather than the
+    /// whole frame, because an export block is taller than the card.
+    @MainActor
+    private func isInsidePanel(_ element: XCUIElement, _ panel: XCUIElement) -> Bool {
+        guard element.exists else { return false }
+        let frame = element.frame
+        return panel.frame.insetBy(dx: 0, dy: 60).contains(CGPoint(x: frame.midX, y: frame.midY))
     }
 
     /// Scrolls the panel's form by a third of its height, up or down.
@@ -800,7 +810,9 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["Control padding"].exists, "Spacing never reaches the button, so its section leaves.")
 
         let all = app.buttons["tuning.scope.all"]
-        for _ in 0..<30 where !all.exists { nudge(panel, up: false) }
+        // A row exists while it is still under the card's toolbar, where a tap
+        // lands on the bar; scroll until the whole row is inside the card.
+        for _ in 0..<30 where !isInsidePanel(all, panel) { nudge(panel, up: false) }
         XCTAssertTrue(all.waitForExistence(timeout: 3))
         all.tap()
         XCTAssertFalse(scoped.waitForExistence(timeout: 1), "All tokens must clear the scope.")

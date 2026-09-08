@@ -11,9 +11,9 @@ The whole system is one loop: edit canonical source in `Registry/sources/` and m
 Each kind of fact lives in exactly one place. Four document classes:
 
 - Contracts, which rules come from: this file, `docs/philosophy.md` (why), `docs/architecture.md` (how), `docs/registry-spec.md` (data and installer contract), `docs/visual-testing.md` (visual evidence rules), `docs/mango.md` (the design-system template)
-- State, the only home of stage status, open deferrals, and plans: `docs/component-roadmap.md`. A status claim in any other file is a pointer, not a second source
+- State, the only home of what shipped and the known limitations: `CHANGELOG.md`. A status claim in any other file is a pointer, not a second source
 - Generated, never hand-edited: `docs/catalog/` (markdown catalog), `Website/content/registry.json` and `Website/public/images/` (the website's data and captures; the site itself is Next.js with shadcn/ui under `Website/`), `Examples/Showcase/.../RegistryCatalogManifest.swift` and `Examples/Showcase/SwiftUIRegistryShowcaseUITests/RegistryItemNames.swift` (the Showcase manifest), `Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift` (the item-to-token map the design surface scopes its panel by), and `docs/images/items/` and `docs/images/themes/` (captures). Current item counts and per-item pages live there, not in prose
-- Archives, closed dated records kept as evidence, not updated: `STAGE_ONE_VALIDATION.md`, `GENERAL_DIRECTION_REVIEW.md`, `docs/clean-room-trial.md`, `docs/research.md`, `tasks/`. `HANDOFF.md` is the brief for the next session and points here for state
+- Archives, closed dated records kept as evidence, not updated, live outside the repository in `~/Projects/swiftui-cn-local/` (the roadmap, the research records, the direction review, the Stage 1 validation, the clean-room trial, the CLI-migration contract, and the handoff brief), with an `INDEX.md` there; none are tracked here, and `CHANGELOG.md` carries what an adopter needs from them
 
 On conflict: state beats archives, the more recent dated record wins between archives, and contracts govern rules regardless. Surface the conflict, then fix the stale text rather than averaging
 
@@ -61,8 +61,8 @@ On conflict: state beats archives, the more recent dated record wins between arc
 - Visual contract and UI tests run on the light-mode iPhone 17, iOS 27.0 simulator; on this machine its UDID is `1807166B-C557-4F6B-B177-D5F3F701CBD7` (`docs/visual-testing.md`)
 - Captures launch the app with `-AppleLanguages (en) -AppleLocale en_US`, so dates, currency, and the calendar in an image never depend on a simulator's region; the iPad Pro 13-inch used for the wide block captures is set to en_US as well because the status bar date comes from the device (it was ar_SA until 2026-09-06)
 - Toolchain: Xcode 27.0, Swift 6.4. No iOS 26 simulator runtime is installed, so floor-26 claims rest on compilation plus iOS 27 runtime evidence
-- CI builds the tool on GitHub's `macos-26` image with its default Xcode 26.6 (`.github/workflows/ci.yml`); the package declares Swift tools 6.2. That runner has not executed a push yet, so the first green run is the owner's evidence
-- Package identity for consumers: `swiftui-ui-registry` at github.com/mangobyte-dev/swiftui-ui-registry. Tags `0.1.0` (2026-09-06) and `0.2.0` (2026-09-07) are published with GitHub releases and the Homebrew tap; an item that reads a foundations field added in `0.2.0` declares that floor (`chart` does), the rest keep `0.1.0` (`docs/registry-spec.md`)
+- CI builds the tool on GitHub's `macos-26` image with its default Xcode 26.6 (`.github/workflows/ci.yml`); the package declares Swift tools 6.2, and the registry gate, the website build, and a secret scan run on every push and pull request
+- Package identity for consumers: `swiftui-ui-registry` at github.com/mangobyte-dev/swiftui-ui-registry. Tags `0.1.0` (2026-09-06) and `0.2.0` (2026-09-07) are published with GitHub releases and the Homebrew tap; the `0.3.0` beta adds the design surface's foundations API and the second product, so every installable item now declares the `0.3.0` floor (`docs/registry-spec.md`)
 
 ## Verification
 

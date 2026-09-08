@@ -3,7 +3,8 @@
 # Foundations interface
 
 `RegistryTheme`, `RegistryMetrics`, `RegistryThemePreset`, the seven presets,
-`registryTheme(_:)`, and `registrySurface(level:)` are declared in the
+`registryTheme(_:)`, `registrySurface(level:)`, and the design surface's item
+hook (`registryItem(_:)`, `RegistryItemSurface`, `RegistryItemAnchorsKey`) are declared in the
 `SwiftUIRegistryFoundations` public interface. It is shared with the
 `swiftui-registry` skill and kept in one place rather than copied:
 

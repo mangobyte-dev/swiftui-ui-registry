@@ -16,12 +16,12 @@ swiftui-registry install questionnaire --destination Sources/YourFeature/Compone
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.1"))
 ]
 
 // In the consuming target's dependencies:
@@ -59,9 +59,9 @@ Questionnaire(
 ## Details
 
 - Kind: block
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
-- Installs in order: [input](input.md) 0.5.0, [field](field.md) 0.1.0, [checkbox](checkbox.md) 0.3.1, [textarea](textarea.md) 0.4.0, [progress](progress.md) 0.2.0, [button](button.md) 0.5.1, [card](card.md) 0.2.0, [questionnaire](questionnaire.md) 0.1.0
+- Installs in order: [input](input.md) 0.5.1, [field](field.md) 0.1.1, [checkbox](checkbox.md) 0.3.2, [textarea](textarea.md) 0.4.1, [progress](progress.md) 0.2.1, [button](button.md) 0.5.2, [card](card.md) 0.2.1, [questionnaire](questionnaire.md) 0.1.1
 - Accessibility contract:
   - The card title carries the header accessibility trait so VoiceOver can reach the questionnaire heading directly.
   - The step counter reads as 'Step N of M' in monospaced digits, and the ProgressView carries an explicit 'Progress' accessibility label with the completed fraction as its value.

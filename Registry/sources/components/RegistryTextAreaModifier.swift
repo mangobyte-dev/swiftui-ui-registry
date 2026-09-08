@@ -39,6 +39,7 @@ private struct RegistryTextAreaModifier: ViewModifier {
                 )
             }
             .opacity(isEnabled ? 1 : theme.disabledOpacity)
+            .registryItem("textarea")
     }
 
     private var borderStyle: AnyShapeStyle {

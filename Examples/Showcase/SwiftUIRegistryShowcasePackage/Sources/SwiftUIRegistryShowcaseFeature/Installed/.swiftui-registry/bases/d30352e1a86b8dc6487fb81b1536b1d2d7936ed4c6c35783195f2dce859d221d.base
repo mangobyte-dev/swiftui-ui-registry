@@ -110,6 +110,7 @@ private struct RegistryChartModifier: ViewModifier {
                 }
             }
             .chartLegend(position: .bottom, spacing: theme.metrics.standardSpacing)
+            .registryItem("chart")
     }
 }
 

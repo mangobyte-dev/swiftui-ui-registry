@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "settings-section",
   "kind": "block",
   "description": "Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.",
@@ -25,7 +25,7 @@
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
       "swiftPM": {
         "kind": "upToNextMinor",
-        "minimumVersion": "0.1.0"
+        "minimumVersion": "0.2.1"
       }
     }
   ],

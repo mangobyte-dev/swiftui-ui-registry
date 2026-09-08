@@ -737,6 +737,48 @@ final class SwiftUIRegistryShowcaseUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["No preset code or RegistryTheme( initializer found in the pasted text."].waitForExistence(timeout: 2))
     }
 
+    /// The design surface's Select mode: arming it and tapping a registry item
+    /// on the screen behind the panel scopes the panel to that item's tokens
+    /// (`RegistryItemTokens`, generated from the sources), so a designer tunes
+    /// the knobs that move what they tapped and nothing else; All tokens
+    /// brings the whole theme back. The negative case is the section the
+    /// button never reads: spacing must leave the panel and come back.
+    @MainActor
+    func testSelectingAnItemScopesThePanelToItsTokens() {
+        let app = launchCatalog()
+        openItem(app, tab: "Components", name: "button")
+        openTuning(app)
+
+        let select = app.buttons["tuning.select"]
+        XCTAssertTrue(select.waitForExistence(timeout: 3), "The panel must offer Select on a design surface.")
+        select.tap()
+        let target = app.buttons["Save changes"].firstMatch
+        XCTAssertTrue(target.waitForExistence(timeout: 3), "The button demo must stay visible behind the sheet.")
+        target.tap()
+
+        let scoped = app.staticTexts["tuning.scope.item"]
+        XCTAssertTrue(scoped.waitForExistence(timeout: 3), "A tap while selecting must select the item under it.")
+        XCTAssertEqual(scoped.label, "button", "The innermost tagged item under the tap must win.")
+        // The count comes from the generated map: RegistryItemTokens.swift lists
+        // seven tokens for button (border, borderWidth, controlRadius,
+        // disabledOpacity, negative, onAccent, surface), none of them spacing.
+        XCTAssertTrue(app.staticTexts["7 tokens reach it"].waitForExistence(timeout: 3), "The scope must count the item's tokens.")
+        // The Form only materializes rows on screen, so scroll the panel to its
+        // end before asking which sections exist.
+        let panel = app.collectionViews.firstMatch
+        for _ in 0..<4 { panel.swipeUp() }
+        XCTAssertTrue(app.staticTexts["Control"].waitForExistence(timeout: 3), "Radius reaches the button, so its section stays.")
+        XCTAssertFalse(app.staticTexts["Control padding"].exists, "Spacing never reaches the button, so its section leaves.")
+
+        for _ in 0..<4 { panel.swipeDown() }
+        let all = app.buttons["tuning.scope.all"]
+        XCTAssertTrue(all.waitForExistence(timeout: 3))
+        all.tap()
+        XCTAssertFalse(scoped.waitForExistence(timeout: 1), "All tokens must clear the scope.")
+        for _ in 0..<4 { panel.swipeUp() }
+        XCTAssertTrue(app.staticTexts["Control padding"].waitForExistence(timeout: 3), "The whole theme must return.")
+    }
+
     /// Codes from `Registry/preset_vectors.json`: Amber (yellow
     /// accent, dark label) and Graphite (primary accent).
     @MainActor

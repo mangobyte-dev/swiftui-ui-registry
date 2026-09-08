@@ -13,7 +13,9 @@ private struct RegistryToggleGroupModifier: ViewModifier {
     let variant: RegistryButtonStyle.Variant
 
     func body(content: Content) -> some View {
-        content.toggleStyle(RegistryToggleStyle(variant))
+        content
+            .toggleStyle(RegistryToggleStyle(variant))
+            .registryItem("toggle-group")
     }
 }
 

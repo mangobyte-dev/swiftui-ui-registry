@@ -17,6 +17,7 @@ public struct RegistrySpinnerStyle: ProgressViewStyle {
             }
         }
         .accessibilityElement(children: .combine)
+        .registryItem("spinner")
     }
 }
 

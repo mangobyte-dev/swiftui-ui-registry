@@ -46,6 +46,7 @@ public struct ItemRow<Media: View, Accessory: View>: View {
         }
         .frame(minHeight: RegistryMetrics.minimumHitSize)
         .contentShape(Rectangle())
+        .registryItem("item")
     }
 }
 

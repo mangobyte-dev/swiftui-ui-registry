@@ -1,16 +1,31 @@
+#if canImport(UIKit)
 import SwiftUI
 import SwiftUIRegistryFoundations
 
 /// One accent as a tappable circle. The visible circle can be small; the hit
 /// area never drops below the registry minimum.
-struct AccentSwatch: View {
+public struct AccentSwatch: View {
     let accent: ThemeTuning.Accent
     let isSelected: Bool
     let custom: ThemeTuning.RGB
     let diameter: CGFloat
     let action: () -> Void
 
-    var body: some View {
+    public init(
+        accent: ThemeTuning.Accent,
+        isSelected: Bool,
+        custom: ThemeTuning.RGB,
+        diameter: CGFloat,
+        action: @escaping () -> Void
+    ) {
+        self.accent = accent
+        self.isSelected = isSelected
+        self.custom = custom
+        self.diameter = diameter
+        self.action = action
+    }
+
+    public var body: some View {
         Button(action: action) {
             ZStack {
                 Circle()
@@ -35,3 +50,4 @@ struct AccentSwatch: View {
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
     }
 }
+#endif

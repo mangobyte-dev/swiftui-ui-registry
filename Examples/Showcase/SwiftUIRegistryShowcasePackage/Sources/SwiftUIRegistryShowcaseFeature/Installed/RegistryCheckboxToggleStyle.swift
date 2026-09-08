@@ -30,6 +30,7 @@ public struct RegistryCheckboxToggleStyle: ToggleStyle {
             Toggle(configuration)
                 .toggleStyle(.switch)
         }
+        .registryItem("checkbox")
     }
 
     private func checkbox(configuration: Configuration) -> some View {

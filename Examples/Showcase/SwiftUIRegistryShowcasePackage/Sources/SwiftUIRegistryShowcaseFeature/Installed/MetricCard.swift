@@ -28,6 +28,7 @@ public struct MetricCard: View {
             detail: detail,
             systemImage: systemImage
         )
+        .registryItem("metric-card")
     }
 }
 

@@ -17,6 +17,7 @@ public struct RegistryCardStyle: GroupBoxStyle {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(theme.metrics.standardSpacing)
         .registrySurface()
+        .registryItem("card")
     }
 }
 

@@ -7,7 +7,7 @@
       "Registry/items/guide.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"guide\", \"kind\": \"recipe\", \"description\": \"Test recipe.\", \"usage\": \"NativeControl()\", \"docs\": \"Use the native control directly.\", \"files\": [], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"guide\"], \"accessibility\": []}",
       "Registry/items/helper.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"helper\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Helper()\", \"files\": [{\"source\": \"sources/Helper.swift\", \"target\": \"Helper.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"helper\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Helper.swift\", \"name\": \"Helper\"}}",
       "Registry/registry.json": "{\"schemaVersion\": 1, \"name\": \"TestRegistry\", \"items\": [\"items/example.json\", \"items/helper.json\", \"items/guide.json\"]}",
-      "Registry/sources/Example.swift": "// example\n",
+      "Registry/sources/Example.swift": "// example\n.registryItem(\"example\")\n",
       "Registry/sources/Helper.swift": "// helper\n"
     },
     "issues": []
@@ -156,7 +156,7 @@
       "Registry/items/guide.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"guide\", \"kind\": \"recipe\", \"description\": \"Test recipe.\", \"usage\": \"NativeControl()\", \"docs\": \"Use the native control directly.\", \"files\": [], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"guide\"], \"accessibility\": []}",
       "Registry/items/helper.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"helper\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Helper()\", \"files\": [{\"source\": \"sources/Helper.swift\", \"target\": \"Helper.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"helper\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Helper.swift\", \"name\": \"Helper\"}}",
       "Registry/registry.json": "{\"schemaVersion\": 1, \"name\": \"TestRegistry\", \"items\": [\"items/example.json\", \"items/helper.json\", \"items/guide.json\"]}",
-      "Registry/sources/Example.swift": "// example\n",
+      "Registry/sources/Example.swift": "// example\n.registryItem(\"example\")\n",
       "Registry/sources/Helper.swift": "// helper\n"
     },
     "issues": [
@@ -171,7 +171,7 @@
       "Registry/items/guide.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"guide\", \"kind\": \"recipe\", \"description\": \"Test recipe.\", \"usage\": \"NativeControl()\", \"docs\": \"Use the native control directly.\", \"files\": [], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"guide\"], \"accessibility\": []}",
       "Registry/items/helper.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"helper\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Helper()\", \"files\": [{\"source\": \"sources/Helper.swift\", \"target\": \"Helper.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"helper\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Helper.swift\", \"name\": \"Helper\"}}",
       "Registry/registry.json": "{\"schemaVersion\": 1, \"name\": \"TestRegistry\", \"items\": [\"items/example.json\", \"items/helper.json\", \"items/guide.json\"]}",
-      "Registry/sources/Example.swift": "// example\n",
+      "Registry/sources/Example.swift": "// example\n.registryItem(\"example\")\n",
       "Registry/sources/Helper.swift": "// helper\n"
     },
     "issues": [
@@ -186,7 +186,7 @@
       "Registry/items/guide.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"guide\", \"kind\": \"recipe\", \"description\": \"Test recipe.\", \"usage\": \"NativeControl()\", \"docs\": \"Use the native control directly.\", \"files\": [], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"guide\"], \"accessibility\": []}",
       "Registry/items/helper.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"helper\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Helper()\", \"files\": [{\"source\": \"sources/Helper.swift\", \"target\": \"Helper.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"helper\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Helper.swift\", \"name\": \"Helper\"}}",
       "Registry/registry.json": "{\"schemaVersion\": 1, \"name\": \"TestRegistry\", \"items\": [\"items/example.json\", \"items/helper.json\", \"items/guide.json\"]}",
-      "Registry/sources/Example.swift": "// example\n",
+      "Registry/sources/Example.swift": "// example\n.registryItem(\"example\")\n",
       "Registry/sources/Helper.swift": "// helper\n"
     },
     "issues": [
@@ -201,7 +201,7 @@
       "Registry/items/guide.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"guide\", \"kind\": \"recipe\", \"description\": \"Test recipe.\", \"usage\": \"NativeControl()\", \"docs\": \"Use the native control directly.\", \"files\": [], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"guide\"], \"accessibility\": []}",
       "Registry/items/helper.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"helper\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Helper()\", \"files\": [{\"source\": \"sources/Helper.swift\", \"target\": \"Helper.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"helper\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Helper.swift\", \"name\": \"Helper\"}}",
       "Registry/registry.json": "{\"schemaVersion\": 1, \"name\": \"TestRegistry\", \"items\": [\"items/example.json\", \"items/helper.json\", \"items/guide.json\"]}",
-      "Registry/sources/Example.swift": "// example\n",
+      "Registry/sources/Example.swift": "// example\n.registryItem(\"example\")\n",
       "Registry/sources/Helper.swift": "// helper\n"
     },
     "issues": [
@@ -503,7 +503,7 @@
       "Registry/items/guide.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"guide\", \"kind\": \"recipe\", \"description\": \"Test recipe.\", \"usage\": \"NativeControl()\", \"docs\": \"Use the native control directly.\", \"files\": [], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"guide\"], \"accessibility\": []}",
       "Registry/items/helper.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"helper\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Helper()\", \"files\": [{\"source\": \"sources/Helper.swift\", \"target\": \"Helper.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"helper\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Helper.swift\", \"name\": \"Helper\"}}",
       "Registry/registry.json": "{\"schemaVersion\": 1, \"name\": \"TestRegistry\", \"items\": [\"items/example.json\", \"items/helper.json\", \"items/guide.json\"]}",
-      "Registry/sources/Example.swift": "// example\n",
+      "Registry/sources/Example.swift": "// example\n.registryItem(\"example\")\n",
       "Registry/sources/Helper.swift": "// helper\n"
     },
     "issues": [
@@ -518,7 +518,7 @@
       "Registry/items/guide.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"guide\", \"kind\": \"recipe\", \"description\": \"Test recipe.\", \"usage\": \"NativeControl()\", \"docs\": \"Use the native control directly.\", \"files\": [], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"guide\"], \"accessibility\": []}",
       "Registry/items/helper.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"helper\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Helper()\", \"files\": [{\"source\": \"sources/Helper.swift\", \"target\": \"Helper.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"helper\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Helper.swift\", \"name\": \"Helper\"}}",
       "Registry/registry.json": "{\"schemaVersion\": 1, \"name\": \"TestRegistry\", \"items\": [\"items/example.json\", \"items/helper.json\", \"items/guide.json\"]}",
-      "Registry/sources/Example.swift": "// example\n",
+      "Registry/sources/Example.swift": "// example\n.registryItem(\"example\")\n",
       "Registry/sources/Helper.swift": "// helper\n"
     },
     "issues": [
@@ -533,7 +533,7 @@
       "Registry/items/guide.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"guide\", \"kind\": \"recipe\", \"description\": \"Test recipe.\", \"usage\": \"NativeControl()\", \"docs\": \"Use the native control directly.\", \"files\": [], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"guide\"], \"accessibility\": []}",
       "Registry/items/helper.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"helper\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Helper()\", \"files\": [{\"source\": \"sources/Helper.swift\", \"target\": \"Helper.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"helper\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Helper.swift\", \"name\": \"Helper\"}}",
       "Registry/registry.json": "{\"schemaVersion\": 1, \"name\": \"TestRegistry\", \"items\": [\"items/example.json\", \"items/helper.json\", \"items/guide.json\"]}",
-      "Registry/sources/Example.swift": "// example\n",
+      "Registry/sources/Example.swift": "// example\n.registryItem(\"example\")\n",
       "Registry/sources/Helper.swift": "// helper\n"
     },
     "issues": []
@@ -655,7 +655,7 @@
       "Registry/items/guide.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"guide\", \"kind\": \"recipe\", \"description\": \"Test recipe.\", \"usage\": \"NativeControl()\", \"docs\": \"Use the native control directly.\", \"files\": [], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"guide\"], \"accessibility\": []}",
       "Registry/items/helper.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"helper\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Helper()\", \"files\": [{\"source\": \"sources/Helper.swift\", \"target\": \"Helper.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"helper\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Helper.swift\", \"name\": \"Helper\"}}",
       "Registry/registry.json": "{\"schemaVersion\": 1, \"name\": \"TestRegistry\", \"items\": [\"items/example.json\", \"items/helper.json\", \"items/guide.json\"]}",
-      "Registry/sources/Example.swift": "// example\n",
+      "Registry/sources/Example.swift": "// example\n.registryItem(\"example\")\n",
       "Registry/sources/Helper.swift": "// helper\n"
     },
     "issues": [
@@ -675,6 +675,21 @@
     },
     "issues": [
       "Registry/items/example.json: schemaVersion must be 1"
+    ]
+  },
+  {
+    "name": "test_foundations_item_without_registry_item_tag_is_rejected",
+    "items": [],
+    "files": {
+      "Registry/items/example.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"example\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Example()\", \"files\": [{\"source\": \"sources/Example.swift\", \"target\": \"Example.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [{\"package\": \"SwiftUIRegistry\", \"product\": \"SwiftUIRegistryFoundations\", \"requirement\": \"0.x\", \"sourceURL\": \"https://github.com/mangobyte-dev/swiftui-ui-registry.git\", \"swiftPM\": {\"kind\": \"upToNextMinor\", \"minimumVersion\": \"0.1.0\"}}], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"example\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Example.swift\", \"name\": \"Example\"}}",
+      "Registry/items/guide.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"guide\", \"kind\": \"recipe\", \"description\": \"Test recipe.\", \"usage\": \"NativeControl()\", \"docs\": \"Use the native control directly.\", \"files\": [], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"guide\"], \"accessibility\": []}",
+      "Registry/items/helper.json": "{\"schemaVersion\": 1, \"version\": \"0.1.0\", \"name\": \"helper\", \"kind\": \"component\", \"description\": \"Test item.\", \"usage\": \"Helper()\", \"files\": [{\"source\": \"sources/Helper.swift\", \"target\": \"Helper.swift\"}], \"registryDependencies\": [], \"packageDependencies\": [], \"platforms\": [{\"name\": \"iOS\", \"minimumVersion\": \"26.0\"}], \"tags\": [\"helper\"], \"accessibility\": [], \"preview\": {\"source\": \"sources/Helper.swift\", \"name\": \"Helper\"}}",
+      "Registry/registry.json": "{\"schemaVersion\": 1, \"name\": \"TestRegistry\", \"items\": [\"items/example.json\", \"items/helper.json\", \"items/guide.json\"]}",
+      "Registry/sources/Example.swift": "source\n",
+      "Registry/sources/Helper.swift": "// helper\n"
+    },
+    "issues": [
+      "Registry/items/example.json: installable items on foundations apply .registryItem(\"example\") in their first source"
     ]
   }
 ]

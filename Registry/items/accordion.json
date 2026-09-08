@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.1",
+  "version": "0.2.2",
   "name": "accordion",
   "kind": "component",
   "description": "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.",
@@ -23,7 +23,7 @@
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
       "swiftPM": {
         "kind": "upToNextMinor",
-        "minimumVersion": "0.1.0"
+        "minimumVersion": "0.2.1"
       }
     }
   ],

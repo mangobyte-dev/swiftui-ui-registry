@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import SwiftUIRegistryDesignSurface
 import SwiftUIRegistryFoundations
 
 /// Renders one item's demo alone for screenshot capture. Launched by

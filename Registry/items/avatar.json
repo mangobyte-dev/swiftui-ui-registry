@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "name": "avatar",
   "kind": "component",
   "description": "Displays a circular identity image with initials or symbol fallback, sized by the environment control size, with a required accessibility label.",
@@ -21,7 +21,7 @@
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
       "swiftPM": {
         "kind": "upToNextMinor",
-        "minimumVersion": "0.1.0"
+        "minimumVersion": "0.2.1"
       }
     }
   ],

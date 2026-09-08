@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "name": "toggle-group",
   "kind": "component",
   "description": "Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.",
@@ -24,7 +24,7 @@
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
       "swiftPM": {
         "kind": "upToNextMinor",
-        "minimumVersion": "0.1.0"
+        "minimumVersion": "0.2.1"
       }
     }
   ],

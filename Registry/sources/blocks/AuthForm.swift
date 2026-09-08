@@ -157,6 +157,7 @@ public struct AuthForm: View {
         .onChange(of: identityError) { _, message in announce(message) }
         .onChange(of: passwordError) { _, message in announce(message) }
         .onChange(of: formError) { _, message in announce(message) }
+        .registryItem("auth-form")
     }
 
     @ViewBuilder

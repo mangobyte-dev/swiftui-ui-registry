@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import Foundation
 
 /// Preset codes: the tuning knobs as a short shareable string, the same code
@@ -108,7 +109,7 @@ extension ThemeTuning {
     }
 
     /// The code for these knobs; numeric values snap to their slider grid.
-    var presetCode: String {
+    public var presetCode: String {
         var writer = BitWriter()
         writeBaseBits(into: &writer)
         if appendedIsNonDefault {
@@ -161,7 +162,7 @@ extension ThemeTuning {
     /// (the environment switches and a named accent's remembered custom
     /// color); `nil` when the text is not a valid code. A version `a` code
     /// yields the version-b defaults for the appended fields.
-    init?(presetCode: String, base: ThemeTuning = .default) {
+    public init?(presetCode: String, base: ThemeTuning = .default) {
         guard Self.isPresetCode(presetCode), let version = presetCode.first,
               let number = Self.number(fromBase62: presetCode.dropFirst()) else { return nil }
         var reader = BitReader(value: number)
@@ -349,3 +350,4 @@ extension ThemeTuning.RGB {
         max(0, min(255, Int((value * 255).rounded())))
     }
 }
+#endif

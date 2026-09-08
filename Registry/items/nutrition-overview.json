@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.2",
+  "version": "0.2.3",
   "name": "nutrition-overview",
   "kind": "block",
   "description": "Composes prepared energy and macronutrient values into an embeddable nutrition overview.",
@@ -24,7 +24,7 @@
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
       "swiftPM": {
         "kind": "upToNextMinor",
-        "minimumVersion": "0.1.0"
+        "minimumVersion": "0.2.1"
       }
     }
   ],

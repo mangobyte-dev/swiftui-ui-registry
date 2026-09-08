@@ -55,6 +55,7 @@ public struct MacroProgress: View {
                 .tint(tint)
         }
         .accessibilityElement(children: .combine)
+        .registryItem("macro-progress")
     }
 }
 

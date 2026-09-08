@@ -23,6 +23,10 @@ let package = Package(
                 .product(
                     name: "SwiftUIRegistryFoundations",
                     package: "SwiftUIRegistry"
+                ),
+                .product(
+                    name: "SwiftUIRegistryDesignSurface",
+                    package: "SwiftUIRegistry"
                 )
             ]
         ),

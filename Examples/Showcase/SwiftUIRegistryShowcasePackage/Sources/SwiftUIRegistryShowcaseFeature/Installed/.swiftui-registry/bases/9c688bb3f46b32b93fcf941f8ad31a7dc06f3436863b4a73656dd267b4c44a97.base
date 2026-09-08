@@ -112,6 +112,7 @@ public struct DataTable<Row: Identifiable>: View {
                 }
             }
         }
+        .registryItem("table")
     }
 
     @ViewBuilder

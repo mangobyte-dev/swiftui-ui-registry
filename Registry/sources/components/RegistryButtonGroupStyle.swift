@@ -20,6 +20,7 @@ public struct RegistryButtonGroupStyle: ControlGroupStyle {
                 .buttonStyle(RegistryButtonStyle(variant))
         }
         .accessibilityElement(children: .contain)
+        .registryItem("button-group")
     }
 }
 

@@ -16,12 +16,12 @@ swiftui-registry install finance-overview --destination Sources/YourFeature/Comp
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.1"))
 ]
 
 // In the consuming target's dependencies:
@@ -59,9 +59,9 @@ FinanceOverview(
 ## Details
 
 - Kind: block
-- Version: 0.4.2
+- Version: 0.4.3
 - Platforms: iOS 26.0+
-- Installs in order: [metric-card](metric-card.md) 0.2.1, [transaction-row](transaction-row.md) 0.5.0, [empty](empty.md) 0.1.0, [finance-overview](finance-overview.md) 0.4.2
+- Installs in order: [metric-card](metric-card.md) 0.2.2, [transaction-row](transaction-row.md) 0.5.1, [empty](empty.md) 0.1.1, [finance-overview](finance-overview.md) 0.4.3
 - Accessibility contract:
   - Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state; the screen and section titles carry the header trait, and Voice Control can address a row by its title alone.
   - Uses system text styles and ViewThatFits for Dynamic Type.

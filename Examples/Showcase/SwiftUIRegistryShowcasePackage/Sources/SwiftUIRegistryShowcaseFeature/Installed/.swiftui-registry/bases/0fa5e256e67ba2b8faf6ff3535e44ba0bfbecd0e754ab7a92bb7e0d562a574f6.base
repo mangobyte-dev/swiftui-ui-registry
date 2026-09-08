@@ -19,6 +19,7 @@ private struct RegistryEmptyStateModifier: ViewModifier {
             .frame(maxWidth: .infinity)
             .padding(theme.metrics.standardSpacing)
             .registrySurface()
+            .registryItem("empty")
     }
 }
 

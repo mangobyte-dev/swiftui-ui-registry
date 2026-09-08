@@ -23,6 +23,7 @@ private struct RegistrySelectModifier: ViewModifier {
             .background(theme.surface, in: shape)
             .overlay { shape.stroke(theme.border, lineWidth: theme.metrics.borderWidth) }
             .opacity(isEnabled ? 1 : theme.disabledOpacity)
+            .registryItem("select")
     }
 }
 

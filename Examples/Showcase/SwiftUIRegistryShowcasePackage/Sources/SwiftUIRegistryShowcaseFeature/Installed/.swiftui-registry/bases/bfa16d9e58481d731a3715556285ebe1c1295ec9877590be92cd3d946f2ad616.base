@@ -61,6 +61,7 @@ public struct MessageRow<Avatar: View, Content: View>: View {
                 column
             }
         }
+        .registryItem("message")
     }
 
     private var columnAlignment: HorizontalAlignment {

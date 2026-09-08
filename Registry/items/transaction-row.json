@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.5.0",
+  "version": "0.5.1",
   "name": "transaction-row",
   "kind": "component",
   "description": "Displays prepared transaction content while leaving selection to a native Button at the call site.",
@@ -21,7 +21,7 @@
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
       "swiftPM": {
         "kind": "upToNextMinor",
-        "minimumVersion": "0.1.0"
+        "minimumVersion": "0.2.1"
       }
     }
   ],

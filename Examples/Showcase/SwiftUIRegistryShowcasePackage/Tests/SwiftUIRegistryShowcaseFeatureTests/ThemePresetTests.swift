@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import SwiftUIRegistryShowcaseFeature
+@testable import SwiftUIRegistryDesignSurface
 
 /// The Showcase speaks the same preset codes as `swiftui-registry preset` and
 /// the website: every vector pinned in `Registry/preset_vectors.json` must

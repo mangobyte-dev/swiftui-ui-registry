@@ -132,6 +132,7 @@ public struct CommandPalette<ID: Hashable>: View {
                 .registrySurface()
             }
         }
+        .registryItem("command")
     }
 
     private func row(_ entry: CommandEntry<ID>) -> some View {

@@ -19,13 +19,16 @@ private struct RegistrySeparatorModifier: ViewModifier {
 
     @ViewBuilder
     func body(content: Content) -> some View {
-        if axis == .horizontal {
-            styled(content)
-                .frame(maxWidth: .infinity)
-        } else {
-            styled(content)
-                .frame(maxHeight: .infinity)
+        Group {
+            if axis == .horizontal {
+                styled(content)
+                    .frame(maxWidth: .infinity)
+            } else {
+                styled(content)
+                    .frame(maxHeight: .infinity)
+            }
         }
+        .registryItem("separator")
     }
 
     private func styled(_ content: Content) -> some View {

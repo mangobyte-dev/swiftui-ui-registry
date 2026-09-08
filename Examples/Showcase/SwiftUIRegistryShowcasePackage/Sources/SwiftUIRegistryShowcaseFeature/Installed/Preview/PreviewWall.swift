@@ -16,15 +16,18 @@ public struct PreviewWall: View {
     public init() {}
 
     public var body: some View {
-        if sizeClass == .regular {
-            LazyVGrid(columns: columns, alignment: .leading, spacing: theme.metrics.standardSpacing) {
-                cards
-            }
-        } else {
-            VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {
-                cards
+        Group {
+            if sizeClass == .regular {
+                LazyVGrid(columns: columns, alignment: .leading, spacing: theme.metrics.standardSpacing) {
+                    cards
+                }
+            } else {
+                VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {
+                    cards
+                }
             }
         }
+        .registryItem("preview")
     }
 
     @ViewBuilder

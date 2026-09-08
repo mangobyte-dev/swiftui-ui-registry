@@ -48,6 +48,7 @@ private struct RegistrySkeletonModifier: ViewModifier {
             .task(id: isActive) {
                 isDimmed = isActive && !reduceMotion
             }
+            .registryItem("skeleton")
     }
 
     private var opacity: Double {

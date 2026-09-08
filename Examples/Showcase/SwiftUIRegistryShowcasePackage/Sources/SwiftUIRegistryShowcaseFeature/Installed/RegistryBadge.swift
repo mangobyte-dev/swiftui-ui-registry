@@ -40,6 +40,7 @@ private struct RegistryBadgeModifier: ViewModifier {
                     lineWidth: variant == .outline ? theme.metrics.borderWidth : 0
                 )
             }
+            .registryItem("badge")
     }
 
     private var foregroundStyle: AnyShapeStyle {

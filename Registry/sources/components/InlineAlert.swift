@@ -78,6 +78,7 @@ public struct InlineAlert<Actions: View>: View {
         .overlay {
             shape.stroke(borderStyle, lineWidth: theme.metrics.borderWidth)
         }
+        .registryItem("alert")
     }
 
     private var defaultSystemImage: String {

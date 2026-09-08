@@ -87,6 +87,7 @@ public struct SettingsSection<Content: View>: View {
                     .foregroundStyle(.secondary)
             }
         }
+        .registryItem("settings-section")
     }
 }
 

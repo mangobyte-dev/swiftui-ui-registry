@@ -42,6 +42,7 @@ public struct TransactionRow: View {
             systemImage: systemImage,
             tone: tone
         )
+        .registryItem("transaction-row")
     }
 }
 

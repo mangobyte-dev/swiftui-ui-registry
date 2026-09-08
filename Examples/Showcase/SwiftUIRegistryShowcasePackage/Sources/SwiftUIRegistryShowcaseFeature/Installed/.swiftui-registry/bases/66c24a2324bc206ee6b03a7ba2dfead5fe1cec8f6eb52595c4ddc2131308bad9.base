@@ -31,6 +31,7 @@ public struct RegistryInputStyle: TextFieldStyle {
                 )
             }
             .opacity(isEnabled ? 1 : theme.disabledOpacity)
+            .registryItem("input")
     }
 
     private var borderStyle: AnyShapeStyle {

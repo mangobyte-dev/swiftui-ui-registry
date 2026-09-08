@@ -12,7 +12,7 @@ Each kind of fact lives in exactly one place. Four document classes:
 
 - Contracts, which rules come from: this file, `docs/philosophy.md` (why), `docs/architecture.md` (how), `docs/registry-spec.md` (data and installer contract), `docs/visual-testing.md` (visual evidence rules), `docs/mango.md` (the design-system template)
 - State, the only home of stage status, open deferrals, and plans: `docs/component-roadmap.md`. A status claim in any other file is a pointer, not a second source
-- Generated, never hand-edited: `docs/catalog/` (markdown catalog), `Website/content/registry.json` and `Website/public/images/` (the website's data and captures; the site itself is Next.js with shadcn/ui under `Website/`), `Examples/Showcase/.../RegistryCatalogManifest.swift` and `Examples/Showcase/SwiftUIRegistryShowcaseUITests/RegistryItemNames.swift` (the Showcase manifest), and `docs/images/items/` and `docs/images/themes/` (captures). Current item counts and per-item pages live there, not in prose
+- Generated, never hand-edited: `docs/catalog/` (markdown catalog), `Website/content/registry.json` and `Website/public/images/` (the website's data and captures; the site itself is Next.js with shadcn/ui under `Website/`), `Examples/Showcase/.../RegistryCatalogManifest.swift` and `Examples/Showcase/SwiftUIRegistryShowcaseUITests/RegistryItemNames.swift` (the Showcase manifest), `Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift` (the item-to-token map the design surface scopes its panel by), and `docs/images/items/` and `docs/images/themes/` (captures). Current item counts and per-item pages live there, not in prose
 - Archives, closed dated records kept as evidence, not updated: `STAGE_ONE_VALIDATION.md`, `GENERAL_DIRECTION_REVIEW.md`, `docs/clean-room-trial.md`, `docs/research.md`, `tasks/`. `HANDOFF.md` is the brief for the next session and points here for state
 
 On conflict: state beats archives, the more recent dated record wins between archives, and contracts govern rules regardless. Surface the conflict, then fix the stale text rather than averaging
@@ -22,13 +22,14 @@ On conflict: state beats archives, the more recent dated record wins between arc
 ## Boundaries
 
 - `Sources/SwiftUIRegistryFoundations/` is the stable package interface for design foundations only
+- `Sources/SwiftUIRegistryDesignSurface/` is the optional design-surface product: the tuning panel, the preset codec, the `designSurface()` modifier, and the `design-tokens.json` store on swift-sharing, compiled only where UIKit exists and inert in release builds. It depends on foundations and never on registry items (its chrome is native styles); the Showcase consumes it, and its tests run through the Showcase scheme because the root package builds it empty on macOS
 - `Sources/RegistryKit/` is the SwiftUI-free engine behind the `swiftui-registry` executable in `Sources/SwiftUIRegistryCLI/`: loading, the single structural validator, resolution, receipts, installation and merge, search, preset codes, the MCP server, and the three generators. It never imports `SwiftUIRegistryFoundations`; `Tests/RegistryKitTests/` holds its contracts and captured fixtures
 - `Registry/sources/components/` contains source-owned styles, focused modifiers, and reusable compositions
 - `Registry/sources/blocks/` contains source-owned compositions of components
 - `Registry/items/` is machine-readable metadata and the dependency graph; `Registry/preset_vectors.json` pins the preset codes every codec reproduces
 - `Distribution/homebrew/` is the formula template for the owner's Homebrew tap, and `.github/workflows/release.yml` builds the universal binary when a GitHub release is published; neither is exercised by the verification list
 - `Examples/TodoCounter/` is a second consumer built from a fresh Xcode project: the published package by URL, the Composable Architecture, seven items installed with the released tool, a customized preset theme, and one locally edited component. It is not part of the verification list; its own test plan runs from its workspace
-- `Examples/Showcase/` proves installation, integration, and visual contracts. It is a browsable catalog (Components, Blocks, Recipes) with the tuning panel beside it, whose item list and usage snippets come from the generated manifest; every item has a demo registered in `ItemDemos.swift`, and the `-item <name>` launch renders that demo alone for capture
+- `Examples/Showcase/` proves installation, integration, and visual contracts. It is a browsable catalog (Components, Blocks, Recipes) with the design surface's tuning panel beside it, whose item list and usage snippets come from the generated manifest; every item has a demo registered in `ItemDemos.swift`, and the `-item <name>` launch renders that demo alone for capture
 - `Skills/` holds the three agent skills in the Point-Free format, mirrored to `~/.claude/skills/`; their content quotes the tool's help and the catalog and is regenerated when either changes
 
 ## Rules
@@ -47,8 +48,9 @@ On conflict: state beats archives, the more recent dated record wins between arc
 - Preview every meaningful variant, including dark appearance and an accessibility Dynamic Type size
 - Do not create an extra reusable abstraction without two concrete consumers or named roadmap usages
 - Every installable item (component or block) needs a version, preview, accessibility notes, supported platform metadata, and a compile path. A `recipe` item is non-installing native guidance: empty `files`, non-empty `docs`, no preview requirement, and no installable item may depend on it (see the value gate in `docs/registry-spec.md`)
+- Every installable item applies `.registryItem("<name>")` once, as the last modifier of its root view's or style's chain (a private modifier's `body` for an item exposed through an extension); it is foundations API, inert without a design surface, and the validator rejects a foundations-dependent item whose first source lacks it
 - Every item of any kind needs a non-empty `usage` snippet: a minimal call-site example quoted from the item's real public API as declared in its canonical source, never written from memory. Recipes reuse the native snippet from their `docs`
-- `docs/catalog/` is generated by `swift run swiftui-registry generate catalog`, the website's data by `swift run swiftui-registry generate site-data`, and the Showcase manifest by `swift run swiftui-registry generate showcase-manifest`; never edit any of them by hand. Regenerate all three after any metadata or registry source change; `generatedOutputsMatchCanonicalBytes` in `Tests/RegistryKitTests/GeneratorTests.swift` rejects drift byte for byte. The site's pages under `Website/app` are hand-written React and read only that JSON; `npm run build` in `Website/` exports it statically
+- `docs/catalog/` is generated by `swift run swiftui-registry generate catalog`, the website's data by `swift run swiftui-registry generate site-data`, the Showcase manifest by `swift run swiftui-registry generate showcase-manifest`, and the design surface's item-to-token map by `swift run swiftui-registry generate item-tokens` (it scans each item's sources and dependency closure for the theme fields they read); never edit any of them by hand. Regenerate all four after any metadata or registry source change; `generatedOutputsMatchCanonicalBytes` in `Tests/RegistryKitTests/GeneratorTests.swift` rejects drift byte for byte. The site's pages under `Website/app` are hand-written React and read only that JSON; `npm run build` in `Website/` exports it statically
 - Item screenshots come from `python3 Scripts/capture_previews.py` on the pinned simulator, never from hand-made images; recapture an item after a visible change to it and regenerate the catalog and site
 - Never regenerate visual references merely to pass a test; follow `docs/visual-testing.md`
 - Add dependencies only when a vertical slice proves they are necessary
@@ -72,7 +74,8 @@ swift run swiftui-registry validate
 swift run swiftui-registry generate catalog
 swift run swiftui-registry generate showcase-manifest
 swift run swiftui-registry generate site-data
-git diff --exit-code -- docs/catalog Examples/Showcase Website/content
+swift run swiftui-registry generate item-tokens
+git diff --exit-code -- docs/catalog Examples/Showcase Website/content Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift
 swift test
 make format-check
 swift run swiftui-registry search nutrition dashboard --kind block --platform iOS --target-version 26.0
@@ -83,4 +86,4 @@ xcodebuildmcp simulator test --workspace-path Examples/Showcase/SwiftUIRegistryS
 (cd Website && npm ci && npm run typecheck && npm run build)
 ```
 
-Scope the run to the change: a metadata-only change stops after `make format-check`, a registry source change needs the install and compile steps, and only a visible UI change needs the simulator test. `swift test` needs `git` and Node 22 on PATH: the merge adapter shells out to `git merge-file`, and the website codec check runs `Website/lib/preset.ts` under `node --experimental-strip-types`. A visible change to an item also needs `python3 Scripts/capture_previews.py <item>` (the one remaining Python script, which lists items through the built tool) followed by the three generators. A change under `Website/` needs the typecheck and build. A change is incomplete if generated consumer sources differ from registry sources or any executed command fails; a skipped step is named in the done-claim
+Scope the run to the change: a metadata-only change stops after `make format-check`, a registry source change needs the install and compile steps, and only a visible UI change needs the simulator test. `swift test` needs `git` and Node 22 on PATH: the merge adapter shells out to `git merge-file`, and the website codec check runs `Website/lib/preset.ts` under `node --experimental-strip-types`. A visible change to an item also needs `python3 Scripts/capture_previews.py <item>` (the one remaining Python script, which lists items through the built tool) followed by the four generators. A change under `Website/` needs the typecheck and build. A change is incomplete if generated consumer sources differ from registry sources or any executed command fails; a skipped step is named in the done-claim

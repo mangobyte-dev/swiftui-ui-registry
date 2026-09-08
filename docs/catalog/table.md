@@ -16,12 +16,12 @@ swiftui-registry install table --destination Sources/YourFeature/Components
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.1"))
 ]
 
 // In the consuming target's dependencies:
@@ -51,9 +51,9 @@ DataTable(
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
-- Installs in order: [separator](separator.md) 0.2.0, [table](table.md) 0.1.0
+- Installs in order: [separator](separator.md) 0.2.1, [table](table.md) 0.1.1
 - Accessibility contract:
   - Each header and body row is combined into one accessibility element so VoiceOver reads its cells in order; the header row also carries the header trait.
   - Trailing columns are the numeric convention: their cells use monospaced digits and hug the trailing edge, so figures line up down the column.

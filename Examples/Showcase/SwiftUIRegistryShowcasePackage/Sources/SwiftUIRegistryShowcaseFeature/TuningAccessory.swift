@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftUIRegistryDesignSurface
 
 /// The tuning strip that stays above the tab bar on every screen: the named
 /// accents one tap away and the Tune button for the full panel, so a change

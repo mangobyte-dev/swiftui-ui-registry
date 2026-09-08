@@ -16,12 +16,12 @@ swiftui-registry install button-group --destination Sources/YourFeature/Componen
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.1"))
 ]
 
 // In the consuming target's dependencies:
@@ -47,9 +47,9 @@ ControlGroup {
 ## Details
 
 - Kind: component
-- Version: 0.3.1
+- Version: 0.3.2
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.1, [button-group](button-group.md) 0.3.1
+- Installs in order: [button](button.md) 0.5.2, [button-group](button-group.md) 0.3.2
 - Accessibility contract:
   - Retains the caller's native Button controls and exposes the row as one accessibility container.
   - Keeps each button's visible or derived accessibility label and role.

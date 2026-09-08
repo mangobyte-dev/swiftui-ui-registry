@@ -10,7 +10,7 @@ consumer app
 └── owns copied component and block source
 ```
 
-The package boundary is intentionally shallow. `SwiftUIRegistryFoundations` contains only the stable environment contract and one shared surface modifier. Registry components and blocks are not package products
+The package boundary is intentionally shallow. `SwiftUIRegistryFoundations` contains only the stable environment contract, one shared surface modifier, and the design surface's item hook (`registryItem(_:)`, an environment value, and an anchor preference, all inert without a surface). Registry components and blocks are not package products. `SwiftUIRegistryDesignSurface` is a second, optional product for debug builds: the tuning panel and its preset codec moved there from the Showcase on 2026-09-08 behind a `designSurface()` modifier and a swift-sharing file store, so any consumer app can tune the tokens on device and export them as `design-tokens.json` and a preset code. Foundations does not depend on it, it never imports registry items, and a consumer that only wants items never adds it
 
 ## Why this split
 

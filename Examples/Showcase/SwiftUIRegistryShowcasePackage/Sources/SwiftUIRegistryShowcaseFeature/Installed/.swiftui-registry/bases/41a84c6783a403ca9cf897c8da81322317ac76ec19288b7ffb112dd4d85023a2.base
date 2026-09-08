@@ -51,6 +51,7 @@ public struct RegistryAccordionStyle: DisclosureGroupStyle {
                     .padding(.bottom, theme.metrics.standardSpacing)
             }
         }
+        .registryItem("accordion")
     }
 }
 

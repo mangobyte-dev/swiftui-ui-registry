@@ -16,12 +16,12 @@ swiftui-registry install toast --destination Sources/YourFeature/Components
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.1"))
 ]
 
 // In the consuming target's dependencies:
@@ -51,9 +51,9 @@ toast = RegistryToast(
 ## Details
 
 - Kind: component
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.1, [toast](toast.md) 0.1.0
+- Installs in order: [button](button.md) 0.5.2, [toast](toast.md) 0.1.1
 - Accessibility contract:
   - Each variant pairs its own symbol with its color, so informational, positive, and destructive meaning never rests on color alone.
   - When a toast appears it posts a VoiceOver announcement built from the title and message, so the update is spoken without moving focus away from the current task.

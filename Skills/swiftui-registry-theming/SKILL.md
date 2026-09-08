@@ -207,6 +207,54 @@ open (`docs/architecture.md`, Foundations).
   board and, only for the six built-in presets, the real capture, and never
   claims otherwise (`docs/architecture.md`, Foundations).
 
+## How to tune on device with the design surface
+
+The why: the last ten percent of a screen (the radius that matches the brand,
+the spacing that feels right) is tuned by looking at the real app, not the
+Showcase, and the result has to reach the agent that writes the next pass. The
+`SwiftUIRegistryDesignSurface` product puts the Showcase's tuning panel into any
+app in debug builds and keeps the tokens in one file the agent reads
+(`docs/registry-spec.md`, Preset codes, "The design tokens file";
+`docs/component-roadmap.md`, Stage 8).
+
+1. Add the second product beside foundations (same package, same rule) and link
+   it to the app target: `.product(name: "SwiftUIRegistryDesignSurface", package: "swiftui-ui-registry")`.
+2. Apply the surface inside the app's theme call, so the tuned theme is the
+   nearer one while tuning and the app's theme is the only one shipped:
+
+   ```swift
+   import SwiftUIRegistryDesignSurface
+
+   ContentView()
+       .designSurface()
+       .registryTheme(.app)
+   ```
+
+   A debug build shows a floating Tune button; a release build returns the
+   content unchanged (`Sources/SwiftUIRegistryDesignSurface/DesignSurface.swift`).
+3. Tune, then read the result: the panel's Copy Code gives the preset code, Copy
+   Swift the initializer, and `design-tokens.json` in the app's Documents folder
+   holds both the code and every knob. On a simulator:
+
+   ```sh
+   cat "$(xcrun simctl get_app_container booted <bundle id> data)/Documents/design-tokens.json"
+   ```
+
+4. Scope the panel to one item: tap Select in the panel, then tap the item on
+   the screen behind it; the panel keeps the sections whose tokens that item
+   reads (`RegistryItemTokens`, generated from the sources) and All tokens
+   brings the theme back.
+5. Push a theme onto the simulator from the agent's side by writing the file
+   with only a code, `{"code": "a74hGF01CVunaG0vzZJG"}`; the surface loads it.
+
+- **DO** feed the file's `code` to `swiftui-registry preset apply` or the MCP
+  `apply_preset` to write `RegistryTheme+App.swift`; the code is the contract,
+  the file the convenience.
+- **DO NOT** apply `designSurface()` outside `registryTheme(_:)`; the inner
+  theme wins in SwiftUI's environment, so the surface's theme would never show.
+- **DO NOT** add the product to an app that only wants items; foundations never
+  depends on it and it pulls swift-sharing in.
+
 ## How to use the version b fields
 
 `Registry/preset_vectors.json` declares `version: "b"` with `maxLength: 48`, so

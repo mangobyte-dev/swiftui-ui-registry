@@ -16,12 +16,12 @@ swiftui-registry install activity-feed --destination Sources/YourFeature/Compone
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.1"))
 ]
 
 // In the consuming target's dependencies:
@@ -59,9 +59,9 @@ ActivityFeed(
 ## Details
 
 - Kind: block
-- Version: 0.2.1
+- Version: 0.2.2
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.1, [alert](alert.md) 0.2.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [skeleton](skeleton.md) 0.2.0, [empty](empty.md) 0.1.0, [accordion](accordion.md) 0.2.1, [activity-feed](activity-feed.md) 0.2.1
+- Installs in order: [button](button.md) 0.5.2, [alert](alert.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [skeleton](skeleton.md) 0.2.1, [empty](empty.md) 0.1.1, [accordion](accordion.md) 0.2.2, [activity-feed](activity-feed.md) 0.2.2
 - Accessibility contract:
   - Feedback is never color alone: unread rows use a heavier title, a dot, and an Unread accessibility value; the notice variant pairs a symbol with its color.
   - Loading placeholders are one disabled accessibility element labeled Loading activity and cannot trigger selection.

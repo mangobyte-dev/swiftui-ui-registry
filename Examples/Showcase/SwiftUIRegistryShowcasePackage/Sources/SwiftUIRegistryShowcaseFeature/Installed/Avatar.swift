@@ -62,6 +62,7 @@ public struct Avatar: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityAddTraits(.isImage)
+        .registryItem("avatar")
     }
 
     private var diameter: CGFloat {

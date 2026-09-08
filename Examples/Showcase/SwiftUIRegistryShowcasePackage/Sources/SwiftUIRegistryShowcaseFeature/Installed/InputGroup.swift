@@ -57,6 +57,7 @@ public struct InputGroup<Leading: View, Content: View, Trailing: View>: View {
             )
         }
         .opacity(isEnabled ? 1 : theme.disabledOpacity)
+        .registryItem("input-group")
     }
 
     private var borderStyle: AnyShapeStyle {

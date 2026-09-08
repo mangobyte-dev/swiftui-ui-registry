@@ -16,12 +16,12 @@ swiftui-registry install auth-form --destination Sources/YourFeature/Components
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.1"))
 ]
 
 // In the consuming target's dependencies:
@@ -52,9 +52,9 @@ AuthForm(
 ## Details
 
 - Kind: block
-- Version: 0.3.1
+- Version: 0.3.2
 - Platforms: iOS 26.0+
-- Installs in order: [input](input.md) 0.5.0, [button](button.md) 0.5.1, [card](card.md) 0.2.0, [auth-form](auth-form.md) 0.3.1
+- Installs in order: [input](input.md) 0.5.1, [button](button.md) 0.5.2, [card](card.md) 0.2.1, [auth-form](auth-form.md) 0.3.2
 - Accessibility contract:
   - Both fields carry an explicit accessibilityLabel equal to their visible titles. Measured on iOS 27: the label-plus-prompt initializer alone exposes the title as placeholder text only, so a field with typed content would be unnamed without it.
   - Focus order is identity then password: the identity field submits with a Next return key that moves focus to the password field, and the password return key submits the form.

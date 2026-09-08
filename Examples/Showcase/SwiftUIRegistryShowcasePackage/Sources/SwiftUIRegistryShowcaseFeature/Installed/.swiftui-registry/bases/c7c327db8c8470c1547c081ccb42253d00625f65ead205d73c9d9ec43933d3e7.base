@@ -120,6 +120,7 @@ public struct Questionnaire: View {
         }
         .groupBoxStyle(.registryCard)
         .onChange(of: currentStep) { _, newValue in announceStep(at: newValue) }
+        .registryItem("questionnaire")
     }
 
     // MARK: Sections

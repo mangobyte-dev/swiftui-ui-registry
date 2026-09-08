@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.4.0",
+  "version": "0.4.1",
   "name": "macro-progress",
   "kind": "component",
   "description": "Displays prepared nutrition progress with a native progress view and adaptive value layout.",
@@ -21,7 +21,7 @@
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
       "swiftPM": {
         "kind": "upToNextMinor",
-        "minimumVersion": "0.1.0"
+        "minimumVersion": "0.2.1"
       }
     }
   ],

@@ -34,6 +34,7 @@ private struct RegistryKeycapModifier: ViewModifier {
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(accessibilityLabel ?? Text(verbatim: ""), isEnabled: accessibilityLabel != nil)
             .accessibilityHidden(accessibilityLabel == nil)
+            .registryItem("kbd")
     }
 }
 

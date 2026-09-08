@@ -309,14 +309,14 @@ extension Commands {
         for file in installed { #expect(try fileData(file.target) == fileData(file.source)) }
         let receipt = try JSON.read(fileData(destination + "/.swiftui-registry/receipt.json"))
         #expect(receipt["schemaVersion"] == 1)
-        #expect(receipt["items"]["finance-overview"]["version"] == "0.4.2")
+        #expect(receipt["items"]["finance-overview"]["version"] == "0.4.3")
         #expect(
           receipt["items"]["finance-overview"]["packageDependencies"] == [
             [
               "package": "SwiftUIRegistry", "product": "SwiftUIRegistryFoundations",
               "requirement": "0.x",
               "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
-              "swiftPM": ["kind": "upToNextMinor", "minimumVersion": "0.1.0"],
+              "swiftPM": ["kind": "upToNextMinor", "minimumVersion": "0.2.1"],
             ]
           ])
         #expect(
@@ -332,7 +332,7 @@ extension Commands {
         #expect(button.code == 0)
         #expect(
           button.stdout.contains(
-            "requires: add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations"
+            "requires: add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations"
           ))
       }
     }
@@ -426,7 +426,7 @@ extension Commands {
         #expect(result.code == 0)
         #expect(
           result.stdout.contains(
-            "closure:\n  metric-card 0.2.1 (component)\n  transaction-row 0.5.0 (component)\n  empty 0.1.0 (component)\n  finance-overview 0.4.2 (block)\n"
+            "closure:\n  metric-card 0.2.2 (component)\n  transaction-row 0.5.1 (component)\n  empty 0.1.1 (component)\n  finance-overview 0.4.3 (block)\n"
           ))
         #expect(
           result.stdout.contains(
@@ -434,7 +434,7 @@ extension Commands {
           ))
         #expect(
           result.stdout.contains(
-            "  requires: add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations"
+            "  requires: add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations"
           ))
         #expect(result.stdout.contains("  ok: no collisions"))
         #expect(result.stdout.contains("next steps:"))

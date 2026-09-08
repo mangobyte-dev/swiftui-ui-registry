@@ -76,6 +76,7 @@ public struct MessageScroller<ID: Hashable & Sendable, Content: View>: View {
             isLoadingHistory = true
             onReachTop()
         }
+        .registryItem("message-scroller")
     }
 
     private func isNearBottom(_ geometry: ScrollGeometry) -> Bool {

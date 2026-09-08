@@ -26,8 +26,13 @@ private struct RegistryMarkerModifier: ViewModifier {
 
     let variant: RegistryMarkerVariant
 
-    @ViewBuilder
     func body(content: Content) -> some View {
+        marker(content)
+            .registryItem("marker")
+    }
+
+    @ViewBuilder
+    private func marker(_ content: Content) -> some View {
         switch variant {
         case .note:
             content

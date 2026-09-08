@@ -37,6 +37,7 @@ private struct RegistryBubbleModifier: ViewModifier {
                     lineWidth: variant == .muted ? theme.metrics.borderWidth : 0
                 )
             }
+            .registryItem("bubble")
     }
 
     private var foregroundStyle: AnyShapeStyle {

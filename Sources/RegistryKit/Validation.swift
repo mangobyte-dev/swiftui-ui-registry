@@ -331,6 +331,19 @@ public struct RegistryValidator {
         source, root: root + "/Registry", unsafe: "unsafe preview source path",
         missing: "preview source file does not exist")
     }
+    // The design surface selects items by the tag their root applies, and the
+    // tag is foundations API, so an installable item on foundations carries
+    // it in its first source; a new item that forgets it is invisible to Select.
+    let onFoundations = (item["packageDependencies"].array ?? []).contains {
+      $0["product"].text == "SwiftUIRegistryFoundations"
+    }
+    if onFoundations, kind == "component" || kind == "block",
+      let source = item["files"].array?.first?["source"].string, let name = item["name"].string,
+      let candidate = try? safeJoin(root + "/Registry", source, fs: fs), fs.isFile(candidate),
+      let text = try? readText(fs, candidate), !text.contains(".registryItem(\"\(name)\")")
+    {
+      add("installable items on foundations apply .registryItem(\"\(name)\") in their first source")
+    }
     for screenshot in preview["screenshots"].strings {
       path(
         screenshot, root: root, unsafe: "unsafe screenshot path",

@@ -36,6 +36,7 @@ public struct RegistryProgressViewStyle: ProgressViewStyle {
             }
         }
         .accessibilityElement(children: .combine)
+        .registryItem("progress")
     }
 
     /// Applies an explicit tint only for the positive/negative tones. The

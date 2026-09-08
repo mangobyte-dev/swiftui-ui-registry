@@ -150,6 +150,7 @@ public struct ActivityFeed<ID: Hashable>: View {
                 .registrySurface()
             }
         }
+        .registryItem("activity-feed")
     }
 
     private func noticeView(_ notice: ActivityNotice) -> some View {

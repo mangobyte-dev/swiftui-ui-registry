@@ -28,6 +28,7 @@ public struct RegistryLabelStyle: LabelStyle {
                 configuration.icon.accessibilityHidden(true)
             }
         }
+        .registryItem("label")
     }
 }
 

@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import SwiftUI
 import SwiftUIRegistryFoundations
 
@@ -6,26 +7,60 @@ import SwiftUIRegistryFoundations
 /// an app root. It stays up beside the catalog, an inspector column on iPad
 /// and a sheet the catalog remains interactive under on iPhone, so a change
 /// shows on the demo behind it at once.
-struct TuningPanel: View {
+public struct TuningPanel<PresetsFooter: View>: View {
     @Binding var tuning: ThemeTuning
+    let presetsFooter: PresetsFooter
+    /// The item scope, when the host is a design surface: `nil` shows every
+    /// section and no Select control, as the Showcase's previews and tests do.
+    private let selection: Binding<ItemSelection>?
     @State private var isImporting = false
     @State private var importText = ""
     @State private var importFailed = false
 
-    var body: some View {
+    /// The panel over the tuning it edits. `presetsFooter` is the host's own
+    /// row under the preset chips, such as a link to a sample design system.
+    public init(
+        tuning: Binding<ThemeTuning>,
+        selection: Binding<ItemSelection>? = nil,
+        @ViewBuilder presetsFooter: () -> PresetsFooter
+    ) {
+        _tuning = tuning
+        self.selection = selection
+        self.presetsFooter = presetsFooter()
+    }
+
+    /// The tokens the selected item reads, or `nil` for the whole theme.
+    private var scope: Set<String>? {
+        guard let item = selection?.wrappedValue.item,
+              let tokens = RegistryItemTokens.tokens(for: item) else { return nil }
+        return Set(tokens)
+    }
+
+    /// Whether a section whose knobs are `tokens` reaches the selected item.
+    private func shows(_ tokens: Set<String>) -> Bool {
+        guard let scope else { return true }
+        return !scope.isDisjoint(with: tokens)
+    }
+
+    public var body: some View {
         NavigationStack {
             Form {
-                PresetsSection(tuning: $tuning)
+                if let selection, let item = selection.wrappedValue.item {
+                    ScopeSection(item: item, tokenCount: scope?.count ?? 0) {
+                        withAnimation(.snappy) { selection.wrappedValue.item = nil }
+                    }
+                }
+                PresetsSection(tuning: $tuning, footer: presetsFooter)
                 ExportSection(tuning: tuning)
                 AccentSection(tuning: $tuning)
                 TypographySection(tuning: $tuning)
-                SurfaceSection(tuning: $tuning)
-                ChartSection(tuning: $tuning)
-                DensitySection(tuning: $tuning)
-                RadiusSection(tuning: $tuning)
-                SpacingSection(tuning: $tuning)
+                if shows(PanelScope.surface) { SurfaceSection(tuning: $tuning) }
+                if shows(["chartPalette"]) { ChartSection(tuning: $tuning) }
+                if shows(PanelScope.radius.union(PanelScope.spacing)) { DensitySection(tuning: $tuning) }
+                if shows(PanelScope.radius) { RadiusSection(tuning: $tuning) }
+                if shows(PanelScope.spacing) { SpacingSection(tuning: $tuning) }
                 ColorsSection(tuning: $tuning)
-                StateSection(tuning: $tuning)
+                if shows(["disabledOpacity"]) { StateSection(tuning: $tuning) }
                 EnvironmentSection(tuning: $tuning)
             }
             .navigationTitle("Tune")
@@ -36,6 +71,16 @@ struct TuningPanel: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Reset", action: reset)
+                }
+                if let selection {
+                    ToolbarItem(placement: .topBarLeading) {
+                        // Arms the next tap on the content to pick the item under it.
+                        Button("Select", systemImage: "scope") {
+                            withAnimation(.snappy) { selection.wrappedValue.isSelecting.toggle() }
+                        }
+                        .accessibilityIdentifier("tuning.select")
+                        .accessibilityAddTraits(selection.wrappedValue.isSelecting ? [.isSelected] : [])
+                    }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Import", systemImage: "square.and.arrow.down", action: beginImport)
@@ -67,8 +112,51 @@ struct TuningPanel: View {
     }
 }
 
-private struct PresetsSection: View {
+extension TuningPanel where PresetsFooter == EmptyView {
+    public init(tuning: Binding<ThemeTuning>) {
+        self.init(tuning: tuning) { EmptyView() }
+    }
+}
+
+/// The knobs each scoped section moves, as the token names the generated
+/// `RegistryItemTokens` map uses; a section shows when the selected item reads
+/// any of them. Accent, typography, and the color pairs reach every item
+/// through the root modifier, so their sections never scope out.
+private enum PanelScope {
+    static let surface: Set<String> = [
+        "surface", "border", "borderWidth", "emphasizedBorderWidth", "surfaceOpacity", "surfaceStep",
+    ]
+    static let radius: Set<String> = ["compactRadius", "controlRadius", "cardRadius"]
+    static let spacing: Set<String> = [
+        "compactSpacing", "standardSpacing", "sectionSpacing", "controlHorizontalPadding",
+    ]
+}
+
+/// The selected item's name and how many of the theme's tokens reach it, with
+/// the way back to the whole theme.
+private struct ScopeSection: View {
+    let item: String
+    let tokenCount: Int
+    let showAll: () -> Void
+
+    var body: some View {
+        Section("Selected item") {
+            LabeledContent {
+                Button("All tokens", action: showAll)
+                    .accessibilityIdentifier("tuning.scope.all")
+            } label: {
+                Text(verbatim: item)
+                    .font(.body.monospaced())
+                    .accessibilityIdentifier("tuning.scope.item")
+                Text("\(tokenCount) tokens reach it")
+            }
+        }
+    }
+}
+
+private struct PresetsSection<Footer: View>: View {
     @Binding var tuning: ThemeTuning
+    let footer: Footer
 
     var body: some View {
         Section("Presets") {
@@ -78,7 +166,9 @@ private struct PresetsSection: View {
                         Button(preset.name) {
                             withAnimation(.snappy) { tuning.apply(presetNamed: preset.name) }
                         }
-                        .buttonStyle(.registryOutline)
+                        // A native style, not the registry button item: the
+                        // panel is a package product and items are copied source.
+                        .buttonStyle(.bordered)
                         .controlSize(.small)
                         .registryTheme(preset.theme)
                     }
@@ -87,12 +177,7 @@ private struct PresetsSection: View {
             .scrollIndicators(.hidden)
             .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
 
-            // The MANGO sample design system, the worked example of building one
-            // on the registry. The panel lives in a NavigationStack, so this pushes.
-            NavigationLink("See MANGO") {
-                MangoDemo()
-            }
-            .accessibilityIdentifier("tuning.mango")
+            footer
         }
     }
 }
@@ -414,6 +499,11 @@ private struct ImportThemeSheet: View {
     @Binding var failed: Bool
     let apply: () -> Void
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.registryTheme) private var theme
+
+    private var fieldShape: RoundedRectangle {
+        RoundedRectangle(cornerRadius: theme.metrics.controlRadius, style: .continuous)
+    }
 
     var body: some View {
         NavigationStack {
@@ -421,8 +511,19 @@ private struct ImportThemeSheet: View {
                 Text("Paste a preset code or a RegistryTheme initializer. A code replaces every knob; an initializer replaces the knobs it names and the rest keep their values.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
+                // Native chrome, not the registry textarea item: the panel is a
+                // package product and items are copied source.
                 TextEditor(text: $text)
-                    .registryTextArea(accessibilityLabel: Text("Preset code or Swift"), isInvalid: failed, minimumHeight: 240)
+                    .accessibilityLabel(Text("Preset code or Swift"))
+                    .frame(minHeight: 240)
+                    .padding(theme.metrics.compactSpacing)
+                    .background(theme.surface, in: fieldShape)
+                    .overlay {
+                        fieldShape.stroke(
+                            failed ? Color.red : theme.border,
+                            lineWidth: failed ? theme.metrics.emphasizedBorderWidth : theme.metrics.borderWidth
+                        )
+                    }
                     .font(.footnote.monospaced())
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
@@ -493,3 +594,4 @@ private struct TuningSlider: View {
     TuningPanel(tuning: $tuning)
         .registryTheme(tuning.theme)
 }
+#endif

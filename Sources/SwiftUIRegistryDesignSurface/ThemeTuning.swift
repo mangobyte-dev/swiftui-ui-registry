@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import Foundation
 import SwiftUI
 import SwiftUIRegistryFoundations
@@ -6,16 +7,16 @@ import UIKit
 /// Every knob the tuning panel exposes, as plain values so the result can be
 /// persisted, restored, and exported as the exact `RegistryTheme` source a
 /// consuming app pastes once at its root.
-struct ThemeTuning: Codable, Equatable {
-    enum Accent: String, Codable, CaseIterable, Identifiable {
+public struct ThemeTuning: Equatable, Sendable {
+    public enum Accent: String, Codable, CaseIterable, Identifiable, Sendable {
         case system, ink, blue, indigo, purple, pink, red, orange, yellow, green, mint, teal, cyan, brown, custom
 
-        var id: String { rawValue }
+        public var id: String { rawValue }
 
         /// Every accent a swatch can show; the custom color has its own picker.
-        static let named: [Accent] = allCases.filter { $0 != .custom }
+        public static let named: [Accent] = allCases.filter { $0 != .custom }
 
-        var title: String {
+        public var title: String {
             switch self {
             case .system: "System"
             case .ink: "Ink"
@@ -34,7 +35,7 @@ struct ThemeTuning: Codable, Equatable {
             }
         }
 
-        func color(custom: RGB, dark: RGB? = nil) -> Color? {
+        public func color(custom: RGB, dark: RGB? = nil) -> Color? {
             switch self {
             // The app accent rather than nil: registryTheme(_:) can only apply
             // the tint conditionally, so a theme that flips between nil and a
@@ -66,10 +67,10 @@ struct ThemeTuning: Codable, Equatable {
         }
     }
 
-    struct RGB: Codable, Equatable {
-        var red: Double
-        var green: Double
-        var blue: Double
+    public struct RGB: Codable, Equatable, Sendable {
+        public var red: Double
+        public var green: Double
+        public var blue: Double
 
         var color: Color { Color(red: red, green: green, blue: blue) }
         var uiColor: UIColor { UIColor(red: red, green: green, blue: blue, alpha: 1) }
@@ -86,13 +87,13 @@ struct ThemeTuning: Codable, Equatable {
             String(format: "%.3f", value)
         }
 
-        init(red: Double, green: Double, blue: Double) {
+        public init(red: Double, green: Double, blue: Double) {
             self.red = red
             self.green = green
             self.blue = blue
         }
 
-        init(_ color: Color) {
+        public init(_ color: Color) {
             let resolved = color.resolve(in: EnvironmentValues())
             red = Double(resolved.red)
             green = Double(resolved.green)
@@ -100,15 +101,15 @@ struct ThemeTuning: Codable, Equatable {
         }
     }
 
-    enum Appearance: String, Codable, CaseIterable, Identifiable {
+    public enum Appearance: String, Codable, CaseIterable, Identifiable, Sendable {
         case system, light, dark
-        var id: String { rawValue }
+        public var id: String { rawValue }
         var title: String { rawValue.capitalized }
     }
 
-    enum TextSize: String, Codable, CaseIterable, Identifiable {
+    public enum TextSize: String, Codable, CaseIterable, Identifiable, Sendable {
         case system, large, accessibility
-        var id: String { rawValue }
+        public var id: String { rawValue }
         var title: String {
             switch self {
             case .system: "System"
@@ -121,9 +122,9 @@ struct ThemeTuning: Codable, Equatable {
     /// The font design the theme carries, applied by `registryTheme(_:)` through
     /// `fontDesign(_:)`. A custom family is never a knob: it lives in the Swift
     /// export and the theme package, not in a code.
-    enum FontDesign: String, Codable, CaseIterable, Identifiable {
+    public enum FontDesign: String, Codable, CaseIterable, Identifiable, Sendable {
         case `default`, rounded, serif, monospaced
-        var id: String { rawValue }
+        public var id: String { rawValue }
         var title: String {
             switch self {
             case .default: "Default"
@@ -157,9 +158,9 @@ struct ThemeTuning: Codable, Equatable {
     /// Which colors the chart draws, kept separate from the accent so a chart
     /// can leave the accent alone. `reserved` (index 3) has no case here, so a
     /// code carrying it is rejected rather than guessed.
-    enum ChartPalette: String, Codable, CaseIterable, Identifiable {
+    public enum ChartPalette: String, Codable, CaseIterable, Identifiable, Sendable {
         case accent, spectrum, monochrome
-        var id: String { rawValue }
+        public var id: String { rawValue }
         var title: String {
             switch self {
             case .accent: "Accent"
@@ -186,40 +187,44 @@ struct ThemeTuning: Codable, Equatable {
         var title: String { rawValue.capitalized }
     }
 
-    var accent: Accent = .indigo
-    var customAccent = RGB(red: 0.35, green: 0.34, blue: 0.84)
+    public var accent: Accent = .indigo
+    public var customAccent = RGB(red: 0.35, green: 0.34, blue: 0.84)
     /// A separate custom accent for dark appearance; `nil` reuses `customAccent`.
-    var customAccentDark: RGB? = nil
-    var darkLabelOnAccent = false
-    var surfaceOpacity = 0.055
-    var borderOpacity = 0.08
-    var borderWidth = 1.0
-    var emphasizedBorderWidth = 2.0
-    var compactRadius = 6.0
-    var controlRadius = 8.0
-    var cardRadius = 16.0
-    var compactSpacing = 8.0
-    var standardSpacing = 16.0
-    var sectionSpacing = 24.0
-    var controlHorizontalPadding = 12.0
-    var disabledOpacity = 0.5
-    var fontDesign: FontDesign = .default
-    var surfaceStep = 0.02
-    var chartPalette: ChartPalette = .accent
+    public var customAccentDark: RGB? = nil
+    public var darkLabelOnAccent = false
+    public var surfaceOpacity = 0.055
+    public var borderOpacity = 0.08
+    public var borderWidth = 1.0
+    public var emphasizedBorderWidth = 2.0
+    public var compactRadius = 6.0
+    public var controlRadius = 8.0
+    public var cardRadius = 16.0
+    public var compactSpacing = 8.0
+    public var standardSpacing = 16.0
+    public var sectionSpacing = 24.0
+    public var controlHorizontalPadding = 12.0
+    public var disabledOpacity = 0.5
+    public var fontDesign: FontDesign = .default
+    public var surfaceStep = 0.02
+    public var chartPalette: ChartPalette = .accent
     /// Background, foreground, and secondary foreground as optional custom light
     /// and dark pairs; `nil` leaves the system color in place. The dark value is
     /// `nil` unless the pair carries its own dark color.
-    var background: RGB? = nil
-    var backgroundDark: RGB? = nil
-    var foreground: RGB? = nil
-    var foregroundDark: RGB? = nil
-    var secondaryForeground: RGB? = nil
-    var secondaryForegroundDark: RGB? = nil
-    var appearance: Appearance = .system
-    var textSize: TextSize = .system
-    var rightToLeft = false
+    public var background: RGB? = nil
+    public var backgroundDark: RGB? = nil
+    public var foreground: RGB? = nil
+    public var foregroundDark: RGB? = nil
+    public var secondaryForeground: RGB? = nil
+    public var secondaryForegroundDark: RGB? = nil
+    /// The environment switches: never part of a theme, a code, or the Swift
+    /// export; the surface applies them around the tuned subtree.
+    public var appearance: Appearance = .system
+    public var textSize: TextSize = .system
+    public var rightToLeft = false
 
-    static let `default` = ThemeTuning()
+    public static let `default` = ThemeTuning()
+
+    public init() {}
 
     // MARK: Projections for the panel's controls
 
@@ -321,7 +326,7 @@ struct ThemeTuning: Codable, Equatable {
 
     // MARK: Derived
 
-    var theme: RegistryTheme {
+    public var theme: RegistryTheme {
         var theme = RegistryTheme(
             accent: accent.color(custom: customAccent, dark: customAccentDark),
             onAccent: onAccent,
@@ -370,7 +375,7 @@ struct ThemeTuning: Codable, Equatable {
         return darkLabelOnAccent ? ".black" : ".white"
     }
 
-    var preferredColorScheme: ColorScheme? {
+    public var preferredColorScheme: ColorScheme? {
         switch appearance {
         case .system: nil
         case .light: .light
@@ -378,7 +383,7 @@ struct ThemeTuning: Codable, Equatable {
         }
     }
 
-    var dynamicTypeSize: DynamicTypeSize? {
+    public var dynamicTypeSize: DynamicTypeSize? {
         switch textSize {
         case .system: nil
         case .large: .xxxLarge
@@ -388,7 +393,7 @@ struct ThemeTuning: Codable, Equatable {
 
     /// The exact Swift a consumer pastes; applying it at the root reproduces
     /// what the panel shows.
-    var swiftSource: String {
+    public var swiftSource: String {
         var lines = ["let theme = RegistryTheme("]
         if accent == .custom, let dark = customAccentDark {
             lines.append("    accent: Color(uiColor: UIColor { traits in")
@@ -474,7 +479,7 @@ struct ThemeTuning: Codable, Equatable {
     /// malformed arguments are ignored; nothing is imported when neither a code
     /// nor a `RegistryTheme(` call is present. Environment switches are never
     /// part of a theme.
-    static func parse(_ swift: String, into base: ThemeTuning = .default) -> ThemeTuning? {
+    public static func parse(_ swift: String, into base: ThemeTuning = .default) -> ThemeTuning? {
         if let code = presetCode(in: swift) {
             return ThemeTuning(presetCode: code, base: base)
         }
@@ -633,31 +638,5 @@ struct ThemeTuning: Codable, Equatable {
         default: break
         }
     }
-
-    // MARK: Persistence
-
-    private static let storageKey = "showcase.tuning"
-
-    /// The knobs a catalog launch starts from: a `-preset` code wins,
-    /// `-default-tuning` resets them for the UI suite, and otherwise the last
-    /// persisted tuning returns.
-    static func initial(for arguments: LaunchArguments) -> ThemeTuning {
-        if let code = arguments.value(after: "-preset"), let tuned = ThemeTuning(presetCode: code) {
-            return tuned
-        }
-        return arguments.contains("-default-tuning") ? .default : restored()
-    }
-
-    static func restored() -> ThemeTuning {
-        guard let data = UserDefaults.standard.data(forKey: storageKey),
-              let tuning = try? JSONDecoder().decode(ThemeTuning.self, from: data) else {
-            return .default
-        }
-        return tuning
-    }
-
-    func persist() {
-        guard let data = try? JSONEncoder().encode(self) else { return }
-        UserDefaults.standard.set(data, forKey: Self.storageKey)
-    }
 }
+#endif

@@ -90,7 +90,7 @@ extension Commands {
     try copy("docs/images")
     try fs.createDirectory("/registry/Examples/Showcase/SwiftUIRegistryShowcaseUITests")
     try withFixture(fs) {
-      for generator in ["catalog", "showcase-manifest", "site-data"] {
+      for generator in ["catalog", "showcase-manifest", "site-data", "item-tokens"] {
         let result = try command(["generate", generator])
         #expect(result.code == 0, "\(generator): \(result.stderr)")
         #expect(result.stderr.isEmpty)
@@ -108,7 +108,7 @@ extension Commands {
       }
       for path in [
         "docs/catalog", ShowcaseManifestGenerator.outputPath, ShowcaseManifestGenerator.namesPath,
-        SiteDataGenerator.outputPath, SiteDataGenerator.imagesPath,
+        SiteDataGenerator.outputPath, SiteDataGenerator.imagesPath, ItemTokensGenerator.outputPath,
       ] { try compare(path) }
       let manifest = try readText(fs, "/registry/" + ShowcaseManifestGenerator.outputPath)
       let registry = try Registry(root: "/registry")

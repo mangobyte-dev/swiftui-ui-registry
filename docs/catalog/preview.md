@@ -16,27 +16,12 @@ swiftui-registry install preview --destination Sources/YourFeature/Components
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-Then add each package requirement to that target:
-
-- add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
-- add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
-]
-
-// In the consuming target's dependencies:
-.product(name: "SwiftUIRegistryFoundations", package: "swiftui-ui-registry")
-```
-
-In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target
-
-```swift
-// Package.swift
-dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.1"))
 ]
 
 // In the consuming target's dependencies:
@@ -56,9 +41,9 @@ PreviewWall()
 ## Details
 
 - Kind: block
-- Version: 0.3.0
+- Version: 0.3.1
 - Platforms: iOS 26.0+
-- Installs in order: [card](card.md) 0.2.0, [avatar](avatar.md) 0.2.0, [separator](separator.md) 0.2.0, [badge](badge.md) 0.3.1, [item](item.md) 0.2.0, [button](button.md) 0.5.1, [alert](alert.md) 0.2.0, [chart](chart.md) 0.1.2, [empty](empty.md) 0.1.0, [input-group](input-group.md) 0.2.0, [combobox](combobox.md) 0.1.0, [input](input.md) 0.5.0, [field](field.md) 0.1.0, [spinner](spinner.md) 0.2.0, [checkbox](checkbox.md) 0.3.1, [textarea](textarea.md) 0.4.0, [table](table.md) 0.1.0, [kbd](kbd.md) 0.1.1, [progress](progress.md) 0.2.0, [select](select.md) 0.2.0, [skeleton](skeleton.md) 0.2.0, [button-group](button-group.md) 0.3.1, [preview](preview.md) 0.3.0
+- Installs in order: [card](card.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [button](button.md) 0.5.2, [alert](alert.md) 0.2.1, [chart](chart.md) 0.1.3, [empty](empty.md) 0.1.1, [input-group](input-group.md) 0.2.1, [combobox](combobox.md) 0.1.1, [input](input.md) 0.5.1, [field](field.md) 0.1.1, [spinner](spinner.md) 0.2.1, [checkbox](checkbox.md) 0.3.2, [textarea](textarea.md) 0.4.1, [table](table.md) 0.1.1, [kbd](kbd.md) 0.1.2, [progress](progress.md) 0.2.1, [select](select.md) 0.2.1, [skeleton](skeleton.md) 0.2.1, [button-group](button-group.md) 0.3.2, [preview](preview.md) 0.3.1
 - Accessibility contract:
   - All 33 cards render in one ordered wall: an adaptive grid on a regular width and a plain, non-lazy VStack on a compact width, so every card exists in the hierarchy even off screen and the capture-route accessibility audit reaches all of them.
   - Every interactive control carries an accessibility label and every decorative SF Symbol is hidden, so the capture-route audit finds no unlabeled button, image, switch, text field, or slider on any card.

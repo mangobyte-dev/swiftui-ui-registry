@@ -55,6 +55,7 @@ public struct AttachmentRow<Thumbnail: View, Actions: View>: View {
 
             stateLine
         }
+        .registryItem("attachment")
     }
 
     @ViewBuilder

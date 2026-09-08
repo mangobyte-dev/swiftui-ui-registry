@@ -110,6 +110,7 @@ public struct Combobox<ID: Hashable>: View {
         .onChange(of: isFocused) { _, focused in
             if !focused { syncQueryToSelection() }
         }
+        .registryItem("combobox")
     }
 
     @ViewBuilder

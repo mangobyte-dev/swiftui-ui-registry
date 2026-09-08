@@ -3,7 +3,7 @@ import RegistryKit
 
 struct Generate: ParsableCommand {
   static let configuration = CommandConfiguration(subcommands: [
-    Catalog.self, ShowcaseManifest.self, SiteData.self,
+    Catalog.self, ShowcaseManifest.self, SiteData.self, ItemTokens.self,
   ])
   struct Catalog: ParsableCommand {
     @OptionGroup var options: RegistryOptions
@@ -41,6 +41,18 @@ struct Generate: ParsableCommand {
         let images = outputPath(images ?? root + "/" + SiteDataGenerator.imagesPath)
         let count = try SiteDataGenerator(root: root).generate(output: output, images: images)
         print("wrote \(output)\ncopied \(count) images to \(images)")
+      }
+    }
+  }
+  struct ItemTokens: ParsableCommand {
+    @OptionGroup var options: RegistryOptions
+    @Option var output: String?
+    func run() throws {
+      try refusal {
+        let root = try options.root()
+        let path = try ItemTokensGenerator(root: root).generate(
+          output: outputPath(output ?? root + "/" + ItemTokensGenerator.outputPath))
+        print("wrote \(path)")
       }
     }
   }

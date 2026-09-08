@@ -62,6 +62,7 @@ public struct Field<Content: View>: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .onChange(of: error) { _, message in announce(message) }
+        .registryItem("field")
     }
 
     /// The error takes the hint when present, otherwise the description; a
@@ -97,6 +98,7 @@ public struct FieldGroup<Content: View>: View {
             content
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .registryItem("field")
     }
 }
 

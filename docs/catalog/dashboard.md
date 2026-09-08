@@ -16,27 +16,12 @@ swiftui-registry install dashboard --destination Sources/YourFeature/Components
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-Then add each package requirement to that target:
-
-- add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
-- add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
-]
-
-// In the consuming target's dependencies:
-.product(name: "SwiftUIRegistryFoundations", package: "swiftui-ui-registry")
-```
-
-In an Xcode app project instead, choose File > Add Package Dependency, enter https://github.com/mangobyte-dev/swiftui-ui-registry.git with the same version rule, and add the SwiftUIRegistryFoundations product to your app target
-
-```swift
-// Package.swift
-dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.1"))
 ]
 
 // In the consuming target's dependencies:
@@ -81,9 +66,9 @@ Dashboard(
 ## Details
 
 - Kind: block
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
-- Installs in order: [metric-card](metric-card.md) 0.2.1, [chart](chart.md) 0.1.2, [separator](separator.md) 0.2.0, [table](table.md) 0.1.0, [dashboard](dashboard.md) 0.1.0
+- Installs in order: [metric-card](metric-card.md) 0.2.2, [chart](chart.md) 0.1.3, [separator](separator.md) 0.2.1, [table](table.md) 0.1.1, [dashboard](dashboard.md) 0.1.1
 - Accessibility contract:
   - The screen title and both section titles (chart and table) carry the header accessibility trait, so VoiceOver users can move between sections by heading.
   - The metric tiles combine their title, value, and detail into one VoiceOver element and treat the SF Symbol as decorative (from metric-card), and lay out as a row or a column through ViewThatFits so they follow Dynamic Type and the available width.

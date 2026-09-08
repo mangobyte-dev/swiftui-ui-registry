@@ -124,6 +124,7 @@ public struct Dashboard<ID: Hashable>: View {
                 DataTable(rows, columns: columns)
             }
         }
+        .registryItem("dashboard")
     }
 
     // The metric tiles fit as a row when the width allows and fall back to a

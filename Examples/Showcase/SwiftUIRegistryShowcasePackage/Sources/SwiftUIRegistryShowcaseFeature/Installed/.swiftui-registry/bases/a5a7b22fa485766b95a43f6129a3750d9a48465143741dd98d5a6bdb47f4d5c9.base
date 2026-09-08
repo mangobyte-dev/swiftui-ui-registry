@@ -13,6 +13,7 @@ public struct RegistryToggleStyle: ToggleStyle {
             .toggleStyle(.button)
             .buttonStyle(RegistryButtonStyle(variant))
             .opacity(configuration.isOn ? 1 : 0.72)
+            .registryItem("toggle")
     }
 }
 

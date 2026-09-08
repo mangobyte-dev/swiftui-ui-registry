@@ -105,6 +105,7 @@ private struct RegistryToastModifier: ViewModifier {
                     dismiss()
                 }
             }
+            .registryItem("toast")
     }
 
     private func dismiss() {

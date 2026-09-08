@@ -78,6 +78,7 @@ public struct FinanceOverview<ID: Hashable>: View {
             emptyDescription: emptyDescription,
             onSelect: onSelect
         )
+        .registryItem("finance-overview")
     }
 }
 

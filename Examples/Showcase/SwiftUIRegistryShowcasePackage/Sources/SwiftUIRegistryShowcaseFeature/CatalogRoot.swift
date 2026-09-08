@@ -1,70 +1,68 @@
+import Sharing
 import SwiftUI
+import SwiftUIRegistryDesignSurface
 import SwiftUIRegistryFoundations
 
-/// The browsable catalog: one tab per item kind, with the tuning panel kept
-/// beside it rather than on a tab of its own: a trailing column on a regular
-/// width and, on iPhone, a sheet the catalog stays interactive under, plus
-/// the accent strip above the tab bar. The tuned theme is applied once here,
-/// so every screen below inherits it, which is exactly how a consuming app
-/// adopts the registry.
-///
-/// The column is a plain sibling, not `inspector(isPresented:)`: measured on
-/// iOS 27, that modifier on the tab's navigation stack stopped the auth
-/// form's Return key from moving focus even while nothing was presented.
+/// The browsable catalog: one tab per item kind, with the design surface
+/// kept beside it rather than on a tab of its own: a trailing column on a
+/// regular width and, on iPhone, a sheet the catalog stays interactive under,
+/// plus the accent strip above the tab bar. `designSurface(isPresented:)`
+/// applies the tuned theme once here, so every screen below inherits it,
+/// which is exactly how a consuming app adopts the registry; the column's
+/// layout and its measured reason live with the modifier.
 struct CatalogRoot: View {
     let arguments: LaunchArguments
-    @State private var tuning: ThemeTuning
+    @Shared(.designTokens) private var tuning
     @State private var isTuning = false
-    @Environment(\.horizontalSizeClass) private var sizeClass
+
+    /// A `-preset` code wins over the persisted tuning and `-default-tuning`
+    /// resets it for the UI suite; otherwise the last tuning returns from the
+    /// surface's file. Seeded exactly once per process: this initializer runs
+    /// again whenever the parent re-evaluates, and measured on 2026-09-08 that
+    /// happened after every knob change, so a seed in the initializer body put
+    /// the launch tuning back over each edit (the file was rewritten with the
+    /// defaults right after a tap on Ink).
+    private static let launchSeed: Void = {
+        let arguments = LaunchArguments.current
+        @Shared(.designTokens) var tuning
+        if let code = arguments.value(after: "-preset"), let tuned = ThemeTuning(presetCode: code) {
+            $tuning.withLock { $0 = tuned }
+        } else if arguments.contains("-default-tuning") {
+            $tuning.withLock { $0 = .default }
+        }
+    }()
 
     init(arguments: LaunchArguments) {
         self.arguments = arguments
-        _tuning = State(initialValue: ThemeTuning.initial(for: arguments))
+        _ = Self.launchSeed
     }
 
     var body: some View {
-        HStack(spacing: 0) {
-            TabView {
-                Tab("Components", systemImage: "square.grid.2x2") {
-                    CatalogList(kind: "component", title: "Components")
-                }
-                Tab("Blocks", systemImage: "rectangle.3.group") {
-                    CatalogList(kind: "block", title: "Blocks")
-                }
-                Tab("Recipes", systemImage: "text.book.closed") {
-                    CatalogList(kind: "recipe", title: "Recipes")
-                }
+        TabView {
+            Tab("Components", systemImage: "square.grid.2x2") {
+                CatalogList(kind: "component", title: "Components")
             }
-            .tabViewBottomAccessory {
-                TuningAccessory(tuning: $tuning, isTuning: $isTuning)
+            Tab("Blocks", systemImage: "rectangle.3.group") {
+                CatalogList(kind: "block", title: "Blocks")
             }
-            .sheet(isPresented: sizeClass == .compact ? $isTuning : .constant(false)) {
-                TuningPanel(tuning: $tuning)
-                    .presentationDetents([.medium, .large])
-                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-            }
-            if sizeClass == .regular && isTuning {
-                Divider()
-                TuningPanel(tuning: $tuning)
-                    .frame(width: 380)
-                    .transition(.move(edge: .trailing))
+            Tab("Recipes", systemImage: "text.book.closed") {
+                CatalogList(kind: "recipe", title: "Recipes")
             }
         }
-        .registryTheme(tuning.theme)
-        .preferredColorScheme(tuning.preferredColorScheme)
-        .transformEnvironment(\.layoutDirection) { direction in
-            if tuning.rightToLeft { direction = .rightToLeft }
+        .tabViewBottomAccessory {
+            TuningAccessory(tuning: Binding($tuning), isTuning: $isTuning)
         }
-        .transformEnvironment(\.dynamicTypeSize) { size in
-            if let tuned = tuning.dynamicTypeSize { size = tuned }
-        }
-        .onChange(of: tuning) { _, updated in
-            updated.persist()
+        .designSurface(isPresented: $isTuning) {
+            // The MANGO sample design system, the worked example of building one
+            // on the registry. The panel lives in a NavigationStack, so this pushes.
+            NavigationLink("See MANGO") {
+                MangoDemo()
+            }
+            .accessibilityIdentifier("tuning.mango")
         }
     }
 }
 
-/// One kind of item as a searchable list that pushes the item's detail.
 struct CatalogList: View {
     let kind: String
     let title: String
@@ -174,37 +172,6 @@ struct DetailSection<Content: View>: View {
                 .font(.headline)
                 .accessibilityAddTraits(.isHeader)
             content
-        }
-    }
-}
-
-/// Monospaced code on the registry surface with a copy action.
-struct CodeBlock: View {
-    @Environment(\.registryTheme) private var theme
-    let code: String
-
-    init(_ code: String) {
-        self.code = code
-    }
-
-    var body: some View {
-        // Wrapping text, not a horizontal scroll view: long lines wrap at
-        // large text sizes, and a hosted scroll view inside a pushed screen
-        // crashed with NaN bounds under right-to-left plus accessibility size.
-        Text(code)
-            .font(.footnote.monospaced())
-            .textSelection(.enabled)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(theme.metrics.standardSpacing)
-            .padding(.trailing, 40)
-            .registrySurface()
-        .overlay(alignment: .topTrailing) {
-            CopyButton("Copy code", text: code)
-                .labelStyle(.iconOnly)
-                .buttonStyle(.registryGhost)
-                .controlSize(.small)
-                .background(.regularMaterial, in: Circle())
-                .padding(theme.metrics.compactSpacing / 2)
         }
     }
 }

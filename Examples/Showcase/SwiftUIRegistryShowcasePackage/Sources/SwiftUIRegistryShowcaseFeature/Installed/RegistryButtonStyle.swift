@@ -56,6 +56,7 @@ public struct RegistryButtonStyle: ButtonStyle {
             // iPad (measured 2026-09-07: hovering changed nothing until this
             // line), so the style asks for it back and the system picks the shape.
             .hoverEffect()
+            .registryItem("button")
     }
 }
 

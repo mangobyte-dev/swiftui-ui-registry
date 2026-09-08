@@ -70,6 +70,7 @@ public struct CommandSearch<ID: Hashable>: View {
                 }
             }
         }
+        .registryItem("command-search")
     }
 }
 

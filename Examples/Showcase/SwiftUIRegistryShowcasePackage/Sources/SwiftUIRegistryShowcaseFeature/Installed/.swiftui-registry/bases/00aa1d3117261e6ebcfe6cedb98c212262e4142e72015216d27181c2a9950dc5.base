@@ -44,6 +44,7 @@ public struct Breadcrumb: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityLabel("Breadcrumb")
+        .registryItem("breadcrumb")
     }
 
     private func trail(_ crumbs: [Segment]) -> some View {

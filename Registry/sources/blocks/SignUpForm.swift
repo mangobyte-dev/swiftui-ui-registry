@@ -217,6 +217,7 @@ public struct SignUpForm: View {
         .onChange(of: confirmationError) { _, message in announce(message) }
         .onChange(of: termsError) { _, message in announce(message) }
         .onChange(of: formError) { _, message in announce(message) }
+        .registryItem("signup-form")
     }
 
     @ViewBuilder

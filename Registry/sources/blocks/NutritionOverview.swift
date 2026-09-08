@@ -109,6 +109,7 @@ public struct NutritionOverview<ID: Hashable>: View {
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
         }
+        .registryItem("nutrition-overview")
     }
 }
 

@@ -16,12 +16,12 @@ swiftui-registry install nutrition-overview --destination Sources/YourFeature/Co
 
 Point `--destination` at a folder inside the consuming target's sources, such as `Sources/YourFeature/Components`, so the copied files are members of that build target
 
-Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.1.0 up to the next minor version) and link product SwiftUIRegistryFoundations
+Then add package https://github.com/mangobyte-dev/swiftui-ui-registry.git (from 0.2.1 up to the next minor version) and link product SwiftUIRegistryFoundations
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.2.1"))
 ]
 
 // In the consuming target's dependencies:
@@ -60,9 +60,9 @@ NutritionOverview(
 ## Details
 
 - Kind: block
-- Version: 0.2.2
+- Version: 0.2.3
 - Platforms: iOS 26.0+
-- Installs in order: [metric-card](metric-card.md) 0.2.1, [macro-progress](macro-progress.md) 0.4.0, [nutrition-overview](nutrition-overview.md) 0.2.2
+- Installs in order: [metric-card](metric-card.md) 0.2.2, [macro-progress](macro-progress.md) 0.4.1, [nutrition-overview](nutrition-overview.md) 0.2.3
 - Accessibility contract:
   - Uses native Button and ProgressView semantics; the screen and section titles carry the header trait.
   - Uses system text styles and adaptive macro rows for Dynamic Type.

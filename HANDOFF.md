@@ -91,3 +91,17 @@ Look at these first:
 1. The Create studio on your phone: https://swiftui-registry.mangobytekw.workers.dev/create/?preset=b3spZukjxUN1w5qQy4eQI (MANGO with rounded type and the spectrum chart, a `b` code) and the Themes page's MANGO section.
 2. `docs/mango.md`, the template a team follows, and `Skills/` (the three skills are live in `~/.claude/skills/`).
 3. The two stale references under Open deferrals: decide whether to replace them (GOLDEN-CHANGE) or fix the blocks.
+
+## The Stage 8 run (2026-09-08)
+
+Started by the owner as `/loop keep working till you finish everything. keep track of yourself in a md file, not your context.` This section is that file: the loop's own log, one line per tick, newest last. The plan, decisions, and slice status stay in the roadmap's Stage 8 section; this log only says what the loop did and where it stopped
+
+Standing notes for this run: commits are left to the owner (the harness in this session appends assistant trailers the owner forbids), so each slice ends with a verified working tree and a roadmap entry, not a commit; argent's taps do not land on the pinned iPhone 17 this morning, XcodeBuildMCP's `snapshot_ui` and `tap` do
+
+| Tick | Did | Next |
+|---|---|---|
+| 1 (10:30) | Slice 1 verified and recorded (see the roadmap). Read the spec's evolution and ownership rules, the item metadata shape, and the token references across every source for slice 2's design | Foundations hook (`registryItem(_:)`, anchor preference, surface environment), the tagging of every installable item by three workers, the item-tokens generator, the surface's selection mode and scoped panel |
+| 2 (11:15) | Foundations hook `registryItem(_:)` with the anchor preference and the surface environment (`Sources/SwiftUIRegistryFoundations/RegistryItem.swift`); three workers tagged all 48 installable item roots (reviewed: one tag per root, names match, five files restructured around `Group`); 48 items bumped one patch with the foundations floor `0.2.1`; every item reinstalled into the Showcase with `--force`; the fourth generator `generate item-tokens` writes `RegistryItemTokens.swift` (48 entries) and the drift test covers it; the surface gained Select mode (one capture layer over the content, innermost frame wins) and the panel a scope section that filters Surface, Chart, Density, Radius, Spacing, and State by the selected item's tokens; contract tests repinned to the new versions | Showcase build and suites, a UI test for Select, the persistence and release checks again, roadmap slice 2 evidence |
+| 3 (11:50) | Slice 2 built end to end: nonisolated fix for the tag, the validator's root-tag rule with fixtures, the theming skill how-to and the regenerated interface, the Select UI test passing, Release build proof | Full iPhone suite in the background; then the persistence recheck, slice 2 done in the roadmap, slice 3 (spec and architecture text, the optional simulator path helper decision), and the closing report |
+| 4 (12:25) | Full iPhone suite: 40 passed, 1 skipped, the 2 stale references at the same percentages as before the tag; slices 2 and 3 recorded `done`; Stage 8 `done` with the `0.2.1` release named as the owner's step in Open deferrals | Nothing; the loop stops. Owner: review the tree, commit, release foundations `0.2.1`, replace the two stale references |
+

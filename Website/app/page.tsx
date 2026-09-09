@@ -109,7 +109,7 @@ export default function HomePage() {
           ))}
           <div className="flex flex-col">
             <dt className="text-2xl font-bold tabular-nums">{registry.presets.length}</dt>
-            <dd className="text-sm text-muted-foreground">presets</dd>
+            <dd className="text-sm text-muted-foreground">theme presets</dd>
           </div>
         </dl>
       </section>

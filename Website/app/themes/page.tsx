@@ -196,7 +196,7 @@ export default function ThemesPage() {
               />
               <p className="text-sm text-muted-foreground">
                 <Link href={`/create/?preset=${mango.code}`}>
-                  MANGO in Create
+                  Open MANGO in Create
                 </Link>
                 {" · "}
                 <a

@@ -4,7 +4,6 @@ import { notFound } from "next/navigation"
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 
 import { DocMarkdown } from "@/components/markdown"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { readDoc } from "@/lib/docs"
@@ -33,7 +32,6 @@ export default async function DocPage({ params }: Props) {
   const previous = index > 0 ? DOCS[index - 1] : null
   const next = index < DOCS.length - 1 ? DOCS[index + 1] : null
   const source = readDoc(doc)
-  const generated = doc.file.startsWith("content/")
 
   return (
     <article className="flex min-w-0 flex-col gap-6">
@@ -46,15 +44,6 @@ export default async function DocPage({ params }: Props) {
           <span>{doc.group}</span>
         </div>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{doc.title}</h1>
-        <p className="max-w-[70ch] text-lg text-muted-foreground">{doc.description}</p>
-        {generated ? (
-          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-            <Badge variant="outline">From the repository</Badge>
-            <span>
-              This page is the repository&apos;s own document, copied by the site generator at build time.
-            </span>
-          </div>
-        ) : null}
       </header>
       <DocMarkdown source={source} />
       <Separator />

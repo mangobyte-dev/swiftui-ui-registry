@@ -1,10 +1,8 @@
 # Changelog
 
-This changelog records what shipped in each release of the SwiftUI registry and the known limitations at the time. The format follows Keep a Changelog. Entries group under Added, Changed, Fixed, and Known limitations, newest first. Versions are the bare semantic tags the repository publishes (`0.1.0`, `0.2.0`). Each tag has GitHub release notes and the universal `swiftui-registry` binary for the Homebrew tap.
-
 ## 0.3.0 (public beta)
 
-The design surface tunes a running app on the device. It ships as a second package product. The Showcase and two apps drive it. To install or upgrade, run `brew install mangobyte-dev/tap/swiftui-registry` or `brew upgrade swiftui-registry`.
+The design surface tunes a running app on the device. It ships as a second package product. To install or upgrade, run `brew install mangobyte-dev/tap/swiftui-registry` or `brew upgrade swiftui-registry`.
 
 ### Added
 

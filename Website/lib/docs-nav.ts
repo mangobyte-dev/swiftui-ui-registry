@@ -81,7 +81,7 @@ export const DOCS: DocPage[] = [
   {
     slug: "changelog",
     title: "Changelog",
-    description: "What shipped in each release, and the known limitations at the time.",
+    description: "Releases and known limitations.",
     group: "Reference",
     file: "content/docs/changelog.md",
   },

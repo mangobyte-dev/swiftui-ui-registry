@@ -1,6 +1,6 @@
 # MANGO
 
-MANGO is MangoByte's sample design system. It proves that a team can own a coherent brand on this registry without a theme engine. This document has two purposes. It records what MANGO is. It is also the template another team follows to build the same for their brand. The document uses the Layers of Product Design order: the domain, then the conceptual model, then the surface. This order settles the vocabulary before any surface choice. The conceptual model is almost always the most neglected layer
+MANGO is MangoByte's sample design system, and the template for a team's own brand on the registry. It runs in the Layers of Product Design order: the domain, the conceptual model, then the surface. The conceptual model comes before any surface choice because it is the layer most often neglected.
 
 ## Goal
 

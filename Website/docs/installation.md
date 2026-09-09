@@ -1,7 +1,5 @@
 # Installation
 
-Every command and snippet below works. `swiftui-registry describe <item>` prints the same usage snippet the item's page shows. `install --plan` prints the requirement you add.
-
 ## 1. Add the package
 
 In `Package.swift`:

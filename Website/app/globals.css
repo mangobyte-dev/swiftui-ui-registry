@@ -139,3 +139,77 @@
   color: var(--shiki-dark);
   background-color: var(--shiki-dark-bg);
 }
+
+/* Repository markdown rendered on the Docs pages. */
+.markdown {
+  @apply text-[15px] leading-7 text-foreground;
+  overflow-wrap: anywhere;
+}
+.markdown > :first-child {
+  @apply mt-0;
+}
+.markdown h2 {
+  @apply mt-10 mb-3 scroll-mt-20 text-2xl font-semibold tracking-tight;
+}
+.markdown h3 {
+  @apply mt-8 mb-2 scroll-mt-20 text-lg font-semibold tracking-tight;
+}
+.markdown h4 {
+  @apply mt-6 mb-2 text-base font-semibold;
+}
+.markdown p {
+  @apply my-4;
+}
+.markdown ul,
+.markdown ol {
+  @apply my-4 pl-6;
+}
+.markdown ul {
+  @apply list-disc;
+}
+.markdown ol {
+  @apply list-decimal;
+}
+.markdown li {
+  @apply my-1.5;
+}
+.markdown li > p {
+  @apply my-1;
+}
+.markdown a {
+  @apply font-medium text-indigo-700 underline underline-offset-4 decoration-indigo-700/40 hover:decoration-indigo-700 dark:text-indigo-300 dark:decoration-indigo-300/40 dark:hover:decoration-indigo-300;
+}
+.markdown .version-tag {
+  @apply rounded-md border border-indigo-500/30 bg-indigo-500/10 px-2 py-0.5 font-mono text-xl font-semibold tracking-tight text-indigo-700 dark:text-indigo-300;
+}
+.markdown blockquote {
+  @apply my-4 border-l-2 pl-4 text-muted-foreground;
+}
+.markdown code {
+  @apply rounded border border-indigo-500/15 bg-indigo-500/8 px-1.5 py-0.5 font-mono text-[0.85em] text-indigo-800 dark:bg-indigo-400/12 dark:text-indigo-200;
+  overflow-wrap: anywhere;
+}
+.markdown strong {
+  @apply font-semibold text-foreground;
+}
+.markdown .not-markdown code {
+  @apply rounded-none border-0 bg-transparent p-0 text-inherit;
+}
+.markdown hr {
+  @apply my-8 border-border;
+}
+.markdown img {
+  @apply my-6 h-auto max-w-full rounded-xl border shadow-sm;
+}
+.markdown table {
+  @apply my-6 w-full border-collapse text-sm;
+  display: block;
+  overflow-x: auto;
+}
+.markdown th,
+.markdown td {
+  @apply border px-3 py-2 text-left align-top;
+}
+.markdown th {
+  @apply bg-muted font-semibold;
+}

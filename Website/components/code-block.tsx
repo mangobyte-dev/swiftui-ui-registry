@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils"
 
 type CodeBlockProps = {
   code: string
-  language?: "swift" | "bash"
+  /** A shiki language id; an unknown one renders as plain text. */
+  language?: string
   className?: string
 }
 
@@ -15,7 +16,9 @@ export async function CodeBlock({ code, language = "swift", className }: CodeBlo
     lang: language,
     themes: { light: "github-light", dark: "github-dark" },
     defaultColor: false,
-  })
+  }).catch(() =>
+    codeToHtml(code, { lang: "text", themes: { light: "github-light", dark: "github-dark" }, defaultColor: false })
+  )
   return (
     <div
       className={cn(

@@ -84,6 +84,9 @@ export const PAGE_KINDS: { name: string; path: string }[] = [
   { name: "item", path: "/items/button/" },
   { name: "themes", path: "/themes/" },
   { name: "create", path: "/create/" },
+  { name: "docs", path: "/docs/" },
+  { name: "design surface", path: "/docs/design-surface/" },
+  { name: "changelog", path: "/docs/changelog/" },
 ]
 
 /** The preset code shown in the studio's code bar, without the flag. */

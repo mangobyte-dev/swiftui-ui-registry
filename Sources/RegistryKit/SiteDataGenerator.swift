@@ -7,6 +7,18 @@ public struct SiteDataGenerator {
   @Dependency(\.registryFileSystem) var fs
   public static let outputPath = "Website/content/registry.json"
   public static let imagesPath = "Website/public/images"
+  /// The repository's markdown the site's Docs section renders, copied beside
+  /// the data so the site reads generated files only: the changelog and the
+  /// contract documents, each under the slug its page uses.
+  public static let docsPath = "Website/content/docs"
+  public static let docs: [(source: String, slug: String)] = [
+    ("CHANGELOG.md", "changelog"),
+    ("docs/philosophy.md", "philosophy"),
+    ("docs/architecture.md", "architecture"),
+    ("docs/registry-spec.md", "registry-spec"),
+    ("docs/mango.md", "mango"),
+    ("docs/visual-testing.md", "visual-testing"),
+  ]
   static let repositoryURL = "https://github.com/mangobyte-dev/swiftui-ui-registry"
   public init(root: String) throws {
     self.root = root
@@ -108,8 +120,9 @@ public struct SiteDataGenerator {
     let text = try render()
     try fs.createDirectory(parentDirectory(output))
     try fs.write(Data(text.utf8), to: output)
+    try copyDocs(beside: output)
     var count = 0
-    for folder in ["items", "themes", "ipad", "comparison"] {
+    for folder in ["items", "themes", "ipad", "comparison", "design-surface"] {
       let source = root + "/docs/images/" + folder
       let target = images + "/" + folder
       try fs.remove(target)
@@ -121,6 +134,19 @@ public struct SiteDataGenerator {
       }
     }
     return count
+  }
+
+  /// Writes each listed markdown file as `docs/<slug>.md` beside the data
+  /// file, byte for byte, and drops anything else in that folder. A source
+  /// the checkout lacks is skipped, so a fixture without a changelog still
+  /// generates.
+  func copyDocs(beside output: String) throws {
+    let target = parentDirectory(output) + "/docs"
+    try fs.remove(target)
+    try fs.createDirectory(target)
+    for doc in Self.docs where fs.isFile(root + "/" + doc.source) {
+      try fs.write(fs.read(root + "/" + doc.source), to: target + "/" + doc.slug + ".md")
+    }
   }
 }
 

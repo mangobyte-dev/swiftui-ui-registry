@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { docHref } from "@/lib/docs-nav"
 import { KINDS, asset, itemsOfKind, registry } from "@/lib/registry"
 
 const COMPARISON_LAYERS = [
@@ -59,7 +60,7 @@ const COMPARISON_ROWS: { label: string; values: [string, string, string] }[] = [
 
 const PACKAGE_SNIPPET = `// Package.swift
 dependencies: [
-    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.1.0"))
+    .package(url: "https://github.com/mangobyte-dev/swiftui-ui-registry.git", .upToNextMinor(from: "0.3.0"))
 ]
 
 // In the consuming target's dependencies:
@@ -71,7 +72,9 @@ export default function HomePage() {
     <div className="flex flex-col gap-16">
       <section className="flex flex-col gap-6 pt-6">
         <div className="flex flex-wrap gap-2">
-          <Badge variant="secondary">Version 0</Badge>
+          <Link href={docHref("changelog")}>
+            <Badge>0.3.0 public beta</Badge>
+          </Link>
           <Badge variant="secondary">iOS 26 and later</Badge>
           <Badge variant="secondary">MIT</Badge>
         </div>
@@ -84,15 +87,15 @@ export default function HomePage() {
           the call site; the registry only styles and composes them.
         </p>
         <div className="flex flex-wrap gap-2">
-          <Button render={<Link href="/items/button/" />} nativeButton={false}>
-            Browse components
+          <Button render={<Link href={docHref("installation")} />} nativeButton={false}>
+            Get started
             <ArrowRightIcon data-icon="inline-end" />
+          </Button>
+          <Button variant="outline" render={<Link href="/items/button/" />} nativeButton={false}>
+            Browse components
           </Button>
           <Button variant="outline" render={<Link href="/create/" />} nativeButton={false}>
             Create a theme
-          </Button>
-          <Button variant="outline" render={<Link href="/themes/" />} nativeButton={false}>
-            Themes
           </Button>
           <Button variant="ghost" render={<a href={registry.repositoryURL} />} nativeButton={false}>
             GitHub
@@ -114,8 +117,8 @@ export default function HomePage() {
 
       <section className="flex flex-col gap-4">
         <h2 className="text-2xl font-semibold tracking-tight">Set up once, use it everywhere</h2>
-        <ol className="grid gap-4 md:grid-cols-3">
-          <li>
+        <ol className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <li className="min-w-0">
             <Card className="h-full">
               <CardHeader>
                 <CardTitle>1. Add the foundations package</CardTitle>
@@ -129,7 +132,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
           </li>
-          <li>
+          <li className="min-w-0">
             <Card className="h-full">
               <CardHeader>
                 <CardTitle>2. Apply a theme at your root</CardTitle>
@@ -143,7 +146,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
           </li>
-          <li>
+          <li className="min-w-0">
             <Card className="h-full">
               <CardHeader>
                 <CardTitle>3. Install what you need</CardTitle>
@@ -165,6 +168,48 @@ export default function HomePage() {
 
       <section className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
+          <h2 className="text-2xl font-semibold tracking-tight">Tune it on the device</h2>
+          <p className="max-w-[70ch] text-muted-foreground">
+            New in 0.3.0: the design surface puts a floating panel over your running app. Tap Select, then any registry
+            item, and the panel scopes to the tokens that reach it; move a knob and the app changes under your finger.
+            The result leaves as a preset code or the Swift to paste. A release build is unchanged.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_2fr]">
+          <figure className="flex min-w-0 flex-col gap-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={asset("/images/design-surface/iphone-card-light.png")}
+              alt="The floating tuning card over the Showcase on iPhone, with the selected card outlined"
+              loading="lazy"
+              className="h-auto w-full rounded-xl border shadow-sm"
+            />
+            <figcaption className="text-sm text-muted-foreground">iPhone: the card hangs where you leave it.</figcaption>
+          </figure>
+          <figure className="flex min-w-0 flex-col gap-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={asset("/images/design-surface/ipad-column-light.png")}
+              alt="The tuning panel as a side column over the Showcase on iPad, with the selected buttons outlined"
+              loading="lazy"
+              className="h-auto w-full rounded-xl border shadow-sm"
+            />
+            <figcaption className="text-sm text-muted-foreground">iPad: the same panel snapped into a column.</figcaption>
+          </figure>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" render={<Link href={docHref("design-surface")} />} nativeButton={false}>
+            How the design surface works
+            <ArrowRightIcon data-icon="inline-end" />
+          </Button>
+          <Button variant="ghost" render={<Link href={docHref("changelog")} />} nativeButton={false}>
+            What&apos;s new in 0.3.0
+          </Button>
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">Why use the registry?</h2>
           <p className="text-muted-foreground">
             The same todo and counter app, three UI layers over the same reducers: the registry items the app owns,
@@ -172,7 +217,7 @@ export default function HomePage() {
             the iPhone 17 simulator, iOS 27; the method and the tests are in the repository&apos;s Examples/TodoCounter.
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {COMPARISON_LAYERS.map((layer) => (
             <figure key={layer.slug} className="flex flex-col gap-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -224,7 +269,7 @@ export default function HomePage() {
             Every capture is the real installed source rendered by the Showcase on iPhone 17, iOS 27.
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((item) => (
             <Link key={item.name} href={`/items/${item.name}/`} className="group">
               <Card className="h-full gap-0 overflow-hidden py-0 transition-colors group-hover:border-foreground/30">
@@ -268,7 +313,7 @@ export default function HomePage() {
             Where a one-line Apple API is the entire treatment, the registry says so instead of wrapping it.
           </p>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {itemsOfKind("recipe").map((item) => (
             <Link key={item.name} href={`/items/${item.name}/`}>
               <Card size="sm" className="h-full transition-colors hover:border-foreground/30">

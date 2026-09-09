@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BoxesIcon, LayersIcon, PaletteIcon, ScrollTextIcon, WandSparklesIcon } from "lucide-react"
+import { BookOpenIcon, BoxesIcon, HistoryIcon, LayersIcon, PaletteIcon, ScrollTextIcon, SlidersHorizontalIcon, WandSparklesIcon } from "lucide-react"
 
 import {
   Sidebar,
@@ -17,6 +17,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { DOCS, DOC_GROUPS, docHref } from "@/lib/docs-nav"
 import { KINDS, itemsOfKind, registry } from "@/lib/registry"
 
 const KIND_ICONS = {
@@ -48,6 +49,21 @@ export function SiteSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
+            <SidebarMenuButton render={<Link href="/docs/" />} isActive={isActive("/docs")}>
+              <BookOpenIcon />
+              Docs
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              render={<Link href={docHref("design-surface")} />}
+              isActive={isActive("/docs/design-surface")}
+            >
+              <SlidersHorizontalIcon />
+              Design surface
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
             <SidebarMenuButton render={<Link href="/themes/" />} isActive={isActive("/themes")}>
               <PaletteIcon />
               Themes
@@ -59,9 +75,38 @@ export function SiteSidebar() {
               Create
             </SidebarMenuButton>
           </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton render={<Link href={docHref("changelog")} />} isActive={isActive("/docs/changelog")}>
+              <HistoryIcon />
+              Changelog
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        {DOC_GROUPS.map((group) => (
+          <SidebarGroup key={group}>
+            <SidebarGroupLabel>
+              <BookOpenIcon className="mr-1.5 size-3.5" />
+              {group}
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {DOCS.filter((doc) => doc.group === group).map((doc) => (
+                  <SidebarMenuItem key={doc.slug}>
+                    <SidebarMenuButton
+                      render={<Link href={docHref(doc.slug)} />}
+                      isActive={isActive(`/docs/${doc.slug}`)}
+                      tooltip={doc.description}
+                    >
+                      {doc.title}
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
         {KINDS.map(({ kind, title }) => {
           const Icon = KIND_ICONS[kind]
           return (

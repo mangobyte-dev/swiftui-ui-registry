@@ -2,7 +2,7 @@
 
 # kbd
 
-Draws text as a keycap for keyboard shortcut hints, hidden from accessibility unless a spoken label is supplied.
+Styles a native Text as a keycap for keyboard shortcut hints, hidden from accessibility unless you supply a spoken label.
 
 ![kbd preview](../images/items/kbd-light.png)
 
@@ -49,7 +49,7 @@ Text(verbatim: "esc")
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Hidden from accessibility by default because symbols such as the command glyph read poorly; pass accessibilityLabel to speak the shortcut.
-  - One line at its intrinsic size; a keycap never wraps.
-  - Uses the compact radius, surface, border, and spacing tokens so it matches badges.
+  - The keycap hides from accessibility by default because symbols such as the command glyph read poorly. To speak the shortcut, pass accessibilityLabel.
+  - The keycap stays on one line at its intrinsic size and never wraps.
+  - It uses the compact radius, surface, border, and spacing tokens to match badges.
 - Source: [sources/components/RegistryKeycapModifier.swift](../../Registry/sources/components/RegistryKeycapModifier.swift), with the `Keycap` Xcode preview

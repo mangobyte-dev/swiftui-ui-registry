@@ -50,8 +50,8 @@ GroupBox {
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Preserves the native accessibility elements and reading order supplied by the GroupBox label and content.
-  - Uses system text styles and allows content to grow vertically with Dynamic Type.
-  - Uses semantic leading alignment that follows the environment layout direction.
-  - Does not impose interaction or selection behavior on caller content.
+  - The card preserves the native accessibility elements and reading order from the GroupBox label and content.
+  - The card uses system text styles and lets content grow vertically with Dynamic Type.
+  - The card uses semantic leading alignment that follows the environment layout direction.
+  - The card adds no interaction or selection behavior to caller content.
 - Source: [sources/components/RegistryCardStyle.swift](../../Registry/sources/components/RegistryCardStyle.swift), with the `Card` Xcode preview

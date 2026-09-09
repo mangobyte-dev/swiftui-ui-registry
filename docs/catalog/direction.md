@@ -27,9 +27,9 @@ HStack {
 
 ## Why native is enough
 
-Read `EnvironmentValues.layoutDirection` and use leading/trailing alignment instead of left/right geometry. No registry replacement is needed because SwiftUI propagates direction through the environment.
+Read `EnvironmentValues.layoutDirection` and use leading/trailing alignment, not left/right geometry. The registry adds no replacement, because SwiftUI propagates direction through the environment.
 
-Use direction-aware symbols such as `chevron.forward` so icons mirror automatically. Preview both directions with `.environment(\.layoutDirection, .rightToLeft)`.
+Use direction-aware symbols such as `chevron.forward`, so icons mirror automatically. Preview both directions with `.environment(\.layoutDirection, .rightToLeft)`.
 
 ## Details
 

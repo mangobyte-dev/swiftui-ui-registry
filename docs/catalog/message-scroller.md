@@ -2,7 +2,7 @@
 
 # message-scroller
 
-A chat scroll container that starts at the newest turn, follows streamed replies while the reader is at the bottom, holds a scrolled-up reader in place, and requests history at the top.
+This native chat ScrollView opens at the newest turn, follows streamed replies at the bottom, holds a scrolled-up reader, and requests history at the top.
 
 ![message-scroller preview](../images/items/message-scroller-light.png)
 
@@ -53,9 +53,9 @@ MessageScroller(position: $position, isFollowing: $isFollowing) {
 - Platforms: iOS 26.0+
 - Installs in order: [avatar](avatar.md) 0.2.1, [bubble](bubble.md) 0.1.1, [message](message.md) 0.1.1, [message-scroller](message-scroller.md) 0.1.1
 - Accessibility contract:
-  - Keeps a native vertical ScrollView, so VoiceOver's scroll and the three-finger scroll gesture work unchanged; the container hides no content.
-  - Starts pinned to the newest turn through the bottom default anchor, so the most recent message is the first the reader lands on.
-  - Keeps the newest turn visible while the reader is within 8 points of the bottom, and leaves a reader who scrolled up in place when new turns stream in.
-  - Requests history through onReachTop once per content height when the reader nears within 40 points of the top, re-arming after a prepend grows the content.
-  - Reading order follows the caller's row order; give each row a stable .id so scrollPosition can move the reader to a specific message.
+  - It keeps a native vertical ScrollView, so VoiceOver scroll and the three-finger scroll gesture work unchanged. The container hides no content.
+  - It starts pinned to the newest turn through the bottom default anchor, so the reader lands on the most recent message first.
+  - It keeps the newest turn visible while the reader is within 8 points of the bottom. When new turns stream in, it leaves a scrolled-up reader in place.
+  - When the reader nears within 40 points of the top, it requests history through onReachTop once per content height. A prepend that grows the content re-arms it.
+  - Reading order follows the caller's row order. To let scrollPosition move the reader to a specific message, give each row a stable .id.
 - Source: [sources/components/MessageScroller.swift](../../Registry/sources/components/MessageScroller.swift), with the `Message Scroller` Xcode preview

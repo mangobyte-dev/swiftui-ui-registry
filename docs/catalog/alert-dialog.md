@@ -2,7 +2,7 @@
 
 # alert-dialog
 
-Native guidance for a modal decision with .alert, using button roles and prepared copy while keeping the system presentation.
+Native guidance for a modal decision with .alert: button roles, prepared copy, and the system presentation.
 
 ![alert-dialog preview](../images/items/alert-dialog-light.png)
 
@@ -28,7 +28,7 @@ Button("Sign out", role: .destructive) {
 
 ## Why native is enough
 
-Present a decision with the native `.alert` modifier and give each button a role: `.destructive` for the irreversible choice and `.cancel` for the way out. The system owns layout, typography, blur, and VoiceOver focus; the registry adds no wrapper because the modifier and roles are the entire treatment.
+Present a decision with the native `.alert` modifier. Give each button a role: `.destructive` for the irreversible choice and `.cancel` to cancel. The system owns layout, typography, blur, and VoiceOver focus. The registry adds no wrapper, because the modifier and roles are the entire treatment.
 
 ## Details
 

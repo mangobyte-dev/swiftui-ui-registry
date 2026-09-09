@@ -22,7 +22,7 @@ import { asset, registry } from "@/lib/registry"
 export const metadata: Metadata = {
   title: "Themes",
   description:
-    "One RegistryTheme applied at the scene root; presets and the live tuning panel.",
+    "One RegistryTheme applied at the scene root. Presets and the live tuning panel.",
 }
 
 const TUNE_EXPORT = `let theme = RegistryTheme(
@@ -122,7 +122,7 @@ export default function ThemesPage() {
           label color on top of it, the content surface, the hairline border,
           positive and negative colors, a disabled opacity, and the metrics.
           Apply it once with <code>.registryTheme(_:)</code> at your scene root.
-          Items read the tokens from the environment; native controls follow the
+          Items read the tokens from the environment. Native controls follow the
           accent through the tint.
         </p>
       </header>
@@ -131,10 +131,10 @@ export default function ThemesPage() {
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">Presets</h2>
           <p className="text-muted-foreground">
-            Starting points. Each is a plain <code>static let</code> you can
+            These are starting points. Each is a plain <code>static let</code> you can
             copy and edit. Every card here is the first screen of the{" "}
             <Link href="/items/preview/">theme preview wall</Link> (the{" "}
-            <code>preview</code> block, 33 cards) rendered under that preset on
+            <code>preview</code> block, 33 cards), rendered under that preset on
             iPhone 17.
           </p>
         </div>
@@ -182,8 +182,8 @@ export default function ThemesPage() {
               MANGO, a design system built on the registry
             </h2>
             <p className="text-muted-foreground">
-              The worked example of a brand on these items, and the template for
-              building yours.
+              The worked example of a brand on these items, and the template to
+              build your own.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
@@ -192,12 +192,12 @@ export default function ThemesPage() {
                 MANGO makes three choices and applies them once at the scene
                 root: rounded type through <code>.fontDesign(.rounded)</code>,
                 strokeless surfaces (border opacity zero, depth from a surface
-                step), and one accent spent on the primary action. Two items are
-                owned copies with edits, the button style with press feedback on
-                a critically damped spring and the metric card with tabular
-                digits. The preset is <code>.mango</code>, the code below opens
-                it in Create, and the template document walks a team through
-                doing the same for their brand.
+                step), and one accent for the primary action. Two items are
+                owned copies with edits: the button style with press feedback on
+                a critically damped spring, and the metric card with tabular
+                digits. The preset is <code>.mango</code>. The code below opens
+                it in Create. The template document shows a team how to do the
+                same for their brand.
               </p>
               <CodeBlock
                 code={`ContentView()\n    .registryTheme(.mango)\n    .fontDesign(.rounded)`}
@@ -256,24 +256,24 @@ export default function ThemesPage() {
         <p className="max-w-[70ch] text-sm leading-relaxed">
           Every token is a slider or a swatch beside a live preview of the
           registry: accent and its label color, surface and border opacity,
-          border widths, the three radii, the four spacings, the disabled
-          opacity, plus appearance, text size, and right-to-left for checking
-          the result. <strong>Copy Swift</strong> puts the exact initializer on
-          the pasteboard, and <strong>Copy Code</strong> the preset code:
+          border widths, the three radii, the four spacings, and the disabled
+          opacity. Appearance, text size, and right-to-left let you check the
+          result. <strong>Copy Swift</strong> puts the exact initializer on the
+          pasteboard. <strong>Copy Code</strong> puts the preset code there instead:
         </p>
         <CodeBlock code={TUNE_EXPORT} />
         <p className="text-sm text-muted-foreground">
-          Open{" "}
+          To tune a theme, open{" "}
           <code>Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace</code>,
           run the Showcase, and tap Tune in the strip above the tab bar. The
-          panel stays beside the catalog, an inspector on iPad and a sheet the
-          catalog remains interactive under on iPhone, so every demo shows the
-          change as you make it. Copy Code puts the theme on the pasteboard as a
-          preset code the <Link href="/create/">Create page</Link> and{" "}
+          panel stays beside the catalog: an inspector on iPad, and on iPhone a
+          sheet with the catalog still interactive beneath it. Every demo shows
+          the change as you make it. Copy Code puts the theme on the pasteboard
+          as a preset code that the <Link href="/create/">Create page</Link> and{" "}
           <code>swiftui-registry preset</code> both read. The preset captures
           above are the first screen of the{" "}
           <Link href="/items/preview/">theme preview wall</Link> (the{" "}
-          <code>preview</code> block, 33 cards) rendered under each preset on
+          <code>preview</code> block, 33 cards), rendered under each preset on
           iPhone 17.
         </p>
       </section>

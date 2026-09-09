@@ -26,7 +26,7 @@ WindowGroup {
 
 ## Why native is enough
 
-Declare a `commands` block on the `WindowGroup` scene and add a `CommandMenu` with keyboard shortcuts; iPadOS and macOS place it in the system menu bar. A desktop menu bar is never drawn on iPhone, so the on-screen iPhone form of the same actions is a toolbar `Menu`. Commands are a `Scene` modifier and cannot be declared inside a view. Watch the placement: put the `commands` block on the scene, not a view, or it will not compile.
+Declare a `commands` block on the `WindowGroup` scene, and add a `CommandMenu` with keyboard shortcuts. iPadOS and macOS place it in the system menu bar. iPhone never draws a desktop menu bar, so the on-screen iPhone form of the same actions is a toolbar `Menu`. Commands are a `Scene` modifier and cannot be declared inside a view. Watch the placement: put the `commands` block on the scene, not a view, or it does not compile.
 
 ## Details
 

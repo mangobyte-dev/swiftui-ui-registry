@@ -26,7 +26,7 @@ Button("Why is this needed?") { isShowingHelp = true }
 
 ## Why native is enough
 
-Anchor short explanatory content with `.popover`. On iPhone it adapts to a sheet unless `.presentationCompactAdaptation(.popover)` opts into the popover form. The system positions the arrow, dims nothing, and dismisses on outside tap; the registry adds no wrapper.
+Anchor short explanatory content with `.popover`. On iPhone it adapts to a sheet, unless `.presentationCompactAdaptation(.popover)` opts into the popover form. The system positions the arrow, dims nothing, and dismisses on an outside tap. The registry adds no wrapper.
 
 ## Details
 

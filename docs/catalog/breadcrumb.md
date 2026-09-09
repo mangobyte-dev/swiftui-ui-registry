@@ -2,7 +2,7 @@
 
 # breadcrumb
 
-A horizontal navigation trail of links with chevron separators and a current page, collapsing middle crumbs into an overflow menu when they do not fit; a component because iOS has no native breadcrumb control.
+A horizontal trail of navigation links with chevron separators, a current page, and an overflow menu for middle crumbs that do not fit; a component because iOS has no native breadcrumb control.
 
 ![breadcrumb preview](../images/items/breadcrumb-light.png)
 
@@ -49,9 +49,9 @@ Breadcrumb([
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - The trail is one accessibility container labeled Breadcrumb; each link stays individually navigable and the current page carries the header trait rather than being a button.
-  - Chevron separators are decorative and hidden from accessibility; the overflow menu carries a Show more label and lists the collapsed crumbs as menu actions.
-  - Separators use chevron.forward, which mirrors automatically for a right-to-left layout, and the trail reverses with the layout direction.
-  - Middle crumbs collapse into the overflow menu through ViewThatFits when the full trail does not fit the available width; links are compact inline targets, and native back navigation stays the primary path.
-  - On iPad each link keeps a pointer effect: the plain button style drops the automatic one, so the link asks for it back with hoverEffect and the system picks the shape.
+  - The trail is one accessibility container labeled Breadcrumb. Each link stays individually navigable. The current page carries the header trait and is not a button.
+  - Chevron separators are decorative and hidden from accessibility. The overflow menu carries a Show more label and lists the collapsed crumbs as menu actions.
+  - Separators use chevron.forward, which mirrors automatically for a right-to-left layout. The trail reverses with the layout direction.
+  - Middle crumbs collapse into the overflow menu through ViewThatFits when the full trail does not fit the available width. Links are compact inline targets. Native back navigation stays the primary path.
+  - On iPad each link keeps a pointer effect. The plain button style drops the automatic one. The link restores it with hoverEffect, and the system picks the shape.
 - Source: [sources/components/Breadcrumb.swift](../../Registry/sources/components/Breadcrumb.swift), with the `Breadcrumb` Xcode preview

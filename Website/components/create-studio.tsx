@@ -205,8 +205,8 @@ function PreviewPanel({
           )}
         >
           A token board drawn in CSS from the decoded values, with the system
-          colors as they resolve on iOS 27. The Showcase renders the real
-          SwiftUI: open Tune and import the code, or run{" "}
+          colors as they resolve on iOS 27. The Showcase renders the SwiftUI
+          itself: open Tune and import the code, or run{" "}
           <code>capture_previews.py --preset {code}</code>.
         </p>
         {capture ? (
@@ -224,7 +224,7 @@ function PreviewPanel({
                 appearance === "dark" ? "text-neutral-400" : "text-neutral-500"
               )}
             >
-              This code is the {matched?.name} preset; above is the theme
+              This code is the {matched?.name} preset. Above is the theme
               preview wall&apos;s first screen under it, captured on iPhone 17.
             </figcaption>
           </figure>
@@ -241,7 +241,7 @@ function PreviewPanel({
       <TabsContent value="apply" className="flex flex-col gap-4 p-4">
         <ApplyStep
           title="With the swiftui-registry tool"
-          detail="brew install mangobyte-dev/tap/swiftui-registry, then this writes RegistryTheme+App.swift next to your installed items, declaring RegistryTheme.app."
+          detail="brew install mangobyte-dev/tap/swiftui-registry. This writes RegistryTheme+App.swift next to your installed items and declares RegistryTheme.app."
         >
           <Command text={applyCommand(code)} />
         </ApplyStep>
@@ -253,7 +253,7 @@ function PreviewPanel({
         </ApplyStep>
         <ApplyStep
           title="On a device"
-          detail="In the Showcase, open Tune, choose Import, and paste the code; or launch the app with the argument below."
+          detail="In the Showcase, open Tune, choose Import, and paste the code. Or launch the app with the argument below."
         >
           <Command text={`-preset ${code}`} />
         </ApplyStep>
@@ -266,8 +266,8 @@ function PreviewPanel({
       </TabsContent>
       <TabsContent value="package" className="flex flex-col gap-4 p-4">
         <p className="text-xs text-muted-foreground">
-          A drop-in theme package, the MANGO way: commit both files. Copy each;
-          there is no download.
+          A drop-in theme package, the MANGO way: commit both files. Copy each
+          one. There is no download.
         </p>
         <PackageFile name="RegistryTheme+App.swift" text={themeFile} />
         <PackageFile name="THEME.md" text={themeDoc} />
@@ -667,8 +667,8 @@ function Customizer({
               spellCheck={false}
             />
             <p className="text-xs text-muted-foreground">
-              Never in the code. It appears only in the Swift export and the
-              theme package, with the Dynamic Type note.
+              It never enters the code. It appears only in the Swift export and
+              the theme package, with the Dynamic Type note.
             </p>
           </div>
           <TypeScale design={tuning.fontDesign} />
@@ -700,8 +700,8 @@ function Customizer({
             ) : null}
           </div>
           <p className="text-xs text-muted-foreground">
-            A bundle of the spacing and radius knobs below. Editing them lands
-            on Custom.
+            A bundle of the spacing and radius knobs below. When you edit them,
+            the density lands on Custom.
           </p>
         </Fieldset>
 

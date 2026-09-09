@@ -2,7 +2,7 @@
 
 # button
 
-Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.
+Styles native SwiftUI buttons with shadcn-inspired semantic variants and preserves roles and environment sizing.
 
 ![button preview](../images/items/button-light.png)
 
@@ -54,9 +54,9 @@ Button("Delete", role: .destructive) {}
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Preserves native Button semantics and ButtonRole behavior.
-  - Maintains a minimum 44 by 44 point interaction area across control sizes.
-  - Uses system text styles and keeps the label on one line: it never wraps or breaks, scaling down slightly before truncating, so the call site provides room with a full-width frame or a stacked layout at large text sizes.
-  - Reads the enabled state from the environment and preserves the native ButtonRole: a destructive role draws the negative fill in the primary variant and negative label text in the outline, secondary, ghost, and link variants, alongside the caller's label.
-  - On iPad the style keeps SwiftUI's automatic pointer effect through hoverEffect(), because a custom ButtonStyle otherwise drops it; measured on the iOS 27 iPad simulator with an XCTest hover, the button's pixels did not change until the effect was restored.
+  - The style preserves native Button semantics and ButtonRole behavior.
+  - The style keeps a minimum 44 by 44 point interaction area across control sizes.
+  - The style uses system text styles and keeps the label on one line. The label never wraps or breaks, and scales down slightly before it truncates. At large text sizes, give the button room with a full-width frame or a stacked layout.
+  - The style reads the enabled state from the environment and preserves the native ButtonRole. A destructive role draws the negative fill in the primary variant. It draws negative label text in the outline, secondary, ghost, and link variants, next to the caller's label.
+  - On iPad the style keeps SwiftUI's automatic pointer effect through hoverEffect(), because a custom ButtonStyle otherwise drops it. Measured on the iOS 27 iPad simulator with an XCTest hover: the button's pixels did not change until the effect was restored.
 - Source: [sources/components/RegistryButtonStyle.swift](../../Registry/sources/components/RegistryButtonStyle.swift), with the `Button Variants` Xcode preview

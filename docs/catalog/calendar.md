@@ -24,7 +24,7 @@ MultiDatePicker("Reminder days", selection: $dates)
 
 ## Why native is enough
 
-Use `DatePicker` with `.datePickerStyle(.graphical)` for a calendar and `MultiDatePicker` for several dates. Both inherit tint, locale, calendar, and layout direction; the registry adds no replacement calendar.
+Use `DatePicker` with `.datePickerStyle(.graphical)` for a calendar, and `MultiDatePicker` for several dates. Both inherit tint, locale, calendar, and layout direction. The registry adds no replacement calendar.
 
 ## Details
 

@@ -2,7 +2,7 @@
 
 # aspect-ratio
 
-Native guidance for SwiftUI's aspectRatio modifier without introducing a replacement API.
+Native guidance for SwiftUI's aspectRatio modifier, with no replacement API.
 
 ![aspect-ratio preview](../images/items/aspect-ratio-light.png)
 
@@ -30,7 +30,7 @@ Color.teal
 
 ## Why native is enough
 
-Use SwiftUI's native `aspectRatio(_:contentMode:)` modifier at the call site. No registry wrapper is needed because the native modifier already preserves parent layout proposals.
+Use SwiftUI's native `aspectRatio(_:contentMode:)` modifier at the call site. The registry adds no wrapper, because the native modifier already preserves parent layout proposals.
 
 ## Details
 

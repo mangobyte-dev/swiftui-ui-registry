@@ -2,7 +2,7 @@
 
 # switch
 
-Native guidance for applying the platform switch treatment to a Toggle while inheriting app tint and environment behavior.
+Native guidance for the platform switch treatment on a Toggle, which inherits app tint and environment behavior.
 
 ![switch preview](../images/items/switch-light.png)
 
@@ -21,7 +21,7 @@ Toggle("Notifications", isOn: $notifications)
 
 ## Why native is enough
 
-Apply `.toggleStyle(.switch)` directly to a native `Toggle`. The registry adds no wrapper because the one-line native style is the entire treatment.
+Apply `.toggleStyle(.switch)` directly to a native `Toggle`. The registry adds no wrapper, because the one-line native style is the entire treatment.
 
 ## Details
 

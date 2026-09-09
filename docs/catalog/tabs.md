@@ -2,7 +2,7 @@
 
 # tabs
 
-Native guidance for a local-selection Picker with the platform segmented style while leaving app navigation to TabView.
+Native guidance for a local-selection Picker with the platform segmented style; app navigation stays with TabView.
 
 ![tabs preview](../images/items/tabs-light.png)
 
@@ -25,7 +25,7 @@ Picker("Section", selection: $selection) {
 
 ## Why native is enough
 
-Apply `.pickerStyle(.segmented)` directly to a native `Picker` for local tab selection. Keep `TabView` for app-level navigation; the registry adds no wrapper because the one-line native style is the entire treatment.
+Apply `.pickerStyle(.segmented)` directly to a native `Picker` for local tab selection. Keep `TabView` for app-level navigation. The registry adds no wrapper, because the one-line native style is the entire treatment.
 
 ## Details
 

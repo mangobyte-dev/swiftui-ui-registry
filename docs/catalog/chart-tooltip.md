@@ -44,7 +44,7 @@ Chart {
 
 ## Why native is enough
 
-Bind `.chartXSelection(value:)` to the mark's category type and, when a value is selected, add a `RuleMark(x:)` with an `.annotation(position: .top)` that shows the figure on a small registry surface. Swift Charts drives the selection from tap and drag; the registry adds only the themed chart treatment through `.registryChart()`, and a single-series mark takes the accent explicitly with `.foregroundStyle(TintShapeStyle())` because Swift Charts draws one series in its own default color otherwise. Keep the annotation content short so it does not overflow the plot. Watch the selection type: it must match the mark's x value type or nothing selects.
+Bind `.chartXSelection(value:)` to the mark's category type. When a value is selected, add a `RuleMark(x:)` with an `.annotation(position: .top)` that shows the figure on a small registry surface. Swift Charts drives the selection from tap and drag. The registry adds only the themed chart treatment through `.registryChart()`. A single-series mark takes the accent explicitly with `.foregroundStyle(TintShapeStyle())`, because Swift Charts otherwise draws one series in its own default color. Keep the annotation content short, so it does not overflow the plot. Watch the selection type: it must match the mark's x value type, or nothing selects.
 
 ## Details
 

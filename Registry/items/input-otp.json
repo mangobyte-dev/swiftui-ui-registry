@@ -6,7 +6,7 @@
   "kind": "recipe",
   "description": "Native guidance for a one-time-code TextField that autofills from Messages and Mail instead of a boxed control.",
   "usage": "@State private var code = \"\"\n\nTextField(\"One-time code\", text: $code)\n    .textContentType(.oneTimeCode)\n    .keyboardType(.numberPad)\n    .textFieldStyle(.registryInput)\n    .font(.title2.monospacedDigit())\n    .accessibilityLabel(\"Verification code\")\n    .onChange(of: code) { _, newValue in\n        code = String(newValue.filter(\\.isNumber).prefix(6))\n    }\n\nButton(\"Verify\") { }\n    .buttonStyle(.registry)\n    .disabled(code.count < 6)",
-  "docs": "A single `TextField` with `.textContentType(.oneTimeCode)` lets the system offer the code from Messages and Mail above the keyboard, and `.keyboardType(.numberPad)` keeps entry numeric. A six-box field would imitate a control Apple already supplies and would lose that autofill. The `onChange` handler keeps at most six digits so paste and autofill stay clean. Watch the content type: without `.oneTimeCode` the system will not surface the code.",
+  "docs": "A single `TextField` with `.textContentType(.oneTimeCode)` lets the system offer the code from Messages and Mail above the keyboard, and `.keyboardType(.numberPad)` keeps entry numeric. A six-box field imitates a control Apple already supplies and loses that autofill. The `onChange` handler keeps at most six digits, so paste and autofill stay clean. Watch the content type: without `.oneTimeCode` the system does not offer the code.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],

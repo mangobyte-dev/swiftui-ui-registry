@@ -56,11 +56,11 @@ AuthForm(
 - Platforms: iOS 26.0+
 - Installs in order: [input](input.md) 0.5.1, [button](button.md) 0.5.2, [card](card.md) 0.2.1, [auth-form](auth-form.md) 0.3.2
 - Accessibility contract:
-  - Both fields carry an explicit accessibilityLabel equal to their visible titles. Measured on iOS 27: the label-plus-prompt initializer alone exposes the title as placeholder text only, so a field with typed content would be unnamed without it.
-  - Focus order is identity then password: the identity field submits with a Next return key that moves focus to the password field, and the password return key submits the form.
-  - Invalid fields are never color-alone: the input border width increases, a visible footnote message renders under the field, and the message is attached as the field's accessibility hint.
-  - Field and form error messages post an AccessibilityNotification.Announcement when they appear or change; an unchanged message is not re-announced, so a caller that re-validates with the same result posts its own announcement. VoiceOver announcement timing has not been verified on device.
-  - Autofill content types are fixed: the identity field is .username (for both email and username sign-in) and the password field is .password. Autofill is verifiable only manually with a saved credential.
-  - While isSubmitting is true every control is disabled through the environment, the composed styles apply the shared disabled opacity, and the submit button keeps its title as its accessibility label while showing a progress spinner.
+  - Both fields carry an explicit accessibilityLabel equal to their visible titles. Measured on iOS 27, the label-plus-prompt initializer alone exposes the title as placeholder text only. Without the explicit label, a field with typed content is unnamed.
+  - Focus order is identity then password. The identity field uses a Next return key that moves focus to the password field. The password return key submits the form.
+  - Invalid fields never use color alone. The input border width increases, a visible footnote message renders under the field, and the message attaches as the field's accessibility hint.
+  - Field and form error messages post an AccessibilityNotification.Announcement when they appear or change. An unchanged message is not re-announced, so a caller that re-validates with the same result posts its own announcement. VoiceOver announcement timing is not verified on device.
+  - Autofill content types are fixed. The identity field is .username, for both email and username sign-in, and the password field is .password. You can verify autofill only manually, with a saved credential.
+  - When isSubmitting is true, the environment disables every control, and the composed styles apply the shared disabled opacity. The submit button shows a progress spinner and keeps its title as its accessibility label.
   - The card title carries the header accessibility trait.
 - Source: [sources/blocks/AuthForm.swift](../../Registry/sources/blocks/AuthForm.swift), with the `Auth Form` Xcode preview

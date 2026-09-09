@@ -29,7 +29,7 @@ Slider(value: $volume, in: 0...100, step: 1) {
 
 ## Why native is enough
 
-Use the native `Slider` and apply `.tint(_:)` and `.controlSize(_:)` directly where the design needs them. The registry adds no wrapper because those modifiers only forward environment values the native control already respects.
+Use the native `Slider` and apply `.tint(_:)` and `.controlSize(_:)` directly where the design needs them. The registry adds no wrapper, because those modifiers only forward environment values that the native control already respects.
 
 ## Details
 

@@ -44,10 +44,10 @@
     "panel"
   ],
   "accessibility": [
-    "Preserves the native accessibility elements and reading order supplied by the GroupBox label and content.",
-    "Uses system text styles and allows content to grow vertically with Dynamic Type.",
-    "Uses semantic leading alignment that follows the environment layout direction.",
-    "Does not impose interaction or selection behavior on caller content."
+    "The card preserves the native accessibility elements and reading order from the GroupBox label and content.",
+    "The card uses system text styles and lets content grow vertically with Dynamic Type.",
+    "The card uses semantic leading alignment that follows the environment layout direction.",
+    "The card adds no interaction or selection behavior to caller content."
   ],
   "preview": {
     "source": "sources/components/RegistryCardStyle.swift",

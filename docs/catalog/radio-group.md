@@ -2,7 +2,7 @@
 
 # radio-group
 
-Native guidance for presenting a bound Picker as an inline mutually exclusive option group.
+Native guidance for a bound Picker as an inline, mutually exclusive option group.
 
 ![radio-group preview](../images/items/radio-group-light.png)
 
@@ -25,7 +25,7 @@ Picker("Delivery speed", selection: $selection) {
 
 ## Why native is enough
 
-Apply `.pickerStyle(.inline)` directly to a native `Picker` for a mutually exclusive option group. The registry adds no wrapper because the one-line native style is the entire treatment.
+Apply `.pickerStyle(.inline)` directly to a native `Picker` for a mutually exclusive option group. The registry adds no wrapper, because the one-line native style is the entire treatment.
 
 ## Details
 

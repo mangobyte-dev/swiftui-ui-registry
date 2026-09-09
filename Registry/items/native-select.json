@@ -6,7 +6,7 @@
   "kind": "recipe",
   "description": "Native guidance for the minimal menu treatment of a bound SwiftUI Picker.",
   "usage": "@State private var sort = \"recent\"\n\nPicker(\"Sort\", selection: $sort) {\n    Text(\"Most recent\").tag(\"recent\")\n    Text(\"Oldest\").tag(\"oldest\")\n    Text(\"Amount\").tag(\"amount\")\n}\n.pickerStyle(.menu)",
-  "docs": "Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no wrapper because the one-line native style is the entire treatment.",
+  "docs": "Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no wrapper, because the one-line native style is the entire treatment.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],

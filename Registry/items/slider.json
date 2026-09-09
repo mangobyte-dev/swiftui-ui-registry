@@ -6,7 +6,7 @@
   "kind": "recipe",
   "description": "Native guidance for a Slider with semantic tint, control sizing, and caller-owned value and labels.",
   "usage": "@State private var volume = 64.0\n\nSlider(value: $volume, in: 0...100, step: 1) {\n    Text(\"Volume\")\n} minimumValueLabel: {\n    Image(systemName: \"speaker.fill\")\n        .accessibilityHidden(true)\n} maximumValueLabel: {\n    Image(systemName: \"speaker.wave.3.fill\")\n        .accessibilityHidden(true)\n}\n.controlSize(.large)",
-  "docs": "Use the native `Slider` and apply `.tint(_:)` and `.controlSize(_:)` directly where the design needs them. The registry adds no wrapper because those modifiers only forward environment values the native control already respects.",
+  "docs": "Use the native `Slider` and apply `.tint(_:)` and `.controlSize(_:)` directly where the design needs them. The registry adds no wrapper, because those modifiers only forward environment values that the native control already respects.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],

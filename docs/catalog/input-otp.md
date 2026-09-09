@@ -32,7 +32,7 @@ Button("Verify") { }
 
 ## Why native is enough
 
-A single `TextField` with `.textContentType(.oneTimeCode)` lets the system offer the code from Messages and Mail above the keyboard, and `.keyboardType(.numberPad)` keeps entry numeric. A six-box field would imitate a control Apple already supplies and would lose that autofill. The `onChange` handler keeps at most six digits so paste and autofill stay clean. Watch the content type: without `.oneTimeCode` the system will not surface the code.
+A single `TextField` with `.textContentType(.oneTimeCode)` lets the system offer the code from Messages and Mail above the keyboard, and `.keyboardType(.numberPad)` keeps entry numeric. A six-box field imitates a control Apple already supplies and loses that autofill. The `onChange` handler keeps at most six digits, so paste and autofill stay clean. Watch the content type: without `.oneTimeCode` the system does not offer the code.
 
 ## Details
 

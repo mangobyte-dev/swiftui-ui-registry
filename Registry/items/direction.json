@@ -6,7 +6,7 @@
   "kind": "recipe",
   "description": "Native guidance for layoutDirection behavior and semantic leading/trailing layout without a replacement API.",
   "usage": "@Environment(\\.layoutDirection) private var layoutDirection\n\nHStack {\n    Image(systemName: \"person.crop.circle\")\n        .accessibilityHidden(true)\n    Text(\"Account\")\n    Spacer()\n    Image(systemName: \"chevron.forward\")\n        .accessibilityHidden(true)\n}",
-  "docs": "Read `EnvironmentValues.layoutDirection` and use leading/trailing alignment instead of left/right geometry. No registry replacement is needed because SwiftUI propagates direction through the environment.\n\nUse direction-aware symbols such as `chevron.forward` so icons mirror automatically. Preview both directions with `.environment(\\.layoutDirection, .rightToLeft)`.",
+  "docs": "Read `EnvironmentValues.layoutDirection` and use leading/trailing alignment, not left/right geometry. The registry adds no replacement, because SwiftUI propagates direction through the environment.\n\nUse direction-aware symbols such as `chevron.forward`, so icons mirror automatically. Preview both directions with `.environment(\\.layoutDirection, .rightToLeft)`.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],

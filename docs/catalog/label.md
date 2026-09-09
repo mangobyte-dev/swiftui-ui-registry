@@ -2,7 +2,7 @@
 
 # label
 
-Controls native Label icon placement with semantic spacing and decorative icon accessibility behavior.
+Controls native Label icon placement with semantic spacing and treats the icon as decorative for accessibility.
 
 ![label preview](../images/items/label-light.png)
 

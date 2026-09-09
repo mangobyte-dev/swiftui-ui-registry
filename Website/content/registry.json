@@ -11,7 +11,7 @@
       "name": "accordion",
       "kind": "component",
       "version": "0.2.2",
-      "description": "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.",
+      "description": "Styles a native DisclosureGroup as a full-width header row with a trailing chevron and revealed content that keeps the caller's styling, for stacked expandable sections.",
       "usage": "@State private var isExpanded = false\n\nDisclosureGroup(\"How do I freeze my card?\", isExpanded: $isExpanded) {\n    Text(\"Open the card, then choose Freeze.\")\n}\n.disclosureGroupStyle(.registryAccordion)",
       "docs": null,
       "tags": [
@@ -44,11 +44,11 @@
         }
       ],
       "accessibility": [
-        "Preserves the native DisclosureGroup binding; the header is a plain Button that toggles isExpanded.",
-        "Reports Expanded or Collapsed as the header's accessibility value; no selection trait is added, so VoiceOver speaks one state word.",
-        "The chevron is decorative and hidden; the header keeps the 44 point minimum height.",
-        "Tapping the header animates expansion with the snappy curve and switches to an immediate change under Reduce Motion; a caller that changes isExpanded programmatically chooses its own animation.",
-        "On iPad the header keeps a pointer effect: the plain button style drops the automatic one, so the header asks for it back with hoverEffect and the system picks the shape."
+        "The header is a plain Button that toggles isExpanded and keeps the native DisclosureGroup binding.",
+        "The header reports Expanded or Collapsed as its accessibility value. It adds no selection trait, so VoiceOver speaks one state word.",
+        "The chevron is decorative and hidden. The header keeps the 44 point minimum height.",
+        "A tap on the header animates expansion with the snappy curve. Under Reduce Motion, the change is immediate. A caller that changes isExpanded in code chooses its own animation.",
+        "On iPad the header keeps a pointer effect. The plain button style drops the automatic one. The header restores it with hoverEffect, and the system picks the shape."
       ],
       "sourcePath": "Registry/sources/components/RegistryAccordionStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryAccordionStyle.swift",
@@ -147,11 +147,11 @@
         }
       ],
       "accessibility": [
-        "Feedback is never color alone: unread rows use a heavier title, a dot, and an Unread accessibility value; the notice variant pairs a symbol with its color.",
-        "Loading placeholders are one disabled accessibility element labeled Loading activity and cannot trigger selection.",
-        "Every avatar carries the caller-provided sender name as its label; the notice symbol and unread dot are decorative and hidden.",
-        "The empty state is a native ContentUnavailableView with caller-provided copy; the earlier section is a native DisclosureGroup announcing Expanded or Collapsed.",
-        "Rows are native Buttons whose combined label reads the sender name, title, detail, and timestamp, with an Unread accessibility value; a sender name equal to the title is spoken twice. Voice Control can address a row by its title alone.",
+        "Feedback never uses color alone. Unread rows use a heavier title, a dot, and an Unread accessibility value. The notice variant pairs a symbol with its color.",
+        "Loading placeholders form one disabled accessibility element labeled Loading activity. They cannot trigger selection.",
+        "Every avatar uses the caller-provided sender name as its label. The notice symbol and unread dot are decorative and hidden.",
+        "The empty state is a native ContentUnavailableView with caller-provided copy. The earlier section is a native DisclosureGroup that announces Expanded or Collapsed.",
+        "Rows are native Buttons. Each row's combined label reads the sender name, title, detail, and timestamp, with an Unread accessibility value. A sender name equal to the title is spoken twice. Voice Control can address a row by its title alone.",
         "The screen title and the section title carry the header accessibility trait."
       ],
       "sourcePath": "Registry/sources/blocks/ActivityFeed.swift",
@@ -212,10 +212,10 @@
         }
       ],
       "accessibility": [
-        "Each variant pairs its own symbol with its color, so informational, positive, and destructive meaning never rests on color alone.",
-        "The title and message combine into one accessibility element; caller-provided action buttons remain separate, activatable elements.",
-        "The leading symbol is hidden from VoiceOver, so the variant reaches assistive technology only through the title and message; name the outcome in the title.",
-        "Stays in the content flow and never interrupts; use the native .alert modifier for decisions that must be answered."
+        "Each variant pairs its own symbol with its color. Informational, positive, and destructive meaning never rests on color alone.",
+        "The title and message combine into one accessibility element. Caller-provided action buttons stay separate and activatable.",
+        "VoiceOver does not read the leading symbol, so the variant reaches assistive technology only through the title and message. Name the outcome in the title.",
+        "The message stays in the content flow and never interrupts. For decisions that must be answered, use the native .alert modifier."
       ],
       "sourcePath": "Registry/sources/components/InlineAlert.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/InlineAlert.swift",
@@ -241,9 +241,9 @@
       "name": "alert-dialog",
       "kind": "recipe",
       "version": "0.1.0",
-      "description": "Native guidance for a modal decision with .alert, using button roles and prepared copy while keeping the system presentation.",
+      "description": "Native guidance for a modal decision with .alert: button roles, prepared copy, and the system presentation.",
       "usage": "@State private var isConfirmingSignOut = false\n\nButton(\"Sign out\", role: .destructive) {\n    isConfirmingSignOut = true\n}\n.alert(\"Sign out?\", isPresented: $isConfirmingSignOut) {\n    Button(\"Sign out\", role: .destructive) { }\n    Button(\"Cancel\", role: .cancel) { }\n} message: {\n    Text(\"You will need your password to sign in again.\")\n}",
-      "docs": "Present a decision with the native `.alert` modifier and give each button a role: `.destructive` for the irreversible choice and `.cancel` for the way out. The system owns layout, typography, blur, and VoiceOver focus; the registry adds no wrapper because the modifier and roles are the entire treatment.",
+      "docs": "Present a decision with the native `.alert` modifier. Give each button a role: `.destructive` for the irreversible choice and `.cancel` to cancel. The system owns layout, typography, blur, and VoiceOver focus. The registry adds no wrapper, because the modifier and roles are the entire treatment.",
       "tags": [
         "alert",
         "dialog",
@@ -285,9 +285,9 @@
       "name": "aspect-ratio",
       "kind": "recipe",
       "version": "0.3.0",
-      "description": "Native guidance for SwiftUI's aspectRatio modifier without introducing a replacement API.",
+      "description": "Native guidance for SwiftUI's aspectRatio modifier, with no replacement API.",
       "usage": "Color.indigo\n    .overlay {\n        Image(systemName: \"play.fill\")\n            .foregroundStyle(.white)\n            .accessibilityHidden(true)\n    }\n    .aspectRatio(16.0 / 9.0, contentMode: .fit)\n    .accessibilityLabel(\"Video placeholder\")\n\nColor.teal\n    .aspectRatio(1, contentMode: .fit)\n    .frame(maxWidth: 160)\n    .accessibilityLabel(\"Avatar placeholder\")",
-      "docs": "Use SwiftUI's native `aspectRatio(_:contentMode:)` modifier at the call site. No registry wrapper is needed because the native modifier already preserves parent layout proposals.",
+      "docs": "Use SwiftUI's native `aspectRatio(_:contentMode:)` modifier at the call site. The registry adds no wrapper, because the native modifier already preserves parent layout proposals.",
       "tags": [
         "aspect-ratio",
         "layout",
@@ -379,11 +379,11 @@
         }
       ],
       "accessibility": [
-        "Every upload state names itself in text, a percent, Processing, a failure message, or Uploaded, so progress and outcome never rest on color or a bar alone.",
-        "The uploading percent is hidden from VoiceOver because the progress bar already reports its value, so the same fraction is not read twice.",
-        "Composes ItemRow, so the name and detail combine into one accessibility element while the trailing actions stay separately activatable.",
-        "The failed and completed states each pair their color with a symbol and a word, so the outcome is not carried by hue alone.",
-        "Requires the caller to label any icon-only action button and the thumbnail image, since neither derives an accessibility label from visible text."
+        "Every upload state shows text: a percent, Processing, a failure message, or Uploaded. Progress and outcome never rest on color or a bar alone.",
+        "VoiceOver does not read the upload percent, because the progress bar already reports its value. The same fraction is not read twice.",
+        "The component composes ItemRow, so the name and detail combine into one accessibility element. The trailing actions stay separately activatable.",
+        "The failed and completed states each pair their color with a symbol and a word. The outcome does not rest on hue alone.",
+        "Label any icon-only action button and the thumbnail image. Neither derives an accessibility label from visible text."
       ],
       "sourcePath": "Registry/sources/components/AttachmentRow.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/AttachmentRow.swift",
@@ -452,12 +452,12 @@
         }
       ],
       "accessibility": [
-        "Both fields carry an explicit accessibilityLabel equal to their visible titles. Measured on iOS 27: the label-plus-prompt initializer alone exposes the title as placeholder text only, so a field with typed content would be unnamed without it.",
-        "Focus order is identity then password: the identity field submits with a Next return key that moves focus to the password field, and the password return key submits the form.",
-        "Invalid fields are never color-alone: the input border width increases, a visible footnote message renders under the field, and the message is attached as the field's accessibility hint.",
-        "Field and form error messages post an AccessibilityNotification.Announcement when they appear or change; an unchanged message is not re-announced, so a caller that re-validates with the same result posts its own announcement. VoiceOver announcement timing has not been verified on device.",
-        "Autofill content types are fixed: the identity field is .username (for both email and username sign-in) and the password field is .password. Autofill is verifiable only manually with a saved credential.",
-        "While isSubmitting is true every control is disabled through the environment, the composed styles apply the shared disabled opacity, and the submit button keeps its title as its accessibility label while showing a progress spinner.",
+        "Both fields carry an explicit accessibilityLabel equal to their visible titles. Measured on iOS 27, the label-plus-prompt initializer alone exposes the title as placeholder text only. Without the explicit label, a field with typed content is unnamed.",
+        "Focus order is identity then password. The identity field uses a Next return key that moves focus to the password field. The password return key submits the form.",
+        "Invalid fields never use color alone. The input border width increases, a visible footnote message renders under the field, and the message attaches as the field's accessibility hint.",
+        "Field and form error messages post an AccessibilityNotification.Announcement when they appear or change. An unchanged message is not re-announced, so a caller that re-validates with the same result posts its own announcement. VoiceOver announcement timing is not verified on device.",
+        "Autofill content types are fixed. The identity field is .username, for both email and username sign-in, and the password field is .password. You can verify autofill only manually, with a saved credential.",
+        "When isSubmitting is true, the environment disables every control, and the composed styles apply the shared disabled opacity. The submit button shows a progress spinner and keeps its title as its accessibility label.",
         "The card title carries the header accessibility trait."
       ],
       "sourcePath": "Registry/sources/blocks/AuthForm.swift",
@@ -484,7 +484,7 @@
       "name": "avatar",
       "kind": "component",
       "version": "0.2.1",
-      "description": "Displays a circular identity image with initials or symbol fallback, sized by the environment control size, with a required accessibility label.",
+      "description": "Displays a circular identity image with an initials or symbol fallback, sized by the environment control size, and requires an accessibility label.",
       "usage": "Avatar(Image(\"maya\"), accessibilityLabel: Text(\"Maya Khalid\"))\n\nAvatar(initials: \"MK\", accessibilityLabel: Text(\"Maya Khalid\"))\n    .controlSize(.large)\n\nAvatar(accessibilityLabel: Text(\"Unknown sender\"))",
       "docs": null,
       "tags": [
@@ -511,10 +511,10 @@
         }
       ],
       "accessibility": [
-        "Requires a caller-supplied accessibility label because a face or monogram cannot be derived from visible content.",
-        "Exposes one image-trait accessibility element and ignores its inner text and symbol.",
-        "Initials use the tint color on the surface fill; the whole avatar scales with the body text style, so the monogram and symbol keep their size relative to the text beside them.",
-        "Diameter follows the environment controlSize from 24 to 72 points at the default text size; the border uses the semantic border token."
+        "Supply an accessibility label, because the view cannot derive one from a face or monogram.",
+        "The view exposes one image-trait accessibility element and ignores its inner text and symbol.",
+        "Initials use the tint color on the surface fill. The whole avatar scales with the body text style, so the monogram and symbol keep their size relative to nearby text.",
+        "The diameter follows the environment controlSize, from 24 to 72 points at the default text size. The border uses the semantic border token."
       ],
       "sourcePath": "Registry/sources/components/Avatar.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/Avatar.swift",
@@ -566,11 +566,11 @@
         }
       ],
       "accessibility": [
-        "Keeps its text on one line at its intrinsic width; a badge never wraps or breaks its label.",
-        "Preserves the accessibility semantics and reading order of the modified Text or Label.",
-        "Uses a system text style, so the single line still grows with Dynamic Type.",
-        "Inherits layout direction so Label content follows the caller's locale.",
-        "Positive and destructive share one fill treatment and differ by hue; pair them with a Label symbol when meaning must not rest on color alone."
+        "The badge keeps its text on one line at its intrinsic width. It never wraps or breaks its label.",
+        "The badge preserves the accessibility semantics and reading order of the modified Text or Label.",
+        "The badge uses a system text style, so the single line grows with Dynamic Type.",
+        "The badge inherits layout direction, so Label content follows the caller's locale.",
+        "Positive and destructive share one fill treatment and differ by hue. When meaning must not rest on color alone, pair them with a Label symbol."
       ],
       "sourcePath": "Registry/sources/components/RegistryBadge.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryBadge.swift",
@@ -596,7 +596,7 @@
       "name": "breadcrumb",
       "kind": "component",
       "version": "0.1.2",
-      "description": "A horizontal navigation trail of links with chevron separators and a current page, collapsing middle crumbs into an overflow menu when they do not fit; a component because iOS has no native breadcrumb control.",
+      "description": "A horizontal trail of navigation links with chevron separators, a current page, and an overflow menu for middle crumbs that do not fit; a component because iOS has no native breadcrumb control.",
       "usage": "Breadcrumb([\n    BreadcrumbItem(Text(\"Home\"), action: { path = NavigationPath() }),\n    BreadcrumbItem(Text(\"Library\"), action: { path.removeLast() }),\n    BreadcrumbItem(Text(\"Payments\"))\n])",
       "docs": null,
       "tags": [
@@ -624,11 +624,11 @@
         }
       ],
       "accessibility": [
-        "The trail is one accessibility container labeled Breadcrumb; each link stays individually navigable and the current page carries the header trait rather than being a button.",
-        "Chevron separators are decorative and hidden from accessibility; the overflow menu carries a Show more label and lists the collapsed crumbs as menu actions.",
-        "Separators use chevron.forward, which mirrors automatically for a right-to-left layout, and the trail reverses with the layout direction.",
-        "Middle crumbs collapse into the overflow menu through ViewThatFits when the full trail does not fit the available width; links are compact inline targets, and native back navigation stays the primary path.",
-        "On iPad each link keeps a pointer effect: the plain button style drops the automatic one, so the link asks for it back with hoverEffect and the system picks the shape."
+        "The trail is one accessibility container labeled Breadcrumb. Each link stays individually navigable. The current page carries the header trait and is not a button.",
+        "Chevron separators are decorative and hidden from accessibility. The overflow menu carries a Show more label and lists the collapsed crumbs as menu actions.",
+        "Separators use chevron.forward, which mirrors automatically for a right-to-left layout. The trail reverses with the layout direction.",
+        "Middle crumbs collapse into the overflow menu through ViewThatFits when the full trail does not fit the available width. Links are compact inline targets. Native back navigation stays the primary path.",
+        "On iPad each link keeps a pointer effect. The plain button style drops the automatic one. The link restores it with hoverEffect, and the system picks the shape."
       ],
       "sourcePath": "Registry/sources/components/Breadcrumb.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/Breadcrumb.swift",
@@ -654,7 +654,7 @@
       "name": "bubble",
       "kind": "component",
       "version": "0.1.1",
-      "description": "Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, leaving alignment to the message row.",
+      "description": "Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, and leaves alignment to the message row.",
       "usage": "Text(\"Are we still on for Thursday?\")\n    .registryBubble(.incoming)\n\nText(\"Yes, 6pm works.\")\n    .registryBubble(.outgoing)",
       "docs": null,
       "tags": [
@@ -680,11 +680,11 @@
         }
       ],
       "accessibility": [
-        "Wraps its text freely and never truncates, so a long message stays fully readable and grows with Dynamic Type.",
-        "Adds no accessibility element of its own; the wrapped Text keeps its semantics and reading order.",
-        "Incoming and outgoing bubbles carry no stroke and rest on fill alone; the outgoing fill is the tint with the theme's onAccent label, which the caller keeps legible against the accent.",
-        "The muted variant drops the fill for a border hairline, so a system line reads as distinct from a spoken turn without relying on color.",
-        "Inherits layout direction, so the bubble's padding and continuous corners follow the caller's locale."
+        "The bubble wraps its text freely and never truncates, so a long message stays readable and grows with Dynamic Type.",
+        "The bubble adds no accessibility element of its own. The wrapped Text keeps its semantics and reading order.",
+        "Incoming and outgoing bubbles carry no stroke and rest on fill alone. The outgoing fill uses the tint with the theme's onAccent label. Keep the label legible against the accent.",
+        "The muted variant drops the fill for a border hairline. A system line reads as distinct from a spoken turn without color.",
+        "The bubble inherits layout direction, so its padding and continuous corners follow the caller's locale."
       ],
       "sourcePath": "Registry/sources/components/RegistryBubbleModifier.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryBubbleModifier.swift",
@@ -710,7 +710,7 @@
       "name": "button",
       "kind": "component",
       "version": "0.5.2",
-      "description": "Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.",
+      "description": "Styles native SwiftUI buttons with shadcn-inspired semantic variants and preserves roles and environment sizing.",
       "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nButton(\"Save changes\") {}\n    .buttonStyle(.registry)\n\nButton(\"Cancel\") {}\n    .buttonStyle(.registryOutline)\n\nButton(\"Delete\", role: .destructive) {}\n    .buttonStyle(.registry)",
       "docs": null,
       "tags": [
@@ -735,11 +735,11 @@
         }
       ],
       "accessibility": [
-        "Preserves native Button semantics and ButtonRole behavior.",
-        "Maintains a minimum 44 by 44 point interaction area across control sizes.",
-        "Uses system text styles and keeps the label on one line: it never wraps or breaks, scaling down slightly before truncating, so the call site provides room with a full-width frame or a stacked layout at large text sizes.",
-        "Reads the enabled state from the environment and preserves the native ButtonRole: a destructive role draws the negative fill in the primary variant and negative label text in the outline, secondary, ghost, and link variants, alongside the caller's label.",
-        "On iPad the style keeps SwiftUI's automatic pointer effect through hoverEffect(), because a custom ButtonStyle otherwise drops it; measured on the iOS 27 iPad simulator with an XCTest hover, the button's pixels did not change until the effect was restored."
+        "The style preserves native Button semantics and ButtonRole behavior.",
+        "The style keeps a minimum 44 by 44 point interaction area across control sizes.",
+        "The style uses system text styles and keeps the label on one line. The label never wraps or breaks, and scales down slightly before it truncates. At large text sizes, give the button room with a full-width frame or a stacked layout.",
+        "The style reads the enabled state from the environment and preserves the native ButtonRole. A destructive role draws the negative fill in the primary variant. It draws negative label text in the outline, secondary, ghost, and link variants, next to the caller's label.",
+        "On iPad the style keeps SwiftUI's automatic pointer effect through hoverEffect(), because a custom ButtonStyle otherwise drops it. Measured on the iOS 27 iPad simulator with an XCTest hover: the button's pixels did not change until the effect was restored."
       ],
       "sourcePath": "Registry/sources/components/RegistryButtonStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryButtonStyle.swift",
@@ -765,7 +765,7 @@
       "name": "button-group",
       "kind": "component",
       "version": "0.3.2",
-      "description": "Lays out every native button in a ControlGroup side by side with one registry button variant, keeping the caller's Button controls, roles, and labels.",
+      "description": "Lays out every native button in a ControlGroup side by side with one registry button variant, and keeps the caller's Button controls, roles, and labels.",
       "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
       "docs": null,
       "tags": [
@@ -795,10 +795,10 @@
         }
       ],
       "accessibility": [
-        "Retains the caller's native Button controls and exposes the row as one accessibility container.",
-        "Keeps each button's visible or derived accessibility label and role.",
-        "Inherits layout direction, control size, enabled state, and Dynamic Type behavior.",
-        "Requires callers to provide labels for icon-only buttons through native Button initializers."
+        "The group keeps the caller's native Button controls and exposes the row as one accessibility container.",
+        "The group keeps each button's visible or derived accessibility label and role.",
+        "The group inherits layout direction, control size, enabled state, and Dynamic Type behavior.",
+        "Provide labels for icon-only buttons through native Button initializers."
       ],
       "sourcePath": "Registry/sources/components/RegistryButtonGroupStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryButtonGroupStyle.swift",
@@ -826,7 +826,7 @@
       "version": "0.1.0",
       "description": "Native guidance for date selection with DatePicker in graphical style and MultiDatePicker for several dates.",
       "usage": "@State private var date = Date.now\n@State private var dates: Set<DateComponents> = []\n\nDatePicker(\"Statement date\", selection: $date, displayedComponents: .date)\n    .datePickerStyle(.graphical)\n\nMultiDatePicker(\"Reminder days\", selection: $dates)",
-      "docs": "Use `DatePicker` with `.datePickerStyle(.graphical)` for a calendar and `MultiDatePicker` for several dates. Both inherit tint, locale, calendar, and layout direction; the registry adds no replacement calendar.",
+      "docs": "Use `DatePicker` with `.datePickerStyle(.graphical)` for a calendar, and `MultiDatePicker` for several dates. Both inherit tint, locale, calendar, and layout direction. The registry adds no replacement calendar.",
       "tags": [
         "calendar",
         "date",
@@ -892,10 +892,10 @@
         }
       ],
       "accessibility": [
-        "Preserves the native accessibility elements and reading order supplied by the GroupBox label and content.",
-        "Uses system text styles and allows content to grow vertically with Dynamic Type.",
-        "Uses semantic leading alignment that follows the environment layout direction.",
-        "Does not impose interaction or selection behavior on caller content."
+        "The card preserves the native accessibility elements and reading order from the GroupBox label and content.",
+        "The card uses system text styles and lets content grow vertically with Dynamic Type.",
+        "The card uses semantic leading alignment that follows the environment layout direction.",
+        "The card adds no interaction or selection behavior to caller content."
       ],
       "sourcePath": "Registry/sources/components/RegistryCardStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryCardStyle.swift",
@@ -923,7 +923,7 @@
       "version": "0.1.0",
       "description": "Native guidance for a paging horizontal ScrollView of cards with scrollTargetBehavior and containerRelativeFrame.",
       "usage": "ScrollView(.horizontal) {\n    HStack(spacing: 12) {\n        ForEach(cards) { card in\n            VStack(alignment: .leading, spacing: 8) {\n                Label(card.title, systemImage: card.systemImage)\n                    .font(.subheadline.weight(.semibold))\n                Text(card.amount, format: .currency(code: \"KWD\"))\n                    .font(.title.monospacedDigit())\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .padding()\n            .registrySurface()\n            .containerRelativeFrame(.horizontal)\n            .accessibilityElement(children: .combine)\n            .accessibilityLabel(\"\\(card.title) card\")\n        }\n    }\n    .scrollTargetLayout()\n}\n.scrollTargetBehavior(.paging)",
-      "docs": "Lay cards in a horizontal `ScrollView`, mark the row with `.scrollTargetLayout()`, and page with `.scrollTargetBehavior(.paging)`; `containerRelativeFrame(.horizontal)` sizes each page to the viewport. For a page control instead, use a `TabView` with `.tabViewStyle(.page)`. The system supplies the paging, the indicators, and the Reduce Motion behavior, so the registry adds no wrapper. Watch the page width: a card must fill the container relative frame or paging stops on partial cards.",
+      "docs": "Lay cards in a horizontal `ScrollView`, mark the row with `.scrollTargetLayout()`, and page with `.scrollTargetBehavior(.paging)`. `containerRelativeFrame(.horizontal)` sizes each page to the viewport. For a page control instead, use a `TabView` with `.tabViewStyle(.page)`. The system supplies the paging, the indicators, and the Reduce Motion behavior, so the registry adds no wrapper. Watch the page width: a card must fill the container relative frame, or paging stops on partial cards.",
       "tags": [
         "carousel",
         "paging",
@@ -962,7 +962,7 @@
       "name": "chart",
       "kind": "component",
       "version": "0.1.3",
-      "description": "Styles a native Swift Charts Chart to the theme: a series palette derived from the accent on the foreground style scale, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.",
+      "description": "Styles a native Swift Charts Chart to the theme: an accent-derived series palette, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.",
       "usage": "Chart(data) { row in\n    BarMark(\n        x: .value(\"Month\", row.month),\n        y: .value(\"Visits\", row.visits)\n    )\n    .foregroundStyle(by: .value(\"Channel\", row.channel))\n    .position(by: .value(\"Channel\", row.channel))\n}\n.registryChart()\n.frame(height: 180)",
       "docs": null,
       "tags": [
@@ -992,11 +992,11 @@
         }
       ],
       "accessibility": [
-        "The marks stay native Swift Charts marks, so the caller keeps the chart's accessibility: add accessibilityLabel and accessibilityValue to marks or the Chart so VoiceOver and the audio graph describe the data.",
-        "Series are named in the legend below the plot, so the chart does not rely on color alone; the legend reads the same palette as the plot.",
-        "Axis value labels use footnote text at secondary emphasis, and grid lines and ticks use the theme border, so the chrome respects Dynamic Type and the color scheme.",
-        "A mark colored by a category reads the accent-derived palette, whose first color is the accent and whose others rotate its hue to stay distinct; a single-series mark takes the accent explicitly with foregroundStyle(TintShapeStyle()) or a RegistryChartPalette color, since Swift Charts otherwise draws one series in its own default color.",
-        "The series palette follows the theme's chartPalette: accent-derived tints, a fixed spectrum, or a gray ramp; the spectrum and gray options keep the categories distinct when the accent has too little chroma to rotate, and every option follows the color scheme."
+        "The marks stay native Swift Charts marks, so the caller keeps the chart's accessibility. Add accessibilityLabel and accessibilityValue to marks or the Chart, so VoiceOver and the audio graph describe the data.",
+        "The legend below the plot names the series, so the chart does not rely on color alone. The legend reads the same palette as the plot.",
+        "Axis value labels use footnote text at secondary emphasis. Grid lines and ticks use the theme border, so the chrome respects Dynamic Type and the color scheme.",
+        "A mark colored by a category reads the accent-derived palette. The first color is the accent, and the others rotate its hue to stay distinct. Give a single-series mark the accent with foregroundStyle(TintShapeStyle()) or a RegistryChartPalette color. Otherwise Swift Charts draws one series in its own default color.",
+        "The series palette follows the theme's chartPalette: accent-derived tints, a fixed spectrum, or a gray ramp. The spectrum and gray options keep the categories distinct when the accent has too little chroma to rotate. Every option follows the color scheme."
       ],
       "sourcePath": "Registry/sources/components/RegistryChart.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryChart.swift",
@@ -1024,7 +1024,7 @@
       "version": "0.1.0",
       "description": "Native guidance for a Swift Charts selection annotation with chartXSelection and a RuleMark tooltip.",
       "usage": "@State private var selectedMonth: String?\n\nvar selected: MonthlyBalance? {\n    balances.first { $0.month == selectedMonth }\n}\n\nChart {\n    ForEach(balances) { row in\n        BarMark(\n            x: .value(\"Month\", row.month),\n            y: .value(\"Balance\", row.amount)\n        )\n        .foregroundStyle(TintShapeStyle())\n    }\n    if let selected {\n        RuleMark(x: .value(\"Month\", selected.month))\n            .foregroundStyle(.secondary)\n            .annotation(position: .top) {\n                Text(selected.amount, format: .currency(code: \"KWD\"))\n                    .font(.footnote.monospacedDigit())\n                    .padding(6)\n                    .registrySurface()\n            }\n    }\n}\n.chartXSelection(value: $selectedMonth)\n.registryChart()",
-      "docs": "Bind `.chartXSelection(value:)` to the mark's category type and, when a value is selected, add a `RuleMark(x:)` with an `.annotation(position: .top)` that shows the figure on a small registry surface. Swift Charts drives the selection from tap and drag; the registry adds only the themed chart treatment through `.registryChart()`, and a single-series mark takes the accent explicitly with `.foregroundStyle(TintShapeStyle())` because Swift Charts draws one series in its own default color otherwise. Keep the annotation content short so it does not overflow the plot. Watch the selection type: it must match the mark's x value type or nothing selects.",
+      "docs": "Bind `.chartXSelection(value:)` to the mark's category type. When a value is selected, add a `RuleMark(x:)` with an `.annotation(position: .top)` that shows the figure on a small registry surface. Swift Charts drives the selection from tap and drag. The registry adds only the themed chart treatment through `.registryChart()`. A single-series mark takes the accent explicitly with `.foregroundStyle(TintShapeStyle())`, because Swift Charts otherwise draws one series in its own default color. Keep the annotation content short, so it does not overflow the plot. Watch the selection type: it must match the mark's x value type, or nothing selects.",
       "tags": [
         "chart-tooltip",
         "chart",
@@ -1063,7 +1063,7 @@
       "name": "checkbox",
       "kind": "component",
       "version": "0.3.2",
-      "description": "Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.",
+      "description": "Styles a native Toggle as a checkbox and preserves its binding, label, enabled state, and accessibility representation.",
       "usage": "@State private var accepted = false\n\nToggle(\"Accept terms\", isOn: $accepted)\n    .toggleStyle(.registryCheckbox)",
       "docs": null,
       "tags": [
@@ -1087,10 +1087,10 @@
         }
       ],
       "accessibility": [
-        "Uses a native Toggle as its accessibility representation.",
-        "Requires the caller's visible Toggle label and preserves the enabled state.",
-        "Provides a 44-point minimum row height and does not communicate selection by color alone.",
-        "Inherits Dynamic Type for the label, the glyph, and the box, which scales with the body text style, and inherits layout direction.",
+        "The checkbox uses a native Toggle as its accessibility representation.",
+        "Provide the visible Toggle label. The checkbox preserves the enabled state.",
+        "The checkbox provides a 44-point minimum row height and does not show selection by color alone.",
+        "The checkbox inherits Dynamic Type for the label, the glyph, and the box, which scales with the body text style. It also inherits layout direction.",
         "On iPad the row keeps SwiftUI's automatic pointer effect through hoverEffect(), because the plain button style it builds on carries none."
       ],
       "sourcePath": "Registry/sources/components/RegistryCheckboxToggleStyle.swift",
@@ -1119,7 +1119,7 @@
       "version": "0.1.0",
       "description": "Native guidance for a single expandable region with the default DisclosureGroup, distinct from the styled accordion.",
       "usage": "@State private var isShowingDetails = false\n\nDisclosureGroup(\"Fee breakdown\", isExpanded: $isShowingDetails) {\n    LabeledContent(\"Transfer fee\", value: \"KWD 1.000\")\n    LabeledContent(\"Exchange margin\", value: \"KWD 0.450\")\n}",
-      "docs": "One expandable region is the default `DisclosureGroup`. Reach for the `accordion` item only when several groups stack as a list; a single collapsible region needs no extra treatment.",
+      "docs": "One expandable region is the default `DisclosureGroup`. Use the `accordion` item only when several groups stack as a list. A single collapsible region needs no extra treatment.",
       "tags": [
         "collapsible",
         "disclosure",
@@ -1158,7 +1158,7 @@
       "name": "combobox",
       "kind": "component",
       "version": "0.1.1",
-      "description": "A searchable single-selection control: a registry search field over caller options with a filtered list that opens below the field, controlled selection through a binding, and a native empty state.",
+      "description": "A searchable single-selection control with a registry search field over caller options, a filtered list below it, binding-driven selection, and a native empty state.",
       "usage": "@State private var timezone: String? = \"riyadh\"\n\nCombobox(\n    selection: $timezone,\n    options: [\n        ComboboxOption(id: \"kuwait\", title: \"Kuwait City\", systemImage: \"clock\"),\n        ComboboxOption(id: \"riyadh\", title: \"Riyadh\", systemImage: \"clock\")\n    ],\n    prompt: \"Search time zones\",\n    emptyDescription: Text(\"Try a city name.\")\n)",
       "docs": null,
       "tags": [
@@ -1220,10 +1220,10 @@
         }
       ],
       "accessibility": [
-        "The field carries the prompt as its explicit accessibility label and uses the search-and-filter query binding; each option is a native Button whose label is its title, addressable by title through Voice Control.",
-        "The selected option carries the isSelected trait and a checkmark; the option symbol is decorative and hidden.",
-        "No matches renders a native ContentUnavailableView on the registry surface with the caller's empty title and description.",
-        "The list opens inline below the field on focus and pushes content rather than overlaying it, so it never covers other controls; a popover is not used because on a compact iPhone width it presents as a full sheet, heavier than a single-select filter needs."
+        "The field carries the prompt as its explicit accessibility label and uses the search-and-filter query binding. Each option is a native Button whose label is its title. Voice Control can address an option by its title.",
+        "The selected option carries the isSelected trait and a checkmark. The option symbol is decorative and hidden.",
+        "When no option matches, the control renders a native ContentUnavailableView on the registry surface with the caller's empty title and description.",
+        "On focus, the list opens inline below the field and pushes content down instead of covering it, so it never hides other controls. The control does not use a popover, because at a compact iPhone width a popover becomes a full sheet, heavier than a single-select filter needs."
       ],
       "sourcePath": "Registry/sources/components/Combobox.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/Combobox.swift",
@@ -1316,9 +1316,9 @@
       ],
       "accessibility": [
         "The search field carries its prompt as an explicit accessibility label and uses the search return key.",
-        "Section titles are headers; each command is a native Button whose label combines title and detail, and Voice Control can address a command by its title alone.",
-        "Shortcut keycaps speak the caller's shortcutLabel or stay hidden; the command symbol is decorative.",
-        "No results renders a native ContentUnavailableView with caller copy; filtering and ranking stay with the caller through the query binding."
+        "Section titles are headers. Each command is a native Button whose label combines title and detail. Voice Control can address a command by its title alone.",
+        "Shortcut keycaps speak the caller's shortcutLabel or stay hidden. The command symbol is decorative.",
+        "When no command matches, the view renders a native ContentUnavailableView with caller copy. Filtering and ranking stay with the caller through the query binding."
       ],
       "sourcePath": "Registry/sources/components/CommandPalette.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/CommandPalette.swift",
@@ -1409,9 +1409,9 @@
         }
       ],
       "accessibility": [
-        "The search field is labeled with its prompt; commands are native Buttons with combined labels; the screen title and section titles are headers.",
-        "No results is a native ContentUnavailableView with caller copy, never a blank surface.",
-        "Each legend line combines its action and spoken shortcut into one element; keycaps are hidden unless labeled.",
+        "The search field is labeled with its prompt. Commands are native Buttons with combined labels. The screen title and section titles are headers.",
+        "No results is a native ContentUnavailableView with caller copy, never blank.",
+        "Each legend line combines its action and spoken shortcut into one element. Keycaps are hidden unless labeled.",
         "Selection, filtering, and the query stay caller-owned, so the screen never triggers an action on its own."
       ],
       "sourcePath": "Registry/sources/blocks/CommandSearch.swift",
@@ -1438,9 +1438,9 @@
       "name": "context-menu",
       "kind": "recipe",
       "version": "0.1.1",
-      "description": "Native guidance for long-press actions with .contextMenu using labeled, role-tagged buttons.",
+      "description": "Native guidance for long-press actions with .contextMenu and labeled, role-tagged buttons.",
       "usage": "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}",
-      "docs": "Attach secondary actions to a row with `.contextMenu` and native `Button`s with symbols and roles. The system renders the Liquid Glass menu, the preview, and haptics; keep the same actions reachable elsewhere because a long press is not discoverable on its own.",
+      "docs": "Attach secondary actions to a row with `.contextMenu` and native `Button`s with symbols and roles. The system renders the Liquid Glass menu, the preview, and the haptics. Keep the same actions reachable elsewhere, because a long press is not discoverable on its own.",
       "tags": [
         "context-menu",
         "long-press",
@@ -1527,12 +1527,12 @@
         }
       ],
       "accessibility": [
-        "The screen title and both section titles (chart and table) carry the header accessibility trait, so VoiceOver users can move between sections by heading.",
-        "The metric tiles combine their title, value, and detail into one VoiceOver element and treat the SF Symbol as decorative (from metric-card), and lay out as a row or a column through ViewThatFits so they follow Dynamic Type and the available width.",
-        "When onSelect is provided each invoice title is a native Button with the plain button style, so selection stays at the call site; the button takes the row title as its accessibility and Voice Control input label, and with no action the table stays a plain non-interactive grid.",
-        "The chart keeps native Swift Charts marks colored and positioned by series, with the series named in the legend below the plot (from chart), so it does not rely on color alone; the caller can add accessibilityLabel and accessibilityValue to the marks for the audio graph.",
-        "The table combines each row into one accessibility element and the header row carries the header trait, while numeric amounts use monospaced digits and hug the trailing edge (from table).",
-        "Uses the semantic spacing tokens and leading alignment throughout, so the layout follows Dynamic Type and right-to-left direction."
+        "The screen title and both section titles, chart and table, carry the header accessibility trait. VoiceOver users can then move between sections by heading.",
+        "The metric tiles combine their title, value, and detail into one VoiceOver element and treat the SF Symbol as decorative (from metric-card). They lay out as a row or a column through ViewThatFits, so they follow Dynamic Type and the available width.",
+        "When you provide onSelect, each invoice title is a native Button with the plain button style, so selection stays at the call site. The button takes the row title as its accessibility label and Voice Control input label. With no action, the table stays a plain, non-interactive grid.",
+        "The chart keeps native Swift Charts marks colored and positioned by series. It names the series in the legend below the plot (from chart), so it does not rely on color alone. The caller can add accessibilityLabel and accessibilityValue to the marks for the audio graph.",
+        "The table combines each row into one accessibility element, and the header row carries the header trait. Numeric amounts use monospaced digits and align to the trailing edge (from table).",
+        "The layout uses the semantic spacing tokens and leading alignment throughout, so it follows Dynamic Type and right-to-left direction."
       ],
       "sourcePath": "Registry/sources/blocks/Dashboard.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/Dashboard.swift",
@@ -1558,9 +1558,9 @@
       "name": "date-picker",
       "kind": "recipe",
       "version": "0.1.0",
-      "description": "Native guidance for a compact DatePicker over a closed range with a presets Menu setting the binding.",
+      "description": "Native guidance for a compact DatePicker over a closed range, with a presets Menu that sets the binding.",
       "usage": "@State private var date = Date.now\n\nDatePicker(\"Statement date\", selection: $date, in: range, displayedComponents: .date)\n    .datePickerStyle(.compact)\n\nMenu(\"Presets\") {\n    Button(\"Today\") { date = .now }\n    Button(\"Tomorrow\") { date = .now.addingTimeInterval(60 * 60 * 24) }\n    Button(\"Next week\") { date = .now.addingTimeInterval(60 * 60 * 24 * 7) }\n}\n.accessibilityLabel(\"Date presets\")",
-      "docs": "Use `DatePicker` in the `.compact` style with a `ClosedRange<Date>` so people cannot pick outside the allowed dates, and offer a `Menu` of common choices that writes the binding directly. The `calendar` recipe covers the graphical style for month-at-a-glance selection. The compact control is a single tap target the system lays out, so the registry adds no wrapper. Watch the range: an empty or reversed range traps the picker at one date.",
+      "docs": "Use `DatePicker` in the `.compact` style with a `ClosedRange<Date>`, so people cannot pick outside the allowed dates. Offer a `Menu` of common choices that writes the binding directly. The `calendar` recipe covers the graphical style for month-at-a-glance selection. The compact control is a single tap target that the system lays out, so the registry adds no wrapper. Watch the range: an empty or reversed range traps the picker at one date.",
       "tags": [
         "date-picker",
         "date",
@@ -1599,9 +1599,9 @@
       "name": "dialog",
       "kind": "recipe",
       "version": "0.1.0",
-      "description": "Native guidance for modal content with .sheet, leaving detents, drag dismissal, and focus to the system.",
+      "description": "Native guidance for modal content with .sheet: the system owns detents, drag dismissal, and focus.",
       "usage": "@State private var isEditing = false\n\nButton(\"Edit profile\") { isEditing = true }\n    .sheet(isPresented: $isEditing) {\n        NavigationStack {\n            ProfileEditor()\n                .navigationTitle(\"Edit profile\")\n                .toolbar {\n                    ToolbarItem(placement: .confirmationAction) {\n                        Button(\"Done\") { isEditing = false }\n                    }\n                }\n        }\n    }",
-      "docs": "Present editing or detail content with the native `.sheet` modifier wrapped in a `NavigationStack` so the title and confirmation action land in system chrome. Liquid Glass, the grabber, swipe-to-dismiss, and keyboard avoidance come from the system; the registry adds no wrapper.",
+      "docs": "Present edit or detail content with the native `.sheet` modifier, wrapped in a `NavigationStack`, so the title and confirmation action land in system chrome. Liquid Glass, the grabber, swipe-to-dismiss, and keyboard avoidance come from the system. The registry adds no wrapper.",
       "tags": [
         "dialog",
         "sheet",
@@ -1643,7 +1643,7 @@
       "version": "0.3.0",
       "description": "Native guidance for layoutDirection behavior and semantic leading/trailing layout without a replacement API.",
       "usage": "@Environment(\\.layoutDirection) private var layoutDirection\n\nHStack {\n    Image(systemName: \"person.crop.circle\")\n        .accessibilityHidden(true)\n    Text(\"Account\")\n    Spacer()\n    Image(systemName: \"chevron.forward\")\n        .accessibilityHidden(true)\n}",
-      "docs": "Read `EnvironmentValues.layoutDirection` and use leading/trailing alignment instead of left/right geometry. No registry replacement is needed because SwiftUI propagates direction through the environment.\n\nUse direction-aware symbols such as `chevron.forward` so icons mirror automatically. Preview both directions with `.environment(\\.layoutDirection, .rightToLeft)`.",
+      "docs": "Read `EnvironmentValues.layoutDirection` and use leading/trailing alignment, not left/right geometry. The registry adds no replacement, because SwiftUI propagates direction through the environment.\n\nUse direction-aware symbols such as `chevron.forward`, so icons mirror automatically. Preview both directions with `.environment(\\.layoutDirection, .rightToLeft)`.",
       "tags": [
         "direction",
         "layout-direction",
@@ -1680,9 +1680,9 @@
       "name": "drawer",
       "kind": "recipe",
       "version": "0.1.0",
-      "description": "Native guidance for a bottom drawer using .sheet with presentation detents and a visible drag indicator.",
+      "description": "Native guidance for a bottom drawer with .sheet, presentation detents, and a visible drag indicator.",
       "usage": "@State private var isShowingFilters = false\n\nButton(\"Filters\") { isShowingFilters = true }\n    .sheet(isPresented: $isShowingFilters) {\n        FilterOptions()\n            .presentationDetents([.medium, .large])\n            .presentationDragIndicator(.visible)\n    }",
-      "docs": "A drawer is a native sheet with `.presentationDetents` and a visible drag indicator. The system handles the resize gesture, the dimming, and dismissal; do not recreate a bottom panel with an offset overlay.",
+      "docs": "A drawer is a native sheet with `.presentationDetents` and a visible drag indicator. The system handles the resize gesture, the dimming, and the dismissal. Do not recreate a bottom panel with an offset overlay.",
       "tags": [
         "drawer",
         "bottom-sheet",
@@ -1725,7 +1725,7 @@
       "version": "0.1.0",
       "description": "Native guidance for a Menu trigger with labeled actions, sections, and a picker inside the menu.",
       "usage": "@State private var sort = \"recent\"\n\nMenu(\"Sort\", systemImage: \"arrow.up.arrow.down\") {\n    Picker(\"Sort by\", selection: $sort) {\n        Text(\"Most recent\").tag(\"recent\")\n        Text(\"Amount\").tag(\"amount\")\n    }\n    Divider()\n    Button(\"Export\", systemImage: \"square.and.arrow.up\") { }\n}\n.buttonStyle(.registryOutline)",
-      "docs": "Use a native `Menu` for dropdown actions; a `Picker` inside it becomes a checkmarked selection group and a `Divider` starts a section. The trigger takes any registry button style; the menu itself stays system-owned.",
+      "docs": "Use a native `Menu` for dropdown actions. A `Picker` inside it becomes a checkmarked selection group, and a `Divider` starts a section. The trigger takes any registry button style. The menu itself stays system-owned.",
       "tags": [
         "dropdown",
         "menu",
@@ -1765,7 +1765,7 @@
       "name": "empty",
       "kind": "component",
       "version": "0.1.1",
-      "description": "Places a native ContentUnavailableView on the registry content surface so an empty section sits where its rows would.",
+      "description": "Places a native ContentUnavailableView on the registry content surface, so an empty section sits where its rows would appear.",
       "usage": "ContentUnavailableView(\n    \"No recent activity\",\n    systemImage: \"clock.arrow.circlepath\",\n    description: Text(\"New transactions will appear here.\")\n)\n.registryEmptyState()",
       "docs": null,
       "tags": [
@@ -1791,9 +1791,9 @@
         }
       ],
       "accessibility": [
-        "Keeps the native ContentUnavailableView, so its title, description, symbol, and actions retain system accessibility semantics.",
-        "Adds only the full-width surface, padding, and border; the empty state is not an interactive control.",
-        "Inherits Dynamic Type, color scheme, and layout direction from the native view."
+        "The view keeps the native ContentUnavailableView, so its title, description, symbol, and actions keep system accessibility semantics.",
+        "The view adds only the full-width surface, padding, and border. The empty state is not an interactive control.",
+        "The view inherits Dynamic Type, color scheme, and layout direction from the native view."
       ],
       "sourcePath": "Registry/sources/components/RegistryEmptyStateModifier.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryEmptyStateModifier.swift",
@@ -1853,10 +1853,10 @@
         }
       ],
       "accessibility": [
-        "The content builder receives the invalid state; the caller applies it to a control that has one, such as RegistryInputStyle(isInvalid:), so the field never fakes an invalid treatment on a control without one.",
-        "A separate label view is not associated with the control automatically, so give the control an explicit accessibilityLabel matching the visible label.",
-        "When present the error, otherwise the description, becomes the content's accessibility hint, so a focused control re-reads the most urgent message; a new error is also posted as an announcement.",
-        "Uses system text styles and the semantic spacing tokens; the label, description, and error all wrap rather than truncate."
+        "The content builder receives the invalid state. Apply it to a control that has one, such as RegistryInputStyle(isInvalid:). The field never fakes an invalid treatment on a control without one.",
+        "A separate label view does not associate with the control automatically. Give the control an explicit accessibilityLabel that matches the visible label.",
+        "The error, or the description when there is no error, becomes the content's accessibility hint, so a focused control re-reads the most urgent message. A new error also posts as an announcement.",
+        "The field uses system text styles and the semantic spacing tokens. The label, description, and error wrap rather than truncate."
       ],
       "sourcePath": "Registry/sources/components/Field.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/Field.swift",
@@ -1923,9 +1923,9 @@
         }
       ],
       "accessibility": [
-        "Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state; the screen and section titles carry the header trait, and Voice Control can address a row by its title alone.",
-        "Uses system text styles and ViewThatFits for Dynamic Type.",
-        "Uses leading and trailing alignment so layout follows right-to-left direction."
+        "Selectable transactions use native Button semantics, and an empty activity state uses ContentUnavailableView. The screen and section titles carry the header trait. Voice Control can address a row by its title alone.",
+        "The overview uses system text styles and ViewThatFits for Dynamic Type.",
+        "The overview uses leading and trailing alignment, so the layout follows right-to-left direction."
       ],
       "sourcePath": "Registry/sources/blocks/FinanceOverview.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/FinanceOverview.swift",
@@ -1977,12 +1977,12 @@
         }
       ],
       "accessibility": [
-        "Give every field an explicit accessibilityLabel matching its visible title. Measured on iOS 27: neither the title initializer nor the label-plus-prompt initializer exposes a label (the title is the placeholder value only), so a field with typed content is otherwise unnamed to VoiceOver; the Showcase demo audit rejects an unlabeled field.",
-        "Preserves native TextField and SecureField editing, keyboard, and autofill behavior.",
-        "Focus draws the accent ring at the emphasized width; the invalid state draws the negative border at the same width and wins over focus, so the caller pairs it with a message.",
-        "Requires callers to provide visible validation copy and an accessibility hint for invalid input.",
-        "Inherits Dynamic Type, layout direction, and enabled state.",
-        "Keeps the 44 point minimum height, so an empty field is a full tap target at every text size."
+        "Give every field an explicit accessibilityLabel that matches its visible title. Measured on iOS 27: neither the title initializer nor the label-plus-prompt initializer exposes a label, because the title is the placeholder value only. A field with typed content is otherwise unnamed to VoiceOver, and the Showcase demo audit rejects an unlabeled field.",
+        "The style preserves native TextField and SecureField editing, keyboard, and autofill behavior.",
+        "Focus draws the accent ring at the emphasized width. The invalid state draws the negative border at the same width and wins over focus. Pair it with a message.",
+        "Provide visible validation copy and an accessibility hint for invalid input.",
+        "The style inherits Dynamic Type, layout direction, and enabled state.",
+        "The style keeps the 44 point minimum height, so an empty field is a full tap target at every text size."
       ],
       "sourcePath": "Registry/sources/components/RegistryInputStyle.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryInputStyle.swift",
@@ -2043,10 +2043,10 @@
         }
       ],
       "accessibility": [
-        "The field stays a native TextField or SecureField; give it an explicit accessibilityLabel because the title is placeholder text only.",
-        "Hide a decorative leading accessory with accessibilityHidden(true); an informational prefix stays visible and the field's accessibilityLabel carries its meaning. A trailing registry button keeps its own label and 44 point hit area.",
-        "Focus draws the accent ring; the invalid state draws the negative border at the same emphasized width and wins over focus, so the caller pairs it with a message.",
-        "Keeps the 44 point minimum height and applies the shared disabled opacity."
+        "The field stays a native TextField or SecureField. Give it an explicit accessibilityLabel, because the title is placeholder text only.",
+        "Hide a decorative leading accessory with accessibilityHidden(true). An informational prefix stays visible, and the field's accessibilityLabel carries its meaning. A trailing registry button keeps its own label and 44 point hit area.",
+        "Focus draws the accent ring. The invalid state draws the negative border at the same emphasized width and wins over focus. Pair it with a message.",
+        "The field keeps the 44 point minimum height and applies the shared disabled opacity."
       ],
       "sourcePath": "Registry/sources/components/InputGroup.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/InputGroup.swift",
@@ -2074,7 +2074,7 @@
       "version": "0.1.0",
       "description": "Native guidance for a one-time-code TextField that autofills from Messages and Mail instead of a boxed control.",
       "usage": "@State private var code = \"\"\n\nTextField(\"One-time code\", text: $code)\n    .textContentType(.oneTimeCode)\n    .keyboardType(.numberPad)\n    .textFieldStyle(.registryInput)\n    .font(.title2.monospacedDigit())\n    .accessibilityLabel(\"Verification code\")\n    .onChange(of: code) { _, newValue in\n        code = String(newValue.filter(\\.isNumber).prefix(6))\n    }\n\nButton(\"Verify\") { }\n    .buttonStyle(.registry)\n    .disabled(code.count < 6)",
-      "docs": "A single `TextField` with `.textContentType(.oneTimeCode)` lets the system offer the code from Messages and Mail above the keyboard, and `.keyboardType(.numberPad)` keeps entry numeric. A six-box field would imitate a control Apple already supplies and would lose that autofill. The `onChange` handler keeps at most six digits so paste and autofill stay clean. Watch the content type: without `.oneTimeCode` the system will not surface the code.",
+      "docs": "A single `TextField` with `.textContentType(.oneTimeCode)` lets the system offer the code from Messages and Mail above the keyboard, and `.keyboardType(.numberPad)` keeps entry numeric. A six-box field imitates a control Apple already supplies and loses that autofill. The `onChange` handler keeps at most six digits, so paste and autofill stay clean. Watch the content type: without `.oneTimeCode` the system does not offer the code.",
       "tags": [
         "input-otp",
         "otp",
@@ -2113,7 +2113,7 @@
       "name": "item",
       "kind": "component",
       "version": "0.2.1",
-      "description": "Composes a generic content row with leading media, a title and optional description, and a trailing accessory while leaving selection to the call site.",
+      "description": "Composes a generic content row with leading media, a title and optional description, and a trailing accessory, and leaves selection to the call site.",
       "usage": "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
       "docs": null,
       "tags": [
@@ -2156,11 +2156,11 @@
         }
       ],
       "accessibility": [
-        "Combines the title and description into one accessibility element; media and accessory remain separate so an interactive accessory stays activatable.",
+        "The row combines the title and description into one accessibility element. The media and accessory stay separate, so an interactive accessory stays activatable.",
         "Selection belongs to a native Button or NavigationLink at the call site, which combines the row into its own label.",
-        "Keeps the 44 point minimum row height and a rectangular content shape.",
-        "Uses system text styles and the semantic spacing tokens; the description wraps rather than truncates.",
-        "To make a row a switch, put the row in the Toggle's label so its words are part of the control and are spoken once; a control placed in the accessory with labelsHidden must restore its label with accessibilityLabel."
+        "The row keeps the 44 point minimum row height and a rectangular content shape.",
+        "The row uses system text styles and the semantic spacing tokens. The description wraps rather than truncates.",
+        "To make a row a switch, put the row in the Toggle's label, so its words are part of the control and are spoken once. A control placed in the accessory with labelsHidden must restore its label with accessibilityLabel."
       ],
       "sourcePath": "Registry/sources/components/ItemRow.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/ItemRow.swift",
@@ -2186,7 +2186,7 @@
       "name": "kbd",
       "kind": "component",
       "version": "0.1.2",
-      "description": "Draws text as a keycap for keyboard shortcut hints, hidden from accessibility unless a spoken label is supplied.",
+      "description": "Styles a native Text as a keycap for keyboard shortcut hints, hidden from accessibility unless you supply a spoken label.",
       "usage": "Text(verbatim: \"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(verbatim: \"esc\")\n    .registryKeycap()",
       "docs": null,
       "tags": [
@@ -2212,9 +2212,9 @@
         }
       ],
       "accessibility": [
-        "Hidden from accessibility by default because symbols such as the command glyph read poorly; pass accessibilityLabel to speak the shortcut.",
-        "One line at its intrinsic size; a keycap never wraps.",
-        "Uses the compact radius, surface, border, and spacing tokens so it matches badges."
+        "The keycap hides from accessibility by default because symbols such as the command glyph read poorly. To speak the shortcut, pass accessibilityLabel.",
+        "The keycap stays on one line at its intrinsic size and never wraps.",
+        "It uses the compact radius, surface, border, and spacing tokens to match badges."
       ],
       "sourcePath": "Registry/sources/components/RegistryKeycapModifier.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryKeycapModifier.swift",
@@ -2240,7 +2240,7 @@
       "name": "label",
       "kind": "component",
       "version": "0.2.1",
-      "description": "Controls native Label icon placement with semantic spacing and decorative icon accessibility behavior.",
+      "description": "Controls native Label icon placement with semantic spacing and treats the icon as decorative for accessibility.",
       "usage": "Label(\"Account settings\", systemImage: \"person.crop.circle\")\n    .labelStyle(.registry)\n\nLabel(\"Continue\", systemImage: \"chevron.forward\")\n    .labelStyle(.registryTrailingIcon)",
       "docs": null,
       "tags": [
@@ -2293,7 +2293,7 @@
       "name": "macro-progress",
       "kind": "component",
       "version": "0.4.1",
-      "description": "Displays prepared nutrition progress with a native progress view and adaptive value layout.",
+      "description": "Displays prepared nutrition progress with a native ProgressView and an adaptive value layout.",
       "usage": "MacroProgress(\n    \"Protein\",\n    value: Text(\"96 g\"),\n    target: Text(\"130 g\"),\n    progress: 96.0 / 130.0,\n    systemImage: \"fish.fill\"\n)\n.registryTint(.indigo)",
       "docs": null,
       "tags": [
@@ -2315,8 +2315,8 @@
       ],
       "accessibility": [
         "Uses native ProgressView semantics.",
-        "Uses ViewThatFits to move prepared values below the label when horizontal space is constrained.",
-        "Combines the label and one localized progress phrase without relying on tint to communicate meaning."
+        "When horizontal space is limited, ViewThatFits moves the prepared values below the label.",
+        "It combines the label with one localized progress phrase and does not use tint alone for meaning."
       ],
       "sourcePath": "Registry/sources/components/MacroProgress.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/MacroProgress.swift",
@@ -2342,7 +2342,7 @@
       "name": "marker",
       "kind": "component",
       "version": "0.1.1",
-      "description": "Treats a Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.",
+      "description": "Styles a native Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.",
       "usage": "Text(\"Today\")\n    .registryMarker(.separator)\n\nText(\"Maya joined the conversation\")\n    .registryMarker()\n\nText(\"Delivered 09:41\")\n    .registryMarker(.status)",
       "docs": null,
       "tags": [
@@ -2377,7 +2377,7 @@
       "accessibility": [
         "The status variant hides its leading clock symbol from VoiceOver, so only the caller's words are spoken.",
         "The separator variant draws its two rules as decoration, so assistive technology reads only the label between them.",
-        "Every variant keeps its text on one line and scales it down before it wraps, so a marker never breaks across lines.",
+        "Every variant keeps its text on one line and scales it down before it wraps. A marker never breaks across lines.",
         "Uses system text styles, so a marker grows with Dynamic Type and follows the caller's layout direction."
       ],
       "sourcePath": "Registry/sources/components/RegistryMarkerModifier.swift",
@@ -2406,7 +2406,7 @@
       "version": "0.1.0",
       "description": "Native guidance for scene-level commands with CommandMenu, which iPadOS and macOS place in the menu bar.",
       "usage": "WindowGroup {\n    RootView()\n}\n.commands {\n    CommandMenu(\"Account\") {\n        Button(\"Sign Out\") { }\n            .keyboardShortcut(\"q\", modifiers: [.command, .shift])\n    }\n}",
-      "docs": "Declare a `commands` block on the `WindowGroup` scene and add a `CommandMenu` with keyboard shortcuts; iPadOS and macOS place it in the system menu bar. A desktop menu bar is never drawn on iPhone, so the on-screen iPhone form of the same actions is a toolbar `Menu`. Commands are a `Scene` modifier and cannot be declared inside a view. Watch the placement: put the `commands` block on the scene, not a view, or it will not compile.",
+      "docs": "Declare a `commands` block on the `WindowGroup` scene, and add a `CommandMenu` with keyboard shortcuts. iPadOS and macOS place it in the system menu bar. iPhone never draws a desktop menu bar, so the on-screen iPhone form of the same actions is a toolbar `Menu`. Commands are a `Scene` modifier and cannot be declared inside a view. Watch the placement: put the `commands` block on the scene, not a view, or it does not compile.",
       "tags": [
         "menubar",
         "commands",
@@ -2482,11 +2482,11 @@
         }
       ],
       "accessibility": [
-        "Combines the header (author and timestamp) with the message bubble into one accessibility element for plain text content; the status line stays a separate element.",
-        "When the content holds controls, wrap the combined element with .contain instead of .combine at the call site so buttons and links remain separate, activatable elements.",
-        "Places the avatar leading for an incoming turn and omits it for an outgoing turn, so the side conveys direction without relying on color.",
-        "Caps the bubble column at 320 points so a long turn wraps instead of filling the row, and the whole row follows the caller's layout direction.",
-        "The avatar carries its own required accessibility label from the caller; the row never derives one from visible content."
+        "It combines the header (author and timestamp) with the message bubble into one accessibility element for plain text content. The status line stays a separate element.",
+        "When the content holds controls, wrap the combined element with .contain instead of .combine at the call site. Buttons and links then stay separate, activatable elements.",
+        "It places the avatar leading for an incoming turn and omits it for an outgoing turn, so the side conveys direction without color.",
+        "It caps the bubble column at 320 points, so a long turn wraps instead of filling the row. The whole row follows the caller's layout direction.",
+        "The avatar carries its own required accessibility label from the caller. The row never derives one from visible content."
       ],
       "sourcePath": "Registry/sources/components/MessageRow.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/MessageRow.swift",
@@ -2512,7 +2512,7 @@
       "name": "message-scroller",
       "kind": "component",
       "version": "0.1.1",
-      "description": "A chat scroll container that starts at the newest turn, follows streamed replies while the reader is at the bottom, holds a scrolled-up reader in place, and requests history at the top.",
+      "description": "This native chat ScrollView opens at the newest turn, follows streamed replies at the bottom, holds a scrolled-up reader, and requests history at the top.",
       "usage": "MessageScroller(position: $position, isFollowing: $isFollowing) {\n    ForEach(messages) { message in\n        MessageRow {\n            Text(message.text)\n        }\n        .registryVariant(message.isMine ? .outgoing : .incoming)\n        .id(message.id)\n    }\n}",
       "docs": null,
       "tags": [
@@ -2554,11 +2554,11 @@
         }
       ],
       "accessibility": [
-        "Keeps a native vertical ScrollView, so VoiceOver's scroll and the three-finger scroll gesture work unchanged; the container hides no content.",
-        "Starts pinned to the newest turn through the bottom default anchor, so the most recent message is the first the reader lands on.",
-        "Keeps the newest turn visible while the reader is within 8 points of the bottom, and leaves a reader who scrolled up in place when new turns stream in.",
-        "Requests history through onReachTop once per content height when the reader nears within 40 points of the top, re-arming after a prepend grows the content.",
-        "Reading order follows the caller's row order; give each row a stable .id so scrollPosition can move the reader to a specific message."
+        "It keeps a native vertical ScrollView, so VoiceOver scroll and the three-finger scroll gesture work unchanged. The container hides no content.",
+        "It starts pinned to the newest turn through the bottom default anchor, so the reader lands on the most recent message first.",
+        "It keeps the newest turn visible while the reader is within 8 points of the bottom. When new turns stream in, it leaves a scrolled-up reader in place.",
+        "When the reader nears within 40 points of the top, it requests history through onReachTop once per content height. A prepend that grows the content re-arms it.",
+        "Reading order follows the caller's row order. To let scrollPosition move the reader to a specific message, give each row a stable .id."
       ],
       "sourcePath": "Registry/sources/components/MessageScroller.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/MessageScroller.swift",
@@ -2584,7 +2584,7 @@
       "name": "metric-card",
       "kind": "component",
       "version": "0.2.2",
-      "description": "Displays one prepared product metric using native text formatting and semantic styling.",
+      "description": "Displays one prepared product metric with native text formatting and semantic styling.",
       "usage": "MetricCard(\n    \"Available balance\",\n    value: Text(12_480.32, format: .currency(code: \"USD\")),\n    detail: Text(\"Up 8.2% this month\"),\n    systemImage: \"creditcard.fill\"\n)",
       "docs": null,
       "tags": [
@@ -2607,7 +2607,7 @@
       "accessibility": [
         "Uses system text styles for Dynamic Type.",
         "Combines title, value, and detail into one VoiceOver element.",
-        "Treats the SF Symbol as decorative; its circle scales with the body text style."
+        "It treats the SF Symbol as decorative. Its circle scales with the body text style."
       ],
       "sourcePath": "Registry/sources/components/MetricCard.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/MetricCard.swift",
@@ -2635,7 +2635,7 @@
       "version": "0.3.0",
       "description": "Native guidance for the minimal menu treatment of a bound SwiftUI Picker.",
       "usage": "@State private var sort = \"recent\"\n\nPicker(\"Sort\", selection: $sort) {\n    Text(\"Most recent\").tag(\"recent\")\n    Text(\"Oldest\").tag(\"oldest\")\n    Text(\"Amount\").tag(\"amount\")\n}\n.pickerStyle(.menu)",
-      "docs": "Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no wrapper because the one-line native style is the entire treatment.",
+      "docs": "Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no wrapper, because the one-line native style is the entire treatment.",
       "tags": [
         "native-select",
         "picker",
@@ -2713,9 +2713,9 @@
         }
       ],
       "accessibility": [
-        "Uses native Button and ProgressView semantics; the screen and section titles carry the header trait.",
-        "Uses system text styles and adaptive macro rows for Dynamic Type.",
-        "Accepts prepared values so callers retain localization and measurement-format control."
+        "The overview uses native Button and ProgressView semantics. The screen and section titles carry the header trait.",
+        "The overview uses system text styles and adaptive macro rows for Dynamic Type.",
+        "The overview accepts prepared values, so callers keep localization and measurement-format control."
       ],
       "sourcePath": "Registry/sources/blocks/NutritionOverview.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/NutritionOverview.swift",
@@ -2743,7 +2743,7 @@
       "version": "0.1.0",
       "description": "Native guidance for anchored, transient content with .popover, which adapts to a sheet on compact widths.",
       "usage": "@State private var isShowingHelp = false\n\nButton(\"Why is this needed?\") { isShowingHelp = true }\n    .buttonStyle(.registryLink)\n    .popover(isPresented: $isShowingHelp) {\n        Text(\"We use your date of birth to verify your identity.\")\n            .padding()\n            .presentationCompactAdaptation(.popover)\n    }",
-      "docs": "Anchor short explanatory content with `.popover`. On iPhone it adapts to a sheet unless `.presentationCompactAdaptation(.popover)` opts into the popover form. The system positions the arrow, dims nothing, and dismisses on outside tap; the registry adds no wrapper.",
+      "docs": "Anchor short explanatory content with `.popover`. On iPhone it adapts to a sheet, unless `.presentationCompactAdaptation(.popover)` opts into the popover form. The system positions the arrow, dims nothing, and dismisses on an outside tap. The registry adds no wrapper.",
       "tags": [
         "popover",
         "hover-card",
@@ -2782,7 +2782,7 @@
       "name": "preview",
       "kind": "block",
       "version": "0.3.1",
-      "description": "The finished theme preview wall from shadcn's create page: 33 realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a screen of real UI.",
+      "description": "A theme preview wall of 33 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.",
       "usage": "PreviewWall()",
       "docs": null,
       "tags": [
@@ -2922,11 +2922,11 @@
         }
       ],
       "accessibility": [
-        "All 33 cards render in one ordered wall: an adaptive grid on a regular width and a plain, non-lazy VStack on a compact width, so every card exists in the hierarchy even off screen and the capture-route accessibility audit reaches all of them.",
-        "Every interactive control carries an accessibility label and every decorative SF Symbol is hidden, so the capture-route audit finds no unlabeled button, image, switch, text field, or slider on any card.",
-        "Avatars read the person or account name as their label, and charts, usage gauges, and shortcut keycaps carry spoken labels rather than raw glyphs.",
-        "Actions that open a dialog use a native alert or sheet, so the decision keeps the system's modal semantics and focus handling.",
-        "Each card is a native GroupBox on the shared card surface and composes native controls, so Dynamic Type, color scheme, and layout direction are respected without per-card handling."
+        "All 33 cards render in one ordered wall: an adaptive grid at a regular width and a plain, non-lazy VStack at a compact width. Every card exists in the hierarchy even off screen, so the capture-route accessibility audit reaches all of them.",
+        "Every interactive control carries an accessibility label, and every decorative SF Symbol is hidden. The capture-route audit then finds no unlabeled button, image, switch, text field, or slider on any card.",
+        "Avatars read the person or account name as their label. Charts, usage gauges, and shortcut keycaps carry spoken labels, not raw glyphs.",
+        "Actions that open a dialog use a native alert or sheet. The decision keeps the system's modal semantics and focus handling.",
+        "Each card is a native GroupBox on the shared card surface and composes native controls. It respects Dynamic Type, color scheme, and layout direction without per-card handling."
       ],
       "sourcePath": "Registry/sources/blocks/Preview/PreviewWall.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/Preview/PreviewWall.swift",
@@ -2952,7 +2952,7 @@
       "name": "preview-02",
       "kind": "block",
       "version": "0.3.1",
-      "description": "The finished second theme preview wall from shadcn's create page: 35 realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a second screen of real UI.",
+      "description": "A second theme preview wall of 35 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.",
       "usage": "PreviewWall02()",
       "docs": null,
       "tags": [
@@ -3095,10 +3095,10 @@
         }
       ],
       "accessibility": [
-        "All 35 cards render in one ordered wall: an adaptive grid on a regular width and a plain, non-lazy VStack on a compact width, so every card exists in the hierarchy even off screen and the capture-route accessibility audit reaches all of them.",
-        "Every interactive control carries an accessibility label and every decorative SF Symbol is hidden, so the capture-route audit finds no unlabeled button, image, switch, text field, slider, menu, or picker on any card.",
-        "The data table, sidebar list, combobox, charts, and graphical date picker keep their native selection, scrolling, and semantics, and each carries a spoken label rather than a raw glyph.",
-        "Each card is a native GroupBox on the shared card surface and composes native controls, so Dynamic Type, color scheme, and layout direction are respected without per-card handling."
+        "All 35 cards render in one ordered wall: an adaptive grid at a regular width and a plain, non-lazy VStack at a compact width. Every card exists in the hierarchy even off screen, so the capture-route accessibility audit reaches all of them.",
+        "Every interactive control carries an accessibility label, and every decorative SF Symbol is hidden. The capture-route audit then finds no unlabeled button, image, switch, text field, slider, menu, or picker on any card.",
+        "The data table, sidebar list, combobox, charts, and graphical date picker keep their native selection, scrolling, and semantics. Each carries a spoken label, not a raw glyph.",
+        "Each card is a native GroupBox on the shared card surface and composes native controls. It respects Dynamic Type, color scheme, and layout direction without per-card handling."
       ],
       "sourcePath": "Registry/sources/blocks/Preview02/PreviewWall02.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/Preview02/PreviewWall02.swift",
@@ -3239,11 +3239,11 @@
         }
       ],
       "accessibility": [
-        "The card title carries the header accessibility trait so VoiceOver can reach the questionnaire heading directly.",
-        "The step counter reads as 'Step N of M' in monospaced digits, and the ProgressView carries an explicit 'Progress' accessibility label with the completed fraction as its value.",
-        "Each step is a Field whose visible label is the step title: single choice is a native inline Picker whose options stay reachable as native picker rows, multiple choice is a column of checkbox Toggles each labeled by its option title, and freeform is a TextEditor whose accessibility label is the step's prompt.",
-        "Advancing or stepping back posts an AccessibilityNotification.Announcement of the new step's title so VoiceOver states where the caller landed.",
-        "The Back, Skip, and Next or Finish buttons each carry an explicit accessibility label; Next stays disabled until the step has an answer unless the step is skippable, and the button row reflows from a row to a column through ViewThatFits so labels never truncate under Dynamic Type."
+        "The card title carries the header accessibility trait, so VoiceOver reaches the questionnaire heading directly.",
+        "The step counter reads as 'Step N of M' in monospaced digits. The ProgressView carries an explicit 'Progress' accessibility label with the completed fraction as its value.",
+        "Each step is a Field whose visible label is the step title. Single choice is a native inline Picker whose options stay reachable as native picker rows. Multiple choice is a column of checkbox Toggles, each labeled by its option title. Freeform is a TextEditor whose accessibility label is the step's prompt.",
+        "A step forward or back posts an AccessibilityNotification.Announcement of the new step's title, so VoiceOver states where the caller landed.",
+        "The Back, Skip, and Next or Finish buttons each carry an explicit accessibility label. Next stays disabled until the step has an answer, unless the step is skippable. The button row reflows from a row to a column through ViewThatFits, so labels never truncate under Dynamic Type."
       ],
       "sourcePath": "Registry/sources/blocks/Questionnaire.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/Questionnaire.swift",
@@ -3269,9 +3269,9 @@
       "name": "radio-group",
       "kind": "recipe",
       "version": "0.3.0",
-      "description": "Native guidance for presenting a bound Picker as an inline mutually exclusive option group.",
+      "description": "Native guidance for a bound Picker as an inline, mutually exclusive option group.",
       "usage": "@State private var selection = \"standard\"\n\nPicker(\"Delivery speed\", selection: $selection) {\n    Text(\"Standard\").tag(\"standard\")\n    Text(\"Express\").tag(\"express\")\n    Text(\"Same day\").tag(\"same-day\")\n}\n.pickerStyle(.inline)",
-      "docs": "Apply `.pickerStyle(.inline)` directly to a native `Picker` for a mutually exclusive option group. The registry adds no wrapper because the one-line native style is the entire treatment.",
+      "docs": "Apply `.pickerStyle(.inline)` directly to a native `Picker` for a mutually exclusive option group. The registry adds no wrapper, because the one-line native style is the entire treatment.",
       "tags": [
         "radio-group",
         "picker",
@@ -3311,7 +3311,7 @@
       "version": "0.2.0",
       "description": "Native guidance for scrollable content with content margins, indicator visibility, and clipping left to ScrollView.",
       "usage": "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()\n.scrollEdgeEffectStyle(.soft, for: .top)",
-      "docs": "Compose blocks inside a native `ScrollView` and tune edges with `.contentMargins`, `.scrollIndicators`, and `.scrollClipDisabled`. Scrolling, bounce, and keyboard avoidance are system behavior; registry blocks deliberately never own a scroll view. The scroll edge effect set with `.scrollEdgeEffectStyle` is the system's transition between content and the Liquid Glass control layer, in place of a background (HIG Layout).",
+      "docs": "Compose blocks inside a native `ScrollView`, and tune the edges with `.contentMargins`, `.scrollIndicators`, and `.scrollClipDisabled`. Scrolling, bounce, and keyboard avoidance are system behavior. Registry blocks deliberately never own a scroll view. The scroll edge effect that you set with `.scrollEdgeEffectStyle` is the system transition between content and the Liquid Glass control layer, in place of a background (HIG Layout).",
       "tags": [
         "scroll",
         "scroll-view",
@@ -3458,7 +3458,7 @@
       "name": "settings-section",
       "kind": "block",
       "version": "0.1.2",
-      "description": "Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.",
+      "description": "Composes registry select, separator, and button treatments into a titled settings section with structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.",
       "usage": "SettingsSection(\n    \"Notifications\",\n    footer: Text(\"Quiet hours apply to every channel.\")\n) {\n    Toggle(\"Transaction alerts\", isOn: $alertsEnabled)\n        .settingsRowDescription(Text(\"A push notification for every card transaction.\"))\n\n    Toggle(\"Marketing messages\", isOn: $marketingEnabled)\n        .settingsRowDisabled(\n            !marketingAllowed,\n            explanation: Text(\"Managed by your organization's privacy policy.\")\n        )\n\n    LabeledContent(\"Currency\") {\n        Picker(\"Currency\", selection: $currency) {\n            Text(\"Kuwaiti dinar\").tag(\"KWD\")\n            Text(\"US dollar\").tag(\"USD\")\n        }\n        .registrySelect()\n    }\n\n    Button(\"Sign out\", role: .destructive) { }\n        .buttonStyle(.registry)\n}",
       "docs": null,
       "tags": [
@@ -3499,12 +3499,12 @@
         }
       ],
       "accessibility": [
-        "The section title renders with the header accessibility trait so the VoiceOver rotor can jump between settings sections.",
-        "Rows keep native control semantics: the block never hides or renames a control, and every control's accessibility name comes from its visible label. Callers who hide a label (.labelsHidden()) must supply their own accessibility label.",
-        "settingsRowDisabled composes native .disabled, so a disabled control dims through its own style treatment and is announced as dimmed by VoiceOver, while the description and explanation render outside the disabled subtree at full secondary contrast.",
-        "A disabled row's explanation is visible static text in reading order directly under the control, not an accessibility hint, so nothing double-announces. An enabled row with an explanation is unrepresentable: the modifier clears the explanation when isDisabled is false.",
-        "Reading order per row is control, then description, then explanation, then the section footer, following caller declaration order for VoiceOver and Full Keyboard Access.",
-        "Text uses system styles (.headline, .footnote) with a 44-point minimum row control height and no fixed heights, so Dynamic Type and right-to-left layouts reflow. Rotor grouping of row chrome (.accessibilityElement(children: .contain)) is deliberately not applied, so each control stays its own element."
+        "The section title uses the header accessibility trait, so the VoiceOver rotor can jump between settings sections.",
+        "Rows keep native control semantics. The block never hides or renames a control, and every control's accessibility name comes from its visible label. A caller that hides a label with .labelsHidden() must supply its own accessibility label.",
+        "settingsRowDisabled composes native .disabled. A disabled control dims through its own style treatment, and VoiceOver announces it as dimmed. The description and explanation render outside the disabled subtree at full secondary contrast.",
+        "A disabled row's explanation is visible static text in reading order, directly under the control, not an accessibility hint, so nothing double-announces. An enabled row with an explanation is unrepresentable: the modifier clears the explanation when isDisabled is false.",
+        "Reading order per row is control, then description, then explanation, then the section footer. This order follows caller declaration order for VoiceOver and Full Keyboard Access.",
+        "Text uses system styles (.headline, .footnote) with a 44-point minimum row control height and no fixed heights, so Dynamic Type and right-to-left layouts reflow. The block deliberately does not apply rotor grouping of row chrome (.accessibilityElement(children: .contain)), so each control stays its own element."
       ],
       "sourcePath": "Registry/sources/blocks/SettingsSection.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/blocks/SettingsSection.swift",
@@ -3532,7 +3532,7 @@
       "version": "0.1.0",
       "description": "Native guidance for a side sheet with inspector on iPad that adapts to a sheet on iPhone.",
       "usage": "@State private var isShowingDetails = false\n\nNavigationStack {\n    List {\n        LabeledContent(\"Merchant\", value: \"Mishmash Bakery\")\n        LabeledContent(\"Amount\", value: \"KWD 8.750\")\n    }\n    .navigationTitle(\"Transaction\")\n    .toolbar {\n        ToolbarItem(placement: .topBarTrailing) {\n            Button(\"Details\", systemImage: \"sidebar.trailing\") {\n                isShowingDetails.toggle()\n            }\n            .accessibilityLabel(\"Toggle details\")\n        }\n    }\n    .inspector(isPresented: $isShowingDetails) {\n        List {\n            LabeledContent(\"Category\", value: \"Dining\")\n            LabeledContent(\"Card\", value: \"Visa 4321\")\n            LabeledContent(\"Status\", value: \"Cleared\")\n        }\n        .inspectorColumnWidth(min: 240, ideal: 280, max: 360)\n    }\n}",
-      "docs": "`.inspector(isPresented:)` shows a trailing column on iPadOS and a sheet on iPhone, sized with `.inspectorColumnWidth(min:ideal:max:)`. The `dialog` and `drawer` recipes cover the plain sheet; this recipe adds the inspector form. The registry measured on iOS 27 that an inspector attached to a tab's navigation stack stopped text-field focus from advancing, so attach it above a stack or keep to `.sheet` when a tab holds text fields. Watch that caveat before placing an inspector inside a tabbed flow.",
+      "docs": "`.inspector(isPresented:)` shows a trailing column on iPadOS and a sheet on iPhone, sized with `.inspectorColumnWidth(min:ideal:max:)`. The `dialog` and `drawer` recipes cover the plain sheet; this recipe adds the inspector form. Measured on iOS 27: an inspector attached to a tab's navigation stack stopped text-field focus from advancing. Attach it above a stack, or keep to `.sheet` when a tab holds text fields. Watch that caveat before you place an inspector inside a tabbed flow.",
       "tags": [
         "sheet",
         "inspector",
@@ -3573,7 +3573,7 @@
       "version": "0.3.0",
       "description": "Native guidance for a sidebar layout with NavigationSplitView and a selection-bound List on iPad.",
       "usage": "@State private var selection: String? = \"activity\"\n@State private var tab = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    // A visually rich detail extends under the sidebar instead of stopping at its edge\n    ActivityBanner()\n        .backgroundExtensionEffect()\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}\n\n// The HIG's first choice on iPad: a tab bar people can switch to a sidebar\nTabView(selection: $tab) {\n    Tab(\"Activity\", systemImage: \"bell\", value: \"activity\") { ActivityScreen() }\n    Tab(\"Cards\", systemImage: \"creditcard\", value: \"cards\") { CardsScreen() }\n}\n.tabViewStyle(.sidebarAdaptable)",
-      "docs": "Use `NavigationSplitView` with a selection-bound `List` for the sidebar; the system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack. On iPadOS people can drag the divider within the `navigationSplitViewColumnWidth` bounds, and iPhone ignores them. Consider a tab bar first: a `TabView` in the `.sidebarAdaptable` style opens as a tab bar or a sidebar, lets people switch between them, and adapts to the window width, which the HIG names as the first choice for iPad navigation; keep `NavigationSplitView` for a sidebar-only layout. Visually rich detail content, such as a header image or gradient, extends beneath the sidebar with `backgroundExtensionEffect()` (26.0) instead of stopping at the column edge, which is the HIG's guidance for sidebars over content.",
+      "docs": "Use `NavigationSplitView` with a selection-bound `List` for the sidebar. The system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack. On iPadOS people can drag the divider within the `navigationSplitViewColumnWidth` bounds; iPhone ignores them. Consider a tab bar first: a `TabView` in the `.sidebarAdaptable` style opens as a tab bar or a sidebar, lets people switch between them, and adapts to the window width. The HIG names that as the first choice for iPad navigation. Keep `NavigationSplitView` for a sidebar-only layout. Visually rich detail content, such as a header image or gradient, extends beneath the sidebar with `backgroundExtensionEffect()` (26.0) instead of stopping at the column edge. That is the HIG's guidance for sidebars over content.",
       "tags": [
         "sidebar",
         "navigation",
@@ -3664,13 +3664,13 @@
         }
       ],
       "accessibility": [
-        "Each of the four fields carries an explicit accessibilityLabel equal to its visible title. Measured on iOS 27: the label-plus-prompt initializer alone exposes the title as placeholder text only, so a field with typed content would be unnamed without it.",
-        "Focus order runs name to email to password to confirmation: each field submits with a Next return key that advances focus, and the confirmation field's Go return key submits the form.",
-        "Invalid fields are never color-alone: the input border width increases, a visible footnote message renders under the field, and the message is attached as the field's accessibility hint; the terms error renders under the checkbox the same way.",
-        "Autofill content types are fixed: the name field is .name, the email field is .username on an email keyboard, and both password fields are .newPassword so the system offers and reuses a strong password. Autofill is verifiable only manually with a saved credential.",
-        "Field, terms, and form error messages post an AccessibilityNotification.Announcement when they appear or change; an unchanged message is not re-announced. VoiceOver announcement timing has not been verified on device.",
-        "The terms toggle uses the checkbox style, which exposes a native Toggle as its accessibility representation and keeps a 44 point minimum row height and does not signal selection by color alone.",
-        "While isSubmitting is true every control is disabled through the environment, the composed styles apply the shared disabled opacity, and the submit button keeps its title as its accessibility label while showing a progress spinner.",
+        "Each of the four fields carries an explicit accessibilityLabel equal to its visible title. Measured on iOS 27, the label-plus-prompt initializer alone exposes the title as placeholder text only. Without the explicit label, a field with typed content is unnamed.",
+        "Focus order runs name, email, password, confirmation. Each field uses a Next return key that advances focus, and the confirmation field's Go return key submits the form.",
+        "Invalid fields never use color alone. The input border width increases, a visible footnote message renders under the field, and the message attaches as the field's accessibility hint. The terms error renders under the checkbox the same way.",
+        "Autofill content types are fixed. The name field is .name, and the email field is .username on an email keyboard. Both password fields are .newPassword, so the system offers and reuses a strong password. You can verify autofill only manually, with a saved credential.",
+        "Field, terms, and form error messages post an AccessibilityNotification.Announcement when they appear or change. An unchanged message is not re-announced. VoiceOver announcement timing is not verified on device.",
+        "The terms toggle uses the checkbox style. That style exposes a native Toggle as its accessibility representation, keeps a 44 point minimum row height, and does not signal selection by color alone.",
+        "When isSubmitting is true, the environment disables every control, and the composed styles apply the shared disabled opacity. The submit button shows a progress spinner and keeps its title as its accessibility label.",
         "The card title carries the header accessibility trait."
       ],
       "sourcePath": "Registry/sources/blocks/SignUpForm.swift",
@@ -3724,10 +3724,10 @@
         }
       ],
       "accessibility": [
-        "Placeholder content is disabled and excluded from hit testing, so a placeholder can never trigger a product action.",
-        "The whole placeholder is one accessibility element with a caller-adjustable loading label instead of exposing meaningless redacted text.",
-        "The opacity pulse is replaced by a static dimmed state when Reduce Motion is on.",
-        "Uses native .redacted(reason: .placeholder) and applies every treatment in both states, so the wrapped content keeps its identity, state, and layout when loading starts or ends."
+        "The placeholder disables its content and excludes it from hit testing, so a placeholder can never trigger a product action.",
+        "The whole placeholder is one accessibility element with a caller-adjustable loading label, and does not expose meaningless redacted text.",
+        "When Reduce Motion is on, a static dimmed state replaces the opacity pulse.",
+        "It uses native .redacted(reason: .placeholder) and applies every treatment in both states. The wrapped content keeps its identity, state, and layout when loading starts or ends."
       ],
       "sourcePath": "Registry/sources/components/RegistrySkeletonModifier.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistrySkeletonModifier.swift",
@@ -3755,7 +3755,7 @@
       "version": "0.3.0",
       "description": "Native guidance for a Slider with semantic tint, control sizing, and caller-owned value and labels.",
       "usage": "@State private var volume = 64.0\n\nSlider(value: $volume, in: 0...100, step: 1) {\n    Text(\"Volume\")\n} minimumValueLabel: {\n    Image(systemName: \"speaker.fill\")\n        .accessibilityHidden(true)\n} maximumValueLabel: {\n    Image(systemName: \"speaker.wave.3.fill\")\n        .accessibilityHidden(true)\n}\n.controlSize(.large)",
-      "docs": "Use the native `Slider` and apply `.tint(_:)` and `.controlSize(_:)` directly where the design needs them. The registry adds no wrapper because those modifiers only forward environment values the native control already respects.",
+      "docs": "Use the native `Slider` and apply `.tint(_:)` and `.controlSize(_:)` directly where the design needs them. The registry adds no wrapper, because those modifiers only forward environment values that the native control already respects.",
       "tags": [
         "slider",
         "value",
@@ -3848,9 +3848,9 @@
       "name": "switch",
       "kind": "recipe",
       "version": "0.3.0",
-      "description": "Native guidance for applying the platform switch treatment to a Toggle while inheriting app tint and environment behavior.",
+      "description": "Native guidance for the platform switch treatment on a Toggle, which inherits app tint and environment behavior.",
       "usage": "@State private var notifications = true\n\nToggle(\"Notifications\", isOn: $notifications)\n    .toggleStyle(.switch)",
-      "docs": "Apply `.toggleStyle(.switch)` directly to a native `Toggle`. The registry adds no wrapper because the one-line native style is the entire treatment.",
+      "docs": "Apply `.toggleStyle(.switch)` directly to a native `Toggle`. The registry adds no wrapper, because the one-line native style is the entire treatment.",
       "tags": [
         "switch",
         "toggle",
@@ -3924,10 +3924,10 @@
         }
       ],
       "accessibility": [
-        "Each header and body row is combined into one accessibility element so VoiceOver reads its cells in order; the header row also carries the header trait.",
-        "Trailing columns are the numeric convention: their cells use monospaced digits and hug the trailing edge, so figures line up down the column.",
-        "Built on a native Grid rather than SwiftUI Table, which collapses to a single column on iPhone; the leading column takes the remaining width so the table fills its container.",
-        "Uses system text styles and the semantic spacing tokens, and the theme border for hairline separators; cell content wraps rather than truncates."
+        "It combines each header and body row into one accessibility element, so VoiceOver reads the cells in order. The header row also carries the header trait.",
+        "Trailing columns hold numbers by convention. Their cells use monospaced digits and hug the trailing edge, so figures line up down the column.",
+        "The table uses a native Grid, not SwiftUI Table, which collapses to a single column on iPhone. The leading column takes the remaining width, so the table fills its container.",
+        "It uses system text styles, the semantic spacing tokens, and the theme border for hairline separators. Cell content wraps rather than truncates."
       ],
       "sourcePath": "Registry/sources/components/DataTable.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/DataTable.swift",
@@ -3953,9 +3953,9 @@
       "name": "tabs",
       "kind": "recipe",
       "version": "0.3.0",
-      "description": "Native guidance for a local-selection Picker with the platform segmented style while leaving app navigation to TabView.",
+      "description": "Native guidance for a local-selection Picker with the platform segmented style; app navigation stays with TabView.",
       "usage": "@State private var selection = \"overview\"\n\nPicker(\"Section\", selection: $selection) {\n    Text(\"Overview\").tag(\"overview\")\n    Text(\"Activity\").tag(\"activity\")\n    Text(\"Settings\").tag(\"settings\")\n}\n.pickerStyle(.segmented)",
-      "docs": "Apply `.pickerStyle(.segmented)` directly to a native `Picker` for local tab selection. Keep `TabView` for app-level navigation; the registry adds no wrapper because the one-line native style is the entire treatment.",
+      "docs": "Apply `.pickerStyle(.segmented)` directly to a native `Picker` for local tab selection. Keep `TabView` for app-level navigation. The registry adds no wrapper, because the one-line native style is the entire treatment.",
       "tags": [
         "tabs",
         "picker",
@@ -4084,10 +4084,10 @@
       ],
       "accessibility": [
         "Each variant pairs its own symbol with its color, so informational, positive, and destructive meaning never rests on color alone.",
-        "When a toast appears it posts a VoiceOver announcement built from the title and message, so the update is spoken without moving focus away from the current task.",
+        "When a toast appears, it posts a VoiceOver announcement built from the title and message. VoiceOver speaks the update and keeps focus on the current task.",
         "The title and message combine into one accessibility element, while the optional action button and the close control stay separate, activatable elements.",
-        "The close control carries a Dismiss label and the leading symbol is hidden from VoiceOver, so the tone reaches assistive technology through the title and message text.",
-        "Under Reduce Motion the enter and exit collapse to a fade with no slide, and the title scales down before it wraps while the message wraps to at most two lines."
+        "The close control carries a Dismiss label. The leading symbol is hidden from VoiceOver, so the tone reaches assistive technology through the title and message text.",
+        "Under Reduce Motion, the enter and exit collapse to a fade with no slide. The title scales down before it wraps, and the message wraps to at most two lines."
       ],
       "sourcePath": "Registry/sources/components/RegistryToastModifier.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistryToastModifier.swift",
@@ -4279,7 +4279,7 @@
       "name": "transaction-row",
       "kind": "component",
       "version": "0.5.1",
-      "description": "Displays prepared transaction content while leaving selection to a native Button at the call site.",
+      "description": "Displays prepared transaction content and leaves selection to a native Button at the call site.",
       "usage": "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)",
       "docs": null,
       "tags": [
@@ -4302,7 +4302,7 @@
       "accessibility": [
         "Uses ViewThatFits to preserve content at large Dynamic Type sizes.",
         "Combines row text into one VoiceOver element.",
-        "Announces positive and negative tone as a VoiceOver value; visible meaning relies on caller-formatted amounts, with tone color as a redundant accent.",
+        "It announces positive and negative tone as a VoiceOver value. Visible meaning relies on caller-formatted amounts, and tone color is a redundant accent.",
         "The tone symbol's circle scales with the body text style."
       ],
       "sourcePath": "Registry/sources/components/TransactionRow.swift",
@@ -4331,7 +4331,7 @@
       "version": "0.1.0",
       "description": "Native guidance for Apple's eleven text styles as the type scale with weight, design, and monospaced digits.",
       "usage": "VStack(alignment: .leading, spacing: 8) {\n    Text(\"Balance\")\n        .font(.title2.weight(.semibold))\n    Text(amount, format: .currency(code: \"KWD\"))\n        .font(.largeTitle)\n        .monospacedDigit()\n    Text(\"Updated today\")\n        .font(.footnote)\n        .foregroundStyle(.secondary)\n}\n.fontDesign(.rounded)",
-      "docs": "Apple's eleven text styles from `.largeTitle` to `.caption2` are the type scale, and they scale with Dynamic Type. Regular through Bold is the legible weight range, and one `.fontDesign` change at the root sets the whole typographic voice. Use `.monospacedDigit()` where figures must align, such as currency. Watch weights below Regular: they thin out and fail legibility at small sizes.",
+      "docs": "Apple's eleven text styles from `.largeTitle` to `.caption2` are the type scale, and they scale with Dynamic Type. Regular through Bold is the legible weight range. One `.fontDesign` change at the root sets the whole typographic voice. Use `.monospacedDigit()` where figures must align, such as currency. Watch weights below Regular: they thin out and fail legibility at small sizes.",
       "tags": [
         "typography",
         "text-styles",

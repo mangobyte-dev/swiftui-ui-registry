@@ -57,7 +57,7 @@ CommandPalette(
 - Installs in order: [button](button.md) 0.5.2, [input-group](input-group.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [kbd](kbd.md) 0.1.2, [empty](empty.md) 0.1.1, [command](command.md) 0.2.1
 - Accessibility contract:
   - The search field carries its prompt as an explicit accessibility label and uses the search return key.
-  - Section titles are headers; each command is a native Button whose label combines title and detail, and Voice Control can address a command by its title alone.
-  - Shortcut keycaps speak the caller's shortcutLabel or stay hidden; the command symbol is decorative.
-  - No results renders a native ContentUnavailableView with caller copy; filtering and ranking stay with the caller through the query binding.
+  - Section titles are headers. Each command is a native Button whose label combines title and detail. Voice Control can address a command by its title alone.
+  - Shortcut keycaps speak the caller's shortcutLabel or stay hidden. The command symbol is decorative.
+  - When no command matches, the view renders a native ContentUnavailableView with caller copy. Filtering and ranking stay with the caller through the query binding.
 - Source: [sources/components/CommandPalette.swift](../../Registry/sources/components/CommandPalette.swift), with the `Command Palette` Xcode preview

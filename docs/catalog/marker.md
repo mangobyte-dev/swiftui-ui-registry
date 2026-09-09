@@ -2,7 +2,7 @@
 
 # marker
 
-Treats a Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.
+Styles a native Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.
 
 ![marker preview](../images/items/marker-light.png)
 
@@ -54,6 +54,6 @@ Text("Delivered 09:41")
 - Accessibility contract:
   - The status variant hides its leading clock symbol from VoiceOver, so only the caller's words are spoken.
   - The separator variant draws its two rules as decoration, so assistive technology reads only the label between them.
-  - Every variant keeps its text on one line and scales it down before it wraps, so a marker never breaks across lines.
+  - Every variant keeps its text on one line and scales it down before it wraps. A marker never breaks across lines.
   - Uses system text styles, so a marker grows with Dynamic Type and follows the caller's layout direction.
 - Source: [sources/components/RegistryMarkerModifier.swift](../../Registry/sources/components/RegistryMarkerModifier.swift), with the `Marker` Xcode preview

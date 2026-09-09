@@ -42,7 +42,7 @@ NavigationStack {
 
 ## Why native is enough
 
-`.inspector(isPresented:)` shows a trailing column on iPadOS and a sheet on iPhone, sized with `.inspectorColumnWidth(min:ideal:max:)`. The `dialog` and `drawer` recipes cover the plain sheet; this recipe adds the inspector form. The registry measured on iOS 27 that an inspector attached to a tab's navigation stack stopped text-field focus from advancing, so attach it above a stack or keep to `.sheet` when a tab holds text fields. Watch that caveat before placing an inspector inside a tabbed flow.
+`.inspector(isPresented:)` shows a trailing column on iPadOS and a sheet on iPhone, sized with `.inspectorColumnWidth(min:ideal:max:)`. The `dialog` and `drawer` recipes cover the plain sheet; this recipe adds the inspector form. Measured on iOS 27: an inspector attached to a tab's navigation stack stopped text-field focus from advancing. Attach it above a stack, or keep to `.sheet` when a tab holds text fields. Watch that caveat before you place an inspector inside a tabbed flow.
 
 ## Details
 

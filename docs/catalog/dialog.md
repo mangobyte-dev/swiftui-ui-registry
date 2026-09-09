@@ -2,7 +2,7 @@
 
 # dialog
 
-Native guidance for modal content with .sheet, leaving detents, drag dismissal, and focus to the system.
+Native guidance for modal content with .sheet: the system owns detents, drag dismissal, and focus.
 
 ![dialog preview](../images/items/dialog-light.png)
 
@@ -31,7 +31,7 @@ Button("Edit profile") { isEditing = true }
 
 ## Why native is enough
 
-Present editing or detail content with the native `.sheet` modifier wrapped in a `NavigationStack` so the title and confirmation action land in system chrome. Liquid Glass, the grabber, swipe-to-dismiss, and keyboard avoidance come from the system; the registry adds no wrapper.
+Present edit or detail content with the native `.sheet` modifier, wrapped in a `NavigationStack`, so the title and confirmation action land in system chrome. Liquid Glass, the grabber, swipe-to-dismiss, and keyboard avoidance come from the system. The registry adds no wrapper.
 
 ## Details
 

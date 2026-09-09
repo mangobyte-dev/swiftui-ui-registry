@@ -28,7 +28,7 @@ Menu("Sort", systemImage: "arrow.up.arrow.down") {
 
 ## Why native is enough
 
-Use a native `Menu` for dropdown actions; a `Picker` inside it becomes a checkmarked selection group and a `Divider` starts a section. The trigger takes any registry button style; the menu itself stays system-owned.
+Use a native `Menu` for dropdown actions. A `Picker` inside it becomes a checkmarked selection group, and a `Divider` starts a section. The trigger takes any registry button style. The menu itself stays system-owned.
 
 ## Details
 

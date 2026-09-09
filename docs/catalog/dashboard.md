@@ -70,10 +70,10 @@ Dashboard(
 - Platforms: iOS 26.0+
 - Installs in order: [metric-card](metric-card.md) 0.2.2, [chart](chart.md) 0.1.3, [separator](separator.md) 0.2.1, [table](table.md) 0.1.1, [dashboard](dashboard.md) 0.1.1
 - Accessibility contract:
-  - The screen title and both section titles (chart and table) carry the header accessibility trait, so VoiceOver users can move between sections by heading.
-  - The metric tiles combine their title, value, and detail into one VoiceOver element and treat the SF Symbol as decorative (from metric-card), and lay out as a row or a column through ViewThatFits so they follow Dynamic Type and the available width.
-  - When onSelect is provided each invoice title is a native Button with the plain button style, so selection stays at the call site; the button takes the row title as its accessibility and Voice Control input label, and with no action the table stays a plain non-interactive grid.
-  - The chart keeps native Swift Charts marks colored and positioned by series, with the series named in the legend below the plot (from chart), so it does not rely on color alone; the caller can add accessibilityLabel and accessibilityValue to the marks for the audio graph.
-  - The table combines each row into one accessibility element and the header row carries the header trait, while numeric amounts use monospaced digits and hug the trailing edge (from table).
-  - Uses the semantic spacing tokens and leading alignment throughout, so the layout follows Dynamic Type and right-to-left direction.
+  - The screen title and both section titles, chart and table, carry the header accessibility trait. VoiceOver users can then move between sections by heading.
+  - The metric tiles combine their title, value, and detail into one VoiceOver element and treat the SF Symbol as decorative (from metric-card). They lay out as a row or a column through ViewThatFits, so they follow Dynamic Type and the available width.
+  - When you provide onSelect, each invoice title is a native Button with the plain button style, so selection stays at the call site. The button takes the row title as its accessibility label and Voice Control input label. With no action, the table stays a plain, non-interactive grid.
+  - The chart keeps native Swift Charts marks colored and positioned by series. It names the series in the legend below the plot (from chart), so it does not rely on color alone. The caller can add accessibilityLabel and accessibilityValue to the marks for the audio graph.
+  - The table combines each row into one accessibility element, and the header row carries the header trait. Numeric amounts use monospaced digits and align to the trailing edge (from table).
+  - The layout uses the semantic spacing tokens and leading alignment throughout, so it follows Dynamic Type and right-to-left direction.
 - Source: [sources/blocks/Dashboard.swift](../../Registry/sources/blocks/Dashboard.swift), with the `Dashboard` Xcode preview

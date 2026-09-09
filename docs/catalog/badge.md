@@ -49,9 +49,9 @@ Label("Completed", systemImage: "checkmark.circle.fill")
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Keeps its text on one line at its intrinsic width; a badge never wraps or breaks its label.
-  - Preserves the accessibility semantics and reading order of the modified Text or Label.
-  - Uses a system text style, so the single line still grows with Dynamic Type.
-  - Inherits layout direction so Label content follows the caller's locale.
-  - Positive and destructive share one fill treatment and differ by hue; pair them with a Label symbol when meaning must not rest on color alone.
+  - The badge keeps its text on one line at its intrinsic width. It never wraps or breaks its label.
+  - The badge preserves the accessibility semantics and reading order of the modified Text or Label.
+  - The badge uses a system text style, so the single line grows with Dynamic Type.
+  - The badge inherits layout direction, so Label content follows the caller's locale.
+  - Positive and destructive share one fill treatment and differ by hue. When meaning must not rest on color alone, pair them with a Label symbol.
 - Source: [sources/components/RegistryBadge.swift](../../Registry/sources/components/RegistryBadge.swift), with the `Badge Variants` Xcode preview

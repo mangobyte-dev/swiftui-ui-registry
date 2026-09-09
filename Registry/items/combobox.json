@@ -4,7 +4,7 @@
   "version": "0.1.1",
   "name": "combobox",
   "kind": "component",
-  "description": "A searchable single-selection control: a registry search field over caller options with a filtered list that opens below the field, controlled selection through a binding, and a native empty state.",
+  "description": "A searchable single-selection control with a registry search field over caller options, a filtered list below it, binding-driven selection, and a native empty state.",
   "usage": "@State private var timezone: String? = \"riyadh\"\n\nCombobox(\n    selection: $timezone,\n    options: [\n        ComboboxOption(id: \"kuwait\", title: \"Kuwait City\", systemImage: \"clock\"),\n        ComboboxOption(id: \"riyadh\", title: \"Riyadh\", systemImage: \"clock\")\n    ],\n    prompt: \"Search time zones\",\n    emptyDescription: Text(\"Try a city name.\")\n)",
   "files": [
     {
@@ -52,10 +52,10 @@
     "dropdown"
   ],
   "accessibility": [
-    "The field carries the prompt as its explicit accessibility label and uses the search-and-filter query binding; each option is a native Button whose label is its title, addressable by title through Voice Control.",
-    "The selected option carries the isSelected trait and a checkmark; the option symbol is decorative and hidden.",
-    "No matches renders a native ContentUnavailableView on the registry surface with the caller's empty title and description.",
-    "The list opens inline below the field on focus and pushes content rather than overlaying it, so it never covers other controls; a popover is not used because on a compact iPhone width it presents as a full sheet, heavier than a single-select filter needs."
+    "The field carries the prompt as its explicit accessibility label and uses the search-and-filter query binding. Each option is a native Button whose label is its title. Voice Control can address an option by its title.",
+    "The selected option carries the isSelected trait and a checkmark. The option symbol is decorative and hidden.",
+    "When no option matches, the control renders a native ContentUnavailableView on the registry surface with the caller's empty title and description.",
+    "On focus, the list opens inline below the field and pushes content down instead of covering it, so it never hides other controls. The control does not use a popover, because at a compact iPhone width a popover becomes a full sheet, heavier than a single-select filter needs."
   ],
   "preview": {
     "source": "sources/components/Combobox.swift",

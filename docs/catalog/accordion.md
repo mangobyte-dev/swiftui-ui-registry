@@ -2,7 +2,7 @@
 
 # accordion
 
-Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.
+Styles a native DisclosureGroup as a full-width header row with a trailing chevron and revealed content that keeps the caller's styling, for stacked expandable sections.
 
 ![accordion preview](../images/items/accordion-light.png)
 
@@ -50,9 +50,9 @@ DisclosureGroup("How do I freeze my card?", isExpanded: $isExpanded) {
 - Platforms: iOS 26.0+
 - Installs in order: [separator](separator.md) 0.2.1, [accordion](accordion.md) 0.2.2
 - Accessibility contract:
-  - Preserves the native DisclosureGroup binding; the header is a plain Button that toggles isExpanded.
-  - Reports Expanded or Collapsed as the header's accessibility value; no selection trait is added, so VoiceOver speaks one state word.
-  - The chevron is decorative and hidden; the header keeps the 44 point minimum height.
-  - Tapping the header animates expansion with the snappy curve and switches to an immediate change under Reduce Motion; a caller that changes isExpanded programmatically chooses its own animation.
-  - On iPad the header keeps a pointer effect: the plain button style drops the automatic one, so the header asks for it back with hoverEffect and the system picks the shape.
+  - The header is a plain Button that toggles isExpanded and keeps the native DisclosureGroup binding.
+  - The header reports Expanded or Collapsed as its accessibility value. It adds no selection trait, so VoiceOver speaks one state word.
+  - The chevron is decorative and hidden. The header keeps the 44 point minimum height.
+  - A tap on the header animates expansion with the snappy curve. Under Reduce Motion, the change is immediate. A caller that changes isExpanded in code chooses its own animation.
+  - On iPad the header keeps a pointer effect. The plain button style drops the automatic one. The header restores it with hoverEffect, and the system picks the shape.
 - Source: [sources/components/RegistryAccordionStyle.swift](../../Registry/sources/components/RegistryAccordionStyle.swift), with the `Accordion` Xcode preview

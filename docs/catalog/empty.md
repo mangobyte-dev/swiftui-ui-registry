@@ -2,7 +2,7 @@
 
 # empty
 
-Places a native ContentUnavailableView on the registry content surface so an empty section sits where its rows would.
+Places a native ContentUnavailableView on the registry content surface, so an empty section sits where its rows would appear.
 
 ![empty preview](../images/items/empty-light.png)
 
@@ -50,7 +50,7 @@ ContentUnavailableView(
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Keeps the native ContentUnavailableView, so its title, description, symbol, and actions retain system accessibility semantics.
-  - Adds only the full-width surface, padding, and border; the empty state is not an interactive control.
-  - Inherits Dynamic Type, color scheme, and layout direction from the native view.
+  - The view keeps the native ContentUnavailableView, so its title, description, symbol, and actions keep system accessibility semantics.
+  - The view adds only the full-width surface, padding, and border. The empty state is not an interactive control.
+  - The view inherits Dynamic Type, color scheme, and layout direction from the native view.
 - Source: [sources/components/RegistryEmptyStateModifier.swift](../../Registry/sources/components/RegistryEmptyStateModifier.swift), with the `Empty State` Xcode preview

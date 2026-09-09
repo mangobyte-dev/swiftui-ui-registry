@@ -2,7 +2,7 @@
 
 # drawer
 
-Native guidance for a bottom drawer using .sheet with presentation detents and a visible drag indicator.
+Native guidance for a bottom drawer with .sheet, presentation detents, and a visible drag indicator.
 
 ![drawer preview](../images/items/drawer-light.png)
 
@@ -25,7 +25,7 @@ Button("Filters") { isShowingFilters = true }
 
 ## Why native is enough
 
-A drawer is a native sheet with `.presentationDetents` and a visible drag indicator. The system handles the resize gesture, the dimming, and dismissal; do not recreate a bottom panel with an offset overlay.
+A drawer is a native sheet with `.presentationDetents` and a visible drag indicator. The system handles the resize gesture, the dimming, and the dismissal. Do not recreate a bottom panel with an offset overlay.
 
 ## Details
 

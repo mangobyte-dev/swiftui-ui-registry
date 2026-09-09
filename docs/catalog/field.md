@@ -58,8 +58,8 @@ FieldGroup {
 - Platforms: iOS 26.0+
 - Installs in order: [input](input.md) 0.5.1, [field](field.md) 0.1.1
 - Accessibility contract:
-  - The content builder receives the invalid state; the caller applies it to a control that has one, such as RegistryInputStyle(isInvalid:), so the field never fakes an invalid treatment on a control without one.
-  - A separate label view is not associated with the control automatically, so give the control an explicit accessibilityLabel matching the visible label.
-  - When present the error, otherwise the description, becomes the content's accessibility hint, so a focused control re-reads the most urgent message; a new error is also posted as an announcement.
-  - Uses system text styles and the semantic spacing tokens; the label, description, and error all wrap rather than truncate.
+  - The content builder receives the invalid state. Apply it to a control that has one, such as RegistryInputStyle(isInvalid:). The field never fakes an invalid treatment on a control without one.
+  - A separate label view does not associate with the control automatically. Give the control an explicit accessibilityLabel that matches the visible label.
+  - The error, or the description when there is no error, becomes the content's accessibility hint, so a focused control re-reads the most urgent message. A new error also posts as an announcement.
+  - The field uses system text styles and the semantic spacing tokens. The label, description, and error wrap rather than truncate.
 - Source: [sources/components/Field.swift](../../Registry/sources/components/Field.swift), with the `Field` Xcode preview

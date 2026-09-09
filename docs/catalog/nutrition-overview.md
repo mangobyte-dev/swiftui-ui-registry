@@ -64,7 +64,7 @@ NutritionOverview(
 - Platforms: iOS 26.0+
 - Installs in order: [metric-card](metric-card.md) 0.2.2, [macro-progress](macro-progress.md) 0.4.1, [nutrition-overview](nutrition-overview.md) 0.2.3
 - Accessibility contract:
-  - Uses native Button and ProgressView semantics; the screen and section titles carry the header trait.
-  - Uses system text styles and adaptive macro rows for Dynamic Type.
-  - Accepts prepared values so callers retain localization and measurement-format control.
+  - The overview uses native Button and ProgressView semantics. The screen and section titles carry the header trait.
+  - The overview uses system text styles and adaptive macro rows for Dynamic Type.
+  - The overview accepts prepared values, so callers keep localization and measurement-format control.
 - Source: [sources/blocks/NutritionOverview.swift](../../Registry/sources/blocks/NutritionOverview.swift), with the `Nutrition Overview` Xcode preview

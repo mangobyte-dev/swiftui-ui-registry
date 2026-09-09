@@ -4,7 +4,7 @@
   "version": "0.1.1",
   "name": "marker",
   "kind": "component",
-  "description": "Treats a Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.",
+  "description": "Styles a native Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.",
   "usage": "Text(\"Today\")\n    .registryMarker(.separator)\n\nText(\"Maya joined the conversation\")\n    .registryMarker()\n\nText(\"Delivered 09:41\")\n    .registryMarker(.status)",
   "files": [
     {
@@ -49,7 +49,7 @@
   "accessibility": [
     "The status variant hides its leading clock symbol from VoiceOver, so only the caller's words are spoken.",
     "The separator variant draws its two rules as decoration, so assistive technology reads only the label between them.",
-    "Every variant keeps its text on one line and scales it down before it wraps, so a marker never breaks across lines.",
+    "Every variant keeps its text on one line and scales it down before it wraps. A marker never breaks across lines.",
     "Uses system text styles, so a marker grows with Dynamic Type and follows the caller's layout direction."
   ],
   "preview": {

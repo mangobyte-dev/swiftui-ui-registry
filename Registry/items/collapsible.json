@@ -6,7 +6,7 @@
   "kind": "recipe",
   "description": "Native guidance for a single expandable region with the default DisclosureGroup, distinct from the styled accordion.",
   "usage": "@State private var isShowingDetails = false\n\nDisclosureGroup(\"Fee breakdown\", isExpanded: $isShowingDetails) {\n    LabeledContent(\"Transfer fee\", value: \"KWD 1.000\")\n    LabeledContent(\"Exchange margin\", value: \"KWD 0.450\")\n}",
-  "docs": "One expandable region is the default `DisclosureGroup`. Reach for the `accordion` item only when several groups stack as a list; a single collapsible region needs no extra treatment.",
+  "docs": "One expandable region is the default `DisclosureGroup`. Use the `accordion` item only when several groups stack as a list. A single collapsible region needs no extra treatment.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],

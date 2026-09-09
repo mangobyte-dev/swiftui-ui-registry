@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "name": "item",
   "kind": "component",
-  "description": "Composes a generic content row with leading media, a title and optional description, and a trailing accessory while leaving selection to the call site.",
+  "description": "Composes a generic content row with leading media, a title and optional description, and a trailing accessory, and leaves selection to the call site.",
   "usage": "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
   "files": [
     {
@@ -49,11 +49,11 @@
     "cell"
   ],
   "accessibility": [
-    "Combines the title and description into one accessibility element; media and accessory remain separate so an interactive accessory stays activatable.",
+    "The row combines the title and description into one accessibility element. The media and accessory stay separate, so an interactive accessory stays activatable.",
     "Selection belongs to a native Button or NavigationLink at the call site, which combines the row into its own label.",
-    "Keeps the 44 point minimum row height and a rectangular content shape.",
-    "Uses system text styles and the semantic spacing tokens; the description wraps rather than truncates.",
-    "To make a row a switch, put the row in the Toggle's label so its words are part of the control and are spoken once; a control placed in the accessory with labelsHidden must restore its label with accessibilityLabel."
+    "The row keeps the 44 point minimum row height and a rectangular content shape.",
+    "The row uses system text styles and the semantic spacing tokens. The description wraps rather than truncates.",
+    "To make a row a switch, put the row in the Toggle's label, so its words are part of the control and are spoken once. A control placed in the accessory with labelsHidden must restore its label with accessibilityLabel."
   ],
   "preview": {
     "source": "sources/components/ItemRow.swift",

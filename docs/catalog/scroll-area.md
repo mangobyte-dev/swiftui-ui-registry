@@ -33,7 +33,7 @@ ScrollView {
 
 ## Why native is enough
 
-Compose blocks inside a native `ScrollView` and tune edges with `.contentMargins`, `.scrollIndicators`, and `.scrollClipDisabled`. Scrolling, bounce, and keyboard avoidance are system behavior; registry blocks deliberately never own a scroll view. The scroll edge effect set with `.scrollEdgeEffectStyle` is the system's transition between content and the Liquid Glass control layer, in place of a background (HIG Layout).
+Compose blocks inside a native `ScrollView`, and tune the edges with `.contentMargins`, `.scrollIndicators`, and `.scrollClipDisabled`. Scrolling, bounce, and keyboard avoidance are system behavior. Registry blocks deliberately never own a scroll view. The scroll edge effect that you set with `.scrollEdgeEffectStyle` is the system transition between content and the Liquid Glass control layer, in place of a background (HIG Layout).
 
 ## Details
 

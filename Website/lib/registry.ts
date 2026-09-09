@@ -44,9 +44,9 @@ export type Registry = {
 export const registry = data as Registry
 
 export const KINDS: { kind: ItemKind; title: string; summary: string }[] = [
-  { kind: "component", title: "Components", summary: "One installable style, modifier, or view each." },
-  { kind: "block", title: "Blocks", summary: "Compositions of components. Installing one installs its whole closure." },
-  { kind: "recipe", title: "Recipes", summary: "Native guidance. Nothing installs; copy the snippet." },
+  { kind: "component", title: "Components", summary: "Each is one installable style, modifier, or view." },
+  { kind: "block", title: "Blocks", summary: "Compositions of components. When you install one, you install its whole closure." },
+  { kind: "recipe", title: "Recipes", summary: "Native guidance. Nothing installs. Copy the snippet." },
 ]
 
 export function itemsOfKind(kind: ItemKind): RegistryItem[] {

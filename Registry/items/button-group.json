@@ -4,7 +4,7 @@
   "version": "0.3.2",
   "name": "button-group",
   "kind": "component",
-  "description": "Lays out every native button in a ControlGroup side by side with one registry button variant, keeping the caller's Button controls, roles, and labels.",
+  "description": "Lays out every native button in a ControlGroup side by side with one registry button variant, and keeps the caller's Button controls, roles, and labels.",
   "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
   "files": [
     {
@@ -44,10 +44,10 @@
     "segmented-buttons"
   ],
   "accessibility": [
-    "Retains the caller's native Button controls and exposes the row as one accessibility container.",
-    "Keeps each button's visible or derived accessibility label and role.",
-    "Inherits layout direction, control size, enabled state, and Dynamic Type behavior.",
-    "Requires callers to provide labels for icon-only buttons through native Button initializers."
+    "The group keeps the caller's native Button controls and exposes the row as one accessibility container.",
+    "The group keeps each button's visible or derived accessibility label and role.",
+    "The group inherits layout direction, control size, enabled state, and Dynamic Type behavior.",
+    "Provide labels for icon-only buttons through native Button initializers."
   ],
   "preview": {
     "source": "sources/components/RegistryButtonGroupStyle.swift",

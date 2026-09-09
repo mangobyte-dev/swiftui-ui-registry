@@ -45,10 +45,10 @@
     "shimmer"
   ],
   "accessibility": [
-    "Placeholder content is disabled and excluded from hit testing, so a placeholder can never trigger a product action.",
-    "The whole placeholder is one accessibility element with a caller-adjustable loading label instead of exposing meaningless redacted text.",
-    "The opacity pulse is replaced by a static dimmed state when Reduce Motion is on.",
-    "Uses native .redacted(reason: .placeholder) and applies every treatment in both states, so the wrapped content keeps its identity, state, and layout when loading starts or ends."
+    "The placeholder disables its content and excludes it from hit testing, so a placeholder can never trigger a product action.",
+    "The whole placeholder is one accessibility element with a caller-adjustable loading label, and does not expose meaningless redacted text.",
+    "When Reduce Motion is on, a static dimmed state replaces the opacity pulse.",
+    "It uses native .redacted(reason: .placeholder) and applies every treatment in both states. The wrapped content keeps its identity, state, and layout when loading starts or ends."
   ],
   "preview": {
     "source": "sources/components/RegistrySkeletonModifier.swift",

@@ -82,9 +82,9 @@ export default function HomePage() {
           Native-first SwiftUI you copy and own.
         </h1>
         <p className="max-w-[62ch] text-lg text-muted-foreground">
-          A registry of SwiftUI product UI in the spirit of shadcn/ui. Search a local catalog, copy real
-          Swift source into your app, set the theme once, and own every line. Apple controls stay visible at
-          the call site; the registry only styles and composes them.
+          A registry of SwiftUI product UI, like shadcn/ui. Search a local catalog, copy real Swift source
+          into your app, set the theme once, and own every line. Apple controls stay visible at the call site.
+          The registry only styles and composes them.
         </p>
         <div className="flex flex-wrap gap-2">
           <Button render={<Link href={docHref("installation")} />} nativeButton={false}>
@@ -138,7 +138,7 @@ export default function HomePage() {
                 <CardTitle>2. Apply a theme at your root</CardTitle>
                 <CardDescription>
                   Pick a preset, or compose one on the Create page and apply its code. Every item below
-                  inherits it, and native controls follow through the tint.
+                  inherits it. Native controls follow through the tint.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -171,8 +171,8 @@ export default function HomePage() {
           <h2 className="text-2xl font-semibold tracking-tight">Tune it on the device</h2>
           <p className="max-w-[70ch] text-muted-foreground">
             New in 0.3.0: the design surface puts a floating panel over your running app. Tap Select, then any registry
-            item, and the panel scopes to the tokens that reach it; move a knob and the app changes under your finger.
-            The result leaves as a preset code or the Swift to paste. A release build is unchanged.
+            item. The panel scopes to the tokens that reach it. Move a knob and the app changes immediately. Export the
+            result as a preset code, or as Swift to paste. A release build does not change.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_2fr]">
@@ -184,7 +184,7 @@ export default function HomePage() {
               loading="lazy"
               className="h-auto w-full rounded-xl border shadow-sm"
             />
-            <figcaption className="text-sm text-muted-foreground">iPhone: the card hangs where you leave it.</figcaption>
+            <figcaption className="text-sm text-muted-foreground">iPhone: the card stays where you leave it.</figcaption>
           </figure>
           <figure className="flex min-w-0 flex-col gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -194,7 +194,7 @@ export default function HomePage() {
               loading="lazy"
               className="h-auto w-full rounded-xl border shadow-sm"
             />
-            <figcaption className="text-sm text-muted-foreground">iPad: the same panel snapped into a column.</figcaption>
+            <figcaption className="text-sm text-muted-foreground">iPad: the same panel, docked into a column.</figcaption>
           </figure>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -210,11 +210,11 @@ export default function HomePage() {
 
       <section className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h2 className="text-2xl font-semibold tracking-tight">Why use the registry?</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">What the registry gives you</h2>
           <p className="text-muted-foreground">
-            The same todo and counter app, three UI layers over the same reducers: the registry items the app owns,
-            stock SwiftUI with no styling, and the registry&apos;s design rewritten by hand. Measured on 2026-09-06 on
-            the iPhone 17 simulator, iOS 27; the method and the tests are in the repository&apos;s Examples/TodoCounter.
+            One todo and counter app, with three UI layers over the same reducers: the registry items the app owns,
+            stock SwiftUI with no styling, and the registry&apos;s design rewritten by hand. The tests ran on 2026-09-06
+            on the iPhone 17 simulator, iOS 27. The method and the tests are in the repository&apos;s Examples/TodoCounter.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -255,10 +255,10 @@ export default function HomePage() {
           </Table>
         </div>
         <p className="text-sm text-muted-foreground">
-          The registry costs nothing at runtime against the hand-written styles; those two columns are within noise.
-          The stock layer&apos;s slower interaction is the system switch&apos;s animation under UI automation, not
-          rendering. What the registry buys is the 585 lines and the skills behind them, once per project, and an
-          update path afterwards.
+          At runtime, the registry costs nothing against the hand-written styles. Those two columns are within noise.
+          The stock layer&apos;s slower interaction comes from the system switch&apos;s animation under UI automation,
+          not from rendering. The registry saves you the 585 lines and the skills behind them, once per project, and
+          gives an update path afterwards.
         </p>
       </section>
 
@@ -266,7 +266,7 @@ export default function HomePage() {
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">Blocks and components</h2>
           <p className="text-muted-foreground">
-            Every capture is the real installed source rendered by the Showcase on iPhone 17, iOS 27.
+            Every capture is the installed source, rendered by the Showcase on iPhone 17, iOS 27.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -310,7 +310,7 @@ export default function HomePage() {
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">Recipes</h2>
           <p className="text-muted-foreground">
-            Where a one-line Apple API is the entire treatment, the registry says so instead of wrapping it.
+            When a one-line Apple API is the whole treatment, the registry says so instead of wrapping it.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">

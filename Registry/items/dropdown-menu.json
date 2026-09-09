@@ -6,7 +6,7 @@
   "kind": "recipe",
   "description": "Native guidance for a Menu trigger with labeled actions, sections, and a picker inside the menu.",
   "usage": "@State private var sort = \"recent\"\n\nMenu(\"Sort\", systemImage: \"arrow.up.arrow.down\") {\n    Picker(\"Sort by\", selection: $sort) {\n        Text(\"Most recent\").tag(\"recent\")\n        Text(\"Amount\").tag(\"amount\")\n    }\n    Divider()\n    Button(\"Export\", systemImage: \"square.and.arrow.up\") { }\n}\n.buttonStyle(.registryOutline)",
-  "docs": "Use a native `Menu` for dropdown actions; a `Picker` inside it becomes a checkmarked selection group and a `Divider` starts a section. The trigger takes any registry button style; the menu itself stays system-owned.",
+  "docs": "Use a native `Menu` for dropdown actions. A `Picker` inside it becomes a checkmarked selection group, and a `Divider` starts a section. The trigger takes any registry button style. The menu itself stays system-owned.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],

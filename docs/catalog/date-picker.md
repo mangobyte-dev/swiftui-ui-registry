@@ -2,7 +2,7 @@
 
 # date-picker
 
-Native guidance for a compact DatePicker over a closed range with a presets Menu setting the binding.
+Native guidance for a compact DatePicker over a closed range, with a presets Menu that sets the binding.
 
 ![date-picker preview](../images/items/date-picker-light.png)
 
@@ -28,7 +28,7 @@ Menu("Presets") {
 
 ## Why native is enough
 
-Use `DatePicker` in the `.compact` style with a `ClosedRange<Date>` so people cannot pick outside the allowed dates, and offer a `Menu` of common choices that writes the binding directly. The `calendar` recipe covers the graphical style for month-at-a-glance selection. The compact control is a single tap target the system lays out, so the registry adds no wrapper. Watch the range: an empty or reversed range traps the picker at one date.
+Use `DatePicker` in the `.compact` style with a `ClosedRange<Date>`, so people cannot pick outside the allowed dates. Offer a `Menu` of common choices that writes the binding directly. The `calendar` recipe covers the graphical style for month-at-a-glance selection. The compact control is a single tap target that the system lays out, so the registry adds no wrapper. Watch the range: an empty or reversed range traps the picker at one date.
 
 ## Details
 

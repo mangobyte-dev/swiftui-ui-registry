@@ -20,7 +20,7 @@ enum RegistryCatalogManifest {
             name: "accordion",
             kind: "component",
             version: "0.2.2",
-            description: "Styles a native DisclosureGroup as a full-width row header with a trailing chevron and content revealed beneath, keeping the caller's content styling, for stacked expandable sections.",
+            description: "Styles a native DisclosureGroup as a full-width header row with a trailing chevron and revealed content that keeps the caller's styling, for stacked expandable sections.",
             usage: "@State private var isExpanded = false\n\nDisclosureGroup(\"How do I freeze my card?\", isExpanded: $isExpanded) {\n    Text(\"Open the card, then choose Freeze.\")\n}\n.disclosureGroupStyle(.registryAccordion)",
             dependencies: ["separator"],
             tags: ["accordion", "disclosure", "collapsible", "expand", "faq", "shadcn"]
@@ -47,7 +47,7 @@ enum RegistryCatalogManifest {
             name: "alert-dialog",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a modal decision with .alert, using button roles and prepared copy while keeping the system presentation.",
+            description: "Native guidance for a modal decision with .alert: button roles, prepared copy, and the system presentation.",
             usage: "@State private var isConfirmingSignOut = false\n\nButton(\"Sign out\", role: .destructive) {\n    isConfirmingSignOut = true\n}\n.alert(\"Sign out?\", isPresented: $isConfirmingSignOut) {\n    Button(\"Sign out\", role: .destructive) { }\n    Button(\"Cancel\", role: .cancel) { }\n} message: {\n    Text(\"You will need your password to sign in again.\")\n}",
             dependencies: [],
             tags: ["alert", "dialog", "confirm", "destructive", "modal", "guidance"]
@@ -56,7 +56,7 @@ enum RegistryCatalogManifest {
             name: "aspect-ratio",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for SwiftUI's aspectRatio modifier without introducing a replacement API.",
+            description: "Native guidance for SwiftUI's aspectRatio modifier, with no replacement API.",
             usage: "Color.indigo\n    .overlay {\n        Image(systemName: \"play.fill\")\n            .foregroundStyle(.white)\n            .accessibilityHidden(true)\n    }\n    .aspectRatio(16.0 / 9.0, contentMode: .fit)\n    .accessibilityLabel(\"Video placeholder\")\n\nColor.teal\n    .aspectRatio(1, contentMode: .fit)\n    .frame(maxWidth: 160)\n    .accessibilityLabel(\"Avatar placeholder\")",
             dependencies: [],
             tags: ["aspect-ratio", "layout", "media", "native", "guidance"]
@@ -83,7 +83,7 @@ enum RegistryCatalogManifest {
             name: "avatar",
             kind: "component",
             version: "0.2.1",
-            description: "Displays a circular identity image with initials or symbol fallback, sized by the environment control size, with a required accessibility label.",
+            description: "Displays a circular identity image with an initials or symbol fallback, sized by the environment control size, and requires an accessibility label.",
             usage: "Avatar(Image(\"maya\"), accessibilityLabel: Text(\"Maya Khalid\"))\n\nAvatar(initials: \"MK\", accessibilityLabel: Text(\"Maya Khalid\"))\n    .controlSize(.large)\n\nAvatar(accessibilityLabel: Text(\"Unknown sender\"))",
             dependencies: [],
             tags: ["avatar", "profile", "identity", "image", "initials", "shadcn"]
@@ -101,7 +101,7 @@ enum RegistryCatalogManifest {
             name: "breadcrumb",
             kind: "component",
             version: "0.1.2",
-            description: "A horizontal navigation trail of links with chevron separators and a current page, collapsing middle crumbs into an overflow menu when they do not fit; a component because iOS has no native breadcrumb control.",
+            description: "A horizontal trail of navigation links with chevron separators, a current page, and an overflow menu for middle crumbs that do not fit; a component because iOS has no native breadcrumb control.",
             usage: "Breadcrumb([\n    BreadcrumbItem(Text(\"Home\"), action: { path = NavigationPath() }),\n    BreadcrumbItem(Text(\"Library\"), action: { path.removeLast() }),\n    BreadcrumbItem(Text(\"Payments\"))\n])",
             dependencies: [],
             tags: ["breadcrumb", "navigation", "trail", "hierarchy", "path", "shadcn"]
@@ -110,7 +110,7 @@ enum RegistryCatalogManifest {
             name: "bubble",
             kind: "component",
             version: "0.1.1",
-            description: "Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, leaving alignment to the message row.",
+            description: "Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, and leaves alignment to the message row.",
             usage: "Text(\"Are we still on for Thursday?\")\n    .registryBubble(.incoming)\n\nText(\"Yes, 6pm works.\")\n    .registryBubble(.outgoing)",
             dependencies: [],
             tags: ["bubble", "chat", "message", "conversation", "modifier", "shadcn"]
@@ -119,7 +119,7 @@ enum RegistryCatalogManifest {
             name: "button",
             kind: "component",
             version: "0.5.2",
-            description: "Styles native SwiftUI buttons with shadcn-inspired semantic variants while preserving roles and environment sizing.",
+            description: "Styles native SwiftUI buttons with shadcn-inspired semantic variants and preserves roles and environment sizing.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nButton(\"Save changes\") {}\n    .buttonStyle(.registry)\n\nButton(\"Cancel\") {}\n    .buttonStyle(.registryOutline)\n\nButton(\"Delete\", role: .destructive) {}\n    .buttonStyle(.registry)",
             dependencies: [],
             tags: ["button", "control", "action", "style", "shadcn"]
@@ -128,7 +128,7 @@ enum RegistryCatalogManifest {
             name: "button-group",
             kind: "component",
             version: "0.3.2",
-            description: "Lays out every native button in a ControlGroup side by side with one registry button variant, keeping the caller's Button controls, roles, and labels.",
+            description: "Lays out every native button in a ControlGroup side by side with one registry button variant, and keeps the caller's Button controls, roles, and labels.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
             dependencies: ["button"],
             tags: ["button", "control-group", "action", "style"]
@@ -164,7 +164,7 @@ enum RegistryCatalogManifest {
             name: "chart",
             kind: "component",
             version: "0.1.3",
-            description: "Styles a native Swift Charts Chart to the theme: a series palette derived from the accent on the foreground style scale, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.",
+            description: "Styles a native Swift Charts Chart to the theme: an accent-derived series palette, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.",
             usage: "Chart(data) { row in\n    BarMark(\n        x: .value(\"Month\", row.month),\n        y: .value(\"Visits\", row.visits)\n    )\n    .foregroundStyle(by: .value(\"Channel\", row.channel))\n    .position(by: .value(\"Channel\", row.channel))\n}\n.registryChart()\n.frame(height: 180)",
             dependencies: [],
             tags: ["chart", "charts", "graph", "bar", "line", "pie", "shadcn"]
@@ -182,7 +182,7 @@ enum RegistryCatalogManifest {
             name: "checkbox",
             kind: "component",
             version: "0.3.2",
-            description: "Styles a native Toggle as a checkbox while preserving its binding, label, enabled state, and accessibility representation.",
+            description: "Styles a native Toggle as a checkbox and preserves its binding, label, enabled state, and accessibility representation.",
             usage: "@State private var accepted = false\n\nToggle(\"Accept terms\", isOn: $accepted)\n    .toggleStyle(.registryCheckbox)",
             dependencies: [],
             tags: ["checkbox", "toggle", "selection", "form", "style"]
@@ -200,7 +200,7 @@ enum RegistryCatalogManifest {
             name: "combobox",
             kind: "component",
             version: "0.1.1",
-            description: "A searchable single-selection control: a registry search field over caller options with a filtered list that opens below the field, controlled selection through a binding, and a native empty state.",
+            description: "A searchable single-selection control with a registry search field over caller options, a filtered list below it, binding-driven selection, and a native empty state.",
             usage: "@State private var timezone: String? = \"riyadh\"\n\nCombobox(\n    selection: $timezone,\n    options: [\n        ComboboxOption(id: \"kuwait\", title: \"Kuwait City\", systemImage: \"clock\"),\n        ComboboxOption(id: \"riyadh\", title: \"Riyadh\", systemImage: \"clock\")\n    ],\n    prompt: \"Search time zones\",\n    emptyDescription: Text(\"Try a city name.\")\n)",
             dependencies: ["input-group", "item", "empty", "separator", "button"],
             tags: ["combobox", "search", "select", "autocomplete", "picker", "shadcn"]
@@ -227,7 +227,7 @@ enum RegistryCatalogManifest {
             name: "context-menu",
             kind: "recipe",
             version: "0.1.1",
-            description: "Native guidance for long-press actions with .contextMenu using labeled, role-tagged buttons.",
+            description: "Native guidance for long-press actions with .contextMenu and labeled, role-tagged buttons.",
             usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}",
             dependencies: [],
             tags: ["context-menu", "long-press", "actions", "menu", "guidance"]
@@ -245,7 +245,7 @@ enum RegistryCatalogManifest {
             name: "date-picker",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a compact DatePicker over a closed range with a presets Menu setting the binding.",
+            description: "Native guidance for a compact DatePicker over a closed range, with a presets Menu that sets the binding.",
             usage: "@State private var date = Date.now\n\nDatePicker(\"Statement date\", selection: $date, in: range, displayedComponents: .date)\n    .datePickerStyle(.compact)\n\nMenu(\"Presets\") {\n    Button(\"Today\") { date = .now }\n    Button(\"Tomorrow\") { date = .now.addingTimeInterval(60 * 60 * 24) }\n    Button(\"Next week\") { date = .now.addingTimeInterval(60 * 60 * 24 * 7) }\n}\n.accessibilityLabel(\"Date presets\")",
             dependencies: [],
             tags: ["date-picker", "date", "calendar", "presets", "guidance"]
@@ -254,7 +254,7 @@ enum RegistryCatalogManifest {
             name: "dialog",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for modal content with .sheet, leaving detents, drag dismissal, and focus to the system.",
+            description: "Native guidance for modal content with .sheet: the system owns detents, drag dismissal, and focus.",
             usage: "@State private var isEditing = false\n\nButton(\"Edit profile\") { isEditing = true }\n    .sheet(isPresented: $isEditing) {\n        NavigationStack {\n            ProfileEditor()\n                .navigationTitle(\"Edit profile\")\n                .toolbar {\n                    ToolbarItem(placement: .confirmationAction) {\n                        Button(\"Done\") { isEditing = false }\n                    }\n                }\n        }\n    }",
             dependencies: [],
             tags: ["dialog", "sheet", "modal", "presentation", "guidance"]
@@ -272,7 +272,7 @@ enum RegistryCatalogManifest {
             name: "drawer",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a bottom drawer using .sheet with presentation detents and a visible drag indicator.",
+            description: "Native guidance for a bottom drawer with .sheet, presentation detents, and a visible drag indicator.",
             usage: "@State private var isShowingFilters = false\n\nButton(\"Filters\") { isShowingFilters = true }\n    .sheet(isPresented: $isShowingFilters) {\n        FilterOptions()\n            .presentationDetents([.medium, .large])\n            .presentationDragIndicator(.visible)\n    }",
             dependencies: [],
             tags: ["drawer", "bottom-sheet", "detents", "sheet", "guidance"]
@@ -290,7 +290,7 @@ enum RegistryCatalogManifest {
             name: "empty",
             kind: "component",
             version: "0.1.1",
-            description: "Places a native ContentUnavailableView on the registry content surface so an empty section sits where its rows would.",
+            description: "Places a native ContentUnavailableView on the registry content surface, so an empty section sits where its rows would appear.",
             usage: "ContentUnavailableView(\n    \"No recent activity\",\n    systemImage: \"clock.arrow.circlepath\",\n    description: Text(\"New transactions will appear here.\")\n)\n.registryEmptyState()",
             dependencies: [],
             tags: ["empty", "placeholder", "content-unavailable", "state", "shadcn"]
@@ -344,7 +344,7 @@ enum RegistryCatalogManifest {
             name: "item",
             kind: "component",
             version: "0.2.1",
-            description: "Composes a generic content row with leading media, a title and optional description, and a trailing accessory while leaving selection to the call site.",
+            description: "Composes a generic content row with leading media, a title and optional description, and a trailing accessory, and leaves selection to the call site.",
             usage: "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
             dependencies: ["avatar", "separator", "badge"],
             tags: ["item", "row", "list", "cell", "media", "shadcn"]
@@ -353,7 +353,7 @@ enum RegistryCatalogManifest {
             name: "kbd",
             kind: "component",
             version: "0.1.2",
-            description: "Draws text as a keycap for keyboard shortcut hints, hidden from accessibility unless a spoken label is supplied.",
+            description: "Styles a native Text as a keycap for keyboard shortcut hints, hidden from accessibility unless you supply a spoken label.",
             usage: "Text(verbatim: \"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(verbatim: \"esc\")\n    .registryKeycap()",
             dependencies: [],
             tags: ["keyboard", "shortcut", "keycap", "hint", "shadcn"]
@@ -362,7 +362,7 @@ enum RegistryCatalogManifest {
             name: "label",
             kind: "component",
             version: "0.2.1",
-            description: "Controls native Label icon placement with semantic spacing and decorative icon accessibility behavior.",
+            description: "Controls native Label icon placement with semantic spacing and treats the icon as decorative for accessibility.",
             usage: "Label(\"Account settings\", systemImage: \"person.crop.circle\")\n    .labelStyle(.registry)\n\nLabel(\"Continue\", systemImage: \"chevron.forward\")\n    .labelStyle(.registryTrailingIcon)",
             dependencies: [],
             tags: ["label", "icon", "text", "alignment", "style"]
@@ -371,7 +371,7 @@ enum RegistryCatalogManifest {
             name: "macro-progress",
             kind: "component",
             version: "0.4.1",
-            description: "Displays prepared nutrition progress with a native progress view and adaptive value layout.",
+            description: "Displays prepared nutrition progress with a native ProgressView and an adaptive value layout.",
             usage: "MacroProgress(\n    \"Protein\",\n    value: Text(\"96 g\"),\n    target: Text(\"130 g\"),\n    progress: 96.0 / 130.0,\n    systemImage: \"fish.fill\"\n)\n.registryTint(.indigo)",
             dependencies: [],
             tags: ["nutrition", "health", "progress", "macronutrients"]
@@ -380,7 +380,7 @@ enum RegistryCatalogManifest {
             name: "marker",
             kind: "component",
             version: "0.1.1",
-            description: "Treats a Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.",
+            description: "Styles a native Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.",
             usage: "Text(\"Today\")\n    .registryMarker(.separator)\n\nText(\"Maya joined the conversation\")\n    .registryMarker()\n\nText(\"Delivered 09:41\")\n    .registryMarker(.status)",
             dependencies: ["separator"],
             tags: ["marker", "conversation", "chat", "timeline", "divider", "shadcn"]
@@ -407,7 +407,7 @@ enum RegistryCatalogManifest {
             name: "message-scroller",
             kind: "component",
             version: "0.1.1",
-            description: "A chat scroll container that starts at the newest turn, follows streamed replies while the reader is at the bottom, holds a scrolled-up reader in place, and requests history at the top.",
+            description: "This native chat ScrollView opens at the newest turn, follows streamed replies at the bottom, holds a scrolled-up reader, and requests history at the top.",
             usage: "MessageScroller(position: $position, isFollowing: $isFollowing) {\n    ForEach(messages) { message in\n        MessageRow {\n            Text(message.text)\n        }\n        .registryVariant(message.isMine ? .outgoing : .incoming)\n        .id(message.id)\n    }\n}",
             dependencies: ["message", "avatar"],
             tags: ["chat", "scroll", "conversation", "messages", "container", "shadcn"]
@@ -416,7 +416,7 @@ enum RegistryCatalogManifest {
             name: "metric-card",
             kind: "component",
             version: "0.2.2",
-            description: "Displays one prepared product metric using native text formatting and semantic styling.",
+            description: "Displays one prepared product metric with native text formatting and semantic styling.",
             usage: "MetricCard(\n    \"Available balance\",\n    value: Text(12_480.32, format: .currency(code: \"USD\")),\n    detail: Text(\"Up 8.2% this month\"),\n    systemImage: \"creditcard.fill\"\n)",
             dependencies: [],
             tags: ["metric", "finance", "health", "analytics"]
@@ -452,7 +452,7 @@ enum RegistryCatalogManifest {
             name: "preview",
             kind: "block",
             version: "0.3.1",
-            description: "The finished theme preview wall from shadcn's create page: 33 realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a screen of real UI.",
+            description: "A theme preview wall of 33 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.",
             usage: "PreviewWall()",
             dependencies: ["card", "item", "alert", "badge", "button", "chart", "empty", "avatar", "combobox", "separator", "field", "input-group", "spinner", "checkbox", "textarea", "input", "table", "kbd", "progress", "select", "skeleton", "button-group"],
             tags: ["preview", "theme", "showcase", "cards", "create", "shadcn", "dashboard"]
@@ -461,7 +461,7 @@ enum RegistryCatalogManifest {
             name: "preview-02",
             kind: "block",
             version: "0.3.1",
-            description: "The finished second theme preview wall from shadcn's create page: 35 realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a second screen of real UI.",
+            description: "A second theme preview wall of 35 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.",
             usage: "PreviewWall02()",
             dependencies: ["card", "field", "input", "button", "item", "badge", "separator", "chart", "input-group", "toggle-group", "empty", "accordion", "skeleton", "checkbox", "breadcrumb", "select", "textarea", "progress", "table", "combobox", "spinner"],
             tags: ["preview", "theme", "showcase", "cards", "create", "shadcn", "dashboard"]
@@ -488,7 +488,7 @@ enum RegistryCatalogManifest {
             name: "radio-group",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for presenting a bound Picker as an inline mutually exclusive option group.",
+            description: "Native guidance for a bound Picker as an inline, mutually exclusive option group.",
             usage: "@State private var selection = \"standard\"\n\nPicker(\"Delivery speed\", selection: $selection) {\n    Text(\"Standard\").tag(\"standard\")\n    Text(\"Express\").tag(\"express\")\n    Text(\"Same day\").tag(\"same-day\")\n}\n.pickerStyle(.inline)",
             dependencies: [],
             tags: ["radio-group", "picker", "selection", "options", "guidance"]
@@ -524,7 +524,7 @@ enum RegistryCatalogManifest {
             name: "settings-section",
             kind: "block",
             version: "0.1.2",
-            description: "Composes registry select, separator, and button treatments into a titled settings section that renders structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.",
+            description: "Composes registry select, separator, and button treatments into a titled settings section with structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.",
             usage: "SettingsSection(\n    \"Notifications\",\n    footer: Text(\"Quiet hours apply to every channel.\")\n) {\n    Toggle(\"Transaction alerts\", isOn: $alertsEnabled)\n        .settingsRowDescription(Text(\"A push notification for every card transaction.\"))\n\n    Toggle(\"Marketing messages\", isOn: $marketingEnabled)\n        .settingsRowDisabled(\n            !marketingAllowed,\n            explanation: Text(\"Managed by your organization's privacy policy.\")\n        )\n\n    LabeledContent(\"Currency\") {\n        Picker(\"Currency\", selection: $currency) {\n            Text(\"Kuwaiti dinar\").tag(\"KWD\")\n            Text(\"US dollar\").tag(\"USD\")\n        }\n        .registrySelect()\n    }\n\n    Button(\"Sign out\", role: .destructive) { }\n        .buttonStyle(.registry)\n}",
             dependencies: ["select", "separator", "button"],
             tags: ["settings", "preferences", "section", "toggle", "form"]
@@ -587,7 +587,7 @@ enum RegistryCatalogManifest {
             name: "switch",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for applying the platform switch treatment to a Toggle while inheriting app tint and environment behavior.",
+            description: "Native guidance for the platform switch treatment on a Toggle, which inherits app tint and environment behavior.",
             usage: "@State private var notifications = true\n\nToggle(\"Notifications\", isOn: $notifications)\n    .toggleStyle(.switch)",
             dependencies: [],
             tags: ["switch", "toggle", "setting", "boolean", "guidance"]
@@ -605,7 +605,7 @@ enum RegistryCatalogManifest {
             name: "tabs",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for a local-selection Picker with the platform segmented style while leaving app navigation to TabView.",
+            description: "Native guidance for a local-selection Picker with the platform segmented style; app navigation stays with TabView.",
             usage: "@State private var selection = \"overview\"\n\nPicker(\"Section\", selection: $selection) {\n    Text(\"Overview\").tag(\"overview\")\n    Text(\"Activity\").tag(\"activity\")\n    Text(\"Settings\").tag(\"settings\")\n}\n.pickerStyle(.segmented)",
             dependencies: [],
             tags: ["tabs", "picker", "segmented", "selection", "guidance"]
@@ -659,7 +659,7 @@ enum RegistryCatalogManifest {
             name: "transaction-row",
             kind: "component",
             version: "0.5.1",
-            description: "Displays prepared transaction content while leaving selection to a native Button at the call site.",
+            description: "Displays prepared transaction content and leaves selection to a native Button at the call site.",
             usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)",
             dependencies: [],
             tags: ["transaction", "row", "finance", "activity"]

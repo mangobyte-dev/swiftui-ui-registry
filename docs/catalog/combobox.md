@@ -2,7 +2,7 @@
 
 # combobox
 
-A searchable single-selection control: a registry search field over caller options with a filtered list that opens below the field, controlled selection through a binding, and a native empty state.
+A searchable single-selection control with a registry search field over caller options, a filtered list below it, binding-driven selection, and a native empty state.
 
 ![combobox preview](../images/items/combobox-light.png)
 
@@ -55,8 +55,8 @@ Combobox(
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [input-group](input-group.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [empty](empty.md) 0.1.1, [combobox](combobox.md) 0.1.1
 - Accessibility contract:
-  - The field carries the prompt as its explicit accessibility label and uses the search-and-filter query binding; each option is a native Button whose label is its title, addressable by title through Voice Control.
-  - The selected option carries the isSelected trait and a checkmark; the option symbol is decorative and hidden.
-  - No matches renders a native ContentUnavailableView on the registry surface with the caller's empty title and description.
-  - The list opens inline below the field on focus and pushes content rather than overlaying it, so it never covers other controls; a popover is not used because on a compact iPhone width it presents as a full sheet, heavier than a single-select filter needs.
+  - The field carries the prompt as its explicit accessibility label and uses the search-and-filter query binding. Each option is a native Button whose label is its title. Voice Control can address an option by its title.
+  - The selected option carries the isSelected trait and a checkmark. The option symbol is decorative and hidden.
+  - When no option matches, the control renders a native ContentUnavailableView on the registry surface with the caller's empty title and description.
+  - On focus, the list opens inline below the field and pushes content down instead of covering it, so it never hides other controls. The control does not use a popover, because at a compact iPhone width a popover becomes a full sheet, heavier than a single-select filter needs.
 - Source: [sources/components/Combobox.swift](../../Registry/sources/components/Combobox.swift), with the `Combobox` Xcode preview

@@ -2,7 +2,7 @@
 
 # item
 
-Composes a generic content row with leading media, a title and optional description, and a trailing accessory while leaving selection to the call site.
+Composes a generic content row with leading media, a title and optional description, and a trailing accessory, and leaves selection to the call site.
 
 ![item preview](../images/items/item-light.png)
 
@@ -52,9 +52,9 @@ ItemRow(
 - Platforms: iOS 26.0+
 - Installs in order: [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1
 - Accessibility contract:
-  - Combines the title and description into one accessibility element; media and accessory remain separate so an interactive accessory stays activatable.
+  - The row combines the title and description into one accessibility element. The media and accessory stay separate, so an interactive accessory stays activatable.
   - Selection belongs to a native Button or NavigationLink at the call site, which combines the row into its own label.
-  - Keeps the 44 point minimum row height and a rectangular content shape.
-  - Uses system text styles and the semantic spacing tokens; the description wraps rather than truncates.
-  - To make a row a switch, put the row in the Toggle's label so its words are part of the control and are spoken once; a control placed in the accessory with labelsHidden must restore its label with accessibilityLabel.
+  - The row keeps the 44 point minimum row height and a rectangular content shape.
+  - The row uses system text styles and the semantic spacing tokens. The description wraps rather than truncates.
+  - To make a row a switch, put the row in the Toggle's label, so its words are part of the control and are spoken once. A control placed in the accessory with labelsHidden must restore its label with accessibilityLabel.
 - Source: [sources/components/ItemRow.swift](../../Registry/sources/components/ItemRow.swift), with the `Item Row` Xcode preview

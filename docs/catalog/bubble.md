@@ -2,7 +2,7 @@
 
 # bubble
 
-Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, leaving alignment to the message row.
+Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, and leaves alignment to the message row.
 
 ![bubble preview](../images/items/bubble-light.png)
 
@@ -49,9 +49,9 @@ Text("Yes, 6pm works.")
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Wraps its text freely and never truncates, so a long message stays fully readable and grows with Dynamic Type.
-  - Adds no accessibility element of its own; the wrapped Text keeps its semantics and reading order.
-  - Incoming and outgoing bubbles carry no stroke and rest on fill alone; the outgoing fill is the tint with the theme's onAccent label, which the caller keeps legible against the accent.
-  - The muted variant drops the fill for a border hairline, so a system line reads as distinct from a spoken turn without relying on color.
-  - Inherits layout direction, so the bubble's padding and continuous corners follow the caller's locale.
+  - The bubble wraps its text freely and never truncates, so a long message stays readable and grows with Dynamic Type.
+  - The bubble adds no accessibility element of its own. The wrapped Text keeps its semantics and reading order.
+  - Incoming and outgoing bubbles carry no stroke and rest on fill alone. The outgoing fill uses the tint with the theme's onAccent label. Keep the label legible against the accent.
+  - The muted variant drops the fill for a border hairline. A system line reads as distinct from a spoken turn without color.
+  - The bubble inherits layout direction, so its padding and continuous corners follow the caller's locale.
 - Source: [sources/components/RegistryBubbleModifier.swift](../../Registry/sources/components/RegistryBubbleModifier.swift), with the `Bubble Variants` Xcode preview

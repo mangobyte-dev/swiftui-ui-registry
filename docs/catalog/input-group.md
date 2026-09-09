@@ -60,8 +60,8 @@ InputGroup {
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [input-group](input-group.md) 0.2.1
 - Accessibility contract:
-  - The field stays a native TextField or SecureField; give it an explicit accessibilityLabel because the title is placeholder text only.
-  - Hide a decorative leading accessory with accessibilityHidden(true); an informational prefix stays visible and the field's accessibilityLabel carries its meaning. A trailing registry button keeps its own label and 44 point hit area.
-  - Focus draws the accent ring; the invalid state draws the negative border at the same emphasized width and wins over focus, so the caller pairs it with a message.
-  - Keeps the 44 point minimum height and applies the shared disabled opacity.
+  - The field stays a native TextField or SecureField. Give it an explicit accessibilityLabel, because the title is placeholder text only.
+  - Hide a decorative leading accessory with accessibilityHidden(true). An informational prefix stays visible, and the field's accessibilityLabel carries its meaning. A trailing registry button keeps its own label and 44 point hit area.
+  - Focus draws the accent ring. The invalid state draws the negative border at the same emphasized width and wins over focus. Pair it with a message.
+  - The field keeps the 44 point minimum height and applies the shared disabled opacity.
 - Source: [sources/components/InputGroup.swift](../../Registry/sources/components/InputGroup.swift), with the `Input Group` Xcode preview

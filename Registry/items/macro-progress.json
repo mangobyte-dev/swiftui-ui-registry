@@ -4,7 +4,7 @@
   "version": "0.4.1",
   "name": "macro-progress",
   "kind": "component",
-  "description": "Displays prepared nutrition progress with a native progress view and adaptive value layout.",
+  "description": "Displays prepared nutrition progress with a native ProgressView and an adaptive value layout.",
   "usage": "MacroProgress(\n    \"Protein\",\n    value: Text(\"96 g\"),\n    target: Text(\"130 g\"),\n    progress: 96.0 / 130.0,\n    systemImage: \"fish.fill\"\n)\n.registryTint(.indigo)",
   "files": [
     {
@@ -39,8 +39,8 @@
   ],
   "accessibility": [
     "Uses native ProgressView semantics.",
-    "Uses ViewThatFits to move prepared values below the label when horizontal space is constrained.",
-    "Combines the label and one localized progress phrase without relying on tint to communicate meaning."
+    "When horizontal space is limited, ViewThatFits moves the prepared values below the label.",
+    "It combines the label with one localized progress phrase and does not use tint alone for meaning."
   ],
   "preview": {
     "source": "sources/components/MacroProgress.swift",

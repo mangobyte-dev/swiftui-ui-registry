@@ -2,7 +2,7 @@
 
 # preview
 
-The finished theme preview wall from shadcn's create page: 33 realistic product cards built from registry components and native controls, laid out as an adaptive grid on a regular width and a single column on a compact width, so a theme can be judged against a screen of real UI.
+A theme preview wall of 33 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.
 
 ![preview preview](../images/items/preview-light.png)
 
@@ -45,11 +45,11 @@ PreviewWall()
 - Platforms: iOS 26.0+
 - Installs in order: [card](card.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [button](button.md) 0.5.2, [alert](alert.md) 0.2.1, [chart](chart.md) 0.1.3, [empty](empty.md) 0.1.1, [input-group](input-group.md) 0.2.1, [combobox](combobox.md) 0.1.1, [input](input.md) 0.5.1, [field](field.md) 0.1.1, [spinner](spinner.md) 0.2.1, [checkbox](checkbox.md) 0.3.2, [textarea](textarea.md) 0.4.1, [table](table.md) 0.1.1, [kbd](kbd.md) 0.1.2, [progress](progress.md) 0.2.1, [select](select.md) 0.2.1, [skeleton](skeleton.md) 0.2.1, [button-group](button-group.md) 0.3.2, [preview](preview.md) 0.3.1
 - Accessibility contract:
-  - All 33 cards render in one ordered wall: an adaptive grid on a regular width and a plain, non-lazy VStack on a compact width, so every card exists in the hierarchy even off screen and the capture-route accessibility audit reaches all of them.
-  - Every interactive control carries an accessibility label and every decorative SF Symbol is hidden, so the capture-route audit finds no unlabeled button, image, switch, text field, or slider on any card.
-  - Avatars read the person or account name as their label, and charts, usage gauges, and shortcut keycaps carry spoken labels rather than raw glyphs.
-  - Actions that open a dialog use a native alert or sheet, so the decision keeps the system's modal semantics and focus handling.
-  - Each card is a native GroupBox on the shared card surface and composes native controls, so Dynamic Type, color scheme, and layout direction are respected without per-card handling.
+  - All 33 cards render in one ordered wall: an adaptive grid at a regular width and a plain, non-lazy VStack at a compact width. Every card exists in the hierarchy even off screen, so the capture-route accessibility audit reaches all of them.
+  - Every interactive control carries an accessibility label, and every decorative SF Symbol is hidden. The capture-route audit then finds no unlabeled button, image, switch, text field, or slider on any card.
+  - Avatars read the person or account name as their label. Charts, usage gauges, and shortcut keycaps carry spoken labels, not raw glyphs.
+  - Actions that open a dialog use a native alert or sheet. The decision keeps the system's modal semantics and focus handling.
+  - Each card is a native GroupBox on the shared card surface and composes native controls. It respects Dynamic Type, color scheme, and layout direction without per-card handling.
 - Source:
   - [sources/blocks/Preview/PreviewWall.swift](../../Registry/sources/blocks/Preview/PreviewWall.swift), with the `Preview Wall` Xcode preview
   - [sources/blocks/Preview/ActivateAgentDialog.swift](../../Registry/sources/blocks/Preview/ActivateAgentDialog.swift)

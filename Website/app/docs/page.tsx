@@ -15,7 +15,7 @@ export default function DocsIndexPage() {
       <header className="flex flex-col gap-3">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Docs</h1>
         <p className="max-w-[70ch] text-lg text-muted-foreground">
-          Start with the installation, meet the on-device tuner, then the tool and the contracts the registry
+          Start with the installation, then the on-device tuner, the tool, and the contracts the registry
           holds itself to. The reference pages are the repository&apos;s own documents.
         </p>
       </header>

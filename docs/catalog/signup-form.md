@@ -62,12 +62,12 @@ SignUpForm(
 - Platforms: iOS 26.0+
 - Installs in order: [input](input.md) 0.5.1, [button](button.md) 0.5.2, [card](card.md) 0.2.1, [checkbox](checkbox.md) 0.3.2, [signup-form](signup-form.md) 0.1.1
 - Accessibility contract:
-  - Each of the four fields carries an explicit accessibilityLabel equal to its visible title. Measured on iOS 27: the label-plus-prompt initializer alone exposes the title as placeholder text only, so a field with typed content would be unnamed without it.
-  - Focus order runs name to email to password to confirmation: each field submits with a Next return key that advances focus, and the confirmation field's Go return key submits the form.
-  - Invalid fields are never color-alone: the input border width increases, a visible footnote message renders under the field, and the message is attached as the field's accessibility hint; the terms error renders under the checkbox the same way.
-  - Autofill content types are fixed: the name field is .name, the email field is .username on an email keyboard, and both password fields are .newPassword so the system offers and reuses a strong password. Autofill is verifiable only manually with a saved credential.
-  - Field, terms, and form error messages post an AccessibilityNotification.Announcement when they appear or change; an unchanged message is not re-announced. VoiceOver announcement timing has not been verified on device.
-  - The terms toggle uses the checkbox style, which exposes a native Toggle as its accessibility representation and keeps a 44 point minimum row height and does not signal selection by color alone.
-  - While isSubmitting is true every control is disabled through the environment, the composed styles apply the shared disabled opacity, and the submit button keeps its title as its accessibility label while showing a progress spinner.
+  - Each of the four fields carries an explicit accessibilityLabel equal to its visible title. Measured on iOS 27, the label-plus-prompt initializer alone exposes the title as placeholder text only. Without the explicit label, a field with typed content is unnamed.
+  - Focus order runs name, email, password, confirmation. Each field uses a Next return key that advances focus, and the confirmation field's Go return key submits the form.
+  - Invalid fields never use color alone. The input border width increases, a visible footnote message renders under the field, and the message attaches as the field's accessibility hint. The terms error renders under the checkbox the same way.
+  - Autofill content types are fixed. The name field is .name, and the email field is .username on an email keyboard. Both password fields are .newPassword, so the system offers and reuses a strong password. You can verify autofill only manually, with a saved credential.
+  - Field, terms, and form error messages post an AccessibilityNotification.Announcement when they appear or change. An unchanged message is not re-announced. VoiceOver announcement timing is not verified on device.
+  - The terms toggle uses the checkbox style. That style exposes a native Toggle as its accessibility representation, keeps a 44 point minimum row height, and does not signal selection by color alone.
+  - When isSubmitting is true, the environment disables every control, and the composed styles apply the shared disabled opacity. The submit button shows a progress spinner and keeps its title as its accessibility label.
   - The card title carries the header accessibility trait.
 - Source: [sources/blocks/SignUpForm.swift](../../Registry/sources/blocks/SignUpForm.swift), with the `Sign Up Form` Xcode preview

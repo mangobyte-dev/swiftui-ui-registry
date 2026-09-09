@@ -2,7 +2,7 @@
 
 # context-menu
 
-Native guidance for long-press actions with .contextMenu using labeled, role-tagged buttons.
+Native guidance for long-press actions with .contextMenu and labeled, role-tagged buttons.
 
 ![context-menu preview](../images/items/context-menu-light.png)
 
@@ -30,7 +30,7 @@ TransactionRow(
 
 ## Why native is enough
 
-Attach secondary actions to a row with `.contextMenu` and native `Button`s with symbols and roles. The system renders the Liquid Glass menu, the preview, and haptics; keep the same actions reachable elsewhere because a long press is not discoverable on its own.
+Attach secondary actions to a row with `.contextMenu` and native `Button`s with symbols and roles. The system renders the Liquid Glass menu, the preview, and the haptics. Keep the same actions reachable elsewhere, because a long press is not discoverable on its own.
 
 ## Details
 

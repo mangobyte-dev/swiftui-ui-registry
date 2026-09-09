@@ -2,7 +2,7 @@
 
 # chart
 
-Styles a native Swift Charts Chart to the theme: a series palette derived from the accent on the foreground style scale, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.
+Styles a native Swift Charts Chart to the theme: an accent-derived series palette, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.
 
 ![chart preview](../images/items/chart-light.png)
 
@@ -54,9 +54,9 @@ Chart(data) { row in
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - The marks stay native Swift Charts marks, so the caller keeps the chart's accessibility: add accessibilityLabel and accessibilityValue to marks or the Chart so VoiceOver and the audio graph describe the data.
-  - Series are named in the legend below the plot, so the chart does not rely on color alone; the legend reads the same palette as the plot.
-  - Axis value labels use footnote text at secondary emphasis, and grid lines and ticks use the theme border, so the chrome respects Dynamic Type and the color scheme.
-  - A mark colored by a category reads the accent-derived palette, whose first color is the accent and whose others rotate its hue to stay distinct; a single-series mark takes the accent explicitly with foregroundStyle(TintShapeStyle()) or a RegistryChartPalette color, since Swift Charts otherwise draws one series in its own default color.
-  - The series palette follows the theme's chartPalette: accent-derived tints, a fixed spectrum, or a gray ramp; the spectrum and gray options keep the categories distinct when the accent has too little chroma to rotate, and every option follows the color scheme.
+  - The marks stay native Swift Charts marks, so the caller keeps the chart's accessibility. Add accessibilityLabel and accessibilityValue to marks or the Chart, so VoiceOver and the audio graph describe the data.
+  - The legend below the plot names the series, so the chart does not rely on color alone. The legend reads the same palette as the plot.
+  - Axis value labels use footnote text at secondary emphasis. Grid lines and ticks use the theme border, so the chrome respects Dynamic Type and the color scheme.
+  - A mark colored by a category reads the accent-derived palette. The first color is the accent, and the others rotate its hue to stay distinct. Give a single-series mark the accent with foregroundStyle(TintShapeStyle()) or a RegistryChartPalette color. Otherwise Swift Charts draws one series in its own default color.
+  - The series palette follows the theme's chartPalette: accent-derived tints, a fixed spectrum, or a gray ramp. The spectrum and gray options keep the categories distinct when the accent has too little chroma to rotate. Every option follows the color scheme.
 - Source: [sources/components/RegistryChart.swift](../../Registry/sources/components/RegistryChart.swift), with the `Chart` Xcode preview

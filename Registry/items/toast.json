@@ -48,10 +48,10 @@
   ],
   "accessibility": [
     "Each variant pairs its own symbol with its color, so informational, positive, and destructive meaning never rests on color alone.",
-    "When a toast appears it posts a VoiceOver announcement built from the title and message, so the update is spoken without moving focus away from the current task.",
+    "When a toast appears, it posts a VoiceOver announcement built from the title and message. VoiceOver speaks the update and keeps focus on the current task.",
     "The title and message combine into one accessibility element, while the optional action button and the close control stay separate, activatable elements.",
-    "The close control carries a Dismiss label and the leading symbol is hidden from VoiceOver, so the tone reaches assistive technology through the title and message text.",
-    "Under Reduce Motion the enter and exit collapse to a fade with no slide, and the title scales down before it wraps while the message wraps to at most two lines."
+    "The close control carries a Dismiss label. The leading symbol is hidden from VoiceOver, so the tone reaches assistive technology through the title and message text.",
+    "Under Reduce Motion, the enter and exit collapse to a fade with no slide. The title scales down before it wraps, and the message wraps to at most two lines."
   ],
   "preview": {
     "source": "sources/components/RegistryToastModifier.swift",

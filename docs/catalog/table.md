@@ -55,8 +55,8 @@ DataTable(
 - Platforms: iOS 26.0+
 - Installs in order: [separator](separator.md) 0.2.1, [table](table.md) 0.1.1
 - Accessibility contract:
-  - Each header and body row is combined into one accessibility element so VoiceOver reads its cells in order; the header row also carries the header trait.
-  - Trailing columns are the numeric convention: their cells use monospaced digits and hug the trailing edge, so figures line up down the column.
-  - Built on a native Grid rather than SwiftUI Table, which collapses to a single column on iPhone; the leading column takes the remaining width so the table fills its container.
-  - Uses system text styles and the semantic spacing tokens, and the theme border for hairline separators; cell content wraps rather than truncates.
+  - It combines each header and body row into one accessibility element, so VoiceOver reads the cells in order. The header row also carries the header trait.
+  - Trailing columns hold numbers by convention. Their cells use monospaced digits and hug the trailing edge, so figures line up down the column.
+  - The table uses a native Grid, not SwiftUI Table, which collapses to a single column on iPhone. The leading column takes the remaining width, so the table fills its container.
+  - It uses system text styles, the semantic spacing tokens, and the theme border for hairline separators. Cell content wraps rather than truncates.
 - Source: [sources/components/DataTable.swift](../../Registry/sources/components/DataTable.swift), with the `Data Table` Xcode preview

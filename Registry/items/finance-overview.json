@@ -47,9 +47,9 @@
     "balance"
   ],
   "accessibility": [
-    "Uses native Button semantics for selectable transactions and ContentUnavailableView for an empty activity state; the screen and section titles carry the header trait, and Voice Control can address a row by its title alone.",
-    "Uses system text styles and ViewThatFits for Dynamic Type.",
-    "Uses leading and trailing alignment so layout follows right-to-left direction."
+    "Selectable transactions use native Button semantics, and an empty activity state uses ContentUnavailableView. The screen and section titles carry the header trait. Voice Control can address a row by its title alone.",
+    "The overview uses system text styles and ViewThatFits for Dynamic Type.",
+    "The overview uses leading and trailing alignment, so the layout follows right-to-left direction."
   ],
   "preview": {
     "source": "sources/blocks/FinanceOverview.swift",

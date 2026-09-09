@@ -23,7 +23,7 @@ DisclosureGroup("Fee breakdown", isExpanded: $isShowingDetails) {
 
 ## Why native is enough
 
-One expandable region is the default `DisclosureGroup`. Reach for the `accordion` item only when several groups stack as a list; a single collapsible region needs no extra treatment.
+One expandable region is the default `DisclosureGroup`. Use the `accordion` item only when several groups stack as a list. A single collapsible region needs no extra treatment.
 
 ## Details
 

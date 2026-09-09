@@ -25,7 +25,7 @@ Picker("Sort", selection: $sort) {
 
 ## Why native is enough
 
-Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no wrapper because the one-line native style is the entire treatment.
+Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no wrapper, because the one-line native style is the entire treatment.
 
 ## Details
 

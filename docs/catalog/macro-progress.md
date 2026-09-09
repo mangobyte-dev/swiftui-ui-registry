@@ -2,7 +2,7 @@
 
 # macro-progress
 
-Displays prepared nutrition progress with a native progress view and adaptive value layout.
+Displays prepared nutrition progress with a native ProgressView and an adaptive value layout.
 
 ![macro-progress preview](../images/items/macro-progress-light.png)
 
@@ -53,6 +53,6 @@ MacroProgress(
 - Registry dependencies: none
 - Accessibility contract:
   - Uses native ProgressView semantics.
-  - Uses ViewThatFits to move prepared values below the label when horizontal space is constrained.
-  - Combines the label and one localized progress phrase without relying on tint to communicate meaning.
+  - When horizontal space is limited, ViewThatFits moves the prepared values below the label.
+  - It combines the label with one localized progress phrase and does not use tint alone for meaning.
 - Source: [sources/components/MacroProgress.swift](../../Registry/sources/components/MacroProgress.swift), with the `Macro Progress` Xcode preview

@@ -349,7 +349,7 @@ The repository is currently verified with Xcode 27.0 and Swift 6.4. The registry
 - [Registry specification](docs/registry-spec.md)
 - [Visual testing](docs/visual-testing.md)
 - [MANGO design system](docs/mango.md)
-- [Agent skills](Skills/): consuming, theming, and authoring the registry in the Point-Free format, mirrored to `~/.claude/skills/`
+- [Agent skills](Skills/): consuming, theming, and authoring the registry, mirrored to `~/.claude/skills/`
 - [Contributing](CONTRIBUTING.md)
 
 ## Deliberate boundaries

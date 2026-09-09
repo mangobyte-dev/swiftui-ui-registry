@@ -24,4 +24,4 @@ To serve a checkout instead of the pinned snapshot, add `"--registry", "/path/to
 
 ## Ground truth for an agent
 
-An agent that composes with the registry quotes from the tool, never from memory. Use `describe <item>` for an item's usage snippet, `install --plan` for the requirement to add, and `preset decode` for a theme's knobs. The three skills under `Skills/` in the repository package this workflow in the Point-Free skill format for consuming, theming, and authoring the registry.
+An agent that composes with the registry quotes from the tool, never from memory. Use `describe <item>` for an item's usage snippet, `install --plan` for the requirement to add, and `preset decode` for a theme's knobs. The three skills under `Skills/` in the repository package this workflow for consuming, theming, and authoring the registry.

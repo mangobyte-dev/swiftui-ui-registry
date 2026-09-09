@@ -8,7 +8,7 @@ One minimal call-site snippet per item, quoted verbatim from each item's `usage`
 ## Components
 
 
-### accordion (component 0.2.1)
+### accordion (component 0.2.2)
 
 
 ```swift
@@ -21,7 +21,7 @@ DisclosureGroup("How do I freeze my card?", isExpanded: $isExpanded) {
 ```
 
 
-### alert (component 0.2.0)
+### alert (component 0.2.1)
 
 
 ```swift
@@ -41,7 +41,7 @@ InlineAlert(
 ```
 
 
-### attachment (component 0.1.0)
+### attachment (component 0.1.1)
 
 
 ```swift
@@ -60,7 +60,7 @@ AttachmentRow(
 ```
 
 
-### avatar (component 0.2.0)
+### avatar (component 0.2.1)
 
 
 ```swift
@@ -73,7 +73,7 @@ Avatar(accessibilityLabel: Text("Unknown sender"))
 ```
 
 
-### badge (component 0.3.1)
+### badge (component 0.3.2)
 
 
 ```swift
@@ -85,7 +85,7 @@ Label("Completed", systemImage: "checkmark.circle.fill")
 ```
 
 
-### breadcrumb (component 0.1.1)
+### breadcrumb (component 0.1.2)
 
 
 ```swift
@@ -97,7 +97,7 @@ Breadcrumb([
 ```
 
 
-### bubble (component 0.1.0)
+### bubble (component 0.1.1)
 
 
 ```swift
@@ -109,7 +109,7 @@ Text("Yes, 6pm works.")
 ```
 
 
-### button (component 0.5.1)
+### button (component 0.5.2)
 
 
 ```swift
@@ -126,7 +126,7 @@ Button("Delete", role: .destructive) {}
 ```
 
 
-### button-group (component 0.3.1)
+### button-group (component 0.3.2)
 
 
 ```swift
@@ -140,7 +140,7 @@ ControlGroup {
 ```
 
 
-### card (component 0.2.0)
+### card (component 0.2.1)
 
 
 ```swift
@@ -153,7 +153,7 @@ GroupBox {
 ```
 
 
-### chart (component 0.1.2)
+### chart (component 0.1.3)
 
 
 ```swift
@@ -170,7 +170,7 @@ Chart(data) { row in
 ```
 
 
-### checkbox (component 0.3.1)
+### checkbox (component 0.3.2)
 
 
 ```swift
@@ -181,7 +181,7 @@ Toggle("Accept terms", isOn: $accepted)
 ```
 
 
-### combobox (component 0.1.0)
+### combobox (component 0.1.1)
 
 
 ```swift
@@ -199,7 +199,7 @@ Combobox(
 ```
 
 
-### command (component 0.2.0)
+### command (component 0.2.1)
 
 
 ```swift
@@ -218,7 +218,7 @@ CommandPalette(
 ```
 
 
-### empty (component 0.1.0)
+### empty (component 0.1.1)
 
 
 ```swift
@@ -231,7 +231,7 @@ ContentUnavailableView(
 ```
 
 
-### field (component 0.1.0)
+### field (component 0.1.1)
 
 
 ```swift
@@ -252,7 +252,7 @@ FieldGroup {
 ```
 
 
-### input (component 0.5.0)
+### input (component 0.5.1)
 
 
 ```swift
@@ -276,7 +276,7 @@ TextField("Email", text: $email)
 ```
 
 
-### input-group (component 0.2.0)
+### input-group (component 0.2.1)
 
 
 ```swift
@@ -299,7 +299,7 @@ InputGroup {
 ```
 
 
-### item (component 0.2.0)
+### item (component 0.2.1)
 
 
 ```swift
@@ -314,7 +314,7 @@ ItemRow(
 ```
 
 
-### kbd (component 0.1.1)
+### kbd (component 0.1.2)
 
 
 ```swift
@@ -326,7 +326,7 @@ Text(verbatim: "esc")
 ```
 
 
-### label (component 0.2.0)
+### label (component 0.2.1)
 
 
 ```swift
@@ -338,7 +338,7 @@ Label("Continue", systemImage: "chevron.forward")
 ```
 
 
-### macro-progress (component 0.4.0)
+### macro-progress (component 0.4.1)
 
 
 ```swift
@@ -353,7 +353,7 @@ MacroProgress(
 ```
 
 
-### marker (component 0.1.0)
+### marker (component 0.1.1)
 
 
 ```swift
@@ -368,7 +368,7 @@ Text("Delivered 09:41")
 ```
 
 
-### message (component 0.1.0)
+### message (component 0.1.1)
 
 
 ```swift
@@ -389,7 +389,7 @@ MessageRow {
 ```
 
 
-### message-scroller (component 0.1.0)
+### message-scroller (component 0.1.1)
 
 
 ```swift
@@ -405,7 +405,7 @@ MessageScroller(position: $position, isFollowing: $isFollowing) {
 ```
 
 
-### metric-card (component 0.2.1)
+### metric-card (component 0.2.2)
 
 
 ```swift
@@ -418,7 +418,7 @@ MetricCard(
 ```
 
 
-### progress (component 0.2.0)
+### progress (component 0.2.1)
 
 
 ```swift
@@ -436,7 +436,7 @@ ProgressView(value: 1) {
 ```
 
 
-### select (component 0.2.0)
+### select (component 0.2.1)
 
 
 ```swift
@@ -450,7 +450,7 @@ Picker("Currency", selection: $currency) {
 ```
 
 
-### separator (component 0.2.0)
+### separator (component 0.2.1)
 
 
 ```swift
@@ -462,7 +462,7 @@ Divider()
 ```
 
 
-### skeleton (component 0.2.0)
+### skeleton (component 0.2.1)
 
 
 ```swift
@@ -475,7 +475,7 @@ ActivityRows()
 ```
 
 
-### spinner (component 0.2.0)
+### spinner (component 0.2.1)
 
 
 ```swift
@@ -484,7 +484,7 @@ ProgressView("Loading results")
 ```
 
 
-### table (component 0.1.0)
+### table (component 0.1.1)
 
 
 ```swift
@@ -502,7 +502,7 @@ DataTable(
 ```
 
 
-### textarea (component 0.4.0)
+### textarea (component 0.4.1)
 
 
 ```swift
@@ -513,7 +513,7 @@ TextEditor(text: $notes)
 ```
 
 
-### toast (component 0.1.0)
+### toast (component 0.1.1)
 
 
 ```swift
@@ -531,7 +531,7 @@ toast = RegistryToast(
 ```
 
 
-### toggle (component 0.2.0)
+### toggle (component 0.2.1)
 
 
 ```swift
@@ -544,7 +544,7 @@ Toggle("Bold", systemImage: "bold", isOn: $bold)
 ```
 
 
-### toggle-group (component 0.2.0)
+### toggle-group (component 0.2.1)
 
 
 ```swift
@@ -561,7 +561,7 @@ ControlGroup {
 ```
 
 
-### transaction-row (component 0.5.0)
+### transaction-row (component 0.5.1)
 
 
 ```swift
@@ -578,7 +578,7 @@ TransactionRow(
 ## Blocks
 
 
-### activity-feed (block 0.2.1)
+### activity-feed (block 0.2.2)
 
 
 ```swift
@@ -604,7 +604,7 @@ ActivityFeed(
 ```
 
 
-### auth-form (block 0.3.1)
+### auth-form (block 0.3.2)
 
 
 ```swift
@@ -623,7 +623,7 @@ AuthForm(
 ```
 
 
-### command-search (block 0.2.0)
+### command-search (block 0.2.1)
 
 
 ```swift
@@ -643,7 +643,7 @@ CommandSearch(
 ```
 
 
-### dashboard (block 0.1.0)
+### dashboard (block 0.1.1)
 
 
 ```swift
@@ -676,7 +676,7 @@ Dashboard(
 ```
 
 
-### finance-overview (block 0.4.2)
+### finance-overview (block 0.4.3)
 
 
 ```swift
@@ -702,7 +702,7 @@ FinanceOverview(
 ```
 
 
-### nutrition-overview (block 0.2.2)
+### nutrition-overview (block 0.2.3)
 
 
 ```swift
@@ -729,7 +729,7 @@ NutritionOverview(
 ```
 
 
-### preview (block 0.3.0)
+### preview (block 0.3.1)
 
 
 ```swift
@@ -737,7 +737,7 @@ PreviewWall()
 ```
 
 
-### preview-02 (block 0.3.0)
+### preview-02 (block 0.3.1)
 
 
 ```swift
@@ -745,7 +745,7 @@ PreviewWall02()
 ```
 
 
-### questionnaire (block 0.1.0)
+### questionnaire (block 0.1.1)
 
 
 ```swift
@@ -771,7 +771,7 @@ Questionnaire(
 ```
 
 
-### settings-section (block 0.1.1)
+### settings-section (block 0.1.2)
 
 
 ```swift
@@ -802,7 +802,7 @@ SettingsSection(
 ```
 
 
-### signup-form (block 0.1.0)
+### signup-form (block 0.1.1)
 
 
 ```swift

@@ -144,24 +144,25 @@ exact commands and scoping are in `references/checklist.md`.
    Use `--force` only for an item whose owned copy the Showcase already tracks.
 3. Register a demo for the item in `ItemDemos.swift` so the `-item <name>` launch
    renders it alone for capture (`AGENTS.md`, Boundaries).
-4. Capture on the pinned simulator, then regenerate all three derived surfaces:
+4. Capture on the pinned simulator, then regenerate all four derived surfaces:
 
    ```sh
    python3 Scripts/capture_previews.py <name>
    swift run swiftui-registry generate catalog
    swift run swiftui-registry generate showcase-manifest
    swift run swiftui-registry generate site-data
+   swift run swiftui-registry generate item-tokens
    ```
 
-5. Confirm no drift: `git diff --exit-code -- docs/catalog Examples/Showcase Website/content`, then `swift test` and `make format-check`.
+5. Confirm no drift: `git diff --exit-code -- docs/catalog Examples/Showcase Website/content Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift`, then `swift test` and `make format-check`.
 
 - **DO** keep the Showcase's `Installed/` copies byte-identical to the registry
   source; MANGO's edited copies live under `Mango/` with renamed types instead
   (`docs/mango.md`, What MANGO customized in the Showcase).
 - **DO** start the demo with the feature the item is named for selected, so the
   capture shows that feature (a verifier lesson).
-- **DO NOT** hand-edit anything under `docs/catalog/`, `Website/content/`, or the
-  Showcase manifest; regenerate it (`AGENTS.md`, Rules).
+- **DO NOT** hand-edit anything under `docs/catalog/`, `Website/content/`, the
+  Showcase manifest, or `RegistryItemTokens.swift`; regenerate it (`AGENTS.md`, Rules).
 
 ## How to run the UI suite on both destinations
 
@@ -188,8 +189,8 @@ floor, and passes the demo walk's accessibility audit on both device classes
 
 ## What the fresh-context verifier catches
 
-These are the misses a fresh-context verifier repeatedly caught that an author
-skips (project memory, Stage 7 slice orchestration):
+These are the misses a fresh-context verifier repeatedly caught during the
+Stage 7 catalog build that an author skips:
 
 1. A preview-only dependency left out of `registryDependencies` (the preview
    compiles in the Showcase but a clean consumer install fails).

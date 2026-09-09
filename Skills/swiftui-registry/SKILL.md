@@ -99,7 +99,7 @@ actually declares (`docs/registry-spec.md`, Agent usage, step 3).
    requirements, and the file targets:
 
    ```text
-   badge (component 0.3.1)
+   badge (component 0.3.2)
    Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.
 
    Usage:

@@ -2,7 +2,7 @@
 
 # nutrition-overview
 
-Composes prepared energy and macronutrient values into an embeddable nutrition overview.
+Composes energy, macro values; embeddable.
 
 ![nutrition-overview preview](../images/items/nutrition-overview-light.png)
 
@@ -64,7 +64,6 @@ NutritionOverview(
 - Platforms: iOS 26.0+
 - Installs in order: [metric-card](metric-card.md) 0.2.2, [macro-progress](macro-progress.md) 0.4.1, [nutrition-overview](nutrition-overview.md) 0.2.3
 - Accessibility contract:
-  - The overview uses native Button and ProgressView semantics. The screen and section titles carry the header trait.
-  - The overview uses system text styles and adaptive macro rows for Dynamic Type.
-  - The overview accepts prepared values, so callers keep localization and measurement-format control.
+  - Button, ProgressView semantics; header-trait titles.
+  - System text, adaptive rows: Dynamic Type; prepared values: caller localization/format.
 - Source: [sources/blocks/NutritionOverview.swift](../../Registry/sources/blocks/NutritionOverview.swift), with the `Nutrition Overview` Xcode preview

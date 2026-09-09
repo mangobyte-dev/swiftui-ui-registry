@@ -2,7 +2,7 @@
 
 # activity-feed
 
-Composes inline alert, avatar, item row, skeleton, empty state, and accordion treatments into an activity feed with caller-owned loading, items, notice, and selection.
+Composes alert, avatar, item, skeleton, empty, accordion; caller-owned loading, items, notice, selection.
 
 ![activity-feed preview](../images/items/activity-feed-light.png)
 
@@ -63,10 +63,9 @@ ActivityFeed(
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [alert](alert.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [skeleton](skeleton.md) 0.2.1, [empty](empty.md) 0.1.1, [accordion](accordion.md) 0.2.2, [activity-feed](activity-feed.md) 0.2.2
 - Accessibility contract:
-  - Feedback never uses color alone. Unread rows use a heavier title, a dot, and an Unread accessibility value. The notice variant pairs a symbol with its color.
-  - Loading placeholders form one disabled accessibility element labeled Loading activity. They cannot trigger selection.
-  - Every avatar uses the caller-provided sender name as its label. The notice symbol and unread dot are decorative and hidden.
-  - The empty state is a native ContentUnavailableView with caller-provided copy. The earlier section is a native DisclosureGroup that announces Expanded or Collapsed.
-  - Rows are native Buttons. Each row's combined label reads the sender name, title, detail, and timestamp, with an Unread accessibility value. A sender name equal to the title is spoken twice. Voice Control can address a row by its title alone.
-  - The screen title and the section title carry the header accessibility trait.
+  - No color-alone feedback. Unread: heavier title, dot, value. Avatar: sender-name. Notice: symbol, color; symbol, dot-decorative.
+  - Loading: 1 disabled element, label Loading activity, no selection.
+  - Empty: ContentUnavailableView, caller copy. Earlier: DisclosureGroup, Expanded, Collapsed.
+  - Rows: Buttons; label sender, title, detail, timestamp, value. Duplicate name spoken twice; Voice-Control: title only.
+  - Screen, section titles: header trait.
 - Source: [sources/blocks/ActivityFeed.swift](../../Registry/sources/blocks/ActivityFeed.swift), with the `Activity Feed` Xcode preview

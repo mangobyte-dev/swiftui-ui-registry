@@ -2,7 +2,7 @@
 
 # popover
 
-Native guidance for anchored, transient content with .popover, which adapts to a sheet on compact widths.
+`.popover` guidance.
 
 ![popover preview](../images/items/popover-light.png)
 
@@ -26,7 +26,7 @@ Button("Why is this needed?") { isShowingHelp = true }
 
 ## Why native is enough
 
-Anchor short explanatory content with `.popover`. On iPhone it adapts to a sheet, unless `.presentationCompactAdaptation(.popover)` opts into the popover form. The system positions the arrow, dims nothing, and dismisses on an outside tap. The registry adds no wrapper.
+`.popover` anchors content; iPhone: sheet unless `.presentationCompactAdaptation(.popover)`. System: arrow, no dim, outside-tap dismiss. No wrapper.
 
 ## Details
 
@@ -34,5 +34,5 @@ Anchor short explanatory content with `.popover`. On iPhone it adapts to a sheet
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Popover content is reachable by VoiceOver and dismissed with the escape gesture.
-  - Never place information only in a popover; keep the trigger label meaningful on its own.
+  - Popover: VoiceOver-reachable, escape-dismissed.
+  - Info MUST NOT live only in popover; label MUST stand alone.

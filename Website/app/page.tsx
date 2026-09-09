@@ -11,47 +11,47 @@ import { KINDS, asset, itemsOfKind, registry } from "@/lib/registry"
 
 const COMPARISON_LAYERS = [
   { slug: "registry", title: "Registry" },
-  { slug: "plain", title: "Stock, no styling" },
-  { slug: "handmade", title: "Same design by hand" },
+  { slug: "plain", title: "Stock" },
+  { slug: "handmade", title: "Handmade" },
 ]
 
 const COMPARISON_ROWS: { label: string; values: [string, string, string] }[] = [
-  { label: "Lines you write", values: ["223 in 4 files", "154 in 3 files", "585 in 11 files"] },
-  { label: "Lines you own but did not write", values: ["651 in 7 installed items", "0", "0"] },
+  { label: "Lines written", values: ["223 (4 files)", "154 (3 files)", "585 (11 files)"] },
+  { label: "Owned, not written", values: ["651 (7 items)", "0", "0"] },
   {
-    label: "Style protocols and modifiers you implement",
+    label: "Protocols/modifiers",
     values: [
       "none",
       "none",
-      "ButtonStyle, TextFieldStyle through its underscored _body, GroupBoxStyle, ToggleStyle, three ViewModifiers, an environment key, and a theme with 8 colors and 9 metrics",
+      "ButtonStyle, TextFieldStyle (_body), GroupBoxStyle, ToggleStyle, 3 ViewModifiers, environment key, theme (8 colors, 9 metrics)",
     ],
   },
   {
     label: "Look",
-    values: ["the design, themed coral from a preset code", "stock controls", "the same design; the todos capture is byte-identical"],
+    values: ["coral (preset)", "stock controls", "same, byte-identical"],
   },
   {
-    label: "Change the accent everywhere",
-    values: ["one value in RegistryTheme+App.swift, or a new preset code", "not available", "one value, once the theme plumbing exists"],
+    label: "Change accent everywhere",
+    values: ["one value (RegistryTheme+App.swift) or new preset code", "not available", "one value, once plumbed"],
   },
   {
-    label: "When the design system improves",
-    values: ["install --update merges upstream into your copy and keeps your edits", "nothing to update", "you port every change by hand"],
+    label: "Updates",
+    values: ["--update merges upstream, keeps edits", "nothing to update", "by hand"],
   },
   {
     label: "Accessibility built in",
     values: [
-      "required labels for icon-only controls, 44 pt hit sizes, boxes that scale with text, a VoiceOver switch representation, RTL and Dynamic Type previews",
+      "required icon-only labels, 44 pt hits, text-scaling boxes, VoiceOver switch, RTL/Dynamic Type previews",
       "whatever stock gives",
-      "you must know it and write it again",
+      "know it, rewrite it",
     ],
   },
   { label: "App launch, XCTApplicationLaunchMetric, 5 runs", values: ["2.97 s", "2.99 s", "2.98 s"] },
-  { label: "Add 5 tasks, complete them, clear, XCTClockMetric, 3 runs", values: ["9.17 s", "15.59 s", "9.16 s"] },
+  { label: "5 tasks, complete, clear, XCTClockMetric, 3 runs", values: ["9.17 s", "15.59 s", "9.16 s"] },
   {
-    label: "Skills needed",
+    label: "Skills",
     values: [
-      "SwiftUI basics and one command",
+      "SwiftUI basics, one command",
       "SwiftUI basics",
       "style protocols, environment plumbing, Dynamic Type, accessibility, dark-mode color, RTL",
     ],
@@ -75,16 +75,15 @@ export default function HomePage() {
           <Link href={docHref("changelog")}>
             <Badge>0.3.0 public beta</Badge>
           </Link>
-          <Badge variant="secondary">iOS 26 and later</Badge>
+          <Badge variant="secondary">iOS 26+</Badge>
           <Badge variant="secondary">MIT</Badge>
         </div>
         <h1 className="max-w-[18ch] text-3xl font-bold tracking-tight sm:text-5xl">
           Native-first SwiftUI you copy and own.
         </h1>
         <p className="max-w-[62ch] text-lg text-muted-foreground">
-          A registry of SwiftUI product UI, like shadcn/ui. Search a local catalog, copy real Swift source
-          into your app, set the theme once, and own every line. Apple controls stay visible at the call site.
-          The registry only styles and composes them.
+          A registry of SwiftUI product UI, like shadcn/ui. Search a local catalog, copy real source, theme
+          once, own every line. Apple controls stay visible; the registry only styles and composes them.
         </p>
         <div className="flex flex-wrap gap-2">
           <Button render={<Link href={docHref("installation")} />} nativeButton={false}>
@@ -95,7 +94,7 @@ export default function HomePage() {
             Browse components
           </Button>
           <Button variant="outline" render={<Link href="/create/" />} nativeButton={false}>
-            Create a theme
+            Create theme
           </Button>
           <Button variant="ghost" render={<a href={registry.repositoryURL} />} nativeButton={false}>
             GitHub
@@ -110,21 +109,20 @@ export default function HomePage() {
           ))}
           <div className="flex flex-col">
             <dt className="text-2xl font-bold tabular-nums">{registry.presets.length}</dt>
-            <dd className="text-sm text-muted-foreground">theme presets</dd>
+            <dd className="text-sm text-muted-foreground">presets</dd>
           </div>
         </dl>
       </section>
 
       <section className="flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold tracking-tight">Set up once, use it everywhere</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">Set up once, use everywhere</h2>
         <ol className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <li className="min-w-0">
             <Card className="h-full">
               <CardHeader>
-                <CardTitle>1. Add the foundations package</CardTitle>
+                <CardTitle>1. Add foundations</CardTitle>
                 <CardDescription>
-                  One small package carries the theme contract: accent, surfaces, borders, semantic colors,
-                  and metrics.
+                  One small package carries the theme contract: accent, surfaces, borders, semantic colors, metrics.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -135,10 +133,9 @@ export default function HomePage() {
           <li className="min-w-0">
             <Card className="h-full">
               <CardHeader>
-                <CardTitle>2. Apply a theme at your root</CardTitle>
+                <CardTitle>2. Theme the root</CardTitle>
                 <CardDescription>
-                  Pick a preset, or compose one on the Create page and apply its code. Every item below
-                  inherits it. Native controls follow through the tint.
+                  Pick a preset or compose on Create; items below inherit it, controls follow the tint.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -149,10 +146,9 @@ export default function HomePage() {
           <li className="min-w-0">
             <Card className="h-full">
               <CardHeader>
-                <CardTitle>3. Install what you need</CardTitle>
+                <CardTitle>3. Install an item</CardTitle>
                 <CardDescription>
-                  Copy an item and its dependency closure into your target. A receipt makes later updates
-                  merge instead of overwrite.
+                  Copies item + dependency closure to target; receipt merges updates, not overwrites.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -168,11 +164,11 @@ export default function HomePage() {
 
       <section className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h2 className="text-2xl font-semibold tracking-tight">Tune it on the device</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">Tune device</h2>
           <p className="max-w-[70ch] text-muted-foreground">
-            New in 0.3.0: the design surface puts a floating panel over your running app. Tap Select, then any registry
-            item. The panel scopes to the tokens that reach it. Move a knob and the app changes immediately. Export the
-            result as a preset code, or as Swift to paste. A release build does not change.
+            New in 0.3.0: the design surface floats a panel over your running app. Select an item, it scopes
+            to that item&apos;s tokens; move a knob and the app changes live. Export a preset or Swift code;
+            release unchanged.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_2fr]">
@@ -180,41 +176,40 @@ export default function HomePage() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={asset("/images/design-surface/iphone-card-light.png")}
-              alt="The floating tuning card over the Showcase on iPhone, with the selected card outlined"
+              alt="Tuning card, Showcase, iPhone, outlined"
               loading="lazy"
               className="h-auto w-full rounded-xl border shadow-sm"
             />
-            <figcaption className="text-sm text-muted-foreground">iPhone: the card stays where you leave it.</figcaption>
+            <figcaption className="text-sm text-muted-foreground">iPhone: stays where left.</figcaption>
           </figure>
           <figure className="flex min-w-0 flex-col gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={asset("/images/design-surface/ipad-column-light.png")}
-              alt="The tuning panel as a side column over the Showcase on iPad, with the selected buttons outlined"
+              alt="Tuning panel, Showcase, iPad side column, buttons outlined"
               loading="lazy"
               className="h-auto w-full rounded-xl border shadow-sm"
             />
-            <figcaption className="text-sm text-muted-foreground">iPad: the same panel, docked into a column.</figcaption>
+            <figcaption className="text-sm text-muted-foreground">iPad: docks into a column.</figcaption>
           </figure>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button variant="outline" render={<Link href={docHref("design-surface")} />} nativeButton={false}>
-            How the design surface works
+            Design surface
             <ArrowRightIcon data-icon="inline-end" />
           </Button>
           <Button variant="ghost" render={<Link href={docHref("changelog")} />} nativeButton={false}>
-            What&apos;s new in 0.3.0
+            What&apos;s new
           </Button>
         </div>
       </section>
 
       <section className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h2 className="text-2xl font-semibold tracking-tight">What the registry gives you</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">You get</h2>
           <p className="text-muted-foreground">
-            One todo and counter app, with three UI layers over the same reducers: the registry items the app owns,
-            stock SwiftUI with no styling, and the registry&apos;s design rewritten by hand. The tests ran on 2026-09-06
-            on the iPhone 17 simulator, iOS 27. The method and the tests are in the repository&apos;s Examples/TodoCounter.
+            One todo-and-counter app, three UI layers, same reducers: registry, stock SwiftUI, handmade.
+            Tested 2026-09-06, iPhone 17 simulator, iOS 27; see Examples/TodoCounter.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -255,10 +250,9 @@ export default function HomePage() {
           </Table>
         </div>
         <p className="text-sm text-muted-foreground">
-          At runtime, the registry costs nothing against the hand-written styles. Those two columns are within noise.
-          The stock layer&apos;s slower interaction comes from the system switch&apos;s animation under UI automation,
-          not from rendering. The registry saves you the 585 lines and the skills behind them, once per project, and
-          gives an update path afterwards.
+          Runtime: registry vs handmade cost nothing extra, within noise. Stock&apos;s slower interaction: switch
+          animation under UI automation, not rendering. Registry saves 585 lines and the skills, once per
+          project, plus an update path.
         </p>
       </section>
 
@@ -266,7 +260,7 @@ export default function HomePage() {
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">Blocks and components</h2>
           <p className="text-muted-foreground">
-            Every capture is the installed source, rendered by the Showcase on iPhone 17, iOS 27.
+            Installed source, rendered by Showcase, iPhone 17, iOS 27.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -310,7 +304,7 @@ export default function HomePage() {
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">Recipes</h2>
           <p className="text-muted-foreground">
-            When a one-line Apple API is the whole treatment, the registry says so instead of wrapping it.
+            When a one-line Apple API suffices, the registry says so, not wraps it.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">

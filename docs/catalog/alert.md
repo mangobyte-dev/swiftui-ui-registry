@@ -2,7 +2,7 @@
 
 # alert
 
-Composes an inline, non-modal status message with informational, positive, and destructive variants and optional caller-owned actions.
+Inline alert: informational, positive, destructive; optional caller actions.
 
 ![alert preview](../images/items/alert-light.png)
 
@@ -57,8 +57,8 @@ InlineAlert(
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [alert](alert.md) 0.2.1
 - Accessibility contract:
-  - Each variant pairs its own symbol with its color. Informational, positive, and destructive meaning never rests on color alone.
-  - The title and message combine into one accessibility element. Caller-provided action buttons stay separate and activatable.
-  - VoiceOver does not read the leading symbol, so the variant reaches assistive technology only through the title and message. Name the outcome in the title.
-  - The message stays in the content flow and never interrupts. For decisions that must be answered, use the native .alert modifier.
+  - Symbol-color pair; MUST NOT rely on color alone.
+  - Title+message: one element. Buttons: separate, activatable.
+  - VoiceOver skips symbol; title MUST name outcome.
+  - MUST NOT interrupt; required answers SHOULD use .alert.
 - Source: [sources/components/InlineAlert.swift](../../Registry/sources/components/InlineAlert.swift), with the `Inline Alert` Xcode preview

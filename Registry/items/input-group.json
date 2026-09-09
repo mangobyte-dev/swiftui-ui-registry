@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "name": "input-group",
   "kind": "component",
-  "description": "Wraps a native text field with registry input chrome and caller-provided leading and trailing accessories, such as a search symbol and a clear button.",
+  "description": "Wraps field in registry chrome; accessories add search symbol or clear button.",
   "usage": "@State private var query = \"\"\n\nInputGroup {\n    Image(systemName: \"magnifyingglass\")\n        .accessibilityHidden(true)\n} content: {\n    TextField(\"Search transactions\", text: $query)\n        .accessibilityLabel(\"Search transactions\")\n} trailing: {\n    if !query.isEmpty {\n        Button(\"Clear search\", systemImage: \"xmark.circle.fill\") { query = \"\" }\n            .labelStyle(.iconOnly)\n            .buttonStyle(.registryGhost)\n            .controlSize(.small)\n    }\n}",
   "files": [
     {
@@ -49,10 +49,10 @@
     "suffix"
   ],
   "accessibility": [
-    "The field stays a native TextField or SecureField. Give it an explicit accessibilityLabel, because the title is placeholder text only.",
-    "Hide a decorative leading accessory with accessibilityHidden(true). An informational prefix stays visible, and the field's accessibilityLabel carries its meaning. A trailing registry button keeps its own label and 44 point hit area.",
-    "Focus draws the accent ring. The invalid state draws the negative border at the same emphasized width and wins over focus. Pair it with a message.",
-    "The field keeps the 44 point minimum height and applies the shared disabled opacity."
+    "TextField/SecureField; MUST have accessibilityLabel (placeholder).",
+    "Leading decorative MUST accessibilityHidden(true); informational visible via label; trailing: label, 44pt area.",
+    "Focus: accent ring; invalid: negative border wins; SHOULD pair message.",
+    "44-point min height; disabled opacity."
   ],
   "preview": {
     "source": "sources/components/InputGroup.swift",

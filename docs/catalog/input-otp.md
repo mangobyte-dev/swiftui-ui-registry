@@ -2,7 +2,7 @@
 
 # input-otp
 
-Native guidance for a one-time-code TextField that autofills from Messages and Mail instead of a boxed control.
+One-time-code TextField, not a boxed control.
 
 ![input-otp preview](../images/items/input-otp-light.png)
 
@@ -32,7 +32,7 @@ Button("Verify") { }
 
 ## Why native is enough
 
-A single `TextField` with `.textContentType(.oneTimeCode)` lets the system offer the code from Messages and Mail above the keyboard, and `.keyboardType(.numberPad)` keeps entry numeric. A six-box field imitates a control Apple already supplies and loses that autofill. The `onChange` handler keeps at most six digits, so paste and autofill stay clean. Watch the content type: without `.oneTimeCode` the system does not offer the code.
+`TextField` + `.textContentType(.oneTimeCode)`: offers Messages/Mail code above keyboard; `.keyboardType(.numberPad)`: numeric. Six-box imitates, loses autofill. `onChange` caps 6 digits. No type: no offer.
 
 ## Details
 
@@ -40,5 +40,5 @@ A single `TextField` with `.textContentType(.oneTimeCode)` lets the system offer
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - The field carries an explicit accessibility label because its title shows only as placeholder text on iOS.
-  - The monospaced-digit font keeps entered digits legible at large Dynamic Type sizes.
+  - Needs explicit label; title shows only as placeholder.
+  - Monospaced-digit font: legible at large Dynamic Type.

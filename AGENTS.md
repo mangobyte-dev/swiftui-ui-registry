@@ -2,71 +2,122 @@
 
 ## Purpose
 
-Validate a native-first, source-owned, registry-driven SwiftUI composition layer. Version 0 is intentionally small
+Validate a native first, source owned, registry driven SwiftUI composition layer. Version 0 stays small.
 
-The whole system is one loop: edit canonical source in `Registry/sources/` and metadata in `Registry/items/`, validate, regenerate `docs/catalog/`, reinstall into Showcase, compile, and verify visually. Everything downstream of metadata is derived, never hand-edited
+One loop: edit `Registry/sources/` and `Registry/items/`, validate, regenerate `docs/catalog/`, reinstall into the Showcase, compile, verify visually. Everything downstream of metadata is derived. You MUST NOT hand edit it.
 
 ## Document map
 
-Each kind of fact lives in exactly one place. Four document classes:
+Each fact has one home in four classes.
 
-- Contracts, which rules come from: this file, `docs/philosophy.md` (why), `docs/architecture.md` (how), `docs/registry-spec.md` (data and installer contract), `docs/visual-testing.md` (visual evidence rules), `docs/mango.md` (the design-system template)
-- State, the only home of what shipped and the known limitations: `CHANGELOG.md`. A status claim in any other file is a pointer, not a second source
-- Generated, never hand-edited: `docs/catalog/` (markdown catalog), `Website/content/registry.json`, `Website/content/docs/` (the changelog and the contract documents the site's Docs pages render, copied from the repository's own markdown), and `Website/public/images/` (the website's data and captures; the site itself is Next.js with shadcn/ui under `Website/`, and its hand-written docs pages live under `Website/docs/`), `Examples/Showcase/.../RegistryCatalogManifest.swift` and `Examples/Showcase/SwiftUIRegistryShowcaseUITests/RegistryItemNames.swift` (the Showcase manifest), `Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift` (the item-to-token map the design surface scopes its panel by), and `docs/images/items/` and `docs/images/themes/` (captures). Current item counts and per-item pages live there, not in prose
-- Archives, closed dated records kept as evidence, not updated, live outside the repository in `~/Projects/swiftui-cn-local/` (the roadmap, the research records, the direction review, the Stage 1 validation, the clean-room trial, the CLI-migration contract, and the handoff brief), with an `INDEX.md` there; none are tracked here, and `CHANGELOG.md` carries what an adopter needs from them
+Contracts:
 
-On conflict: state beats archives, the more recent dated record wins between archives, and contracts govern rules regardless. Surface the conflict, then fix the stale text rather than averaging
+| File | Covers |
+| --- | --- |
+| this file | developing the registry |
+| `docs/philosophy.md` | why |
+| `docs/architecture.md` | how |
+| `docs/registry-spec.md` | data and installer contract; "Agent usage" covers a consuming app |
+| `docs/visual-testing.md` | visual evidence rules |
+| `docs/mango.md` | the design system template |
 
-`docs/registry-spec.md` "Agent usage" addresses an agent consuming the registry from another app. This file addresses an agent developing the registry
+State: `CHANGELOG.md` alone holds what shipped and the known limitations. A status claim elsewhere is a pointer.
+
+Generated, MUST NOT hand edit:
+
+| Path | Holds |
+| --- | --- |
+| `docs/catalog/` | markdown catalog |
+| `Website/content/registry.json` | site data |
+| `Website/content/docs/` | changelog and contracts copied for the site's Docs pages |
+| `Website/public/images/` | site captures |
+| `Examples/Showcase/.../RegistryCatalogManifest.swift`, `Examples/Showcase/SwiftUIRegistryShowcaseUITests/RegistryItemNames.swift` | Showcase manifest |
+| `Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift` | item to token map that scopes the design surface's panel |
+| `docs/images/items/`, `docs/images/themes/` | captures |
+
+Counts and per item pages live there, not in prose. `Website/` is Next.js with shadcn/ui; its hand written docs pages sit in `Website/docs/`.
+
+Archives: 7 closed dated records (roadmap, research records, direction review, Stage 1 validation, clean room trial, CLI migration contract, handoff brief). They sit untracked in `~/Projects/swiftui-cn-local/` beside an `INDEX.md`. `CHANGELOG.md` carries what an adopter needs from them.
+
+Conflicts: state beats archives, the later archive wins, contracts govern rules. Surface the conflict and fix the stale text. MUST NOT average.
 
 ## Boundaries
 
-- `Sources/SwiftUIRegistryFoundations/` is the stable package interface for design foundations only
-- `Sources/SwiftUIRegistryDesignSurface/` is the optional design-surface product: the tuning panel, the preset codec, the `designSurface()` modifier, and the `design-tokens.json` store on swift-sharing, compiled only where UIKit exists and inert in release builds. It depends on foundations and never on registry items (its chrome is native styles); the Showcase consumes it, and its tests run through the Showcase scheme because the root package builds it empty on macOS
-- `Sources/RegistryKit/` is the SwiftUI-free engine behind the `swiftui-registry` executable in `Sources/SwiftUIRegistryCLI/`: loading, the single structural validator, resolution, receipts, installation and merge, search, preset codes, the MCP server, and the three generators. It never imports `SwiftUIRegistryFoundations`; `Tests/RegistryKitTests/` holds its contracts and captured fixtures
-- `Registry/sources/components/` contains source-owned styles, focused modifiers, and reusable compositions
-- `Registry/sources/blocks/` contains source-owned compositions of components
-- `Registry/items/` is machine-readable metadata and the dependency graph; `Registry/preset_vectors.json` pins the preset codes every codec reproduces
-- `Distribution/homebrew/` is the formula template for the owner's Homebrew tap, and `.github/workflows/release.yml` builds the universal binary when a GitHub release is published; neither is exercised by the verification list
-- `Examples/TodoCounter/` is a second consumer built from a fresh Xcode project: the published package by URL, the Composable Architecture, seven items installed with the released tool, a customized preset theme, and one locally edited component. It is not part of the verification list; its own test plan runs from its workspace
-- `Examples/Showcase/` proves installation, integration, and visual contracts. It is a browsable catalog (Components, Blocks, Recipes) with the design surface's tuning panel beside it, whose item list and usage snippets come from the generated manifest; every item has a demo registered in `ItemDemos.swift`, and the `-item <name>` launch renders that demo alone for capture
-- `Skills/` holds the three agent skills, mirrored to `~/.claude/skills/`; their content quotes the tool's help and the catalog and is regenerated when either changes
+- `Sources/SwiftUIRegistryFoundations/`: stable interface, design foundations only.
+- `Sources/SwiftUIRegistryDesignSurface/`: optional product: tuning panel, preset codec, `designSurface()`, the `design-tokens.json` store on `swift-sharing`. Compiles only with UIKit, inert in release. Depends on foundations, never on items (native chrome). The Showcase consumes it; its tests run through the Showcase scheme, since the root package builds it empty on macOS.
+- `Sources/RegistryKit/`: SwiftUI free engine behind `swiftui-registry` (`Sources/SwiftUIRegistryCLI/`): loading, the single structural validator, resolution, receipts, install and merge, search, preset codes, the MCP server, the generators. Never imports `SwiftUIRegistryFoundations`. Contracts and captured fixtures: `Tests/RegistryKitTests/`.
+- `Registry/sources/components/`: source owned styles, focused modifiers, reusable compositions.
+- `Registry/sources/blocks/`: source owned compositions of components.
+- `Registry/items/`: metadata and the dependency graph. `Registry/preset_vectors.json` pins the codes every codec reproduces.
+- `Distribution/homebrew/`: the tap's formula template. `.github/workflows/release.yml` builds the universal binary on a GitHub release. Neither is in the verification list.
+- `Examples/TodoCounter/`: second consumer from a fresh Xcode project: package by URL, the Composable Architecture, 7 items installed with the released tool, a customized preset theme, 1 locally edited component. Not in the verification list; its test plan runs from its workspace.
+- `Examples/Showcase/`: proves installation, integration, and the visual contracts. Components, Blocks, and Recipes tabs beside the tuning panel; item list and usage snippets from the generated manifest. Every item has a demo in `ItemDemos.swift`; `-item <name>` renders one alone for capture.
+- `Skills/`: 3 agent skills, mirrored to `~/.claude/skills/`. They quote the tool's help and the catalog; regenerate them when either changes.
 
 ## Rules
 
-- Keep raw SwiftUI controls and containers visible at the call site. Standardize interactive appearance with SwiftUI style protocols and optional behavior with focused `ViewModifier`s. Do not add a wrapper only to rename an Apple control
-- Configure reusable views with prepared values, bindings, actions, and sensible defaults. Use `@ViewBuilder` when a container provides structure or chrome around arbitrary caller content
-- Prefer modifiers over adding parameters for independent optional decorations or behavior
-- A registry view's initializer carries what it is (content, bindings, actions, required accessibility input); a presentation choice the view owns (variant, tone, tint, a future size or emphasis) is a `registry`-prefixed copy-and-return method on the view applied before generic modifiers, as in `InlineAlert(...) { }.registryVariant(.positive)`. Native controls keep presentation in a `registry` style, text treatments in a `registry` modifier with a variant argument, the theme in the environment, and sizes through Apple's `controlSize`; a `ViewModifier` is for optional decorations that do not reach a component's internal layout
-- Keep controlled state with the caller through bindings. A component may own transient `@State` only when the interaction is genuinely self-contained and no caller must coordinate it
-- Registry source does not import app architecture, networking, or persistence libraries
-- Keep copied items understandable in isolation and list every source dependency in registry metadata
-- Use semantic foundation tokens instead of repeated hardcoded colors or metrics. Add a token only when at least two real registry items need the same semantic value
-- Keep a style or modifier source-owned until at least two registry items use the exact same treatment; only then consider moving the shared treatment into foundations
-- Respect environment values and layout proposals. Support Dynamic Type, color scheme, layout direction, enabled state, and flexible parent sizing rather than hardcoding one context
-- Require accessibility input when it cannot be derived from visible content. Do not make labels for icon-only controls optional
-- Preview every meaningful variant, including dark appearance and an accessibility Dynamic Type size
-- Do not create an extra reusable abstraction without two concrete consumers or named roadmap usages
-- Every installable item (component or block) needs a version, preview, accessibility notes, supported platform metadata, and a compile path. A `recipe` item is non-installing native guidance: empty `files`, non-empty `docs`, no preview requirement, and no installable item may depend on it (see the value gate in `docs/registry-spec.md`)
-- Every installable item applies `.registryItem("<name>")` once, as the last modifier of its root view's or style's chain (a private modifier's `body` for an item exposed through an extension); it is foundations API, inert without a design surface, and the validator rejects a foundations-dependent item whose first source lacks it
-- Every item of any kind needs a non-empty `usage` snippet: a minimal call-site example quoted from the item's real public API as declared in its canonical source, never written from memory. Recipes reuse the native snippet from their `docs`
-- `docs/catalog/` is generated by `swift run swiftui-registry generate catalog`, the website's data by `swift run swiftui-registry generate site-data`, the Showcase manifest by `swift run swiftui-registry generate showcase-manifest`, and the design surface's item-to-token map by `swift run swiftui-registry generate item-tokens` (it scans each item's sources and dependency closure for the theme fields they read); never edit any of them by hand. Regenerate all four after any metadata or registry source change; `generatedOutputsMatchCanonicalBytes` in `Tests/RegistryKitTests/GeneratorTests.swift` rejects drift byte for byte. The site's pages under `Website/app` are hand-written React and read only that JSON and the generated markdown under `Website/content/docs/` (plus the hand-written pages under `Website/docs/`); `npm run build` in `Website/` exports it statically
-- Item screenshots come from `python3 Scripts/capture_previews.py` on the pinned simulator, never from hand-made images; recapture an item after a visible change to it and regenerate the catalog and site
-- Never regenerate visual references merely to pass a test; follow `docs/visual-testing.md`
-- Add dependencies only when a vertical slice proves they are necessary
-- `Sources/RegistryKit/Validation.swift` is the only place registry structure is enforced; add or change structural checks there, never as ad hoc checks in commands or tests (see Validation in `docs/registry-spec.md`)
+- Keep raw controls and containers visible at the call site. Style protocols set appearance; a focused `ViewModifier` adds optional behavior. MUST NOT wrap an Apple control only to rename it.
+- Configure views with prepared values, bindings, actions, and defaults. Use `@ViewBuilder` when a container wraps caller content in structure or chrome.
+- Prefer a modifier over a parameter for an independent optional decoration or behavior.
+- One home per concern:
+
+  | Concern | Home |
+  | --- | --- |
+  | content, bindings, actions, required accessibility input | the initializer |
+  | variant, tone, tint, a future size or emphasis | a `registry` prefixed copy and return method, before generic modifiers |
+  | presentation of a native control | a `registry` style |
+  | a text treatment | a `registry` modifier with a variant argument |
+  | the theme | the environment |
+  | sizes | Apple's `controlSize` |
+  | an optional decoration outside internal layout | a `ViewModifier` |
+
+  Example: `InlineAlert(...) { }.registryVariant(.positive)`.
+
+- Controlled state stays with the caller through bindings. A component MAY own transient `@State` only for a self contained interaction.
+- Registry source MUST NOT import app architecture, networking, or persistence libraries.
+- A copied item stays understandable alone; metadata lists every source dependency.
+- Use semantic tokens, not repeated hardcoded colors or metrics. Add a token only when 2 real items need it.
+- A treatment stays source owned until 2 items share it exactly; only then consider foundations.
+- Respect environment values and layout proposals: Dynamic Type, color scheme, layout direction, enabled state, flexible parent sizing. MUST NOT hardcode one context.
+- Require accessibility input that visible content cannot supply. An icon only control's label MUST NOT be optional.
+- Preview every meaningful variant, including dark appearance and an accessibility Dynamic Type size.
+- A new reusable abstraction needs 2 concrete consumers or named roadmap usages.
+- Every installable component or block needs a version, preview, accessibility notes, platform metadata, and a compile path. A `recipe` installs nothing: empty `files`, non empty `docs`, no preview. No installable item MAY depend on a recipe (value gate, `docs/registry-spec.md`).
+- Every installable item applies `.registryItem("<name>")` once, last in its root view's or style's chain. For an item exposed through an extension, that chain is a private modifier's `body`. The tag is foundations API, inert without a surface. The validator rejects a foundations dependent item whose first source lacks it.
+- Every item needs a non empty `usage` snippet quoted from its canonical public API, never from memory. A recipe reuses the native snippet from its `docs`.
+- Four generators, four outputs:
+
+  | Command | Output |
+  | --- | --- |
+  | `swift run swiftui-registry generate catalog` | `docs/catalog/` |
+  | `swift run swiftui-registry generate site-data` | website data |
+  | `swift run swiftui-registry generate showcase-manifest` | Showcase manifest |
+  | `swift run swiftui-registry generate item-tokens` | item to token map |
+
+  `item-tokens` scans each item's sources and dependency closure for the theme fields they read. Regenerate all four after any metadata or source change; `generatedOutputsMatchCanonicalBytes` in `Tests/RegistryKitTests/GeneratorTests.swift` rejects drift byte for byte. `Website/app` is hand written React over that JSON and `Website/content/docs/`; `npm run build` in `Website/` exports it statically.
+
+- Item screenshots come from `python3 Scripts/capture_previews.py` on the pinned simulator, never hand made. Recapture after a visible change, then regenerate the catalog and site.
+- MUST NOT regenerate a visual reference merely to pass a test (`docs/visual-testing.md`).
+- Add a dependency only when a vertical slice proves it necessary.
+- `Sources/RegistryKit/Validation.swift` is the only place that enforces registry structure (Validation, `docs/registry-spec.md`).
 
 ## Environment pins
 
-- Visual contract and UI tests run on the light-mode iPhone 17, iOS 27.0 simulator; on this machine its UDID is `1807166B-C557-4F6B-B177-D5F3F701CBD7` (`docs/visual-testing.md`)
-- Captures launch the app with `-AppleLanguages (en) -AppleLocale en_US`, so dates, currency, and the calendar in an image never depend on a simulator's region; the iPad Pro 13-inch used for the wide block captures is set to en_US as well because the status bar date comes from the device (it was ar_SA until 2026-09-06)
-- Toolchain: Xcode 27.0, Swift 6.4. No iOS 26 simulator runtime is installed, so floor-26 claims rest on compilation plus iOS 27 runtime evidence
-- CI builds the tool on GitHub's `macos-26` image with its default Xcode 26.6 (`.github/workflows/ci.yml`); the package declares Swift tools 6.2, and the registry gate, the website build, and a secret scan run on every push and pull request
-- Package identity for consumers: `swiftui-ui-registry` at github.com/mangobyte-dev/swiftui-ui-registry. Tags `0.1.0` (2026-09-06) and `0.2.0` (2026-09-07) are published with GitHub releases and the Homebrew tap; the `0.3.0` beta adds the design surface's foundations API and the second product, so every installable item now declares the `0.3.0` floor (`docs/registry-spec.md`)
+| Pin | Value |
+| --- | --- |
+| visual contract and UI tests | light mode iPhone 17, iOS 27.0, UDID `1807166B-C557-4F6B-B177-D5F3F701CBD7` (`docs/visual-testing.md`) |
+| capture launch arguments | `-AppleLanguages (en) -AppleLocale en_US` |
+| wide block captures | iPad Pro 13 inch, also `en_US` (`ar_SA` until 2026-09-06) |
+| toolchain | Xcode 27.0, Swift 6.4 |
+| CI | GitHub `macos-26` image, default Xcode 26.6, Swift tools 6.2 (`.github/workflows/ci.yml`) |
+| package identity | `swiftui-ui-registry` at `github.com/mangobyte-dev/swiftui-ui-registry` |
+| published tags | `0.1.0` (2026-09-06), `0.2.0` (2026-09-07), each with a GitHub release and the Homebrew tap |
+
+The launch arguments keep dates, currency, and the calendar in an image independent of the region; the iPad's status bar date comes from the device, hence its pin. No iOS 26 runtime is installed. A floor 26 claim rests on compilation plus iOS 27 runtime evidence. CI runs the registry gate, the website build, and a secret scan on every push and pull request. `0.3.0` adds the design surface's foundations API and the second product. Every installable item therefore declares the `0.3.0` floor (`docs/registry-spec.md`).
 
 ## Verification
 
-Run from the repository root, cheapest first, so a defect fails the run before expensive steps:
+Run from the root, cheapest first:
 
 ```sh
 swift build
@@ -86,4 +137,4 @@ xcodebuildmcp simulator test --workspace-path Examples/Showcase/SwiftUIRegistryS
 (cd Website && npm ci && npm run typecheck && npm run build)
 ```
 
-Scope the run to the change: a metadata-only change stops after `make format-check`, a registry source change needs the install and compile steps, and only a visible UI change needs the simulator test. `swift test` needs `git` and Node 22 on PATH: the merge adapter shells out to `git merge-file`, and the website codec check runs `Website/lib/preset.ts` under `node --experimental-strip-types`. A visible change to an item also needs `python3 Scripts/capture_previews.py <item>` (the one remaining Python script, which lists items through the built tool) followed by the four generators. A change under `Website/` needs the typecheck and build. A change is incomplete if generated consumer sources differ from registry sources or any executed command fails; a skipped step is named in the done-claim
+Scope to the change: metadata only stops after `make format-check`; registry source needs the install and compile steps; only a visible UI change needs the simulator test; a change under `Website/` needs the typecheck and build. `swift test` needs `git` and Node 22 on PATH (`git merge-file`; `Website/lib/preset.ts` under `node --experimental-strip-types`). A visible item change also needs `python3 Scripts/capture_previews.py <item>`, then the four generators. That is the one remaining Python script; it lists items through the built tool. A change is incomplete if generated source differs from registry source or any command fails. Name a skipped step in the done claim.

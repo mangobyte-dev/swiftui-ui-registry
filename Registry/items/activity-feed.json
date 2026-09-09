@@ -4,7 +4,7 @@
   "version": "0.2.2",
   "name": "activity-feed",
   "kind": "block",
-  "description": "Composes inline alert, avatar, item row, skeleton, empty state, and accordion treatments into an activity feed with caller-owned loading, items, notice, and selection.",
+  "description": "Composes alert, avatar, item, skeleton, empty, accordion; caller-owned loading, items, notice, selection.",
   "usage": "ActivityFeed(\n    \"Activity\",\n    notice: ActivityNotice(\"Card delivery delayed\", message: Text(\"Arrives Thursday.\")),\n    onDismissNotice: { },\n    items: [\n        ActivityItem(\n            id: \"bakery\",\n            title: Text(\"Mishmash Bakery\"),\n            detail: Text(\"Card payment of KWD 8.750\"),\n            timestamp: Text(\"09:41\"),\n            initials: \"MB\",\n            senderName: Text(\"Mishmash Bakery\"),\n            isUnread: true\n        )\n    ],\n    earlierItems: [],\n    isLoading: false,\n    onSelect: { id in }\n)",
   "files": [
     {
@@ -55,12 +55,11 @@
     "feed"
   ],
   "accessibility": [
-    "Feedback never uses color alone. Unread rows use a heavier title, a dot, and an Unread accessibility value. The notice variant pairs a symbol with its color.",
-    "Loading placeholders form one disabled accessibility element labeled Loading activity. They cannot trigger selection.",
-    "Every avatar uses the caller-provided sender name as its label. The notice symbol and unread dot are decorative and hidden.",
-    "The empty state is a native ContentUnavailableView with caller-provided copy. The earlier section is a native DisclosureGroup that announces Expanded or Collapsed.",
-    "Rows are native Buttons. Each row's combined label reads the sender name, title, detail, and timestamp, with an Unread accessibility value. A sender name equal to the title is spoken twice. Voice Control can address a row by its title alone.",
-    "The screen title and the section title carry the header accessibility trait."
+    "No color-alone feedback. Unread: heavier title, dot, value. Avatar: sender-name. Notice: symbol, color; symbol, dot-decorative.",
+    "Loading: 1 disabled element, label Loading activity, no selection.",
+    "Empty: ContentUnavailableView, caller copy. Earlier: DisclosureGroup, Expanded, Collapsed.",
+    "Rows: Buttons; label sender, title, detail, timestamp, value. Duplicate name spoken twice; Voice-Control: title only.",
+    "Screen, section titles: header trait."
   ],
   "preview": {
     "source": "sources/blocks/ActivityFeed.swift",

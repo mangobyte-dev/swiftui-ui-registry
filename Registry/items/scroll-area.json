@@ -4,9 +4,9 @@
   "version": "0.2.0",
   "name": "scroll-area",
   "kind": "recipe",
-  "description": "Native guidance for scrollable content with content margins, indicator visibility, and clipping left to ScrollView.",
+  "description": "Scrollable content: margins, indicators, clipping.",
   "usage": "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()\n.scrollEdgeEffectStyle(.soft, for: .top)",
-  "docs": "Compose blocks inside a native `ScrollView`, and tune the edges with `.contentMargins`, `.scrollIndicators`, and `.scrollClipDisabled`. Scrolling, bounce, and keyboard avoidance are system behavior. Registry blocks deliberately never own a scroll view. The scroll edge effect that you set with `.scrollEdgeEffectStyle` is the system transition between content and the Liquid Glass control layer, in place of a background (HIG Layout).",
+  "docs": "`ScrollView` + `.contentMargins`, `.scrollIndicators`, `.scrollClipDisabled`; scrolling/bounce/keyboard system-owned, not blocks. `.scrollEdgeEffectStyle`: content-to-glass transition, replaces background (HIG Layout).",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -28,8 +28,8 @@
     "scrollview"
   ],
   "accessibility": [
-    "Native scroll views support VoiceOver page scrolling and the three-finger scroll gesture.",
-    "Hidden indicators remove a sighted affordance; prefer .automatic for long content."
+    "Native scroll: VoiceOver page-scroll, three-finger gesture.",
+    "Hidden indicators remove sighted affordance; prefer .automatic for long content."
   ],
   "preview": {
     "screenshots": [

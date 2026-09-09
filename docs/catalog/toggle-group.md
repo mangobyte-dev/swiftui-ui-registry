@@ -2,7 +2,7 @@
 
 # toggle-group
 
-Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.
+Toggle treatment, ControlGroup.
 
 ![toggle-group preview](../images/items/toggle-group-light.png)
 
@@ -54,8 +54,7 @@ ControlGroup {
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [toggle](toggle.md) 0.2.1, [toggle-group](toggle-group.md) 0.2.1
 - Accessibility contract:
-  - Retains each native Toggle's independent state and activation behavior.
-  - Keeps all selection bindings caller-owned.
-  - Requires accessible labels for icon-only toggles.
-  - Inherits Dynamic Type, enabled state, control size, and layout direction.
+  - Toggle state, activation, bindings caller-owned.
+  - Icon-only labels needed.
+  - Dynamic Type, enabled, size, layout direction.
 - Source: [sources/components/RegistryToggleGroupModifier.swift](../../Registry/sources/components/RegistryToggleGroupModifier.swift), with the `Toggle Group` Xcode preview

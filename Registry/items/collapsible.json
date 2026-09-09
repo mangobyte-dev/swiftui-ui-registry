@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "name": "collapsible",
   "kind": "recipe",
-  "description": "Native guidance for a single expandable region with the default DisclosureGroup, distinct from the styled accordion.",
+  "description": "Native DisclosureGroup, distinct from accordion.",
   "usage": "@State private var isShowingDetails = false\n\nDisclosureGroup(\"Fee breakdown\", isExpanded: $isShowingDetails) {\n    LabeledContent(\"Transfer fee\", value: \"KWD 1.000\")\n    LabeledContent(\"Exchange margin\", value: \"KWD 0.450\")\n}",
-  "docs": "One expandable region is the default `DisclosureGroup`. Use the `accordion` item only when several groups stack as a list. A single collapsible region needs no extra treatment.",
+  "docs": "`DisclosureGroup`: 1 region. `accordion`: several stacked. No extra treatment.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -28,8 +28,8 @@
     "expand"
   ],
   "accessibility": [
-    "The native disclosure announces expanded and collapsed states.",
-    "Keep the label meaningful when collapsed, because that is all VoiceOver reads."
+    "Disclosure announces expanded/collapsed.",
+    "Keep label meaningful: collapsed, VoiceOver reads only it."
   ],
   "preview": {
     "screenshots": [

@@ -1,12 +1,12 @@
 # CLI
 
-`swiftui-registry` is one binary with no runtime dependencies. Install it with `brew install mangobyte-dev/tap/swiftui-registry`, or run `swift run swiftui-registry <command>` from a clone.
+`swiftui-registry`: one binary, no dependencies. `brew install mangobyte-dev/tap/swiftui-registry`, or `swift run swiftui-registry <command>` from clone.
 
-Every command works from any directory:
+Registry source:
 
-- With `--registry /path/to/clone`, it reads that checkout.
-- Inside a clone, it reads the enclosing one.
-- Anywhere else, it fetches the registry snapshot of its own release tag on first use and caches it. `--refresh` fetches again and checks the tap for a newer release.
+- `--registry <path>`: that checkout.
+- Inside clone: enclosing one.
+- Elsewhere: cached snapshot; `--refresh` rechecks tap.
 
 ```text
 USAGE: swiftui-registry <subcommand>
@@ -26,15 +26,7 @@ SUBCOMMANDS:
 
 ## search
 
-The search command is local, deterministic, and JSON-first. Results carry these fields:
-
-- dependency closure inputs
-- package requirements
-- accessibility notes
-- preview paths
-- compatibility metadata
-
-No model, account, or hosted service is involved.
+Local, deterministic, JSON-first, no model/account/hosted service. Results: closure, package/accessibility/compatibility, previews.
 
 ```sh
 swiftui-registry search nutrition dashboard --kind block --platform iOS --target-version 26.0
@@ -43,14 +35,7 @@ swiftui-registry search activity --kind block --format names
 
 ## describe
 
-describe prints an item before you install it. It prints these fields:
-
-- name, kind, version, description
-- the call-site usage snippet
-- the accessibility notes
-- for an installable item: the ordered install closure, the package requirement, and the file targets
-
-`--source` appends each file's canonical content. `--format json` prints the payload the MCP `describe_item` tool returns. A recipe reports its native guidance instead of an install closure.
+Prints item: name, kind, version, description, usage, accessibility notes; installables: closure, requirement, targets. `--source`: content; `--format json`: MCP `describe_item` payload; recipes: native guidance.
 
 ```sh
 swiftui-registry describe activity-feed
@@ -63,18 +48,18 @@ swiftui-registry describe button --source
 USAGE: swiftui-registry install [--registry <registry>] [--refresh] <item> --destination <destination> [--force] [--update] [--plan] [--diff]
 ```
 
-- `--plan` resolves the item like a real install and writes nothing. It prints the ordered closure, every target write with its status (`new`, `up-to-date`, `modified-would-require-force`, `would-merge`), the package requirement, preflight collisions, and the manual steps.
-- A plain install copies the closure, writes `.swiftui-registry/receipt.json` and non-Swift base snapshots inside the destination, and prints the requirement. A repeated install is accepted only when the existing source still matches its receipt.
-- `--diff` prints a unified diff of each owned file against the registry source and exits 1 when they differ. It needs a receipt.
-- `--update` is content-based: unmodified files take the registry version, local edits stay, disjoint edits merge with `git merge-file`, and overlapping edits keep the owned file and write a `.merge` artifact under `.swiftui-registry/conflicts/`.
-- `--force` replaces modified owned source. It never touches the registry cache.
-- A recipe installs nothing: the command prints its guidance and exits with code 2.
+- `--plan`: dry run: closure, status (`new`/`up-to-date`/`modified-would-require-force`/`would-merge`), requirement, collisions, steps.
+- Default: copies closure, writes `.swiftui-registry/receipt.json` + non-Swift base snapshots, prints requirement; repeat needs matching receipt.
+- `--diff`: unified diff vs registry, exit 1 on difference, needs receipt.
+- `--update`: unmodified takes registry, edits stay, disjoint merges via `git merge-file`, overlapping keeps file, writes `.merge` under `.swiftui-registry/conflicts/`.
+- `--force` replaces modified source, skips cache.
+- Recipe: installs nothing, exit 2.
 
-After an install, the tool asks the Homebrew tap for a newer release at most once a day. It prints the upgrade command when a release is newer than the running tool. A failed check is silent.
+Checks tap daily, prints upgrade if newer; failures silent.
 
 ## info
 
-info reads the receipt in a destination. It reports each installed item, and marks its owned files up-to-date, modified, or missing against the digests recorded at install time. It never touches the registry. It exits 2 when the destination holds no receipt.
+Reads receipt, lists items, marks files up-to-date/modified/missing vs install-time digests. Never touches registry; exits 2 without one.
 
 ```sh
 swiftui-registry info --destination Sources/App/Components
@@ -82,7 +67,7 @@ swiftui-registry info --destination Sources/App/Components
 
 ## preset
 
-A preset code is a `RegistryTheme` as one short string. The tool, the Showcase, the website, and the MCP server all read and write it.
+Preset code: one `RegistryTheme` string, read/written by tool, Showcase, website, MCP.
 
 ```sh
 swiftui-registry preset decode a13GkaOXWwIF          # the knobs, the Swift, the website URL (--json for the payload)
@@ -92,14 +77,14 @@ swiftui-registry preset resolve path/to/YourApp/RegistryTheme+App.swift         
 swiftui-registry preset random                        # a code to start from
 ```
 
-The theme file is not a registry item and carries no receipt. The app applies it with `.registryTheme(.app)`.
+Theme file: not registry item, no receipt; apply via `.registryTheme(.app)`.
 
 ## validate and generate
 
-`validate` runs the one structural validator over the catalog. It exits 0 or 1 with a readable report. You can scope it to named items and their closures.
+`validate`: structural check over catalog, exits 0/1 with report; scopes to items, closures.
 
-`generate catalog`, `generate showcase-manifest`, `generate site-data`, and `generate item-tokens` write the derived files a maintainer commits. They keep this site, the markdown catalog, the Showcase manifest, and the design surface's token map in step with the metadata.
+`generate catalog`/`showcase-manifest`/`site-data`/`item-tokens`: files committed, synced with metadata: site, catalog, Showcase manifest, token map.
 
 ## mcp
 
-`swiftui-registry mcp` serves the same engine over stdio. See the [MCP server](/docs/mcp/) page.
+`swiftui-registry mcp` serves engine over stdio; see [MCP server](/docs/mcp/).

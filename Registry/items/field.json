@@ -4,7 +4,7 @@
   "version": "0.1.1",
   "name": "field",
   "kind": "component",
-  "description": "Composes a labeled form field around a native control with an optional description and an error message that drives the content's invalid state.",
+  "description": "Labeled form field, native control; optional description; error drives invalid state.",
   "usage": "@State private var email = \"\"\n\nFieldGroup {\n    Field(\"Full name\", description: \"As it appears on your card.\") { _ in\n        TextField(\"Full name\", text: $name)\n            .textFieldStyle(.registryInput)\n            .accessibilityLabel(\"Full name\")\n    }\n    Field(\"Email\", error: emailError) { isInvalid in\n        TextField(\"you@example.com\", text: $email)\n            .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))\n            .accessibilityLabel(\"Email\")\n    }\n}",
   "files": [
     {
@@ -48,10 +48,10 @@
     "validation-message"
   ],
   "accessibility": [
-    "The content builder receives the invalid state. Apply it to a control that has one, such as RegistryInputStyle(isInvalid:). The field never fakes an invalid treatment on a control without one.",
-    "A separate label view does not associate with the control automatically. Give the control an explicit accessibilityLabel that matches the visible label.",
-    "The error, or the description when there is no error, becomes the content's accessibility hint, so a focused control re-reads the most urgent message. A new error also posts as an announcement.",
-    "The field uses system text styles and the semantic spacing tokens. The label, description, and error wrap rather than truncate."
+    "Builder gets invalid state, e.g. RegistryInputStyle(isInvalid:); MUST NOT fake it otherwise.",
+    "Label doesn't auto-associate; MUST have accessibilityLabel matching visible label.",
+    "Error/description becomes hint; focused control re-reads; new error announces.",
+    "System styles, spacing tokens; label/description/error wrap."
   ],
   "preview": {
     "source": "sources/components/Field.swift",

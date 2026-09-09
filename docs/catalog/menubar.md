@@ -2,7 +2,7 @@
 
 # menubar
 
-Native guidance for scene-level commands with CommandMenu, which iPadOS and macOS place in the menu bar.
+Scene-level commands via CommandMenu.
 
 ![menubar preview](../images/items/menubar-light.png)
 
@@ -26,7 +26,7 @@ WindowGroup {
 
 ## Why native is enough
 
-Declare a `commands` block on the `WindowGroup` scene, and add a `CommandMenu` with keyboard shortcuts. iPadOS and macOS place it in the system menu bar. iPhone never draws a desktop menu bar, so the on-screen iPhone form of the same actions is a toolbar `Menu`. Commands are a `Scene` modifier and cannot be declared inside a view. Watch the placement: put the `commands` block on the scene, not a view, or it does not compile.
+`commands` on `WindowGroup` + `CommandMenu`, shortcuts. iPadOS/macOS: menu bar; iPhone: toolbar `Menu`. Commands = `Scene` modifier, not view; MUST be on scene, or no compile.
 
 ## Details
 
@@ -34,5 +34,5 @@ Declare a `commands` block on the `WindowGroup` scene, and add a `CommandMenu` w
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Menu bar commands carry keyboard shortcuts and are reachable by full keyboard access on iPadOS and macOS.
-  - The iPhone toolbar Menu is a labeled control that lists the same buttons.
+  - Menu bar commands: keyboard shortcuts, full keyboard access on iPadOS/macOS.
+  - iPhone toolbar Menu: labeled control, same buttons.

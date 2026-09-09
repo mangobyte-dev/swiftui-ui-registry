@@ -1,10 +1,8 @@
-<!-- Reference for the swiftui-registry-authoring skill. The commands and scoping rules are quoted from AGENTS.md, "Verification". Run from the repository root, cheapest first. Do not hand-edit; AGENTS.md governs. -->
+<!-- Checklist for `swiftui-registry-authoring`; from `AGENTS.md` Verification, do not edit. -->
 
 # Authoring verification checklist
 
-Quoted from `AGENTS.md`, "Verification". Run from the repository root, cheapest
-first, so a defect fails the run before the expensive steps. Scope the run to the
-change (see "Scoping" below).
+Repo root, cheapest first; scope to change (Scoping).
 
 ## Commands
 
@@ -24,19 +22,16 @@ change (see "Scoping" below).
 - [ ] `xcodebuildmcp simulator test --workspace-path Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace --scheme SwiftUIRegistryShowcase --simulator-id 1807166B-C557-4F6B-B177-D5F3F701CBD7`
 - [ ] `(cd Website && npm ci && npm run typecheck && npm run build)`
 
-## Captures (a visible change to an item)
+## Captures
 
-- [ ] `python3 Scripts/capture_previews.py <item>` on the pinned simulator, then regenerate the four generators above
+- [ ] visible item change: `python3 Scripts/capture_previews.py <item>` on pinned simulator, rerun the four generators above
 
-## Scoping (quoted from AGENTS.md)
+## Scoping
 
-- A metadata-only change stops after `make format-check`.
-- A registry source change needs the install and compile steps.
-- Only a visible UI change needs the simulator test.
-- A change under `Website/` needs the typecheck and build.
-- `swift test` needs `git` and Node 22 on PATH (the merge adapter shells out to
-  `git merge-file`; the website codec check runs `Website/lib/preset.ts` under
-  `node --experimental-strip-types`).
+- metadata-only: stop after `make format-check`
+- registry source: + install, compile
+- visible UI: + simulator test
+- `Website/`: + typecheck, build
+- `swift test` needs `git`, `node` 22 on PATH: `git merge-file`; `Website/lib/preset.ts` under `node --experimental-strip-types`
 
-A change is incomplete if generated consumer sources differ from registry sources
-or any executed command fails; a skipped step is named in the done-claim.
+Incomplete if generated differs from registry, or any command fails; name skipped steps.

@@ -2,7 +2,7 @@
 
 # tooltip
 
-Native guidance for supplementary help without hover: an accessibility hint plus an optional informational popover.
+Tooltip: hint, popover.
 
 ![tooltip preview](../images/items/tooltip-light.png)
 
@@ -21,7 +21,7 @@ Button("Freeze card", systemImage: "snowflake") { }
 
 ## Why native is enough
 
-iPhone has no hover, so a tooltip is an `accessibilityHint` for VoiceOver plus `.help` for pointer and iPad hover. Information a sighted user must see belongs in visible copy or a popover, never only in a tooltip.
+No iPhone hover; `accessibilityHint` (VoiceOver) + `.help` (pointer/iPad) = tooltip. Sighted-info also needs copy/popover.
 
 ## Details
 
@@ -29,6 +29,5 @@ iPhone has no hover, so a tooltip is an `accessibilityHint` for VoiceOver plus `
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - The hint is read after the label by VoiceOver.
-  - help text appears on pointer hover on iPad and macOS-style environments.
-  - Never rely on hover-only information on touch devices.
+  - Hint after label; help: pointer/iPad/macOS-style hover.
+  - MUST NOT rely on hover-only info, touch.

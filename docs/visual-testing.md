@@ -2,73 +2,57 @@
 
 ## Contract
 
-The showcase UI tests compare the finance, nutrition, authentication, settings, activity, and command-search screens with approved references under `Examples/Showcase/SwiftUIRegistryShowcaseUITests/ReferenceImages/`
+Showcase UI tests compare 6 screens (finance, nutrition, authentication, settings, activity, command-search) to `Examples/Showcase/SwiftUIRegistryShowcaseUITests/ReferenceImages/`
 
-The contract is pinned to a light-mode iPhone 17 that runs iOS 27.0. Native controls and tab presentation change across Apple platform versions by design, so a different runtime is visual review evidence, not a valid baseline runner
+Pin: light-mode iPhone 17, iOS 27.0; controls/tabs vary by platform, other runtimes are evidence only
 
 ## Comparison
 
 `SwiftUIRegistryShowcaseUITests.swift`:
 
-1. Captures the app through `XCUIApplication.screenshot()`
-2. Removes the top 7 percent containing volatile status-bar content
-3. Normalizes both images to 192 by 384 RGBA pixels
-4. Computes mean absolute channel difference
-5. Fails when the normalized difference exceeds 1.5 percent
+1. captures via `XCUIApplication.screenshot()`
+2. removes top `7%` (status-bar)
+3. normalizes to `192x384` `RGBA`
+4. computes mean absolute channel difference
+5. fails above `1.5%` difference
 
-Semantic UI assertions stay separate. The image check protects layout, hierarchy, surfaces, color distribution, and major typography. It does not treat the changing clock as product output
+Semantic UI assertions separate; image check protects layout, hierarchy, surfaces, color distribution, major typography, ignores clock
 
-The pixel comparison runs on the iPhone pin only, because the references are iPhone screens by contract. The iPad destination attaches its screenshots as evidence and skips the comparison. Every semantic assertion in the same test still runs on iPad. Three known limitations are recorded in `CHANGELOG.md`: the iPad simulator's intermittent idle stall after keyboard input, the one test that reports it as a measured skip, and the `-disable-animations` launch flag the suite passes on the iPad destination to avoid it
+iPhone pin only for pixel comparison; iPad gets evidence screenshots, no comparison, semantic assertions run. 3 known limits (`CHANGELOG.md`): iPad's intermittent idle stall after keyboard input, that test's measured skip, `-disable-animations` on iPad
 
 ## Approved references
 
-- `finance-light.png`
-- `nutrition-light.png`
-- `auth-light.png`
-- `settings-light.png`
-- `activity-light.png`
-- `command-light.png`
+`finance-light.png`, `nutrition-light.png`, `auth-light.png`, `settings-light.png`, `activity-light.png`, `command-light.png`
 
-GOLDEN-CHANGE: these initial references were approved after iPhone and iPad review of both domains, an iOS 18 deployment-floor run, and an accessibility-size run. A future reference change needs the same explicit note in the reviewing change
+Reference change MUST carry a GOLDEN-CHANGE note; each captured via kept attachments, reviewed before approval, unless noted:
 
-GOLDEN-CHANGE: the deployment floor was raised to iOS 26. So a floor-26 app can no longer launch on the previous iPhone 16 Pro iOS 18.0 pin, and the iOS 18 references became unrunnable, not merely stale. Both references were recaptured on the light-mode iPhone 17 iOS 27.0 runtime, where system controls and presentations render Liquid Glass, most visibly the floating tab bar. Screen content, hierarchy, and copy are unchanged. Capture on an iOS 26 runtime is deferred until a 26 runtime or device is available. iOS 27.0 is the only installed runtime that can run the app
-
-GOLDEN-CHANGE (2026-09-01): `auth-light.png` and `settings-light.png` were added for the two Stage 2 blocks. Each shows the pristine light-mode screen on the pinned iPhone 17 iOS 27.0 runtime:
-
-- the auth screen with the Welcome back card, empty Email and Password fields, Sign in button, and Forgot password? link
-- the settings screen with the Notifications header, five rows with separators, the dimmed organization-managed Marketing messages row with its explanation, the Currency select, the destructive Sign out button, the footer, and the binding caption
-
-Both images were captured through the suite's kept attachments, exported with `xcrun xcresulttool export attachments`, and reviewed directly before approval. The existing finance and nutrition references are untouched
-
-GOLDEN-CHANGE (2026-09-01): `finance-light.png` and `nutrition-light.png` were recaptured on the same light-mode iPhone 17 iOS 27.0 pin. The prior references were approved before the Authentication and Settings tabs existed and showed a stale two-tab bar. Stage 2 grew the tab bar from two to four tabs (Finance, Nutrition, Authentication, Settings), a difference the 2 percent tolerance silently absorbed. The recapture updates the references to the intended current product state. Screen content, hierarchy, and copy are unchanged. The only visual difference is the four-tab Liquid Glass tab bar. Both images were captured through the suite's kept attachments, exported with `xcrun xcresulttool export attachments`, and reviewed directly before approval
-
-GOLDEN-CHANGE (2026-09-05, pending the owner's copy): the tuning panel left its tab, so every catalog screen now shows three tabs (Components, Blocks, Recipes), with the accent strip and the Tune button above them. Four references absorb that within the 1.5 percent tolerance (`activity`, `command`, `finance`, `settings`). `auth-light` (already stale after the audit, now 2.67 percent) and `nutrition-light` (1.53 percent) do not, because their blocks reach the strip. The block content above the strip is unchanged. The replacements are the suite's kept attachments from that UI-suite run. The harness refuses to write into `ReferenceImages/` from an agent session, so the copy is the owner's step, and the two tests fail until then
-
-GOLDEN-CHANGE (2026-09-05): all four existing references were recaptured, and `activity-light.png` was added. The Showcase became a browsable catalog. Every block now opens from the Blocks tab as a pushed detail screen. It has an inline navigation title and a one-line description above the block. The four-tab Liquid Glass bar (Components, Blocks, Recipes, Tune) replaces the previous five block tabs. The block content, hierarchy, and copy are unchanged, and the accent is the Indigo theme applied once at the catalog root. The activity reference shows the Stage 3 feed in its loaded state: the Card delivery delayed notice with Dismiss, the Recent section with the unread Mishmash Bakery row, Salary received, and Statement ready. All five were captured through the suite's kept attachments, exported with `xcrun xcresulttool export attachments`, and reviewed directly before approval. This closes the open deferral about the fifth Components tab
-
-GOLDEN-CHANGE (2026-09-05): `command-light.png` was added for the Stage 4 block. It shows the pristine light-mode screen on the pinned iPhone 17 iOS 27.0 runtime: the Search title, the empty search field with its magnifying glass, the Actions section (New transfer with its command-T keycap, Freeze card, Download statement), the Recent section (Mishmash Bakery, Salary), and the top of the shortcut legend. The image was captured through the suite's kept attachment, exported with `xcrun xcresulttool export attachments`, and reviewed directly before approval
+- Initial: iPhone+iPad review, both domains; iOS-18 floor run; accessibility-size run
+- Floor to iOS 26: iPhone 16 Pro iOS-18 pin can't launch it, refs unrunnable not stale. Recaptured (Liquid Glass, floating tab bar), content/hierarchy/copy unchanged. iOS-26 deferred; 27.0 only runtime running app
+- 2026-09-01: `auth-light.png`/`settings-light.png` added, 2 Stage-2 blocks, pristine light-mode. Auth: `Welcome back` card, empty Email/Password, `Sign in`, `Forgot password?` link. Settings: `Notifications` header, 5 rows + separators, dimmed org-managed `Marketing messages` row + explanation, `Currency` select, destructive `Sign out`, footer, binding caption. `finance-light.png`/`nutrition-light.png` also recaptured. Prior refs predated these tabs, stale 2-tab bar grown to 4. `2%` tolerance absorbed it. Only diff: 4-tab Liquid Glass bar
+- 2026-09-05, pending owner's copy: tuning panel left its tab. Catalog screens show 3 tabs (`Components`, `Blocks`, `Recipes`), accent strip + `Tune` button above. `activity`/`command`/`finance`/`settings` absorb within `1.5%`. `auth-light` (already stale, audit) at 2.67%, `nutrition-light` at 1.53%, don't: blocks reach strip, content above strip unchanged. Replacements: suite's kept attachments. Harness refuses agent-session writes to `ReferenceImages/`, so owner copies, 2 tests fail till then
+- 2026-09-05: all 4 refs recaptured, `activity-light.png` added. Showcase became a browsable catalog. Each block: pushed detail screen (`Blocks` tab), nav title, description. 4-tab bar (`Components`, `Blocks`, `Recipes`, `Tune`) replaces prior 5. Content/hierarchy/copy unchanged, accent Indigo at root. Activity ref: Stage-3 feed (`Card delivery delayed` + `Dismiss`; Recent: unread `Mishmash Bakery`, `Salary received`, `Statement ready`). Closes fifth-tab deferral. `command-light.png` added, Stage-4 block: `Search` title, empty field + magnifying glass, Actions (`New transfer` + command-T keycap, `Freeze card`, `Download statement`), Recent (`Mishmash Bakery`, `Salary`), shortcut legend
 
 ## Item captures
 
-Every capture launches the app with `-AppleLanguages (en) -AppleLocale en_US`, so the locale is part of the capture, not of the simulator. The iPad Pro 13-inch used for the item captures is also set to en_US, because the status bar date is the device's own. Its region was ar_SA until 2026-09-06, which put Hijri dates and spaced currency into the first wall captures
+Every capture launches `-AppleLanguages (en) -AppleLocale en_US` (capture's locale, not simulator's). iPad Pro 13-inch also en_US; status-bar date is device's own. Region was `ar_SA` until 2026-09-06: Hijri dates + spaced currency in first wall captures
 
-Per-item light and dark images under `docs/images/items/` and the preset images under `docs/images/themes/` are documentation captures. `Scripts/capture_previews.py` produces them from the Showcase's `-item` launch on the same pinned simulator. The iPad captures of every item, light and dark, live under `docs/images/ipad/`, produced by `Scripts/capture_previews.py --ipad` on the iPad Pro 13-inch. The site-data generator copies them into `Website/public/images/ipad/`, and each item page shows them under On iPad. These images feed the catalog and the website (the site-data generator copies them into `Website/public/images/`). They are human review evidence, not test baselines
+Per-item light/dark (`docs/images/items/`), presets (`docs/images/themes/`): `Scripts/capture_previews.py`, Showcase `-item` launch, pinned simulator. iPad per-item light/dark (`docs/images/ipad/`): same script + `--ipad`, iPad Pro 13-inch. Site-data copies to `Website/public/images/ipad/` ("On iPad") and `Website/public/images/`. Review evidence, not baselines
 
-GOLDEN-CHANGE (2026-09-05, threshold): the comparison moved from 96 by 192 at 2 percent to 192 by 384 at 1.5 percent, so a whole tab bar or navigation bar can no longer hide inside the tolerance. All five references passed at the new setting without recapture
+GOLDEN-CHANGE (2026-09-05, threshold): `96x192` at `2%` moved to `192x384` at `1.5%`; a tab/nav bar can't hide in tolerance. All 5 refs passed without recapture
 
 ## Updating a reference
 
-Do not regenerate a reference only because a test failed
+MUST NOT regenerate only because a test failed.
 
-1. Inspect the failure attachment and identify the intended product change
-2. Run the full UI suite on the pinned runtime
-3. Export kept attachments from the resulting `.xcresult` with `xcrun xcresulttool export attachments`
-4. Replace only the affected reference
-5. Review the image directly
-6. Record a `GOLDEN-CHANGE` note that describes the intended visual difference
+1. inspect failure attachment, identify intended change
+2. run full UI suite on pinned runtime
+3. export kept attachments (`.xcresult`, `xcrun xcresulttool export attachments`)
+4. replace only affected reference
+5. review image directly
+6. record `GOLDEN-CHANGE` note describing the difference
 
-A threshold change is a visual-contract change and needs the same review
+Threshold change is a visual-contract change: same review
 
 ## Limits
 
-The normalized comparison is small and deterministic by design. It can miss a subtle glyph-only change, so visible copy and accessibility semantics also have explicit UI assertions. Current-platform iPhone and iPad screenshots under `docs/images/` stay human review evidence, not test baselines
+Normalized comparison: small/deterministic, can miss a glyph-only change; explicit UI assertions cover copy + accessibility. Current-platform iPhone/iPad screenshots (`docs/images/`): review evidence, not baselines

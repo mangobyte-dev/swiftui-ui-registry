@@ -2,7 +2,7 @@
 
 # skeleton
 
-Turns any view into a loading placeholder with native redaction, disabled interaction, one loading accessibility element, and a pulse that stops under Reduce Motion.
+Turns any view into loading placeholder with native redaction.
 
 ![skeleton preview](../images/items/skeleton-light.png)
 
@@ -50,8 +50,8 @@ ActivityRows()
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - The placeholder disables its content and excludes it from hit testing, so a placeholder can never trigger a product action.
-  - The whole placeholder is one accessibility element with a caller-adjustable loading label, and does not expose meaningless redacted text.
-  - When Reduce Motion is on, a static dimmed state replaces the opacity pulse.
-  - It uses native .redacted(reason: .placeholder) and applies every treatment in both states. The wrapped content keeps its identity, state, and layout when loading starts or ends.
+  - Disables content, excludes hit testing. MUST NOT trigger action.
+  - One element, adjustable label. MUST NOT expose redacted text.
+  - Reduce Motion: static dimmed state, no pulse.
+  - Uses .redacted(.placeholder); keeps identity, state, layout.
 - Source: [sources/components/RegistrySkeletonModifier.swift](../../Registry/sources/components/RegistrySkeletonModifier.swift), with the `Skeleton` Xcode preview

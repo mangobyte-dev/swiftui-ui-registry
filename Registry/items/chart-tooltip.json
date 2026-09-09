@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "name": "chart-tooltip",
   "kind": "recipe",
-  "description": "Native guidance for a Swift Charts selection annotation with chartXSelection and a RuleMark tooltip.",
+  "description": "chartXSelection + RuleMark annotation.",
   "usage": "@State private var selectedMonth: String?\n\nvar selected: MonthlyBalance? {\n    balances.first { $0.month == selectedMonth }\n}\n\nChart {\n    ForEach(balances) { row in\n        BarMark(\n            x: .value(\"Month\", row.month),\n            y: .value(\"Balance\", row.amount)\n        )\n        .foregroundStyle(TintShapeStyle())\n    }\n    if let selected {\n        RuleMark(x: .value(\"Month\", selected.month))\n            .foregroundStyle(.secondary)\n            .annotation(position: .top) {\n                Text(selected.amount, format: .currency(code: \"KWD\"))\n                    .font(.footnote.monospacedDigit())\n                    .padding(6)\n                    .registrySurface()\n            }\n    }\n}\n.chartXSelection(value: $selectedMonth)\n.registryChart()",
-  "docs": "Bind `.chartXSelection(value:)` to the mark's category type. When a value is selected, add a `RuleMark(x:)` with an `.annotation(position: .top)` that shows the figure on a small registry surface. Swift Charts drives the selection from tap and drag. The registry adds only the themed chart treatment through `.registryChart()`. A single-series mark takes the accent explicitly with `.foregroundStyle(TintShapeStyle())`, because Swift Charts otherwise draws one series in its own default color. Keep the annotation content short, so it does not overflow the plot. Watch the selection type: it must match the mark's x value type, or nothing selects.",
+  "docs": "`chartXSelection` binds mark's x type; tap/drag native. Adds `RuleMark` + top annotation on registry surface; only `.registryChart()` themes. Single-series needs explicit accent, else default color. Keep annotation short; type MUST match mark's x, or nothing selects.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -28,8 +28,8 @@
     "data-tooltip"
   ],
   "accessibility": [
-    "Swift Charts exposes each mark to VoiceOver through its audio graph and value descriptions.",
-    "The selected value is shown as visible text, not by color alone."
+    "Marks expose to VoiceOver via audio graph, value text.",
+    "Selected value: visible text, not color alone."
   ],
   "preview": {
     "screenshots": [

@@ -2,7 +2,7 @@
 
 # carousel
 
-Native guidance for a paging horizontal ScrollView of cards with scrollTargetBehavior and containerRelativeFrame.
+Paging ScrollView of cards.
 
 ![carousel preview](../images/items/carousel-light.png)
 
@@ -37,7 +37,7 @@ ScrollView(.horizontal) {
 
 ## Why native is enough
 
-Lay cards in a horizontal `ScrollView`, mark the row with `.scrollTargetLayout()`, and page with `.scrollTargetBehavior(.paging)`. `containerRelativeFrame(.horizontal)` sizes each page to the viewport. For a page control instead, use a `TabView` with `.tabViewStyle(.page)`. The system supplies the paging, the indicators, and the Reduce Motion behavior, so the registry adds no wrapper. Watch the page width: a card must fill the container relative frame, or paging stops on partial cards.
+`ScrollView(.horizontal)` + `.scrollTargetLayout()` + `.scrollTargetBehavior(.paging)`; `containerRelativeFrame(.horizontal)` sizes pages. Alt: `TabView` + `.tabViewStyle(.page)`. System owns paging, indicators, Reduce-Motion; no wrapper. Card MUST fill frame or stalls.
 
 ## Details
 
@@ -45,5 +45,5 @@ Lay cards in a horizontal `ScrollView`, mark the row with `.scrollTargetLayout()
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Paging scroll views are native and support VoiceOver page scrolling and the three-finger scroll gesture.
-  - Give each page an accessibility label; a card combined from several texts should read as one element.
+  - Paging: native; VoiceOver page-scroll, three-finger gesture.
+  - Label each page; combined card SHOULD read as one element.

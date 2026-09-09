@@ -2,7 +2,7 @@
 
 # label
 
-Controls native Label icon placement with semantic spacing and treats the icon as decorative for accessibility.
+Controls Label icon placement with semantic spacing.
 
 ![label preview](../images/items/label-light.png)
 
@@ -49,8 +49,7 @@ Label("Continue", systemImage: "chevron.forward")
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Keeps the native Label title as the accessible content.
-  - Treats the paired icon as decorative to avoid repeating the title.
-  - Uses semantic order so leading and trailing placements mirror in right-to-left layouts.
-  - Inherits the caller's text style and Dynamic Type behavior.
+  - Title is accessible; icon decorative.
+  - RTL mirrors leading/trailing.
+  - Inherits caller's text style, Dynamic Type.
 - Source: [sources/components/RegistryLabelStyle.swift](../../Registry/sources/components/RegistryLabelStyle.swift), with the `Label` Xcode preview

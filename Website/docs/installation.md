@@ -2,7 +2,7 @@
 
 ## 1. Add the package
 
-In `Package.swift`:
+`Package.swift`:
 
 ```swift
 dependencies: [
@@ -12,17 +12,9 @@ dependencies: [
 .product(name: "SwiftUIRegistryFoundations", package: "swiftui-ui-registry")
 ```
 
-In an Xcode project:
-
-1. Choose File, then Add Package Dependency.
-2. Enter the same URL. Set the rule to Up to Next Minor Version from 0.3.0.
-3. Add the `SwiftUIRegistryFoundations` product to the app target.
-
-The `package:` argument is the SwiftPM package identity for the URL. It is the last path component without `.git`.
+Or Xcode: Add Package Dependency, same URL, rule Up to Next Minor Version from 0.3.0, add `SwiftUIRegistryFoundations`. `package:` = URL's last segment minus `.git`.
 
 ## 2. Theme once
-
-At the scene root:
 
 ```swift
 import SwiftUIRegistryFoundations
@@ -31,27 +23,18 @@ ContentView()
     .registryTheme(.graphite)
 ```
 
-Presets: `.system` (inherits your app tint), `.graphite`, `.indigo`, `.rose`, `.emerald`, `.amber`, and `.mango`, the sample design system. Every registry item below inherits the theme. Native controls follow the accent through the tint. To make your own theme, compose one on the [Create](/create/) page and paste its code, or tune it on the device (step 5).
+Presets: `.system` (app tint), `.graphite`, `.indigo`, `.rose`, `.emerald`, `.amber`, `.mango`. Controls follow tint. Compose on [Create](/create/) or tune on-device (step 5).
 
 ## 3. Install an item
-
-Install the tool with Homebrew. Then install an item into a folder your target compiles:
 
 ```sh
 brew install mangobyte-dev/tap/swiftui-registry
 swiftui-registry install button --destination Sources/App/Components
 ```
 
-The tool does four things:
+Resolves dependencies, copies exact source (`RegistryButtonStyle.swift`), writes `.swiftui-registry/receipt.json`, prints requirement. Never edits project files; add destination to target. Outside clone, fetches release on first use, cached under `~/Library/Caches/swiftui-registry`.
 
-- It resolves the item's dependency closure.
-- It copies exact source (`RegistryButtonStyle.swift` here).
-- It writes `.swiftui-registry/receipt.json` beside it.
-- It prints the package requirement: from 0.3.0 up to the next minor version, the floor every item declares.
-
-The tool never edits project files. Make the destination folder a member of your build target. Outside a clone, the tool fetches the registry snapshot of its own release tag on first use. It caches the snapshot under `~/Library/Caches/swiftui-registry`.
-
-## 4. Use it as the snippet says
+## 4. Use it
 
 ```swift
 Button("Save changes") {}
@@ -61,11 +44,11 @@ Button("Cancel") {}
     .buttonStyle(.registryOutline)
 ```
 
-Apple's `Button` stays visible at the call site. The registry only styles it. Every item's page carries its snippet, its accessibility contract, and its full source.
+Apple's `Button` stays visible; only style changes. Each item carries snippet, accessibility contract, source.
 
 ## 5. Tune on the device
 
-Add the `SwiftUIRegistryDesignSurface` product to the same target. Import it. Apply `designSurface()` inside the theme call:
+Add `SwiftUIRegistryDesignSurface` to target:
 
 ```swift
 import SwiftUIRegistryDesignSurface
@@ -75,32 +58,27 @@ ContentView()
     .registryTheme(.graphite)
 ```
 
-A debug build shows a draggable Tune button. The panel is a floating card over the live app. To scope the panel to the tokens that reach an item, tap Select, then tap any registry item. Copy Swift gives you the `RegistryTheme(...)` to paste back into step 2. A release build is unchanged. The [design surface](/docs/design-surface/) page has the whole tool.
+Debug builds add draggable Tune button; Select, then item, scopes tokens. Copy Swift gives `RegistryTheme(...)` for step 2. Release unchanged. See [design surface](/docs/design-surface/).
 
-## Update owned source later
+## Update source
 
 ```sh
 swiftui-registry install button --destination Sources/App/Components --diff
 swiftui-registry install button --destination Sources/App/Components --update
 ```
 
-`--diff` shows your local edits against the registry source. `--update` is content-based:
+`--diff` shows local edits vs registry. `--update`:
 
-- Unmodified files take the registry version.
-- Your edits stay.
-- Disjoint edits merge with `git merge-file`.
-- Overlapping edits keep your file and write a `.merge` artifact under `.swiftui-registry/conflicts/`.
+- Unmodified files: registry version.
+- Edits stay.
+- Disjoint edits merge via `git merge-file`.
+- Overlapping edits keep file, write `.merge` under `.swiftui-registry/conflicts/`.
 
-The updater never silently resolves a conflict or replaces a customized file.
+Conflicts never auto-resolve; customized files stay.
 
 ## Requirements
 
-- Swift tools 6.2 or newer, iOS 26 or newer, and an Xcode that builds Swift 6.2 packages
-- Homebrew on macOS for the tool, or `swift run swiftui-registry <command>` from a clone
-- Git when an update needs a three-way merge
-
-The registry targets iOS 26 and above:
-
-- Items inherit Liquid Glass natively.
-- Items carry no pre-26 compatibility styling.
-- Items avoid 27-only APIs, so the floor stays iOS 26.
+- Swift tools 6.2+, iOS 26+, Xcode building Swift 6.2
+- Homebrew, or `swift run swiftui-registry <command>` from clone
+- Git for three-way merges
+- Liquid Glass native, no pre-26 styling, no 27-only APIs, floor iOS 26

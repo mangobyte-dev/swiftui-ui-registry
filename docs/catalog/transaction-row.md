@@ -2,7 +2,7 @@
 
 # transaction-row
 
-Displays prepared transaction content and leaves selection to a native Button at the call site.
+Transaction content; caller Button selects.
 
 ![transaction-row preview](../images/items/transaction-row-light.png)
 
@@ -51,8 +51,8 @@ TransactionRow(
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Uses ViewThatFits to preserve content at large Dynamic Type sizes.
-  - Combines row text into one VoiceOver element.
-  - It announces positive and negative tone as a VoiceOver value. Visible meaning relies on caller-formatted amounts, and tone color is a redundant accent.
-  - The tone symbol's circle scales with the body text style.
+  - ViewThatFits preserves content, large sizes.
+  - Row text combines, one element.
+  - Tone spoken; meaning via amounts, not color.
+  - Symbol circle scales, text.
 - Source: [sources/components/TransactionRow.swift](../../Registry/sources/components/TransactionRow.swift), with the `Transaction Row` Xcode preview

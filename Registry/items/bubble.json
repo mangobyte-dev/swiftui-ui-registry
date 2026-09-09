@@ -4,7 +4,7 @@
   "version": "0.1.1",
   "name": "bubble",
   "kind": "component",
-  "description": "Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, and leaves alignment to the message row.",
+  "description": "Wraps text: incoming, outgoing, muted; aligns with message row.",
   "usage": "Text(\"Are we still on for Thursday?\")\n    .registryBubble(.incoming)\n\nText(\"Yes, 6pm works.\")\n    .registryBubble(.outgoing)",
   "files": [
     {
@@ -44,11 +44,11 @@
     "speech-bubble"
   ],
   "accessibility": [
-    "The bubble wraps its text freely and never truncates, so a long message stays readable and grows with Dynamic Type.",
-    "The bubble adds no accessibility element of its own. The wrapped Text keeps its semantics and reading order.",
-    "Incoming and outgoing bubbles carry no stroke and rest on fill alone. The outgoing fill uses the tint with the theme's onAccent label. Keep the label legible against the accent.",
-    "The muted variant drops the fill for a border hairline. A system line reads as distinct from a spoken turn without color.",
-    "The bubble inherits layout direction, so its padding and continuous corners follow the caller's locale."
+    "Text wraps, MUST NOT truncate; grows Dynamic Type.",
+    "No added element; keeps semantics, reading order.",
+    "Fill, no stroke; outgoing uses tint, onAccent MUST stay legible.",
+    "Muted: border hairline, no fill; reads distinct without color.",
+    "Inherits layout direction; padding/corners follow locale."
   ],
   "preview": {
     "source": "sources/components/RegistryBubbleModifier.swift",

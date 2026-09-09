@@ -140,7 +140,7 @@ export function SiteSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <p className="px-2 text-xs text-muted-foreground">
-          Captures from the Showcase on iPhone 17, iOS 27.
+          Showcase captures: iPhone 17, iOS 27.
         </p>
       </SidebarFooter>
       <SidebarRail />

@@ -2,7 +2,7 @@
 
 # table
 
-Lays out Identifiable rows in aligned columns on a native Grid, with numeric columns in monospaced digits, optional summary rows, and theme hairline separators.
+Identifiable rows in aligned columns; numeric monospaced; optional summary rows.
 
 ![table preview](../images/items/table-light.png)
 
@@ -55,8 +55,8 @@ DataTable(
 - Platforms: iOS 26.0+
 - Installs in order: [separator](separator.md) 0.2.1, [table](table.md) 0.1.1
 - Accessibility contract:
-  - It combines each header and body row into one accessibility element, so VoiceOver reads the cells in order. The header row also carries the header trait.
-  - Trailing columns hold numbers by convention. Their cells use monospaced digits and hug the trailing edge, so figures line up down the column.
-  - The table uses a native Grid, not SwiftUI Table, which collapses to a single column on iPhone. The leading column takes the remaining width, so the table fills its container.
-  - It uses system text styles, the semantic spacing tokens, and the theme border for hairline separators. Cell content wraps rather than truncates.
+  - Row combines into one element; header row carries trait.
+  - Trailing columns hold numbers, hug edge; figures align.
+  - Grid, not Table (single column on iPhone); leading column takes remaining width.
+  - System text styles, semantic spacing, theme separators; cells wrap not truncate.
 - Source: [sources/components/DataTable.swift](../../Registry/sources/components/DataTable.swift), with the `Data Table` Xcode preview

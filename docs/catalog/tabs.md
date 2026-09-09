@@ -2,7 +2,7 @@
 
 # tabs
 
-Native guidance for a local-selection Picker with the platform segmented style; app navigation stays with TabView.
+Picker segmented; local selection, TabView nav.
 
 ![tabs preview](../images/items/tabs-light.png)
 
@@ -25,7 +25,7 @@ Picker("Section", selection: $selection) {
 
 ## Why native is enough
 
-Apply `.pickerStyle(.segmented)` directly to a native `Picker` for local tab selection. Keep `TabView` for app-level navigation. The registry adds no wrapper, because the one-line native style is the entire treatment.
+`.pickerStyle(.segmented)`: local selection; `TabView`: app nav. No wrapper.
 
 ## Details
 
@@ -33,7 +33,5 @@ Apply `.pickerStyle(.segmented)` directly to a native `Picker` for local tab sel
 - Version: 0.3.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Retains native Picker selection and segmented-control semantics.
-  - Keeps local selection caller-owned and does not replace app-level TabView navigation.
-  - Requires concise visible segment labels that remain distinguishable at large text sizes.
-  - Inherits enabled state, tint, and layout direction.
+  - Retains Picker segmented semantics; selection caller-owned, not TabView nav.
+  - Needs concise, large-text-legible segment labels; inherits enabled, tint, direction.

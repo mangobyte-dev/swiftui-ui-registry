@@ -2,7 +2,7 @@
 
 # signup-form
 
-Composes registry input, button, card, and checkbox treatments into a sign-up form with caller-owned fields, validation messages, terms acceptance, and submission state.
+Composes input, button, card, checkbox; caller owns fields, validation, terms, submission state.
 
 ![signup-form preview](../images/items/signup-form-light.png)
 
@@ -62,12 +62,12 @@ SignUpForm(
 - Platforms: iOS 26.0+
 - Installs in order: [input](input.md) 0.5.1, [button](button.md) 0.5.2, [card](card.md) 0.2.1, [checkbox](checkbox.md) 0.3.2, [signup-form](signup-form.md) 0.1.1
 - Accessibility contract:
-  - Each of the four fields carries an explicit accessibilityLabel equal to its visible title. Measured on iOS 27, the label-plus-prompt initializer alone exposes the title as placeholder text only. Without the explicit label, a field with typed content is unnamed.
-  - Focus order runs name, email, password, confirmation. Each field uses a Next return key that advances focus, and the confirmation field's Go return key submits the form.
-  - Invalid fields never use color alone. The input border width increases, a visible footnote message renders under the field, and the message attaches as the field's accessibility hint. The terms error renders under the checkbox the same way.
-  - Autofill content types are fixed. The name field is .name, and the email field is .username on an email keyboard. Both password fields are .newPassword, so the system offers and reuses a strong password. You can verify autofill only manually, with a saved credential.
-  - Field, terms, and form error messages post an AccessibilityNotification.Announcement when they appear or change. An unchanged message is not re-announced. VoiceOver announcement timing is not verified on device.
-  - The terms toggle uses the checkbox style. That style exposes a native Toggle as its accessibility representation, keeps a 44 point minimum row height, and does not signal selection by color alone.
-  - When isSubmitting is true, the environment disables every control, and the composed styles apply the shared disabled opacity. The submit button shows a progress spinner and keeps its title as its accessibility label.
-  - The card title carries the header accessibility trait.
+  - Fields: explicit accessibilityLabel = title. iOS 27: label+prompt initializer shows placeholder only; unlabeled = unnamed.
+  - Focus: name, email, password, confirmation; Next advances, confirmation Go submits.
+  - Invalid: no color-alone; border-width increases; footnote under field = accessibility hint (terms error: same, under checkbox).
+  - Autofill fixed: name=.name; email=.username (email keyboard); passwords=.newPassword (system offers, reuses). Verify manually, saved credential.
+  - Field/terms/form errors post AccessibilityNotification.Announcement on change; unchanged = no re-announce. Timing unverified on device.
+  - Terms toggle: checkbox style, native Toggle, 44pt min-row, no color-alone.
+  - isSubmitting: disables controls, shared opacity; submit shows spinner, title stays label.
+  - Card title: header trait.
 - Source: [sources/blocks/SignUpForm.swift](../../Registry/sources/blocks/SignUpForm.swift), with the `Sign Up Form` Xcode preview

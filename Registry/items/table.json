@@ -4,7 +4,7 @@
   "version": "0.1.1",
   "name": "table",
   "kind": "component",
-  "description": "Lays out Identifiable rows in aligned columns on a native Grid, with numeric columns in monospaced digits, optional summary rows, and theme hairline separators.",
+  "description": "Identifiable rows in aligned columns; numeric monospaced; optional summary rows.",
   "usage": "DataTable(\n    lines,\n    columns: [\n        DataTableColumn(Text(\"Item\")) { Text($0.item) },\n        DataTableColumn(Text(\"Qty\"), alignment: .trailing) { Text($0.quantity, format: .number) },\n        DataTableColumn(Text(\"Amount\"), alignment: .trailing) { Text($0.amount, format: .currency(code: \"USD\")) }\n    ],\n    footer: [\n        DataTableFooterRow(label: Text(\"Total due\"), value: Text(total, format: .currency(code: \"USD\")), isEmphasized: true)\n    ]\n)",
   "files": [
     {
@@ -48,10 +48,10 @@
     "invoice"
   ],
   "accessibility": [
-    "It combines each header and body row into one accessibility element, so VoiceOver reads the cells in order. The header row also carries the header trait.",
-    "Trailing columns hold numbers by convention. Their cells use monospaced digits and hug the trailing edge, so figures line up down the column.",
-    "The table uses a native Grid, not SwiftUI Table, which collapses to a single column on iPhone. The leading column takes the remaining width, so the table fills its container.",
-    "It uses system text styles, the semantic spacing tokens, and the theme border for hairline separators. Cell content wraps rather than truncates."
+    "Row combines into one element; header row carries trait.",
+    "Trailing columns hold numbers, hug edge; figures align.",
+    "Grid, not Table (single column on iPhone); leading column takes remaining width.",
+    "System text styles, semantic spacing, theme separators; cells wrap not truncate."
   ],
   "preview": {
     "source": "sources/components/DataTable.swift",

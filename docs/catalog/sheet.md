@@ -2,7 +2,7 @@
 
 # sheet
 
-Native guidance for a side sheet with inspector on iPad that adapts to a sheet on iPhone.
+Side sheet: iPad inspector, iPhone sheet.
 
 ![sheet preview](../images/items/sheet-light.png)
 
@@ -42,7 +42,7 @@ NavigationStack {
 
 ## Why native is enough
 
-`.inspector(isPresented:)` shows a trailing column on iPadOS and a sheet on iPhone, sized with `.inspectorColumnWidth(min:ideal:max:)`. The `dialog` and `drawer` recipes cover the plain sheet; this recipe adds the inspector form. Measured on iOS 27: an inspector attached to a tab's navigation stack stopped text-field focus from advancing. Attach it above a stack, or keep to `.sheet` when a tab holds text fields. Watch that caveat before you place an inspector inside a tabbed flow.
+`.inspector`: trailing column iPadOS, sheet iPhone; sized via `.inspectorColumnWidth`. `dialog`/`drawer` cover plain sheet. iOS 27: tab-attached inspector stopped text-field focus. Attach above stack, or use `.sheet` in text-field tabs.
 
 ## Details
 
@@ -50,5 +50,5 @@ NavigationStack {
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - The inspector toggle is a labeled button, and the panel content is reachable by VoiceOver.
-  - On iPhone the inspector adapts to a sheet with the system dismiss affordance.
+  - Inspector toggle: labeled button; panel: VoiceOver-reachable.
+  - iPhone: inspector adapts to sheet, system dismiss.

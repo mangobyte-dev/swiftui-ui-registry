@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "name": "card",
   "kind": "component",
-  "description": "Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.",
+  "description": "Styles GroupBox: bordered surface, adaptive label, content spacing.",
   "usage": "GroupBox {\n    Text(\"Manage billing and renewal details from your account settings.\")\n} label: {\n    Label(\"Subscription\", systemImage: \"creditcard.fill\")\n}\n.groupBoxStyle(.registryCard)",
   "files": [
     {
@@ -44,10 +44,10 @@
     "panel"
   ],
   "accessibility": [
-    "The card preserves the native accessibility elements and reading order from the GroupBox label and content.",
-    "The card uses system text styles and lets content grow vertically with Dynamic Type.",
-    "The card uses semantic leading alignment that follows the environment layout direction.",
-    "The card adds no interaction or selection behavior to caller content."
+    "Preserves reading order (label, content).",
+    "System styles; grows Dynamic Type.",
+    "Leading alignment follows layout direction.",
+    "No interaction/selection added."
   ],
   "preview": {
     "source": "sources/components/RegistryCardStyle.swift",

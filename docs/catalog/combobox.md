@@ -2,7 +2,7 @@
 
 # combobox
 
-A searchable single-selection control with a registry search field over caller options, a filtered list below it, binding-driven selection, and a native empty state.
+Searchable single-selection: search field, filtered list, binding-driven selection, native empty state.
 
 ![combobox preview](../images/items/combobox-light.png)
 
@@ -55,8 +55,8 @@ Combobox(
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [input-group](input-group.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [empty](empty.md) 0.1.1, [combobox](combobox.md) 0.1.1
 - Accessibility contract:
-  - The field carries the prompt as its explicit accessibility label and uses the search-and-filter query binding. Each option is a native Button whose label is its title. Voice Control can address an option by its title.
-  - The selected option carries the isSelected trait and a checkmark. The option symbol is decorative and hidden.
-  - When no option matches, the control renders a native ContentUnavailableView on the registry surface with the caller's empty title and description.
-  - On focus, the list opens inline below the field and pushes content down instead of covering it, so it never hides other controls. The control does not use a popover, because at a compact iPhone width a popover becomes a full sheet, heavier than a single-select filter needs.
+  - Field label: prompt, query binding; options: native Buttons, titled, Voice-Control ready.
+  - Selected: isSelected trait, checkmark; symbol decorative, hidden.
+  - No match: ContentUnavailableView on registry surface (caller's empty title/description).
+  - Focus: list opens inline below, pushes content; MUST NOT hide controls. No popover (full sheet on compact iPhone).
 - Source: [sources/components/Combobox.swift](../../Registry/sources/components/Combobox.swift), with the `Combobox` Xcode preview

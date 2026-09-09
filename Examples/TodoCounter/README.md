@@ -1,43 +1,43 @@
 # Todo Counter sample app
 
-A consumer built from a fresh Xcode project to prove the registry works with any architecture: the Composable Architecture drives a todo list and Point-Free's counter, and every visible control is a native SwiftUI control styled by registry items this app owns
+A fresh-Xcode-project, any-architecture proof: Composable Architecture drives a todo list, Point-Free's counter; every control native SwiftUI, styled by owned registry items.
 
 | Todos | Counter |
 | --- | --- |
-| ![Todos tab with a completed task](Screenshots/todos.jpg) | ![Counter tab at seven](Screenshots/counter.jpg) |
+| ![Todos tab, done task](Screenshots/todos.jpg) | ![Counter tab, 7](Screenshots/counter.jpg) |
 
-Captured on the iPhone 17 simulator, iOS 27, on 2026-09-06
+Captured: iPhone 17 simulator, iOS 27, 2026-09-06.
 
-What it exercises, in the order it was built on 2026-09-06:
+Built 2026-09-06, in order:
 
-- The published package by URL: `TodoCounterPackage/Package.swift` depends on `swiftui-ui-registry` at `0.1.0` (up to the next minor) and on `swift-composable-architecture` `1.26.2`
-- The released tool: `brew install mangobyte-dev/tap/swiftui-registry`, then `swiftui-registry install button input card checkbox badge empty separator` (one call per item) into `TodoCounterPackage/Sources/TodoCounterFeature/Registry`, which carries the receipt under `.swiftui-registry/`
-- A theme the shadcn way: `swiftui-registry preset apply a13GkaOXWwIF` wrote `RegistryTheme+App.swift`; the app then edited it (a custom coral accent, larger radii, a slightly stronger surface) and `swiftui-registry preset resolve` read the edit back into the shareable code `a2nH36tnmJHJAMzm`, which the website's Create page opens
-- A component the app owns: `RegistryBadge.swift` gained uppercase, semibold labels. `swiftui-registry install badge --diff` prints the hunk, `--plan` reports `modified-would-require-force`, and `--update` keeps the edit as `locally-modified`
-- App-wide typography with `fontDesign(.rounded)` at the root, beside `registryTheme(.app)`
-- The MCP server: `swiftui-registry mcp` answered `initialize`, `tools/list`, `search_items`, `describe_item`, `plan_install`, `diff_item`, and `describe_preset` over stdio from this directory
+- URL package: `TodoCounterPackage/Package.swift` deps `swiftui-ui-registry` `0.1.0` (next minor), `swift-composable-architecture` `1.26.2`
+- Released tool: `brew install mangobyte-dev/tap/swiftui-registry`; `swiftui-registry install button input card checkbox badge empty separator` (one call per item) into `TodoCounterPackage/Sources/TodoCounterFeature/Registry`, receipt `.swiftui-registry/`
+- Theme, shadcn way: `swiftui-registry preset apply a13GkaOXWwIF` wrote `RegistryTheme+App.swift` (coral accent, larger radii, slightly stronger surface); `swiftui-registry preset resolve`: `a2nH36tnmJHJAMzm`, via website's Create page
+- Owned: `RegistryBadge.swift` gained uppercase, semibold labels; `swiftui-registry install badge --diff` hunk, `--plan`: `modified-would-require-force`, `--update`: `locally-modified`
+- App-wide: `fontDesign(.rounded)` at root, beside `registryTheme(.app)`
+- MCP, stdio, from this directory: `swiftui-registry mcp` answered `initialize`, `tools/list`, `search_items`, `describe_item`, `plan_install`, `diff_item`, `describe_preset`
 
 ## Three layers, one app
 
-The app carries three UI layers over the same reducers, so the comparison in the repository README changes one thing at a time. `Variants/Registry` is the default: native controls styled by the installed items. `Variants/Plain` is stock SwiftUI with no styling. `Variants/Handmade` is the registry variant's design rewritten in this app without the registry: its own theme tokens and environment key, a button style, an input style, a card style, a checkbox toggle style, a badge, an empty-state surface, and a separator. Launch with `-ui plain` or `-ui handmade` to switch; `ContentView` reads the argument
+One reducer set, three layers (repository README comparison, one thing at a time): `Variants/Registry`, installed-item styled (default); `Variants/Plain`, stock unstyled; `Variants/Handmade`, own theme tokens/styles, no registry (button, input, card, checkbox-toggle, badge, empty, separator, environment key); `-ui plain`/`-ui handmade` read by `ContentView`.
 
-Counted with `python3 count-lines.py` on 2026-09-06 (non-blank, non-comment lines):
+Non-blank, non-comment lines (`python3 count-lines.py`, 2026-09-06):
 
-| Layer | Written by the app | Installed and owned |
+| Layer | App-written | Installed/owned |
 | --- | --- | --- |
-| Registry | 223 lines in 4 files (three views and the edited theme file) | 651 lines in 7 items, previews included |
-| Plain | 154 lines in 3 files | 0 |
-| Handmade | 585 lines in 11 files | 0 |
+| Registry | 223 lines, 4 files (three views, edited theme) | 651 lines, 7 items, previews included |
+| Plain | 154 lines, 3 files | 0 |
+| Handmade | 585 lines, 11 files | 0 |
 
-`TodoCounterUITests` drives the same flow on all three layers; the labels differ only where the design differs (the registry and handmade badges are uppercase). `TodoCounterPerformanceTests` measures each layer with `XCTApplicationLaunchMetric` (five launches) and `XCTClockMetric` over adding five tasks, completing them, and clearing (three runs). On the iPhone 17 simulator, iOS 27, launch was 2.97 s, 2.99 s, and 2.98 s for the registry, plain, and handmade layers, and the interaction 9.17 s, 15.59 s, and 9.16 s; the stock layer's extra seconds are the system switch's animation under automation, since a stock `Toggle` only flips when the tap lands on the switch itself. `TodoCounterCaptureTests` writes same-state PNGs of each layer when `TEST_RUNNER_TODOCOUNTER_CAPTURE_DIR` names a directory; the captures under `docs/images/comparison/` came from it, and the handmade todos capture is byte-identical to the registry's
+`TodoCounterUITests`: same flow, all layers (registry/handmade uppercase, else identical). `TodoCounterPerformanceTests` (registry/plain/handmade), iPhone 17 simulator iOS 27: `XCTApplicationLaunchMetric` (five launches) 2.97/2.99/2.98s; `XCTClockMetric`, add-five/complete/clear (three runs), 9.17/15.59/9.16s (plain extra: switch animation; stock `Toggle` flips only when tap lands on switch itself). `TodoCounterCaptureTests`: same-state PNGs per layer, `TEST_RUNNER_TODOCOUNTER_CAPTURE_DIR`, source of `docs/images/comparison/`; handmade's todos byte-identical to registry's.
 
 ## Run
 
-Open `TodoCounter.xcworkspace`, select the `TodoCounter` scheme, and run on an iOS 26 or newer simulator. Xcode resolves both packages from GitHub on first build. The test plan runs the feature's `TestStore` tests and one UI test that adds, completes, and counts through the registry-styled controls
+Open `TodoCounter.xcworkspace`, select `TodoCounter`, run iOS 26+ (Xcode resolves both packages from GitHub, first build). Test plan: feature's `TestStore` tests, one UI test (adds, completes, counts) through registry-styled controls.
 
 ## Layout
 
-- `TodoCounter/`: the app shell, which creates one store and hands it to `ContentView`
-- `TodoCounterPackage/Sources/TodoCounterFeature/`: `Todos`, `Counter`, and the `TodoCounter` root reducer, the `-ui` switch in `ContentView`, `Variants/` with the three UI layers, and `Registry/` with the installed items, the theme file, and the receipt
+- `TodoCounter/`: app shell, creates one store, hands to `ContentView`
+- `TodoCounterPackage/Sources/TodoCounterFeature/`: `Todos`, `Counter`, `TodoCounter` root reducer, `-ui` switch in `ContentView`, `Variants/` (three layers), `Registry/` (installed items, theme file, receipt)
 - `TodoCounterPackage/Tests/`: reducer tests
-- `TodoCounterUITests/`: the simulator flow
+- `TodoCounterUITests/`: simulator flow

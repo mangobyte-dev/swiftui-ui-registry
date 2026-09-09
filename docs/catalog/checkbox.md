@@ -2,7 +2,7 @@
 
 # checkbox
 
-Styles a native Toggle as a checkbox and preserves its binding, label, enabled state, and accessibility representation.
+Styles Toggle as checkbox; preserves binding, label, state.
 
 ![checkbox preview](../images/items/checkbox-light.png)
 
@@ -48,9 +48,9 @@ Toggle("Accept terms", isOn: $accepted)
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - The checkbox uses a native Toggle as its accessibility representation.
-  - Provide the visible Toggle label. The checkbox preserves the enabled state.
-  - The checkbox provides a 44-point minimum row height and does not show selection by color alone.
-  - The checkbox inherits Dynamic Type for the label, the glyph, and the box, which scales with the body text style. It also inherits layout direction.
-  - On iPad the row keeps SwiftUI's automatic pointer effect through hoverEffect(), because the plain button style it builds on carries none.
+  - Toggle: accessibility representation.
+  - MUST have visible label; preserves enabled state.
+  - 44-point minimum row height; not color-only.
+  - Label, glyph, box scale with Dynamic Type, direction.
+  - iPad: hoverEffect keeps pointer effect; button lacks it.
 - Source: [sources/components/RegistryCheckboxToggleStyle.swift](../../Registry/sources/components/RegistryCheckboxToggleStyle.swift), with the `Checkbox` Xcode preview

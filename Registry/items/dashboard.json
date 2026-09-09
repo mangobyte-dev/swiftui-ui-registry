@@ -4,7 +4,7 @@
   "version": "0.1.1",
   "name": "dashboard",
   "kind": "block",
-  "description": "Composes metric cards, a themed Swift Charts bar chart, and a data table into an analytics dashboard with caller-owned values and optional row selection.",
+  "description": "Composes metrics, bar chart, table; caller-owned values, selection.",
   "usage": "Dashboard(\n    \"Analytics\",\n    metrics: [\n        DashboardMetric(\n            title: \"Revenue\",\n            value: Text(48_200, format: .currency(code: \"USD\")),\n            detail: Text(\"Up 12% this month\"),\n            systemImage: \"dollarsign.circle.fill\"\n        )\n    ],\n    chartTitle: \"Visitors by channel\",\n    points: [\n        DashboardSeriesPoint(id: \"jan-direct\", category: \"Jan\", series: \"Direct\", value: 186)\n    ],\n    tableTitle: \"Recent invoices\",\n    rows: [\n        DashboardRow(\n            id: \"1041\",\n            title: Text(\"Invoice 1041\"),\n            detail: Text(\"Northwind Trading\"),\n            status: Text(\"Paid\"),\n            amount: Text(1_240, format: .currency(code: \"USD\"))\n        )\n    ],\n    onSelect: { id in }\n)",
   "files": [
     {
@@ -49,12 +49,12 @@
     "analytics"
   ],
   "accessibility": [
-    "The screen title and both section titles, chart and table, carry the header accessibility trait. VoiceOver users can then move between sections by heading.",
-    "The metric tiles combine their title, value, and detail into one VoiceOver element and treat the SF Symbol as decorative (from metric-card). They lay out as a row or a column through ViewThatFits, so they follow Dynamic Type and the available width.",
-    "When you provide onSelect, each invoice title is a native Button with the plain button style, so selection stays at the call site. The button takes the row title as its accessibility label and Voice Control input label. With no action, the table stays a plain, non-interactive grid.",
-    "The chart keeps native Swift Charts marks colored and positioned by series. It names the series in the legend below the plot (from chart), so it does not rely on color alone. The caller can add accessibilityLabel and accessibilityValue to the marks for the audio graph.",
-    "The table combines each row into one accessibility element, and the header row carries the header trait. Numeric amounts use monospaced digits and align to the trailing edge (from table).",
-    "The layout uses the semantic spacing tokens and leading alignment throughout, so it follows Dynamic Type and right-to-left direction."
+    "Screen, chart/table titles: header trait; VoiceOver moves by heading.",
+    "Metric tiles: title+value+detail = one element; SF Symbol decorative (metric-card); row/column via ViewThatFits, Dynamic Type, width.",
+    "onSelect: invoice title = plain Button, label = row title (accessibility, Voice Control); selection at call site. Else: plain, non-interactive grid.",
+    "Chart: marks colored/positioned by series. Legend names series (chart), not color-alone; caller adds accessibilityLabel/Value for audio graph.",
+    "Table: row = one element; header: header trait; amounts monospaced, trailing-aligned (table).",
+    "Semantic spacing, leading alignment; follows Dynamic Type, RTL."
   ],
   "preview": {
     "source": "sources/blocks/Dashboard.swift",

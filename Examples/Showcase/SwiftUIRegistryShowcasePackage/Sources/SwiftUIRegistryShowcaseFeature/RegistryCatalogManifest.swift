@@ -20,7 +20,7 @@ enum RegistryCatalogManifest {
             name: "accordion",
             kind: "component",
             version: "0.2.2",
-            description: "Styles a native DisclosureGroup as a full-width header row with a trailing chevron and revealed content that keeps the caller's styling, for stacked expandable sections.",
+            description: "Styles DisclosureGroup: full-width header, trailing chevron; keeps caller styling.",
             usage: "@State private var isExpanded = false\n\nDisclosureGroup(\"How do I freeze my card?\", isExpanded: $isExpanded) {\n    Text(\"Open the card, then choose Freeze.\")\n}\n.disclosureGroupStyle(.registryAccordion)",
             dependencies: ["separator"],
             tags: ["accordion", "disclosure", "collapsible", "expand", "faq", "shadcn"]
@@ -29,7 +29,7 @@ enum RegistryCatalogManifest {
             name: "activity-feed",
             kind: "block",
             version: "0.2.2",
-            description: "Composes inline alert, avatar, item row, skeleton, empty state, and accordion treatments into an activity feed with caller-owned loading, items, notice, and selection.",
+            description: "Composes alert, avatar, item, skeleton, empty, accordion; caller-owned loading, items, notice, selection.",
             usage: "ActivityFeed(\n    \"Activity\",\n    notice: ActivityNotice(\"Card delivery delayed\", message: Text(\"Arrives Thursday.\")),\n    onDismissNotice: { },\n    items: [\n        ActivityItem(\n            id: \"bakery\",\n            title: Text(\"Mishmash Bakery\"),\n            detail: Text(\"Card payment of KWD 8.750\"),\n            timestamp: Text(\"09:41\"),\n            initials: \"MB\",\n            senderName: Text(\"Mishmash Bakery\"),\n            isUnread: true\n        )\n    ],\n    earlierItems: [],\n    isLoading: false,\n    onSelect: { id in }\n)",
             dependencies: ["alert", "avatar", "item", "skeleton", "empty", "accordion", "separator", "button"],
             tags: ["activity", "feed", "inbox", "notifications", "timeline", "loading"]
@@ -38,7 +38,7 @@ enum RegistryCatalogManifest {
             name: "alert",
             kind: "component",
             version: "0.2.1",
-            description: "Composes an inline, non-modal status message with informational, positive, and destructive variants and optional caller-owned actions.",
+            description: "Inline alert: informational, positive, destructive; optional caller actions.",
             usage: "InlineAlert(\n    \"Card delivery delayed\",\n    message: Text(\"Your new card now arrives on Thursday.\")\n)\n\nInlineAlert(\n    \"Payment failed\",\n    message: Text(\"The card on file was declined.\")\n) {\n    Button(\"Retry\") {}\n        .buttonStyle(.registry)\n}\n.registryVariant(.destructive)",
             dependencies: ["button"],
             tags: ["alert", "banner", "notice", "feedback", "status", "shadcn"]
@@ -47,7 +47,7 @@ enum RegistryCatalogManifest {
             name: "alert-dialog",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a modal decision with .alert: button roles, prepared copy, and the system presentation.",
+            description: "Modal .alert decision.",
             usage: "@State private var isConfirmingSignOut = false\n\nButton(\"Sign out\", role: .destructive) {\n    isConfirmingSignOut = true\n}\n.alert(\"Sign out?\", isPresented: $isConfirmingSignOut) {\n    Button(\"Sign out\", role: .destructive) { }\n    Button(\"Cancel\", role: .cancel) { }\n} message: {\n    Text(\"You will need your password to sign in again.\")\n}",
             dependencies: [],
             tags: ["alert", "dialog", "confirm", "destructive", "modal", "guidance"]
@@ -56,7 +56,7 @@ enum RegistryCatalogManifest {
             name: "aspect-ratio",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for SwiftUI's aspectRatio modifier, with no replacement API.",
+            description: "Native aspectRatio guidance.",
             usage: "Color.indigo\n    .overlay {\n        Image(systemName: \"play.fill\")\n            .foregroundStyle(.white)\n            .accessibilityHidden(true)\n    }\n    .aspectRatio(16.0 / 9.0, contentMode: .fit)\n    .accessibilityLabel(\"Video placeholder\")\n\nColor.teal\n    .aspectRatio(1, contentMode: .fit)\n    .frame(maxWidth: 160)\n    .accessibilityLabel(\"Avatar placeholder\")",
             dependencies: [],
             tags: ["aspect-ratio", "layout", "media", "native", "guidance"]
@@ -65,7 +65,7 @@ enum RegistryCatalogManifest {
             name: "attachment",
             kind: "component",
             version: "0.1.1",
-            description: "Presents a file or image attachment as a row with square media, a name and detail, caller-owned actions, and a state line for idle, uploading, processing, failed, and completed uploads.",
+            description: "Row: square media, name, detail, caller actions. States: idle, uploading, processing, failed, completed.",
             usage: "AttachmentRow(\n    name: Text(\"Statement-Aug-2026.pdf\"),\n    detail: Text(\"PDF document, 1.2 MB\"),\n    state: .uploading(progress: 0.68)\n) {\n    Image(systemName: \"doc.fill\")\n} actions: {\n    Button(\"Cancel\", systemImage: \"xmark\") {}\n        .labelStyle(.iconOnly)\n        .buttonStyle(.registryGhost)\n        .accessibilityLabel(\"Cancel upload\")\n}",
             dependencies: ["item", "progress", "button", "separator"],
             tags: ["attachment", "file", "upload", "row", "media", "shadcn"]
@@ -74,7 +74,7 @@ enum RegistryCatalogManifest {
             name: "auth-form",
             kind: "block",
             version: "0.3.2",
-            description: "Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.",
+            description: "Composes input, button, card into sign-in form; caller owns credentials, validation, submission state.",
             usage: "AuthForm(\n    \"Welcome back\",\n    identity: $email,\n    identityError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Forgot password?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
             dependencies: ["input", "button", "card"],
             tags: ["authentication", "sign-in", "form", "validation", "autofill"]
@@ -83,7 +83,7 @@ enum RegistryCatalogManifest {
             name: "avatar",
             kind: "component",
             version: "0.2.1",
-            description: "Displays a circular identity image with an initials or symbol fallback, sized by the environment control size, and requires an accessibility label.",
+            description: "Identity image, circular; initials/symbol fallback. Sizes via controlSize; needs label.",
             usage: "Avatar(Image(\"maya\"), accessibilityLabel: Text(\"Maya Khalid\"))\n\nAvatar(initials: \"MK\", accessibilityLabel: Text(\"Maya Khalid\"))\n    .controlSize(.large)\n\nAvatar(accessibilityLabel: Text(\"Unknown sender\"))",
             dependencies: [],
             tags: ["avatar", "profile", "identity", "image", "initials", "shadcn"]
@@ -92,7 +92,7 @@ enum RegistryCatalogManifest {
             name: "badge",
             kind: "component",
             version: "0.3.2",
-            description: "Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.",
+            description: "Primary, secondary, outline, positive, destructive: Text/Label treatments.",
             usage: "Text(\"New\")\n    .registryBadge()\n\nLabel(\"Completed\", systemImage: \"checkmark.circle.fill\")\n    .registryBadge(.positive)",
             dependencies: [],
             tags: ["badge", "label", "status", "category", "modifier"]
@@ -101,7 +101,7 @@ enum RegistryCatalogManifest {
             name: "breadcrumb",
             kind: "component",
             version: "0.1.2",
-            description: "A horizontal trail of navigation links with chevron separators, a current page, and an overflow menu for middle crumbs that do not fit; a component because iOS has no native breadcrumb control.",
+            description: "Horizontal nav trail: chevron separators, current page; overflow holds excess crumbs. iOS: no native breadcrumb.",
             usage: "Breadcrumb([\n    BreadcrumbItem(Text(\"Home\"), action: { path = NavigationPath() }),\n    BreadcrumbItem(Text(\"Library\"), action: { path.removeLast() }),\n    BreadcrumbItem(Text(\"Payments\"))\n])",
             dependencies: [],
             tags: ["breadcrumb", "navigation", "trail", "hierarchy", "path", "shadcn"]
@@ -110,7 +110,7 @@ enum RegistryCatalogManifest {
             name: "bubble",
             kind: "component",
             version: "0.1.1",
-            description: "Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, and leaves alignment to the message row.",
+            description: "Wraps text: incoming, outgoing, muted; aligns with message row.",
             usage: "Text(\"Are we still on for Thursday?\")\n    .registryBubble(.incoming)\n\nText(\"Yes, 6pm works.\")\n    .registryBubble(.outgoing)",
             dependencies: [],
             tags: ["bubble", "chat", "message", "conversation", "modifier", "shadcn"]
@@ -119,7 +119,7 @@ enum RegistryCatalogManifest {
             name: "button",
             kind: "component",
             version: "0.5.2",
-            description: "Styles native SwiftUI buttons with shadcn-inspired semantic variants and preserves roles and environment sizing.",
+            description: "Styles SwiftUI buttons: shadcn-inspired variants; preserves roles, sizing.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nButton(\"Save changes\") {}\n    .buttonStyle(.registry)\n\nButton(\"Cancel\") {}\n    .buttonStyle(.registryOutline)\n\nButton(\"Delete\", role: .destructive) {}\n    .buttonStyle(.registry)",
             dependencies: [],
             tags: ["button", "control", "action", "style", "shadcn"]
@@ -128,7 +128,7 @@ enum RegistryCatalogManifest {
             name: "button-group",
             kind: "component",
             version: "0.3.2",
-            description: "Lays out every native button in a ControlGroup side by side with one registry button variant, and keeps the caller's Button controls, roles, and labels.",
+            description: "ControlGroup: buttons side by side, one variant; keeps roles, labels.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\nControlGroup {\n    Button(\"Undo\", systemImage: \"arrow.uturn.backward\") {}\n    Button(\"Redo\", systemImage: \"arrow.uturn.forward\") {}\n}\n.controlGroupStyle(.registryButtons)",
             dependencies: ["button"],
             tags: ["button", "control-group", "action", "style"]
@@ -137,7 +137,7 @@ enum RegistryCatalogManifest {
             name: "calendar",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for date selection with DatePicker in graphical style and MultiDatePicker for several dates.",
+            description: "Calendar guidance.",
             usage: "@State private var date = Date.now\n@State private var dates: Set<DateComponents> = []\n\nDatePicker(\"Statement date\", selection: $date, displayedComponents: .date)\n    .datePickerStyle(.graphical)\n\nMultiDatePicker(\"Reminder days\", selection: $dates)",
             dependencies: [],
             tags: ["calendar", "date", "picker", "date-picker", "guidance"]
@@ -146,7 +146,7 @@ enum RegistryCatalogManifest {
             name: "card",
             kind: "component",
             version: "0.2.1",
-            description: "Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.",
+            description: "Styles GroupBox: bordered surface, adaptive label, content spacing.",
             usage: "GroupBox {\n    Text(\"Manage billing and renewal details from your account settings.\")\n} label: {\n    Label(\"Subscription\", systemImage: \"creditcard.fill\")\n}\n.groupBoxStyle(.registryCard)",
             dependencies: [],
             tags: ["card", "group-box", "surface", "container", "style"]
@@ -155,7 +155,7 @@ enum RegistryCatalogManifest {
             name: "carousel",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a paging horizontal ScrollView of cards with scrollTargetBehavior and containerRelativeFrame.",
+            description: "Paging ScrollView of cards.",
             usage: "ScrollView(.horizontal) {\n    HStack(spacing: 12) {\n        ForEach(cards) { card in\n            VStack(alignment: .leading, spacing: 8) {\n                Label(card.title, systemImage: card.systemImage)\n                    .font(.subheadline.weight(.semibold))\n                Text(card.amount, format: .currency(code: \"KWD\"))\n                    .font(.title.monospacedDigit())\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .padding()\n            .registrySurface()\n            .containerRelativeFrame(.horizontal)\n            .accessibilityElement(children: .combine)\n            .accessibilityLabel(\"\\(card.title) card\")\n        }\n    }\n    .scrollTargetLayout()\n}\n.scrollTargetBehavior(.paging)",
             dependencies: [],
             tags: ["carousel", "paging", "scroll", "cards", "guidance"]
@@ -164,7 +164,7 @@ enum RegistryCatalogManifest {
             name: "chart",
             kind: "component",
             version: "0.1.3",
-            description: "Styles a native Swift Charts Chart to the theme: an accent-derived series palette, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.",
+            description: "Styles Swift Charts to theme: accent palette, theme grid, footnote axis, legend; bar/line/area/pie.",
             usage: "Chart(data) { row in\n    BarMark(\n        x: .value(\"Month\", row.month),\n        y: .value(\"Visits\", row.visits)\n    )\n    .foregroundStyle(by: .value(\"Channel\", row.channel))\n    .position(by: .value(\"Channel\", row.channel))\n}\n.registryChart()\n.frame(height: 180)",
             dependencies: [],
             tags: ["chart", "charts", "graph", "bar", "line", "pie", "shadcn"]
@@ -173,7 +173,7 @@ enum RegistryCatalogManifest {
             name: "chart-tooltip",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a Swift Charts selection annotation with chartXSelection and a RuleMark tooltip.",
+            description: "chartXSelection + RuleMark annotation.",
             usage: "@State private var selectedMonth: String?\n\nvar selected: MonthlyBalance? {\n    balances.first { $0.month == selectedMonth }\n}\n\nChart {\n    ForEach(balances) { row in\n        BarMark(\n            x: .value(\"Month\", row.month),\n            y: .value(\"Balance\", row.amount)\n        )\n        .foregroundStyle(TintShapeStyle())\n    }\n    if let selected {\n        RuleMark(x: .value(\"Month\", selected.month))\n            .foregroundStyle(.secondary)\n            .annotation(position: .top) {\n                Text(selected.amount, format: .currency(code: \"KWD\"))\n                    .font(.footnote.monospacedDigit())\n                    .padding(6)\n                    .registrySurface()\n            }\n    }\n}\n.chartXSelection(value: $selectedMonth)\n.registryChart()",
             dependencies: [],
             tags: ["chart-tooltip", "chart", "selection", "annotation", "guidance"]
@@ -182,7 +182,7 @@ enum RegistryCatalogManifest {
             name: "checkbox",
             kind: "component",
             version: "0.3.2",
-            description: "Styles a native Toggle as a checkbox and preserves its binding, label, enabled state, and accessibility representation.",
+            description: "Styles Toggle as checkbox; preserves binding, label, state.",
             usage: "@State private var accepted = false\n\nToggle(\"Accept terms\", isOn: $accepted)\n    .toggleStyle(.registryCheckbox)",
             dependencies: [],
             tags: ["checkbox", "toggle", "selection", "form", "style"]
@@ -191,7 +191,7 @@ enum RegistryCatalogManifest {
             name: "collapsible",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a single expandable region with the default DisclosureGroup, distinct from the styled accordion.",
+            description: "Native DisclosureGroup, distinct from accordion.",
             usage: "@State private var isShowingDetails = false\n\nDisclosureGroup(\"Fee breakdown\", isExpanded: $isShowingDetails) {\n    LabeledContent(\"Transfer fee\", value: \"KWD 1.000\")\n    LabeledContent(\"Exchange margin\", value: \"KWD 0.450\")\n}",
             dependencies: [],
             tags: ["collapsible", "disclosure", "expand", "toggle", "guidance"]
@@ -200,7 +200,7 @@ enum RegistryCatalogManifest {
             name: "combobox",
             kind: "component",
             version: "0.1.1",
-            description: "A searchable single-selection control with a registry search field over caller options, a filtered list below it, binding-driven selection, and a native empty state.",
+            description: "Searchable single-selection: search field, filtered list, binding-driven selection, native empty state.",
             usage: "@State private var timezone: String? = \"riyadh\"\n\nCombobox(\n    selection: $timezone,\n    options: [\n        ComboboxOption(id: \"kuwait\", title: \"Kuwait City\", systemImage: \"clock\"),\n        ComboboxOption(id: \"riyadh\", title: \"Riyadh\", systemImage: \"clock\")\n    ],\n    prompt: \"Search time zones\",\n    emptyDescription: Text(\"Try a city name.\")\n)",
             dependencies: ["input-group", "item", "empty", "separator", "button"],
             tags: ["combobox", "search", "select", "autocomplete", "picker", "shadcn"]
@@ -209,7 +209,7 @@ enum RegistryCatalogManifest {
             name: "command",
             kind: "component",
             version: "0.2.1",
-            description: "Composes the registry input group, item rows, keycaps, and empty state into a search field over caller-filtered command sections.",
+            description: "Composes input group, rows, keycaps, empty state into search field.",
             usage: "@State private var query = \"\"\n\nCommandPalette(\n    query: $query,\n    prompt: \"Search actions\",\n    sections: [\n        CommandSection(id: \"actions\", title: \"Actions\", entries: [\n            CommandEntry(id: \"transfer\", title: Text(\"New transfer\"), systemImage: \"arrow.up.right\", shortcut: \"⌘T\", shortcutLabel: Text(\"Command T\"))\n        ])\n    ],\n    onSelect: { id in }\n)",
             dependencies: ["input-group", "item", "kbd", "empty", "separator", "button"],
             tags: ["command", "palette", "search", "spotlight", "shadcn"]
@@ -218,7 +218,7 @@ enum RegistryCatalogManifest {
             name: "command-search",
             kind: "block",
             version: "0.2.1",
-            description: "Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.",
+            description: "Composes command, keycap; caller owns query, filtering, sections, legend.",
             usage: "@State private var query = \"\"\n\nCommandSearch(\n    \"Search\",\n    query: $query,\n    prompt: \"Search actions and activity\",\n    sections: sections,\n    emptyDescription: Text(\"Try a payee, a card, or an action.\"),\n    shortcuts: [\n        CommandShortcutHint(\"Open search\", keys: \"⌘K\", keysLabel: Text(\"Command K\"))\n    ],\n    onSelect: { id in }\n)",
             dependencies: ["command", "kbd"],
             tags: ["search", "command", "palette", "shortcuts", "screen"]
@@ -227,7 +227,7 @@ enum RegistryCatalogManifest {
             name: "context-menu",
             kind: "recipe",
             version: "0.1.1",
-            description: "Native guidance for long-press actions with .contextMenu and labeled, role-tagged buttons.",
+            description: "Native .contextMenu: labeled, role-tagged buttons.",
             usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}",
             dependencies: [],
             tags: ["context-menu", "long-press", "actions", "menu", "guidance"]
@@ -236,7 +236,7 @@ enum RegistryCatalogManifest {
             name: "dashboard",
             kind: "block",
             version: "0.1.1",
-            description: "Composes metric cards, a themed Swift Charts bar chart, and a data table into an analytics dashboard with caller-owned values and optional row selection.",
+            description: "Composes metrics, bar chart, table; caller-owned values, selection.",
             usage: "Dashboard(\n    \"Analytics\",\n    metrics: [\n        DashboardMetric(\n            title: \"Revenue\",\n            value: Text(48_200, format: .currency(code: \"USD\")),\n            detail: Text(\"Up 12% this month\"),\n            systemImage: \"dollarsign.circle.fill\"\n        )\n    ],\n    chartTitle: \"Visitors by channel\",\n    points: [\n        DashboardSeriesPoint(id: \"jan-direct\", category: \"Jan\", series: \"Direct\", value: 186)\n    ],\n    tableTitle: \"Recent invoices\",\n    rows: [\n        DashboardRow(\n            id: \"1041\",\n            title: Text(\"Invoice 1041\"),\n            detail: Text(\"Northwind Trading\"),\n            status: Text(\"Paid\"),\n            amount: Text(1_240, format: .currency(code: \"USD\"))\n        )\n    ],\n    onSelect: { id in }\n)",
             dependencies: ["metric-card", "chart", "table"],
             tags: ["dashboard", "analytics", "overview", "chart", "table", "metrics", "shadcn"]
@@ -245,7 +245,7 @@ enum RegistryCatalogManifest {
             name: "date-picker",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a compact DatePicker over a closed range, with a presets Menu that sets the binding.",
+            description: "Compact DatePicker, closed range, presets Menu.",
             usage: "@State private var date = Date.now\n\nDatePicker(\"Statement date\", selection: $date, in: range, displayedComponents: .date)\n    .datePickerStyle(.compact)\n\nMenu(\"Presets\") {\n    Button(\"Today\") { date = .now }\n    Button(\"Tomorrow\") { date = .now.addingTimeInterval(60 * 60 * 24) }\n    Button(\"Next week\") { date = .now.addingTimeInterval(60 * 60 * 24 * 7) }\n}\n.accessibilityLabel(\"Date presets\")",
             dependencies: [],
             tags: ["date-picker", "date", "calendar", "presets", "guidance"]
@@ -254,7 +254,7 @@ enum RegistryCatalogManifest {
             name: "dialog",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for modal content with .sheet: the system owns detents, drag dismissal, and focus.",
+            description: "`.sheet`: system owns detents, drag-dismissal, focus.",
             usage: "@State private var isEditing = false\n\nButton(\"Edit profile\") { isEditing = true }\n    .sheet(isPresented: $isEditing) {\n        NavigationStack {\n            ProfileEditor()\n                .navigationTitle(\"Edit profile\")\n                .toolbar {\n                    ToolbarItem(placement: .confirmationAction) {\n                        Button(\"Done\") { isEditing = false }\n                    }\n                }\n        }\n    }",
             dependencies: [],
             tags: ["dialog", "sheet", "modal", "presentation", "guidance"]
@@ -263,7 +263,7 @@ enum RegistryCatalogManifest {
             name: "direction",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for layoutDirection behavior and semantic leading/trailing layout without a replacement API.",
+            description: "layoutDirection guidance.",
             usage: "@Environment(\\.layoutDirection) private var layoutDirection\n\nHStack {\n    Image(systemName: \"person.crop.circle\")\n        .accessibilityHidden(true)\n    Text(\"Account\")\n    Spacer()\n    Image(systemName: \"chevron.forward\")\n        .accessibilityHidden(true)\n}",
             dependencies: [],
             tags: ["direction", "layout-direction", "rtl", "localization", "guidance"]
@@ -272,7 +272,7 @@ enum RegistryCatalogManifest {
             name: "drawer",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a bottom drawer with .sheet, presentation detents, and a visible drag indicator.",
+            description: "Drawer guidance.",
             usage: "@State private var isShowingFilters = false\n\nButton(\"Filters\") { isShowingFilters = true }\n    .sheet(isPresented: $isShowingFilters) {\n        FilterOptions()\n            .presentationDetents([.medium, .large])\n            .presentationDragIndicator(.visible)\n    }",
             dependencies: [],
             tags: ["drawer", "bottom-sheet", "detents", "sheet", "guidance"]
@@ -281,7 +281,7 @@ enum RegistryCatalogManifest {
             name: "dropdown-menu",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a Menu trigger with labeled actions, sections, and a picker inside the menu.",
+            description: "Menu trigger guidance.",
             usage: "@State private var sort = \"recent\"\n\nMenu(\"Sort\", systemImage: \"arrow.up.arrow.down\") {\n    Picker(\"Sort by\", selection: $sort) {\n        Text(\"Most recent\").tag(\"recent\")\n        Text(\"Amount\").tag(\"amount\")\n    }\n    Divider()\n    Button(\"Export\", systemImage: \"square.and.arrow.up\") { }\n}\n.buttonStyle(.registryOutline)",
             dependencies: [],
             tags: ["dropdown", "menu", "actions", "picker", "guidance"]
@@ -290,7 +290,7 @@ enum RegistryCatalogManifest {
             name: "empty",
             kind: "component",
             version: "0.1.1",
-            description: "Places a native ContentUnavailableView on the registry content surface, so an empty section sits where its rows would appear.",
+            description: "Places ContentUnavailableView on registry surface, where rows appear.",
             usage: "ContentUnavailableView(\n    \"No recent activity\",\n    systemImage: \"clock.arrow.circlepath\",\n    description: Text(\"New transactions will appear here.\")\n)\n.registryEmptyState()",
             dependencies: [],
             tags: ["empty", "placeholder", "content-unavailable", "state", "shadcn"]
@@ -299,7 +299,7 @@ enum RegistryCatalogManifest {
             name: "field",
             kind: "component",
             version: "0.1.1",
-            description: "Composes a labeled form field around a native control with an optional description and an error message that drives the content's invalid state.",
+            description: "Labeled form field, native control; optional description; error drives invalid state.",
             usage: "@State private var email = \"\"\n\nFieldGroup {\n    Field(\"Full name\", description: \"As it appears on your card.\") { _ in\n        TextField(\"Full name\", text: $name)\n            .textFieldStyle(.registryInput)\n            .accessibilityLabel(\"Full name\")\n    }\n    Field(\"Email\", error: emailError) { isInvalid in\n        TextField(\"you@example.com\", text: $email)\n            .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))\n            .accessibilityLabel(\"Email\")\n    }\n}",
             dependencies: ["input"],
             tags: ["field", "form", "label", "validation", "error", "shadcn"]
@@ -308,7 +308,7 @@ enum RegistryCatalogManifest {
             name: "finance-overview",
             kind: "block",
             version: "0.4.3",
-            description: "Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.",
+            description: "Composes metrics, selectable transactions; caller-owned navigation, state.",
             usage: "FinanceOverview(\n    \"Overview\",\n    balanceTitle: \"Available balance\",\n    balance: Text(12_480.32, format: .currency(code: \"USD\")),\n    changeTitle: \"Monthly change\",\n    change: Text(0.082, format: .percent),\n    sectionTitle: \"Recent activity\",\n    transactions: [\n        FinanceTransactionItem(\n            id: \"salary\",\n            title: Text(\"Salary\"),\n            subtitle: Text(\"Yesterday\"),\n            amount: Text(2_450, format: .currency(code: \"KWD\")),\n            systemImage: \"building.columns.fill\",\n            tone: .positive\n        )\n    ],\n    onSelect: { id in }\n)",
             dependencies: ["metric-card", "transaction-row", "empty"],
             tags: ["finance", "dashboard", "overview", "transactions"]
@@ -317,7 +317,7 @@ enum RegistryCatalogManifest {
             name: "input",
             kind: "component",
             version: "0.5.1",
-            description: "Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.",
+            description: "Styles TextField/SecureField: fill, focus, disabled, invalid.",
             usage: "@State private var email = \"\"\n@State private var password = \"\"\n\n// The title is placeholder text to VoiceOver; the explicit label names\n// the field once it holds text.\nTextField(\"Email\", text: $email)\n    .textFieldStyle(.registryInput)\n    .accessibilityLabel(\"Email\")\n\nSecureField(\"Password\", text: $password)\n    .textFieldStyle(.registryInput)\n    .accessibilityLabel(\"Password\")\n\nTextField(\"Email\", text: $email)\n    .textFieldStyle(RegistryInputStyle(isInvalid: true))\n    .accessibilityLabel(\"Email\")\n    .accessibilityHint(\"Enter a valid email address\")",
             dependencies: [],
             tags: ["input", "text-field", "secure-field", "form", "style"]
@@ -326,7 +326,7 @@ enum RegistryCatalogManifest {
             name: "input-group",
             kind: "component",
             version: "0.2.1",
-            description: "Wraps a native text field with registry input chrome and caller-provided leading and trailing accessories, such as a search symbol and a clear button.",
+            description: "Wraps field in registry chrome; accessories add search symbol or clear button.",
             usage: "@State private var query = \"\"\n\nInputGroup {\n    Image(systemName: \"magnifyingglass\")\n        .accessibilityHidden(true)\n} content: {\n    TextField(\"Search transactions\", text: $query)\n        .accessibilityLabel(\"Search transactions\")\n} trailing: {\n    if !query.isEmpty {\n        Button(\"Clear search\", systemImage: \"xmark.circle.fill\") { query = \"\" }\n            .labelStyle(.iconOnly)\n            .buttonStyle(.registryGhost)\n            .controlSize(.small)\n    }\n}",
             dependencies: ["button"],
             tags: ["input", "group", "search", "accessory", "text-field", "shadcn"]
@@ -335,7 +335,7 @@ enum RegistryCatalogManifest {
             name: "input-otp",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a one-time-code TextField that autofills from Messages and Mail instead of a boxed control.",
+            description: "One-time-code TextField, not a boxed control.",
             usage: "@State private var code = \"\"\n\nTextField(\"One-time code\", text: $code)\n    .textContentType(.oneTimeCode)\n    .keyboardType(.numberPad)\n    .textFieldStyle(.registryInput)\n    .font(.title2.monospacedDigit())\n    .accessibilityLabel(\"Verification code\")\n    .onChange(of: code) { _, newValue in\n        code = String(newValue.filter(\\.isNumber).prefix(6))\n    }\n\nButton(\"Verify\") { }\n    .buttonStyle(.registry)\n    .disabled(code.count < 6)",
             dependencies: [],
             tags: ["input-otp", "otp", "verification-code", "one-time-code", "guidance"]
@@ -344,7 +344,7 @@ enum RegistryCatalogManifest {
             name: "item",
             kind: "component",
             version: "0.2.1",
-            description: "Composes a generic content row with leading media, a title and optional description, and a trailing accessory, and leaves selection to the call site.",
+            description: "Composes content row: media, title, description, accessory; selection at call site.",
             usage: "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
             dependencies: ["avatar", "separator", "badge"],
             tags: ["item", "row", "list", "cell", "media", "shadcn"]
@@ -353,7 +353,7 @@ enum RegistryCatalogManifest {
             name: "kbd",
             kind: "component",
             version: "0.1.2",
-            description: "Styles a native Text as a keycap for keyboard shortcut hints, hidden from accessibility unless you supply a spoken label.",
+            description: "Styles Text as a keycap for shortcuts.",
             usage: "Text(verbatim: \"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(verbatim: \"esc\")\n    .registryKeycap()",
             dependencies: [],
             tags: ["keyboard", "shortcut", "keycap", "hint", "shadcn"]
@@ -362,7 +362,7 @@ enum RegistryCatalogManifest {
             name: "label",
             kind: "component",
             version: "0.2.1",
-            description: "Controls native Label icon placement with semantic spacing and treats the icon as decorative for accessibility.",
+            description: "Controls Label icon placement with semantic spacing.",
             usage: "Label(\"Account settings\", systemImage: \"person.crop.circle\")\n    .labelStyle(.registry)\n\nLabel(\"Continue\", systemImage: \"chevron.forward\")\n    .labelStyle(.registryTrailingIcon)",
             dependencies: [],
             tags: ["label", "icon", "text", "alignment", "style"]
@@ -371,7 +371,7 @@ enum RegistryCatalogManifest {
             name: "macro-progress",
             kind: "component",
             version: "0.4.1",
-            description: "Displays prepared nutrition progress with a native ProgressView and an adaptive value layout.",
+            description: "Nutrition progress via ProgressView.",
             usage: "MacroProgress(\n    \"Protein\",\n    value: Text(\"96 g\"),\n    target: Text(\"130 g\"),\n    progress: 96.0 / 130.0,\n    systemImage: \"fish.fill\"\n)\n.registryTint(.indigo)",
             dependencies: [],
             tags: ["nutrition", "health", "progress", "macronutrients"]
@@ -380,7 +380,7 @@ enum RegistryCatalogManifest {
             name: "marker",
             kind: "component",
             version: "0.1.1",
-            description: "Styles a native Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.",
+            description: "Marker style: note, status, separator variants (system line, delivery pill, date rule).",
             usage: "Text(\"Today\")\n    .registryMarker(.separator)\n\nText(\"Maya joined the conversation\")\n    .registryMarker()\n\nText(\"Delivered 09:41\")\n    .registryMarker(.status)",
             dependencies: ["separator"],
             tags: ["marker", "conversation", "chat", "timeline", "divider", "shadcn"]
@@ -389,7 +389,7 @@ enum RegistryCatalogManifest {
             name: "menubar",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for scene-level commands with CommandMenu, which iPadOS and macOS place in the menu bar.",
+            description: "Scene-level commands via CommandMenu.",
             usage: "WindowGroup {\n    RootView()\n}\n.commands {\n    CommandMenu(\"Account\") {\n        Button(\"Sign Out\") { }\n            .keyboardShortcut(\"q\", modifiers: [.command, .shift])\n    }\n}",
             dependencies: [],
             tags: ["menubar", "commands", "keyboard-shortcuts", "menu-bar", "guidance"]
@@ -398,7 +398,7 @@ enum RegistryCatalogManifest {
             name: "message",
             kind: "component",
             version: "0.1.1",
-            description: "Composes one conversation turn with an optional author and timestamp header, the content in a bubble, an optional status line, and side-based alignment.",
+            description: "One turn: optional author/timestamp header, bubble content, status line, side alignment.",
             usage: "MessageRow(\n    author: Text(\"Maya\"),\n    timestamp: Text(\"09:41\"),\n    status: Text(\"Delivered\")\n) {\n    Avatar(initials: \"MK\", accessibilityLabel: Text(\"Maya Khalid\"))\n} content: {\n    Text(\"Are we still on for Thursday?\")\n}\n\nMessageRow {\n    Text(\"Yes, 6pm works.\")\n}\n.registryVariant(.outgoing)",
             dependencies: ["avatar", "bubble"],
             tags: ["message", "chat", "conversation", "row", "bubble", "shadcn"]
@@ -407,7 +407,7 @@ enum RegistryCatalogManifest {
             name: "message-scroller",
             kind: "component",
             version: "0.1.1",
-            description: "This native chat ScrollView opens at the newest turn, follows streamed replies at the bottom, holds a scrolled-up reader, and requests history at the top.",
+            description: "Chat ScrollView: newest-turn open, follows streamed replies, holds scrolled-up reader, requests history at top.",
             usage: "MessageScroller(position: $position, isFollowing: $isFollowing) {\n    ForEach(messages) { message in\n        MessageRow {\n            Text(message.text)\n        }\n        .registryVariant(message.isMine ? .outgoing : .incoming)\n        .id(message.id)\n    }\n}",
             dependencies: ["message", "avatar"],
             tags: ["chat", "scroll", "conversation", "messages", "container", "shadcn"]
@@ -416,7 +416,7 @@ enum RegistryCatalogManifest {
             name: "metric-card",
             kind: "component",
             version: "0.2.2",
-            description: "Displays one prepared product metric with native text formatting and semantic styling.",
+            description: "Formatted, semantic metric text.",
             usage: "MetricCard(\n    \"Available balance\",\n    value: Text(12_480.32, format: .currency(code: \"USD\")),\n    detail: Text(\"Up 8.2% this month\"),\n    systemImage: \"creditcard.fill\"\n)",
             dependencies: [],
             tags: ["metric", "finance", "health", "analytics"]
@@ -425,7 +425,7 @@ enum RegistryCatalogManifest {
             name: "native-select",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for the minimal menu treatment of a bound SwiftUI Picker.",
+            description: "Picker menu.",
             usage: "@State private var sort = \"recent\"\n\nPicker(\"Sort\", selection: $sort) {\n    Text(\"Most recent\").tag(\"recent\")\n    Text(\"Oldest\").tag(\"oldest\")\n    Text(\"Amount\").tag(\"amount\")\n}\n.pickerStyle(.menu)",
             dependencies: [],
             tags: ["native-select", "picker", "menu", "selection", "guidance"]
@@ -434,7 +434,7 @@ enum RegistryCatalogManifest {
             name: "nutrition-overview",
             kind: "block",
             version: "0.2.3",
-            description: "Composes prepared energy and macronutrient values into an embeddable nutrition overview.",
+            description: "Composes energy, macro values; embeddable.",
             usage: "NutritionOverview(\n    \"Today\",\n    energyTitle: \"Energy\",\n    energy: Text(\"1,640 kcal\"),\n    energyDetail: Text(\"360 kcal remaining\"),\n    sectionTitle: \"Macronutrients\",\n    macros: [\n        NutritionMacroItem(\n            id: \"protein\",\n            name: \"Protein\",\n            value: Text(\"96 g\"),\n            target: Text(\"130 g\"),\n            progress: 96.0 / 130.0,\n            systemImage: \"fish.fill\",\n            tint: .indigo\n        )\n    ],\n    actionTitle: \"Log food\",\n    onLogFood: {}\n)",
             dependencies: ["metric-card", "macro-progress"],
             tags: ["nutrition", "health", "dashboard", "overview", "macronutrients"]
@@ -443,7 +443,7 @@ enum RegistryCatalogManifest {
             name: "popover",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for anchored, transient content with .popover, which adapts to a sheet on compact widths.",
+            description: "`.popover` guidance.",
             usage: "@State private var isShowingHelp = false\n\nButton(\"Why is this needed?\") { isShowingHelp = true }\n    .buttonStyle(.registryLink)\n    .popover(isPresented: $isShowingHelp) {\n        Text(\"We use your date of birth to verify your identity.\")\n            .padding()\n            .presentationCompactAdaptation(.popover)\n    }",
             dependencies: [],
             tags: ["popover", "hover-card", "tooltip", "anchored", "guidance"]
@@ -452,7 +452,7 @@ enum RegistryCatalogManifest {
             name: "preview",
             kind: "block",
             version: "0.3.1",
-            description: "A theme preview wall of 33 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.",
+            description: "Theme wall: 33 cards, registry + native; adaptive grid, compact one-column.",
             usage: "PreviewWall()",
             dependencies: ["card", "item", "alert", "badge", "button", "chart", "empty", "avatar", "combobox", "separator", "field", "input-group", "spinner", "checkbox", "textarea", "input", "table", "kbd", "progress", "select", "skeleton", "button-group"],
             tags: ["preview", "theme", "showcase", "cards", "create", "shadcn", "dashboard"]
@@ -461,7 +461,7 @@ enum RegistryCatalogManifest {
             name: "preview-02",
             kind: "block",
             version: "0.3.1",
-            description: "A second theme preview wall of 35 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.",
+            description: "Theme wall: 35 cards, registry + native; adaptive grid, compact one-column.",
             usage: "PreviewWall02()",
             dependencies: ["card", "field", "input", "button", "item", "badge", "separator", "chart", "input-group", "toggle-group", "empty", "accordion", "skeleton", "checkbox", "breadcrumb", "select", "textarea", "progress", "table", "combobox", "spinner"],
             tags: ["preview", "theme", "showcase", "cards", "create", "shadcn", "dashboard"]
@@ -470,7 +470,7 @@ enum RegistryCatalogManifest {
             name: "progress",
             kind: "component",
             version: "0.2.1",
-            description: "Styles native determinate and indeterminate ProgressView controls with linear accent, positive, and negative semantic tones.",
+            description: "Linear ProgressView: determinate, indeterminate, accent, positive, negative.",
             usage: "ProgressView(value: 0.68) {\n    Text(\"Uploading\")\n} currentValueLabel: {\n    Text(\"68 percent\")\n}\n.progressViewStyle(.registryLinear)\n\nProgressView(value: 1) {\n    Text(\"Import complete\")\n}\n.progressViewStyle(.registryLinearPositive)",
             dependencies: [],
             tags: ["progress", "progress-view", "linear", "loading", "style"]
@@ -479,7 +479,7 @@ enum RegistryCatalogManifest {
             name: "questionnaire",
             kind: "block",
             version: "0.1.1",
-            description: "Composes the registry field, checkbox, textarea, progress, button, and card treatments into a caller-driven multi-step questionnaire with single-choice, multiple-choice, freeform, and skippable steps.",
+            description: "Composes field, checkbox, textarea, progress, button, card; drives choice, freeform, skippable steps.",
             usage: "@State private var currentStep = 0\n@State private var answers: [String: QuestionnaireAnswer] = [:]\n\nQuestionnaire(\n    \"Set up your profile\",\n    steps: [\n        QuestionnaireStep(\n            id: \"goal\",\n            title: \"What is your main goal?\",\n            kind: .singleChoice([\n                QuestionnaireOption(id: \"save\", title: \"Save more\"),\n                QuestionnaireOption(id: \"invest\", title: \"Start investing\")\n            ])\n        )\n    ],\n    currentStep: $currentStep,\n    answers: $answers,\n    onFinish: { }\n)",
             dependencies: ["field", "checkbox", "textarea", "progress", "button", "card"],
             tags: ["questionnaire", "survey", "form", "multi-step", "shadcn"]
@@ -488,7 +488,7 @@ enum RegistryCatalogManifest {
             name: "radio-group",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for a bound Picker as an inline, mutually exclusive option group.",
+            description: "Picker: inline exclusive group.",
             usage: "@State private var selection = \"standard\"\n\nPicker(\"Delivery speed\", selection: $selection) {\n    Text(\"Standard\").tag(\"standard\")\n    Text(\"Express\").tag(\"express\")\n    Text(\"Same day\").tag(\"same-day\")\n}\n.pickerStyle(.inline)",
             dependencies: [],
             tags: ["radio-group", "picker", "selection", "options", "guidance"]
@@ -497,7 +497,7 @@ enum RegistryCatalogManifest {
             name: "scroll-area",
             kind: "recipe",
             version: "0.2.0",
-            description: "Native guidance for scrollable content with content margins, indicator visibility, and clipping left to ScrollView.",
+            description: "Scrollable content: margins, indicators, clipping.",
             usage: "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()\n.scrollEdgeEffectStyle(.soft, for: .top)",
             dependencies: [],
             tags: ["scroll", "scroll-view", "margins", "indicators", "guidance"]
@@ -506,7 +506,7 @@ enum RegistryCatalogManifest {
             name: "select",
             kind: "component",
             version: "0.2.1",
-            description: "Adds semantic field chrome to a native menu-style Picker without replacing its presentation or selection behavior.",
+            description: "Adds chrome to menu-style Picker.",
             usage: "@State private var currency = \"KWD\"\n\nPicker(\"Currency\", selection: $currency) {\n    Text(\"Kuwaiti dinar\").tag(\"KWD\")\n    Text(\"US dollar\").tag(\"USD\")\n}\n.registrySelect()",
             dependencies: [],
             tags: ["select", "picker", "menu", "form", "modifier"]
@@ -515,7 +515,7 @@ enum RegistryCatalogManifest {
             name: "separator",
             kind: "component",
             version: "0.2.1",
-            description: "Applies semantic color, orientation, and caller-provided insets to a native Divider.",
+            description: "Orientation, insets, native Divider.",
             usage: "Divider()\n    .registrySeparator(insets: EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))\n\nDivider()\n    .registrySeparator(.vertical)",
             dependencies: [],
             tags: ["separator", "divider", "layout", "inset", "modifier"]
@@ -524,7 +524,7 @@ enum RegistryCatalogManifest {
             name: "settings-section",
             kind: "block",
             version: "0.1.2",
-            description: "Composes registry select, separator, and button treatments into a titled settings section with structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.",
+            description: "Composes select, separator, button; structure, separators, messages, caller-owned toggle/picker/action rows.",
             usage: "SettingsSection(\n    \"Notifications\",\n    footer: Text(\"Quiet hours apply to every channel.\")\n) {\n    Toggle(\"Transaction alerts\", isOn: $alertsEnabled)\n        .settingsRowDescription(Text(\"A push notification for every card transaction.\"))\n\n    Toggle(\"Marketing messages\", isOn: $marketingEnabled)\n        .settingsRowDisabled(\n            !marketingAllowed,\n            explanation: Text(\"Managed by your organization's privacy policy.\")\n        )\n\n    LabeledContent(\"Currency\") {\n        Picker(\"Currency\", selection: $currency) {\n            Text(\"Kuwaiti dinar\").tag(\"KWD\")\n            Text(\"US dollar\").tag(\"USD\")\n        }\n        .registrySelect()\n    }\n\n    Button(\"Sign out\", role: .destructive) { }\n        .buttonStyle(.registry)\n}",
             dependencies: ["select", "separator", "button"],
             tags: ["settings", "preferences", "section", "toggle", "form"]
@@ -533,7 +533,7 @@ enum RegistryCatalogManifest {
             name: "sheet",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for a side sheet with inspector on iPad that adapts to a sheet on iPhone.",
+            description: "Side sheet: iPad inspector, iPhone sheet.",
             usage: "@State private var isShowingDetails = false\n\nNavigationStack {\n    List {\n        LabeledContent(\"Merchant\", value: \"Mishmash Bakery\")\n        LabeledContent(\"Amount\", value: \"KWD 8.750\")\n    }\n    .navigationTitle(\"Transaction\")\n    .toolbar {\n        ToolbarItem(placement: .topBarTrailing) {\n            Button(\"Details\", systemImage: \"sidebar.trailing\") {\n                isShowingDetails.toggle()\n            }\n            .accessibilityLabel(\"Toggle details\")\n        }\n    }\n    .inspector(isPresented: $isShowingDetails) {\n        List {\n            LabeledContent(\"Category\", value: \"Dining\")\n            LabeledContent(\"Card\", value: \"Visa 4321\")\n            LabeledContent(\"Status\", value: \"Cleared\")\n        }\n        .inspectorColumnWidth(min: 240, ideal: 280, max: 360)\n    }\n}",
             dependencies: [],
             tags: ["sheet", "inspector", "side-sheet", "detail-panel", "guidance"]
@@ -542,7 +542,7 @@ enum RegistryCatalogManifest {
             name: "sidebar",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for a sidebar layout with NavigationSplitView and a selection-bound List on iPad.",
+            description: "Sidebar: NavigationSplitView + selection-bound List (iPad).",
             usage: "@State private var selection: String? = \"activity\"\n@State private var tab = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    // A visually rich detail extends under the sidebar instead of stopping at its edge\n    ActivityBanner()\n        .backgroundExtensionEffect()\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}\n\n// The HIG's first choice on iPad: a tab bar people can switch to a sidebar\nTabView(selection: $tab) {\n    Tab(\"Activity\", systemImage: \"bell\", value: \"activity\") { ActivityScreen() }\n    Tab(\"Cards\", systemImage: \"creditcard\", value: \"cards\") { CardsScreen() }\n}\n.tabViewStyle(.sidebarAdaptable)",
             dependencies: [],
             tags: ["sidebar", "navigation", "split-view", "ipad", "guidance"]
@@ -551,7 +551,7 @@ enum RegistryCatalogManifest {
             name: "signup-form",
             kind: "block",
             version: "0.1.1",
-            description: "Composes registry input, button, card, and checkbox treatments into a sign-up form with caller-owned fields, validation messages, terms acceptance, and submission state.",
+            description: "Composes input, button, card, checkbox; caller owns fields, validation, terms, submission state.",
             usage: "SignUpForm(\n    \"Create your account\",\n    name: $name,\n    nameError: nameError,\n    email: $email,\n    emailError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    confirmation: $confirmation,\n    confirmationError: confirmationError,\n    acceptsTerms: $acceptsTerms,\n    termsError: termsError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Already have an account?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
             dependencies: ["input", "button", "card", "checkbox"],
             tags: ["sign-up", "registration", "form", "validation", "autofill", "shadcn"]
@@ -560,7 +560,7 @@ enum RegistryCatalogManifest {
             name: "skeleton",
             kind: "component",
             version: "0.2.1",
-            description: "Turns any view into a loading placeholder with native redaction, disabled interaction, one loading accessibility element, and a pulse that stops under Reduce Motion.",
+            description: "Turns any view into loading placeholder with native redaction.",
             usage: "@State private var isLoading = true\n\nActivityRows()\n    .registrySkeleton(isLoading)\n\n// Pass false to render the real content unchanged.",
             dependencies: [],
             tags: ["skeleton", "loading", "placeholder", "redacted", "shimmer", "shadcn"]
@@ -569,7 +569,7 @@ enum RegistryCatalogManifest {
             name: "slider",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for a Slider with semantic tint, control sizing, and caller-owned value and labels.",
+            description: "Slider: tint, sizing; caller-owned value, labels.",
             usage: "@State private var volume = 64.0\n\nSlider(value: $volume, in: 0...100, step: 1) {\n    Text(\"Volume\")\n} minimumValueLabel: {\n    Image(systemName: \"speaker.fill\")\n        .accessibilityHidden(true)\n} maximumValueLabel: {\n    Image(systemName: \"speaker.wave.3.fill\")\n        .accessibilityHidden(true)\n}\n.controlSize(.large)",
             dependencies: [],
             tags: ["slider", "value", "range", "control", "guidance"]
@@ -578,7 +578,7 @@ enum RegistryCatalogManifest {
             name: "spinner",
             kind: "component",
             version: "0.2.1",
-            description: "Styles a native indeterminate ProgressView with a compact circular indicator and optional label.",
+            description: "Compact circular indeterminate ProgressView style.",
             usage: "ProgressView(\"Loading results\")\n    .progressViewStyle(.registrySpinner)",
             dependencies: [],
             tags: ["spinner", "progress-view", "circular", "loading", "style"]
@@ -587,7 +587,7 @@ enum RegistryCatalogManifest {
             name: "switch",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for the platform switch treatment on a Toggle, which inherits app tint and environment behavior.",
+            description: "Toggle: switch style; inherits tint, environment.",
             usage: "@State private var notifications = true\n\nToggle(\"Notifications\", isOn: $notifications)\n    .toggleStyle(.switch)",
             dependencies: [],
             tags: ["switch", "toggle", "setting", "boolean", "guidance"]
@@ -596,7 +596,7 @@ enum RegistryCatalogManifest {
             name: "table",
             kind: "component",
             version: "0.1.1",
-            description: "Lays out Identifiable rows in aligned columns on a native Grid, with numeric columns in monospaced digits, optional summary rows, and theme hairline separators.",
+            description: "Identifiable rows in aligned columns; numeric monospaced; optional summary rows.",
             usage: "DataTable(\n    lines,\n    columns: [\n        DataTableColumn(Text(\"Item\")) { Text($0.item) },\n        DataTableColumn(Text(\"Qty\"), alignment: .trailing) { Text($0.quantity, format: .number) },\n        DataTableColumn(Text(\"Amount\"), alignment: .trailing) { Text($0.amount, format: .currency(code: \"USD\")) }\n    ],\n    footer: [\n        DataTableFooterRow(label: Text(\"Total due\"), value: Text(total, format: .currency(code: \"USD\")), isEmphasized: true)\n    ]\n)",
             dependencies: ["separator"],
             tags: ["table", "grid", "data", "rows", "columns", "shadcn"]
@@ -605,7 +605,7 @@ enum RegistryCatalogManifest {
             name: "tabs",
             kind: "recipe",
             version: "0.3.0",
-            description: "Native guidance for a local-selection Picker with the platform segmented style; app navigation stays with TabView.",
+            description: "Picker segmented; local selection, TabView nav.",
             usage: "@State private var selection = \"overview\"\n\nPicker(\"Section\", selection: $selection) {\n    Text(\"Overview\").tag(\"overview\")\n    Text(\"Activity\").tag(\"activity\")\n    Text(\"Settings\").tag(\"settings\")\n}\n.pickerStyle(.segmented)",
             dependencies: [],
             tags: ["tabs", "picker", "segmented", "selection", "guidance"]
@@ -614,7 +614,7 @@ enum RegistryCatalogManifest {
             name: "textarea",
             kind: "component",
             version: "0.4.1",
-            description: "Applies input-matching focus, disabled, and invalid chrome to a native TextEditor.",
+            description: "Focus, disabled, invalid chrome.",
             usage: "@State private var notes = \"\"\n\nTextEditor(text: $notes)\n    .registryTextArea(accessibilityLabel: Text(\"Delivery instructions\"))",
             dependencies: [],
             tags: ["textarea", "text-editor", "multiline", "form", "modifier"]
@@ -623,7 +623,7 @@ enum RegistryCatalogManifest {
             name: "toast",
             kind: "component",
             version: "0.1.1",
-            description: "Presents a transient status toast over content with informational, positive, and destructive variants, an optional caller-run action, and swipe, tap, or timed dismissal.",
+            description: "Transient status toast: informational, positive, destructive; optional action; swipe/tap/timed dismissal.",
             usage: "@State private var toast: RegistryToast?\n\nCardDetail()\n    .registryToast($toast)\n\n// Present a destructive toast with an undo action:\ntoast = RegistryToast(\n    title: \"Message deleted\",\n    variant: .destructive,\n    action: RegistryToast.Action(label: \"Undo\") { restoreMessage() }\n)",
             dependencies: ["button"],
             tags: ["toast", "snackbar", "notification", "feedback", "status", "shadcn"]
@@ -632,7 +632,7 @@ enum RegistryCatalogManifest {
             name: "toggle",
             kind: "component",
             version: "0.2.1",
-            description: "Applies registry button treatments to native Toggle state for compact selectable controls.",
+            description: "Button treatment, Toggle.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\n@State private var bold = false\n\nToggle(\"Bold\", systemImage: \"bold\", isOn: $bold)\n    .toggleStyle(.registryToggle)",
             dependencies: ["button"],
             tags: ["toggle", "button", "selection", "formatting", "style"]
@@ -641,7 +641,7 @@ enum RegistryCatalogManifest {
             name: "toggle-group",
             kind: "component",
             version: "0.2.1",
-            description: "Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.",
+            description: "Toggle treatment, ControlGroup.",
             usage: "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\n@State private var bold = false\n@State private var italic = false\n\nControlGroup {\n    Toggle(\"Bold\", systemImage: \"bold\", isOn: $bold)\n    Toggle(\"Italic\", systemImage: \"italic\", isOn: $italic)\n}\n.registryToggleGroup()",
             dependencies: ["toggle", "button"],
             tags: ["toggle-group", "toggle", "control-group", "multi-selection", "modifier"]
@@ -650,7 +650,7 @@ enum RegistryCatalogManifest {
             name: "tooltip",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for supplementary help without hover: an accessibility hint plus an optional informational popover.",
+            description: "Tooltip: hint, popover.",
             usage: "Button(\"Freeze card\", systemImage: \"snowflake\") { }\n    .buttonStyle(.registryOutline)\n    .accessibilityHint(\"Blocks new purchases until you unfreeze the card.\")\n    .help(\"Blocks new purchases until you unfreeze the card.\")",
             dependencies: [],
             tags: ["tooltip", "help", "hint", "hover", "guidance"]
@@ -659,7 +659,7 @@ enum RegistryCatalogManifest {
             name: "transaction-row",
             kind: "component",
             version: "0.5.1",
-            description: "Displays prepared transaction content and leaves selection to a native Button at the call site.",
+            description: "Transaction content; caller Button selects.",
             usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)",
             dependencies: [],
             tags: ["transaction", "row", "finance", "activity"]
@@ -668,7 +668,7 @@ enum RegistryCatalogManifest {
             name: "typography",
             kind: "recipe",
             version: "0.1.0",
-            description: "Native guidance for Apple's eleven text styles as the type scale with weight, design, and monospaced digits.",
+            description: "Styles = type scale: weight, design, monospaced digits.",
             usage: "VStack(alignment: .leading, spacing: 8) {\n    Text(\"Balance\")\n        .font(.title2.weight(.semibold))\n    Text(amount, format: .currency(code: \"KWD\"))\n        .font(.largeTitle)\n        .monospacedDigit()\n    Text(\"Updated today\")\n        .font(.footnote)\n        .foregroundStyle(.secondary)\n}\n.fontDesign(.rounded)",
             dependencies: [],
             tags: ["typography", "text-styles", "font", "type-scale", "guidance"]

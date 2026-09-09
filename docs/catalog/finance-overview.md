@@ -2,7 +2,7 @@
 
 # finance-overview
 
-Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.
+Composes metrics, selectable transactions; caller-owned navigation, state.
 
 ![finance-overview preview](../images/items/finance-overview-light.png)
 
@@ -63,7 +63,7 @@ FinanceOverview(
 - Platforms: iOS 26.0+
 - Installs in order: [metric-card](metric-card.md) 0.2.2, [transaction-row](transaction-row.md) 0.5.1, [empty](empty.md) 0.1.1, [finance-overview](finance-overview.md) 0.4.3
 - Accessibility contract:
-  - Selectable transactions use native Button semantics, and an empty activity state uses ContentUnavailableView. The screen and section titles carry the header trait. Voice Control can address a row by its title alone.
-  - The overview uses system text styles and ViewThatFits for Dynamic Type.
-  - The overview uses leading and trailing alignment, so the layout follows right-to-left direction.
+  - Transactions: Button semantics. Empty: ContentUnavailableView. Titles: header trait; Voice Control: title.
+  - System text styles, ViewThatFits: Dynamic Type.
+  - Leading/trailing alignment: RTL.
 - Source: [sources/blocks/FinanceOverview.swift](../../Registry/sources/blocks/FinanceOverview.swift), with the `Finance Overview` Xcode preview

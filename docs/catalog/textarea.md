@@ -2,7 +2,7 @@
 
 # textarea
 
-Applies input-matching focus, disabled, and invalid chrome to a native TextEditor.
+Focus, disabled, invalid chrome.
 
 ![textarea preview](../images/items/textarea-light.png)
 
@@ -48,8 +48,8 @@ TextEditor(text: $notes)
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Retains native TextEditor editing, selection, keyboard, and scrolling behavior.
-  - Requires a caller-supplied Text accessibility label because TextEditor has no prompt parameter.
-  - Requires visible validation copy and an accessibility hint for invalid input.
-  - Inherits Dynamic Type, enabled state, focus, and layout direction.
+  - Editing, selection, keyboard, scrolling.
+  - Label needed; no prompt.
+  - Validation copy, invalid hint.
+  - Dynamic Type, focus, direction.
 - Source: [sources/components/RegistryTextAreaModifier.swift](../../Registry/sources/components/RegistryTextAreaModifier.swift), with the `Textarea States` Xcode preview

@@ -2,7 +2,7 @@
 
 # slider
 
-Native guidance for a Slider with semantic tint, control sizing, and caller-owned value and labels.
+Slider: tint, sizing; caller-owned value, labels.
 
 ![slider preview](../images/items/slider-light.png)
 
@@ -29,7 +29,7 @@ Slider(value: $volume, in: 0...100, step: 1) {
 
 ## Why native is enough
 
-Use the native `Slider` and apply `.tint(_:)` and `.controlSize(_:)` directly where the design needs them. The registry adds no wrapper, because those modifiers only forward environment values that the native control already respects.
+Use the native `Slider` with `.tint(_:)` and `.controlSize(_:)` where the design needs them. The registry adds no wrapper: those modifiers only forward environment values the control already respects.
 
 ## Details
 
@@ -37,7 +37,5 @@ Use the native `Slider` and apply `.tint(_:)` and `.controlSize(_:)` directly wh
 - Version: 0.3.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Retains native Slider adjustable-control semantics and gestures.
-  - Keeps the value, bounds, step, and editing callbacks caller-owned.
-  - Requires a meaningful label and supports native minimum and maximum labels.
-  - Inherits control size, enabled state, and layout direction unless explicitly overridden.
+  - Retains Slider semantics, gestures; caller-owned value, bounds, step, callbacks.
+  - Needs meaningful label; supports min/max labels; inherits size, enabled, direction (overridable).

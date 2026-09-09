@@ -2,7 +2,7 @@
 
 # attachment
 
-Presents a file or image attachment as a row with square media, a name and detail, caller-owned actions, and a state line for idle, uploading, processing, failed, and completed uploads.
+Row: square media, name, detail, caller actions. States: idle, uploading, processing, failed, completed.
 
 ![attachment preview](../images/items/attachment-light.png)
 
@@ -56,9 +56,9 @@ AttachmentRow(
 - Platforms: iOS 26.0+
 - Installs in order: [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [progress](progress.md) 0.2.1, [button](button.md) 0.5.2, [attachment](attachment.md) 0.1.1
 - Accessibility contract:
-  - Every upload state shows text: a percent, Processing, a failure message, or Uploaded. Progress and outcome never rest on color or a bar alone.
-  - VoiceOver does not read the upload percent, because the progress bar already reports its value. The same fraction is not read twice.
-  - The component composes ItemRow, so the name and detail combine into one accessibility element. The trailing actions stay separately activatable.
-  - The failed and completed states each pair their color with a symbol and a word. The outcome does not rest on hue alone.
-  - Label any icon-only action button and the thumbnail image. Neither derives an accessibility label from visible text.
+  - State text: percent, Processing, failure, Uploaded; MUST NOT rely on color/bar.
+  - VoiceOver skips percent; bar reports it.
+  - ItemRow: name+detail one element; actions separate, activatable.
+  - Failed/completed: color, symbol, word; not hue-only.
+  - Icon buttons, thumbnail MUST label, not text-derived.
 - Source: [sources/components/AttachmentRow.swift](../../Registry/sources/components/AttachmentRow.swift), with the `Attachment Row` Xcode preview

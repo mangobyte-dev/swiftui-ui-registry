@@ -2,7 +2,7 @@
 
 # date-picker
 
-Native guidance for a compact DatePicker over a closed range, with a presets Menu that sets the binding.
+Compact DatePicker, closed range, presets Menu.
 
 ![date-picker preview](../images/items/date-picker-light.png)
 
@@ -28,7 +28,7 @@ Menu("Presets") {
 
 ## Why native is enough
 
-Use `DatePicker` in the `.compact` style with a `ClosedRange<Date>`, so people cannot pick outside the allowed dates. Offer a `Menu` of common choices that writes the binding directly. The `calendar` recipe covers the graphical style for month-at-a-glance selection. The compact control is a single tap target that the system lays out, so the registry adds no wrapper. Watch the range: an empty or reversed range traps the picker at one date.
+`DatePicker` `.compact` + `ClosedRange<Date>` restricts pickable dates. `Menu` presets write binding. `calendar`: graphical month view. Compact = single tap target; no wrapper. Empty/reversed range traps at one date.
 
 ## Details
 
@@ -36,5 +36,5 @@ Use `DatePicker` in the `.compact` style with a `ClosedRange<Date>`, so people c
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - The DatePicker exposes its title as its accessibility label and reads the selected date.
-  - Label the presets Menu so its purpose is clear without relying on the visible glyph.
+  - DatePicker: title = accessibility label; reads date.
+  - Label presets Menu; clear without visible glyph.

@@ -4,7 +4,7 @@
   "version": "0.3.2",
   "name": "auth-form",
   "kind": "block",
-  "description": "Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.",
+  "description": "Composes input, button, card into sign-in form; caller owns credentials, validation, submission state.",
   "usage": "AuthForm(\n    \"Welcome back\",\n    identity: $email,\n    identityError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Forgot password?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
   "files": [
     {
@@ -49,13 +49,13 @@
     "password-form"
   ],
   "accessibility": [
-    "Both fields carry an explicit accessibilityLabel equal to their visible titles. Measured on iOS 27, the label-plus-prompt initializer alone exposes the title as placeholder text only. Without the explicit label, a field with typed content is unnamed.",
-    "Focus order is identity then password. The identity field uses a Next return key that moves focus to the password field. The password return key submits the form.",
-    "Invalid fields never use color alone. The input border width increases, a visible footnote message renders under the field, and the message attaches as the field's accessibility hint.",
-    "Field and form error messages post an AccessibilityNotification.Announcement when they appear or change. An unchanged message is not re-announced, so a caller that re-validates with the same result posts its own announcement. VoiceOver announcement timing is not verified on device.",
-    "Autofill content types are fixed. The identity field is .username, for both email and username sign-in, and the password field is .password. You can verify autofill only manually, with a saved credential.",
-    "When isSubmitting is true, the environment disables every control, and the composed styles apply the shared disabled opacity. The submit button shows a progress spinner and keeps its title as its accessibility label.",
-    "The card title carries the header accessibility trait."
+    "Fields need accessibilityLabel = title (iOS 27: label+prompt alone shows placeholder, unnamed once typed).",
+    "Focus: identity, password. Next key: identity to password. Return: submits.",
+    "Invalid: not color alone; border increases; footnote under field is accessibility hint.",
+    "Errors post AccessibilityNotification.Announcement on change; unchanged skipped, caller MUST announce same-result; VoiceOver timing unverified.",
+    "Autofill fixed: identity .username (email/username), password .password; verify manually, saved credential.",
+    "isSubmitting: controls disabled, shared opacity; submit spinner, title as label.",
+    "Card title carries header trait."
   ],
   "preview": {
     "source": "sources/blocks/AuthForm.swift",

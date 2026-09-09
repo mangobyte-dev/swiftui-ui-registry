@@ -2,7 +2,7 @@
 
 # chart
 
-Styles a native Swift Charts Chart to the theme: an accent-derived series palette, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.
+Styles Swift Charts to theme: accent palette, theme grid, footnote axis, legend; bar/line/area/pie.
 
 ![chart preview](../images/items/chart-light.png)
 
@@ -54,9 +54,9 @@ Chart(data) { row in
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - The marks stay native Swift Charts marks, so the caller keeps the chart's accessibility. Add accessibilityLabel and accessibilityValue to marks or the Chart, so VoiceOver and the audio graph describe the data.
-  - The legend below the plot names the series, so the chart does not rely on color alone. The legend reads the same palette as the plot.
-  - Axis value labels use footnote text at secondary emphasis. Grid lines and ticks use the theme border, so the chrome respects Dynamic Type and the color scheme.
-  - A mark colored by a category reads the accent-derived palette. The first color is the accent, and the others rotate its hue to stay distinct. Give a single-series mark the accent with foregroundStyle(TintShapeStyle()) or a RegistryChartPalette color. Otherwise Swift Charts draws one series in its own default color.
-  - The series palette follows the theme's chartPalette: accent-derived tints, a fixed spectrum, or a gray ramp. The spectrum and gray options keep the categories distinct when the accent has too little chroma to rotate. Every option follows the color scheme.
+  - MUST carry accessibilityLabel/accessibilityValue on marks or Chart (VoiceOver, audio graph).
+  - Legend below plot names series, avoiding color-only; matches palette.
+  - Axis: footnote, secondary emphasis. Grid/ticks: theme border, Dynamic Type, color-scheme.
+  - Category marks: accent-derived; first=accent, rest hue-rotated. Single-series SHOULD use foregroundStyle(TintShapeStyle()) or RegistryChartPalette, else default.
+  - Palette: theme chartPalette (accent tints, fixed spectrum, gray ramp); spectrum/gray stay distinct despite low chroma. Color-scheme aware.
 - Source: [sources/components/RegistryChart.swift](../../Registry/sources/components/RegistryChart.swift), with the `Chart` Xcode preview

@@ -2,7 +2,7 @@
 
 # dialog
 
-Native guidance for modal content with .sheet: the system owns detents, drag dismissal, and focus.
+`.sheet`: system owns detents, drag-dismissal, focus.
 
 ![dialog preview](../images/items/dialog-light.png)
 
@@ -31,7 +31,7 @@ Button("Edit profile") { isEditing = true }
 
 ## Why native is enough
 
-Present edit or detail content with the native `.sheet` modifier, wrapped in a `NavigationStack`, so the title and confirmation action land in system chrome. Liquid Glass, the grabber, swipe-to-dismiss, and keyboard avoidance come from the system. The registry adds no wrapper.
+`.sheet` + `NavigationStack`: edit/detail → chrome gets title, confirmation. Grabber, dismiss, keyboard, Liquid Glass: system. No wrapper.
 
 ## Details
 
@@ -39,6 +39,6 @@ Present edit or detail content with the native `.sheet` modifier, wrapped in a `
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Sheets present as modal to VoiceOver and support swipe-to-dismiss and the escape gesture.
-  - Toolbar placements give Done and Cancel their system position and semantics.
-  - Content inside the sheet uses registry items like any other screen.
+  - Sheets: modal VoiceOver, swipe-escape dismiss.
+  - Toolbar: system semantics, Done-Cancel.
+  - Sheet content: registry items, any-screen.

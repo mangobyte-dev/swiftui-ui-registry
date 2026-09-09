@@ -2,7 +2,7 @@
 
 # drawer
 
-Native guidance for a bottom drawer with .sheet, presentation detents, and a visible drag indicator.
+Drawer guidance.
 
 ![drawer preview](../images/items/drawer-light.png)
 
@@ -25,7 +25,7 @@ Button("Filters") { isShowingFilters = true }
 
 ## Why native is enough
 
-A drawer is a native sheet with `.presentationDetents` and a visible drag indicator. The system handles the resize gesture, the dimming, and the dismissal. Do not recreate a bottom panel with an offset overlay.
+Drawer = sheet + `.presentationDetents`, drag indicator; system resize/dim/dismiss. MUST NOT fake via offset-overlay.
 
 ## Details
 
@@ -33,6 +33,6 @@ A drawer is a native sheet with `.presentationDetents` and a visible drag indica
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Detent changes are announced and adjustable through VoiceOver.
-  - The drag indicator gives a visible affordance; keep a button-based dismissal too.
-  - Content must remain reachable at the medium detent or be scrollable.
+  - Detents: announced, VoiceOver-adjustable.
+  - Drag indicator visible; add button dismissal.
+  - Content MUST reach medium detent or scroll.

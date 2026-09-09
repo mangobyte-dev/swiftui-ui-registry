@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "name": "toggle-group",
   "kind": "component",
-  "description": "Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.",
+  "description": "Toggle treatment, ControlGroup.",
   "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\n@State private var bold = false\n@State private var italic = false\n\nControlGroup {\n    Toggle(\"Bold\", systemImage: \"bold\", isOn: $bold)\n    Toggle(\"Italic\", systemImage: \"italic\", isOn: $italic)\n}\n.registryToggleGroup()",
   "files": [
     {
@@ -46,10 +46,9 @@
     "multi-select"
   ],
   "accessibility": [
-    "Retains each native Toggle's independent state and activation behavior.",
-    "Keeps all selection bindings caller-owned.",
-    "Requires accessible labels for icon-only toggles.",
-    "Inherits Dynamic Type, enabled state, control size, and layout direction."
+    "Toggle state, activation, bindings caller-owned.",
+    "Icon-only labels needed.",
+    "Dynamic Type, enabled, size, layout direction."
   ],
   "preview": {
     "source": "sources/components/RegistryToggleGroupModifier.swift",

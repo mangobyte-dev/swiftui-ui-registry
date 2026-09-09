@@ -2,7 +2,7 @@
 
 # toast
 
-Presents a transient status toast over content with informational, positive, and destructive variants, an optional caller-run action, and swipe, tap, or timed dismissal.
+Transient status toast: informational, positive, destructive; optional action; swipe/tap/timed dismissal.
 
 ![toast preview](../images/items/toast-light.png)
 
@@ -55,9 +55,9 @@ toast = RegistryToast(
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [toast](toast.md) 0.1.1
 - Accessibility contract:
-  - Each variant pairs its own symbol with its color, so informational, positive, and destructive meaning never rests on color alone.
-  - When a toast appears, it posts a VoiceOver announcement built from the title and message. VoiceOver speaks the update and keeps focus on the current task.
-  - The title and message combine into one accessibility element, while the optional action button and the close control stay separate, activatable elements.
-  - The close control carries a Dismiss label. The leading symbol is hidden from VoiceOver, so the tone reaches assistive technology through the title and message text.
-  - Under Reduce Motion, the enter and exit collapse to a fade with no slide. The title scales down before it wraps, and the message wraps to at most two lines.
+  - Variant pairs symbol with color. MUST NOT rely on color alone.
+  - Posts VoiceOver announcement from title+message; keeps focus.
+  - Title+message combine; action, close stay separate.
+  - Close carries Dismiss label; symbol hidden; tone via text.
+  - Reduce Motion: fade not slide; title shrinks; message wraps 2 lines.
 - Source: [sources/components/RegistryToastModifier.swift](../../Registry/sources/components/RegistryToastModifier.swift), with the `Toast` Xcode preview

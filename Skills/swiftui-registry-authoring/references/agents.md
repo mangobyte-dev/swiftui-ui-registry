@@ -1,16 +1,11 @@
-<!-- Reference pointer for the swiftui-registry-authoring skill. -->
+<!-- Reference for swiftui-registry-authoring. -->
 
 # Authoring rules
 
-The rules an item must satisfy (the placement rule for presentation choices, the
-value gate, semantic tokens, accessibility input, previews, the generated-output
-contract, and the single structural validator) live in one place and are not
-copied here so this skill never drifts from them:
+Items MUST place presentation correctly, pass value gate, semantic tokens, required accessibility, previews, generated-output contract: validator-enforced.
 
-- `AGENTS.md`, the "Rules" and "Boundaries" sections (repository root)
-- `docs/philosophy.md` (why) and `docs/architecture.md` (how)
-- `docs/registry-spec.md` (the data and installer contract, including the value gate)
+- `AGENTS.md` Rules/Boundaries
+- `docs/philosophy.md`, `docs/architecture.md`
+- `docs/registry-spec.md`
 
-Read `AGENTS.md` in full before authoring. `Sources/RegistryKit/Validation.swift`
-is the single structural validator; a structural rule that is not in it is not
-enforced.
+Read `AGENTS.md` in full before authoring. `Sources/RegistryKit/Validation.swift` is the single validator; unlisted rules go unenforced.

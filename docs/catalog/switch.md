@@ -2,7 +2,7 @@
 
 # switch
 
-Native guidance for the platform switch treatment on a Toggle, which inherits app tint and environment behavior.
+Toggle: switch style; inherits tint, environment.
 
 ![switch preview](../images/items/switch-light.png)
 
@@ -21,7 +21,7 @@ Toggle("Notifications", isOn: $notifications)
 
 ## Why native is enough
 
-Apply `.toggleStyle(.switch)` directly to a native `Toggle`. The registry adds no wrapper, because the one-line native style is the entire treatment.
+`.toggleStyle(.switch)` on `Toggle`; no wrapper.
 
 ## Details
 
@@ -29,7 +29,5 @@ Apply `.toggleStyle(.switch)` directly to a native `Toggle`. The registry adds n
 - Version: 0.3.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Retains native Toggle switch semantics and state announcements.
-  - Requires a caller-supplied visible label unless the surrounding context supplies an accessibility label.
-  - Inherits tint, enabled state, Dynamic Type, and layout direction.
-  - Does not replace platform interaction or animation behavior.
+  - Retains Toggle semantics, announcements; needs visible/accessibility label.
+  - Inherits tint, enabled, Dynamic Type, direction; no interaction/animation changes.

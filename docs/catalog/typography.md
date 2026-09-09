@@ -2,7 +2,7 @@
 
 # typography
 
-Native guidance for Apple's eleven text styles as the type scale with weight, design, and monospaced digits.
+Styles = type scale: weight, design, monospaced digits.
 
 ![typography preview](../images/items/typography-light.png)
 
@@ -28,7 +28,7 @@ VStack(alignment: .leading, spacing: 8) {
 
 ## Why native is enough
 
-Apple's eleven text styles from `.largeTitle` to `.caption2` are the type scale, and they scale with Dynamic Type. Regular through Bold is the legible weight range. One `.fontDesign` change at the root sets the whole typographic voice. Use `.monospacedDigit()` where figures must align, such as currency. Watch weights below Regular: they thin out and fail legibility at small sizes.
+`.largeTitle`-`.caption2`: 11 styles, type scale, with Dynamic Type. `.fontDesign` (root) sets typographic voice. `.monospacedDigit()` aligns figures (currency).
 
 ## Details
 
@@ -36,5 +36,5 @@ Apple's eleven text styles from `.largeTitle` to `.caption2` are the type scale,
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Text styles scale with Dynamic Type, including the accessibility sizes, without hardcoded point sizes.
-  - Keep weights in the Regular through Bold range so text stays legible at small sizes.
+  - Scales with Dynamic Type, accessibility sizes; no hardcoded points.
+  - Regular-Bold: legible; below Regular thins, fails at small sizes.

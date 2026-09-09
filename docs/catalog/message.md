@@ -2,7 +2,7 @@
 
 # message
 
-Composes one conversation turn with an optional author and timestamp header, the content in a bubble, an optional status line, and side-based alignment.
+One turn: optional author/timestamp header, bubble content, status line, side alignment.
 
 ![message preview](../images/items/message-light.png)
 
@@ -58,9 +58,9 @@ MessageRow {
 - Platforms: iOS 26.0+
 - Installs in order: [avatar](avatar.md) 0.2.1, [bubble](bubble.md) 0.1.1, [message](message.md) 0.1.1
 - Accessibility contract:
-  - It combines the header (author and timestamp) with the message bubble into one accessibility element for plain text content. The status line stays a separate element.
-  - When the content holds controls, wrap the combined element with .contain instead of .combine at the call site. Buttons and links then stay separate, activatable elements.
-  - It places the avatar leading for an incoming turn and omits it for an outgoing turn, so the side conveys direction without color.
-  - It caps the bubble column at 320 points, so a long turn wraps instead of filling the row. The whole row follows the caller's layout direction.
-  - The avatar carries its own required accessibility label from the caller. The row never derives one from visible content.
+  - Plain text: header+bubble combine; status stays separate.
+  - Controls: use .contain not .combine; buttons/links stay separate.
+  - Avatar leading on incoming, omitted on outgoing; side conveys direction.
+  - Bubble column caps at 320 points; row follows layout direction.
+  - Avatar needs caller label; MUST NOT derive one.
 - Source: [sources/components/MessageRow.swift](../../Registry/sources/components/MessageRow.swift), with the `Message Row` Xcode preview

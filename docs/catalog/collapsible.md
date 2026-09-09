@@ -2,7 +2,7 @@
 
 # collapsible
 
-Native guidance for a single expandable region with the default DisclosureGroup, distinct from the styled accordion.
+Native DisclosureGroup, distinct from accordion.
 
 ![collapsible preview](../images/items/collapsible-light.png)
 
@@ -23,7 +23,7 @@ DisclosureGroup("Fee breakdown", isExpanded: $isShowingDetails) {
 
 ## Why native is enough
 
-One expandable region is the default `DisclosureGroup`. Use the `accordion` item only when several groups stack as a list. A single collapsible region needs no extra treatment.
+`DisclosureGroup`: 1 region. `accordion`: several stacked. No extra treatment.
 
 ## Details
 
@@ -31,5 +31,5 @@ One expandable region is the default `DisclosureGroup`. Use the `accordion` item
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - The native disclosure announces expanded and collapsed states.
-  - Keep the label meaningful when collapsed, because that is all VoiceOver reads.
+  - Disclosure announces expanded/collapsed.
+  - Keep label meaningful: collapsed, VoiceOver reads only it.

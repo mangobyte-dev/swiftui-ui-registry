@@ -4,9 +4,9 @@
   "version": "0.3.0",
   "name": "switch",
   "kind": "recipe",
-  "description": "Native guidance for the platform switch treatment on a Toggle, which inherits app tint and environment behavior.",
+  "description": "Toggle: switch style; inherits tint, environment.",
   "usage": "@State private var notifications = true\n\nToggle(\"Notifications\", isOn: $notifications)\n    .toggleStyle(.switch)",
-  "docs": "Apply `.toggleStyle(.switch)` directly to a native `Toggle`. The registry adds no wrapper, because the one-line native style is the entire treatment.",
+  "docs": "`.toggleStyle(.switch)` on `Toggle`; no wrapper.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -27,10 +27,8 @@
     "toggle-switch"
   ],
   "accessibility": [
-    "Retains native Toggle switch semantics and state announcements.",
-    "Requires a caller-supplied visible label unless the surrounding context supplies an accessibility label.",
-    "Inherits tint, enabled state, Dynamic Type, and layout direction.",
-    "Does not replace platform interaction or animation behavior."
+    "Retains Toggle semantics, announcements; needs visible/accessibility label.",
+    "Inherits tint, enabled, Dynamic Type, direction; no interaction/animation changes."
   ],
   "preview": {
     "screenshots": [

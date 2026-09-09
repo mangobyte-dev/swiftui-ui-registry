@@ -4,7 +4,7 @@
   "version": "0.3.1",
   "name": "preview",
   "kind": "block",
-  "description": "A theme preview wall of 33 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.",
+  "description": "Theme wall: 33 cards, registry + native; adaptive grid, compact one-column.",
   "usage": "PreviewWall()",
   "files": [
     {
@@ -202,11 +202,11 @@
     "gallery"
   ],
   "accessibility": [
-    "All 33 cards render in one ordered wall: an adaptive grid at a regular width and a plain, non-lazy VStack at a compact width. Every card exists in the hierarchy even off screen, so the capture-route accessibility audit reaches all of them.",
-    "Every interactive control carries an accessibility label, and every decorative SF Symbol is hidden. The capture-route audit then finds no unlabeled button, image, switch, text field, or slider on any card.",
-    "Avatars read the person or account name as their label. Charts, usage gauges, and shortcut keycaps carry spoken labels, not raw glyphs.",
-    "Actions that open a dialog use a native alert or sheet. The decision keeps the system's modal semantics and focus handling.",
-    "Each card is a native GroupBox on the shared card surface and composes native controls. It respects Dynamic Type, color scheme, and layout direction without per-card handling."
+    "33 cards, one wall; regular: adaptive grid; compact: plain-non-lazy-VStack, all off-screen too (capture-route audit).",
+    "Controls: accessibility label; SF Symbol hidden; no unlabeled button, image, switch, field, slider.",
+    "Avatars: person/account name label. Charts, gauges, keycaps: spoken labels, not glyphs.",
+    "Dialog actions: native alert/sheet; keeps modal semantics, focus.",
+    "Cards: native GroupBox + controls, card-surface; respects Dynamic Type, color-scheme, direction, no-per-card-handling."
   ],
   "preview": {
     "source": "sources/blocks/Preview/PreviewWall.swift",

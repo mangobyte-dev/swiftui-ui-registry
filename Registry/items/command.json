@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "name": "command",
   "kind": "component",
-  "description": "Composes the registry input group, item rows, keycaps, and empty state into a search field over caller-filtered command sections.",
+  "description": "Composes input group, rows, keycaps, empty state into search field.",
   "usage": "@State private var query = \"\"\n\nCommandPalette(\n    query: $query,\n    prompt: \"Search actions\",\n    sections: [\n        CommandSection(id: \"actions\", title: \"Actions\", entries: [\n            CommandEntry(id: \"transfer\", title: Text(\"New transfer\"), systemImage: \"arrow.up.right\", shortcut: \"⌘T\", shortcutLabel: Text(\"Command T\"))\n        ])\n    ],\n    onSelect: { id in }\n)",
   "files": [
     {
@@ -52,10 +52,10 @@
     "omnibar"
   ],
   "accessibility": [
-    "The search field carries its prompt as an explicit accessibility label and uses the search return key.",
-    "Section titles are headers. Each command is a native Button whose label combines title and detail. Voice Control can address a command by its title alone.",
-    "Shortcut keycaps speak the caller's shortcutLabel or stay hidden. The command symbol is decorative.",
-    "When no command matches, the view renders a native ContentUnavailableView with caller copy. Filtering and ranking stay with the caller through the query binding."
+    "Field label: prompt; search-return key.",
+    "Titles: headers. Commands: Buttons, title+detail; Voice Control by title.",
+    "Keycaps: shortcutLabel or hidden; symbol decorative.",
+    "No match: ContentUnavailableView, caller copy; filtering via query binding."
   ],
   "preview": {
     "source": "sources/components/CommandPalette.swift",

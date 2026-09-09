@@ -4,9 +4,9 @@
   "version": "0.3.0",
   "name": "native-select",
   "kind": "recipe",
-  "description": "Native guidance for the minimal menu treatment of a bound SwiftUI Picker.",
+  "description": "Picker menu.",
   "usage": "@State private var sort = \"recent\"\n\nPicker(\"Sort\", selection: $sort) {\n    Text(\"Most recent\").tag(\"recent\")\n    Text(\"Oldest\").tag(\"oldest\")\n    Text(\"Amount\").tag(\"amount\")\n}\n.pickerStyle(.menu)",
-  "docs": "Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no wrapper, because the one-line native style is the entire treatment.",
+  "docs": "`.pickerStyle(.menu)` on `Picker`; no wrapper.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -28,10 +28,8 @@
     "menu-picker"
   ],
   "accessibility": [
-    "Retains native Picker accessibility, menu, and selection behavior.",
-    "Requires caller-supplied labels and option text.",
-    "Keeps selection state external through the Picker binding.",
-    "Inherits Dynamic Type, enabled state, tint, and layout direction."
+    "Retains Picker accessibility, menu, selection; needs caller labels, text.",
+    "State external (binding); inherits Dynamic Type, enabled, tint, direction."
   ],
   "preview": {
     "screenshots": [

@@ -4,7 +4,7 @@
   "version": "0.2.3",
   "name": "nutrition-overview",
   "kind": "block",
-  "description": "Composes prepared energy and macronutrient values into an embeddable nutrition overview.",
+  "description": "Composes energy, macro values; embeddable.",
   "usage": "NutritionOverview(\n    \"Today\",\n    energyTitle: \"Energy\",\n    energy: Text(\"1,640 kcal\"),\n    energyDetail: Text(\"360 kcal remaining\"),\n    sectionTitle: \"Macronutrients\",\n    macros: [\n        NutritionMacroItem(\n            id: \"protein\",\n            name: \"Protein\",\n            value: Text(\"96 g\"),\n            target: Text(\"130 g\"),\n            progress: 96.0 / 130.0,\n            systemImage: \"fish.fill\",\n            tint: .indigo\n        )\n    ],\n    actionTitle: \"Log food\",\n    onLogFood: {}\n)",
   "files": [
     {
@@ -47,9 +47,8 @@
     "calories"
   ],
   "accessibility": [
-    "The overview uses native Button and ProgressView semantics. The screen and section titles carry the header trait.",
-    "The overview uses system text styles and adaptive macro rows for Dynamic Type.",
-    "The overview accepts prepared values, so callers keep localization and measurement-format control."
+    "Button, ProgressView semantics; header-trait titles.",
+    "System text, adaptive rows: Dynamic Type; prepared values: caller localization/format."
   ],
   "preview": {
     "source": "sources/blocks/NutritionOverview.swift",

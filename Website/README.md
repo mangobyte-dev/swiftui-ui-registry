@@ -1,6 +1,6 @@
 # SwiftUIRegistry website
 
-The registry's website: a Next.js static export built with shadcn/ui. It reads only `content/registry.json`, which `swift run swiftui-registry generate site-data` (run from the repository root) writes from the validated registry along with the captures under `public/images/`. Never edit that JSON or those images by hand; regenerate them
+Next.js static export, shadcn/ui, from `content/registry.json` + `public/images/` (`swift run swiftui-registry generate site-data`). MUST NOT hand-edit.
 
 ```sh
 swift run swiftui-registry generate site-data   # from the repository root
@@ -11,6 +11,6 @@ npm run typecheck
 npm run build        # static export under out/
 ```
 
-Production is Cloudflare Workers static assets (`wrangler.jsonc`, worker `swiftui-registry`): `npm run deploy` builds and uploads `out/` to https://swiftui-registry.mangobytekw.workers.dev after `npx wrangler login`. `.github/workflows/pages.yml` is an alternative that deploys the same export to GitHub Pages with `NEXT_PUBLIC_BASE_PATH` set to the repository name
+Production: Cloudflare Workers static assets (`wrangler.jsonc`, worker `swiftui-registry`). `npm run deploy` builds, uploads `out/` to `https://swiftui-registry.mangobytekw.workers.dev` after `npx wrangler login`. Alternative: `.github/workflows/pages.yml` → GitHub Pages, `NEXT_PUBLIC_BASE_PATH` = repo.
 
-Pages: `/` (hero, set-up-once steps, item cards), `/items/<name>/` (preview with light and dark captures, install command, usage, source, accessibility contract, details), `/themes/` (presets, the tuning panel export, the token table). Components come from shadcn/ui (`components/ui`); site components live in `components/`
+Pages: `/` (hero, setup, cards); `/items/<name>/` (preview, light/dark, install, usage, source, accessibility, details); `/themes/` (presets, tuning export, tokens). shadcn/ui: `components/ui`; site: `components/`.

@@ -2,7 +2,7 @@
 
 # separator
 
-Applies semantic color, orientation, and caller-provided insets to a native Divider.
+Orientation, insets, native Divider.
 
 ![separator preview](../images/items/separator-light.png)
 
@@ -49,8 +49,8 @@ Divider()
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Retains Divider as a noninteractive visual separator.
-  - Uses a semantic border color that adapts to appearance.
-  - Uses leading and trailing insets that mirror with layout direction.
-  - Does not add redundant accessibility content.
+  - Noninteractive separator.
+  - Semantic color, adapts appearance.
+  - Insets mirror RTL.
+  - MUST NOT be redundant.
 - Source: [sources/components/RegistrySeparatorModifier.swift](../../Registry/sources/components/RegistrySeparatorModifier.swift), with the `Separator` Xcode preview

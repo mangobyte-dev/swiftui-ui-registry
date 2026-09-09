@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "name": "select",
   "kind": "component",
-  "description": "Adds semantic field chrome to a native menu-style Picker without replacing its presentation or selection behavior.",
+  "description": "Adds chrome to menu-style Picker.",
   "usage": "@State private var currency = \"KWD\"\n\nPicker(\"Currency\", selection: $currency) {\n    Text(\"Kuwaiti dinar\").tag(\"KWD\")\n    Text(\"US dollar\").tag(\"USD\")\n}\n.registrySelect()",
   "files": [
     {
@@ -43,10 +43,9 @@
     "dropdown"
   ],
   "accessibility": [
-    "Retains native Picker menu, selection, and dismissal behavior.",
-    "Keeps option labels and selection caller-owned.",
-    "Provides a 44-point minimum control height and visible disabled treatment.",
-    "Inherits Dynamic Type and layout direction."
+    "Menu, selection, dismissal, labels caller-owned.",
+    "44pt height, visible disabled.",
+    "Dynamic Type, layout direction."
   ],
   "preview": {
     "source": "sources/components/RegistrySelectModifier.swift",

@@ -2,7 +2,7 @@
 
 # breadcrumb
 
-A horizontal trail of navigation links with chevron separators, a current page, and an overflow menu for middle crumbs that do not fit; a component because iOS has no native breadcrumb control.
+Horizontal nav trail: chevron separators, current page; overflow holds excess crumbs. iOS: no native breadcrumb.
 
 ![breadcrumb preview](../images/items/breadcrumb-light.png)
 
@@ -49,9 +49,9 @@ Breadcrumb([
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - The trail is one accessibility container labeled Breadcrumb. Each link stays individually navigable. The current page carries the header trait and is not a button.
-  - Chevron separators are decorative and hidden from accessibility. The overflow menu carries a Show more label and lists the collapsed crumbs as menu actions.
-  - Separators use chevron.forward, which mirrors automatically for a right-to-left layout. The trail reverses with the layout direction.
-  - Middle crumbs collapse into the overflow menu through ViewThatFits when the full trail does not fit the available width. Links are compact inline targets. Native back navigation stays the primary path.
-  - On iPad each link keeps a pointer effect. The plain button style drops the automatic one. The link restores it with hoverEffect, and the system picks the shape.
+  - One container: Breadcrumb; links navigable; current: header trait, not button.
+  - Chevrons decorative, hidden; overflow: Show more, lists crumbs.
+  - chevron.forward mirrors RTL; reverses with layout direction.
+  - ViewThatFits collapses middle crumbs past width; links compact inline; back stays primary.
+  - iPad: plain style drops pointer effect; hoverEffect restores, shape auto-picked.
 - Source: [sources/components/Breadcrumb.swift](../../Registry/sources/components/Breadcrumb.swift), with the `Breadcrumb` Xcode preview

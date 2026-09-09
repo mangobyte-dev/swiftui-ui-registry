@@ -2,7 +2,7 @@
 
 # select
 
-Adds semantic field chrome to a native menu-style Picker without replacing its presentation or selection behavior.
+Adds chrome to menu-style Picker.
 
 ![select preview](../images/items/select-light.png)
 
@@ -51,8 +51,7 @@ Picker("Currency", selection: $currency) {
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Retains native Picker menu, selection, and dismissal behavior.
-  - Keeps option labels and selection caller-owned.
-  - Provides a 44-point minimum control height and visible disabled treatment.
-  - Inherits Dynamic Type and layout direction.
+  - Menu, selection, dismissal, labels caller-owned.
+  - 44pt height, visible disabled.
+  - Dynamic Type, layout direction.
 - Source: [sources/components/RegistrySelectModifier.swift](../../Registry/sources/components/RegistrySelectModifier.swift), with the `Select` Xcode preview

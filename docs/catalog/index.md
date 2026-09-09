@@ -14,86 +14,86 @@ Point `--destination` at a folder inside the consuming target's sources, such as
 
 Compositions of components. Installing one installs its whole closure
 
-- [activity-feed](activity-feed.md): Composes inline alert, avatar, item row, skeleton, empty state, and accordion treatments into an activity feed with caller-owned loading, items, notice, and selection.
-- [auth-form](auth-form.md): Composes registry input, button, and card treatments into a sign-in form with caller-owned credentials, validation messages, and submission state.
-- [command-search](command-search.md): Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.
-- [dashboard](dashboard.md): Composes metric cards, a themed Swift Charts bar chart, and a data table into an analytics dashboard with caller-owned values and optional row selection.
-- [finance-overview](finance-overview.md): Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.
-- [nutrition-overview](nutrition-overview.md): Composes prepared energy and macronutrient values into an embeddable nutrition overview.
-- [preview](preview.md): A theme preview wall of 33 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.
-- [preview-02](preview-02.md): A second theme preview wall of 35 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.
-- [questionnaire](questionnaire.md): Composes the registry field, checkbox, textarea, progress, button, and card treatments into a caller-driven multi-step questionnaire with single-choice, multiple-choice, freeform, and skippable steps.
-- [settings-section](settings-section.md): Composes registry select, separator, and button treatments into a titled settings section with structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
-- [signup-form](signup-form.md): Composes registry input, button, card, and checkbox treatments into a sign-up form with caller-owned fields, validation messages, terms acceptance, and submission state.
+- [activity-feed](activity-feed.md): Composes alert, avatar, item, skeleton, empty, accordion; caller-owned loading, items, notice, selection.
+- [auth-form](auth-form.md): Composes input, button, card into sign-in form; caller owns credentials, validation, submission state.
+- [command-search](command-search.md): Composes command, keycap; caller owns query, filtering, sections, legend.
+- [dashboard](dashboard.md): Composes metrics, bar chart, table; caller-owned values, selection.
+- [finance-overview](finance-overview.md): Composes metrics, selectable transactions; caller-owned navigation, state.
+- [nutrition-overview](nutrition-overview.md): Composes energy, macro values; embeddable.
+- [preview](preview.md): Theme wall: 33 cards, registry + native; adaptive grid, compact one-column.
+- [preview-02](preview-02.md): Theme wall: 35 cards, registry + native; adaptive grid, compact one-column.
+- [questionnaire](questionnaire.md): Composes field, checkbox, textarea, progress, button, card; drives choice, freeform, skippable steps.
+- [settings-section](settings-section.md): Composes select, separator, button; structure, separators, messages, caller-owned toggle/picker/action rows.
+- [signup-form](signup-form.md): Composes input, button, card, checkbox; caller owns fields, validation, terms, submission state.
 
 ## Components (37)
 
 One installable style, modifier, or view each
 
-- [accordion](accordion.md): Styles a native DisclosureGroup as a full-width header row with a trailing chevron and revealed content that keeps the caller's styling, for stacked expandable sections.
-- [alert](alert.md): Composes an inline, non-modal status message with informational, positive, and destructive variants and optional caller-owned actions.
-- [attachment](attachment.md): Presents a file or image attachment as a row with square media, a name and detail, caller-owned actions, and a state line for idle, uploading, processing, failed, and completed uploads.
-- [avatar](avatar.md): Displays a circular identity image with an initials or symbol fallback, sized by the environment control size, and requires an accessibility label.
-- [badge](badge.md): Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.
-- [breadcrumb](breadcrumb.md): A horizontal trail of navigation links with chevron separators, a current page, and an overflow menu for middle crumbs that do not fit; a component because iOS has no native breadcrumb control.
-- [bubble](bubble.md): Wraps text content in an incoming, outgoing, or muted conversation bubble as a reusable treatment, and leaves alignment to the message row.
-- [button](button.md): Styles native SwiftUI buttons with shadcn-inspired semantic variants and preserves roles and environment sizing.
-- [button-group](button-group.md): Lays out every native button in a ControlGroup side by side with one registry button variant, and keeps the caller's Button controls, roles, and labels.
-- [card](card.md): Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.
-- [chart](chart.md): Styles a native Swift Charts Chart to the theme: an accent-derived series palette, theme-colored grid lines, footnote axis labels, and a bottom legend, across bar, line, area, and pie marks.
-- [checkbox](checkbox.md): Styles a native Toggle as a checkbox and preserves its binding, label, enabled state, and accessibility representation.
-- [combobox](combobox.md): A searchable single-selection control with a registry search field over caller options, a filtered list below it, binding-driven selection, and a native empty state.
-- [command](command.md): Composes the registry input group, item rows, keycaps, and empty state into a search field over caller-filtered command sections.
-- [empty](empty.md): Places a native ContentUnavailableView on the registry content surface, so an empty section sits where its rows would appear.
-- [field](field.md): Composes a labeled form field around a native control with an optional description and an error message that drives the content's invalid state.
-- [input](input.md): Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.
-- [input-group](input-group.md): Wraps a native text field with registry input chrome and caller-provided leading and trailing accessories, such as a search symbol and a clear button.
-- [item](item.md): Composes a generic content row with leading media, a title and optional description, and a trailing accessory, and leaves selection to the call site.
-- [kbd](kbd.md): Styles a native Text as a keycap for keyboard shortcut hints, hidden from accessibility unless you supply a spoken label.
-- [label](label.md): Controls native Label icon placement with semantic spacing and treats the icon as decorative for accessibility.
-- [macro-progress](macro-progress.md): Displays prepared nutrition progress with a native ProgressView and an adaptive value layout.
-- [marker](marker.md): Styles a native Text as an inline conversation marker with note, status, and separator variants for system lines, delivery pills, and labelled date rules.
-- [message](message.md): Composes one conversation turn with an optional author and timestamp header, the content in a bubble, an optional status line, and side-based alignment.
-- [message-scroller](message-scroller.md): This native chat ScrollView opens at the newest turn, follows streamed replies at the bottom, holds a scrolled-up reader, and requests history at the top.
-- [metric-card](metric-card.md): Displays one prepared product metric with native text formatting and semantic styling.
-- [progress](progress.md): Styles native determinate and indeterminate ProgressView controls with linear accent, positive, and negative semantic tones.
-- [select](select.md): Adds semantic field chrome to a native menu-style Picker without replacing its presentation or selection behavior.
-- [separator](separator.md): Applies semantic color, orientation, and caller-provided insets to a native Divider.
-- [skeleton](skeleton.md): Turns any view into a loading placeholder with native redaction, disabled interaction, one loading accessibility element, and a pulse that stops under Reduce Motion.
-- [spinner](spinner.md): Styles a native indeterminate ProgressView with a compact circular indicator and optional label.
-- [table](table.md): Lays out Identifiable rows in aligned columns on a native Grid, with numeric columns in monospaced digits, optional summary rows, and theme hairline separators.
-- [textarea](textarea.md): Applies input-matching focus, disabled, and invalid chrome to a native TextEditor.
-- [toast](toast.md): Presents a transient status toast over content with informational, positive, and destructive variants, an optional caller-run action, and swipe, tap, or timed dismissal.
-- [toggle](toggle.md): Applies registry button treatments to native Toggle state for compact selectable controls.
-- [toggle-group](toggle-group.md): Applies one registry toggle treatment to native Toggle controls in a caller-owned ControlGroup.
-- [transaction-row](transaction-row.md): Displays prepared transaction content and leaves selection to a native Button at the call site.
+- [accordion](accordion.md): Styles DisclosureGroup: full-width header, trailing chevron; keeps caller styling.
+- [alert](alert.md): Inline alert: informational, positive, destructive; optional caller actions.
+- [attachment](attachment.md): Row: square media, name, detail, caller actions. States: idle, uploading, processing, failed, completed.
+- [avatar](avatar.md): Identity image, circular; initials/symbol fallback. Sizes via controlSize; needs label.
+- [badge](badge.md): Primary, secondary, outline, positive, destructive: Text/Label treatments.
+- [breadcrumb](breadcrumb.md): Horizontal nav trail: chevron separators, current page; overflow holds excess crumbs. iOS: no native breadcrumb.
+- [bubble](bubble.md): Wraps text: incoming, outgoing, muted; aligns with message row.
+- [button](button.md): Styles SwiftUI buttons: shadcn-inspired variants; preserves roles, sizing.
+- [button-group](button-group.md): ControlGroup: buttons side by side, one variant; keeps roles, labels.
+- [card](card.md): Styles GroupBox: bordered surface, adaptive label, content spacing.
+- [chart](chart.md): Styles Swift Charts to theme: accent palette, theme grid, footnote axis, legend; bar/line/area/pie.
+- [checkbox](checkbox.md): Styles Toggle as checkbox; preserves binding, label, state.
+- [combobox](combobox.md): Searchable single-selection: search field, filtered list, binding-driven selection, native empty state.
+- [command](command.md): Composes input group, rows, keycaps, empty state into search field.
+- [empty](empty.md): Places ContentUnavailableView on registry surface, where rows appear.
+- [field](field.md): Labeled form field, native control; optional description; error drives invalid state.
+- [input](input.md): Styles TextField/SecureField: fill, focus, disabled, invalid.
+- [input-group](input-group.md): Wraps field in registry chrome; accessories add search symbol or clear button.
+- [item](item.md): Composes content row: media, title, description, accessory; selection at call site.
+- [kbd](kbd.md): Styles Text as a keycap for shortcuts.
+- [label](label.md): Controls Label icon placement with semantic spacing.
+- [macro-progress](macro-progress.md): Nutrition progress via ProgressView.
+- [marker](marker.md): Marker style: note, status, separator variants (system line, delivery pill, date rule).
+- [message](message.md): One turn: optional author/timestamp header, bubble content, status line, side alignment.
+- [message-scroller](message-scroller.md): Chat ScrollView: newest-turn open, follows streamed replies, holds scrolled-up reader, requests history at top.
+- [metric-card](metric-card.md): Formatted, semantic metric text.
+- [progress](progress.md): Linear ProgressView: determinate, indeterminate, accent, positive, negative.
+- [select](select.md): Adds chrome to menu-style Picker.
+- [separator](separator.md): Orientation, insets, native Divider.
+- [skeleton](skeleton.md): Turns any view into loading placeholder with native redaction.
+- [spinner](spinner.md): Compact circular indeterminate ProgressView style.
+- [table](table.md): Identifiable rows in aligned columns; numeric monospaced; optional summary rows.
+- [textarea](textarea.md): Focus, disabled, invalid chrome.
+- [toast](toast.md): Transient status toast: informational, positive, destructive; optional action; swipe/tap/timed dismissal.
+- [toggle](toggle.md): Button treatment, Toggle.
+- [toggle-group](toggle-group.md): Toggle treatment, ControlGroup.
+- [transaction-row](transaction-row.md): Transaction content; caller Button selects.
 
 ## Recipes (25)
 
 Native guidance. Nothing installs; copy the snippet
 
-- [alert-dialog](alert-dialog.md): Native guidance for a modal decision with .alert: button roles, prepared copy, and the system presentation.
-- [aspect-ratio](aspect-ratio.md): Native guidance for SwiftUI's aspectRatio modifier, with no replacement API.
-- [calendar](calendar.md): Native guidance for date selection with DatePicker in graphical style and MultiDatePicker for several dates.
-- [carousel](carousel.md): Native guidance for a paging horizontal ScrollView of cards with scrollTargetBehavior and containerRelativeFrame.
-- [chart-tooltip](chart-tooltip.md): Native guidance for a Swift Charts selection annotation with chartXSelection and a RuleMark tooltip.
-- [collapsible](collapsible.md): Native guidance for a single expandable region with the default DisclosureGroup, distinct from the styled accordion.
-- [context-menu](context-menu.md): Native guidance for long-press actions with .contextMenu and labeled, role-tagged buttons.
-- [date-picker](date-picker.md): Native guidance for a compact DatePicker over a closed range, with a presets Menu that sets the binding.
-- [dialog](dialog.md): Native guidance for modal content with .sheet: the system owns detents, drag dismissal, and focus.
-- [direction](direction.md): Native guidance for layoutDirection behavior and semantic leading/trailing layout without a replacement API.
-- [drawer](drawer.md): Native guidance for a bottom drawer with .sheet, presentation detents, and a visible drag indicator.
-- [dropdown-menu](dropdown-menu.md): Native guidance for a Menu trigger with labeled actions, sections, and a picker inside the menu.
-- [input-otp](input-otp.md): Native guidance for a one-time-code TextField that autofills from Messages and Mail instead of a boxed control.
-- [menubar](menubar.md): Native guidance for scene-level commands with CommandMenu, which iPadOS and macOS place in the menu bar.
-- [native-select](native-select.md): Native guidance for the minimal menu treatment of a bound SwiftUI Picker.
-- [popover](popover.md): Native guidance for anchored, transient content with .popover, which adapts to a sheet on compact widths.
-- [radio-group](radio-group.md): Native guidance for a bound Picker as an inline, mutually exclusive option group.
-- [scroll-area](scroll-area.md): Native guidance for scrollable content with content margins, indicator visibility, and clipping left to ScrollView.
-- [sheet](sheet.md): Native guidance for a side sheet with inspector on iPad that adapts to a sheet on iPhone.
-- [sidebar](sidebar.md): Native guidance for a sidebar layout with NavigationSplitView and a selection-bound List on iPad.
-- [slider](slider.md): Native guidance for a Slider with semantic tint, control sizing, and caller-owned value and labels.
-- [switch](switch.md): Native guidance for the platform switch treatment on a Toggle, which inherits app tint and environment behavior.
-- [tabs](tabs.md): Native guidance for a local-selection Picker with the platform segmented style; app navigation stays with TabView.
-- [tooltip](tooltip.md): Native guidance for supplementary help without hover: an accessibility hint plus an optional informational popover.
-- [typography](typography.md): Native guidance for Apple's eleven text styles as the type scale with weight, design, and monospaced digits.
+- [alert-dialog](alert-dialog.md): Modal .alert decision.
+- [aspect-ratio](aspect-ratio.md): Native aspectRatio guidance.
+- [calendar](calendar.md): Calendar guidance.
+- [carousel](carousel.md): Paging ScrollView of cards.
+- [chart-tooltip](chart-tooltip.md): chartXSelection + RuleMark annotation.
+- [collapsible](collapsible.md): Native DisclosureGroup, distinct from accordion.
+- [context-menu](context-menu.md): Native .contextMenu: labeled, role-tagged buttons.
+- [date-picker](date-picker.md): Compact DatePicker, closed range, presets Menu.
+- [dialog](dialog.md): `.sheet`: system owns detents, drag-dismissal, focus.
+- [direction](direction.md): layoutDirection guidance.
+- [drawer](drawer.md): Drawer guidance.
+- [dropdown-menu](dropdown-menu.md): Menu trigger guidance.
+- [input-otp](input-otp.md): One-time-code TextField, not a boxed control.
+- [menubar](menubar.md): Scene-level commands via CommandMenu.
+- [native-select](native-select.md): Picker menu.
+- [popover](popover.md): `.popover` guidance.
+- [radio-group](radio-group.md): Picker: inline exclusive group.
+- [scroll-area](scroll-area.md): Scrollable content: margins, indicators, clipping.
+- [sheet](sheet.md): Side sheet: iPad inspector, iPhone sheet.
+- [sidebar](sidebar.md): Sidebar: NavigationSplitView + selection-bound List (iPad).
+- [slider](slider.md): Slider: tint, sizing; caller-owned value, labels.
+- [switch](switch.md): Toggle: switch style; inherits tint, environment.
+- [tabs](tabs.md): Picker segmented; local selection, TabView nav.
+- [tooltip](tooltip.md): Tooltip: hint, popover.
+- [typography](typography.md): Styles = type scale: weight, design, monospaced digits.

@@ -2,7 +2,7 @@
 
 # input
 
-Styles native TextField and SecureField controls with semantic fill, focus, disabled, and invalid treatments.
+Styles TextField/SecureField: fill, focus, disabled, invalid.
 
 ![input preview](../images/items/input-light.png)
 
@@ -61,10 +61,10 @@ TextField("Email", text: $email)
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Give every field an explicit accessibilityLabel that matches its visible title. Measured on iOS 27: neither the title initializer nor the label-plus-prompt initializer exposes a label, because the title is the placeholder value only. A field with typed content is otherwise unnamed to VoiceOver, and the Showcase demo audit rejects an unlabeled field.
-  - The style preserves native TextField and SecureField editing, keyboard, and autofill behavior.
-  - Focus draws the accent ring at the emphasized width. The invalid state draws the negative border at the same width and wins over focus. Pair it with a message.
-  - Provide visible validation copy and an accessibility hint for invalid input.
-  - The style inherits Dynamic Type, layout direction, and enabled state.
-  - The style keeps the 44 point minimum height, so an empty field is a full tap target at every text size.
+  - MUST have accessibilityLabel = title (placeholder-only; iOS 27: title-only/label+prompt initializers expose none). Showcase audit rejects unlabeled, typed-but-unnamed fields.
+  - Preserves editing, keyboard, autofill.
+  - Focus: accent ring; invalid: negative border wins; SHOULD pair message.
+  - Invalid: MUST have visible copy, hint.
+  - Inherits Dynamic Type, direction, state.
+  - 44-point min height; empty: full tap target, any size.
 - Source: [sources/components/RegistryInputStyle.swift](../../Registry/sources/components/RegistryInputStyle.swift), with the `Input States` Xcode preview

@@ -2,7 +2,7 @@
 
 # spinner
 
-Styles a native indeterminate ProgressView with a compact circular indicator and optional label.
+Compact circular indeterminate ProgressView style.
 
 ![spinner preview](../images/items/spinner-light.png)
 
@@ -46,8 +46,8 @@ ProgressView("Loading results")
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Retains native indeterminate ProgressView semantics.
-  - Requires an accessibility label when no visible loading label is supplied.
-  - Combines a visible label with the indicator in reading order.
-  - Inherits Dynamic Type, tint, enabled state, and layout direction.
+  - Semantics retained.
+  - Needs label if absent.
+  - Label+indicator combined.
+  - Dynamic Type, tint, enabled, direction.
 - Source: [sources/components/RegistrySpinnerStyle.swift](../../Registry/sources/components/RegistrySpinnerStyle.swift), with the `Spinner` Xcode preview

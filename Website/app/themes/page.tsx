@@ -21,8 +21,7 @@ import { asset, registry } from "@/lib/registry"
 
 export const metadata: Metadata = {
   title: "Themes",
-  description:
-    "One RegistryTheme applied at the scene root. Presets and the live tuning panel.",
+  description: "One RegistryTheme at the scene root. Presets and the live tuning panel.",
 }
 
 const TUNE_EXPORT = `let theme = RegistryTheme(
@@ -49,12 +48,12 @@ ContentView()
     .registryTheme(theme)`
 
 const TOKENS: [string, string, string][] = [
-  ["accent", "nil (app tint)", "every tinted item, through the subtree tint"],
+  ["accent", "nil (app tint)", "tinted items, via subtree tint"],
   ["onAccent", ".white", "button, auth-form"],
   [
     "surface",
     ".primary.opacity(0.055)",
-    "card, input, badge, select, textarea, avatar, alert, empty, every block",
+    "card, input, badge, select, textarea, avatar, alert, empty, blocks",
   ],
   [
     "border",
@@ -68,41 +67,41 @@ const TOKENS: [string, string, string][] = [
     "badge, button, input, textarea, transaction-row, alert, auth-form",
   ],
   ["disabledOpacity", "0.5", "button, checkbox, input, select, textarea"],
-  ["metrics.compactSpacing", "8", "badge, label, every row"],
-  ["metrics.standardSpacing", "16", "card, metric-card, every block"],
+  ["metrics.compactSpacing", "8", "badge, label, rows"],
+  ["metrics.standardSpacing", "16", "card, metric-card, blocks"],
   ["metrics.sectionSpacing", "24", "blocks"],
   ["metrics.controlHorizontalPadding", "12", "input, select"],
   [
     "metrics.borderWidth / emphasizedBorderWidth",
     "1 / 2",
-    "inputs at rest and focused or invalid",
+    "inputs at rest, focused, or invalid",
   ],
   [
     "metrics.compactRadius / controlRadius / cardRadius",
     "6 / 8 / 16",
-    "badge and checkbox / controls and alerts / cards",
+    "badge/checkbox, controls/alerts, cards",
   ],
   [
     "fontDesign",
     "nil (system)",
-    "every text, applied by registryTheme with .fontDesign when set",
+    "every text, via registryTheme's .fontDesign when set",
   ],
   [
     "surfaceStep",
     "0.02",
-    "the elevation ladder, registrySurface(level:) and RegistrySurfaceLevel",
+    "elevation ladder, registrySurface(level:), RegistrySurfaceLevel",
   ],
-  ["chartPalette", ".accent", "chart, through chartForegroundStyleScale"],
-  ["background", "nil (system background)", "the scene root, when set"],
+  ["chartPalette", ".accent", "chart, via chartForegroundStyleScale"],
+  ["background", "nil (system background)", "scene root, when set"],
   [
     "foreground",
     "nil (system label)",
-    "the scene root; the secondary hierarchy derives from it",
+    "scene root; secondary hierarchy derives from it",
   ],
   [
     "secondaryForeground",
     "nil (system secondary label)",
-    "the scene root, paired with foreground when set",
+    "scene root, paired with foreground when set",
   ],
 ]
 
@@ -118,12 +117,9 @@ export default function ThemesPage() {
           One modifier, every screen
         </h1>
         <p className="max-w-[62ch] text-lg text-muted-foreground">
-          A <code>RegistryTheme</code> is a small value: an optional accent, the
-          label color on top of it, the content surface, the hairline border,
-          positive and negative colors, a disabled opacity, and the metrics.
-          Apply it once with <code>.registryTheme(_:)</code> at your scene root.
-          Items read the tokens from the environment. Native controls follow the
-          accent through the tint.
+          <code>RegistryTheme</code>: optional accent, label color, surface, hairline border,
+          positive/negative, disabled opacity, metrics. Apply once via{" "}
+          <code>.registryTheme(_:)</code> at root; items read tokens from the environment, controls follow tint.
         </p>
       </header>
 
@@ -131,11 +127,10 @@ export default function ThemesPage() {
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">Presets</h2>
           <p className="text-muted-foreground">
-            These are starting points. Each is a plain <code>static let</code> you can
-            copy and edit. Every card here is the first screen of the{" "}
-            <Link href="/items/preview/">theme preview wall</Link> (the{" "}
-            <code>preview</code> block, 33 cards), rendered under that preset on
-            iPhone 17.
+            Starting points, each a plain <code>static let</code> to copy/edit. Cards: first
+            screen of the{" "}
+            <Link href="/items/preview/">preview wall</Link> ({" "}
+            <code>preview</code> block, 33 cards), iPhone 17.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -146,7 +141,7 @@ export default function ThemesPage() {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={asset(preset.screenshots.light)}
-                    alt={`${preset.name} preset, light`}
+                    alt={`${preset.name}, light`}
                     loading="lazy"
                     className="w-full dark:hidden"
                   />
@@ -155,7 +150,7 @@ export default function ThemesPage() {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={asset(preset.screenshots.dark)}
-                    alt={`${preset.name} preset, dark`}
+                    alt={`${preset.name}, dark`}
                     loading="lazy"
                     className="hidden w-full dark:block"
                   />
@@ -182,22 +177,16 @@ export default function ThemesPage() {
               MANGO, a design system built on the registry
             </h2>
             <p className="text-muted-foreground">
-              The worked example of a brand on these items, and the template to
-              build your own.
+              A worked brand example, a template to build your own.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
             <div className="flex flex-col gap-4">
               <p className="max-w-[62ch] text-sm leading-relaxed">
-                MANGO makes three choices and applies them once at the scene
-                root: rounded type through <code>.fontDesign(.rounded)</code>,
-                strokeless surfaces (border opacity zero, depth from a surface
-                step), and one accent for the primary action. Two items are
-                owned copies with edits: the button style with press feedback on
-                a critically damped spring, and the metric card with tabular
-                digits. The preset is <code>.mango</code>. The code below opens
-                it in Create. The template document shows a team how to do the
-                same for their brand.
+                MANGO: rounded type via <code>.fontDesign(.rounded)</code>, strokeless
+                surfaces (zero border opacity, depth from surface step), one accent, two
+                owned/edited items, critically-damped button press, tabular metric-card
+                digits, preset <code>.mango</code>. Code opens it in Create as a template.
               </p>
               <CodeBlock
                 code={`ContentView()\n    .registryTheme(.mango)\n    .fontDesign(.rounded)`}
@@ -207,7 +196,7 @@ export default function ThemesPage() {
               />
               <p className="text-sm text-muted-foreground">
                 <Link href={`/create/?preset=${mango.code}`}>
-                  Open MANGO in Create
+                  MANGO in Create
                 </Link>
                 {" · "}
                 <a
@@ -215,7 +204,7 @@ export default function ThemesPage() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Read the template, docs/mango.md
+                  docs/mango.md
                 </a>
               </p>
             </div>
@@ -224,7 +213,7 @@ export default function ThemesPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={asset(mango.demoScreenshots.light)}
-                  alt="The MANGO demo in the Showcase, light"
+                  alt="MANGO demo, Showcase, light"
                   loading="lazy"
                   className="w-full dark:hidden"
                 />
@@ -232,7 +221,7 @@ export default function ThemesPage() {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={asset(mango.demoScreenshots.dark)}
-                    alt="The MANGO demo in the Showcase, dark"
+                    alt="MANGO demo, Showcase, dark"
                     loading="lazy"
                     className="hidden w-full dark:block"
                   />
@@ -249,38 +238,31 @@ export default function ThemesPage() {
             Tune it live
           </h2>
           <p className="text-muted-foreground">
-            The Showcase&apos;s tuning panel is the theme creator, beside the
-            catalog.
+            The Showcase&apos;s tuning panel is the theme creator, beside the catalog.
           </p>
         </div>
         <p className="max-w-[70ch] text-sm leading-relaxed">
-          Every token is a slider or a swatch beside a live preview of the
-          registry: accent and its label color, surface and border opacity,
-          border widths, the three radii, the four spacings, and the disabled
-          opacity. Appearance, text size, and right-to-left let you check the
-          result. <strong>Copy Swift</strong> puts the exact initializer on the
-          pasteboard. <strong>Copy Code</strong> puts the preset code there instead:
+          Every token: a slider or swatch beside live preview: accent, label color,
+          surface/border opacity, border widths, 3 radii, 4 spacings, disabled opacity.
+          Appearance, text size, RTL check result. <strong>Copy Swift</strong> puts the exact initializer on
+          pasteboard; <strong>Copy Code</strong> puts the preset code instead:
         </p>
         <CodeBlock code={TUNE_EXPORT} />
         <p className="text-sm text-muted-foreground">
-          To tune a theme, open{" "}
-          <code>Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace</code>,
-          run the Showcase, and tap Tune in the strip above the tab bar. The
-          panel stays beside the catalog: an inspector on iPad, and on iPhone a
-          sheet with the catalog still interactive beneath it. Every demo shows
-          the change as you make it. Copy Code puts the theme on the pasteboard
-          as a preset code that the <Link href="/create/">Create page</Link> and{" "}
-          <code>swiftui-registry preset</code> both read. The preset captures
-          above are the first screen of the{" "}
-          <Link href="/items/preview/">theme preview wall</Link> (the{" "}
-          <code>preview</code> block, 33 cards), rendered under each preset on
-          iPhone 17.
+          Open{" "}
+          <code>Examples/Showcase/SwiftUIRegistryShowcase.xcworkspace</code>, run
+          Showcase, tap Tune above the tab bar. Panel: inspector on iPad, sheet on iPhone
+          (catalog interactive beneath). Demos update live. Copy Code puts a preset code
+          on pasteboard; <Link href="/create/">Create page</Link> and{" "}
+          <code>swiftui-registry preset</code> read it. Captures: preview wall&apos;s first
+          screen ({" "}
+          <code>preview</code> block, 33 cards), iPhone 17.
         </p>
       </section>
 
       <section className="flex flex-col gap-4">
         <h2 className="text-2xl font-semibold tracking-tight">
-          Every token, and who reads it
+          Every token
         </h2>
         <div className="overflow-x-auto rounded-xl border">
           <Table>

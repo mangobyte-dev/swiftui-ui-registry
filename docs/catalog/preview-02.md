@@ -2,7 +2,7 @@
 
 # preview-02
 
-A second theme preview wall of 35 product cards built from registry components and native controls: an adaptive grid on a regular width, one column on a compact width.
+Theme wall: 35 cards, registry + native; adaptive grid, compact one-column.
 
 ![preview-02 preview](../images/items/preview-02-light.png)
 
@@ -45,10 +45,10 @@ PreviewWall02()
 - Platforms: iOS 26.0+
 - Installs in order: [card](card.md) 0.2.1, [input](input.md) 0.5.1, [field](field.md) 0.1.1, [button](button.md) 0.5.2, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [chart](chart.md) 0.1.3, [input-group](input-group.md) 0.2.1, [toggle](toggle.md) 0.2.1, [toggle-group](toggle-group.md) 0.2.1, [empty](empty.md) 0.1.1, [accordion](accordion.md) 0.2.2, [skeleton](skeleton.md) 0.2.1, [checkbox](checkbox.md) 0.3.2, [breadcrumb](breadcrumb.md) 0.1.2, [select](select.md) 0.2.1, [textarea](textarea.md) 0.4.1, [progress](progress.md) 0.2.1, [table](table.md) 0.1.1, [combobox](combobox.md) 0.1.1, [spinner](spinner.md) 0.2.1, [preview-02](preview-02.md) 0.3.1
 - Accessibility contract:
-  - All 35 cards render in one ordered wall: an adaptive grid at a regular width and a plain, non-lazy VStack at a compact width. Every card exists in the hierarchy even off screen, so the capture-route accessibility audit reaches all of them.
-  - Every interactive control carries an accessibility label, and every decorative SF Symbol is hidden. The capture-route audit then finds no unlabeled button, image, switch, text field, slider, menu, or picker on any card.
-  - The data table, sidebar list, combobox, charts, and graphical date picker keep their native selection, scrolling, and semantics. Each carries a spoken label, not a raw glyph.
-  - Each card is a native GroupBox on the shared card surface and composes native controls. It respects Dynamic Type, color scheme, and layout direction without per-card handling.
+  - 35 cards, one wall; regular: adaptive grid; compact: plain-non-lazy-VStack, all off-screen too (capture-route audit).
+  - Every control: accessibility-label; SF-Symbol hidden; no unlabeled control (buttons, images, switches, fields, sliders, menus, pickers).
+  - Table, sidebar, combobox, charts, date picker: native selection, scrolling, semantics; spoken labels, not glyphs.
+  - Cards: native GroupBox + controls, card-surface; respects Dynamic Type, color-scheme, direction, no-per-card-handling.
 - Source:
   - [sources/blocks/Preview02/PreviewWall02.swift](../../Registry/sources/blocks/Preview02/PreviewWall02.swift), with the `Preview Wall 02` Xcode preview
   - [sources/blocks/Preview02/AccountAccess.swift](../../Registry/sources/blocks/Preview02/AccountAccess.swift)

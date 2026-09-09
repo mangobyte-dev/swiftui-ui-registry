@@ -2,7 +2,7 @@
 
 # scroll-area
 
-Native guidance for scrollable content with content margins, indicator visibility, and clipping left to ScrollView.
+Scrollable content: margins, indicators, clipping.
 
 ![scroll-area preview](../images/items/scroll-area-light.png)
 
@@ -33,7 +33,7 @@ ScrollView {
 
 ## Why native is enough
 
-Compose blocks inside a native `ScrollView`, and tune the edges with `.contentMargins`, `.scrollIndicators`, and `.scrollClipDisabled`. Scrolling, bounce, and keyboard avoidance are system behavior. Registry blocks deliberately never own a scroll view. The scroll edge effect that you set with `.scrollEdgeEffectStyle` is the system transition between content and the Liquid Glass control layer, in place of a background (HIG Layout).
+`ScrollView` + `.contentMargins`, `.scrollIndicators`, `.scrollClipDisabled`; scrolling/bounce/keyboard system-owned, not blocks. `.scrollEdgeEffectStyle`: content-to-glass transition, replaces background (HIG Layout).
 
 ## Details
 
@@ -41,5 +41,5 @@ Compose blocks inside a native `ScrollView`, and tune the edges with `.contentMa
 - Version: 0.2.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Native scroll views support VoiceOver page scrolling and the three-finger scroll gesture.
-  - Hidden indicators remove a sighted affordance; prefer .automatic for long content.
+  - Native scroll: VoiceOver page-scroll, three-finger gesture.
+  - Hidden indicators remove sighted affordance; prefer .automatic for long content.

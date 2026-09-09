@@ -2,7 +2,7 @@
 
 # context-menu
 
-Native guidance for long-press actions with .contextMenu and labeled, role-tagged buttons.
+Native .contextMenu: labeled, role-tagged buttons.
 
 ![context-menu preview](../images/items/context-menu-light.png)
 
@@ -30,7 +30,7 @@ TransactionRow(
 
 ## Why native is enough
 
-Attach secondary actions to a row with `.contextMenu` and native `Button`s with symbols and roles. The system renders the Liquid Glass menu, the preview, and the haptics. Keep the same actions reachable elsewhere, because a long press is not discoverable on its own.
+`.contextMenu` + Buttons: symbols, roles. System renders Liquid Glass menu, preview, haptics. Long press isn't discoverable.
 
 ## Details
 
@@ -38,6 +38,6 @@ Attach secondary actions to a row with `.contextMenu` and native `Button`s with 
 - Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Context menus are exposed through the VoiceOver actions rotor.
-  - Destructive roles render in the system's destructive style without custom color.
-  - Actions in a context menu must also exist in a visible place, such as a detail screen.
+  - Menus: VoiceOver actions rotor.
+  - Destructive: system style only.
+  - Actions MUST also exist visibly (detail screen).

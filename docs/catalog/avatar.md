@@ -2,7 +2,7 @@
 
 # avatar
 
-Displays a circular identity image with an initials or symbol fallback, sized by the environment control size, and requires an accessibility label.
+Identity image, circular; initials/symbol fallback. Sizes via controlSize; needs label.
 
 ![avatar preview](../images/items/avatar-light.png)
 
@@ -50,8 +50,8 @@ Avatar(accessibilityLabel: Text("Unknown sender"))
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Supply an accessibility label, because the view cannot derive one from a face or monogram.
-  - The view exposes one image-trait accessibility element and ignores its inner text and symbol.
-  - Initials use the tint color on the surface fill. The whole avatar scales with the body text style, so the monogram and symbol keep their size relative to nearby text.
-  - The diameter follows the environment controlSize, from 24 to 72 points at the default text size. The border uses the semantic border token.
+  - MUST supply label; none from face/monogram.
+  - One image-trait element; ignores inner text/symbol.
+  - Initials: tint/surface fill; scales with body text.
+  - Diameter: controlSize, 24-72pt default; border: semantic token.
 - Source: [sources/components/Avatar.swift](../../Registry/sources/components/Avatar.swift), with the `Avatar` Xcode preview

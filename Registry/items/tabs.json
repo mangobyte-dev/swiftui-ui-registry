@@ -4,9 +4,9 @@
   "version": "0.3.0",
   "name": "tabs",
   "kind": "recipe",
-  "description": "Native guidance for a local-selection Picker with the platform segmented style; app navigation stays with TabView.",
+  "description": "Picker segmented; local selection, TabView nav.",
   "usage": "@State private var selection = \"overview\"\n\nPicker(\"Section\", selection: $selection) {\n    Text(\"Overview\").tag(\"overview\")\n    Text(\"Activity\").tag(\"activity\")\n    Text(\"Settings\").tag(\"settings\")\n}\n.pickerStyle(.segmented)",
-  "docs": "Apply `.pickerStyle(.segmented)` directly to a native `Picker` for local tab selection. Keep `TabView` for app-level navigation. The registry adds no wrapper, because the one-line native style is the entire treatment.",
+  "docs": "`.pickerStyle(.segmented)`: local selection; `TabView`: app nav. No wrapper.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -28,10 +28,8 @@
     "segmented-control"
   ],
   "accessibility": [
-    "Retains native Picker selection and segmented-control semantics.",
-    "Keeps local selection caller-owned and does not replace app-level TabView navigation.",
-    "Requires concise visible segment labels that remain distinguishable at large text sizes.",
-    "Inherits enabled state, tint, and layout direction."
+    "Retains Picker segmented semantics; selection caller-owned, not TabView nav.",
+    "Needs concise, large-text-legible segment labels; inherits enabled, tint, direction."
   ],
   "preview": {
     "screenshots": [

@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "name": "alert-dialog",
   "kind": "recipe",
-  "description": "Native guidance for a modal decision with .alert: button roles, prepared copy, and the system presentation.",
+  "description": "Modal .alert decision.",
   "usage": "@State private var isConfirmingSignOut = false\n\nButton(\"Sign out\", role: .destructive) {\n    isConfirmingSignOut = true\n}\n.alert(\"Sign out?\", isPresented: $isConfirmingSignOut) {\n    Button(\"Sign out\", role: .destructive) { }\n    Button(\"Cancel\", role: .cancel) { }\n} message: {\n    Text(\"You will need your password to sign in again.\")\n}",
-  "docs": "Present a decision with the native `.alert` modifier. Give each button a role: `.destructive` for the irreversible choice and `.cancel` to cancel. The system owns layout, typography, blur, and VoiceOver focus. The registry adds no wrapper, because the modifier and roles are the entire treatment.",
+  "docs": "Native `.alert`; `.destructive` irreversible, `.cancel` dismiss. Owns layout, typography, blur, VoiceOver focus; no wrapper.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -30,9 +30,9 @@
     "modal"
   ],
   "accessibility": [
-    "Native alerts move VoiceOver focus into the dialog and restore it on dismissal.",
-    "Button roles drive the destructive tint and the cancel position without custom styling.",
-    "Copy must state the consequence; the alert never relies on the tint to convey danger."
+    "Alerts move VoiceOver focus, restore on dismiss.",
+    "Roles drive destructive tint, cancel-position; no custom-styling.",
+    "Copy MUST state consequence; MUST NOT rely on tint."
   ],
   "preview": {
     "screenshots": [

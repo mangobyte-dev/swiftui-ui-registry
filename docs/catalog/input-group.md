@@ -2,7 +2,7 @@
 
 # input-group
 
-Wraps a native text field with registry input chrome and caller-provided leading and trailing accessories, such as a search symbol and a clear button.
+Wraps field in registry chrome; accessories add search symbol or clear button.
 
 ![input-group preview](../images/items/input-group-light.png)
 
@@ -60,8 +60,8 @@ InputGroup {
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [input-group](input-group.md) 0.2.1
 - Accessibility contract:
-  - The field stays a native TextField or SecureField. Give it an explicit accessibilityLabel, because the title is placeholder text only.
-  - Hide a decorative leading accessory with accessibilityHidden(true). An informational prefix stays visible, and the field's accessibilityLabel carries its meaning. A trailing registry button keeps its own label and 44 point hit area.
-  - Focus draws the accent ring. The invalid state draws the negative border at the same emphasized width and wins over focus. Pair it with a message.
-  - The field keeps the 44 point minimum height and applies the shared disabled opacity.
+  - TextField/SecureField; MUST have accessibilityLabel (placeholder).
+  - Leading decorative MUST accessibilityHidden(true); informational visible via label; trailing: label, 44pt area.
+  - Focus: accent ring; invalid: negative border wins; SHOULD pair message.
+  - 44-point min height; disabled opacity.
 - Source: [sources/components/InputGroup.swift](../../Registry/sources/components/InputGroup.swift), with the `Input Group` Xcode preview

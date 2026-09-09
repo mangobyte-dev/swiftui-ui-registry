@@ -2,7 +2,7 @@
 
 # button-group
 
-Lays out every native button in a ControlGroup side by side with one registry button variant, and keeps the caller's Button controls, roles, and labels.
+ControlGroup: buttons side by side, one variant; keeps roles, labels.
 
 ![button-group preview](../images/items/button-group-light.png)
 
@@ -51,8 +51,8 @@ ControlGroup {
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [button-group](button-group.md) 0.3.2
 - Accessibility contract:
-  - The group keeps the caller's native Button controls and exposes the row as one accessibility container.
-  - The group keeps each button's visible or derived accessibility label and role.
-  - The group inherits layout direction, control size, enabled state, and Dynamic Type behavior.
-  - Provide labels for icon-only buttons through native Button initializers.
+  - Native Button controls; one container.
+  - Keeps button label, role.
+  - Inherits direction, size, state, Dynamic Type.
+  - Icon-only buttons MUST have labels.
 - Source: [sources/components/RegistryButtonGroupStyle.swift](../../Registry/sources/components/RegistryButtonGroupStyle.swift), with the `Button Group` Xcode preview

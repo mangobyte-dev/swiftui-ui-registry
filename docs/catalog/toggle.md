@@ -2,7 +2,7 @@
 
 # toggle
 
-Applies registry button treatments to native Toggle state for compact selectable controls.
+Button treatment, Toggle.
 
 ![toggle preview](../images/items/toggle-light.png)
 
@@ -50,8 +50,8 @@ Toggle("Bold", systemImage: "bold", isOn: $bold)
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [toggle](toggle.md) 0.2.1
 - Accessibility contract:
-  - Retains native Toggle state and activation behavior.
-  - Requires caller-supplied labels for icon-only controls.
-  - Uses opacity and native selected state in addition to color.
-  - Inherits Dynamic Type, enabled state, control size, and layout direction.
+  - State, activation retained.
+  - Icon-only needs labels.
+  - Opacity, selected beyond color.
+  - Dynamic Type, enabled, size, direction.
 - Source: [sources/components/RegistryToggleStyle.swift](../../Registry/sources/components/RegistryToggleStyle.swift), with the `Toggle` Xcode preview

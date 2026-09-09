@@ -2,7 +2,7 @@
 
 # card
 
-Styles a native GroupBox as a semantic bordered surface with adaptive label and content spacing.
+Styles GroupBox: bordered surface, adaptive label, content spacing.
 
 ![card preview](../images/items/card-light.png)
 
@@ -50,8 +50,8 @@ GroupBox {
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - The card preserves the native accessibility elements and reading order from the GroupBox label and content.
-  - The card uses system text styles and lets content grow vertically with Dynamic Type.
-  - The card uses semantic leading alignment that follows the environment layout direction.
-  - The card adds no interaction or selection behavior to caller content.
+  - Preserves reading order (label, content).
+  - System styles; grows Dynamic Type.
+  - Leading alignment follows layout direction.
+  - No interaction/selection added.
 - Source: [sources/components/RegistryCardStyle.swift](../../Registry/sources/components/RegistryCardStyle.swift), with the `Card` Xcode preview

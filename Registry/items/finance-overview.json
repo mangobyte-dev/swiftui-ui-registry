@@ -4,7 +4,7 @@
   "version": "0.4.3",
   "name": "finance-overview",
   "kind": "block",
-  "description": "Composes metrics and selectable transactions into an embeddable finance overview without owning navigation or state.",
+  "description": "Composes metrics, selectable transactions; caller-owned navigation, state.",
   "usage": "FinanceOverview(\n    \"Overview\",\n    balanceTitle: \"Available balance\",\n    balance: Text(12_480.32, format: .currency(code: \"USD\")),\n    changeTitle: \"Monthly change\",\n    change: Text(0.082, format: .percent),\n    sectionTitle: \"Recent activity\",\n    transactions: [\n        FinanceTransactionItem(\n            id: \"salary\",\n            title: Text(\"Salary\"),\n            subtitle: Text(\"Yesterday\"),\n            amount: Text(2_450, format: .currency(code: \"KWD\")),\n            systemImage: \"building.columns.fill\",\n            tone: .positive\n        )\n    ],\n    onSelect: { id in }\n)",
   "files": [
     {
@@ -47,9 +47,9 @@
     "balance"
   ],
   "accessibility": [
-    "Selectable transactions use native Button semantics, and an empty activity state uses ContentUnavailableView. The screen and section titles carry the header trait. Voice Control can address a row by its title alone.",
-    "The overview uses system text styles and ViewThatFits for Dynamic Type.",
-    "The overview uses leading and trailing alignment, so the layout follows right-to-left direction."
+    "Transactions: Button semantics. Empty: ContentUnavailableView. Titles: header trait; Voice Control: title.",
+    "System text styles, ViewThatFits: Dynamic Type.",
+    "Leading/trailing alignment: RTL."
   ],
   "preview": {
     "source": "sources/blocks/FinanceOverview.swift",

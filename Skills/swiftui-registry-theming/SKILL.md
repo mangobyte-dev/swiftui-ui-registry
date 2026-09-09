@@ -9,117 +9,55 @@ metadata:
 
 ## Goal
 
-Give an app one coherent brand without a theme engine: a `RegistryTheme` set
-once at the scene root, a short preset code that survives copy and paste, and a
-worked design system (MANGO) to extend.
+One `RegistryTheme` at scene root gives coherent brand. Preset code survives copy-paste. MANGO: system to extend.
 
-This skill answers two of the recorded iOS design-system pain points
-(`docs/mango.md`, Goal):
+Two pain points (`docs/mango.md`):
 
-- Drift, the same primitives rebuilt with different padding, radii, and color
-  every sprint: one `RegistryTheme` applied once with `registryTheme(_:)`, its
-  tokens read from the environment rather than from scattered constants and never
-  as `Color` statics that type-check into nonsense (`docs/architecture.md`,
-  Foundations; `docs/mango.md`, Goal, the `Color`-extension trap).
-- Sameness, every app converging on one skin: the preset code plus the Create
-  studio and MANGO as the worked brand let a team build a distinct look on the
-  same items (`docs/mango.md`, Goal).
+- Drift: rebuilt primitives, different padding/radii/color each sprint. One `RegistryTheme` fixes it.
+- Sameness: apps converge on one skin; preset code, Create studio, MANGO give distinct looks.
 
 ## Quick start
 
-1. Apply a preset at your scene root:
-
-   ```swift
-   ContentView()
-       .registryTheme(.graphite)
-   ```
-
-2. Read a code's tokens, Swift, and website URL: `swiftui-registry preset decode a13GkaOXWwIF`.
-3. Write a code into an app as a theme file: `swiftui-registry preset apply a13GkaOXWwIF --destination path/to/YourApp`.
-4. Apply the written theme: `ContentView().registryTheme(.app)`.
-5. Read an edited theme file back into a code: `swiftui-registry preset resolve path/to/YourApp/RegistryTheme+App.swift`.
+1. Apply a preset at scene root: `ContentView().registryTheme(.graphite)`.
+2. Decode: `swiftui-registry preset decode a13GkaOXWwIF`.
+3. Write into app: `swiftui-registry preset apply a13GkaOXWwIF --destination path/to/YourApp`.
+4. Apply: `ContentView().registryTheme(.app)`.
+5. Read back to code: `swiftui-registry preset resolve path/to/YourApp/RegistryTheme+App.swift`.
 
 ## API interface
 
-- Theme, metrics, presets, and root modifiers: `references/foundations-interface.md` (a pointer to the shared `SwiftUIRegistryFoundations.swiftinterface`)
-- The preset code layout, versions `a` and `b`: `references/preset-format.md`
-- The MANGO design system and its build-your-own steps: `references/mango.md` (a pointer to `docs/mango.md`)
+- Theme, metrics, presets, root modifiers: `references/foundations-interface.md` (shared `SwiftUIRegistryFoundations.swiftinterface`)
+- Preset code layout, versions `a` and `b`: `references/preset-format.md`
+- MANGO design system, build-your-own steps: `references/mango.md` (pointer to `docs/mango.md`)
 
-Quote every theme API and every code from these, never from memory: a code is
-produced by the codec, never typed by hand (`docs/mango.md`, The MANGO preset
-code).
+Quote every API, code from these, never memory; codes come from codec, never hand-typed.
 
 ## How to apply a theme once at the root
 
-The why: `RegistryTheme` is the set-up-once contract; applied once, every
-registry item below inherits the same accent, surfaces, borders, and metrics, and
-Apple controls follow the accent through the tint (`docs/architecture.md`,
-Foundations).
+`RegistryTheme`: set-up-once contract. Items inherit accent, surfaces, borders, metrics; Apple controls follow accent via tint.
 
-1. Pick one of the seven presets (`system`, `graphite`, `indigo`, `rose`,
-   `emerald`, `amber`, `mango`) and apply it at the scene root:
+1. Seven presets: `system`, `graphite`, `indigo`, `rose`, `emerald`, `amber`, `mango`. Apply at root: `ContentView().registryTheme(.mango)`.
+2. `.system` inherits app tint in place; others declare accent, tint subtree.
 
-   ```swift
-   ContentView()
-       .registryTheme(.mango)
-   ```
-
-2. `.system` inherits the app tint already in place; the others declare an accent
-   and tint the subtree.
-
-- **DO** apply the theme once, before the scene appears; the tokens flow through
-  the environment to every item below.
-- **DO NOT** switch a theme's accent between `nil` and a value at runtime:
-  `tint(nil)` resets the tint rather than inheriting it, so the subtree is
-  replaced and the state below it resets. Keep the accent's presence stable, or
-  pass `Color.accentColor` instead of `nil` (`docs/architecture.md`, Foundations).
-- **DO NOT** define tokens as `Color` statics; they live on the theme value in
-  the environment (`docs/mango.md`, Goal, the `Color`-extension trap).
+- **DO** apply once, before scene appears; tokens flow via environment.
+- **DO NOT** toggle accent nil/value at runtime: `tint(nil)` resets, not inherits, resetting subtree. Use `Color.accentColor`, not `nil`.
+- **DO NOT** define tokens as `Color` statics; they live on the theme value.
 
 ## How to pick a preset and read its code
 
-The why: a preset code is a `RegistryTheme` as one short shareable string that
-the tool, the Showcase, the website, and the MCP server all read and write
-(`docs/registry-spec.md`, Preset codes).
+A preset code is one short `RegistryTheme` string; tool, Showcase, website, MCP read/write it.
 
-1. Decode a code to its knobs, the Swift, and the website URL:
+1. `swiftui-registry preset decode a13GkaOXWwIF`: code, version, accent, ..., website URL.
+2. `--json`: machine-readable knobs, same payload as MCP `describe_preset`.
+3. `preset url a13GkaOXWwIF`: just the URL.
 
-   ```sh
-   swiftui-registry preset decode a13GkaOXWwIF
-   ```
-
-   ```text
-   Preset
-     code                      a13GkaOXWwIF
-     version                   a
-     accent                    indigo
-     ...
-     url                       https://swiftui-registry.mangobytekw.workers.dev/create?preset=a13GkaOXWwIF
-   ```
-
-2. Add `--json` for the machine-readable knobs, the same payload the MCP
-   `describe_preset` tool returns.
-3. Get just the website URL with `swiftui-registry preset url a13GkaOXWwIF`.
-
-- **DO** treat the code as the portable form; `a13GkaOXWwIF` is the Indigo preset
-  on the foundation metrics (`docs/registry-spec.md`, Preset codes).
-- **DO NOT** reorder or hand-assemble a code's characters; decode it and read the
-  fields.
+- **DO** treat the code as portable: `a13GkaOXWwIF` = Indigo preset, foundation metrics; never hand-assemble characters, decode it.
 
 ## How to write a code into an app
 
-The why: `preset apply` turns a code into `RegistryTheme+App.swift`, an extension
-declaring `RegistryTheme.app` for the consumer to apply once at the scene root;
-the theme file is not a registry item and carries no receipt (`docs/registry-spec.md`,
-Preset codes).
+`preset apply` turns a code into `RegistryTheme+App.swift`; not a registry item, no receipt.
 
-1. Write the file:
-
-   ```sh
-   swiftui-registry preset apply a74hGF01CVunaG0vzZJG --destination path/to/YourApp
-   ```
-
-   It writes `RegistryTheme+App.swift` with a header naming the code and URL:
+1. `swiftui-registry preset apply a74hGF01CVunaG0vzZJG --destination path/to/YourApp` writes:
 
    ```swift
    import SwiftUI
@@ -135,91 +73,42 @@ Preset codes).
        static let app = RegistryTheme(
    ```
 
-2. Apply it at the root: `ContentView().registryTheme(.app)`.
-3. Edit the initializer in place; it is your source now.
-4. Read your edited file back into a shareable code:
+2. Apply at root: `ContentView().registryTheme(.app)`.
+3. Edit initializer in place; it's your source now.
+4. `preset resolve path/to/YourApp/RegistryTheme+App.swift` reads it back to a code.
 
-   ```sh
-   swiftui-registry preset resolve path/to/YourApp/RegistryTheme+App.swift
-   ```
-
-- **DO** edit the theme freely after applying; `resolve` parses the initializer,
-  never trusting the file header.
-- **DO** pass `--force` to `preset apply` to replace an edited file; without it,
-  apply replaces the file only while it still resolves to the code in its header.
-- **DO NOT** commit a code typed by hand into the header and expect `resolve` to
-  trust it; the initializer is the source of truth.
+- **DO** edit the theme freely; `resolve` parses the initializer, never trusting a hand-typed header.
+- **DO** pass `--force` to replace an edited file; else it replaces while resolving to header's code.
 
 ## How to build a brand the MANGO way
 
-The why: naming the layers before the surface is the point of the Layers order,
-because the most neglected layer is the conceptual model (`docs/mango.md`,
-Conceptual model). MANGO is the template a team follows for its own brand.
+MANGO is the template for `docs/mango.md`'s Layers order.
 
-1. Work the Layers order from `docs/mango.md`: the Domain (who the brand serves),
-   then the Conceptual model (the five things a design system here is made of:
-   the theme value, the environment, the presets, the code, the owned copies),
-   then the Surface (tokens, typography, motion).
-2. Set the tokens as a `RegistryTheme` (MANGO's are in `docs/mango.md`, Surface,
-   Tokens: a custom mango accent with a light and dark pair, `onAccent: .black`,
-   `surface: .primary.opacity(0.07)`, `border: .primary.opacity(0)`, radii 10, 14,
-   24, spacing 8, 16, 28, control padding 16, disabled 0.4).
-3. Apply the typography once at the MANGO scene root with `.fontDesign(.rounded)`,
-   and put `.monospacedDigit()` on every value that can change so digits do not
-   shift width.
-4. Adopt the motion vocabulary: a critically damped `.spring(response: 0.4,
-   dampingFraction: 1.0)` by default, `dampingFraction: 0.8` only after a gesture
-   that carried momentum, press feedback (scale 0.97 on `isPressed`, applied on
-   press), and an `.opacity` cross-fade under `accessibilityReduceMotion`
-   (`docs/mango.md`, Surface, Motion).
-5. Read the code back with `preset resolve`; MANGO's is `a74hGF01CVunaG0vzZJG`,
-   pinned in `Registry/preset_vectors.json`.
+1. Domain (audience), Conceptual model (theme value, environment, presets, code, owned copies), Surface (tokens, typography, motion).
+2. MANGO `RegistryTheme`: mango accent (light/dark pair), `onAccent: .black`, `surface: .primary.opacity(0.07)`, `border: .primary.opacity(0)`. Radii 10/14/24, spacing 8/16/28, padding 16, disabled 0.4.
+3. `.fontDesign(.rounded)` at root; `.monospacedDigit()` on changing values.
+4. Motion: default `.spring(response: 0.4, dampingFraction: 1.0)`; `dampingFraction: 0.8` after momentum only. Press: scale 0.97 on `isPressed`. Cross-fade `.opacity` under `accessibilityReduceMotion`.
+5. `preset resolve` reads the code back; MANGO's is `a74hGF01CVunaG0vzZJG`, pinned in `Registry/preset_vectors.json`.
 
-- **DO** keep a customized item as an owned copy tracked by the receipt, with a
-  header comment naming the item and version it came from and every edit, as
-  MANGO does with `MangoButtonStyle` and `MangoMetricCard` (`docs/mango.md`, What
-  MANGO customized in the Showcase).
-- **DO NOT** add a `theme` item kind; a preset code already round-trips through
-  the tool, the Showcase, the website, and the MCP server, and the theme file is
-  by contract not a registry item (`docs/registry-spec.md`, Preset codes).
+- **DO** keep customized items as owned copies, receipt-tracked; header names item, version, edits. MANGO: `MangoButtonStyle`, `MangoMetricCard`.
+- **DO NOT** add a `theme` item kind.
 
 ## How to use the Create studio and the tuning panel
 
-The why: the Create studio and the Showcase's tuning panel are the theme creator;
-the panel floats over the catalog in the tool's own window so a slider move
-shows on whichever demo is open (`docs/architecture.md`, Foundations).
+Create studio, Showcase tuning panel: the theme creator; a slider move updates open demo.
 
-1. Open the Create page at the code's URL to see the tokens as a CSS board and,
-   for one of the presets, the real capture: `?preset=<code>` on the website (for
-   example `https://swiftui-registry.mangobytekw.workers.dev/create?preset=a13GkaOXWwIF`,
-   from `preset url` or `preset decode`).
-2. In the Showcase, tap Tune in the accent strip to open the tuning panel, move
-   the sliders, then use the export actions:
-   Copy Swift for the exact `RegistryTheme(...)` initializer to paste at a root,
-   Copy Code for the theme as a preset code, and Import to load either back into
-   the knobs (`docs/architecture.md`, Foundations).
-3. Export a MANGO-style theme package from the Create studio's Export tab:
-   `RegistryTheme+App.swift` and `THEME.md`, with copy buttons and no downloads.
+1. Create page at the code's URL: CSS token board, capture (six presets); `?preset=<code>` on website.
+2. Showcase: tap Tune in accent strip; slide, Copy Swift (initializer), Copy Code (preset code), or Import.
+3. Export tab: `RegistryTheme+App.swift`, `THEME.md`; copy buttons, no downloads.
 
-- **DO** use Copy Swift when you want the initializer to paste, and Copy Code when
-  you want the portable string.
-- **DO NOT** expect the Create page to render SwiftUI; it shows the CSS token
-  board and, only for the six built-in presets, the real capture, and never
-  claims otherwise (`docs/architecture.md`, Foundations).
+- **DO NOT** expect Create to render SwiftUI.
 
 ## How to tune on device with the design surface
 
-The why: the last ten percent of a screen (the radius that matches the brand,
-the spacing that feels right) is tuned by looking at the real app, not the
-Showcase, and the result has to reach the agent that writes the next pass. The
-`SwiftUIRegistryDesignSurface` product puts the Showcase's tuning panel into any
-app in debug builds and keeps the tokens in one file the agent reads
-(`docs/registry-spec.md`, Preset codes, "The design tokens file").
+The agent's pass MUST see tuning, not Showcase. `SwiftUIRegistryDesignSurface` puts panel in app's debug build.
 
-1. Add the second product beside foundations (same package, same rule) and link
-   it to the app target: `.product(name: "SwiftUIRegistryDesignSurface", package: "swiftui-ui-registry")`.
-2. Apply the surface inside the app's theme call, so the tuned theme is the
-   nearer one while tuning and the app's theme is the only one shipped:
+1. Link: `.product(name: "SwiftUIRegistryDesignSurface", package: "swiftui-ui-registry")`.
+2. Apply inside the theme call:
 
    ```swift
    import SwiftUIRegistryDesignSurface
@@ -229,70 +118,22 @@ app in debug builds and keeps the tokens in one file the agent reads
        .registryTheme(.app)
    ```
 
-   A debug build shows a floating Tune button; a release build returns the
-   content unchanged (`Sources/SwiftUIRegistryDesignSurface/DesignSurface.swift`).
-3. Tune, then read the result: the panel's Copy Code gives the preset code, Copy
-   Swift the initializer, and `registry-tokens.json` in the app's Documents folder
-   holds both the code and every knob. On a simulator:
+   Debug: floating Tune button; release: unchanged.
+3. Copy Code/Swift: preset code/initializer; `registry-tokens.json` in Documents holds both; simulator: `cat "$(xcrun simctl get_app_container booted <bundle id> data)/Documents/registry-tokens.json"`.
+4. Select, tap an item: panel scopes to its tokens (`RegistryItemTokens`); All tokens restores full theme.
+5. Agent push: write `{"code": "a74hGF01CVunaG0vzZJG"}`; surface loads it.
+6. Own tokens: conform to `TokenDocument` (value, file name, `.number`/`.choice`/`.color` knobs, `apply()`). `designSurface(tokens: MyTokens.self, knobs: ["button": [ItemKnob("padding", in: 0...32, shipped: 12)]])`; panel gains App tokens, item knobs. Read via `environment.registryKnob("button", "padding", default: 12)`.
 
-   ```sh
-   cat "$(xcrun simctl get_app_container booted <bundle id> data)/Documents/registry-tokens.json"
-   ```
-
-4. Scope the panel to one item: tap Select in the panel, then tap the item on
-   the screen behind it; the panel keeps the sections whose tokens that item
-   reads (`RegistryItemTokens`, generated from the sources) and All tokens
-   brings the theme back.
-5. Push a theme onto the simulator from the agent's side by writing the file
-   with only a code, `{"code": "a74hGF01CVunaG0vzZJG"}`; the surface loads it.
-
-6. Hand the surface your app's own tokens and knobs: conform your token value
-   to `TokenDocument` (shipped value, file name, pages of `.number`, `.choice`,
-   and `.color` knobs, and `apply()` that pushes the value into what your views
-   read), then `designSurface(tokens: MyTokens.self, knobs: ["button": [ItemKnob("padding", in: 0...32, shipped: 12)]])`.
-   The panel gains an App tokens section and, for a selected item, its knobs;
-   an item reads a knob with `environment.registryKnob("button", "padding", default: 12)`
-   (`docs/registry-spec.md`, Preset codes, the design tokens file).
-
-- **DO** feed the file's `code` to `swiftui-registry preset apply` or the MCP
-  `apply_preset` to write `RegistryTheme+App.swift`; the code is the contract,
-  the file the convenience.
-- **DO NOT** apply `designSurface()` outside `registryTheme(_:)`; the inner
-  theme wins in SwiftUI's environment, so the surface's theme would never show.
-- **DO NOT** add the product to an app that only wants items; foundations never
-  depends on it and it pulls swift-sharing in.
+- **DO** feed `code` to `preset apply` or MCP `apply_preset`.
+- **DO NOT** apply `designSurface()` outside `registryTheme(_:)`; inner theme wins.
+- **DO NOT** add to an item-only app; pulls swift-sharing in.
 
 ## How to use the version b fields
 
-`Registry/preset_vectors.json` declares `version: "b"` with `maxLength: 48`, so
-the Create studio's fields are live. Version `b` appends fields after the version
-`a` block, and every `a` code still decodes (`docs/registry-spec.md`, Preset
-codes, "Format, version `b`").
+`Registry/preset_vectors.json`: `version: "b"`, `maxLength: 48`. Version `b` appends fields after `a`; every `a` code still decodes.
 
-1. Decode a `b` code; it carries the appended keys:
+1. `preset decode b3nbXHeB3DzH`: version `b`, ..., `fontDesign` rounded, `surfaceStep` 0.02, `chartPalette` accent, `background`/`foreground`/`secondaryForeground` none.
+2. Appended, in order: `fontDesign` (default, rounded, serif, monospaced), `surfaceStep` (elevation-ladder step), `chartPalette` (accent, spectrum, monochrome). Optional light/dark pairs for `background`, `foreground`, `secondaryForeground`.
 
-   ```sh
-   swiftui-registry preset decode b3nbXHeB3DzH
-   ```
-
-   ```text
-     version                   b
-     ...
-     fontDesign                rounded
-     surfaceStep               0.02
-     chartPalette              accent
-     background                none
-     foreground                none
-     secondaryForeground       none
-   ```
-
-2. The appended fields, in order: `fontDesign` (default, rounded, serif,
-   monospaced), `surfaceStep` (the elevation ladder's step), `chartPalette`
-   (accent, spectrum, monochrome), then optional light and dark pairs for
-   `background`, `foreground`, and `secondaryForeground`.
-
-- **DO** expect a tuning that leaves every `b` field at its default to encode to
-  its `a` code; a code is `b` only when an appended field leaves its default or a
-  pair is present.
-- **DO NOT** carry a custom font family in a code; it lives only in the Swift
-  export and the theme package (`docs/registry-spec.md`, Preset codes).
+- **DO** expect a default `b` tuning to encode as `a`; `b` only when field or pair leaves default.
+- **DO NOT** carry a font family in code; it lives in Swift export, theme package.

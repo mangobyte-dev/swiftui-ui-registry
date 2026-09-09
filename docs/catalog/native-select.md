@@ -2,7 +2,7 @@
 
 # native-select
 
-Native guidance for the minimal menu treatment of a bound SwiftUI Picker.
+Picker menu.
 
 ![native-select preview](../images/items/native-select-light.png)
 
@@ -25,7 +25,7 @@ Picker("Sort", selection: $sort) {
 
 ## Why native is enough
 
-Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no wrapper, because the one-line native style is the entire treatment.
+`.pickerStyle(.menu)` on `Picker`; no wrapper.
 
 ## Details
 
@@ -33,7 +33,5 @@ Apply `.pickerStyle(.menu)` directly to a native `Picker`. The registry adds no 
 - Version: 0.3.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Retains native Picker accessibility, menu, and selection behavior.
-  - Requires caller-supplied labels and option text.
-  - Keeps selection state external through the Picker binding.
-  - Inherits Dynamic Type, enabled state, tint, and layout direction.
+  - Retains Picker accessibility, menu, selection; needs caller labels, text.
+  - State external (binding); inherits Dynamic Type, enabled, tint, direction.

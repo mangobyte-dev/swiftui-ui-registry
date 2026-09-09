@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "name": "progress",
   "kind": "component",
-  "description": "Styles native determinate and indeterminate ProgressView controls with linear accent, positive, and negative semantic tones.",
+  "description": "Linear ProgressView: determinate, indeterminate, accent, positive, negative.",
   "usage": "ProgressView(value: 0.68) {\n    Text(\"Uploading\")\n} currentValueLabel: {\n    Text(\"68 percent\")\n}\n.progressViewStyle(.registryLinear)\n\nProgressView(value: 1) {\n    Text(\"Import complete\")\n}\n.progressViewStyle(.registryLinearPositive)",
   "files": [
     {
@@ -43,10 +43,10 @@
     "linear-progress"
   ],
   "accessibility": [
-    "Retains native ProgressView progress semantics.",
-    "Combines the caller's label, progress value, and current-value label in reading order.",
-    "Uses caller-provided prepared value text and semantic tint.",
-    "Inherits Dynamic Type and layout direction."
+    "Native semantics.",
+    "Label, value, current-value.",
+    "Caller value, tint.",
+    "Dynamic Type, direction."
   ],
   "preview": {
     "source": "sources/components/RegistryProgressViewStyle.swift",

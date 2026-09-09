@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "name": "toggle",
   "kind": "component",
-  "description": "Applies registry button treatments to native Toggle state for compact selectable controls.",
+  "description": "Button treatment, Toggle.",
   "usage": "// Content layer only. In toolbars, tab bars, or floating chrome the system supplies Liquid Glass; use .buttonStyle(.glass) or .buttonStyle(.glassProminent) there instead of .registry styles.\n\n@State private var bold = false\n\nToggle(\"Bold\", systemImage: \"bold\", isOn: $bold)\n    .toggleStyle(.registryToggle)",
   "files": [
     {
@@ -44,10 +44,10 @@
     "toggle-button"
   ],
   "accessibility": [
-    "Retains native Toggle state and activation behavior.",
-    "Requires caller-supplied labels for icon-only controls.",
-    "Uses opacity and native selected state in addition to color.",
-    "Inherits Dynamic Type, enabled state, control size, and layout direction."
+    "State, activation retained.",
+    "Icon-only needs labels.",
+    "Opacity, selected beyond color.",
+    "Dynamic Type, enabled, size, direction."
   ],
   "preview": {
     "source": "sources/components/RegistryToggleStyle.swift",

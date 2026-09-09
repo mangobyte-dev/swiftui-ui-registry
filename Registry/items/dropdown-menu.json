@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "name": "dropdown-menu",
   "kind": "recipe",
-  "description": "Native guidance for a Menu trigger with labeled actions, sections, and a picker inside the menu.",
+  "description": "Menu trigger guidance.",
   "usage": "@State private var sort = \"recent\"\n\nMenu(\"Sort\", systemImage: \"arrow.up.arrow.down\") {\n    Picker(\"Sort by\", selection: $sort) {\n        Text(\"Most recent\").tag(\"recent\")\n        Text(\"Amount\").tag(\"amount\")\n    }\n    Divider()\n    Button(\"Export\", systemImage: \"square.and.arrow.up\") { }\n}\n.buttonStyle(.registryOutline)",
-  "docs": "Use a native `Menu` for dropdown actions. A `Picker` inside it becomes a checkmarked selection group, and a `Divider` starts a section. The trigger takes any registry button style. The menu itself stays system-owned.",
+  "docs": "`Menu`: dropdown-actions. `Picker` inside: checkmarked-group; `Divider`: section. Trigger: any registry button style.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -28,9 +28,9 @@
     "menu"
   ],
   "accessibility": [
-    "The menu trigger keeps a visible text label; a symbol-only trigger needs an accessibility label.",
-    "Picker selection inside a menu announces the checked state.",
-    "Menu presentation, dismissal, and Liquid Glass are system behavior."
+    "Trigger: text label default; symbol-only MUST have accessibility label.",
+    "Picker selection: announces checked state.",
+    "Presentation, dismissal, Liquid-Glass: system."
   ],
   "preview": {
     "screenshots": [

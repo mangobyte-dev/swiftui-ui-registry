@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "name": "spinner",
   "kind": "component",
-  "description": "Styles a native indeterminate ProgressView with a compact circular indicator and optional label.",
+  "description": "Compact circular indeterminate ProgressView style.",
   "usage": "ProgressView(\"Loading results\")\n    .progressViewStyle(.registrySpinner)",
   "files": [
     {
@@ -44,10 +44,10 @@
     "progress-circular"
   ],
   "accessibility": [
-    "Retains native indeterminate ProgressView semantics.",
-    "Requires an accessibility label when no visible loading label is supplied.",
-    "Combines a visible label with the indicator in reading order.",
-    "Inherits Dynamic Type, tint, enabled state, and layout direction."
+    "Semantics retained.",
+    "Needs label if absent.",
+    "Label+indicator combined.",
+    "Dynamic Type, tint, enabled, direction."
   ],
   "preview": {
     "source": "sources/components/RegistrySpinnerStyle.swift",

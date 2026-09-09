@@ -6,7 +6,7 @@ import { DOCS, DOC_GROUPS, docHref } from "@/lib/docs-nav"
 
 export const metadata: Metadata = {
   title: "Docs",
-  description: "How to install the registry, theme it, tune it on the device, drive the tool, and read its contracts.",
+  description: "Install, theme, tune on device. Drive the tool, read contracts.",
 }
 
 export default function DocsIndexPage() {

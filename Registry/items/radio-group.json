@@ -4,9 +4,9 @@
   "version": "0.3.0",
   "name": "radio-group",
   "kind": "recipe",
-  "description": "Native guidance for a bound Picker as an inline, mutually exclusive option group.",
+  "description": "Picker: inline exclusive group.",
   "usage": "@State private var selection = \"standard\"\n\nPicker(\"Delivery speed\", selection: $selection) {\n    Text(\"Standard\").tag(\"standard\")\n    Text(\"Express\").tag(\"express\")\n    Text(\"Same day\").tag(\"same-day\")\n}\n.pickerStyle(.inline)",
-  "docs": "Apply `.pickerStyle(.inline)` directly to a native `Picker` for a mutually exclusive option group. The registry adds no wrapper, because the one-line native style is the entire treatment.",
+  "docs": "`.pickerStyle(.inline)`: exclusive group; no wrapper.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -24,10 +24,8 @@
     "guidance"
   ],
   "accessibility": [
-    "Retains native Picker selection and option semantics.",
-    "Keeps selection caller-owned through the Picker binding.",
-    "Uses visible option labels and native selected-state indicators.",
-    "Inherits Dynamic Type, enabled state, and layout direction."
+    "Retains Picker selection, option semantics; caller-owned via binding.",
+    "Visible labels, native selected-state; inherits Dynamic Type, enabled, direction."
   ],
   "preview": {
     "screenshots": [

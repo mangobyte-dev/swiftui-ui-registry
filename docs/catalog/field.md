@@ -2,7 +2,7 @@
 
 # field
 
-Composes a labeled form field around a native control with an optional description and an error message that drives the content's invalid state.
+Labeled form field, native control; optional description; error drives invalid state.
 
 ![field preview](../images/items/field-light.png)
 
@@ -58,8 +58,8 @@ FieldGroup {
 - Platforms: iOS 26.0+
 - Installs in order: [input](input.md) 0.5.1, [field](field.md) 0.1.1
 - Accessibility contract:
-  - The content builder receives the invalid state. Apply it to a control that has one, such as RegistryInputStyle(isInvalid:). The field never fakes an invalid treatment on a control without one.
-  - A separate label view does not associate with the control automatically. Give the control an explicit accessibilityLabel that matches the visible label.
-  - The error, or the description when there is no error, becomes the content's accessibility hint, so a focused control re-reads the most urgent message. A new error also posts as an announcement.
-  - The field uses system text styles and the semantic spacing tokens. The label, description, and error wrap rather than truncate.
+  - Builder gets invalid state, e.g. RegistryInputStyle(isInvalid:); MUST NOT fake it otherwise.
+  - Label doesn't auto-associate; MUST have accessibilityLabel matching visible label.
+  - Error/description becomes hint; focused control re-reads; new error announces.
+  - System styles, spacing tokens; label/description/error wrap.
 - Source: [sources/components/Field.swift](../../Registry/sources/components/Field.swift), with the `Field` Xcode preview

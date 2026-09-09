@@ -4,7 +4,7 @@
   "version": "0.2.1",
   "name": "label",
   "kind": "component",
-  "description": "Controls native Label icon placement with semantic spacing and treats the icon as decorative for accessibility.",
+  "description": "Controls Label icon placement with semantic spacing.",
   "usage": "Label(\"Account settings\", systemImage: \"person.crop.circle\")\n    .labelStyle(.registry)\n\nLabel(\"Continue\", systemImage: \"chevron.forward\")\n    .labelStyle(.registryTrailingIcon)",
   "files": [
     {
@@ -42,10 +42,9 @@
     "icon-label"
   ],
   "accessibility": [
-    "Keeps the native Label title as the accessible content.",
-    "Treats the paired icon as decorative to avoid repeating the title.",
-    "Uses semantic order so leading and trailing placements mirror in right-to-left layouts.",
-    "Inherits the caller's text style and Dynamic Type behavior."
+    "Title is accessible; icon decorative.",
+    "RTL mirrors leading/trailing.",
+    "Inherits caller's text style, Dynamic Type."
   ],
   "preview": {
     "source": "sources/components/RegistryLabelStyle.swift",

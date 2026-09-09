@@ -2,7 +2,7 @@
 
 # metric-card
 
-Displays one prepared product metric with native text formatting and semantic styling.
+Formatted, semantic metric text.
 
 ![metric-card preview](../images/items/metric-card-light.png)
 
@@ -50,7 +50,6 @@ MetricCard(
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Uses system text styles for Dynamic Type.
-  - Combines title, value, and detail into one VoiceOver element.
-  - It treats the SF Symbol as decorative. Its circle scales with the body text style.
+  - Dynamic Type; title, value, detail combine.
+  - Icon decorative; circle scales with text.
 - Source: [sources/components/MetricCard.swift](../../Registry/sources/components/MetricCard.swift), with the `Metric Card` Xcode preview

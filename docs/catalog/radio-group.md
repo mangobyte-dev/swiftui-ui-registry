@@ -2,7 +2,7 @@
 
 # radio-group
 
-Native guidance for a bound Picker as an inline, mutually exclusive option group.
+Picker: inline exclusive group.
 
 ![radio-group preview](../images/items/radio-group-light.png)
 
@@ -25,7 +25,7 @@ Picker("Delivery speed", selection: $selection) {
 
 ## Why native is enough
 
-Apply `.pickerStyle(.inline)` directly to a native `Picker` for a mutually exclusive option group. The registry adds no wrapper, because the one-line native style is the entire treatment.
+`.pickerStyle(.inline)`: exclusive group; no wrapper.
 
 ## Details
 
@@ -33,7 +33,5 @@ Apply `.pickerStyle(.inline)` directly to a native `Picker` for a mutually exclu
 - Version: 0.3.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Retains native Picker selection and option semantics.
-  - Keeps selection caller-owned through the Picker binding.
-  - Uses visible option labels and native selected-state indicators.
-  - Inherits Dynamic Type, enabled state, and layout direction.
+  - Retains Picker selection, option semantics; caller-owned via binding.
+  - Visible labels, native selected-state; inherits Dynamic Type, enabled, direction.

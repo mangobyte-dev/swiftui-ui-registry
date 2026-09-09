@@ -4,7 +4,7 @@
   "version": "0.1.1",
   "name": "attachment",
   "kind": "component",
-  "description": "Presents a file or image attachment as a row with square media, a name and detail, caller-owned actions, and a state line for idle, uploading, processing, failed, and completed uploads.",
+  "description": "Row: square media, name, detail, caller actions. States: idle, uploading, processing, failed, completed.",
   "usage": "AttachmentRow(\n    name: Text(\"Statement-Aug-2026.pdf\"),\n    detail: Text(\"PDF document, 1.2 MB\"),\n    state: .uploading(progress: 0.68)\n) {\n    Image(systemName: \"doc.fill\")\n} actions: {\n    Button(\"Cancel\", systemImage: \"xmark\") {}\n        .labelStyle(.iconOnly)\n        .buttonStyle(.registryGhost)\n        .accessibilityLabel(\"Cancel upload\")\n}",
   "files": [
     {
@@ -49,11 +49,11 @@
     "file-row"
   ],
   "accessibility": [
-    "Every upload state shows text: a percent, Processing, a failure message, or Uploaded. Progress and outcome never rest on color or a bar alone.",
-    "VoiceOver does not read the upload percent, because the progress bar already reports its value. The same fraction is not read twice.",
-    "The component composes ItemRow, so the name and detail combine into one accessibility element. The trailing actions stay separately activatable.",
-    "The failed and completed states each pair their color with a symbol and a word. The outcome does not rest on hue alone.",
-    "Label any icon-only action button and the thumbnail image. Neither derives an accessibility label from visible text."
+    "State text: percent, Processing, failure, Uploaded; MUST NOT rely on color/bar.",
+    "VoiceOver skips percent; bar reports it.",
+    "ItemRow: name+detail one element; actions separate, activatable.",
+    "Failed/completed: color, symbol, word; not hue-only.",
+    "Icon buttons, thumbnail MUST label, not text-derived."
   ],
   "preview": {
     "source": "sources/components/AttachmentRow.swift",

@@ -2,7 +2,7 @@
 
 # sidebar
 
-Native guidance for a sidebar layout with NavigationSplitView and a selection-bound List on iPad.
+Sidebar: NavigationSplitView + selection-bound List (iPad).
 
 ![sidebar preview](../images/items/sidebar-light.png)
 
@@ -40,7 +40,7 @@ TabView(selection: $tab) {
 
 ## Why native is enough
 
-Use `NavigationSplitView` with a selection-bound `List` for the sidebar. The system collapses it to a stack on iPhone, adds the column toggle, and handles keyboard and pointer selection. Do not rebuild a sidebar with a manual HStack. On iPadOS people can drag the divider within the `navigationSplitViewColumnWidth` bounds; iPhone ignores them. Consider a tab bar first: a `TabView` in the `.sidebarAdaptable` style opens as a tab bar or a sidebar, lets people switch between them, and adapts to the window width. The HIG names that as the first choice for iPad navigation. Keep `NavigationSplitView` for a sidebar-only layout. Visually rich detail content, such as a header image or gradient, extends beneath the sidebar with `backgroundExtensionEffect()` (26.0) instead of stopping at the column edge. That is the HIG's guidance for sidebars over content.
+`NavigationSplitView` + selection-bound `List`: iPhone-stack, column-toggle; keyboard/pointer selection. MUST NOT rebuild via HStack. iPadOS drags divider (`navigationSplitViewColumnWidth`); iPhone ignores. `TabView`+`.sidebarAdaptable` first: tab-bar or sidebar, switches, adapts width (HIG pick). Else `NavigationSplitView` for sidebar-only. Rich detail extends beneath via `backgroundExtensionEffect()` (26.0), past edge (HIG: sidebar-over-content).
 
 ## Details
 
@@ -48,8 +48,8 @@ Use `NavigationSplitView` with a selection-bound `List` for the sidebar. The sys
 - Version: 0.3.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Sidebar rows are native list cells with selection semantics.
-  - The column toggle button is system-provided and labeled.
-  - Selection state stays caller-owned through the binding.
-  - The convertible tab bar's switch between tab bar and sidebar is a system control with its own label, and the tabs keep native tab semantics in both forms.
-  - The background extension effect only mirrors pixels beneath the sidebar; it adds no accessibility element and hides nothing.
+  - Sidebar rows: native cells, selection semantics.
+  - Column toggle: system-provided, labeled.
+  - Selection state: caller-owned via binding.
+  - Tab/sidebar switch: system control, own label; tabs keep native semantics.
+  - Background extension: mirrors pixels beneath sidebar; no accessibility element, hides nothing.

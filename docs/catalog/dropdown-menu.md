@@ -2,7 +2,7 @@
 
 # dropdown-menu
 
-Native guidance for a Menu trigger with labeled actions, sections, and a picker inside the menu.
+Menu trigger guidance.
 
 ![dropdown-menu preview](../images/items/dropdown-menu-light.png)
 
@@ -28,7 +28,7 @@ Menu("Sort", systemImage: "arrow.up.arrow.down") {
 
 ## Why native is enough
 
-Use a native `Menu` for dropdown actions. A `Picker` inside it becomes a checkmarked selection group, and a `Divider` starts a section. The trigger takes any registry button style. The menu itself stays system-owned.
+`Menu`: dropdown-actions. `Picker` inside: checkmarked-group; `Divider`: section. Trigger: any registry button style.
 
 ## Details
 
@@ -36,6 +36,6 @@ Use a native `Menu` for dropdown actions. A `Picker` inside it becomes a checkma
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - The menu trigger keeps a visible text label; a symbol-only trigger needs an accessibility label.
-  - Picker selection inside a menu announces the checked state.
-  - Menu presentation, dismissal, and Liquid Glass are system behavior.
+  - Trigger: text label default; symbol-only MUST have accessibility label.
+  - Picker selection: announces checked state.
+  - Presentation, dismissal, Liquid-Glass: system.

@@ -2,7 +2,7 @@
 
 # calendar
 
-Native guidance for date selection with DatePicker in graphical style and MultiDatePicker for several dates.
+Calendar guidance.
 
 ![calendar preview](../images/items/calendar-light.png)
 
@@ -24,7 +24,7 @@ MultiDatePicker("Reminder days", selection: $dates)
 
 ## Why native is enough
 
-Use `DatePicker` with `.datePickerStyle(.graphical)` for a calendar, and `MultiDatePicker` for several dates. Both inherit tint, locale, calendar, and layout direction. The registry adds no replacement calendar.
+`DatePicker` + `.graphical`: date. `MultiDatePicker`: several. Inherits tint, locale, calendar, direction. No replacement.
 
 ## Details
 
@@ -32,6 +32,6 @@ Use `DatePicker` with `.datePickerStyle(.graphical)` for a calendar, and `MultiD
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Native date pickers expose adjustable day cells and month navigation to VoiceOver.
-  - Locale, first weekday, and right-to-left month order come from the environment.
-  - Keep a visible label; the graphical style hides it, so provide surrounding context.
+  - Day-cells, month nav: VoiceOver-adjustable.
+  - Locale, first-weekday, RTL-month-order: environment.
+  - Label needed: graphical style hides it; add surrounding context.

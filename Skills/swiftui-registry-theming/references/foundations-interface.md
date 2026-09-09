@@ -1,13 +1,9 @@
-<!-- Reference pointer for the swiftui-registry-theming skill. -->
+<!-- Pointer for `swiftui-registry-theming`. -->
 
 # Foundations interface
 
-`RegistryTheme`, `RegistryMetrics`, `RegistryThemePreset`, the seven presets,
-`registryTheme(_:)`, `registrySurface(level:)`, and the design surface's item
-hook (`registryItem(_:)`, `registryScreen(_:)`, `RegistryItemSurface`) are declared in the
-`SwiftUIRegistryFoundations` public interface. It is shared with the
-`swiftui-registry` skill and kept in one place rather than copied:
+`SwiftUIRegistryFoundations` declares `RegistryTheme`, `RegistryMetrics`, `RegistryThemePreset`, seven presets, `registryTheme(_:)`, `registrySurface(level:)`; design-surface hook `registryItem(_:)`, `registryScreen(_:)`, `RegistryItemSurface`. Shared, not copied:
 
 - `../../swiftui-registry/references/interface/SwiftUIRegistryFoundations.swiftinterface`
 
-Quote every theme API from that `.swiftinterface`, never from memory.
+Quote from that file, never memory.

@@ -2,7 +2,7 @@
 
 # direction
 
-Native guidance for layoutDirection behavior and semantic leading/trailing layout without a replacement API.
+layoutDirection guidance.
 
 ![direction preview](../images/items/direction-light.png)
 
@@ -27,9 +27,7 @@ HStack {
 
 ## Why native is enough
 
-Read `EnvironmentValues.layoutDirection` and use leading/trailing alignment, not left/right geometry. The registry adds no replacement, because SwiftUI propagates direction through the environment.
-
-Use direction-aware symbols such as `chevron.forward`, so icons mirror automatically. Preview both directions with `.environment(\.layoutDirection, .rightToLeft)`.
+`layoutDirection`: leading/trailing, not left/right; no replacement. `chevron.forward` mirrors; preview via `.environment`, `.rightToLeft`.
 
 ## Details
 
@@ -37,6 +35,6 @@ Use direction-aware symbols such as `chevron.forward`, so icons mirror automatic
 - Version: 0.3.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Uses semantic reading order and leading/trailing alignment.
-  - Treats illustrative symbols as decorative.
-  - Relies on SwiftUI's environment propagation instead of duplicating locale state.
+  - Semantic reading order, leading/trailing alignment.
+  - Symbols: decorative.
+  - SwiftUI environment, not duplicated state.

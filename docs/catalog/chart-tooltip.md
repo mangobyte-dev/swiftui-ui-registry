@@ -2,7 +2,7 @@
 
 # chart-tooltip
 
-Native guidance for a Swift Charts selection annotation with chartXSelection and a RuleMark tooltip.
+chartXSelection + RuleMark annotation.
 
 ![chart-tooltip preview](../images/items/chart-tooltip-light.png)
 
@@ -44,7 +44,7 @@ Chart {
 
 ## Why native is enough
 
-Bind `.chartXSelection(value:)` to the mark's category type. When a value is selected, add a `RuleMark(x:)` with an `.annotation(position: .top)` that shows the figure on a small registry surface. Swift Charts drives the selection from tap and drag. The registry adds only the themed chart treatment through `.registryChart()`. A single-series mark takes the accent explicitly with `.foregroundStyle(TintShapeStyle())`, because Swift Charts otherwise draws one series in its own default color. Keep the annotation content short, so it does not overflow the plot. Watch the selection type: it must match the mark's x value type, or nothing selects.
+`chartXSelection` binds mark's x type; tap/drag native. Adds `RuleMark` + top annotation on registry surface; only `.registryChart()` themes. Single-series needs explicit accent, else default color. Keep annotation short; type MUST match mark's x, or nothing selects.
 
 ## Details
 
@@ -52,5 +52,5 @@ Bind `.chartXSelection(value:)` to the mark's category type. When a value is sel
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Swift Charts exposes each mark to VoiceOver through its audio graph and value descriptions.
-  - The selected value is shown as visible text, not by color alone.
+  - Marks expose to VoiceOver via audio graph, value text.
+  - Selected value: visible text, not color alone.

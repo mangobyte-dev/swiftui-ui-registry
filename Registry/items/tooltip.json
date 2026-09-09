@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "name": "tooltip",
   "kind": "recipe",
-  "description": "Native guidance for supplementary help without hover: an accessibility hint plus an optional informational popover.",
+  "description": "Tooltip: hint, popover.",
   "usage": "Button(\"Freeze card\", systemImage: \"snowflake\") { }\n    .buttonStyle(.registryOutline)\n    .accessibilityHint(\"Blocks new purchases until you unfreeze the card.\")\n    .help(\"Blocks new purchases until you unfreeze the card.\")",
-  "docs": "iPhone has no hover, so a tooltip is an `accessibilityHint` for VoiceOver plus `.help` for pointer and iPad hover. Information a sighted user must see belongs in visible copy or a popover, never only in a tooltip.",
+  "docs": "No iPhone hover; `accessibilityHint` (VoiceOver) + `.help` (pointer/iPad) = tooltip. Sighted-info also needs copy/popover.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -28,9 +28,8 @@
     "hint"
   ],
   "accessibility": [
-    "The hint is read after the label by VoiceOver.",
-    "help text appears on pointer hover on iPad and macOS-style environments.",
-    "Never rely on hover-only information on touch devices."
+    "Hint after label; help: pointer/iPad/macOS-style hover.",
+    "MUST NOT rely on hover-only info, touch."
   ],
   "preview": {
     "screenshots": [

@@ -2,7 +2,7 @@
 
 # progress
 
-Styles native determinate and indeterminate ProgressView controls with linear accent, positive, and negative semantic tones.
+Linear ProgressView: determinate, indeterminate, accent, positive, negative.
 
 ![progress preview](../images/items/progress-light.png)
 
@@ -55,8 +55,8 @@ ProgressView(value: 1) {
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - Retains native ProgressView progress semantics.
-  - Combines the caller's label, progress value, and current-value label in reading order.
-  - Uses caller-provided prepared value text and semantic tint.
-  - Inherits Dynamic Type and layout direction.
+  - Native semantics.
+  - Label, value, current-value.
+  - Caller value, tint.
+  - Dynamic Type, direction.
 - Source: [sources/components/RegistryProgressViewStyle.swift](../../Registry/sources/components/RegistryProgressViewStyle.swift), with the `Progress` Xcode preview

@@ -2,7 +2,7 @@
 
 # badge
 
-Applies primary, secondary, outline, positive, and destructive badge treatments to native Text and Label content.
+Primary, secondary, outline, positive, destructive: Text/Label treatments.
 
 ![badge preview](../images/items/badge-light.png)
 
@@ -49,9 +49,9 @@ Label("Completed", systemImage: "checkmark.circle.fill")
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:
-  - The badge keeps its text on one line at its intrinsic width. It never wraps or breaks its label.
-  - The badge preserves the accessibility semantics and reading order of the modified Text or Label.
-  - The badge uses a system text style, so the single line grows with Dynamic Type.
-  - The badge inherits layout direction, so Label content follows the caller's locale.
-  - Positive and destructive share one fill treatment and differ by hue. When meaning must not rest on color alone, pair them with a Label symbol.
+  - One line, intrinsic width.
+  - Preserves semantics, reading order.
+  - System style; grows Dynamic Type.
+  - Inherits layout direction; locale-aware.
+  - Positive/destructive: same fill, differ hue; pair symbol, MUST NOT rely on color alone.
 - Source: [sources/components/RegistryBadge.swift](../../Registry/sources/components/RegistryBadge.swift), with the `Badge Variants` Xcode preview

@@ -2,7 +2,7 @@
 
 # command-search
 
-Composes the command palette and keycap treatments into a search screen with caller-owned query, filtering, sections, and a keyboard shortcut legend.
+Composes command, keycap; caller owns query, filtering, sections, legend.
 
 ![command-search preview](../images/items/command-search-light.png)
 
@@ -57,8 +57,8 @@ CommandSearch(
 - Platforms: iOS 26.0+
 - Installs in order: [button](button.md) 0.5.2, [input-group](input-group.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [kbd](kbd.md) 0.1.2, [empty](empty.md) 0.1.1, [command](command.md) 0.2.1, [command-search](command-search.md) 0.2.1
 - Accessibility contract:
-  - The search field is labeled with its prompt. Commands are native Buttons with combined labels. The screen title and section titles are headers.
-  - No results is a native ContentUnavailableView with caller copy, never blank.
-  - Each legend line combines its action and spoken shortcut into one element. Keycaps are hidden unless labeled.
-  - Selection, filtering, and the query stay caller-owned, so the screen never triggers an action on its own.
+  - Field: prompt. Commands: Buttons, combined-label. Titles headers.
+  - No results: ContentUnavailableView, copy, never blank.
+  - Legend: action-shortcut merge; keycaps hidden unless labeled.
+  - Selection/filtering/query caller-owned; no self-trigger.
 - Source: [sources/blocks/CommandSearch.swift](../../Registry/sources/blocks/CommandSearch.swift), with the `Command Search` Xcode preview

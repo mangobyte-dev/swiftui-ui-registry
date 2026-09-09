@@ -1,17 +1,9 @@
-# Code of conduct
+# Conduct
 
-Everyone taking part in this project, in issues, pull requests, discussions, and reviews, is expected to be respectful and constructive
+MUST respectful, constructive: issues, PRs, discussions, reviews
 
-Expected:
+Do: good faith critique, not people, name problems, fixes, onboard newcomers
 
-- Assume good intent and disagree about the work, not the person
-- Give reviews that name the problem and a way forward
-- Welcome newcomers and answer questions patiently
+MUST NOT: harassment, personal attacks, discrimination, sexualization, doxxing, derailing
 
-Not accepted:
-
-- Harassment, personal attacks, discriminatory remarks, or sexualized language
-- Publishing someone's private information
-- Sustained disruption of discussions
-
-Maintainers may edit, remove, or reject contributions and comments that break these rules, and may block repeat offenders. Report concerns privately to the maintainers through a GitHub Security Advisory or the contact on the maintainer's GitHub profile; reports are handled confidentially
+Maintainers MAY edit, remove, reject content, block offenders. Report privately: GitHub Security Advisory, maintainer profile, confidential

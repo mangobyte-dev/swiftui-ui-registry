@@ -2,7 +2,7 @@
 
 # questionnaire
 
-Composes the registry field, checkbox, textarea, progress, button, and card treatments into a caller-driven multi-step questionnaire with single-choice, multiple-choice, freeform, and skippable steps.
+Composes field, checkbox, textarea, progress, button, card; drives choice, freeform, skippable steps.
 
 ![questionnaire preview](../images/items/questionnaire-light.png)
 
@@ -63,9 +63,9 @@ Questionnaire(
 - Platforms: iOS 26.0+
 - Installs in order: [input](input.md) 0.5.1, [field](field.md) 0.1.1, [checkbox](checkbox.md) 0.3.2, [textarea](textarea.md) 0.4.1, [progress](progress.md) 0.2.1, [button](button.md) 0.5.2, [card](card.md) 0.2.1, [questionnaire](questionnaire.md) 0.1.1
 - Accessibility contract:
-  - The card title carries the header accessibility trait, so VoiceOver reaches the questionnaire heading directly.
-  - The step counter reads as 'Step N of M' in monospaced digits. The ProgressView carries an explicit 'Progress' accessibility label with the completed fraction as its value.
-  - Each step is a Field whose visible label is the step title. Single choice is a native inline Picker whose options stay reachable as native picker rows. Multiple choice is a column of checkbox Toggles, each labeled by its option title. Freeform is a TextEditor whose accessibility label is the step's prompt.
-  - A step forward or back posts an AccessibilityNotification.Announcement of the new step's title, so VoiceOver states where the caller landed.
-  - The Back, Skip, and Next or Finish buttons each carry an explicit accessibility label. Next stays disabled until the step has an answer, unless the step is skippable. The button row reflows from a row to a column through ViewThatFits, so labels never truncate under Dynamic Type.
+  - Card title: header trait; VoiceOver reaches heading directly.
+  - Counter: 'Step N of M', monospaced; ProgressView: 'Progress' label, fraction-value.
+  - Step = Field, label = title. Single: inline-Picker, native rows. Multiple: checkbox Toggles per option. Freeform: TextEditor, label = prompt.
+  - Step change posts AccessibilityNotification.Announcement of new title; VoiceOver states landing.
+  - Back/Skip/Next-or-Finish: explicit-label. Next disabled until answered (unless skippable). Row reflows via ViewThatFits, no truncation.
 - Source: [sources/blocks/Questionnaire.swift](../../Registry/sources/blocks/Questionnaire.swift), with the `Questionnaire` Xcode preview

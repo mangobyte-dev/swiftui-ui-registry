@@ -2,7 +2,7 @@
 
 # settings-section
 
-Composes registry select, separator, and button treatments into a titled settings section with structure, separators, and per-row messages around caller-owned native toggle, picker, and action rows.
+Composes select, separator, button; structure, separators, messages, caller-owned toggle/picker/action rows.
 
 ![settings-section preview](../images/items/settings-section-light.png)
 
@@ -68,10 +68,10 @@ SettingsSection(
 - Platforms: iOS 26.0+
 - Installs in order: [select](select.md) 0.2.1, [separator](separator.md) 0.2.1, [button](button.md) 0.5.2, [settings-section](settings-section.md) 0.1.2
 - Accessibility contract:
-  - The section title uses the header accessibility trait, so the VoiceOver rotor can jump between settings sections.
-  - Rows keep native control semantics. The block never hides or renames a control, and every control's accessibility name comes from its visible label. A caller that hides a label with .labelsHidden() must supply its own accessibility label.
-  - settingsRowDisabled composes native .disabled. A disabled control dims through its own style treatment, and VoiceOver announces it as dimmed. The description and explanation render outside the disabled subtree at full secondary contrast.
-  - A disabled row's explanation is visible static text in reading order, directly under the control, not an accessibility hint, so nothing double-announces. An enabled row with an explanation is unrepresentable: the modifier clears the explanation when isDisabled is false.
-  - Reading order per row is control, then description, then explanation, then the section footer. This order follows caller declaration order for VoiceOver and Full Keyboard Access.
-  - Text uses system styles (.headline, .footnote) with a 44-point minimum row control height and no fixed heights, so Dynamic Type and right-to-left layouts reflow. The block deliberately does not apply rotor grouping of row chrome (.accessibilityElement(children: .contain)), so each control stays its own element.
+  - Section title: header trait; rotor jumps sections.
+  - Rows: native semantics, not hidden/renamed; name = label. `.labelsHidden()` label MUST get explicit label.
+  - settingsRowDisabled = native .disabled; dims via style, VoiceOver: dimmed. Description/explanation: contrast, outside-subtree.
+  - Disabled explanation: under-control static-text, not a hint. Enabled+explanation: unrepresentable, cleared-when-enabled.
+  - Row order: control, description, explanation, footer; follows declaration order (VoiceOver, Full-Keyboard-Access).
+  - System styles (.headline/.footnote), 44pt row-height, no fixed-heights: Dynamic Type/RTL reflow. No rotor-grouping (`accessibilityElement-children-contain`); controls stay own-elements.
 - Source: [sources/blocks/SettingsSection.swift](../../Registry/sources/blocks/SettingsSection.swift), with the `Settings Section` Xcode preview

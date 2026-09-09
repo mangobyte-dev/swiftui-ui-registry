@@ -4,7 +4,7 @@
   "version": "0.1.2",
   "name": "kbd",
   "kind": "component",
-  "description": "Styles a native Text as a keycap for keyboard shortcut hints, hidden from accessibility unless you supply a spoken label.",
+  "description": "Styles Text as a keycap for shortcuts.",
   "usage": "Text(verbatim: \"⌘K\")\n    .registryKeycap(accessibilityLabel: Text(\"Command K\"))\n\nText(verbatim: \"esc\")\n    .registryKeycap()",
   "files": [
     {
@@ -44,9 +44,9 @@
     "hotkey"
   ],
   "accessibility": [
-    "The keycap hides from accessibility by default because symbols such as the command glyph read poorly. To speak the shortcut, pass accessibilityLabel.",
-    "The keycap stays on one line at its intrinsic size and never wraps.",
-    "It uses the compact radius, surface, border, and spacing tokens to match badges."
+    "Hidden unless accessibilityLabel given.",
+    "One line, intrinsic size. MUST NOT wrap.",
+    "Uses badge's compact radius, surface, border, spacing tokens."
   ],
   "preview": {
     "source": "sources/components/RegistryKeycapModifier.swift",

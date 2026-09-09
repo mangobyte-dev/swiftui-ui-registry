@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "name": "calendar",
   "kind": "recipe",
-  "description": "Native guidance for date selection with DatePicker in graphical style and MultiDatePicker for several dates.",
+  "description": "Calendar guidance.",
   "usage": "@State private var date = Date.now\n@State private var dates: Set<DateComponents> = []\n\nDatePicker(\"Statement date\", selection: $date, displayedComponents: .date)\n    .datePickerStyle(.graphical)\n\nMultiDatePicker(\"Reminder days\", selection: $dates)",
-  "docs": "Use `DatePicker` with `.datePickerStyle(.graphical)` for a calendar, and `MultiDatePicker` for several dates. Both inherit tint, locale, calendar, and layout direction. The registry adds no replacement calendar.",
+  "docs": "`DatePicker` + `.graphical`: date. `MultiDatePicker`: several. Inherits tint, locale, calendar, direction. No replacement.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -28,9 +28,9 @@
     "datepicker"
   ],
   "accessibility": [
-    "Native date pickers expose adjustable day cells and month navigation to VoiceOver.",
-    "Locale, first weekday, and right-to-left month order come from the environment.",
-    "Keep a visible label; the graphical style hides it, so provide surrounding context."
+    "Day-cells, month nav: VoiceOver-adjustable.",
+    "Locale, first-weekday, RTL-month-order: environment.",
+    "Label needed: graphical style hides it; add surrounding context."
   ],
   "preview": {
     "screenshots": [

@@ -2,7 +2,7 @@
 
 # alert-dialog
 
-Native guidance for a modal decision with .alert: button roles, prepared copy, and the system presentation.
+Modal .alert decision.
 
 ![alert-dialog preview](../images/items/alert-dialog-light.png)
 
@@ -28,7 +28,7 @@ Button("Sign out", role: .destructive) {
 
 ## Why native is enough
 
-Present a decision with the native `.alert` modifier. Give each button a role: `.destructive` for the irreversible choice and `.cancel` to cancel. The system owns layout, typography, blur, and VoiceOver focus. The registry adds no wrapper, because the modifier and roles are the entire treatment.
+Native `.alert`; `.destructive` irreversible, `.cancel` dismiss. Owns layout, typography, blur, VoiceOver focus; no wrapper.
 
 ## Details
 
@@ -36,6 +36,6 @@ Present a decision with the native `.alert` modifier. Give each button a role: `
 - Version: 0.1.0
 - Platforms: iOS 26.0+
 - Accessibility contract:
-  - Native alerts move VoiceOver focus into the dialog and restore it on dismissal.
-  - Button roles drive the destructive tint and the cancel position without custom styling.
-  - Copy must state the consequence; the alert never relies on the tint to convey danger.
+  - Alerts move VoiceOver focus, restore on dismiss.
+  - Roles drive destructive tint, cancel-position; no custom-styling.
+  - Copy MUST state consequence; MUST NOT rely on tint.

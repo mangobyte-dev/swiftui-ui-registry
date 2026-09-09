@@ -20,7 +20,7 @@ const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 export const metadata: Metadata = {
   title: { default: registry.name, template: `%s · ${registry.name}` },
   description:
-    "Native-first SwiftUI you copy and own. A shadcn-style registry of source-owned components, blocks, and recipes with a set-up-once theme.",
+    "Native-first SwiftUI, copy and own. Shadcn-style registry: source-owned components, blocks, recipes, set-up-once theme.",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "name": "dialog",
   "kind": "recipe",
-  "description": "Native guidance for modal content with .sheet: the system owns detents, drag dismissal, and focus.",
+  "description": "`.sheet`: system owns detents, drag-dismissal, focus.",
   "usage": "@State private var isEditing = false\n\nButton(\"Edit profile\") { isEditing = true }\n    .sheet(isPresented: $isEditing) {\n        NavigationStack {\n            ProfileEditor()\n                .navigationTitle(\"Edit profile\")\n                .toolbar {\n                    ToolbarItem(placement: .confirmationAction) {\n                        Button(\"Done\") { isEditing = false }\n                    }\n                }\n        }\n    }",
-  "docs": "Present edit or detail content with the native `.sheet` modifier, wrapped in a `NavigationStack`, so the title and confirmation action land in system chrome. Liquid Glass, the grabber, swipe-to-dismiss, and keyboard avoidance come from the system. The registry adds no wrapper.",
+  "docs": "`.sheet` + `NavigationStack`: edit/detail → chrome gets title, confirmation. Grabber, dismiss, keyboard, Liquid Glass: system. No wrapper.",
   "files": [],
   "registryDependencies": [],
   "packageDependencies": [],
@@ -28,9 +28,9 @@
     "sheet"
   ],
   "accessibility": [
-    "Sheets present as modal to VoiceOver and support swipe-to-dismiss and the escape gesture.",
-    "Toolbar placements give Done and Cancel their system position and semantics.",
-    "Content inside the sheet uses registry items like any other screen."
+    "Sheets: modal VoiceOver, swipe-escape dismiss.",
+    "Toolbar: system semantics, Done-Cancel.",
+    "Sheet content: registry items, any-screen."
   ],
   "preview": {
     "screenshots": [

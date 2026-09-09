@@ -8,7 +8,6 @@ enum ItemDemos {
     @MainActor
     static func demo(for name: String) -> AnyView? {
         switch name {
-        // Components
         case "badge": AnyView(BadgeDemo())
         case "button": AnyView(ButtonDemo())
         case "button-group": AnyView(ButtonGroupDemo())
@@ -46,7 +45,6 @@ enum ItemDemos {
         case "toast": AnyView(ToastDemo())
         case "attachment": AnyView(AttachmentDemo())
         case "marker": AnyView(MarkerDemo())
-        // Blocks
         case "finance-overview": AnyView(FinanceDemo())
         case "nutrition-overview": AnyView(NutritionDemo())
         case "auth-form": AnyView(AuthenticationDemo())
@@ -58,7 +56,6 @@ enum ItemDemos {
         case "preview-02": AnyView(Preview02Demo())
         case "dashboard": AnyView(DashboardDemo())
         case "signup-form": AnyView(SignUpDemo())
-        // Recipes
         case "aspect-ratio": AnyView(AspectRatioRecipe())
         case "direction": AnyView(DirectionRecipe())
         case "native-select": AnyView(NativeSelectRecipe())

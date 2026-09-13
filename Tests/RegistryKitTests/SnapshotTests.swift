@@ -257,8 +257,8 @@ extension Commands {
   @Test func updateNoticeNeverAdvertisesATapTagThatIsNotNewer() throws {
     // A tap still on the previous release is below the running tool, so an install must not
     // prompt an upgrade to an older version. A tag equal to the current version is silent too.
-    let older = "0.2.0"
-    #expect(RegistryRelease.version == "0.3.0")
+    let older = "0.3.0"
+    #expect(RegistryRelease.version == "0.3.1")
     for tag in [older, RegistryRelease.version] {
       let fs = try fixture()
       let result = try withDependencies {

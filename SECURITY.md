@@ -8,7 +8,7 @@ Acknowledged 7 days; fix or decision 30. Disclosure post-fix
 
 ## Versions
 
-`0.3.0`, `main`. Not `0.1.0`, `0.2.0`
+`0.3.1`, `main`. Not `0.1.0`, `0.2.0`, `0.3.0`
 
 ## Scope
 

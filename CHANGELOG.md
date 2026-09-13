@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.3.1
+
+A patch release: every change is source compatible. `brew upgrade swiftui-registry` installs the tool. A package pinned `.upToNextMinor(from: "0.3.0")` resolves it, and every item keeps the `0.3.0` floor, since none needs anything newer.
+
+### Added
+
+- Recipes are selectable. A recipe's usage snippet ends its root with `.registryItem("<name>")`; copy it, and the design surface selects the recipe. A recipe whose snippet uses registry items declares them, so the panel scopes to the tokens they read. `menubar` carries no tag: its root is a `Scene`, and the tag is a View modifier.
+- `RegistryItemReport.ancestors`: the tagged roots an item sits inside, outermost first. `ItemSelection.chain(reports:at:)` reads it.
+
+### Changed
+
+- A child that fills its parent exactly is picked before the parent. Before, equal areas resolved by name, so an `attachment` won over the `item` inside it.
+- The panel shows only what an export reproduces. A value that arrives off its slider grid (an import, a hand edited `registry-tokens.json`) renders and exports at the nearest step, and a custom color at 8 bits a channel.
+- The System accent tints nothing while tuning. A consumer's export carries no accent for System, so its native controls keep their own colors; the tuner now shows the same.
+
+### Fixed
+
+- `swiftui-registry preset apply` wrote a theme file that did not compile for a code with a font design, a surface step, a chart palette, or a color pair. Those arguments now follow `metrics:`, the order `RegistryTheme.init` declares. The Swift that `preset decode` prints, the MCP tools, and the website's Create page share the fix.
+- Copy Swift rounded an off-grid number or a custom color to three decimals, which changed pixels. It now prints the fewest decimals that read back. The theme file prints each color channel the same way.
+- Neither export wrote `surfaceOpacity`, so `registrySurface(level:)` drew a different elevated surface in the consumer. Both write it when it leaves 0.055.
+
+### Known limitations
+
+- A native `ControlGroup` never places its toggles, so `toggle-group`'s toggles report no frame and Select picks the group. `registryToggleGroup(_:)`'s variant has no visible effect on iOS 27.
+- Six Showcase visual references fail on the pinned simulator by 4.0 to 5.5 percent against the 1.5 percent tolerance (`activity`, `auth`, `command`, `finance`, `nutrition`, `settings`). They failed before this release too, on an unchanged tree.
+
 ## 0.3.0 (public beta)
 
 The design surface tunes a running app on the device. It ships as a second package product. Install or upgrade: `brew install mangobyte-dev/tap/swiftui-registry` or `brew upgrade swiftui-registry`.

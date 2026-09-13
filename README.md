@@ -232,7 +232,7 @@ Version 0, honest prototype:
 - Every item: versioned JSON metadata (dependencies, SwiftPM requirements, platforms, accessibility notes, previews, usage). 1 validator checks all, captured screenshots
 - Installer writes exact-content receipts, performs conflict-aware three-way updates
 - Showcase compiles installables, recipes at iOS 26 floor. Pins visual contract checks for blocks, runs accessibility-audited demo walk per item
-- Published: `0.1.0` (2026-09-06), `0.2.0` (2026-09-07) as tags/GitHub releases, shipping universal `swiftui-registry` binary, Homebrew tap `mangobyte-dev/tap`. `0.3.0`: design-surface's public beta. Not yet: hosted registry, Xcode-project mutation, platforms beyond iOS. Known limitations: `CHANGELOG.md`
+- Published: `0.1.0` (2026-09-06), `0.2.0` (2026-09-07) as tags/GitHub releases, shipping universal `swiftui-registry` binary, Homebrew tap `mangobyte-dev/tap`. `0.3.0`: design-surface's public beta. `0.3.1`: exports reproduce the panel; recipes are selectable. Not yet: hosted registry, Xcode-project mutation, platforms beyond iOS. Known limitations: `CHANGELOG.md`
 
 ## Showcase screenshots
 

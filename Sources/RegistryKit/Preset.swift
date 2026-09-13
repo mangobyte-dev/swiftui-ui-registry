@@ -236,10 +236,19 @@ public enum Preset {
   }
   static func hex(_ bits: Int) -> String { String(format: "#%06X", bits & 0xffffff) }
   public static func url(_ code: String) -> String { siteURL + "/create?preset=" + code }
+  /// A channel with the fewest decimals, never under three, that reads back as
+  /// the 8-bit value, so the compiled color is the one the code decodes to.
+  static func channelLiteral(_ value: Double) -> String {
+    for digits in 3...15 {
+      let text = String(format: "%.\(digits)f", value)
+      if let read = Double(text), abs(read - value) <= 1e-12 { return text }
+    }
+    return "\(value)"
+  }
   public static func initializerLines(_ tuning: JSON) throws -> [String] {
     func color(_ value: String, ui: Bool) throws -> String {
       let bits = try rgb(value)
-      let values = [16, 8, 0].map { String(format: "%.3f", Double((bits >> $0) & 255) / 255) }
+      let values = [16, 8, 0].map { channelLiteral(Double((bits >> $0) & 255) / 255) }
       return
         "\(ui ? "UIColor" : "Color")(red: \(values[0]), green: \(values[1]), blue: \(values[2])\(ui ? ", alpha: 1" : ""))"
     }
@@ -271,27 +280,34 @@ public enum Preset {
       "    disabledOpacity: \(decimal("disabledOpacity")),",
     ]
     // Version b fields print only when non-default, so an a-shaped tuning exports
-    // the same Swift it always did.
+    // the same Swift it always did. They follow metrics, the order RegistryTheme's
+    // initializer declares, or the file does not compile.
+    var appended: [String] = []
     if let font = tuning["fontDesign"].string, font != "default" {
-      lines.append("    fontDesign: .\(font),")
+      appended.append("    fontDesign: .\(font),")
+    }
+    // The surface fill alone does not carry surfaceOpacity, and `surface(at:)`
+    // steps an elevated level from it.
+    if let opacity = tuning["surfaceOpacity"].number, opacity != 0.055 {
+      appended.append("    surfaceOpacity: \(decimal("surfaceOpacity")),")
     }
     if let step = tuning["surfaceStep"].number, step != 0.02 {
-      lines.append("    surfaceStep: \(String(format: "%.2f", step)),")
+      appended.append("    surfaceStep: \(String(format: "%.2f", step)),")
     }
     if let palette = tuning["chartPalette"].string, palette != "accent" {
-      lines.append("    chartPalette: .\(palette),")
+      appended.append("    chartPalette: .\(palette),")
     }
     for (light, dark) in colorPairs {
       guard let value = tuning[light].string, !value.isEmpty else { continue }
       if let darkValue = tuning[dark].string, !darkValue.isEmpty {
-        lines += [
+        appended += [
           "    \(light): Color(uiColor: UIColor { traits in",
           "        traits.userInterfaceStyle == .dark",
           "            ? \(try color(darkValue, ui: true))",
           "            : \(try color(value, ui: true))", "    }),",
         ]
       } else {
-        lines.append("    \(light): \(try color(value, ui: false)),")
+        appended.append("    \(light): \(try color(value, ui: false)),")
       }
     }
     lines.append("    metrics: RegistryMetrics(")
@@ -302,7 +318,9 @@ public enum Preset {
     for key in metrics {
       lines.append("        \(key): \(points(key))\(key == metrics.last ? "" : ",")")
     }
-    return lines + ["    )", ")"]
+    guard !appended.isEmpty else { return lines + ["    )", ")"] }
+    appended[appended.count - 1].removeLast()
+    return lines + ["    ),"] + appended + [")"]
   }
   // Whether the Swift export uses the dynamic UIColor(uiColor:) form, which needs UIKit:
   // the ink label, a custom accent pair, or any color field carrying a dark value.

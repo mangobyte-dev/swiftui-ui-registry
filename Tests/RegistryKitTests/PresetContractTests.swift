@@ -65,7 +65,9 @@ private func vector(named prefix: String) throws -> PresetVector {
     "border: .primary.opacity(0.160),",
   ] { #expect(tuned.contains(marker), "\(marker)") }
   let custom = try Preset.swiftSource(vector(named: "Custom accent without a dark accent").tuning)
-  #expect(custom.contains("accent: Color(red: 0.349, green: 0.341, blue: 0.839),"))
+  #expect(
+    custom.contains(
+      "accent: Color(red: 0.349019607843, green: 0.341176470588, blue: 0.839215686275),"))
 }
 
 @Test func mangoDecodesStrokelessWithASeparateDarkAccentPair() throws {
@@ -165,21 +167,27 @@ private func vector(named prefix: String) throws -> PresetVector {
 @Test func swiftExportsEachAppendedFieldOnlyWhenItLeavesTheDefault() throws {
   // The rounded, elevation, and spectrum vectors each print one appended line.
   let rounded = try Preset.swiftSource(vector(named: "Rounded").tuning)
-  #expect(rounded.contains("fontDesign: .rounded,"))
+  #expect(rounded.contains("fontDesign: .rounded"))
   #expect(!rounded.contains("surfaceStep:"))
   #expect(!rounded.contains("chartPalette:"))
   let elevation = try Preset.swiftSource(vector(named: "Elevation").tuning)
-  #expect(elevation.contains("surfaceStep: 0.04,"))
+  #expect(elevation.contains("surfaceStep: 0.04"))
   let spectrum = try Preset.swiftSource(vector(named: "Spectrum chart").tuning)
-  #expect(spectrum.contains("chartPalette: .spectrum,"))
+  #expect(spectrum.contains("chartPalette: .spectrum"))
   // A color pair with a dark value exports the dynamic UIColor form, dark first.
   let pair = try Preset.swiftSource(vector(named: "Background pair").tuning)
   #expect(pair.contains("background: Color(uiColor: UIColor { traits in"))
-  #expect(pair.contains("? UIColor(red: 0.078, green: 0.067, blue: 0.051, alpha: 1)"))
-  #expect(pair.contains(": UIColor(red: 0.969, green: 0.949, blue: 0.918, alpha: 1)"))
+  #expect(
+    pair.contains(
+      "? UIColor(red: 0.07843137255, green: 0.066666666667, blue: 0.050980392157, alpha: 1)"))
+  #expect(
+    pair.contains(
+      ": UIColor(red: 0.96862745098, green: 0.949019607843, blue: 0.917647058824, alpha: 1)"))
   // A single-value color pair exports the plain Color form and needs no UIKit.
   let single = try Preset.swiftSource(vector(named: "Foreground pair without dark").tuning)
-  #expect(single.contains("foreground: Color(red: 0.106, green: 0.106, blue: 0.122),"))
+  #expect(
+    single.contains(
+      "foreground: Color(red: 0.105882352941, green: 0.105882352941, blue: 0.12156862745)"))
   #expect(
     !(try Preset.themeFile(vector(named: "Foreground pair without dark").tuning, code: "b0"))
       .contains("import UIKit"))
@@ -187,6 +195,28 @@ private func vector(named prefix: String) throws -> PresetVector {
   let system = try Preset.swiftSource(vector(named: "System").tuning)
   for marker in ["fontDesign:", "surfaceStep:", "chartPalette:", "background:", "foreground:"] {
     #expect(!system.contains(marker), "\(marker)")
+  }
+}
+
+@Test func swiftArgumentsFollowTheInitializerOrderSoAThemeFileCompiles() throws {
+  // Swift rejects labeled arguments out of their declared order, so a theme file
+  // whose fields leave RegistryTheme.init's order never builds in the consuming app.
+  let source = try String(
+    contentsOfFile: repositoryRoot + "/Sources/SwiftUIRegistryFoundations/RegistryTheme.swift",
+    encoding: .utf8)
+  let initializer = try #require(source.range(of: "public init(")).upperBound
+  let end = try #require(source.range(of: ") {", range: initializer..<source.endIndex)).lowerBound
+  let order = Preset.captures("(?m)^\\s+([a-zA-Z]+):", String(source[initializer..<end])).map {
+    $0[0]
+  }
+  #expect(order.first == "accent" && order.contains("metrics") && order.contains("fontDesign"))
+  for vector in presetVectors {
+    let labels = Preset.captures(
+      "(?m)^    ([a-zA-Z]+):", try Preset.initializerLines(vector.tuning).joined(separator: "\n")
+    )
+    .map { $0[0] }
+    let positions = labels.map { order.firstIndex(of: $0) ?? -1 }
+    #expect(!positions.contains(-1) && positions == positions.sorted(), "\(vector.name): \(labels)")
   }
 }
 

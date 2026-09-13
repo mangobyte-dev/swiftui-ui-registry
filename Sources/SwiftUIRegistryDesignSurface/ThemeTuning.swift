@@ -83,8 +83,15 @@ public struct ThemeTuning: Equatable, Sendable {
             "UIColor(red: \(RGB.format(red)), green: \(RGB.format(green)), blue: \(RGB.format(blue)), alpha: 1)"
         }
 
-        static func format(_ value: Double) -> String {
-            String(format: "%.3f", value)
+        /// The fewest decimals, never under `minimum`, that read back as the
+        /// value, so a knob off its slider grid exports what the screen shows
+        /// and a knob on it keeps its short form.
+        static func format(_ value: Double, minimum: Int = 3) -> String {
+            for digits in minimum...15 {
+                let text = String(format: "%.\(digits)f", value)
+                if let read = Double(text), abs(read - value) <= 1e-12 * max(1, abs(value)) { return text }
+            }
+            return "\(value)"
         }
 
         public init(red: Double, green: Double, blue: Double) {
@@ -326,7 +333,15 @@ public struct ThemeTuning: Equatable, Sendable {
 
     // MARK: Derived
 
-    public var theme: RegistryTheme {
+    /// These knobs as the preset code carries them: each number on its slider
+    /// grid, each color at 8 bits a channel. A value that arrives off the grid
+    /// (an import, an edited file) renders and exports snapped, so the screen
+    /// never shows what the code would change.
+    var onCodeGrid: ThemeTuning { ThemeTuning(presetCode: presetCode, base: self) ?? self }
+
+    public var theme: RegistryTheme { onCodeGrid.exactTheme }
+
+    private var exactTheme: RegistryTheme {
         var theme = RegistryTheme(
             accent: accent.color(custom: customAccent, dark: customAccentDark),
             onAccent: onAccent,
@@ -393,7 +408,9 @@ public struct ThemeTuning: Equatable, Sendable {
 
     /// The exact Swift a consumer pastes; applying it at the root reproduces
     /// what the panel shows.
-    public var swiftSource: String {
+    public var swiftSource: String { onCodeGrid.exactSwiftSource }
+
+    private var exactSwiftSource: String {
         var lines = ["let theme = RegistryTheme("]
         if accent == .custom, let dark = customAccentDark {
             lines.append("    accent: Color(uiColor: UIColor { traits in")
@@ -434,12 +451,17 @@ public struct ThemeTuning: Equatable, Sendable {
         return lines.joined(separator: "\n")
     }
 
-    /// The lines the export appends for version-b fields that are off their
-    /// default, so an unchanged tuning still exports the version-a initializer.
+    /// The lines the export appends for fields the initializer above does not
+    /// carry and that are off their default, so an unchanged tuning still
+    /// exports the version-a initializer. `surfaceOpacity` is one of them: the
+    /// surface fill alone does not carry it, and `surface(at:)` steps from it.
     private var newFieldExports: [String] {
         var lines: [String] = []
         if let design = fontDesign.source {
             lines.append("theme.fontDesign = \(design)")
+        }
+        if surfaceOpacity != Self.default.surfaceOpacity {
+            lines.append("theme.surfaceOpacity = \(RGB.format(surfaceOpacity))")
         }
         if surfaceStep != Self.default.surfaceStep {
             lines.append("theme.surfaceStep = \(RGB.format(surfaceStep))")
@@ -468,7 +490,7 @@ public struct ThemeTuning: Equatable, Sendable {
     }
 
     private static func points(_ value: Double) -> String {
-        value == value.rounded() ? String(Int(value)) : String(format: "%.1f", value)
+        value == value.rounded() ? String(Int(value)) : RGB.format(value, minimum: 1)
     }
 
     // MARK: Import

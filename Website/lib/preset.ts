@@ -506,6 +506,15 @@ for (const accent of ACCENTS) {
     ACCENT_SWIFT[accent] = `.${accent}`
 }
 
+/** A channel with the fewest decimals, never under three, that reads back as the 8-bit value. */
+function channelLiteral(value: number): string {
+  for (let digits = 3; digits <= 15; digits++) {
+    const text = value.toFixed(digits)
+    if (Math.abs(Number(text) - value) <= 1e-12) return text
+  }
+  return String(value)
+}
+
 function points(value: number): string {
   return Number.isInteger(value) ? String(value) : value.toFixed(1)
 }
@@ -513,7 +522,7 @@ function points(value: number): string {
 function channels(hex: string): [string, string, string] {
   const bits = Number(rgbBits(hex))
   return [16, 8, 0].map((shift) =>
-    (((bits >> shift) & 0xff) / 255).toFixed(3)
+    channelLiteral(((bits >> shift) & 0xff) / 255)
   ) as [string, string, string]
 }
 
@@ -578,10 +587,23 @@ export function initializerLines(tuning: PresetTuning): string[] {
   args.push([`surface: .primary.opacity(${tuning.surfaceOpacity.toFixed(3)})`])
   args.push([`border: .primary.opacity(${tuning.borderOpacity.toFixed(3)})`])
   args.push([`disabledOpacity: ${tuning.disabledOpacity.toFixed(3)}`])
+  const metrics = ["metrics: RegistryMetrics("]
+  METRIC_KEYS.forEach((key, index) => {
+    metrics.push(
+      `    ${key}: ${points(tuning[key])}${index === METRIC_KEYS.length - 1 ? "" : ","}`
+    )
+  })
+  metrics.push(")")
+  args.push(metrics)
   // Version b fields print only when present and non-default, in the codec's
-  // append order and before metrics, so an a-shaped tuning exports unchanged Swift.
+  // append order and after metrics, the order RegistryTheme's initializer
+  // declares, so an a-shaped tuning exports unchanged Swift that compiles.
   if (tuning.fontDesign && tuning.fontDesign !== "default")
     args.push([`fontDesign: .${tuning.fontDesign}`])
+  // The surface fill alone does not carry surfaceOpacity, and surface(at:)
+  // steps an elevated level from it.
+  if (tuning.surfaceOpacity !== 0.055)
+    args.push([`surfaceOpacity: ${tuning.surfaceOpacity.toFixed(3)}`])
   if (typeof tuning.surfaceStep === "number" && tuning.surfaceStep !== 0.02)
     args.push([`surfaceStep: ${tuning.surfaceStep.toFixed(2)}`])
   if (tuning.chartPalette && tuning.chartPalette !== "accent")
@@ -603,14 +625,6 @@ export function initializerLines(tuning: PresetTuning): string[] {
       )
     )
   }
-  const metrics = ["metrics: RegistryMetrics("]
-  METRIC_KEYS.forEach((key, index) => {
-    metrics.push(
-      `    ${key}: ${points(tuning[key])}${index === METRIC_KEYS.length - 1 ? "" : ","}`
-    )
-  })
-  metrics.push(")")
-  args.push(metrics)
 
   const lines = ["RegistryTheme("]
   args.forEach((block, blockIndex) => {

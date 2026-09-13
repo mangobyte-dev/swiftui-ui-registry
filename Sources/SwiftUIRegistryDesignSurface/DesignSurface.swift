@@ -197,12 +197,17 @@ private struct DesignSurfaceModifier<PresetsFooter: View>: ViewModifier {
 
 /// The tuned registry theme over the app tree, or nothing for a host that
 /// paints the items from its own tokens.
-private struct TunedTheme: ViewModifier {
+struct TunedTheme: ViewModifier {
     let tuning: ThemeTuning?
 
     func body(content: Content) -> some View {
         if let tuning {
             content
+                // System exports no accent, so a consumer's controls keep their
+                // own colors. The theme below carries the app accent to keep its
+                // tint branch from flipping (and resetting the app); this inner
+                // tint takes it off again. One unconditional modifier, no reset.
+                .tint(tuning.accent == .system ? nil : tuning.theme.accent)
                 .registryTheme(tuning.theme)
                 .preferredColorScheme(tuning.preferredColorScheme)
                 .transformEnvironment(\.layoutDirection) { direction in

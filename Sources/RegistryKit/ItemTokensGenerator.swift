@@ -2,9 +2,9 @@ import Dependencies
 import Foundation
 
 /// The item-to-token map the design surface scopes its panel by: for every
-/// component and block, the theme fields its sources and its dependency
-/// closure read. Derived from the sources, never declared by hand, so the map
-/// cannot drift from what an item actually draws with.
+/// catalog item, the theme fields its sources and its dependency closure read,
+/// and for a recipe, what its usage snippet uses. Derived from the sources,
+/// never declared by hand, so the map cannot drift from what an item draws with.
 public struct ItemTokensGenerator {
   let registry: Registry
   @Dependency(\.registryFileSystem) var fs
@@ -15,9 +15,11 @@ public struct ItemTokensGenerator {
     // Do not edit by hand; edit the item source and regenerate.
 
     #if canImport(UIKit)
-    /// The `RegistryTheme` and `RegistryMetrics` fields each installable item
+    /// The `RegistryTheme` and `RegistryMetrics` fields each catalog item
     /// reads, over its dependency closure, so the design surface can scope its
-    /// panel to the knobs that move a selected item.
+    /// panel to the knobs that move a selected item. A recipe reads what its
+    /// usage snippet uses, which for a native one is nothing scoped: the accent
+    /// and the typography still reach it through the root modifier.
     public enum RegistryItemTokens {
         public static let tokens: [String: [String]] = [
 
@@ -52,6 +54,16 @@ public struct ItemTokensGenerator {
 
   public func tokens(for name: String) throws -> [String] {
     var found: Set<String> = []
+    // A recipe installs nothing, so it has no sources: the code a consumer
+    // copies is its usage snippet, and what that snippet uses is what it reads.
+    if registry.items[name]?["kind"] == "recipe" {
+      let item = registry.items[name]!
+      found.formUnion(Self.tokens(in: item["usage"].text))
+      for dependency in item["registryDependencies"].strings {
+        found.formUnion(try tokens(for: dependency))
+      }
+      return found.sorted()
+    }
     for member in try registry.resolve(name) {
       for file in registry.items[member]!["files"].array ?? [] {
         let text = try readText(fs, registry.root + "/Registry/" + file["source"].text)
@@ -65,7 +77,7 @@ public struct ItemTokensGenerator {
     var result = header
     for name in registry.items.keys.sorted() {
       let kind = registry.items[name]!["kind"].text
-      guard kind == "component" || kind == "block" else { continue }
+      guard kind == "component" || kind == "block" || kind == "recipe" else { continue }
       let fields = try tokens(for: name).map(ShowcaseManifestGenerator.swiftString)
       result +=
         "            \(ShowcaseManifestGenerator.swiftString(name)): [\(fields.joined(separator: ", "))],\n"

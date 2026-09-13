@@ -29,6 +29,7 @@ NavigationSplitView {
         .backgroundExtensionEffect()
     if selection == "activity" { ActivityScreen() } else { CardsScreen() }
 }
+.registryItem("sidebar")
 
 // The HIG's first choice on iPad: a tab bar people can switch to a sidebar
 TabView(selection: $tab) {
@@ -45,7 +46,7 @@ TabView(selection: $tab) {
 ## Details
 
 - Kind: recipe
-- Version: 0.3.0
+- Version: 0.3.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Sidebar rows: native cells, selection semantics.

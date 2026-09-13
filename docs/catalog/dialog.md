@@ -27,6 +27,7 @@ Button("Edit profile") { isEditing = true }
                 }
         }
     }
+    .registryItem("dialog")
 ```
 
 ## Why native is enough
@@ -36,7 +37,7 @@ Button("Edit profile") { isEditing = true }
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Sheets: modal VoiceOver, swipe-escape dismiss.

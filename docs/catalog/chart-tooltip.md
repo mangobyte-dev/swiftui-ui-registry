@@ -40,6 +40,7 @@ Chart {
 }
 .chartXSelection(value: $selectedMonth)
 .registryChart()
+.registryItem("chart-tooltip")
 ```
 
 ## Why native is enough
@@ -49,7 +50,7 @@ Chart {
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Marks expose to VoiceOver via audio graph, value text.

@@ -21,6 +21,7 @@ Picker("Section", selection: $selection) {
     Text("Settings").tag("settings")
 }
 .pickerStyle(.segmented)
+.registryItem("tabs")
 ```
 
 ## Why native is enough
@@ -30,7 +31,7 @@ Picker("Section", selection: $selection) {
 ## Details
 
 - Kind: recipe
-- Version: 0.3.0
+- Version: 0.3.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Retains Picker segmented semantics; selection caller-owned, not TabView nav.

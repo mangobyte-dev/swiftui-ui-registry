@@ -1,15 +1,28 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "popover",
   "kind": "recipe",
   "description": "`.popover` guidance.",
-  "usage": "@State private var isShowingHelp = false\n\nButton(\"Why is this needed?\") { isShowingHelp = true }\n    .buttonStyle(.registryLink)\n    .popover(isPresented: $isShowingHelp) {\n        Text(\"We use your date of birth to verify your identity.\")\n            .padding()\n            .presentationCompactAdaptation(.popover)\n    }",
+  "usage": "@State private var isShowingHelp = false\n\nButton(\"Why is this needed?\") { isShowingHelp = true }\n    .buttonStyle(.registryLink)\n    .popover(isPresented: $isShowingHelp) {\n        Text(\"We use your date of birth to verify your identity.\")\n            .padding()\n            .presentationCompactAdaptation(.popover)\n    }\n    .registryItem(\"popover\")",
   "docs": "`.popover` anchors content; iPhone: sheet unless `.presentationCompactAdaptation(.popover)`. System: arrow, no dim, outside-tap dismiss. No wrapper.",
   "files": [],
-  "registryDependencies": [],
-  "packageDependencies": [],
+  "registryDependencies": [
+    "button"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.3.0"
+      }
+    }
+  ],
   "platforms": [
     {
       "name": "iOS",

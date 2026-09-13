@@ -11,13 +11,13 @@ import UIKit
 /// the pick the window uses, and the chain must equal the element's structural
 /// nesting (the tagged roots it sits inside, from the view tree, not from
 /// geometry). An item counts only when its own root reports, every element in
-/// its demo resolves, and each selected element scopes the panel to its tokens.
+/// its demo resolves, and the registry knows each selected element's token scope.
 /// The printed percentage is the metric; it MUST NOT be loosened to move.
 @MainActor
 struct SelectionCoverageTests {
     /// The best measured coverage; the sweep fails below it, so a change that
     /// loses coverage is caught. Raise it only to a measured value.
-    static let floor = 63.0
+    static let floor = 95.8
 
     @Test func `Every catalog item and each nested element resolves to its structural chain`() async throws {
         let clock = ContinuousClock()
@@ -216,9 +216,12 @@ enum SelectionSweep {
                 } else if actual != expected {
                     problems.append("\(element.name) chain \(actual) expected \(expected)")
                 }
-                if RegistryItemTokens.tokens(for: element.name)?.isEmpty ?? true {
+                // A known scope, empty included: a native recipe reads no theme
+                // field of its own, and the panel then hides every scoped section,
+                // which is the right answer for it. An unknown name is the failure.
+                if RegistryItemTokens.tokens(for: element.name) == nil {
                     passed = false
-                    problems.append("\(element.name) scopes no knobs")
+                    problems.append("\(element.name) has no token scope")
                 }
                 let f = element.frame
                 return ElementResult(

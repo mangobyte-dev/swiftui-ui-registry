@@ -1,15 +1,28 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "tooltip",
   "kind": "recipe",
   "description": "Tooltip: hint, popover.",
-  "usage": "Button(\"Freeze card\", systemImage: \"snowflake\") { }\n    .buttonStyle(.registryOutline)\n    .accessibilityHint(\"Blocks new purchases until you unfreeze the card.\")\n    .help(\"Blocks new purchases until you unfreeze the card.\")",
+  "usage": "Button(\"Freeze card\", systemImage: \"snowflake\") { }\n    .buttonStyle(.registryOutline)\n    .accessibilityHint(\"Blocks new purchases until you unfreeze the card.\")\n    .help(\"Blocks new purchases until you unfreeze the card.\")\n    .registryItem(\"tooltip\")",
   "docs": "No iPhone hover; `accessibilityHint` (VoiceOver) + `.help` (pointer/iPad) = tooltip. Sighted-info also needs copy/popover.",
   "files": [],
-  "registryDependencies": [],
-  "packageDependencies": [],
+  "registryDependencies": [
+    "button"
+  ],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.3.0"
+      }
+    }
+  ],
   "platforms": [
     {
       "name": "iOS",

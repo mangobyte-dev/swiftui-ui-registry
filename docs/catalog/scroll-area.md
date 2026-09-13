@@ -29,6 +29,7 @@ ScrollView {
 .scrollIndicators(.hidden)
 .scrollClipDisabled()
 .scrollEdgeEffectStyle(.soft, for: .top)
+.registryItem("scroll-area")
 ```
 
 ## Why native is enough
@@ -38,7 +39,7 @@ ScrollView {
 ## Details
 
 - Kind: recipe
-- Version: 0.2.0
+- Version: 0.2.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Native scroll: VoiceOver page-scroll, three-finger gesture.

@@ -25,6 +25,7 @@ Slider(value: $volume, in: 0...100, step: 1) {
         .accessibilityHidden(true)
 }
 .controlSize(.large)
+.registryItem("slider")
 ```
 
 ## Why native is enough
@@ -34,7 +35,7 @@ Use the native `Slider` with `.tint(_:)` and `.controlSize(_:)` where the design
 ## Details
 
 - Kind: recipe
-- Version: 0.3.0
+- Version: 0.3.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Retains Slider semantics, gestures; caller-owned value, bounds, step, callbacks.

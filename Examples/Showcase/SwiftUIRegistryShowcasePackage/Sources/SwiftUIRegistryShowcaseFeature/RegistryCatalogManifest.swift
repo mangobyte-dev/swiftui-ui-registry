@@ -46,18 +46,18 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "alert-dialog",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Modal .alert decision.",
-            usage: "@State private var isConfirmingSignOut = false\n\nButton(\"Sign out\", role: .destructive) {\n    isConfirmingSignOut = true\n}\n.alert(\"Sign out?\", isPresented: $isConfirmingSignOut) {\n    Button(\"Sign out\", role: .destructive) { }\n    Button(\"Cancel\", role: .cancel) { }\n} message: {\n    Text(\"You will need your password to sign in again.\")\n}",
+            usage: "@State private var isConfirmingSignOut = false\n\nButton(\"Sign out\", role: .destructive) {\n    isConfirmingSignOut = true\n}\n.alert(\"Sign out?\", isPresented: $isConfirmingSignOut) {\n    Button(\"Sign out\", role: .destructive) { }\n    Button(\"Cancel\", role: .cancel) { }\n} message: {\n    Text(\"You will need your password to sign in again.\")\n}\n.registryItem(\"alert-dialog\")",
             dependencies: [],
             tags: ["alert", "dialog", "confirm", "destructive", "modal", "guidance"]
         ),
         CatalogEntry(
             name: "aspect-ratio",
             kind: "recipe",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "Native aspectRatio guidance.",
-            usage: "Color.indigo\n    .overlay {\n        Image(systemName: \"play.fill\")\n            .foregroundStyle(.white)\n            .accessibilityHidden(true)\n    }\n    .aspectRatio(16.0 / 9.0, contentMode: .fit)\n    .accessibilityLabel(\"Video placeholder\")\n\nColor.teal\n    .aspectRatio(1, contentMode: .fit)\n    .frame(maxWidth: 160)\n    .accessibilityLabel(\"Avatar placeholder\")",
+            usage: "Color.indigo\n    .overlay {\n        Image(systemName: \"play.fill\")\n            .foregroundStyle(.white)\n            .accessibilityHidden(true)\n    }\n    .aspectRatio(16.0 / 9.0, contentMode: .fit)\n    .accessibilityLabel(\"Video placeholder\")\n    .registryItem(\"aspect-ratio\")\n\nColor.teal\n    .aspectRatio(1, contentMode: .fit)\n    .frame(maxWidth: 160)\n    .accessibilityLabel(\"Avatar placeholder\")",
             dependencies: [],
             tags: ["aspect-ratio", "layout", "media", "native", "guidance"]
         ),
@@ -136,9 +136,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "calendar",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Calendar guidance.",
-            usage: "@State private var date = Date.now\n@State private var dates: Set<DateComponents> = []\n\nDatePicker(\"Statement date\", selection: $date, displayedComponents: .date)\n    .datePickerStyle(.graphical)\n\nMultiDatePicker(\"Reminder days\", selection: $dates)",
+            usage: "@State private var date = Date.now\n@State private var dates: Set<DateComponents> = []\n\nDatePicker(\"Statement date\", selection: $date, displayedComponents: .date)\n    .datePickerStyle(.graphical)\n    .registryItem(\"calendar\")\n\nMultiDatePicker(\"Reminder days\", selection: $dates)",
             dependencies: [],
             tags: ["calendar", "date", "picker", "date-picker", "guidance"]
         ),
@@ -154,9 +154,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "carousel",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Paging ScrollView of cards.",
-            usage: "ScrollView(.horizontal) {\n    HStack(spacing: 12) {\n        ForEach(cards) { card in\n            VStack(alignment: .leading, spacing: 8) {\n                Label(card.title, systemImage: card.systemImage)\n                    .font(.subheadline.weight(.semibold))\n                Text(card.amount, format: .currency(code: \"KWD\"))\n                    .font(.title.monospacedDigit())\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .padding()\n            .registrySurface()\n            .containerRelativeFrame(.horizontal)\n            .accessibilityElement(children: .combine)\n            .accessibilityLabel(\"\\(card.title) card\")\n        }\n    }\n    .scrollTargetLayout()\n}\n.scrollTargetBehavior(.paging)",
+            usage: "ScrollView(.horizontal) {\n    HStack(spacing: 12) {\n        ForEach(cards) { card in\n            VStack(alignment: .leading, spacing: 8) {\n                Label(card.title, systemImage: card.systemImage)\n                    .font(.subheadline.weight(.semibold))\n                Text(card.amount, format: .currency(code: \"KWD\"))\n                    .font(.title.monospacedDigit())\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .padding()\n            .registrySurface()\n            .containerRelativeFrame(.horizontal)\n            .accessibilityElement(children: .combine)\n            .accessibilityLabel(\"\\(card.title) card\")\n        }\n    }\n    .scrollTargetLayout()\n}\n.scrollTargetBehavior(.paging)\n.registryItem(\"carousel\")",
             dependencies: [],
             tags: ["carousel", "paging", "scroll", "cards", "guidance"]
         ),
@@ -172,10 +172,10 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "chart-tooltip",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "chartXSelection + RuleMark annotation.",
-            usage: "@State private var selectedMonth: String?\n\nvar selected: MonthlyBalance? {\n    balances.first { $0.month == selectedMonth }\n}\n\nChart {\n    ForEach(balances) { row in\n        BarMark(\n            x: .value(\"Month\", row.month),\n            y: .value(\"Balance\", row.amount)\n        )\n        .foregroundStyle(TintShapeStyle())\n    }\n    if let selected {\n        RuleMark(x: .value(\"Month\", selected.month))\n            .foregroundStyle(.secondary)\n            .annotation(position: .top) {\n                Text(selected.amount, format: .currency(code: \"KWD\"))\n                    .font(.footnote.monospacedDigit())\n                    .padding(6)\n                    .registrySurface()\n            }\n    }\n}\n.chartXSelection(value: $selectedMonth)\n.registryChart()",
-            dependencies: [],
+            usage: "@State private var selectedMonth: String?\n\nvar selected: MonthlyBalance? {\n    balances.first { $0.month == selectedMonth }\n}\n\nChart {\n    ForEach(balances) { row in\n        BarMark(\n            x: .value(\"Month\", row.month),\n            y: .value(\"Balance\", row.amount)\n        )\n        .foregroundStyle(TintShapeStyle())\n    }\n    if let selected {\n        RuleMark(x: .value(\"Month\", selected.month))\n            .foregroundStyle(.secondary)\n            .annotation(position: .top) {\n                Text(selected.amount, format: .currency(code: \"KWD\"))\n                    .font(.footnote.monospacedDigit())\n                    .padding(6)\n                    .registrySurface()\n            }\n    }\n}\n.chartXSelection(value: $selectedMonth)\n.registryChart()\n.registryItem(\"chart-tooltip\")",
+            dependencies: ["chart"],
             tags: ["chart-tooltip", "chart", "selection", "annotation", "guidance"]
         ),
         CatalogEntry(
@@ -190,9 +190,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "collapsible",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Native DisclosureGroup, distinct from accordion.",
-            usage: "@State private var isShowingDetails = false\n\nDisclosureGroup(\"Fee breakdown\", isExpanded: $isShowingDetails) {\n    LabeledContent(\"Transfer fee\", value: \"KWD 1.000\")\n    LabeledContent(\"Exchange margin\", value: \"KWD 0.450\")\n}",
+            usage: "@State private var isShowingDetails = false\n\nDisclosureGroup(\"Fee breakdown\", isExpanded: $isShowingDetails) {\n    LabeledContent(\"Transfer fee\", value: \"KWD 1.000\")\n    LabeledContent(\"Exchange margin\", value: \"KWD 0.450\")\n}\n.registryItem(\"collapsible\")",
             dependencies: [],
             tags: ["collapsible", "disclosure", "expand", "toggle", "guidance"]
         ),
@@ -226,10 +226,10 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "context-menu",
             kind: "recipe",
-            version: "0.1.1",
+            version: "0.1.2",
             description: "Native .contextMenu: labeled, role-tagged buttons.",
-            usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}",
-            dependencies: [],
+            usage: "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}\n.registryItem(\"context-menu\")",
+            dependencies: ["transaction-row"],
             tags: ["context-menu", "long-press", "actions", "menu", "guidance"]
         ),
         CatalogEntry(
@@ -244,46 +244,46 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "date-picker",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Compact DatePicker, closed range, presets Menu.",
-            usage: "@State private var date = Date.now\n\nDatePicker(\"Statement date\", selection: $date, in: range, displayedComponents: .date)\n    .datePickerStyle(.compact)\n\nMenu(\"Presets\") {\n    Button(\"Today\") { date = .now }\n    Button(\"Tomorrow\") { date = .now.addingTimeInterval(60 * 60 * 24) }\n    Button(\"Next week\") { date = .now.addingTimeInterval(60 * 60 * 24 * 7) }\n}\n.accessibilityLabel(\"Date presets\")",
+            usage: "@State private var date = Date.now\n\nDatePicker(\"Statement date\", selection: $date, in: range, displayedComponents: .date)\n    .datePickerStyle(.compact)\n    .registryItem(\"date-picker\")\n\nMenu(\"Presets\") {\n    Button(\"Today\") { date = .now }\n    Button(\"Tomorrow\") { date = .now.addingTimeInterval(60 * 60 * 24) }\n    Button(\"Next week\") { date = .now.addingTimeInterval(60 * 60 * 24 * 7) }\n}\n.accessibilityLabel(\"Date presets\")",
             dependencies: [],
             tags: ["date-picker", "date", "calendar", "presets", "guidance"]
         ),
         CatalogEntry(
             name: "dialog",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "`.sheet`: system owns detents, drag-dismissal, focus.",
-            usage: "@State private var isEditing = false\n\nButton(\"Edit profile\") { isEditing = true }\n    .sheet(isPresented: $isEditing) {\n        NavigationStack {\n            ProfileEditor()\n                .navigationTitle(\"Edit profile\")\n                .toolbar {\n                    ToolbarItem(placement: .confirmationAction) {\n                        Button(\"Done\") { isEditing = false }\n                    }\n                }\n        }\n    }",
+            usage: "@State private var isEditing = false\n\nButton(\"Edit profile\") { isEditing = true }\n    .sheet(isPresented: $isEditing) {\n        NavigationStack {\n            ProfileEditor()\n                .navigationTitle(\"Edit profile\")\n                .toolbar {\n                    ToolbarItem(placement: .confirmationAction) {\n                        Button(\"Done\") { isEditing = false }\n                    }\n                }\n        }\n    }\n    .registryItem(\"dialog\")",
             dependencies: [],
             tags: ["dialog", "sheet", "modal", "presentation", "guidance"]
         ),
         CatalogEntry(
             name: "direction",
             kind: "recipe",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "layoutDirection guidance.",
-            usage: "@Environment(\\.layoutDirection) private var layoutDirection\n\nHStack {\n    Image(systemName: \"person.crop.circle\")\n        .accessibilityHidden(true)\n    Text(\"Account\")\n    Spacer()\n    Image(systemName: \"chevron.forward\")\n        .accessibilityHidden(true)\n}",
+            usage: "@Environment(\\.layoutDirection) private var layoutDirection\n\nHStack {\n    Image(systemName: \"person.crop.circle\")\n        .accessibilityHidden(true)\n    Text(\"Account\")\n    Spacer()\n    Image(systemName: \"chevron.forward\")\n        .accessibilityHidden(true)\n}\n.registryItem(\"direction\")",
             dependencies: [],
             tags: ["direction", "layout-direction", "rtl", "localization", "guidance"]
         ),
         CatalogEntry(
             name: "drawer",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Drawer guidance.",
-            usage: "@State private var isShowingFilters = false\n\nButton(\"Filters\") { isShowingFilters = true }\n    .sheet(isPresented: $isShowingFilters) {\n        FilterOptions()\n            .presentationDetents([.medium, .large])\n            .presentationDragIndicator(.visible)\n    }",
+            usage: "@State private var isShowingFilters = false\n\nButton(\"Filters\") { isShowingFilters = true }\n    .sheet(isPresented: $isShowingFilters) {\n        FilterOptions()\n            .presentationDetents([.medium, .large])\n            .presentationDragIndicator(.visible)\n    }\n    .registryItem(\"drawer\")",
             dependencies: [],
             tags: ["drawer", "bottom-sheet", "detents", "sheet", "guidance"]
         ),
         CatalogEntry(
             name: "dropdown-menu",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Menu trigger guidance.",
-            usage: "@State private var sort = \"recent\"\n\nMenu(\"Sort\", systemImage: \"arrow.up.arrow.down\") {\n    Picker(\"Sort by\", selection: $sort) {\n        Text(\"Most recent\").tag(\"recent\")\n        Text(\"Amount\").tag(\"amount\")\n    }\n    Divider()\n    Button(\"Export\", systemImage: \"square.and.arrow.up\") { }\n}\n.buttonStyle(.registryOutline)",
-            dependencies: [],
+            usage: "@State private var sort = \"recent\"\n\nMenu(\"Sort\", systemImage: \"arrow.up.arrow.down\") {\n    Picker(\"Sort by\", selection: $sort) {\n        Text(\"Most recent\").tag(\"recent\")\n        Text(\"Amount\").tag(\"amount\")\n    }\n    Divider()\n    Button(\"Export\", systemImage: \"square.and.arrow.up\") { }\n}\n.buttonStyle(.registryOutline)\n.registryItem(\"dropdown-menu\")",
+            dependencies: ["button"],
             tags: ["dropdown", "menu", "actions", "picker", "guidance"]
         ),
         CatalogEntry(
@@ -334,10 +334,10 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "input-otp",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "One-time-code TextField, not a boxed control.",
-            usage: "@State private var code = \"\"\n\nTextField(\"One-time code\", text: $code)\n    .textContentType(.oneTimeCode)\n    .keyboardType(.numberPad)\n    .textFieldStyle(.registryInput)\n    .font(.title2.monospacedDigit())\n    .accessibilityLabel(\"Verification code\")\n    .onChange(of: code) { _, newValue in\n        code = String(newValue.filter(\\.isNumber).prefix(6))\n    }\n\nButton(\"Verify\") { }\n    .buttonStyle(.registry)\n    .disabled(code.count < 6)",
-            dependencies: [],
+            usage: "@State private var code = \"\"\n\nTextField(\"One-time code\", text: $code)\n    .textContentType(.oneTimeCode)\n    .keyboardType(.numberPad)\n    .textFieldStyle(.registryInput)\n    .font(.title2.monospacedDigit())\n    .accessibilityLabel(\"Verification code\")\n    .onChange(of: code) { _, newValue in\n        code = String(newValue.filter(\\.isNumber).prefix(6))\n    }\n    .registryItem(\"input-otp\")\n\nButton(\"Verify\") { }\n    .buttonStyle(.registry)\n    .disabled(code.count < 6)",
+            dependencies: ["input", "button"],
             tags: ["input-otp", "otp", "verification-code", "one-time-code", "guidance"]
         ),
         CatalogEntry(
@@ -424,9 +424,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "native-select",
             kind: "recipe",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "Picker menu.",
-            usage: "@State private var sort = \"recent\"\n\nPicker(\"Sort\", selection: $sort) {\n    Text(\"Most recent\").tag(\"recent\")\n    Text(\"Oldest\").tag(\"oldest\")\n    Text(\"Amount\").tag(\"amount\")\n}\n.pickerStyle(.menu)",
+            usage: "@State private var sort = \"recent\"\n\nPicker(\"Sort\", selection: $sort) {\n    Text(\"Most recent\").tag(\"recent\")\n    Text(\"Oldest\").tag(\"oldest\")\n    Text(\"Amount\").tag(\"amount\")\n}\n.pickerStyle(.menu)\n.registryItem(\"native-select\")",
             dependencies: [],
             tags: ["native-select", "picker", "menu", "selection", "guidance"]
         ),
@@ -442,10 +442,10 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "popover",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "`.popover` guidance.",
-            usage: "@State private var isShowingHelp = false\n\nButton(\"Why is this needed?\") { isShowingHelp = true }\n    .buttonStyle(.registryLink)\n    .popover(isPresented: $isShowingHelp) {\n        Text(\"We use your date of birth to verify your identity.\")\n            .padding()\n            .presentationCompactAdaptation(.popover)\n    }",
-            dependencies: [],
+            usage: "@State private var isShowingHelp = false\n\nButton(\"Why is this needed?\") { isShowingHelp = true }\n    .buttonStyle(.registryLink)\n    .popover(isPresented: $isShowingHelp) {\n        Text(\"We use your date of birth to verify your identity.\")\n            .padding()\n            .presentationCompactAdaptation(.popover)\n    }\n    .registryItem(\"popover\")",
+            dependencies: ["button"],
             tags: ["popover", "hover-card", "tooltip", "anchored", "guidance"]
         ),
         CatalogEntry(
@@ -487,19 +487,19 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "radio-group",
             kind: "recipe",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "Picker: inline exclusive group.",
-            usage: "@State private var selection = \"standard\"\n\nPicker(\"Delivery speed\", selection: $selection) {\n    Text(\"Standard\").tag(\"standard\")\n    Text(\"Express\").tag(\"express\")\n    Text(\"Same day\").tag(\"same-day\")\n}\n.pickerStyle(.inline)",
+            usage: "@State private var selection = \"standard\"\n\nPicker(\"Delivery speed\", selection: $selection) {\n    Text(\"Standard\").tag(\"standard\")\n    Text(\"Express\").tag(\"express\")\n    Text(\"Same day\").tag(\"same-day\")\n}\n.pickerStyle(.inline)\n.registryItem(\"radio-group\")",
             dependencies: [],
             tags: ["radio-group", "picker", "selection", "options", "guidance"]
         ),
         CatalogEntry(
             name: "scroll-area",
             kind: "recipe",
-            version: "0.2.0",
+            version: "0.2.1",
             description: "Scrollable content: margins, indicators, clipping.",
-            usage: "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()\n.scrollEdgeEffectStyle(.soft, for: .top)",
-            dependencies: [],
+            usage: "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()\n.scrollEdgeEffectStyle(.soft, for: .top)\n.registryItem(\"scroll-area\")",
+            dependencies: ["finance-overview"],
             tags: ["scroll", "scroll-view", "margins", "indicators", "guidance"]
         ),
         CatalogEntry(
@@ -532,18 +532,18 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "sheet",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Side sheet: iPad inspector, iPhone sheet.",
-            usage: "@State private var isShowingDetails = false\n\nNavigationStack {\n    List {\n        LabeledContent(\"Merchant\", value: \"Mishmash Bakery\")\n        LabeledContent(\"Amount\", value: \"KWD 8.750\")\n    }\n    .navigationTitle(\"Transaction\")\n    .toolbar {\n        ToolbarItem(placement: .topBarTrailing) {\n            Button(\"Details\", systemImage: \"sidebar.trailing\") {\n                isShowingDetails.toggle()\n            }\n            .accessibilityLabel(\"Toggle details\")\n        }\n    }\n    .inspector(isPresented: $isShowingDetails) {\n        List {\n            LabeledContent(\"Category\", value: \"Dining\")\n            LabeledContent(\"Card\", value: \"Visa 4321\")\n            LabeledContent(\"Status\", value: \"Cleared\")\n        }\n        .inspectorColumnWidth(min: 240, ideal: 280, max: 360)\n    }\n}",
+            usage: "@State private var isShowingDetails = false\n\nNavigationStack {\n    List {\n        LabeledContent(\"Merchant\", value: \"Mishmash Bakery\")\n        LabeledContent(\"Amount\", value: \"KWD 8.750\")\n    }\n    .navigationTitle(\"Transaction\")\n    .toolbar {\n        ToolbarItem(placement: .topBarTrailing) {\n            Button(\"Details\", systemImage: \"sidebar.trailing\") {\n                isShowingDetails.toggle()\n            }\n            .accessibilityLabel(\"Toggle details\")\n        }\n    }\n    .inspector(isPresented: $isShowingDetails) {\n        List {\n            LabeledContent(\"Category\", value: \"Dining\")\n            LabeledContent(\"Card\", value: \"Visa 4321\")\n            LabeledContent(\"Status\", value: \"Cleared\")\n        }\n        .inspectorColumnWidth(min: 240, ideal: 280, max: 360)\n    }\n}\n.registryItem(\"sheet\")",
             dependencies: [],
             tags: ["sheet", "inspector", "side-sheet", "detail-panel", "guidance"]
         ),
         CatalogEntry(
             name: "sidebar",
             kind: "recipe",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "Sidebar: NavigationSplitView + selection-bound List (iPad).",
-            usage: "@State private var selection: String? = \"activity\"\n@State private var tab = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    // A visually rich detail extends under the sidebar instead of stopping at its edge\n    ActivityBanner()\n        .backgroundExtensionEffect()\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}\n\n// The HIG's first choice on iPad: a tab bar people can switch to a sidebar\nTabView(selection: $tab) {\n    Tab(\"Activity\", systemImage: \"bell\", value: \"activity\") { ActivityScreen() }\n    Tab(\"Cards\", systemImage: \"creditcard\", value: \"cards\") { CardsScreen() }\n}\n.tabViewStyle(.sidebarAdaptable)",
+            usage: "@State private var selection: String? = \"activity\"\n@State private var tab = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    // A visually rich detail extends under the sidebar instead of stopping at its edge\n    ActivityBanner()\n        .backgroundExtensionEffect()\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}\n.registryItem(\"sidebar\")\n\n// The HIG's first choice on iPad: a tab bar people can switch to a sidebar\nTabView(selection: $tab) {\n    Tab(\"Activity\", systemImage: \"bell\", value: \"activity\") { ActivityScreen() }\n    Tab(\"Cards\", systemImage: \"creditcard\", value: \"cards\") { CardsScreen() }\n}\n.tabViewStyle(.sidebarAdaptable)",
             dependencies: [],
             tags: ["sidebar", "navigation", "split-view", "ipad", "guidance"]
         ),
@@ -568,9 +568,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "slider",
             kind: "recipe",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "Slider: tint, sizing; caller-owned value, labels.",
-            usage: "@State private var volume = 64.0\n\nSlider(value: $volume, in: 0...100, step: 1) {\n    Text(\"Volume\")\n} minimumValueLabel: {\n    Image(systemName: \"speaker.fill\")\n        .accessibilityHidden(true)\n} maximumValueLabel: {\n    Image(systemName: \"speaker.wave.3.fill\")\n        .accessibilityHidden(true)\n}\n.controlSize(.large)",
+            usage: "@State private var volume = 64.0\n\nSlider(value: $volume, in: 0...100, step: 1) {\n    Text(\"Volume\")\n} minimumValueLabel: {\n    Image(systemName: \"speaker.fill\")\n        .accessibilityHidden(true)\n} maximumValueLabel: {\n    Image(systemName: \"speaker.wave.3.fill\")\n        .accessibilityHidden(true)\n}\n.controlSize(.large)\n.registryItem(\"slider\")",
             dependencies: [],
             tags: ["slider", "value", "range", "control", "guidance"]
         ),
@@ -586,9 +586,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "switch",
             kind: "recipe",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "Toggle: switch style; inherits tint, environment.",
-            usage: "@State private var notifications = true\n\nToggle(\"Notifications\", isOn: $notifications)\n    .toggleStyle(.switch)",
+            usage: "@State private var notifications = true\n\nToggle(\"Notifications\", isOn: $notifications)\n    .toggleStyle(.switch)\n    .registryItem(\"switch\")",
             dependencies: [],
             tags: ["switch", "toggle", "setting", "boolean", "guidance"]
         ),
@@ -604,9 +604,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "tabs",
             kind: "recipe",
-            version: "0.3.0",
+            version: "0.3.1",
             description: "Picker segmented; local selection, TabView nav.",
-            usage: "@State private var selection = \"overview\"\n\nPicker(\"Section\", selection: $selection) {\n    Text(\"Overview\").tag(\"overview\")\n    Text(\"Activity\").tag(\"activity\")\n    Text(\"Settings\").tag(\"settings\")\n}\n.pickerStyle(.segmented)",
+            usage: "@State private var selection = \"overview\"\n\nPicker(\"Section\", selection: $selection) {\n    Text(\"Overview\").tag(\"overview\")\n    Text(\"Activity\").tag(\"activity\")\n    Text(\"Settings\").tag(\"settings\")\n}\n.pickerStyle(.segmented)\n.registryItem(\"tabs\")",
             dependencies: [],
             tags: ["tabs", "picker", "segmented", "selection", "guidance"]
         ),
@@ -649,10 +649,10 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "tooltip",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Tooltip: hint, popover.",
-            usage: "Button(\"Freeze card\", systemImage: \"snowflake\") { }\n    .buttonStyle(.registryOutline)\n    .accessibilityHint(\"Blocks new purchases until you unfreeze the card.\")\n    .help(\"Blocks new purchases until you unfreeze the card.\")",
-            dependencies: [],
+            usage: "Button(\"Freeze card\", systemImage: \"snowflake\") { }\n    .buttonStyle(.registryOutline)\n    .accessibilityHint(\"Blocks new purchases until you unfreeze the card.\")\n    .help(\"Blocks new purchases until you unfreeze the card.\")\n    .registryItem(\"tooltip\")",
+            dependencies: ["button"],
             tags: ["tooltip", "help", "hint", "hover", "guidance"]
         ),
         CatalogEntry(
@@ -667,9 +667,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "typography",
             kind: "recipe",
-            version: "0.1.0",
+            version: "0.1.1",
             description: "Styles = type scale: weight, design, monospaced digits.",
-            usage: "VStack(alignment: .leading, spacing: 8) {\n    Text(\"Balance\")\n        .font(.title2.weight(.semibold))\n    Text(amount, format: .currency(code: \"KWD\"))\n        .font(.largeTitle)\n        .monospacedDigit()\n    Text(\"Updated today\")\n        .font(.footnote)\n        .foregroundStyle(.secondary)\n}\n.fontDesign(.rounded)",
+            usage: "VStack(alignment: .leading, spacing: 8) {\n    Text(\"Balance\")\n        .font(.title2.weight(.semibold))\n    Text(amount, format: .currency(code: \"KWD\"))\n        .font(.largeTitle)\n        .monospacedDigit()\n    Text(\"Updated today\")\n        .font(.footnote)\n        .foregroundStyle(.secondary)\n}\n.fontDesign(.rounded)\n.registryItem(\"typography\")",
             dependencies: [],
             tags: ["typography", "text-styles", "font", "type-scale", "guidance"]
         ),

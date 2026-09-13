@@ -2,15 +2,19 @@
 // Do not edit by hand; edit the item source and regenerate.
 
 #if canImport(UIKit)
-/// The `RegistryTheme` and `RegistryMetrics` fields each installable item
+/// The `RegistryTheme` and `RegistryMetrics` fields each catalog item
 /// reads, over its dependency closure, so the design surface can scope its
-/// panel to the knobs that move a selected item.
+/// panel to the knobs that move a selected item. A recipe reads what its
+/// usage snippet uses, which for a native one is nothing scoped: the accent
+/// and the typography still reach it through the root modifier.
 public enum RegistryItemTokens {
     public static let tokens: [String: [String]] = [
 
             "accordion": ["border", "borderWidth", "cardRadius", "compactSpacing", "standardSpacing", "surface"],
             "activity-feed": ["border", "borderWidth", "cardRadius", "compactRadius", "compactSpacing", "controlRadius", "disabledOpacity", "negative", "onAccent", "positive", "sectionSpacing", "standardSpacing", "surface"],
             "alert": ["border", "borderWidth", "compactSpacing", "controlRadius", "disabledOpacity", "negative", "onAccent", "positive", "standardSpacing", "surface"],
+            "alert-dialog": [],
+            "aspect-ratio": [],
             "attachment": ["border", "borderWidth", "cardRadius", "compactRadius", "compactSpacing", "controlRadius", "disabledOpacity", "negative", "onAccent", "positive", "standardSpacing", "surface"],
             "auth-form": ["border", "borderWidth", "cardRadius", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "onAccent", "standardSpacing", "surface"],
             "avatar": ["border", "borderWidth", "surface"],
@@ -19,43 +23,66 @@ public enum RegistryItemTokens {
             "bubble": ["border", "borderWidth", "cardRadius", "compactSpacing", "onAccent", "standardSpacing", "surface"],
             "button": ["border", "borderWidth", "controlRadius", "disabledOpacity", "negative", "onAccent", "surface"],
             "button-group": ["border", "borderWidth", "compactSpacing", "controlRadius", "disabledOpacity", "negative", "onAccent", "surface"],
+            "calendar": [],
             "card": ["border", "borderWidth", "cardRadius", "standardSpacing", "surface"],
+            "carousel": ["border", "borderWidth", "cardRadius", "surface"],
             "chart": ["accent", "border", "chartPalette", "standardSpacing"],
+            "chart-tooltip": ["accent", "border", "borderWidth", "cardRadius", "chartPalette", "standardSpacing", "surface"],
             "checkbox": ["border", "borderWidth", "compactRadius", "compactSpacing", "disabledOpacity"],
+            "collapsible": [],
             "combobox": ["border", "borderWidth", "cardRadius", "compactRadius", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "onAccent", "positive", "standardSpacing", "surface"],
             "command": ["border", "borderWidth", "cardRadius", "compactRadius", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "onAccent", "positive", "standardSpacing", "surface"],
             "command-search": ["border", "borderWidth", "cardRadius", "compactRadius", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "onAccent", "positive", "sectionSpacing", "standardSpacing", "surface"],
+            "context-menu": ["compactSpacing", "negative", "positive", "standardSpacing"],
             "dashboard": ["accent", "border", "borderWidth", "cardRadius", "chartPalette", "compactSpacing", "sectionSpacing", "standardSpacing", "surface"],
+            "date-picker": [],
+            "dialog": [],
+            "direction": [],
+            "drawer": [],
+            "dropdown-menu": ["border", "borderWidth", "controlRadius", "disabledOpacity", "negative", "onAccent", "surface"],
             "empty": ["border", "borderWidth", "cardRadius", "standardSpacing", "surface"],
             "field": ["border", "borderWidth", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "standardSpacing", "surface"],
             "finance-overview": ["border", "borderWidth", "cardRadius", "compactSpacing", "negative", "positive", "sectionSpacing", "standardSpacing", "surface"],
             "input": ["border", "borderWidth", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "surface"],
             "input-group": ["border", "borderWidth", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "onAccent", "surface"],
+            "input-otp": ["border", "borderWidth", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "onAccent", "surface"],
             "item": ["border", "borderWidth", "cardRadius", "compactRadius", "compactSpacing", "negative", "positive", "standardSpacing", "surface"],
             "kbd": ["border", "borderWidth", "compactRadius", "compactSpacing", "surface"],
             "label": ["compactSpacing"],
             "macro-progress": ["compactSpacing", "standardSpacing"],
             "marker": ["border", "borderWidth", "compactRadius", "compactSpacing", "standardSpacing", "surface"],
+            "menubar": [],
             "message": ["border", "borderWidth", "cardRadius", "compactSpacing", "onAccent", "standardSpacing", "surface"],
             "message-scroller": ["border", "borderWidth", "cardRadius", "compactSpacing", "onAccent", "standardSpacing", "surface"],
             "metric-card": ["border", "borderWidth", "cardRadius", "compactSpacing", "standardSpacing", "surface"],
+            "native-select": [],
             "nutrition-overview": ["border", "borderWidth", "cardRadius", "compactSpacing", "sectionSpacing", "standardSpacing", "surface"],
+            "popover": ["border", "borderWidth", "controlRadius", "disabledOpacity", "negative", "onAccent", "surface"],
             "preview": ["accent", "border", "borderWidth", "cardRadius", "chartPalette", "compactRadius", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "onAccent", "positive", "sectionSpacing", "standardSpacing", "surface"],
             "preview-02": ["accent", "border", "borderWidth", "cardRadius", "chartPalette", "compactRadius", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "onAccent", "positive", "standardSpacing", "surface"],
             "progress": ["compactSpacing", "negative", "positive"],
             "questionnaire": ["border", "borderWidth", "cardRadius", "compactRadius", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "onAccent", "positive", "standardSpacing", "surface"],
+            "radio-group": [],
+            "scroll-area": ["border", "borderWidth", "cardRadius", "compactSpacing", "negative", "positive", "sectionSpacing", "standardSpacing", "surface"],
             "select": ["border", "borderWidth", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "surface"],
             "separator": ["border"],
             "settings-section": ["border", "borderWidth", "cardRadius", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "negative", "onAccent", "standardSpacing", "surface"],
+            "sheet": [],
+            "sidebar": [],
             "signup-form": ["border", "borderWidth", "cardRadius", "compactRadius", "compactSpacing", "controlHorizontalPadding", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "onAccent", "standardSpacing", "surface"],
             "skeleton": ["standardSpacing", "surface"],
+            "slider": [],
             "spinner": ["compactSpacing"],
+            "switch": [],
             "table": ["border", "borderWidth", "cardRadius", "compactSpacing", "standardSpacing", "surface"],
+            "tabs": [],
             "textarea": ["border", "borderWidth", "controlRadius", "disabledOpacity", "emphasizedBorderWidth", "negative", "surface"],
             "toast": ["border", "borderWidth", "compactSpacing", "controlRadius", "disabledOpacity", "negative", "onAccent", "positive", "standardSpacing", "surface"],
             "toggle": ["border", "borderWidth", "controlRadius", "disabledOpacity", "negative", "onAccent", "surface"],
             "toggle-group": ["border", "borderWidth", "controlRadius", "disabledOpacity", "negative", "onAccent", "surface"],
+            "tooltip": ["border", "borderWidth", "controlRadius", "disabledOpacity", "negative", "onAccent", "surface"],
             "transaction-row": ["compactSpacing", "negative", "positive", "standardSpacing"],
+            "typography": [],
     ]
 
     /// The tokens an item reads, or `nil` for a name the registry does not know.

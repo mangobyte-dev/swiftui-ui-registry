@@ -24,6 +24,7 @@ VStack(alignment: .leading, spacing: 8) {
         .foregroundStyle(.secondary)
 }
 .fontDesign(.rounded)
+.registryItem("typography")
 ```
 
 ## Why native is enough
@@ -33,7 +34,7 @@ VStack(alignment: .leading, spacing: 8) {
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Scales with Dynamic Type, accessibility sizes; no hardcoded points.

@@ -1,15 +1,26 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.3.0",
+  "version": "0.3.1",
   "name": "switch",
   "kind": "recipe",
   "description": "Toggle: switch style; inherits tint, environment.",
-  "usage": "@State private var notifications = true\n\nToggle(\"Notifications\", isOn: $notifications)\n    .toggleStyle(.switch)",
+  "usage": "@State private var notifications = true\n\nToggle(\"Notifications\", isOn: $notifications)\n    .toggleStyle(.switch)\n    .registryItem(\"switch\")",
   "docs": "`.toggleStyle(.switch)` on `Toggle`; no wrapper.",
   "files": [],
   "registryDependencies": [],
-  "packageDependencies": [],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.3.0"
+      }
+    }
+  ],
   "platforms": [
     {
       "name": "iOS",

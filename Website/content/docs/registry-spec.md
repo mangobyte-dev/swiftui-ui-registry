@@ -30,6 +30,8 @@ Installable `component`/`block` MUST add treatment beyond native API; native-mod
 
 `recipe`: native guidance, not installable: `files: []`, guidance in `docs`; discovery, platform, accessibility metadata kept. Resolving/installing fails loudly (prints `docs`, exits `2`). Installable MUST NOT depend on one
 
+A recipe's `usage` SHOULD end its primary root with `.registryItem("<name>")`, so a consumer who copies it can select the recipe on the design surface; the recipe then declares the foundations package dependency, and `registryDependencies` for any registry item its snippet uses. A snippet whose root is a `Scene` (`menubar`) carries no tag: `registryItem` is a View modifier. Tokens for a recipe come from its snippet and those dependencies, so a native-only recipe scopes to none and the panel hides every scoped section
+
 ## Resolution
 
 Depth-first, deterministic declaration order, installs once. Fails loudly: unknown items, cycles, missing source, duplicate targets, unsafe paths, untracked collisions, modified receipt-backed targets

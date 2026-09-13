@@ -19,6 +19,7 @@ DisclosureGroup("Fee breakdown", isExpanded: $isShowingDetails) {
     LabeledContent("Transfer fee", value: "KWD 1.000")
     LabeledContent("Exchange margin", value: "KWD 0.450")
 }
+.registryItem("collapsible")
 ```
 
 ## Why native is enough
@@ -28,7 +29,7 @@ DisclosureGroup("Fee breakdown", isExpanded: $isShowingDetails) {
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Disclosure announces expanded/collapsed.

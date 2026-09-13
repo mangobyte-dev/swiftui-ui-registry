@@ -22,6 +22,7 @@ Button("Why is this needed?") { isShowingHelp = true }
             .padding()
             .presentationCompactAdaptation(.popover)
     }
+    .registryItem("popover")
 ```
 
 ## Why native is enough
@@ -31,7 +32,7 @@ Button("Why is this needed?") { isShowingHelp = true }
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Popover: VoiceOver-reachable, escape-dismissed.

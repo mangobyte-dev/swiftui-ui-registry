@@ -42,6 +42,7 @@ struct CarouselRecipe: View {
         }
         .scrollTargetBehavior(.paging)
         .frame(height: 200)
+        .registryItem("carousel")
     }
 }
 
@@ -58,6 +59,7 @@ struct DatePickerRecipe: View {
             HStack {
                 DatePicker("Statement date", selection: $date, in: range, displayedComponents: .date)
                     .datePickerStyle(.compact)
+                    .registryItem("date-picker")
                 Spacer()
                 Menu("Presets") {
                     Button("Today") { date = .now }
@@ -84,6 +86,7 @@ struct InputOTPRecipe: View {
                 .onChange(of: code) { _, newValue in
                     code = String(newValue.filter(\.isNumber).prefix(6))
                 }
+                .registryItem("input-otp")
             Button("Verify") { }
                 .buttonStyle(.registry)
                 .disabled(code.count < 6)
@@ -144,6 +147,7 @@ struct SheetRecipe: View {
         }
         .frame(height: 360)
         .registrySurface()
+        .registryItem("sheet")
     }
 }
 
@@ -182,6 +186,7 @@ struct TypographyRecipe: View {
                 }
             }
             .fontDesign(design)
+            .registryItem("typography")
         }
     }
 }
@@ -232,6 +237,7 @@ struct ChartTooltipRecipe: View {
             .chartXSelection(value: $selectedMonth)
             .registryChart()
             .frame(height: 200)
+            .registryItem("chart-tooltip")
 
             Text(selectedMonth.map { "Selected: \($0)" } ?? "Tap a bar to select a month.")
                 .font(.footnote)

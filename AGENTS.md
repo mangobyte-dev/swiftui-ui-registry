@@ -83,7 +83,7 @@ Conflicts: state beats archives, the later archive wins, contracts govern rules.
 - Preview every meaningful variant, including dark appearance and an accessibility Dynamic Type size.
 - A new reusable abstraction needs 2 concrete consumers or named roadmap usages.
 - Every installable component or block needs a version, preview, accessibility notes, platform metadata, and a compile path. A `recipe` installs nothing: empty `files`, non empty `docs`, no preview. No installable item MAY depend on a recipe (value gate, `docs/registry-spec.md`).
-- Every installable item applies `.registryItem("<name>")` once, last in its root view's or style's chain. For an item exposed through an extension, that chain is a private modifier's `body`. The tag is foundations API, inert without a surface. The validator rejects a foundations dependent item whose first source lacks it.
+- Every installable item applies `.registryItem("<name>")` once, last in its root view's or style's chain. A recipe carries the tag in its `usage` snippet instead, unless that snippet's root is a `Scene`. For an item exposed through an extension, that chain is a private modifier's `body`. The tag is foundations API, inert without a surface. The validator rejects a foundations dependent item whose first source lacks it.
 - Every item needs a non empty `usage` snippet quoted from its canonical public API, never from memory. A recipe reuses the native snippet from its `docs`.
 - Four generators, four outputs:
 

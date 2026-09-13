@@ -38,6 +38,7 @@ NavigationStack {
         .inspectorColumnWidth(min: 240, ideal: 280, max: 360)
     }
 }
+.registryItem("sheet")
 ```
 
 ## Why native is enough
@@ -47,7 +48,7 @@ NavigationStack {
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Inspector toggle: labeled button; panel: VoiceOver-reachable.

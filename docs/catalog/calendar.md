@@ -18,6 +18,7 @@ Nothing to install. Copy the snippet below
 
 DatePicker("Statement date", selection: $date, displayedComponents: .date)
     .datePickerStyle(.graphical)
+    .registryItem("calendar")
 
 MultiDatePicker("Reminder days", selection: $dates)
 ```
@@ -29,7 +30,7 @@ MultiDatePicker("Reminder days", selection: $dates)
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Day-cells, month nav: VoiceOver-adjustable.

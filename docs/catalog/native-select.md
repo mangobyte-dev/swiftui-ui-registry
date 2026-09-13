@@ -21,6 +21,7 @@ Picker("Sort", selection: $sort) {
     Text("Amount").tag("amount")
 }
 .pickerStyle(.menu)
+.registryItem("native-select")
 ```
 
 ## Why native is enough
@@ -30,7 +31,7 @@ Picker("Sort", selection: $sort) {
 ## Details
 
 - Kind: recipe
-- Version: 0.3.0
+- Version: 0.3.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Retains Picker accessibility, menu, selection; needs caller labels, text.

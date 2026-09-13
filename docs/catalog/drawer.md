@@ -21,6 +21,7 @@ Button("Filters") { isShowingFilters = true }
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
     }
+    .registryItem("drawer")
 ```
 
 ## Why native is enough
@@ -30,7 +31,7 @@ Drawer = sheet + `.presentationDetents`, drag indicator; system resize/dim/dismi
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Detents: announced, VoiceOver-adjustable.

@@ -21,6 +21,7 @@ Color.indigo
     }
     .aspectRatio(16.0 / 9.0, contentMode: .fit)
     .accessibilityLabel("Video placeholder")
+    .registryItem("aspect-ratio")
 
 Color.teal
     .aspectRatio(1, contentMode: .fit)
@@ -35,7 +36,7 @@ Color.teal
 ## Details
 
 - Kind: recipe
-- Version: 0.3.0
+- Version: 0.3.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - No accessibility semantics change.

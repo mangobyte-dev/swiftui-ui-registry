@@ -830,7 +830,7 @@ SignUpForm(
 ## Recipes
 
 
-### alert-dialog (recipe 0.1.0)
+### alert-dialog (recipe 0.1.1)
 
 
 ```swift
@@ -845,10 +845,11 @@ Button("Sign out", role: .destructive) {
 } message: {
     Text("You will need your password to sign in again.")
 }
+.registryItem("alert-dialog")
 ```
 
 
-### aspect-ratio (recipe 0.3.0)
+### aspect-ratio (recipe 0.3.1)
 
 
 ```swift
@@ -860,6 +861,7 @@ Color.indigo
     }
     .aspectRatio(16.0 / 9.0, contentMode: .fit)
     .accessibilityLabel("Video placeholder")
+    .registryItem("aspect-ratio")
 
 Color.teal
     .aspectRatio(1, contentMode: .fit)
@@ -868,7 +870,7 @@ Color.teal
 ```
 
 
-### calendar (recipe 0.1.0)
+### calendar (recipe 0.1.1)
 
 
 ```swift
@@ -877,12 +879,13 @@ Color.teal
 
 DatePicker("Statement date", selection: $date, displayedComponents: .date)
     .datePickerStyle(.graphical)
+    .registryItem("calendar")
 
 MultiDatePicker("Reminder days", selection: $dates)
 ```
 
 
-### carousel (recipe 0.1.0)
+### carousel (recipe 0.1.1)
 
 
 ```swift
@@ -906,10 +909,11 @@ ScrollView(.horizontal) {
     .scrollTargetLayout()
 }
 .scrollTargetBehavior(.paging)
+.registryItem("carousel")
 ```
 
 
-### chart-tooltip (recipe 0.1.0)
+### chart-tooltip (recipe 0.1.1)
 
 
 ```swift
@@ -940,10 +944,11 @@ Chart {
 }
 .chartXSelection(value: $selectedMonth)
 .registryChart()
+.registryItem("chart-tooltip")
 ```
 
 
-### collapsible (recipe 0.1.0)
+### collapsible (recipe 0.1.1)
 
 
 ```swift
@@ -953,10 +958,11 @@ DisclosureGroup("Fee breakdown", isExpanded: $isShowingDetails) {
     LabeledContent("Transfer fee", value: "KWD 1.000")
     LabeledContent("Exchange margin", value: "KWD 0.450")
 }
+.registryItem("collapsible")
 ```
 
 
-### context-menu (recipe 0.1.1)
+### context-menu (recipe 0.1.2)
 
 
 ```swift
@@ -973,10 +979,11 @@ TransactionRow(
     Divider()
     Button("Report", systemImage: "flag", role: .destructive) { }
 }
+.registryItem("context-menu")
 ```
 
 
-### date-picker (recipe 0.1.0)
+### date-picker (recipe 0.1.1)
 
 
 ```swift
@@ -984,6 +991,7 @@ TransactionRow(
 
 DatePicker("Statement date", selection: $date, in: range, displayedComponents: .date)
     .datePickerStyle(.compact)
+    .registryItem("date-picker")
 
 Menu("Presets") {
     Button("Today") { date = .now }
@@ -994,7 +1002,7 @@ Menu("Presets") {
 ```
 
 
-### dialog (recipe 0.1.0)
+### dialog (recipe 0.1.1)
 
 
 ```swift
@@ -1012,10 +1020,11 @@ Button("Edit profile") { isEditing = true }
                 }
         }
     }
+    .registryItem("dialog")
 ```
 
 
-### direction (recipe 0.3.0)
+### direction (recipe 0.3.1)
 
 
 ```swift
@@ -1029,10 +1038,11 @@ HStack {
     Image(systemName: "chevron.forward")
         .accessibilityHidden(true)
 }
+.registryItem("direction")
 ```
 
 
-### drawer (recipe 0.1.0)
+### drawer (recipe 0.1.1)
 
 
 ```swift
@@ -1044,10 +1054,11 @@ Button("Filters") { isShowingFilters = true }
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
     }
+    .registryItem("drawer")
 ```
 
 
-### dropdown-menu (recipe 0.1.0)
+### dropdown-menu (recipe 0.1.1)
 
 
 ```swift
@@ -1062,10 +1073,11 @@ Menu("Sort", systemImage: "arrow.up.arrow.down") {
     Button("Export", systemImage: "square.and.arrow.up") { }
 }
 .buttonStyle(.registryOutline)
+.registryItem("dropdown-menu")
 ```
 
 
-### input-otp (recipe 0.1.0)
+### input-otp (recipe 0.1.1)
 
 
 ```swift
@@ -1080,6 +1092,7 @@ TextField("One-time code", text: $code)
     .onChange(of: code) { _, newValue in
         code = String(newValue.filter(\.isNumber).prefix(6))
     }
+    .registryItem("input-otp")
 
 Button("Verify") { }
     .buttonStyle(.registry)
@@ -1103,7 +1116,7 @@ WindowGroup {
 ```
 
 
-### native-select (recipe 0.3.0)
+### native-select (recipe 0.3.1)
 
 
 ```swift
@@ -1115,10 +1128,11 @@ Picker("Sort", selection: $sort) {
     Text("Amount").tag("amount")
 }
 .pickerStyle(.menu)
+.registryItem("native-select")
 ```
 
 
-### popover (recipe 0.1.0)
+### popover (recipe 0.1.1)
 
 
 ```swift
@@ -1131,10 +1145,11 @@ Button("Why is this needed?") { isShowingHelp = true }
             .padding()
             .presentationCompactAdaptation(.popover)
     }
+    .registryItem("popover")
 ```
 
 
-### radio-group (recipe 0.3.0)
+### radio-group (recipe 0.3.1)
 
 
 ```swift
@@ -1146,10 +1161,11 @@ Picker("Delivery speed", selection: $selection) {
     Text("Same day").tag("same-day")
 }
 .pickerStyle(.inline)
+.registryItem("radio-group")
 ```
 
 
-### scroll-area (recipe 0.2.0)
+### scroll-area (recipe 0.2.1)
 
 
 ```swift
@@ -1169,10 +1185,11 @@ ScrollView {
 .scrollIndicators(.hidden)
 .scrollClipDisabled()
 .scrollEdgeEffectStyle(.soft, for: .top)
+.registryItem("scroll-area")
 ```
 
 
-### sheet (recipe 0.1.0)
+### sheet (recipe 0.1.1)
 
 
 ```swift
@@ -1201,10 +1218,11 @@ NavigationStack {
         .inspectorColumnWidth(min: 240, ideal: 280, max: 360)
     }
 }
+.registryItem("sheet")
 ```
 
 
-### sidebar (recipe 0.3.0)
+### sidebar (recipe 0.3.1)
 
 
 ```swift
@@ -1224,6 +1242,7 @@ NavigationSplitView {
         .backgroundExtensionEffect()
     if selection == "activity" { ActivityScreen() } else { CardsScreen() }
 }
+.registryItem("sidebar")
 
 // The HIG's first choice on iPad: a tab bar people can switch to a sidebar
 TabView(selection: $tab) {
@@ -1234,7 +1253,7 @@ TabView(selection: $tab) {
 ```
 
 
-### slider (recipe 0.3.0)
+### slider (recipe 0.3.1)
 
 
 ```swift
@@ -1250,10 +1269,11 @@ Slider(value: $volume, in: 0...100, step: 1) {
         .accessibilityHidden(true)
 }
 .controlSize(.large)
+.registryItem("slider")
 ```
 
 
-### switch (recipe 0.3.0)
+### switch (recipe 0.3.1)
 
 
 ```swift
@@ -1261,10 +1281,11 @@ Slider(value: $volume, in: 0...100, step: 1) {
 
 Toggle("Notifications", isOn: $notifications)
     .toggleStyle(.switch)
+    .registryItem("switch")
 ```
 
 
-### tabs (recipe 0.3.0)
+### tabs (recipe 0.3.1)
 
 
 ```swift
@@ -1276,10 +1297,11 @@ Picker("Section", selection: $selection) {
     Text("Settings").tag("settings")
 }
 .pickerStyle(.segmented)
+.registryItem("tabs")
 ```
 
 
-### tooltip (recipe 0.1.0)
+### tooltip (recipe 0.1.1)
 
 
 ```swift
@@ -1287,10 +1309,11 @@ Button("Freeze card", systemImage: "snowflake") { }
     .buttonStyle(.registryOutline)
     .accessibilityHint("Blocks new purchases until you unfreeze the card.")
     .help("Blocks new purchases until you unfreeze the card.")
+    .registryItem("tooltip")
 ```
 
 
-### typography (recipe 0.1.0)
+### typography (recipe 0.1.1)
 
 
 ```swift
@@ -1305,4 +1328,5 @@ VStack(alignment: .leading, spacing: 8) {
         .foregroundStyle(.secondary)
 }
 .fontDesign(.rounded)
+.registryItem("typography")
 ```

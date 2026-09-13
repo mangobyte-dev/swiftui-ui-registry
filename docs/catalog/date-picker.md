@@ -17,6 +17,7 @@ Nothing to install. Copy the snippet below
 
 DatePicker("Statement date", selection: $date, in: range, displayedComponents: .date)
     .datePickerStyle(.compact)
+    .registryItem("date-picker")
 
 Menu("Presets") {
     Button("Today") { date = .now }
@@ -33,7 +34,7 @@ Menu("Presets") {
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - DatePicker: title = accessibility label; reads date.

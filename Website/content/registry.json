@@ -239,9 +239,9 @@
     {
       "name": "alert-dialog",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Modal .alert decision.",
-      "usage": "@State private var isConfirmingSignOut = false\n\nButton(\"Sign out\", role: .destructive) {\n    isConfirmingSignOut = true\n}\n.alert(\"Sign out?\", isPresented: $isConfirmingSignOut) {\n    Button(\"Sign out\", role: .destructive) { }\n    Button(\"Cancel\", role: .cancel) { }\n} message: {\n    Text(\"You will need your password to sign in again.\")\n}",
+      "usage": "@State private var isConfirmingSignOut = false\n\nButton(\"Sign out\", role: .destructive) {\n    isConfirmingSignOut = true\n}\n.alert(\"Sign out?\", isPresented: $isConfirmingSignOut) {\n    Button(\"Sign out\", role: .destructive) { }\n    Button(\"Cancel\", role: .cancel) { }\n} message: {\n    Text(\"You will need your password to sign in again.\")\n}\n.registryItem(\"alert-dialog\")",
       "docs": "Native `.alert`; `.destructive` irreversible, `.cancel` dismiss. Owns layout, typography, blur, VoiceOver focus; no wrapper.",
       "tags": [
         "alert",
@@ -283,9 +283,9 @@
     {
       "name": "aspect-ratio",
       "kind": "recipe",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Native aspectRatio guidance.",
-      "usage": "Color.indigo\n    .overlay {\n        Image(systemName: \"play.fill\")\n            .foregroundStyle(.white)\n            .accessibilityHidden(true)\n    }\n    .aspectRatio(16.0 / 9.0, contentMode: .fit)\n    .accessibilityLabel(\"Video placeholder\")\n\nColor.teal\n    .aspectRatio(1, contentMode: .fit)\n    .frame(maxWidth: 160)\n    .accessibilityLabel(\"Avatar placeholder\")",
+      "usage": "Color.indigo\n    .overlay {\n        Image(systemName: \"play.fill\")\n            .foregroundStyle(.white)\n            .accessibilityHidden(true)\n    }\n    .aspectRatio(16.0 / 9.0, contentMode: .fit)\n    .accessibilityLabel(\"Video placeholder\")\n    .registryItem(\"aspect-ratio\")\n\nColor.teal\n    .aspectRatio(1, contentMode: .fit)\n    .frame(maxWidth: 160)\n    .accessibilityLabel(\"Avatar placeholder\")",
       "docs": "`aspectRatio(_:contentMode:)` at call site; no wrapper; preserves parent layout proposals.",
       "tags": [
         "aspect-ratio",
@@ -821,9 +821,9 @@
     {
       "name": "calendar",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Calendar guidance.",
-      "usage": "@State private var date = Date.now\n@State private var dates: Set<DateComponents> = []\n\nDatePicker(\"Statement date\", selection: $date, displayedComponents: .date)\n    .datePickerStyle(.graphical)\n\nMultiDatePicker(\"Reminder days\", selection: $dates)",
+      "usage": "@State private var date = Date.now\n@State private var dates: Set<DateComponents> = []\n\nDatePicker(\"Statement date\", selection: $date, displayedComponents: .date)\n    .datePickerStyle(.graphical)\n    .registryItem(\"calendar\")\n\nMultiDatePicker(\"Reminder days\", selection: $dates)",
       "docs": "`DatePicker` + `.graphical`: date. `MultiDatePicker`: several. Inherits tint, locale, calendar, direction. No replacement.",
       "tags": [
         "calendar",
@@ -918,9 +918,9 @@
     {
       "name": "carousel",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Paging ScrollView of cards.",
-      "usage": "ScrollView(.horizontal) {\n    HStack(spacing: 12) {\n        ForEach(cards) { card in\n            VStack(alignment: .leading, spacing: 8) {\n                Label(card.title, systemImage: card.systemImage)\n                    .font(.subheadline.weight(.semibold))\n                Text(card.amount, format: .currency(code: \"KWD\"))\n                    .font(.title.monospacedDigit())\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .padding()\n            .registrySurface()\n            .containerRelativeFrame(.horizontal)\n            .accessibilityElement(children: .combine)\n            .accessibilityLabel(\"\\(card.title) card\")\n        }\n    }\n    .scrollTargetLayout()\n}\n.scrollTargetBehavior(.paging)",
+      "usage": "ScrollView(.horizontal) {\n    HStack(spacing: 12) {\n        ForEach(cards) { card in\n            VStack(alignment: .leading, spacing: 8) {\n                Label(card.title, systemImage: card.systemImage)\n                    .font(.subheadline.weight(.semibold))\n                Text(card.amount, format: .currency(code: \"KWD\"))\n                    .font(.title.monospacedDigit())\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .padding()\n            .registrySurface()\n            .containerRelativeFrame(.horizontal)\n            .accessibilityElement(children: .combine)\n            .accessibilityLabel(\"\\(card.title) card\")\n        }\n    }\n    .scrollTargetLayout()\n}\n.scrollTargetBehavior(.paging)\n.registryItem(\"carousel\")",
       "docs": "`ScrollView(.horizontal)` + `.scrollTargetLayout()` + `.scrollTargetBehavior(.paging)`; `containerRelativeFrame(.horizontal)` sizes pages. Alt: `TabView` + `.tabViewStyle(.page)`. System owns paging, indicators, Reduce-Motion; no wrapper. Card MUST fill frame or stalls.",
       "tags": [
         "carousel",
@@ -1019,9 +1019,9 @@
     {
       "name": "chart-tooltip",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "chartXSelection + RuleMark annotation.",
-      "usage": "@State private var selectedMonth: String?\n\nvar selected: MonthlyBalance? {\n    balances.first { $0.month == selectedMonth }\n}\n\nChart {\n    ForEach(balances) { row in\n        BarMark(\n            x: .value(\"Month\", row.month),\n            y: .value(\"Balance\", row.amount)\n        )\n        .foregroundStyle(TintShapeStyle())\n    }\n    if let selected {\n        RuleMark(x: .value(\"Month\", selected.month))\n            .foregroundStyle(.secondary)\n            .annotation(position: .top) {\n                Text(selected.amount, format: .currency(code: \"KWD\"))\n                    .font(.footnote.monospacedDigit())\n                    .padding(6)\n                    .registrySurface()\n            }\n    }\n}\n.chartXSelection(value: $selectedMonth)\n.registryChart()",
+      "usage": "@State private var selectedMonth: String?\n\nvar selected: MonthlyBalance? {\n    balances.first { $0.month == selectedMonth }\n}\n\nChart {\n    ForEach(balances) { row in\n        BarMark(\n            x: .value(\"Month\", row.month),\n            y: .value(\"Balance\", row.amount)\n        )\n        .foregroundStyle(TintShapeStyle())\n    }\n    if let selected {\n        RuleMark(x: .value(\"Month\", selected.month))\n            .foregroundStyle(.secondary)\n            .annotation(position: .top) {\n                Text(selected.amount, format: .currency(code: \"KWD\"))\n                    .font(.footnote.monospacedDigit())\n                    .padding(6)\n                    .registrySurface()\n            }\n    }\n}\n.chartXSelection(value: $selectedMonth)\n.registryChart()\n.registryItem(\"chart-tooltip\")",
       "docs": "`chartXSelection` binds mark's x type; tap/drag native. Adds `RuleMark` + top annotation on registry surface; only `.registryChart()` themes. Single-series needs explicit accent, else default color. Keep annotation short; type MUST match mark's x, or nothing selects.",
       "tags": [
         "chart-tooltip",
@@ -1037,7 +1037,9 @@
       "platforms": [
         "iOS 26.0+"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "chart"
+      ],
       "installOrder": [],
       "accessibility": [
         "Marks expose to VoiceOver via audio graph, value text.",
@@ -1114,9 +1116,9 @@
     {
       "name": "collapsible",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Native DisclosureGroup, distinct from accordion.",
-      "usage": "@State private var isShowingDetails = false\n\nDisclosureGroup(\"Fee breakdown\", isExpanded: $isShowingDetails) {\n    LabeledContent(\"Transfer fee\", value: \"KWD 1.000\")\n    LabeledContent(\"Exchange margin\", value: \"KWD 0.450\")\n}",
+      "usage": "@State private var isShowingDetails = false\n\nDisclosureGroup(\"Fee breakdown\", isExpanded: $isShowingDetails) {\n    LabeledContent(\"Transfer fee\", value: \"KWD 1.000\")\n    LabeledContent(\"Exchange margin\", value: \"KWD 0.450\")\n}\n.registryItem(\"collapsible\")",
       "docs": "`DisclosureGroup`: 1 region. `accordion`: several stacked. No extra treatment.",
       "tags": [
         "collapsible",
@@ -1435,9 +1437,9 @@
     {
       "name": "context-menu",
       "kind": "recipe",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "Native .contextMenu: labeled, role-tagged buttons.",
-      "usage": "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}",
+      "usage": "TransactionRow(\n    title: Text(\"Mishmash Bakery\"),\n    subtitle: Text(\"Today, 09:41\"),\n    amount: Text(-8.75, format: .currency(code: \"KWD\")),\n    systemImage: \"cup.and.saucer.fill\"\n)\n.registryTone(.negative)\n.contextMenu {\n    Button(\"Add note\", systemImage: \"square.and.pencil\") { }\n    Button(\"Share\", systemImage: \"square.and.arrow.up\") { }\n    Divider()\n    Button(\"Report\", systemImage: \"flag\", role: .destructive) { }\n}\n.registryItem(\"context-menu\")",
       "docs": "`.contextMenu` + Buttons: symbols, roles. System renders Liquid Glass menu, preview, haptics. Long press isn't discoverable.",
       "tags": [
         "context-menu",
@@ -1453,7 +1455,9 @@
       "platforms": [
         "iOS 26.0+"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "transaction-row"
+      ],
       "installOrder": [],
       "accessibility": [
         "Menus: VoiceOver actions rotor.",
@@ -1555,9 +1559,9 @@
     {
       "name": "date-picker",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Compact DatePicker, closed range, presets Menu.",
-      "usage": "@State private var date = Date.now\n\nDatePicker(\"Statement date\", selection: $date, in: range, displayedComponents: .date)\n    .datePickerStyle(.compact)\n\nMenu(\"Presets\") {\n    Button(\"Today\") { date = .now }\n    Button(\"Tomorrow\") { date = .now.addingTimeInterval(60 * 60 * 24) }\n    Button(\"Next week\") { date = .now.addingTimeInterval(60 * 60 * 24 * 7) }\n}\n.accessibilityLabel(\"Date presets\")",
+      "usage": "@State private var date = Date.now\n\nDatePicker(\"Statement date\", selection: $date, in: range, displayedComponents: .date)\n    .datePickerStyle(.compact)\n    .registryItem(\"date-picker\")\n\nMenu(\"Presets\") {\n    Button(\"Today\") { date = .now }\n    Button(\"Tomorrow\") { date = .now.addingTimeInterval(60 * 60 * 24) }\n    Button(\"Next week\") { date = .now.addingTimeInterval(60 * 60 * 24 * 7) }\n}\n.accessibilityLabel(\"Date presets\")",
       "docs": "`DatePicker` `.compact` + `ClosedRange<Date>` restricts pickable dates. `Menu` presets write binding. `calendar`: graphical month view. Compact = single tap target; no wrapper. Empty/reversed range traps at one date.",
       "tags": [
         "date-picker",
@@ -1596,9 +1600,9 @@
     {
       "name": "dialog",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "`.sheet`: system owns detents, drag-dismissal, focus.",
-      "usage": "@State private var isEditing = false\n\nButton(\"Edit profile\") { isEditing = true }\n    .sheet(isPresented: $isEditing) {\n        NavigationStack {\n            ProfileEditor()\n                .navigationTitle(\"Edit profile\")\n                .toolbar {\n                    ToolbarItem(placement: .confirmationAction) {\n                        Button(\"Done\") { isEditing = false }\n                    }\n                }\n        }\n    }",
+      "usage": "@State private var isEditing = false\n\nButton(\"Edit profile\") { isEditing = true }\n    .sheet(isPresented: $isEditing) {\n        NavigationStack {\n            ProfileEditor()\n                .navigationTitle(\"Edit profile\")\n                .toolbar {\n                    ToolbarItem(placement: .confirmationAction) {\n                        Button(\"Done\") { isEditing = false }\n                    }\n                }\n        }\n    }\n    .registryItem(\"dialog\")",
       "docs": "`.sheet` + `NavigationStack`: edit/detail → chrome gets title, confirmation. Grabber, dismiss, keyboard, Liquid Glass: system. No wrapper.",
       "tags": [
         "dialog",
@@ -1638,9 +1642,9 @@
     {
       "name": "direction",
       "kind": "recipe",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "layoutDirection guidance.",
-      "usage": "@Environment(\\.layoutDirection) private var layoutDirection\n\nHStack {\n    Image(systemName: \"person.crop.circle\")\n        .accessibilityHidden(true)\n    Text(\"Account\")\n    Spacer()\n    Image(systemName: \"chevron.forward\")\n        .accessibilityHidden(true)\n}",
+      "usage": "@Environment(\\.layoutDirection) private var layoutDirection\n\nHStack {\n    Image(systemName: \"person.crop.circle\")\n        .accessibilityHidden(true)\n    Text(\"Account\")\n    Spacer()\n    Image(systemName: \"chevron.forward\")\n        .accessibilityHidden(true)\n}\n.registryItem(\"direction\")",
       "docs": "`layoutDirection`: leading/trailing, not left/right; no replacement. `chevron.forward` mirrors; preview via `.environment`, `.rightToLeft`.",
       "tags": [
         "direction",
@@ -1677,9 +1681,9 @@
     {
       "name": "drawer",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Drawer guidance.",
-      "usage": "@State private var isShowingFilters = false\n\nButton(\"Filters\") { isShowingFilters = true }\n    .sheet(isPresented: $isShowingFilters) {\n        FilterOptions()\n            .presentationDetents([.medium, .large])\n            .presentationDragIndicator(.visible)\n    }",
+      "usage": "@State private var isShowingFilters = false\n\nButton(\"Filters\") { isShowingFilters = true }\n    .sheet(isPresented: $isShowingFilters) {\n        FilterOptions()\n            .presentationDetents([.medium, .large])\n            .presentationDragIndicator(.visible)\n    }\n    .registryItem(\"drawer\")",
       "docs": "Drawer = sheet + `.presentationDetents`, drag indicator; system resize/dim/dismiss. MUST NOT fake via offset-overlay.",
       "tags": [
         "drawer",
@@ -1720,9 +1724,9 @@
     {
       "name": "dropdown-menu",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Menu trigger guidance.",
-      "usage": "@State private var sort = \"recent\"\n\nMenu(\"Sort\", systemImage: \"arrow.up.arrow.down\") {\n    Picker(\"Sort by\", selection: $sort) {\n        Text(\"Most recent\").tag(\"recent\")\n        Text(\"Amount\").tag(\"amount\")\n    }\n    Divider()\n    Button(\"Export\", systemImage: \"square.and.arrow.up\") { }\n}\n.buttonStyle(.registryOutline)",
+      "usage": "@State private var sort = \"recent\"\n\nMenu(\"Sort\", systemImage: \"arrow.up.arrow.down\") {\n    Picker(\"Sort by\", selection: $sort) {\n        Text(\"Most recent\").tag(\"recent\")\n        Text(\"Amount\").tag(\"amount\")\n    }\n    Divider()\n    Button(\"Export\", systemImage: \"square.and.arrow.up\") { }\n}\n.buttonStyle(.registryOutline)\n.registryItem(\"dropdown-menu\")",
       "docs": "`Menu`: dropdown-actions. `Picker` inside: checkmarked-group; `Divider`: section. Trigger: any registry button style.",
       "tags": [
         "dropdown",
@@ -1738,7 +1742,9 @@
       "platforms": [
         "iOS 26.0+"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "button"
+      ],
       "installOrder": [],
       "accessibility": [
         "Trigger: text label default; symbol-only MUST have accessibility label.",
@@ -2069,9 +2075,9 @@
     {
       "name": "input-otp",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "One-time-code TextField, not a boxed control.",
-      "usage": "@State private var code = \"\"\n\nTextField(\"One-time code\", text: $code)\n    .textContentType(.oneTimeCode)\n    .keyboardType(.numberPad)\n    .textFieldStyle(.registryInput)\n    .font(.title2.monospacedDigit())\n    .accessibilityLabel(\"Verification code\")\n    .onChange(of: code) { _, newValue in\n        code = String(newValue.filter(\\.isNumber).prefix(6))\n    }\n\nButton(\"Verify\") { }\n    .buttonStyle(.registry)\n    .disabled(code.count < 6)",
+      "usage": "@State private var code = \"\"\n\nTextField(\"One-time code\", text: $code)\n    .textContentType(.oneTimeCode)\n    .keyboardType(.numberPad)\n    .textFieldStyle(.registryInput)\n    .font(.title2.monospacedDigit())\n    .accessibilityLabel(\"Verification code\")\n    .onChange(of: code) { _, newValue in\n        code = String(newValue.filter(\\.isNumber).prefix(6))\n    }\n    .registryItem(\"input-otp\")\n\nButton(\"Verify\") { }\n    .buttonStyle(.registry)\n    .disabled(code.count < 6)",
       "docs": "`TextField` + `.textContentType(.oneTimeCode)`: offers Messages/Mail code above keyboard; `.keyboardType(.numberPad)`: numeric. Six-box imitates, loses autofill. `onChange` caps 6 digits. No type: no offer.",
       "tags": [
         "input-otp",
@@ -2087,7 +2093,10 @@
       "platforms": [
         "iOS 26.0+"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "input",
+        "button"
+      ],
       "installOrder": [],
       "accessibility": [
         "Needs explicit label; title shows only as placeholder.",
@@ -2629,9 +2638,9 @@
     {
       "name": "native-select",
       "kind": "recipe",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Picker menu.",
-      "usage": "@State private var sort = \"recent\"\n\nPicker(\"Sort\", selection: $sort) {\n    Text(\"Most recent\").tag(\"recent\")\n    Text(\"Oldest\").tag(\"oldest\")\n    Text(\"Amount\").tag(\"amount\")\n}\n.pickerStyle(.menu)",
+      "usage": "@State private var sort = \"recent\"\n\nPicker(\"Sort\", selection: $sort) {\n    Text(\"Most recent\").tag(\"recent\")\n    Text(\"Oldest\").tag(\"oldest\")\n    Text(\"Amount\").tag(\"amount\")\n}\n.pickerStyle(.menu)\n.registryItem(\"native-select\")",
       "docs": "`.pickerStyle(.menu)` on `Picker`; no wrapper.",
       "tags": [
         "native-select",
@@ -2734,9 +2743,9 @@
     {
       "name": "popover",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "`.popover` guidance.",
-      "usage": "@State private var isShowingHelp = false\n\nButton(\"Why is this needed?\") { isShowingHelp = true }\n    .buttonStyle(.registryLink)\n    .popover(isPresented: $isShowingHelp) {\n        Text(\"We use your date of birth to verify your identity.\")\n            .padding()\n            .presentationCompactAdaptation(.popover)\n    }",
+      "usage": "@State private var isShowingHelp = false\n\nButton(\"Why is this needed?\") { isShowingHelp = true }\n    .buttonStyle(.registryLink)\n    .popover(isPresented: $isShowingHelp) {\n        Text(\"We use your date of birth to verify your identity.\")\n            .padding()\n            .presentationCompactAdaptation(.popover)\n    }\n    .registryItem(\"popover\")",
       "docs": "`.popover` anchors content; iPhone: sheet unless `.presentationCompactAdaptation(.popover)`. System: arrow, no dim, outside-tap dismiss. No wrapper.",
       "tags": [
         "popover",
@@ -2752,7 +2761,9 @@
       "platforms": [
         "iOS 26.0+"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "button"
+      ],
       "installOrder": [],
       "accessibility": [
         "Popover: VoiceOver-reachable, escape-dismissed.",
@@ -3262,9 +3273,9 @@
     {
       "name": "radio-group",
       "kind": "recipe",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Picker: inline exclusive group.",
-      "usage": "@State private var selection = \"standard\"\n\nPicker(\"Delivery speed\", selection: $selection) {\n    Text(\"Standard\").tag(\"standard\")\n    Text(\"Express\").tag(\"express\")\n    Text(\"Same day\").tag(\"same-day\")\n}\n.pickerStyle(.inline)",
+      "usage": "@State private var selection = \"standard\"\n\nPicker(\"Delivery speed\", selection: $selection) {\n    Text(\"Standard\").tag(\"standard\")\n    Text(\"Express\").tag(\"express\")\n    Text(\"Same day\").tag(\"same-day\")\n}\n.pickerStyle(.inline)\n.registryItem(\"radio-group\")",
       "docs": "`.pickerStyle(.inline)`: exclusive group; no wrapper.",
       "tags": [
         "radio-group",
@@ -3300,9 +3311,9 @@
     {
       "name": "scroll-area",
       "kind": "recipe",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Scrollable content: margins, indicators, clipping.",
-      "usage": "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()\n.scrollEdgeEffectStyle(.soft, for: .top)",
+      "usage": "ScrollView {\n    FinanceOverview(\n        \"Overview\",\n        balanceTitle: \"Available balance\",\n        balance: Text(12_480.32, format: .currency(code: \"USD\")),\n        changeTitle: \"Monthly change\",\n        change: Text(0.082, format: .percent),\n        sectionTitle: \"Recent activity\",\n        transactions: rows,\n        onSelect: { id in }\n    )\n}\n.contentMargins(.horizontal, 16, for: .scrollContent)\n.scrollIndicators(.hidden)\n.scrollClipDisabled()\n.scrollEdgeEffectStyle(.soft, for: .top)\n.registryItem(\"scroll-area\")",
       "docs": "`ScrollView` + `.contentMargins`, `.scrollIndicators`, `.scrollClipDisabled`; scrolling/bounce/keyboard system-owned, not blocks. `.scrollEdgeEffectStyle`: content-to-glass transition, replaces background (HIG Layout).",
       "tags": [
         "scroll",
@@ -3318,7 +3329,9 @@
       "platforms": [
         "iOS 26.0+"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "finance-overview"
+      ],
       "installOrder": [],
       "accessibility": [
         "Native scroll: VoiceOver page-scroll, three-finger gesture.",
@@ -3520,9 +3533,9 @@
     {
       "name": "sheet",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Side sheet: iPad inspector, iPhone sheet.",
-      "usage": "@State private var isShowingDetails = false\n\nNavigationStack {\n    List {\n        LabeledContent(\"Merchant\", value: \"Mishmash Bakery\")\n        LabeledContent(\"Amount\", value: \"KWD 8.750\")\n    }\n    .navigationTitle(\"Transaction\")\n    .toolbar {\n        ToolbarItem(placement: .topBarTrailing) {\n            Button(\"Details\", systemImage: \"sidebar.trailing\") {\n                isShowingDetails.toggle()\n            }\n            .accessibilityLabel(\"Toggle details\")\n        }\n    }\n    .inspector(isPresented: $isShowingDetails) {\n        List {\n            LabeledContent(\"Category\", value: \"Dining\")\n            LabeledContent(\"Card\", value: \"Visa 4321\")\n            LabeledContent(\"Status\", value: \"Cleared\")\n        }\n        .inspectorColumnWidth(min: 240, ideal: 280, max: 360)\n    }\n}",
+      "usage": "@State private var isShowingDetails = false\n\nNavigationStack {\n    List {\n        LabeledContent(\"Merchant\", value: \"Mishmash Bakery\")\n        LabeledContent(\"Amount\", value: \"KWD 8.750\")\n    }\n    .navigationTitle(\"Transaction\")\n    .toolbar {\n        ToolbarItem(placement: .topBarTrailing) {\n            Button(\"Details\", systemImage: \"sidebar.trailing\") {\n                isShowingDetails.toggle()\n            }\n            .accessibilityLabel(\"Toggle details\")\n        }\n    }\n    .inspector(isPresented: $isShowingDetails) {\n        List {\n            LabeledContent(\"Category\", value: \"Dining\")\n            LabeledContent(\"Card\", value: \"Visa 4321\")\n            LabeledContent(\"Status\", value: \"Cleared\")\n        }\n        .inspectorColumnWidth(min: 240, ideal: 280, max: 360)\n    }\n}\n.registryItem(\"sheet\")",
       "docs": "`.inspector`: trailing column iPadOS, sheet iPhone; sized via `.inspectorColumnWidth`. `dialog`/`drawer` cover plain sheet. iOS 27: tab-attached inspector stopped text-field focus. Attach above stack, or use `.sheet` in text-field tabs.",
       "tags": [
         "sheet",
@@ -3561,9 +3574,9 @@
     {
       "name": "sidebar",
       "kind": "recipe",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Sidebar: NavigationSplitView + selection-bound List (iPad).",
-      "usage": "@State private var selection: String? = \"activity\"\n@State private var tab = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    // A visually rich detail extends under the sidebar instead of stopping at its edge\n    ActivityBanner()\n        .backgroundExtensionEffect()\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}\n\n// The HIG's first choice on iPad: a tab bar people can switch to a sidebar\nTabView(selection: $tab) {\n    Tab(\"Activity\", systemImage: \"bell\", value: \"activity\") { ActivityScreen() }\n    Tab(\"Cards\", systemImage: \"creditcard\", value: \"cards\") { CardsScreen() }\n}\n.tabViewStyle(.sidebarAdaptable)",
+      "usage": "@State private var selection: String? = \"activity\"\n@State private var tab = \"activity\"\n\nNavigationSplitView {\n    List(selection: $selection) {\n        Label(\"Activity\", systemImage: \"bell\").tag(\"activity\")\n        Label(\"Cards\", systemImage: \"creditcard\").tag(\"cards\")\n    }\n    .navigationTitle(\"Bank\")\n    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)\n} detail: {\n    // A visually rich detail extends under the sidebar instead of stopping at its edge\n    ActivityBanner()\n        .backgroundExtensionEffect()\n    if selection == \"activity\" { ActivityScreen() } else { CardsScreen() }\n}\n.registryItem(\"sidebar\")\n\n// The HIG's first choice on iPad: a tab bar people can switch to a sidebar\nTabView(selection: $tab) {\n    Tab(\"Activity\", systemImage: \"bell\", value: \"activity\") { ActivityScreen() }\n    Tab(\"Cards\", systemImage: \"creditcard\", value: \"cards\") { CardsScreen() }\n}\n.tabViewStyle(.sidebarAdaptable)",
       "docs": "`NavigationSplitView` + selection-bound `List`: iPhone-stack, column-toggle; keyboard/pointer selection. MUST NOT rebuild via HStack. iPadOS drags divider (`navigationSplitViewColumnWidth`); iPhone ignores. `TabView`+`.sidebarAdaptable` first: tab-bar or sidebar, switches, adapts width (HIG pick). Else `NavigationSplitView` for sidebar-only. Rich detail extends beneath via `backgroundExtensionEffect()` (26.0), past edge (HIG: sidebar-over-content).",
       "tags": [
         "sidebar",
@@ -3743,9 +3756,9 @@
     {
       "name": "slider",
       "kind": "recipe",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Slider: tint, sizing; caller-owned value, labels.",
-      "usage": "@State private var volume = 64.0\n\nSlider(value: $volume, in: 0...100, step: 1) {\n    Text(\"Volume\")\n} minimumValueLabel: {\n    Image(systemName: \"speaker.fill\")\n        .accessibilityHidden(true)\n} maximumValueLabel: {\n    Image(systemName: \"speaker.wave.3.fill\")\n        .accessibilityHidden(true)\n}\n.controlSize(.large)",
+      "usage": "@State private var volume = 64.0\n\nSlider(value: $volume, in: 0...100, step: 1) {\n    Text(\"Volume\")\n} minimumValueLabel: {\n    Image(systemName: \"speaker.fill\")\n        .accessibilityHidden(true)\n} maximumValueLabel: {\n    Image(systemName: \"speaker.wave.3.fill\")\n        .accessibilityHidden(true)\n}\n.controlSize(.large)\n.registryItem(\"slider\")",
       "docs": "Use the native `Slider` with `.tint(_:)` and `.controlSize(_:)` where the design needs them. The registry adds no wrapper: those modifiers only forward environment values the control already respects.",
       "tags": [
         "slider",
@@ -3836,9 +3849,9 @@
     {
       "name": "switch",
       "kind": "recipe",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Toggle: switch style; inherits tint, environment.",
-      "usage": "@State private var notifications = true\n\nToggle(\"Notifications\", isOn: $notifications)\n    .toggleStyle(.switch)",
+      "usage": "@State private var notifications = true\n\nToggle(\"Notifications\", isOn: $notifications)\n    .toggleStyle(.switch)\n    .registryItem(\"switch\")",
       "docs": "`.toggleStyle(.switch)` on `Toggle`; no wrapper.",
       "tags": [
         "switch",
@@ -3939,9 +3952,9 @@
     {
       "name": "tabs",
       "kind": "recipe",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "description": "Picker segmented; local selection, TabView nav.",
-      "usage": "@State private var selection = \"overview\"\n\nPicker(\"Section\", selection: $selection) {\n    Text(\"Overview\").tag(\"overview\")\n    Text(\"Activity\").tag(\"activity\")\n    Text(\"Settings\").tag(\"settings\")\n}\n.pickerStyle(.segmented)",
+      "usage": "@State private var selection = \"overview\"\n\nPicker(\"Section\", selection: $selection) {\n    Text(\"Overview\").tag(\"overview\")\n    Text(\"Activity\").tag(\"activity\")\n    Text(\"Settings\").tag(\"settings\")\n}\n.pickerStyle(.segmented)\n.registryItem(\"tabs\")",
       "docs": "`.pickerStyle(.segmented)`: local selection; `TabView`: app nav. No wrapper.",
       "tags": [
         "tabs",
@@ -4220,9 +4233,9 @@
     {
       "name": "tooltip",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Tooltip: hint, popover.",
-      "usage": "Button(\"Freeze card\", systemImage: \"snowflake\") { }\n    .buttonStyle(.registryOutline)\n    .accessibilityHint(\"Blocks new purchases until you unfreeze the card.\")\n    .help(\"Blocks new purchases until you unfreeze the card.\")",
+      "usage": "Button(\"Freeze card\", systemImage: \"snowflake\") { }\n    .buttonStyle(.registryOutline)\n    .accessibilityHint(\"Blocks new purchases until you unfreeze the card.\")\n    .help(\"Blocks new purchases until you unfreeze the card.\")\n    .registryItem(\"tooltip\")",
       "docs": "No iPhone hover; `accessibilityHint` (VoiceOver) + `.help` (pointer/iPad) = tooltip. Sighted-info also needs copy/popover.",
       "tags": [
         "tooltip",
@@ -4238,7 +4251,9 @@
       "platforms": [
         "iOS 26.0+"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "button"
+      ],
       "installOrder": [],
       "accessibility": [
         "Hint after label; help: pointer/iPad/macOS-style hover.",
@@ -4311,9 +4326,9 @@
     {
       "name": "typography",
       "kind": "recipe",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Styles = type scale: weight, design, monospaced digits.",
-      "usage": "VStack(alignment: .leading, spacing: 8) {\n    Text(\"Balance\")\n        .font(.title2.weight(.semibold))\n    Text(amount, format: .currency(code: \"KWD\"))\n        .font(.largeTitle)\n        .monospacedDigit()\n    Text(\"Updated today\")\n        .font(.footnote)\n        .foregroundStyle(.secondary)\n}\n.fontDesign(.rounded)",
+      "usage": "VStack(alignment: .leading, spacing: 8) {\n    Text(\"Balance\")\n        .font(.title2.weight(.semibold))\n    Text(amount, format: .currency(code: \"KWD\"))\n        .font(.largeTitle)\n        .monospacedDigit()\n    Text(\"Updated today\")\n        .font(.footnote)\n        .foregroundStyle(.secondary)\n}\n.fontDesign(.rounded)\n.registryItem(\"typography\")",
       "docs": "`.largeTitle`-`.caption2`: 11 styles, type scale, with Dynamic Type. `.fontDesign` (root) sets typographic voice. `.monospacedDigit()` aligns figures (currency).",
       "tags": [
         "typography",

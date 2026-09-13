@@ -21,6 +21,7 @@ Picker("Delivery speed", selection: $selection) {
     Text("Same day").tag("same-day")
 }
 .pickerStyle(.inline)
+.registryItem("radio-group")
 ```
 
 ## Why native is enough
@@ -30,7 +31,7 @@ Picker("Delivery speed", selection: $selection) {
 ## Details
 
 - Kind: recipe
-- Version: 0.3.0
+- Version: 0.3.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Retains Picker selection, option semantics; caller-owned via binding.

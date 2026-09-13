@@ -23,6 +23,7 @@ HStack {
     Image(systemName: "chevron.forward")
         .accessibilityHidden(true)
 }
+.registryItem("direction")
 ```
 
 ## Why native is enough
@@ -32,7 +33,7 @@ HStack {
 ## Details
 
 - Kind: recipe
-- Version: 0.3.0
+- Version: 0.3.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Semantic reading order, leading/trailing alignment.

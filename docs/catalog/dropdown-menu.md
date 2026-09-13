@@ -24,6 +24,7 @@ Menu("Sort", systemImage: "arrow.up.arrow.down") {
     Button("Export", systemImage: "square.and.arrow.up") { }
 }
 .buttonStyle(.registryOutline)
+.registryItem("dropdown-menu")
 ```
 
 ## Why native is enough
@@ -33,7 +34,7 @@ Menu("Sort", systemImage: "arrow.up.arrow.down") {
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Trigger: text label default; symbol-only MUST have accessibility label.

@@ -17,6 +17,7 @@ Button("Freeze card", systemImage: "snowflake") { }
     .buttonStyle(.registryOutline)
     .accessibilityHint("Blocks new purchases until you unfreeze the card.")
     .help("Blocks new purchases until you unfreeze the card.")
+    .registryItem("tooltip")
 ```
 
 ## Why native is enough
@@ -26,7 +27,7 @@ No iPhone hover; `accessibilityHint` (VoiceOver) + `.help` (pointer/iPad) = tool
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Hint after label; help: pointer/iPad/macOS-style hover.

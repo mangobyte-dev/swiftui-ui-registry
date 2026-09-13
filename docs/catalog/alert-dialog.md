@@ -24,6 +24,7 @@ Button("Sign out", role: .destructive) {
 } message: {
     Text("You will need your password to sign in again.")
 }
+.registryItem("alert-dialog")
 ```
 
 ## Why native is enough
@@ -33,7 +34,7 @@ Native `.alert`; `.destructive` irreversible, `.cancel` dismiss. Owns layout, ty
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Alerts move VoiceOver focus, restore on dismiss.

@@ -24,6 +24,7 @@ TextField("One-time code", text: $code)
     .onChange(of: code) { _, newValue in
         code = String(newValue.filter(\.isNumber).prefix(6))
     }
+    .registryItem("input-otp")
 
 Button("Verify") { }
     .buttonStyle(.registry)
@@ -37,7 +38,7 @@ Button("Verify") { }
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Needs explicit label; title shows only as placeholder.

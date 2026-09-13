@@ -16,6 +16,7 @@ struct AspectRatioRecipe: View {
                 .aspectRatio(16.0 / 9.0, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 .accessibilityLabel("Sixteen by nine layout example")
+                .registryItem("aspect-ratio")
         }
     }
 }
@@ -27,6 +28,7 @@ struct DirectionRecipe: View {
         DemoSurface {
             Label("Leading content mirrors automatically", systemImage: "arrow.forward")
                 .labelStyle(.registry)
+                .registryItem("direction")
             Text(layoutDirection == .rightToLeft ? "Layout direction: right to left" : "Layout direction: left to right")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -44,6 +46,7 @@ struct NativeSelectRecipe: View {
                 Text("Oldest").tag("oldest")
             }
             .pickerStyle(.menu)
+            .registryItem("native-select")
         }
     }
 }
@@ -58,6 +61,7 @@ struct RadioGroupRecipe: View {
                 Text("Express").tag("express")
             }
             .pickerStyle(.inline)
+            .registryItem("radio-group")
         }
     }
 }
@@ -77,6 +81,7 @@ struct SliderRecipe: View {
             Slider(value: $volume) {
                 Text("Volume")
             }
+            .registryItem("slider")
         }
     }
 }
@@ -88,6 +93,7 @@ struct SwitchRecipe: View {
         DemoSurface {
             Toggle("Notifications", isOn: $notifications)
                 .toggleStyle(.switch)
+                .registryItem("switch")
         }
     }
 }
@@ -103,6 +109,7 @@ struct TabsRecipe: View {
                 Text("Settings").tag("settings")
             }
             .pickerStyle(.segmented)
+            .registryItem("tabs")
         }
     }
 }
@@ -122,6 +129,7 @@ struct AlertDialogRecipe: View {
             } message: {
                 Text("You will need your password to sign in again.")
             }
+            .registryItem("alert-dialog")
         }
     }
 }
@@ -134,6 +142,7 @@ struct CalendarRecipe: View {
         DemoSurface {
             DatePicker("Statement date", selection: $date, displayedComponents: .date)
                 .datePickerStyle(.graphical)
+                .registryItem("calendar")
             MultiDatePicker("Reminder days", selection: $dates)
         }
     }
@@ -148,6 +157,7 @@ struct CollapsibleRecipe: View {
                 LabeledContent("Transfer fee", value: "KWD 1.000")
                 LabeledContent("Exchange margin", value: "KWD 0.450")
             }
+            .registryItem("collapsible")
         }
     }
 }
@@ -168,6 +178,7 @@ struct ContextMenuRecipe: View {
                 Divider()
                 Button("Report", systemImage: "flag", role: .destructive) { }
             }
+            .registryItem("context-menu")
             Text("Touch and hold the row.")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -193,6 +204,7 @@ struct DialogRecipe: View {
                             }
                     }
                 }
+                .registryItem("dialog")
         }
     }
 }
@@ -219,6 +231,7 @@ struct DrawerRecipe: View {
                         .presentationDetents([.medium, .large])
                         .presentationDragIndicator(.visible)
                 }
+                .registryItem("drawer")
         }
     }
 }
@@ -247,6 +260,7 @@ struct DropdownMenuRecipe: View {
                 Button("Export", systemImage: "square.and.arrow.up") { }
             }
             .buttonStyle(.registryOutline)
+            .registryItem("dropdown-menu")
         }
     }
 }
@@ -263,6 +277,7 @@ struct PopoverRecipe: View {
                         .padding()
                         .presentationCompactAdaptation(.popover)
                 }
+                .registryItem("popover")
         }
     }
 }
@@ -298,6 +313,7 @@ struct ScrollAreaRecipe: View {
         .scrollEdgeEffectStyle(.soft, for: .top)
         .frame(height: 420)
         .registrySurface()
+        .registryItem("scroll-area")
     }
 }
 
@@ -339,6 +355,7 @@ struct SidebarRecipe: View {
         .frame(height: 360)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .registrySurface()
+        .registryItem("sidebar")
     }
 }
 
@@ -376,6 +393,7 @@ struct TooltipRecipe: View {
                 .buttonStyle(.registryOutline)
                 .accessibilityHint("Blocks new purchases until you unfreeze the card.")
                 .help("Blocks new purchases until you unfreeze the card.")
+                .registryItem("tooltip")
             Text("VoiceOver reads the hint; a pointer shows the help text.")
                 .font(.footnote)
                 .foregroundStyle(.secondary)

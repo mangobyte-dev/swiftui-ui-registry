@@ -26,6 +26,7 @@ TransactionRow(
     Divider()
     Button("Report", systemImage: "flag", role: .destructive) { }
 }
+.registryItem("context-menu")
 ```
 
 ## Why native is enough
@@ -35,7 +36,7 @@ TransactionRow(
 ## Details
 
 - Kind: recipe
-- Version: 0.1.1
+- Version: 0.1.2
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Menus: VoiceOver actions rotor.

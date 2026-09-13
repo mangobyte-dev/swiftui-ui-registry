@@ -17,6 +17,7 @@ Nothing to install. Copy the snippet below
 
 Toggle("Notifications", isOn: $notifications)
     .toggleStyle(.switch)
+    .registryItem("switch")
 ```
 
 ## Why native is enough
@@ -26,7 +27,7 @@ Toggle("Notifications", isOn: $notifications)
 ## Details
 
 - Kind: recipe
-- Version: 0.3.0
+- Version: 0.3.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Retains Toggle semantics, announcements; needs visible/accessibility label.

@@ -33,6 +33,7 @@ ScrollView(.horizontal) {
     .scrollTargetLayout()
 }
 .scrollTargetBehavior(.paging)
+.registryItem("carousel")
 ```
 
 ## Why native is enough
@@ -42,7 +43,7 @@ ScrollView(.horizontal) {
 ## Details
 
 - Kind: recipe
-- Version: 0.1.0
+- Version: 0.1.1
 - Platforms: iOS 26.0+
 - Accessibility contract:
   - Paging: native; VoiceOver page-scroll, three-finger gesture.

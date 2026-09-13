@@ -1,5 +1,6 @@
 #if canImport(UIKit)
 import CoreGraphics
+import SwiftUIRegistryFoundations
 
 /// Which registry item the surface is tuning: `item` is the selected item's
 /// name, or `nil` for the whole theme, and `isSelecting` is the arming state
@@ -30,12 +31,24 @@ public struct ItemSelection: Equatable, Sendable {
     /// An empty frame contains nothing; a point outside every frame gives an
     /// empty chain.
     public static func chain(_ frames: [(name: String, frame: CGRect)], at point: CGPoint) -> [String] {
+        chain(frames.map { (name: $0.name, frame: $0.frame, depth: 0) }, at: point)
+    }
+
+    /// The chain under the point over the reports the tagged roots sent. A
+    /// child that fills its parent exactly ties on area, and geometry cannot
+    /// order the two, so the one nested deeper comes first.
+    public static func chain(reports: [RegistryItemReport], at point: CGPoint) -> [String] {
+        chain(reports.map { (name: $0.name, frame: $0.frame, depth: $0.ancestors.count) }, at: point)
+    }
+
+    private static func chain(_ frames: [(name: String, frame: CGRect, depth: Int)], at point: CGPoint) -> [String] {
         var seen: Set<String> = []
         return frames
             .filter { !$0.frame.isEmpty && $0.frame.contains(point) }
             .sorted {
                 let (a, b) = ($0.frame.width * $0.frame.height, $1.frame.width * $1.frame.height)
-                return a == b ? $0.name < $1.name : a < b
+                if a != b { return a < b }
+                return $0.depth == $1.depth ? $0.name < $1.name : $0.depth > $1.depth
             }
             .compactMap { seen.insert($0.name).inserted ? $0.name : nil }
     }

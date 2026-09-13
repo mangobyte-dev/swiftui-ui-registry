@@ -33,6 +33,18 @@ struct SurfaceBoundaryTests {
         #expect(chain == ["button", "card"], "a zero-area frame contains nothing, a duplicate instance lists once")
     }
 
+    @Test func `A child that fills its parent exactly resolves child first`() {
+        // Two frames of the same size tell geometry nothing about which is
+        // inside which, and by name the parent would win; the nesting the tags
+        // report is what orders them.
+        let frame = CGRect(x: 0, y: 0, width: 200, height: 60)
+        let parent = RegistryItemReport(id: UUID(), name: "alpha", frame: frame)
+        let child = RegistryItemReport(id: UUID(), name: "beta", frame: frame, ancestors: ["alpha"])
+        let point = CGPoint(x: 100, y: 30)
+        #expect(ItemSelection.chain(reports: [parent, child], at: point) == ["beta", "alpha"])
+        #expect(ItemSelection.chain(reports: [child, parent], at: point) == ["beta", "alpha"])
+    }
+
     @Test func `Equal areas resolve in a fixed order however the frames arrive`() {
         // Frames come from a dictionary, so their order is not stable; a tie
         // must still pick the same item on every tap.

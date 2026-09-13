@@ -16,19 +16,22 @@ public struct RegistryItemSurface: Equatable, Sendable {
 }
 
 /// One tagged root's place on screen, reported to a surface as it changes:
-/// the instance (`id`), the item name, and the frame in the screen's global
-/// coordinates. Reported through the environment rather than a preference so
+/// the instance (`id`), the item name, the frame in the screen's global
+/// coordinates, and the names of the tagged roots it sits inside, outermost
+/// first. Reported through the environment rather than a preference so
 /// a root inside a sheet or a cover, whose tree a preference never leaves,
 /// still reaches the surface.
 public struct RegistryItemReport: Sendable {
     public let id: UUID
     public let name: String
     public let frame: CGRect
+    public let ancestors: [String]
 
-    public init(id: UUID, name: String, frame: CGRect) {
+    public init(id: UUID, name: String, frame: CGRect, ancestors: [String] = []) {
         self.id = id
         self.name = name
         self.frame = frame
+        self.ancestors = ancestors
     }
 }
 
@@ -56,6 +59,11 @@ public struct RegistrySurfaceReporter: Sendable {
 public extension EnvironmentValues {
     @Entry var registryItemSurface: RegistryItemSurface? = nil
     @Entry var registrySurfaceReporter: RegistrySurfaceReporter? = nil
+}
+
+extension EnvironmentValues {
+    /// The tagged roots around this view while a surface is present, outermost first.
+    @Entry var registryItemAncestors: [String] = []
 }
 
 public extension View {
@@ -95,6 +103,7 @@ private struct RegistryItemModifier: ViewModifier {
     @Environment(\.registryItemSurface) private var surface
     @Environment(\.registrySurfaceReporter) private var reporter
     @Environment(\.registryTheme) private var theme
+    @Environment(\.registryItemAncestors) private var ancestors
     @State private var token = UUID()
     let name: String
 
@@ -105,24 +114,26 @@ private struct RegistryItemModifier: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        content.overlay {
-            if let surface, !name.isEmpty {
-                Color.clear
-                    .onGeometryChange(for: CGRect.self) { proxy in
-                        proxy.frame(in: .global)
-                    } action: { frame in
-                        reporter?.itemChanged(RegistryItemReport(id: token, name: name, frame: frame))
-                    }
-                    .onDisappear { reporter?.itemLeft(token) }
-                    .overlay(alignment: .topLeading) {
-                        if surface.selected == name {
-                            selection
+        content
+            .environment(\.registryItemAncestors, surface != nil && !name.isEmpty ? ancestors + [name] : ancestors)
+            .overlay {
+                if let surface, !name.isEmpty {
+                    Color.clear
+                        .onGeometryChange(for: CGRect.self) { proxy in
+                            proxy.frame(in: .global)
+                        } action: { frame in
+                            reporter?.itemChanged(RegistryItemReport(id: token, name: name, frame: frame, ancestors: ancestors))
                         }
-                    }
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
+                        .onDisappear { reporter?.itemLeft(token) }
+                        .overlay(alignment: .topLeading) {
+                            if surface.selected == name {
+                                selection
+                            }
+                        }
+                        .allowsHitTesting(false)
+                        .accessibilityHidden(true)
+                }
             }
-        }
     }
 
     /// A hairline ring 4 points outside the item and its name above it, so

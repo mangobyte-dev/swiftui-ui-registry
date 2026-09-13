@@ -200,8 +200,7 @@ private struct SelectCapture: View {
         Color.clear
             .contentShape(Rectangle())
             .onTapGesture(coordinateSpace: .global) { point in
-                let frames = state.frames.values.map { (name: $0.name, frame: $0.frame) }
-                let chain = ItemSelection.chain(frames, at: point)
+                let chain = ItemSelection.chain(reports: Array(state.frames.values), at: point)
                 withAnimation(ToolChrome.animation) {
                     state.selection.item = chain.first
                     state.selection.chain = chain

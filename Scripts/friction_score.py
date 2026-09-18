@@ -255,6 +255,10 @@ def bash_reads_escape_path(command: str, escape_in_text: re.Pattern) -> bool:
     segment, or runs after a `cd` into one within the same Bash call."""
     cwd_escaped = False
     for segment in SEGMENT_SPLIT.split(command):
+        # An exclusion (`grep -v /Installed/`, `--exclude-dir=Installed`,
+        # `-not -path '*Installed*'`) names the path to keep it out of a read.
+        segment = re.sub(r"\bgrep\b(?:\s+-\w+)*\s+-v\s+(?:\"[^\"]*\"|'[^']*'|\S+)", "grep", segment)
+        segment = re.sub(r"--exclude(?:-dir)?[= ]\S+|-not\s+-path\s+(?:\"[^\"]*\"|'[^']*'|\S+)", "", segment)
         if re.search(r"\bcd\s+\S*Installed\b", segment) or (
             re.match(r"\s*cd\s", segment) and escape_in_text.search(segment)
         ):

@@ -25,6 +25,7 @@ jobs:
       - run: swift run swiftui-registry generate showcase-manifest
       - run: swift run swiftui-registry generate site-data
       - run: swift run swiftui-registry generate item-tokens
+      - run: swift run swiftui-registry generate usage-checks
       - name: Generated files must be committed
         run: git diff --exit-code -- docs/catalog Examples/Showcase Website/content Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift
       - run: swift test

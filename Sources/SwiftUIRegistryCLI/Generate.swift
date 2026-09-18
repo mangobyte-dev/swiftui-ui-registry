@@ -3,7 +3,7 @@ import RegistryKit
 
 struct Generate: ParsableCommand {
   static let configuration = CommandConfiguration(subcommands: [
-    Catalog.self, ShowcaseManifest.self, SiteData.self, ItemTokens.self,
+    Catalog.self, ShowcaseManifest.self, SiteData.self, ItemTokens.self, UsageChecks.self,
   ])
   struct Catalog: ParsableCommand {
     @OptionGroup var options: RegistryOptions
@@ -53,6 +53,18 @@ struct Generate: ParsableCommand {
         let path = try ItemTokensGenerator(root: root).generate(
           output: outputPath(output ?? root + "/" + ItemTokensGenerator.outputPath))
         print("wrote \(path)")
+      }
+    }
+  }
+  struct UsageChecks: ParsableCommand {
+    @OptionGroup var options: RegistryOptions
+    @Option var output: String?
+    func run() throws {
+      try refusal {
+        let root = try options.root()
+        for path in try UsageChecksGenerator(root: root).generate(
+          output: outputPath(output ?? root + "/" + UsageChecksGenerator.outputPath))
+        { print("wrote \(path)") }
       }
     }
   }

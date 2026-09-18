@@ -73,6 +73,8 @@ No timestamps: byte-stable, `GeneratorTests.swift` asserts equality. MUST NOT ha
 
 `Website/content/registry.json` (captures to `Website/public/images/`) from `generate site-data`; `RegistryCatalogManifest.swift`/`RegistryItemNames.swift` from `generate showcase-manifest`. Both validated-path, deterministic, byte-equal to checked-in files
 
+`UsageSnippetChecks.swift` (`generate usage-checks`): one `View` per installable item wrapping its `usage` snippet, so a snippet naming an undeclared symbol fails the Showcase build. Names a snippet leaves to the adopter are stand-ins in the hand-written `UsageSnippetPlaceholders.swift`. Deterministic, byte-equal, MUST NOT hand-edit
+
 `Next.js` site (`Website/`) reads only that `JSON`. Page: preview, install command, `usage`, then full source + accessibility contract. `python3 Scripts/capture_previews.py` produces `preview.screenshots`
 
 ## File ownership

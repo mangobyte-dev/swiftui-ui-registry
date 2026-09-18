@@ -3,9 +3,24 @@
 ## Unreleased
 
 A Point-Free audit in two passes (`docs/point-free-audit.md`): small, independently reviewed
-hardening, no new items, no schema change.
+hardening, no new items, no schema change. A stranger's build of a shop front from the released
+tool then drove the discovery and documentation fixes below.
+
+### Added
+
+- A fifth generator, `swiftui-registry generate usage-checks`, writes `UsageSnippetChecks.swift`:
+  one `View` per installable item that compiles the item's `usage` snippet, so a snippet naming an
+  undeclared symbol fails the Showcase build instead of shipping. Symbols a snippet leaves to the
+  adopter are stand-ins in the hand-written `UsageSnippetPlaceholders.swift`.
+- `describe` lists `Signatures:`: every public initializer, function, and static member of the
+  item's sources, one line each with labels, types, and defaults. The JSON and MCP `describe_item`
+  payloads carry them as `signatures`.
 
 ### Changed
+
+- Thirteen items gained the words a shop developer searches first: `product`, `cart`, `price`,
+  `checkout`, `rating`, and their neighbors now resolve to `item`, `badge`, `button`, `field`,
+  `empty`, `metric-card`, and the rest. Search itself is unchanged: every term must still match.
 
 - `Installer.FileStatus.status` and `InstalledInventory.File.status` are now enums
   (`PlanFileStatus`, `UpdateFileStatus`, `InventoryFileStatus`) instead of `String`. JSON and CLI
@@ -25,10 +40,12 @@ hardening, no new items, no schema change.
 
 ### Fixed
 
-- `field`'s usage snippet referenced `$name` and `emailError` without declaring them, so it did not
-  compile as printed. It now declares its state and takes the error expression from the item's own
-  preview. Found by building an e-commerce front end from the released tool as a stranger would;
-  the rest of that exercise's findings are in `docs/point-free-audit.md`.
+- Five usage snippets did not compile as printed. `field` read `$name` and `emailError` without
+  declaring them; `auth-form`, `signup-form`, `message-scroller`, and `settings-section` bound state
+  they never declared. Each now declares the state it assumes. `toast`'s snippet shows `message:`
+  and `carousel`'s names its placeholder collection.
+- `swiftui-registry search ... --format names` printed nothing on zero matches. It now says
+  `No item matches ...` on stderr and still exits 0.
 - In a test, an un-overridden `registryFileSystem` or `registrySource` reached the real disk and the
   release snapshot. Both now fail at the boundary: the file system's throwing members throw, its
   queries report an issue, and the source throws. `RegistryKit` declares `IssueReporting`, already

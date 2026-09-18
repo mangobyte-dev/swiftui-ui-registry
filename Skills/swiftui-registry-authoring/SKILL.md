@@ -82,7 +82,7 @@ Everything downstream, metadata-derived; byte-exact test rejects drift.
 
    `--force` only if Showcase already owns item.
 3. Register demo in `ItemDemos.swift`; `-item <name>` renders alone.
-4. Capture pinned simulator, regenerate all four:
+4. Capture pinned simulator, regenerate all five:
 
    ```sh
    python3 Scripts/capture_previews.py <name>
@@ -90,6 +90,7 @@ Everything downstream, metadata-derived; byte-exact test rejects drift.
    swift run swiftui-registry generate showcase-manifest
    swift run swiftui-registry generate site-data
    swift run swiftui-registry generate item-tokens
+   swift run swiftui-registry generate usage-checks
    ```
 
 5. `git diff --exit-code -- docs/catalog Examples/Showcase Website/content Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift`, then `swift test`, `make format-check`.

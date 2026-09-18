@@ -46,9 +46,7 @@
     "sonner",
     "notification-banner",
     "added-to-cart",
-    "confirmation",
-    "refresh",
-    "refreshed"
+    "confirmation"
   ],
   "accessibility": [
     "Variant pairs symbol with color. MUST NOT rely on color alone.",

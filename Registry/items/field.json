@@ -47,11 +47,7 @@
     "labeled-field",
     "validation-message",
     "checkout-form",
-    "address-form",
-    "email",
-    "phone",
-    "account-form",
-    "payment"
+    "address-form"
   ],
   "accessibility": [
     "Builder gets invalid state, e.g. RegistryInputStyle(isInvalid:); MUST NOT fake it otherwise.",

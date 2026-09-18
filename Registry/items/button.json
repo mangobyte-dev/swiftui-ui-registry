@@ -43,10 +43,7 @@
     "action-button",
     "add-to-cart",
     "buy",
-    "checkout",
-    "send",
-    "submit",
-    "refresh-button"
+    "checkout"
   ],
   "accessibility": [
     "Preserves Button semantics, ButtonRole.",

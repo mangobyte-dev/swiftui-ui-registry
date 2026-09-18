@@ -27,10 +27,7 @@
         "expandable",
         "faq",
         "product-details",
-        "specifications",
-        "filter",
-        "filters",
-        "filter-panel"
+        "specifications"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -259,11 +256,7 @@
       "aliases": [
         "confirm",
         "confirmation",
-        "modal",
-        "sign-out",
-        "signout",
-        "logout",
-        "log-out"
+        "modal"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -505,8 +498,7 @@
       "aliases": [
         "profile-image",
         "initials",
-        "monogram",
-        "profile-header"
+        "monogram"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -564,11 +556,7 @@
         "pill",
         "price",
         "price-tag",
-        "discount",
-        "unread",
-        "unread-count",
-        "counter",
-        "verified"
+        "discount"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -740,10 +728,7 @@
         "action-button",
         "add-to-cart",
         "buy",
-        "checkout",
-        "send",
-        "submit",
-        "refresh-button"
+        "checkout"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1100,9 +1085,7 @@
       "aliases": [
         "check",
         "consent",
-        "terms",
-        "filter",
-        "filters"
+        "terms"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -1870,11 +1853,7 @@
         "labeled-field",
         "validation-message",
         "checkout-form",
-        "address-form",
-        "email",
-        "phone",
-        "account-form",
-        "payment"
+        "address-form"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -2006,12 +1985,7 @@
         "textfield",
         "secure-field",
         "address",
-        "promo-code",
-        "email",
-        "phone",
-        "password",
-        "email-field",
-        "phone-field"
+        "promo-code"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -2071,10 +2045,7 @@
         "searchbar",
         "input-addon",
         "prefix",
-        "suffix",
-        "composer",
-        "message-composer",
-        "chat-input"
+        "suffix"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -2653,9 +2624,7 @@
         "rating",
         "stat",
         "kpi",
-        "price",
-        "total",
-        "order-total"
+        "price"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -3530,10 +3499,7 @@
       ],
       "aliases": [
         "preferences",
-        "settings-list",
-        "notifications",
-        "notification-settings",
-        "account-settings"
+        "settings-list"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -3827,11 +3793,7 @@
         "control",
         "guidance"
       ],
-      "aliases": [
-        "range",
-        "amount-range",
-        "price-range"
-      ],
+      "aliases": [],
       "platforms": [
         "iOS 26.0+"
       ],
@@ -3971,9 +3933,7 @@
         "spreadsheet",
         "invoice",
         "order-summary",
-        "pricing",
-        "total",
-        "order-total"
+        "pricing"
       ],
       "platforms": [
         "iOS 26.0+"
@@ -4132,9 +4092,7 @@
         "sonner",
         "notification-banner",
         "added-to-cart",
-        "confirmation",
-        "refresh",
-        "refreshed"
+        "confirmation"
       ],
       "platforms": [
         "iOS 26.0+"

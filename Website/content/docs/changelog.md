@@ -2,8 +2,8 @@
 
 ## Unreleased
 
-A Point-Free audit pass (`docs/point-free-audit.md`): small, independently reviewed hardening, no
-new items, no schema change.
+A Point-Free audit in two passes (`docs/point-free-audit.md`): small, independently reviewed
+hardening, no new items, no schema change.
 
 ### Changed
 
@@ -11,6 +11,19 @@ new items, no schema change.
   (`PlanFileStatus`, `UpdateFileStatus`, `InventoryFileStatus`) instead of `String`. JSON and CLI
   text output are byte-identical; Swift code that links `RegistryKit` directly and compares
   `.status` against a string literal needs to compare against the matching case instead.
+- `skeleton` 0.2.2: the doc comment names what redaction does not cover. An effect the wrapped
+  content starts itself (`task`, `onAppear`, a request) still runs; gate it on the same flag. No
+  visible change, no recapture.
+- The tuning panel's import sheet owns its draft and its failure state; a failed paste no longer
+  outlives the sheet.
+
+### Fixed
+
+- In a test, an un-overridden `registryFileSystem` or `registrySource` reached the real disk and the
+  release snapshot. Both now fail at the boundary: the file system's throwing members throw, its
+  queries report an issue, and the source throws. `RegistryKit` declares `IssueReporting`, already
+  resolved through swift-dependencies; `RegistryKitTests` declares `CustomDump` for line diffs on
+  multi-field assertions and generated text. Neither changes `Package.resolved`.
 
 ## 0.3.1
 

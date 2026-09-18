@@ -488,3 +488,17 @@ extension Commands {
     }
   }
 }
+
+extension Commands {
+  // An installable item whose source declares no public initializer, function, or static member
+  // cannot be composed from `describe`; every one must name at least one.
+  @Test func everyInstallableItemDescribesAtLeastOnePublicSignature() throws {
+    try withRepository {
+      let registry = try Registry(root: repositoryRoot)
+      for name in registry.items.keys.sorted() where registry.items[name]!["kind"] != "recipe" {
+        let described = try describeItem(name, registry: registry, fs: .local, root: repositoryRoot)
+        #expect(!(described["signatures"].array ?? []).isEmpty, "\(name)")
+      }
+    }
+  }
+}

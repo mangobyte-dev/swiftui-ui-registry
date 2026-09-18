@@ -1,3 +1,4 @@
+import CustomDump
 import Dependencies
 import DependenciesTestSupport
 import Foundation
@@ -76,6 +77,7 @@ private func recipeFixture() throws -> InMemoryFileSystem {
             "example"
           ],
           "packageRequirements": [],
+          "signatures": [],
           "files": [
             {
               "source": "sources/Example.swift",
@@ -256,6 +258,54 @@ private func recipeFixture() throws -> InMemoryFileSystem {
 
         """
       }
+    }
+  }
+}
+
+extension DescribeAndInfo {
+  // A composer needs labels and types; the snippet alone shows neither. Private members, the
+  // body, and default values must not leak into or cut off a signature.
+  @Test func describeListsThePublicSignaturesOfTheSource() throws {
+    let source = """
+      import SwiftUI
+
+      public struct Example: View {
+          public init(
+              _ title: LocalizedStringResource,
+              value: Text,
+              detail: Text? = nil
+          ) { self.title = title }
+          public var body: some View { Text("x") }
+          public func registryVariant(_ variant: Int) -> Example where Int == Int { self }
+          public static var registry: Example { Example("x", value: Text("")) }
+          public static let shared = Example("x", value: Text(""))
+          private func hidden(_ secret: Int = 1) {}
+      }
+      """
+    try withFixture(try fixture(source)) {
+      let json = try command(["describe", "example", "--format", "json"])
+      let decoded = try JSON.read(Data(json.stdout.utf8))
+      expectNoDifference(
+        decoded["signatures"].strings,
+        [
+          "public init(_ title: LocalizedStringResource, value: Text, detail: Text? = nil)",
+          "public func registryVariant(_ variant: Int) -> Example where Int == Int",
+          "public static var registry: Example",
+          "public static let shared",
+        ])
+      let text = try command(["describe", "example"])
+      #expect(
+        text.stdout.contains(
+          "Signatures:\n  public init(_ title: LocalizedStringResource, value: Text, detail: Text? = nil)\n"
+        ))
+      #expect(!text.stdout.contains("hidden"))
+    }
+  }
+
+  @Test func describeOmitsTheSignaturesHeadingWhenTheSourceHasNoPublicMember() throws {
+    try withFixture(try fixture("struct Example {}\n")) {
+      let text = try command(["describe", "example"])
+      #expect(!text.stdout.contains("Signatures:"))
     }
   }
 }

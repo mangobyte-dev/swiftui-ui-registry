@@ -28,6 +28,12 @@ struct Describe: ParsableCommand {
       out += member["description"].text + "\n\n"
       out += "Usage:\n"
       for line in member["usage"].text.components(separatedBy: "\n") { out += "  " + line + "\n" }
+      let payload = try describeItem(item, registry: registry, fs: fs, root: root)
+      let signatures = payload["signatures"].array ?? []
+      if !signatures.isEmpty {
+        out += "Signatures:\n"
+        for signature in signatures { out += "  " + (signature.string ?? "") + "\n" }
+      }
       out += "Accessibility:\n"
       for note in member["accessibility"].strings { out += "- " + note + "\n" }
       if member["kind"] == "recipe" {
@@ -43,7 +49,6 @@ struct Describe: ParsableCommand {
         out += "Files:\n"
         for file in member["files"].array ?? [] { out += "  " + file["target"].text + "\n" }
         if source {
-          let payload = try describeItem(item, registry: registry, fs: fs, root: root)
           for file in payload["files"].array ?? [] {
             out += "--- \(file["target"].string ?? "") ---\n"
             out += file["content"].string ?? ""

@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- A fifth generator, `swiftui-registry generate usage-checks`, writes `UsageSnippetChecks.swift`: one `View` per installable item that compiles the item's `usage` snippet, so a snippet naming an undeclared symbol fails the Showcase build instead of shipping. Symbols a snippet leaves to the adopter are stand-ins in the hand-written `UsageSnippetPlaceholders.swift`.
+
+### Known limitations
+
+- Five snippets quote a caller-owned SwiftUI binding they never declare: `auth-form`, `field`, `message-scroller`, `settings-section`, `signup-form`. A `Binding` cannot come from a stand-in, since a property wrapper is illegal on a global variable, so `usage-checks` records these and skips them instead of compiling them. `field` also reads `$name` while declaring only `email`, the mismatch that shipped in 0.3.1. Each is fixed by giving its snippet the `@State` it assumes.
+
 ## 0.3.1
 
 A patch release: every change is source compatible. `brew upgrade swiftui-registry` installs the tool. A package pinned `.upToNextMinor(from: "0.3.0")` resolves it, and every item keeps the `0.3.0` floor, since none needs anything newer.

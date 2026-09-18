@@ -55,6 +55,15 @@ extension Commands {
       #expect(!fs.exists("/images/items/stale.png"))
       #expect(!fs.exists("/images/themes"))
       #expect(try fs.read("/images/items/example-light.png") == Data("image bytes".utf8))
+      let checks = try command(["generate", "usage-checks", "--output", "/checks.swift"])
+      #expect(checks.code == 0)
+      #expect(checks.stderr.isEmpty)
+      assertInlineSnapshot(of: checks.stdout, as: .lines) {
+        """
+        wrote /checks.swift
+
+        """
+      }
       var item = example
       item["name"] = "index"
       try fs.put("/registry/Registry/items/example.json", item.rendered())
@@ -67,6 +76,56 @@ extension Commands {
         """
       }
       #expect(!fs.exists("/refused"))
+    }
+  }
+
+  @Test func usageChecksRendering() {
+    // A comment attaches to the statement below it; declarations become stored
+    // members, views fill `body`, and the lone assignment lands in `statements()`.
+    let usage = """
+      // A short note about the counter.
+      @State private var count = 0
+      @State private var flag = false
+
+      CounterView(count: $count)
+
+      Toggle("Flag", isOn: $flag)
+
+      count = 0
+      """
+    assertInlineSnapshot(
+      of: UsageChecksGenerator.snippetStruct(name: "sample-item", usage: usage), as: .lines
+    ) {
+      """
+      // MARK: sample-item
+      private struct UsageSnippet_SampleItem: View {
+          // A short note about the counter.
+          @State private var count = 0
+          @State private var flag = false
+          var body: some View {
+              CounterView(count: $count)
+              Toggle("Flag", isOn: $flag)
+          }
+          private func statements() {
+              count = 0
+          }
+      }
+
+      """
+    }
+    // A single view with no declarations renders no `statements()` function.
+    let solo = UsageChecksGenerator.snippetStruct(name: "solo", usage: "SoloView()")
+    #expect(!solo.contains("func statements()"))
+    assertInlineSnapshot(of: solo, as: .lines) {
+      """
+      // MARK: solo
+      private struct UsageSnippet_Solo: View {
+          var body: some View {
+              SoloView()
+          }
+      }
+
+      """
     }
   }
 
@@ -91,7 +150,8 @@ extension Commands {
     for doc in SiteDataGenerator.docs { try copy(doc.source) }
     try fs.createDirectory("/registry/Examples/Showcase/SwiftUIRegistryShowcaseUITests")
     try withFixture(fs) {
-      for generator in ["catalog", "showcase-manifest", "site-data", "item-tokens"] {
+      for generator in ["catalog", "showcase-manifest", "site-data", "item-tokens", "usage-checks"]
+      {
         let result = try command(["generate", generator])
         #expect(result.code == 0, "\(generator): \(result.stderr)")
         #expect(result.stderr.isEmpty)
@@ -110,7 +170,7 @@ extension Commands {
       for path in [
         "docs/catalog", ShowcaseManifestGenerator.outputPath, ShowcaseManifestGenerator.namesPath,
         SiteDataGenerator.outputPath, SiteDataGenerator.imagesPath, SiteDataGenerator.docsPath,
-        ItemTokensGenerator.outputPath,
+        ItemTokensGenerator.outputPath, UsageChecksGenerator.outputPath,
       ] { try compare(path) }
       let manifest = try readText(fs, "/registry/" + ShowcaseManifestGenerator.outputPath)
       let registry = try Registry(root: "/registry")

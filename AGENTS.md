@@ -32,6 +32,7 @@ Generated, MUST NOT hand edit:
 | `Website/content/docs/` | changelog and contracts copied for the site's Docs pages |
 | `Website/public/images/` | site captures |
 | `Examples/Showcase/.../RegistryCatalogManifest.swift`, `Examples/Showcase/SwiftUIRegistryShowcaseUITests/RegistryItemNames.swift` | Showcase manifest |
+| `Examples/Showcase/.../UsageSnippetChecks.swift` | one `View` per installable item that compiles its `usage` snippet |
 | `Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift` | item to token map that scopes the design surface's panel |
 | `docs/images/items/`, `docs/images/themes/` | captures |
 
@@ -85,7 +86,7 @@ Conflicts: state beats archives, the later archive wins, contracts govern rules.
 - Every installable component or block needs a version, preview, accessibility notes, platform metadata, and a compile path. A `recipe` installs nothing: empty `files`, non empty `docs`, no preview. No installable item MAY depend on a recipe (value gate, `docs/registry-spec.md`).
 - Every installable item applies `.registryItem("<name>")` once, last in its root view's or style's chain. A recipe carries the tag in its `usage` snippet instead, unless that snippet's root is a `Scene`. For an item exposed through an extension, that chain is a private modifier's `body`. The tag is foundations API, inert without a surface. The validator rejects a foundations dependent item whose first source lacks it.
 - Every item needs a non empty `usage` snippet quoted from its canonical public API, never from memory. A recipe reuses the native snippet from its `docs`.
-- Four generators, four outputs:
+- Five generators, five outputs:
 
   | Command | Output |
   | --- | --- |
@@ -93,8 +94,9 @@ Conflicts: state beats archives, the later archive wins, contracts govern rules.
   | `swift run swiftui-registry generate site-data` | website data |
   | `swift run swiftui-registry generate showcase-manifest` | Showcase manifest |
   | `swift run swiftui-registry generate item-tokens` | item to token map |
+  | `swift run swiftui-registry generate usage-checks` | Showcase usage-snippet checks |
 
-  `item-tokens` scans each item's sources and dependency closure for the theme fields they read. Regenerate all four after any metadata or source change; `generatedOutputsMatchCanonicalBytes` in `Tests/RegistryKitTests/GeneratorTests.swift` rejects drift byte for byte. `Website/app` is hand written React over that JSON and `Website/content/docs/`; `npm run build` in `Website/` exports it statically.
+  `item-tokens` scans each item's sources and dependency closure for the theme fields they read. `usage-checks` wraps each installable item's `usage` snippet in a `View` so a snippet naming an undeclared symbol fails the Showcase build; the names a snippet leaves to the adopter live in the hand-written `UsageSnippetPlaceholders.swift`. Regenerate all five after any metadata or source change; `generatedOutputsMatchCanonicalBytes` in `Tests/RegistryKitTests/GeneratorTests.swift` rejects drift byte for byte. `Website/app` is hand written React over that JSON and `Website/content/docs/`; `npm run build` in `Website/` exports it statically.
 
 - Item screenshots come from `python3 Scripts/capture_previews.py` on the pinned simulator, never hand made. Recapture after a visible change, then regenerate the catalog and site.
 - MUST NOT regenerate a visual reference merely to pass a test (`docs/visual-testing.md`).
@@ -126,6 +128,7 @@ swift run swiftui-registry generate catalog
 swift run swiftui-registry generate showcase-manifest
 swift run swiftui-registry generate site-data
 swift run swiftui-registry generate item-tokens
+swift run swiftui-registry generate usage-checks
 git diff --exit-code -- docs/catalog Examples/Showcase Website/content Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift
 swift test
 make format-check

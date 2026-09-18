@@ -28,7 +28,7 @@ Hypothesis: finance/nutrition test, not universal-reuse. Foundation-free item SH
 - `Sources/RegistryKit/`, `Sources/SwiftUIRegistryCLI/`: `swiftui-registry`, SwiftUI-free: validation, resolution, receipts, install, conflict-aware updates, search, preset codes, MCP server, generators
 - `Examples/Showcase/`: iOS consumer, catalog, demo per item, tuning panel, item-screenshot route
 - `Examples/TodoCounter/`: 2nd consumer (Composable Architecture), URL package at published tag, Homebrew install, customized preset theme
-- `swiftui-registry generate catalog | showcase-manifest | site-data`: derived from metadata
+- `swiftui-registry generate catalog | showcase-manifest | site-data | item-tokens | usage-checks`: derived from metadata
 - `Website/`: Next.js static export, shadcn/ui, reads only `content/registry.json`; `npm run deploy` → Cloudflare Workers (`Website/wrangler.jsonc`); `.github/workflows/pages.yml` → alt GitHub Pages deploy
 - `Scripts/capture_previews.py`: per-item light/dark captures, pinned simulator
 - `Tests/RegistryKitTests/`: command, installer, validator, preset, MCP, generator contracts; fixtures, website codec check under `Fixtures/`

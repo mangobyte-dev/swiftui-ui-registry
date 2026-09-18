@@ -35,7 +35,9 @@ Verify the install by building the consuming target for an iOS Simulator destina
 ## Usage
 
 ```swift
+@State private var name = ""
 @State private var email = ""
+@State private var showErrors = false
 
 FieldGroup {
     Field("Full name", description: "As it appears on your card.") { _ in
@@ -43,7 +45,7 @@ FieldGroup {
             .textFieldStyle(.registryInput)
             .accessibilityLabel("Full name")
     }
-    Field("Email", error: emailError) { isInvalid in
+    Field("Email", error: showErrors ? "Enter a valid email address." : nil) { isInvalid in
         TextField("you@example.com", text: $email)
             .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))
             .accessibilityLabel("Email")

@@ -19,6 +19,10 @@ hardening, no new items, no schema change.
 
 ### Fixed
 
+- `field`'s usage snippet referenced `$name` and `emailError` without declaring them, so it did not
+  compile as printed. It now declares its state and takes the error expression from the item's own
+  preview. Found by building an e-commerce front end from the released tool as a stranger would;
+  the rest of that exercise's findings are in `docs/point-free-audit.md`.
 - In a test, an un-overridden `registryFileSystem` or `registrySource` reached the real disk and the
   release snapshot. Both now fail at the boundary: the file system's throwing members throw, its
   queries report an issue, and the source throws. `RegistryKit` declares `IssueReporting`, already

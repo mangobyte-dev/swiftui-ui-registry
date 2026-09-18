@@ -201,6 +201,29 @@ with the item's patch version bumped and the Showcase copy reinstalled. Two mani
 added, both for packages already in `Package.resolved` (no resolution change): `IssueReporting` for
 the engine's test default and `CustomDump` for the test target only.
 
+## Phase 5: dogfood findings
+
+A fresh agent built an e-commerce front end (`~/Projects/ShopFront`: product list, detail, cart,
+checkout, mock data) from the released `swiftui-registry` 0.3.1 and the spec's "Agent usage" steps,
+seeing no registry source. 14 items installed, 3 recipes used as guidance, build clean, four
+screens verified on the pinned simulator. Each finding below was checked against the registry
+afterwards.
+
+| # | Step | Finding | Severity | Status |
+|---|---|---|---|---|
+| F1 | search | `product`, `cart`, `price`, `checkout`, `quantity`, `rating`, `stepper`, `price-tag` all return nothing; no item's name, tags, or aliases carry any of them. The fitting items (item, field, badge, toast, empty) are reachable only by internal name | major | open: alias proposal for the owner (item: product; badge: price; field and input: checkout, form; empty: empty-cart; metric-card: rating; button: add-to-cart) |
+| F2 | compose | `field`'s usage snippet used `$name` and `emailError` without declaring them, so it did not compile as printed | major | **fixed**: declares its state and takes the error expression from `FieldPreview` |
+| F3 | compile | The XcodeBuildMCP scaffold pairs `swift-tools-version: 6.1` with `.iOS(.v26)`; the first added dependency fails resolution | major | scaffold defect, not the registry's; bumped to 6.2 in the app |
+| F4 | docs | `toast`'s snippet omits `message:` (`RegistryToastModifier.swift:46` has it) | minor | open |
+| F5 | docs | `describe` shows call shape, not parameter types (`MetricCard`'s `LocalizedStringResource` title and `Text` value) | minor | open: a signature line under Usage |
+| F6 | search | `--format names` prints nothing on zero matches; JSON prints `[]` | nit | open |
+| F7 | compose | `carousel`'s recipe snippet iterates an undeclared `cards` | minor | open: name the placeholder |
+
+Nothing compiles the `usage` snippets today; F2 shipped in 0.3.1 because of that. A contract test
+that type-checks every installable item's snippet inside a `View` body is the highest-value
+follow-up from the exercise. Missing components a shop wanted: a price display, a quantity stepper,
+a rating, a product tile with an image; each was composed from badge, button, metric-card, and item.
+
 ## Open questions for the owner
 
 1. **R1**, rewrite `FileSystem` and `RegistrySource` as structs of closures: a `RegistryKit` public

@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+A Point-Free audit pass (`docs/point-free-audit.md`): small, independently reviewed hardening, no
+new items, no schema change.
+
+### Changed
+
+- `Installer.FileStatus.status` and `InstalledInventory.File.status` are now enums
+  (`PlanFileStatus`, `UpdateFileStatus`, `InventoryFileStatus`) instead of `String`. JSON and CLI
+  text output are byte-identical; Swift code that links `RegistryKit` directly and compares
+  `.status` against a string literal needs to compare against the matching case instead.
+
 ## 0.3.1
 
 A patch release: every change is source compatible. `brew upgrade swiftui-registry` installs the tool. A package pinned `.upToNextMinor(from: "0.3.0")` resolves it, and every item keeps the `0.3.0` floor, since none needs anything newer.

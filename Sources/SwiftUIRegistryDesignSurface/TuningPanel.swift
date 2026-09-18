@@ -18,8 +18,6 @@ public struct TuningPanel<PresetsFooter: View>: View {
     /// embeds the panel without the window.
     private let showsScreen: Bool
     @State private var isImporting = false
-    @State private var importText = ""
-    @State private var importFailed = false
     /// The item names pushed as host pages.
     @State private var path: [String] = []
 
@@ -123,7 +121,7 @@ public struct TuningPanel<PresetsFooter: View>: View {
                 if item == nil { path = [] }
             }
             .sheet(isPresented: $isImporting, onDismiss: { if showsScreen { DesignSurfaceWindow.shared.setKey(false) } }) {
-                ImportThemeSheet(text: $importText, failed: $importFailed, apply: applyImport)
+                ImportThemeSheet(apply: applyImport)
             }
             .toolbar {
                 if tunesTheme {
@@ -158,20 +156,16 @@ public struct TuningPanel<PresetsFooter: View>: View {
     }
 
     private func beginImport() {
-        importText = ""
-        importFailed = false
         // A field inside a sheet takes focus only in the key window.
         if showsScreen { DesignSurfaceWindow.shared.setKey(true) }
         isImporting = true
     }
 
-    private func applyImport() {
-        guard let parsed = ThemeTuning.parse(importText, into: tuning) else {
-            importFailed = true
-            return
-        }
+    /// Applies a pasted code or initializer; `false` leaves the sheet up to show the failure.
+    private func applyImport(_ text: String) -> Bool {
+        guard let parsed = ThemeTuning.parse(text, into: tuning) else { return false }
         withAnimation(ToolChrome.animation) { tuning = parsed }
-        isImporting = false
+        return true
     }
 }
 
@@ -662,10 +656,12 @@ private struct EnvironmentSection: View {
 /// `RegistryTheme(...)` initializer in the shape Copy Swift produces, to load
 /// it into the knobs. Typing into the editor is a keyboard paste, which never
 /// raises the system pasteboard prompt.
+/// The draft and its failure live with the sheet: they exist only while it
+/// is up, so the panel cannot hold a stale draft or a failure after dismissal.
 private struct ImportThemeSheet: View {
-    @Binding var text: String
-    @Binding var failed: Bool
-    let apply: () -> Void
+    let apply: (String) -> Bool
+    @State private var text = ""
+    @State private var failed = false
     @Environment(\.dismiss) private var dismiss
     @Environment(\.registryTheme) private var theme
 
@@ -710,8 +706,10 @@ private struct ImportThemeSheet: View {
                     Button("Cancel") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Apply", action: apply)
-                        .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    Button("Apply") {
+                        if apply(text) { dismiss() } else { failed = true }
+                    }
+                    .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
         }

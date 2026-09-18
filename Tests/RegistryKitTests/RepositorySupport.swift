@@ -6,16 +6,11 @@ import RegistryKit
 let repositoryRoot = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
   .deletingLastPathComponent().deletingLastPathComponent().path
 
-struct FixedRegistrySource: RegistrySource {
-  let root: String
-  func repositoryRoot(override: String?, refresh: Bool) throws -> String { override ?? root }
-}
-
 /// Runs against the real registry through the live filesystem, as an adopter's shell does.
 func withRepository<R>(_ body: () throws -> R) rethrows -> R {
   try withDependencies {
-    $0.registryFileSystem = LocalFileSystem()
-    $0.registrySource = FixedRegistrySource(root: repositoryRoot)
+    $0.registryFileSystem = .local
+    $0.registrySource = RegistrySource { override, _ in override ?? repositoryRoot }
     $0.registrySourceMerger = .git
     $0.date = .constant(fixedNow)
   } operation: {
@@ -29,7 +24,7 @@ func withTemporaryDirectory<R>(_ body: (String) throws -> R) throws -> R {
     .appendingPathComponent("swiftui-registry-tests-" + UUID().uuidString)
   try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
   defer { try? FileManager.default.removeItem(at: url) }
-  return try body(LocalFileSystem().resolve(url.path))
+  return try body(FileSystem.local.resolve(url.path))
 }
 
 func repositoryText(_ relative: String) throws -> String {

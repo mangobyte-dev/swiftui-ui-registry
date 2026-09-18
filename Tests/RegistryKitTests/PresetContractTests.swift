@@ -264,7 +264,7 @@ extension Commands {
         ].text
       }
       #expect(try command(["preset", "apply", amber, "--destination", destination]).code == 0)
-      let text = try readText(fs, path)
+      let text = try readText(fs.fileSystem, path)
       for marker in [
         "// swiftui-registry preset \(amber)", "accent: .yellow,", "onAccent: .black,",
         ".registryTheme(.app)",
@@ -278,11 +278,11 @@ extension Commands {
       let refused = try command(["preset", "apply", indigo, "--destination", destination])
       #expect(refused.code == 2)
       #expect(refused.stderr.contains("edited since it was written"))
-      #expect(try readText(fs, path).contains("cardRadius: 20"))
+      #expect(try readText(fs.fileSystem, path).contains("cardRadius: 20"))
       #expect(try resolved() != amber)
       #expect(
         try command(["preset", "apply", indigo, "--destination", destination, "--force"]).code == 0)
-      #expect(try readText(fs, path).contains("accent: .indigo,"))
+      #expect(try readText(fs.fileSystem, path).contains("accent: .indigo,"))
       // decode, url, and random speak the same code.
       let dual = try vector(named: "Custom accent with a separate dark accent")
       let decoded = try command(["preset", "decode", dual.code])

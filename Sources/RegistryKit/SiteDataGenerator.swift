@@ -158,7 +158,7 @@ func packageDescription(_ entry: JSON) -> OrderedJSON {
   ]
 }
 
-func readText(_ fs: any FileSystem, _ path: String) throws -> String {
+func readText(_ fs: FileSystem, _ path: String) throws -> String {
   let data = try fs.read(path)
   guard let text = String(data: data, encoding: .utf8) else {
     throw RegistryError("Cannot decode UTF-8: \(path)")

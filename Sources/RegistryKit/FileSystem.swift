@@ -2,150 +2,191 @@ import Dependencies
 import Foundation
 import IssueReporting
 
-public protocol FileSystem: Sendable {
-  var currentDirectory: String { get }
-  func resolve(_ path: String) -> String
-  func expandUser(_ path: String) -> String
-  func exists(_ path: String) -> Bool
-  func isFile(_ path: String) -> Bool
-  func isDirectory(_ path: String) -> Bool
-  func read(_ path: String) throws -> Data
-  func write(_ data: Data, to path: String) throws
-  func createDirectory(_ path: String) throws
-  func remove(_ path: String) throws
-  func replace(_ source: String, _ target: String) throws
-  func children(_ path: String) throws -> [String]
+/// The file system as a struct of closures, the shape of every other effect here: one value per
+/// context, no protocol. `write(_:to:)` keeps its label through a method over the closure.
+public struct FileSystem: Sendable {
+  public var currentDirectory: @Sendable () -> String
+  public var resolve: @Sendable (String) -> String
+  public var expandUser: @Sendable (String) -> String
+  public var exists: @Sendable (String) -> Bool
+  public var isFile: @Sendable (String) -> Bool
+  public var isDirectory: @Sendable (String) -> Bool
+  public var read: @Sendable (String) throws -> Data
+  public var write: @Sendable (Data, String) throws -> Void
+  public var createDirectory: @Sendable (String) throws -> Void
+  public var remove: @Sendable (String) throws -> Void
+  public var replace: @Sendable (String, String) throws -> Void
+  public var children: @Sendable (String) throws -> [String]
+
+  public init(
+    currentDirectory: @escaping @Sendable () -> String,
+    resolve: @escaping @Sendable (String) -> String,
+    expandUser: @escaping @Sendable (String) -> String,
+    exists: @escaping @Sendable (String) -> Bool,
+    isFile: @escaping @Sendable (String) -> Bool,
+    isDirectory: @escaping @Sendable (String) -> Bool,
+    read: @escaping @Sendable (String) throws -> Data,
+    write: @escaping @Sendable (Data, String) throws -> Void,
+    createDirectory: @escaping @Sendable (String) throws -> Void,
+    remove: @escaping @Sendable (String) throws -> Void,
+    replace: @escaping @Sendable (String, String) throws -> Void,
+    children: @escaping @Sendable (String) throws -> [String]
+  ) {
+    self.currentDirectory = currentDirectory
+    self.resolve = resolve
+    self.expandUser = expandUser
+    self.exists = exists
+    self.isFile = isFile
+    self.isDirectory = isDirectory
+    self.read = read
+    self.write = write
+    self.createDirectory = createDirectory
+    self.remove = remove
+    self.replace = replace
+    self.children = children
+  }
+
+  public func write(_ data: Data, to path: String) throws { try write(data, path) }
 }
 
-public struct LocalFileSystem: FileSystem {
-  public init() {}
-  public var currentDirectory: String { FileManager.default.currentDirectoryPath }
-  public func expandUser(_ path: String) -> String { (path as NSString).expandingTildeInPath }
-  public func resolve(_ path: String) -> String {
-    if let resolved = realpath(path, nil) {
-      defer { free(resolved) }
-      return String(cString: resolved)
+extension FileSystem {
+  /// The disk under the process, through `FileManager` and `realpath`.
+  public static let local: FileSystem = {
+    @Sendable func exists(_ path: String) -> Bool { FileManager.default.fileExists(atPath: path) }
+    @Sendable func isDirectory(_ path: String) -> Bool {
+      var flag = ObjCBool(false)
+      return FileManager.default.fileExists(atPath: path, isDirectory: &flag) && flag.boolValue
     }
-    func walk(_ path: String, depth: Int) -> String {
-      let absolute = path.hasPrefix("/") ? path : currentDirectory + "/" + path
-      var parts: [String] = []
-      for part in absolute.split(separator: "/") {
-        if part == "." { continue }
-        if part == ".." {
-          if !parts.isEmpty { parts.removeLast() }
-          continue
-        }
-        let parent = "/" + parts.joined(separator: "/")
-        parts.append(String(part))
-        if depth < 40,
-          let link = try? FileManager.default.destinationOfSymbolicLink(
-            atPath: "/" + parts.joined(separator: "/"))
-        {
-          let target = walk(link.hasPrefix("/") ? link : parent + "/" + link, depth: depth + 1)
-          parts = target.split(separator: "/").map(String.init)
-        }
+    @Sendable func resolve(_ path: String) -> String {
+      if let resolved = realpath(path, nil) {
+        defer { free(resolved) }
+        return String(cString: resolved)
       }
-      return "/" + parts.joined(separator: "/")
+      func walk(_ path: String, depth: Int) -> String {
+        let absolute =
+          path.hasPrefix("/") ? path : FileManager.default.currentDirectoryPath + "/" + path
+        var parts: [String] = []
+        for part in absolute.split(separator: "/") {
+          if part == "." { continue }
+          if part == ".." {
+            if !parts.isEmpty { parts.removeLast() }
+            continue
+          }
+          let parent = "/" + parts.joined(separator: "/")
+          parts.append(String(part))
+          if depth < 40,
+            let link = try? FileManager.default.destinationOfSymbolicLink(
+              atPath: "/" + parts.joined(separator: "/"))
+          {
+            let target = walk(link.hasPrefix("/") ? link : parent + "/" + link, depth: depth + 1)
+            parts = target.split(separator: "/").map(String.init)
+          }
+        }
+        return "/" + parts.joined(separator: "/")
+      }
+      return walk(path, depth: 0)
     }
-    return walk(path, depth: 0)
-  }
-  public func exists(_ path: String) -> Bool { FileManager.default.fileExists(atPath: path) }
-  public func isDirectory(_ path: String) -> Bool {
-    var flag = ObjCBool(false)
-    return FileManager.default.fileExists(atPath: path, isDirectory: &flag) && flag.boolValue
-  }
-  public func isFile(_ path: String) -> Bool { exists(path) && !isDirectory(path) }
-  public func read(_ path: String) throws -> Data {
-    try Data(contentsOf: URL(fileURLWithPath: path))
-  }
-  public func write(_ data: Data, to path: String) throws {
-    try data.write(to: URL(fileURLWithPath: path))
-  }
-  public func createDirectory(_ path: String) throws {
-    try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true)
-  }
-  public func remove(_ path: String) throws {
-    if exists(path) { try FileManager.default.removeItem(atPath: path) }
-  }
-  public func replace(_ source: String, _ target: String) throws {
-    guard rename(source, target) == 0 else {
-      throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO)
-    }
-  }
-  public func children(_ path: String) throws -> [String] {
-    try FileManager.default.contentsOfDirectory(atPath: path).sorted().map { path + "/" + $0 }
-  }
-}
+    return FileSystem(
+      currentDirectory: { FileManager.default.currentDirectoryPath },
+      resolve: resolve,
+      expandUser: { ($0 as NSString).expandingTildeInPath },
+      exists: exists,
+      isFile: { exists($0) && !isDirectory($0) },
+      isDirectory: isDirectory,
+      read: { try Data(contentsOf: URL(fileURLWithPath: $0)) },
+      write: { try $0.write(to: URL(fileURLWithPath: $1)) },
+      createDirectory: {
+        try FileManager.default.createDirectory(atPath: $0, withIntermediateDirectories: true)
+      },
+      remove: { if exists($0) { try FileManager.default.removeItem(atPath: $0) } },
+      replace: { source, target in
+        guard rename(source, target) == 0 else {
+          throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO)
+        }
+      },
+      children: { path in
+        try FileManager.default.contentsOfDirectory(atPath: path).sorted().map { path + "/" + $0 }
+      }
+    )
+  }()
 
-/// The test default: a test that forgets its override fails at the boundary instead of
-/// reaching the disk. The members that can throw do; the queries cannot, so each reports
-/// an issue and answers as an empty file system would.
-struct UnimplementedFileSystem: FileSystem {
-  private func report(_ member: StaticString) {
-    reportIssue("Unimplemented: @Dependency(\\.registryFileSystem).\(member)")
-  }
-  private func unimplemented(_ member: StaticString) -> RegistryError {
-    RegistryError("no file system in tests: \(member)")
-  }
-  var currentDirectory: String {
-    report("currentDirectory")
-    return "/"
-  }
-  func resolve(_ path: String) -> String {
-    report("resolve")
-    return path
-  }
-  func expandUser(_ path: String) -> String {
-    report("expandUser")
-    return path
-  }
-  func exists(_ path: String) -> Bool {
-    report("exists")
-    return false
-  }
-  func isFile(_ path: String) -> Bool {
-    report("isFile")
-    return false
-  }
-  func isDirectory(_ path: String) -> Bool {
-    report("isDirectory")
-    return false
-  }
-  func read(_ path: String) throws -> Data { throw unimplemented("read") }
-  func write(_ data: Data, to path: String) throws { throw unimplemented("write") }
-  func createDirectory(_ path: String) throws { throw unimplemented("createDirectory") }
-  func remove(_ path: String) throws { throw unimplemented("remove") }
-  func replace(_ source: String, _ target: String) throws { throw unimplemented("replace") }
-  func children(_ path: String) throws -> [String] { throw unimplemented("children") }
+  /// The test default: a test that forgets its override fails at the boundary instead of
+  /// reaching the disk. The members that can throw do; the queries cannot, so each reports
+  /// an issue and answers as an empty file system would.
+  public static let unimplemented: FileSystem = {
+    @Sendable func report(_ member: StaticString) {
+      reportIssue("Unimplemented: @Dependency(\\.registryFileSystem).\(member)")
+    }
+    @Sendable func unimplemented(_ member: StaticString) -> RegistryError {
+      RegistryError("no file system in tests: \(member)")
+    }
+    return FileSystem(
+      currentDirectory: {
+        report("currentDirectory")
+        return "/"
+      },
+      resolve: {
+        report("resolve")
+        return $0
+      },
+      expandUser: {
+        report("expandUser")
+        return $0
+      },
+      exists: { _ in
+        report("exists")
+        return false
+      },
+      isFile: { _ in
+        report("isFile")
+        return false
+      },
+      isDirectory: { _ in
+        report("isDirectory")
+        return false
+      },
+      read: { _ in throw unimplemented("read") },
+      write: { _, _ in throw unimplemented("write") },
+      createDirectory: { _ in throw unimplemented("createDirectory") },
+      remove: { _ in throw unimplemented("remove") },
+      replace: { _, _ in throw unimplemented("replace") },
+      children: { _ in throw unimplemented("children") }
+    )
+  }()
 }
 
 private enum FileSystemKey: DependencyKey {
-  static let liveValue: any FileSystem = LocalFileSystem()
-  static let testValue: any FileSystem = UnimplementedFileSystem()
+  static let liveValue = FileSystem.local
+  static let testValue = FileSystem.unimplemented
 }
 extension DependencyValues {
-  public var registryFileSystem: any FileSystem {
+  public var registryFileSystem: FileSystem {
     get { self[FileSystemKey.self] }
     set { self[FileSystemKey.self] = newValue }
   }
 }
 
-public protocol RegistrySource: Sendable {
-  func repositoryRoot(override: String?, refresh: Bool) throws -> String
-}
-extension RegistrySource {
-  public func repositoryRoot(override: String?) throws -> String {
-    try repositoryRoot(override: override, refresh: false)
+/// Where the registry lives for this run. `repositoryRoot(override:refresh:)` keeps its labels
+/// through a method over the closure.
+public struct RegistrySource: Sendable {
+  public var repositoryRoot: @Sendable (_ override: String?, _ refresh: Bool) throws -> String
+  public init(
+    repositoryRoot: @escaping @Sendable (_ override: String?, _ refresh: Bool) throws -> String
+  ) {
+    self.repositoryRoot = repositoryRoot
+  }
+  public func repositoryRoot(override: String?, refresh: Bool = false) throws -> String {
+    try repositoryRoot(override, refresh)
   }
 }
-/// Resolution order: the explicit path, a clone enclosing the working directory, then the
-/// cached release snapshot. `refresh` reaches only the snapshot.
-public struct LocalRegistrySource: RegistrySource {
-  public init() {}
-  public func repositoryRoot(override: String?, refresh: Bool) throws -> String {
+
+extension RegistrySource {
+  /// Resolution order: the explicit path, a clone enclosing the working directory, then the
+  /// cached release snapshot. `refresh` reaches only the snapshot.
+  public static let local = RegistrySource { override, refresh in
     @Dependency(\.registryFileSystem) var fs
     if let override { return fs.resolve(override) }
-    var candidate = fs.resolve(fs.currentDirectory)
+    var candidate = fs.resolve(fs.currentDirectory())
     while true {
       if fs.isFile(candidate + "/Registry/registry.json") { return candidate }
       let parent = (candidate as NSString).deletingLastPathComponent
@@ -154,24 +195,23 @@ public struct LocalRegistrySource: RegistrySource {
     }
     return try ReleaseSnapshot().root(refresh: refresh)
   }
-}
-struct UnimplementedRegistrySource: RegistrySource {
-  func repositoryRoot(override: String?, refresh: Bool) throws -> String {
+
+  public static let unimplemented = RegistrySource { _, _ in
     throw RegistryError("no registry source in tests")
   }
 }
 private enum RegistrySourceKey: DependencyKey {
-  static let liveValue: any RegistrySource = LocalRegistrySource()
-  static let testValue: any RegistrySource = UnimplementedRegistrySource()
+  static let liveValue = RegistrySource.local
+  static let testValue = RegistrySource.unimplemented
 }
 extension DependencyValues {
-  public var registrySource: any RegistrySource {
+  public var registrySource: RegistrySource {
     get { self[RegistrySourceKey.self] }
     set { self[RegistrySourceKey.self] = newValue }
   }
 }
 
-func safeJoin(_ root: String, _ value: String, fs: any FileSystem) throws -> String {
+func safeJoin(_ root: String, _ value: String, fs: FileSystem) throws -> String {
   let parts = value.split(separator: "/")
   guard !value.isEmpty, !value.hasPrefix("/"), !parts.contains(".."),
     parts.contains(where: { $0 != "." })

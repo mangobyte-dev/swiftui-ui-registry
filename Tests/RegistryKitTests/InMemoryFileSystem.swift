@@ -2,7 +2,15 @@ import Foundation
 import RegistryKit
 import Synchronization
 
-final class InMemoryFileSystem: FileSystem, Sendable {
+/// The storage behind an in-memory `FileSystem`; `fileSystem` is the value a test installs.
+final class InMemoryFileSystem: Sendable {
+  var fileSystem: FileSystem {
+    FileSystem(
+      currentDirectory: { self.currentDirectory }, resolve: resolve, expandUser: expandUser,
+      exists: exists, isFile: isFile, isDirectory: isDirectory, read: read,
+      write: { try self.write($0, to: $1) }, createDirectory: createDirectory, remove: remove,
+      replace: replace, children: children)
+  }
   enum Entry: Equatable, Sendable {
     case directory
     case file(Data)
@@ -109,8 +117,6 @@ final class InMemoryFileSystem: FileSystem, Sendable {
   }
 }
 
-struct InMemoryRegistrySource: RegistrySource {
-  func repositoryRoot(override: String?, refresh: Bool) throws -> String {
-    override ?? "/registry"
-  }
+extension RegistrySource {
+  static let inMemory = RegistrySource { override, _ in override ?? "/registry" }
 }

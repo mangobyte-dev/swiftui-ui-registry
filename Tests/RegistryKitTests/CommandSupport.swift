@@ -73,8 +73,8 @@ let fixedNow = Date(timeIntervalSince1970: 1_800_000_000)
 
 func withFixture<R>(_ fs: InMemoryFileSystem, _ body: () throws -> R) rethrows -> R {
   try withDependencies {
-    $0.registryFileSystem = fs
-    $0.registrySource = InMemoryRegistrySource()
+    $0.registryFileSystem = fs.fileSystem
+    $0.registrySource = .inMemory
     $0.registrySourceMerger = .git
     $0.uuid = .incrementing
     $0.date = .constant(fixedNow)

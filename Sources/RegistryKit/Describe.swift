@@ -5,7 +5,7 @@ import Foundation
 /// command. Item metadata keeps the source document's field order; an installable item also
 /// carries the resolved install order, package requirements, and canonical file source, while a
 /// recipe stops at its metadata and `installs: false`.
-public func describeItem(_ name: String, registry: Registry, fs: any FileSystem, root: String)
+public func describeItem(_ name: String, registry: Registry, fs: FileSystem, root: String)
   throws -> OrderedJSON
 {
   guard let item = registry.items[name] else {

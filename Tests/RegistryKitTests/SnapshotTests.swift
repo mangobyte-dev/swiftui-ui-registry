@@ -23,8 +23,8 @@ private func withSnapshot<R>(
   _ body: () throws -> R
 ) rethrows -> R {
   try withDependencies {
-    $0.registryFileSystem = fs
-    $0.registrySource = LocalRegistrySource()
+    $0.registryFileSystem = fs.fileSystem
+    $0.registrySource = .local
     $0.registrySourceMerger = .git
     $0.uuid = .incrementing
     $0.date = .constant(fixedNow)
@@ -46,7 +46,7 @@ extension Commands {
       throw RegistryError("unexpected download")
     }
     try withSnapshot(fs, download: refused, extract: RegistryArchive { _, _ in }) {
-      let source = LocalRegistrySource()
+      let source = RegistrySource.local
       #expect(try source.repositoryRoot(override: "/registry", refresh: true) == "/registry")
       #expect(try source.repositoryRoot(override: nil, refresh: false) == "/registry")
       #expect(try source.repositoryRoot(override: nil, refresh: true) == "/registry")
@@ -79,7 +79,7 @@ extension Commands {
       #expect(validated.stderr == fetching)
       #expect(downloads.withLock { $0 } == [RegistryRelease.archiveURL])
       #expect(
-        try readText(fs, snapshotDirectory + "/snapshot.json") == """
+        try readText(fs.fileSystem, snapshotDirectory + "/snapshot.json") == """
           {
             "fetchedAt": "\(fixedNow.formatted(.iso8601))",
             "url": "\(RegistryRelease.archiveURL)",
@@ -107,8 +107,8 @@ extension Commands {
         #expect(refreshed.stderr == fetching)
       }
       #expect(downloads.withLock { $0 }.count == 2)
-      #expect(
-        try readText(fs, snapshotDirectory + "/snapshot.json").contains(later.formatted(.iso8601)))
+      let manifest = try readText(fs.fileSystem, snapshotDirectory + "/snapshot.json")
+      #expect(manifest.contains(later.formatted(.iso8601)))
       #expect(try fs.children(cacheRoot + "/registries") == [snapshotDirectory])
     }
   }
@@ -197,7 +197,7 @@ extension Commands {
       #expect(first.stdout == "installed example: /app/Example.swift\n" + notice)
       #expect(requests.withLock { $0 } == 1)
       #expect(
-        try readText(fs, stamp) == """
+        try readText(fs.fileSystem, stamp) == """
           {
             "checkedAt": "\(fixedNow.formatted(.iso8601))",
             "latest": "0.4.0"
@@ -226,9 +226,9 @@ extension Commands {
       let unrelated = try install(at: fixedNow.addingTimeInterval(3 * 86_400))
       #expect(unrelated.stdout == "up-to-date: example\n")
       #expect(requests.withLock { $0 } == 4)
-      #expect(try readText(fs, stamp).contains("\"latest\": null"))
+      #expect(try readText(fs.fileSystem, stamp).contains("\"latest\": null"))
       // A failed request is silent and leaves the stamp alone; plan never asks.
-      let before = try readText(fs, stamp)
+      let before = try readText(fs.fileSystem, stamp)
       let failing = try withDependencies {
         $0.date = .constant(fixedNow.addingTimeInterval(5 * 86_400))
         $0.releaseTags = ReleaseTags { _ in throw RegistryError("offline") }
@@ -237,7 +237,7 @@ extension Commands {
       }
       #expect(failing.code == 0)
       #expect(failing.stdout == "up-to-date: example\n")
-      #expect(try readText(fs, stamp) == before)
+      #expect(try readText(fs.fileSystem, stamp) == before)
       tags.withLock { $0 = ["swiftui-registry-0.9.0"] }
       let planned = try withDependencies {
         $0.date = .constant(fixedNow.addingTimeInterval(9 * 86_400))

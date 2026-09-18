@@ -75,7 +75,7 @@ extension Commands {
     let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
       .deletingLastPathComponent().deletingLastPathComponent().path
     let fs = InMemoryFileSystem()
-    let live = LocalFileSystem()
+    let live = FileSystem.local
     func copy(_ relative: String) throws {
       let source = root + "/" + relative
       if live.isDirectory(source) {
@@ -122,7 +122,8 @@ extension Commands {
         SiteDataGenerator.outputPath, SiteDataGenerator.imagesPath, SiteDataGenerator.docsPath,
         ItemTokensGenerator.outputPath,
       ] { try compare(path) }
-      let manifest = try readText(fs, "/registry/" + ShowcaseManifestGenerator.outputPath)
+      let manifest = try readText(
+        fs.fileSystem, "/registry/" + ShowcaseManifestGenerator.outputPath)
       let registry = try Registry(root: "/registry")
       for (name, item) in registry.items {
         #expect(manifest.components(separatedBy: "name: \"\(name)\",").count == 2)

@@ -89,7 +89,9 @@ import time
 from pathlib import Path
 
 READ_COMMANDS = re.compile(r"(?<![\w-])(cat|sed|head|tail|grep|rg|awk|less|more|bat)\b")
-ERROR_LINE = re.compile(r"\berror:")
+# A compiler diagnostic (`path:12:3: error: ...`, `xcodebuild: error: ...`, `error: ...`), never
+# a source excerpt line that happens to pass an `error:` argument label.
+ERROR_LINE = re.compile(r"^(?:[^\s|]+: )?error: ")
 SUCCESS_MARKS = ("BUILD SUCCEEDED", "Build complete!", "Compiling", "Build succeeded")
 FAILURE_MARKS = ("BUILD FAILED", "xcodebuild: error", "error:")
 GENERIC_NAMES = {

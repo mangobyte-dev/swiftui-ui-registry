@@ -5,7 +5,7 @@
   "name": "toast",
   "kind": "component",
   "description": "Transient status toast: informational, positive, destructive; optional action; swipe/tap/timed dismissal.",
-  "usage": "@State private var toast: RegistryToast?\n\nCardDetail()\n    .registryToast($toast)\n\n// Present a destructive toast with an undo action:\ntoast = RegistryToast(\n    title: \"Message deleted\",\n    variant: .destructive,\n    action: RegistryToast.Action(label: \"Undo\") { restoreMessage() }\n)",
+  "usage": "@State private var toast: RegistryToast?\n\nCardDetail()\n    .registryToast($toast)\n\n// Present a destructive toast with an undo action:\ntoast = RegistryToast(\n    title: \"Message deleted\",\n    message: \"You can undo this for a few seconds.\",\n    variant: .destructive,\n    action: RegistryToast.Action(label: \"Undo\") { restoreMessage() }\n)",
   "files": [
     {
       "source": "sources/components/RegistryToastModifier.swift",
@@ -44,7 +44,9 @@
   "aliases": [
     "snackbar",
     "sonner",
-    "notification-banner"
+    "notification-banner",
+    "added-to-cart",
+    "confirmation"
   ],
   "accessibility": [
     "Variant pairs symbol with color. MUST NOT rely on color alone.",

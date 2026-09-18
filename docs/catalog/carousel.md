@@ -13,6 +13,8 @@ Nothing to install. Copy the snippet below
 ## Usage
 
 ```swift
+// cards is your own model collection; each element is Identifiable
+// and has a title, a systemImage, and an amount.
 ScrollView(.horizontal) {
     HStack(spacing: 12) {
         ForEach(cards) { card in

@@ -42,7 +42,8 @@
   "aliases": [
     "loading",
     "placeholder",
-    "shimmer"
+    "shimmer",
+    "loading-products"
   ],
   "accessibility": [
     "Disables content, excludes hit testing. MUST NOT trigger action.",

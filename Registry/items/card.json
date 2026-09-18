@@ -41,7 +41,8 @@
   "aliases": [
     "group-box",
     "surface",
-    "panel"
+    "panel",
+    "product-card"
   ],
   "accessibility": [
     "Preserves reading order (label, content).",

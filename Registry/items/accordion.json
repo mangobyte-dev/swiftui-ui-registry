@@ -44,7 +44,9 @@
   "aliases": [
     "disclosure",
     "expandable",
-    "faq"
+    "faq",
+    "product-details",
+    "specifications"
   ],
   "accessibility": [
     "Header: plain Button bound to isExpanded.",

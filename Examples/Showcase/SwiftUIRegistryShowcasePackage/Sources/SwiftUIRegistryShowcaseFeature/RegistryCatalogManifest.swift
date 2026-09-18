@@ -156,7 +156,7 @@ enum RegistryCatalogManifest {
             kind: "recipe",
             version: "0.1.1",
             description: "Paging ScrollView of cards.",
-            usage: "ScrollView(.horizontal) {\n    HStack(spacing: 12) {\n        ForEach(cards) { card in\n            VStack(alignment: .leading, spacing: 8) {\n                Label(card.title, systemImage: card.systemImage)\n                    .font(.subheadline.weight(.semibold))\n                Text(card.amount, format: .currency(code: \"KWD\"))\n                    .font(.title.monospacedDigit())\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .padding()\n            .registrySurface()\n            .containerRelativeFrame(.horizontal)\n            .accessibilityElement(children: .combine)\n            .accessibilityLabel(\"\\(card.title) card\")\n        }\n    }\n    .scrollTargetLayout()\n}\n.scrollTargetBehavior(.paging)\n.registryItem(\"carousel\")",
+            usage: "// cards is your own model collection; each element is Identifiable\n// and has a title, a systemImage, and an amount.\nScrollView(.horizontal) {\n    HStack(spacing: 12) {\n        ForEach(cards) { card in\n            VStack(alignment: .leading, spacing: 8) {\n                Label(card.title, systemImage: card.systemImage)\n                    .font(.subheadline.weight(.semibold))\n                Text(card.amount, format: .currency(code: \"KWD\"))\n                    .font(.title.monospacedDigit())\n            }\n            .frame(maxWidth: .infinity, alignment: .leading)\n            .padding()\n            .registrySurface()\n            .containerRelativeFrame(.horizontal)\n            .accessibilityElement(children: .combine)\n            .accessibilityLabel(\"\\(card.title) card\")\n        }\n    }\n    .scrollTargetLayout()\n}\n.scrollTargetBehavior(.paging)\n.registryItem(\"carousel\")",
             dependencies: [],
             tags: ["carousel", "paging", "scroll", "cards", "guidance"]
         ),
@@ -624,7 +624,7 @@ enum RegistryCatalogManifest {
             kind: "component",
             version: "0.1.1",
             description: "Transient status toast: informational, positive, destructive; optional action; swipe/tap/timed dismissal.",
-            usage: "@State private var toast: RegistryToast?\n\nCardDetail()\n    .registryToast($toast)\n\n// Present a destructive toast with an undo action:\ntoast = RegistryToast(\n    title: \"Message deleted\",\n    variant: .destructive,\n    action: RegistryToast.Action(label: \"Undo\") { restoreMessage() }\n)",
+            usage: "@State private var toast: RegistryToast?\n\nCardDetail()\n    .registryToast($toast)\n\n// Present a destructive toast with an undo action:\ntoast = RegistryToast(\n    title: \"Message deleted\",\n    message: \"You can undo this for a few seconds.\",\n    variant: .destructive,\n    action: RegistryToast.Action(label: \"Undo\") { restoreMessage() }\n)",
             dependencies: ["button"],
             tags: ["toast", "snackbar", "notification", "feedback", "status", "shadcn"]
         ),

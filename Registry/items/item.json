@@ -46,7 +46,10 @@
   "aliases": [
     "row",
     "list-item",
-    "cell"
+    "cell",
+    "product",
+    "product-row",
+    "cart-row"
   ],
   "accessibility": [
     "Title+description: one element; media/accessory separate, activatable.",

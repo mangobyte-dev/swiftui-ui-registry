@@ -41,7 +41,10 @@
   "aliases": [
     "chip",
     "tag",
-    "pill"
+    "pill",
+    "price",
+    "price-tag",
+    "discount"
   ],
   "accessibility": [
     "One line, intrinsic width.",

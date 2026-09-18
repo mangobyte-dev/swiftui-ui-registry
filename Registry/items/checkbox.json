@@ -39,7 +39,9 @@
     "style"
   ],
   "aliases": [
-    "check"
+    "check",
+    "consent",
+    "terms"
   ],
   "accessibility": [
     "Toggle: accessibility representation.",

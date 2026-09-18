@@ -45,7 +45,9 @@
     "data-table",
     "datagrid",
     "spreadsheet",
-    "invoice"
+    "invoice",
+    "order-summary",
+    "pricing"
   ],
   "accessibility": [
     "Row combines into one element; header row carries trait.",

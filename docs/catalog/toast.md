@@ -43,6 +43,7 @@ CardDetail()
 // Present a destructive toast with an undo action:
 toast = RegistryToast(
     title: "Message deleted",
+    message: "You can undo this for a few seconds.",
     variant: .destructive,
     action: RegistryToast.Action(label: "Undo") { restoreMessage() }
 )

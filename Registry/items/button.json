@@ -40,7 +40,10 @@
   ],
   "aliases": [
     "cta",
-    "action-button"
+    "action-button",
+    "add-to-cart",
+    "buy",
+    "checkout"
   ],
   "accessibility": [
     "Preserves Button semantics, ButtonRole.",

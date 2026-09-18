@@ -41,7 +41,9 @@
   "aliases": [
     "empty-state",
     "no-data",
-    "content-unavailable"
+    "content-unavailable",
+    "empty-cart",
+    "no-results"
   ],
   "accessibility": [
     "Keeps ContentUnavailableView semantics (title, description, symbol, actions).",

@@ -288,13 +288,21 @@ private struct GuideOverlay: View {
     }
 }
 
+/// The button's remembered-position keys, named once so `FloatingTuneButton`'s
+/// own `@AppStorage` and `DesignSurface`'s `forgetRememberedLayout()` reset
+/// can't drift apart the way two copies of the literal string could.
+enum FloatingButtonStorage {
+    static let restingY = "designSurface.button.y"
+    static let restingTrailing = "designSurface.button.trailing"
+}
+
 /// The draggable button that opens the panel. It settles to the nearer side
 /// after a drag and remembers its place. A hold offers the outlines and the
 /// guides.
 private struct FloatingTuneButton: View {
     @Bindable private var state = DesignSurfaceState.shared
-    @AppStorage("designSurface.button.y") private var restingY = 0.72
-    @AppStorage("designSurface.button.trailing") private var restingTrailing = true
+    @AppStorage(FloatingButtonStorage.restingY) private var restingY = 0.72
+    @AppStorage(FloatingButtonStorage.restingTrailing) private var restingTrailing = true
     @State private var drag: CGSize = .zero
 
     var body: some View {

@@ -97,7 +97,7 @@ public enum DesignSurface {
         let defaults = UserDefaults.standard
         for key in [
             PanelGeometry.storageKey(regular: false), PanelGeometry.storageKey(regular: true),
-            "designSurface.button.y", "designSurface.button.trailing",
+            FloatingButtonStorage.restingY, FloatingButtonStorage.restingTrailing,
         ] {
             defaults.removeObject(forKey: key)
         }

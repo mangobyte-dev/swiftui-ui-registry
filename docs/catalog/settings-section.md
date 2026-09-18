@@ -35,6 +35,11 @@ Verify the install by building the consuming target for an iOS Simulator destina
 ## Usage
 
 ```swift
+@State private var alertsEnabled = true
+@State private var marketingEnabled = false
+@State private var currency = "KWD"
+let marketingAllowed = false
+
 SettingsSection(
     "Notifications",
     footer: Text("Quiet hours apply to every channel.")

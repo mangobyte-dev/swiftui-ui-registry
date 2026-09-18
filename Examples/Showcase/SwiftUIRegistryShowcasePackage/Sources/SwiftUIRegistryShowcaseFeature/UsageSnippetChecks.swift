@@ -81,6 +81,35 @@ private struct UsageSnippet_Attachment: View {
     }
 }
 
+// MARK: auth-form
+private struct UsageSnippet_AuthForm: View {
+    @State private var email = ""
+    @State private var password = ""
+    @State private var isSubmitting = false
+    let formError: LocalizedStringResource? = nil
+    // Errors derive from state; nil hides the message and clears the invalid style.
+    var emailError: LocalizedStringResource? {
+        email.isEmpty || email.contains("@") ? nil : "Enter a valid email address."
+    }
+    var passwordError: LocalizedStringResource? {
+        password.isEmpty || password.count >= 8 ? nil : "Use at least 8 characters."
+    }
+    var body: some View {
+        AuthForm(
+            "Welcome back",
+            identity: $email,
+            identityError: emailError,
+            password: $password,
+            passwordError: passwordError,
+            formError: formError,
+            isSubmitting: isSubmitting,
+            secondaryActionTitle: "Forgot password?",
+            onSecondaryAction: { },
+            onSubmit: { }
+        )
+    }
+}
+
 // MARK: avatar
 private struct UsageSnippet_Avatar: View {
     var body: some View {
@@ -279,6 +308,27 @@ private struct UsageSnippet_Empty: View {
     }
 }
 
+// MARK: field
+private struct UsageSnippet_Field: View {
+    @State private var name = ""
+    @State private var email = ""
+    @State private var showErrors = false
+    var body: some View {
+        FieldGroup {
+            Field("Full name", description: "As it appears on your card.") { _ in
+                TextField("Full name", text: $name)
+                    .textFieldStyle(.registryInput)
+                    .accessibilityLabel("Full name")
+            }
+            Field("Email", error: showErrors ? "Enter a valid email address." : nil) { isInvalid in
+                TextField("you@example.com", text: $email)
+                    .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))
+                    .accessibilityLabel("Email")
+            }
+        }
+    }
+}
+
 // MARK: finance-overview
 private struct UsageSnippet_FinanceOverview: View {
     var body: some View {
@@ -424,6 +474,25 @@ private struct UsageSnippet_Message: View {
     }
 }
 
+// MARK: message-scroller
+private struct UsageSnippet_MessageScroller: View {
+    // messages is your own model collection; each element is Identifiable
+    // with an id, a text, and isMine.
+    @State private var position: String?
+    @State private var isFollowing = true
+    var body: some View {
+        MessageScroller(position: $position, isFollowing: $isFollowing) {
+            ForEach(messages) { message in
+                MessageRow {
+                    Text(message.text)
+                }
+                .registryVariant(message.isMine ? .outgoing : .incoming)
+                .id(message.id)
+            }
+        }
+    }
+}
+
 // MARK: metric-card
 private struct UsageSnippet_MetricCard: View {
     var body: some View {
@@ -538,6 +607,83 @@ private struct UsageSnippet_Separator: View {
     }
 }
 
+// MARK: settings-section
+private struct UsageSnippet_SettingsSection: View {
+    @State private var alertsEnabled = true
+    @State private var marketingEnabled = false
+    @State private var currency = "KWD"
+    let marketingAllowed = false
+    var body: some View {
+        SettingsSection(
+            "Notifications",
+            footer: Text("Quiet hours apply to every channel.")
+        ) {
+            Toggle("Transaction alerts", isOn: $alertsEnabled)
+                .settingsRowDescription(Text("A push notification for every card transaction."))
+        
+            Toggle("Marketing messages", isOn: $marketingEnabled)
+                .settingsRowDisabled(
+                    !marketingAllowed,
+                    explanation: Text("Managed by your organization's privacy policy.")
+                )
+        
+            LabeledContent("Currency") {
+                Picker("Currency", selection: $currency) {
+                    Text("Kuwaiti dinar").tag("KWD")
+                    Text("US dollar").tag("USD")
+                }
+                .registrySelect()
+            }
+        
+            Button("Sign out", role: .destructive) { }
+                .buttonStyle(.registry)
+        }
+    }
+}
+
+// MARK: signup-form
+private struct UsageSnippet_SignupForm: View {
+    @State private var name = ""
+    @State private var email = ""
+    @State private var password = ""
+    @State private var confirmation = ""
+    @State private var acceptsTerms = false
+    @State private var isSubmitting = false
+    let formError: LocalizedStringResource? = nil
+    // Errors derive from state; nil hides the message and clears the invalid style.
+    var nameError: LocalizedStringResource? { nil }
+    var emailError: LocalizedStringResource? {
+        email.isEmpty || email.contains("@") ? nil : "Enter a valid email address."
+    }
+    var passwordError: LocalizedStringResource? {
+        password.isEmpty || password.count >= 8 ? nil : "Use at least 8 characters."
+    }
+    var confirmationError: LocalizedStringResource? {
+        confirmation == password ? nil : "Passwords do not match."
+    }
+    var termsError: LocalizedStringResource? { nil }
+    var body: some View {
+        SignUpForm(
+            "Create your account",
+            name: $name,
+            nameError: nameError,
+            email: $email,
+            emailError: emailError,
+            password: $password,
+            passwordError: passwordError,
+            confirmation: $confirmation,
+            confirmationError: confirmationError,
+            acceptsTerms: $acceptsTerms,
+            termsError: termsError,
+            formError: formError,
+            isSubmitting: isSubmitting,
+            secondaryActionTitle: "Already have an account?",
+            onSecondaryAction: { },
+            onSubmit: { }
+        )
+    }
+}
+
 // MARK: skeleton
 private struct UsageSnippet_Skeleton: View {
     @State private var isLoading = true
@@ -593,6 +739,7 @@ private struct UsageSnippet_Toast: View {
         // Present a destructive toast with an undo action:
         toast = RegistryToast(
             title: "Message deleted",
+            message: "You can undo this for a few seconds.",
             variant: .destructive,
             action: RegistryToast.Action(label: "Undo") { restoreMessage() }
         )

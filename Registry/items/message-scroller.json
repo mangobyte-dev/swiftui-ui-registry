@@ -5,7 +5,7 @@
   "name": "message-scroller",
   "kind": "component",
   "description": "Chat ScrollView: newest-turn open, follows streamed replies, holds scrolled-up reader, requests history at top.",
-  "usage": "MessageScroller(position: $position, isFollowing: $isFollowing) {\n    ForEach(messages) { message in\n        MessageRow {\n            Text(message.text)\n        }\n        .registryVariant(message.isMine ? .outgoing : .incoming)\n        .id(message.id)\n    }\n}",
+  "usage": "// messages is your own model collection; each element is Identifiable\n// with an id, a text, and isMine.\n@State private var position: String?\n@State private var isFollowing = true\n\nMessageScroller(position: $position, isFollowing: $isFollowing) {\n    ForEach(messages) { message in\n        MessageRow {\n            Text(message.text)\n        }\n        .registryVariant(message.isMine ? .outgoing : .incoming)\n        .id(message.id)\n    }\n}",
   "files": [
     {
       "source": "sources/components/MessageScroller.swift",

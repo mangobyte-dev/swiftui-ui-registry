@@ -35,6 +35,11 @@ Verify the install by building the consuming target for an iOS Simulator destina
 ## Usage
 
 ```swift
+// messages is your own model collection; each element is Identifiable
+// with an id, a text, and isMine.
+@State private var position: String?
+@State private var isFollowing = true
+
 MessageScroller(position: $position, isFollowing: $isFollowing) {
     ForEach(messages) { message in
         MessageRow {

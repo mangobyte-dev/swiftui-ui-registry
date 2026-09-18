@@ -45,3 +45,11 @@ struct CardDetail: View {
     var body: some View { EmptyView() }
 }
 func restoreMessage() {}
+
+// message-scroller: the conversation rows (`message.id`, `message.text`, `message.isMine`).
+struct UsageSnippetMessage: Identifiable {
+    let id: String
+    let text: String
+    let isMine: Bool
+}
+let messages: [UsageSnippetMessage] = []

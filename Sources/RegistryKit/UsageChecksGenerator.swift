@@ -10,17 +10,6 @@ public struct UsageChecksGenerator {
   public static let outputPath =
     "Examples/Showcase/SwiftUIRegistryShowcasePackage/Sources/SwiftUIRegistryShowcaseFeature/UsageSnippetChecks.swift"
 
-  /// Snippets that reference a caller-owned SwiftUI binding (`$name`) the
-  /// snippet does not itself declare. A `Binding` cannot come from the
-  /// placeholder file: a property wrapper is illegal on a global variable, so
-  /// `$name` resolves only against a wrapped member of the enclosing view, and
-  /// only the snippet can add that member. These are registry defects, recorded
-  /// here and reported rather than silently skipped, until each snippet either
-  /// declares its own `@State` or stops quoting a bare binding.
-  static let unverifiable: Set<String> = [
-    "auth-form", "field", "message-scroller", "settings-section", "signup-form",
-  ]
-
   public init(root: String) throws { registry = try Registry(root: root) }
 
   private static let header = #"""
@@ -38,7 +27,6 @@ public struct UsageChecksGenerator {
     let names =
       registry.items.keys
       .filter { registry.items[$0]!["kind"].text != "recipe" }
-      .filter { !Self.unverifiable.contains($0) }
       .sorted()
     let usages = names.map { registry.items[$0]!["usage"].text }
     var result = Self.header

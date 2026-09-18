@@ -410,7 +410,7 @@
       "kind": "block",
       "version": "0.3.2",
       "description": "Composes input, button, card into sign-in form; caller owns credentials, validation, submission state.",
-      "usage": "AuthForm(\n    \"Welcome back\",\n    identity: $email,\n    identityError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Forgot password?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
+      "usage": "@State private var email = \"\"\n@State private var password = \"\"\n@State private var isSubmitting = false\nlet formError: LocalizedStringResource? = nil\n\n// Errors derive from state; nil hides the message and clears the invalid style.\nvar emailError: LocalizedStringResource? {\n    email.isEmpty || email.contains(\"@\") ? nil : \"Enter a valid email address.\"\n}\nvar passwordError: LocalizedStringResource? {\n    password.isEmpty || password.count >= 8 ? nil : \"Use at least 8 characters.\"\n}\n\nAuthForm(\n    \"Welcome back\",\n    identity: $email,\n    identityError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Forgot password?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
       "docs": null,
       "tags": [
         "authentication",
@@ -2540,7 +2540,7 @@
       "kind": "component",
       "version": "0.1.1",
       "description": "Chat ScrollView: newest-turn open, follows streamed replies, holds scrolled-up reader, requests history at top.",
-      "usage": "MessageScroller(position: $position, isFollowing: $isFollowing) {\n    ForEach(messages) { message in\n        MessageRow {\n            Text(message.text)\n        }\n        .registryVariant(message.isMine ? .outgoing : .incoming)\n        .id(message.id)\n    }\n}",
+      "usage": "// messages is your own model collection; each element is Identifiable\n// with an id, a text, and isMine.\n@State private var position: String?\n@State private var isFollowing = true\n\nMessageScroller(position: $position, isFollowing: $isFollowing) {\n    ForEach(messages) { message in\n        MessageRow {\n            Text(message.text)\n        }\n        .registryVariant(message.isMine ? .outgoing : .incoming)\n        .id(message.id)\n    }\n}",
       "docs": null,
       "tags": [
         "chat",
@@ -3488,7 +3488,7 @@
       "kind": "block",
       "version": "0.1.2",
       "description": "Composes select, separator, button; structure, separators, messages, caller-owned toggle/picker/action rows.",
-      "usage": "SettingsSection(\n    \"Notifications\",\n    footer: Text(\"Quiet hours apply to every channel.\")\n) {\n    Toggle(\"Transaction alerts\", isOn: $alertsEnabled)\n        .settingsRowDescription(Text(\"A push notification for every card transaction.\"))\n\n    Toggle(\"Marketing messages\", isOn: $marketingEnabled)\n        .settingsRowDisabled(\n            !marketingAllowed,\n            explanation: Text(\"Managed by your organization's privacy policy.\")\n        )\n\n    LabeledContent(\"Currency\") {\n        Picker(\"Currency\", selection: $currency) {\n            Text(\"Kuwaiti dinar\").tag(\"KWD\")\n            Text(\"US dollar\").tag(\"USD\")\n        }\n        .registrySelect()\n    }\n\n    Button(\"Sign out\", role: .destructive) { }\n        .buttonStyle(.registry)\n}",
+      "usage": "@State private var alertsEnabled = true\n@State private var marketingEnabled = false\n@State private var currency = \"KWD\"\nlet marketingAllowed = false\n\nSettingsSection(\n    \"Notifications\",\n    footer: Text(\"Quiet hours apply to every channel.\")\n) {\n    Toggle(\"Transaction alerts\", isOn: $alertsEnabled)\n        .settingsRowDescription(Text(\"A push notification for every card transaction.\"))\n\n    Toggle(\"Marketing messages\", isOn: $marketingEnabled)\n        .settingsRowDisabled(\n            !marketingAllowed,\n            explanation: Text(\"Managed by your organization's privacy policy.\")\n        )\n\n    LabeledContent(\"Currency\") {\n        Picker(\"Currency\", selection: $currency) {\n            Text(\"Kuwaiti dinar\").tag(\"KWD\")\n            Text(\"US dollar\").tag(\"USD\")\n        }\n        .registrySelect()\n    }\n\n    Button(\"Sign out\", role: .destructive) { }\n        .buttonStyle(.registry)\n}",
       "docs": null,
       "tags": [
         "settings",
@@ -3646,7 +3646,7 @@
       "kind": "block",
       "version": "0.1.1",
       "description": "Composes input, button, card, checkbox; caller owns fields, validation, terms, submission state.",
-      "usage": "SignUpForm(\n    \"Create your account\",\n    name: $name,\n    nameError: nameError,\n    email: $email,\n    emailError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    confirmation: $confirmation,\n    confirmationError: confirmationError,\n    acceptsTerms: $acceptsTerms,\n    termsError: termsError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Already have an account?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
+      "usage": "@State private var name = \"\"\n@State private var email = \"\"\n@State private var password = \"\"\n@State private var confirmation = \"\"\n@State private var acceptsTerms = false\n@State private var isSubmitting = false\nlet formError: LocalizedStringResource? = nil\n\n// Errors derive from state; nil hides the message and clears the invalid style.\nvar nameError: LocalizedStringResource? { nil }\nvar emailError: LocalizedStringResource? {\n    email.isEmpty || email.contains(\"@\") ? nil : \"Enter a valid email address.\"\n}\nvar passwordError: LocalizedStringResource? {\n    password.isEmpty || password.count >= 8 ? nil : \"Use at least 8 characters.\"\n}\nvar confirmationError: LocalizedStringResource? {\n    confirmation == password ? nil : \"Passwords do not match.\"\n}\nvar termsError: LocalizedStringResource? { nil }\n\nSignUpForm(\n    \"Create your account\",\n    name: $name,\n    nameError: nameError,\n    email: $email,\n    emailError: emailError,\n    password: $password,\n    passwordError: passwordError,\n    confirmation: $confirmation,\n    confirmationError: confirmationError,\n    acceptsTerms: $acceptsTerms,\n    termsError: termsError,\n    formError: formError,\n    isSubmitting: isSubmitting,\n    secondaryActionTitle: \"Already have an account?\",\n    onSecondaryAction: { },\n    onSubmit: { }\n)",
       "docs": null,
       "tags": [
         "sign-up",

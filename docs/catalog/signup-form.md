@@ -35,6 +35,27 @@ Verify the install by building the consuming target for an iOS Simulator destina
 ## Usage
 
 ```swift
+@State private var name = ""
+@State private var email = ""
+@State private var password = ""
+@State private var confirmation = ""
+@State private var acceptsTerms = false
+@State private var isSubmitting = false
+let formError: LocalizedStringResource? = nil
+
+// Errors derive from state; nil hides the message and clears the invalid style.
+var nameError: LocalizedStringResource? { nil }
+var emailError: LocalizedStringResource? {
+    email.isEmpty || email.contains("@") ? nil : "Enter a valid email address."
+}
+var passwordError: LocalizedStringResource? {
+    password.isEmpty || password.count >= 8 ? nil : "Use at least 8 characters."
+}
+var confirmationError: LocalizedStringResource? {
+    confirmation == password ? nil : "Passwords do not match."
+}
+var termsError: LocalizedStringResource? { nil }
+
 SignUpForm(
     "Create your account",
     name: $name,

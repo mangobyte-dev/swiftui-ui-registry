@@ -197,6 +197,12 @@ Second pass:
 | `2907402` | V5: record that the skeleton gates appearance and interaction, not effects | copy-owned source, Showcase, generated | none |
 | `4a7b803` | Dogfood F2: declare the state the `field` usage snippet reads | metadata, generated | none |
 | `0f686bc` | V6: `FileSystem` and `RegistrySource` as structs of closures | RegistryKit, tests | low, **public API change, approved before implementing** |
+| `b4b663c` | Dogfood F1, F4, F7: shop vocabulary aliases on 13 items, `toast` shows `message:`, `carousel` names its placeholder | metadata, generated | none |
+| `6871db5` | Dogfood F5: `describe` lists public signatures, in text and in the JSON and MCP payloads | RegistryKit, CLI, tests | low, additive payload field |
+| `90c22e3` | Dogfood F6: a names search that matches nothing says so | CLI, tests | none |
+| `dabb739` | The consumer skill documents `Signatures:` and the no-match message | Skills | none |
+| `dafc7ca` (merges `6a6d651`) | Dogfood F2 gate: `generate usage-checks`, the fifth generator, plus the placeholder file, CI, AGENTS, and docs | RegistryKit, CLI, Showcase, tests, docs | low |
+| `4f253ab` | Dogfood F2: four block snippets declare their state, the gate compiles all 48 | metadata, generated, Showcase | none |
 
 V6 is the one second-pass commit that changes public API, and it followed the owner's answer. V5 is the one edit to `Registry/sources/`: a doc comment,
 with the item's patch version bumped and the Showcase copy reinstalled. Two manifest lines were
@@ -213,25 +219,28 @@ afterwards.
 
 | # | Step | Finding | Severity | Status |
 |---|---|---|---|---|
-| F1 | search | `product`, `cart`, `price`, `checkout`, `quantity`, `rating`, `stepper`, `price-tag` all return nothing; no item's name, tags, or aliases carry any of them. The fitting items (item, field, badge, toast, empty) are reachable only by internal name | major | open: alias proposal for the owner (item: product; badge: price; field and input: checkout, form; empty: empty-cart; metric-card: rating; button: add-to-cart) |
-| F2 | compose | `field`'s usage snippet used `$name` and `emailError` without declaring them, so it did not compile as printed | major | **fixed**: declares its state and takes the error expression from `FieldPreview` |
+| F1 | search | `product`, `cart`, `price`, `checkout`, `quantity`, `rating`, `stepper`, `price-tag` all return nothing; no item's name, tags, or aliases carry any of them. The fitting items (item, field, badge, toast, empty) are reachable only by internal name | major | **fixed** (`b4b663c`): thirteen items gained shop aliases; `product`, `cart`, `price`, `checkout`, and `rating` now resolve |
+| F2 | compose | `field`'s usage snippet used `$name` and `emailError` without declaring them, so it did not compile as printed. The gate then found the same defect in `auth-form`, `signup-form`, `message-scroller`, and `settings-section` | major | **fixed** (`4a7b803`, then the gate commit): all five declare their state; `generate usage-checks` now compiles every installable snippet in the Showcase |
 | F3 | compile | The XcodeBuildMCP scaffold pairs `swift-tools-version: 6.1` with `.iOS(.v26)`; the first added dependency fails resolution | major | scaffold defect, not the registry's; bumped to 6.2 in the app |
-| F4 | docs | `toast`'s snippet omits `message:` (`RegistryToastModifier.swift:46` has it) | minor | open |
-| F5 | docs | `describe` shows call shape, not parameter types (`MetricCard`'s `LocalizedStringResource` title and `Text` value) | minor | open: a signature line under Usage |
-| F6 | search | `--format names` prints nothing on zero matches; JSON prints `[]` | nit | open |
-| F7 | compose | `carousel`'s recipe snippet iterates an undeclared `cards` | minor | open: name the placeholder |
+| F4 | docs | `toast`'s snippet omits `message:` (`RegistryToastModifier.swift:46` has it) | minor | **fixed** (`b4b663c`) |
+| F5 | docs | `describe` shows call shape, not parameter types (`MetricCard`'s `LocalizedStringResource` title and `Text` value) | minor | **fixed** (`6871db5`): `describe` lists every public initializer, function, and static member under `Signatures:`, and the JSON and MCP payloads carry `signatures` |
+| F6 | search | `--format names` prints nothing on zero matches; JSON prints `[]` | nit | **fixed** (`90c22e3`): stderr says `No item matches ...`, exit 0 |
+| F7 | compose | `carousel`'s recipe snippet iterates an undeclared `cards` | minor | **fixed** (`b4b663c`): the snippet opens by naming `cards` as the consumer's model |
 
-Nothing compiles the `usage` snippets today; F2 shipped in 0.3.1 because of that. A contract test
-that type-checks every installable item's snippet inside a `View` body is the highest-value
-follow-up from the exercise. Missing components a shop wanted: a price display, a quantity stepper,
+The compile gate exists now: `swiftui-registry generate usage-checks` writes one `View` per
+installable item around its snippet (declarations as members, views in `body`, an assignment in a
+method), and the Showcase build type-checks the file. Names a snippet leaves to the adopter are
+stand-ins in `UsageSnippetPlaceholders.swift`. It is Ep 55's idea: save the generated code as a real
+Swift file so the compiler validates it. Its first run found four more broken snippets. Missing components a shop wanted: a price display, a quantity stepper,
 a rating, a product tile with an image; each was composed from badge, button, metric-card, and item.
 
 ## Owner decisions, 2026-09-18
 
 1. **R1**, `FileSystem` and `RegistrySource` as structs of closures: yes, applied as V6.
 2. **R2**, an `ItemName` newtype: no.
-3. Dogfood proposals (shop-vocabulary aliases, a snippet compile gate): no for now; they stay
-   recorded under Phase 5.
+3. Dogfood proposals (shop-vocabulary aliases, a snippet compile gate): no at first, then "fix the
+   weak points" later the same day, with the stated aim of using Point-Free's ideas to cut the
+   friction an agent meets; all seven findings are fixed, see Phase 5.
 4. **R4**, `ComposableArchitecture2Deprecations` on `Examples/TodoCounter`: deferred until that app
    is next opened.
 

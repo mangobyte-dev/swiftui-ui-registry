@@ -7,9 +7,23 @@ public struct PlannedFile: Equatable, Sendable {
   public var source: String
   public var target: String
 }
-public struct FileStatus: Equatable, Sendable {
+/// A file's status, generic over which vocabulary produced it: `plan`/`update`
+/// share the `(file, status)` shape but never the same set of cases.
+public struct FileStatus<Status: Equatable & Sendable>: Equatable, Sendable {
   public var file: PlannedFile
-  public var status: String
+  public var status: Status
+}
+public enum PlanFileStatus: String, Equatable, Sendable {
+  case new
+  case upToDate = "up-to-date"
+  case wouldMerge = "would-merge"
+  case modifiedWouldRequireForce = "modified-would-require-force"
+}
+public enum UpdateFileStatus: String, Equatable, Sendable {
+  case unchanged
+  case updated
+  case locallyModified = "locally-modified"
+  case merged
 }
 public struct FileDiff: Equatable, Sendable {
   public var file: PlannedFile
@@ -40,24 +54,26 @@ public struct Installer {
     }
     return planned
   }
-  public func inspectPlan(_ name: String, destination: String) throws -> [FileStatus] {
+  public func inspectPlan(_ name: String, destination: String) throws -> [FileStatus<
+    PlanFileStatus
+  >] {
     let destination = fs.resolve(destination)
     let files = try plan(name, destination: destination)
     let receipt = try readReceipt(destination)
     return try files.map { file in
       let record = receipt["files"][key(file, destination)]
-      let status: String
+      let status: PlanFileStatus
       if !fs.exists(file.target) {
-        status = "new"
+        status = .new
       } else if try matchesReceipt(file, record, destination) {
-        status = "up-to-date"
+        status = .upToDate
       } else if let base = record["base"].string,
         let path = Optional(try safeJoin(metadata(destination), base, fs: fs)), fs.isFile(path),
         try fs.read(path) != fs.read(file.source)
       {
-        status = "would-merge"
+        status = .wouldMerge
       } else {
-        status = "modified-would-require-force"
+        status = .modifiedWouldRequireForce
       }
       return .init(file: file, status: status)
     }
@@ -117,11 +133,13 @@ public struct Installer {
     try writeReceipt(receipt, destination)
     return installed
   }
-  public func update(_ name: String, destination: String) throws -> [FileStatus] {
+  public func update(_ name: String, destination: String) throws -> [FileStatus<
+    UpdateFileStatus
+  >] {
     let destination = fs.resolve(destination)
     let files = try plan(name, destination: destination)
     var receipt = try readReceipt(destination, required: true)
-    var decisions: [(PlannedFile, Data, Data, String)] = []
+    var decisions: [(PlannedFile, Data, Data, UpdateFileStatus)] = []
     var conflicts: [(PlannedFile, Data)] = []
     for file in files {
       let record = receipt["files"][key(file, destination)]
@@ -143,15 +161,15 @@ public struct Installer {
         throw RegistryError("Receipt base digest mismatch for \(file.target)")
       }
       if current == base {
-        decisions.append((file, incoming, incoming, incoming == base ? "unchanged" : "updated"))
+        decisions.append((file, incoming, incoming, incoming == base ? .unchanged : .updated))
       } else if incoming == base {
-        decisions.append((file, current, base, "locally-modified"))
+        decisions.append((file, current, base, .locallyModified))
       } else {
         let merged = try merger.merge(current, base, incoming, key(file, destination))
         if merged.hasConflict {
           conflicts.append((file, merged.content))
         } else {
-          decisions.append((file, merged.content, incoming, "merged"))
+          decisions.append((file, merged.content, incoming, .merged))
         }
       }
     }

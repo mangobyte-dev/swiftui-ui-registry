@@ -203,17 +203,17 @@ public struct MCPServer {
         entries.map {
           [
             "item": .string($0.file.item), "target": .string($0.file.target),
-            "status": .string($0.status),
+            "status": .string($0.status.rawValue),
           ]
         }),
       "packageRequirements": .array(
         try registry.packageRequirements(name).map { .string(Registry.dependencyInstruction($0)) }),
       "collisions": .array(
-        entries.filter { $0.status == "modified-would-require-force" }.map {
+        entries.filter { $0.status == .modifiedWouldRequireForce }.map {
           .string($0.file.target)
         }),
       "stale": .array(
-        entries.filter { $0.status == "would-merge" }.map { .string($0.file.target) }),
+        entries.filter { $0.status == .wouldMerge }.map { .string($0.file.target) }),
       "nextSteps": [
         "Add each package requirement to the consuming project; the installer never edits project files",
         "Ensure the destination folder is a member of the consuming build target",

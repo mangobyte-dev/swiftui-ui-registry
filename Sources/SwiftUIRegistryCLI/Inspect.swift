@@ -79,7 +79,7 @@ struct Info: ParsableCommand {
                   .array(
                     item.files.map {
                       OrderedJSON.object([
-                        ("target", .string($0.target)), ("status", .string($0.status)),
+                        ("target", .string($0.target)), ("status", .string($0.status.rawValue)),
                       ])
                     })
                 ),
@@ -98,7 +98,7 @@ struct Info: ParsableCommand {
       var out = "Installed items in \(report.destination):\n"
       for item in report.items {
         out += "\(item.name) \(item.version)\n"
-        for file in item.files { out += "  \(file.target)  \(file.status)\n" }
+        for file in item.files { out += "  \(file.target)  \(file.status.rawValue)\n" }
       }
       out +=
         "\(report.items.count) items, \(report.upToDate) files up-to-date, "

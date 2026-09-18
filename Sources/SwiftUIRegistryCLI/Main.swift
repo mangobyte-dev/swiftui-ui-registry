@@ -115,7 +115,7 @@ struct Install: ParsableCommand {
         }
         if update {
           for result in try installer.update(item, destination: destination) {
-            print("\(result.status) \(result.file.item): \(result.file.target)")
+            print("\(result.status.rawValue) \(result.file.item): \(result.file.target)")
           }
         } else {
           let files = try installer.install(item, destination: destination, force: force)
@@ -152,15 +152,17 @@ struct Install: ParsableCommand {
       print("  \(name) \(member["version"].text) (\(member["kind"].text))")
     }
     print("files:")
-    for entry in entries { print("  \(entry.status) \(entry.file.item): \(entry.file.target)") }
+    for entry in entries {
+      print("  \(entry.status.rawValue) \(entry.file.item): \(entry.file.target)")
+    }
     print("packages:")
     let requirements = try installer.registry.packageRequirements(item)
     for dependency in requirements {
       print("  requires: " + Registry.dependencyInstruction(dependency))
     }
     if requirements.isEmpty { print("  none") }
-    let blocked = entries.filter { $0.status == "modified-would-require-force" }
-    let stale = entries.filter { $0.status == "would-merge" }
+    let blocked = entries.filter { $0.status == .modifiedWouldRequireForce }
+    let stale = entries.filter { $0.status == .wouldMerge }
     print("preflight:")
     if blocked.isEmpty && stale.isEmpty {
       print("  ok: no collisions; install writes new targets and skips up-to-date targets")

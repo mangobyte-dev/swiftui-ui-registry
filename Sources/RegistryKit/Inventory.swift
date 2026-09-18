@@ -3,10 +3,15 @@ import Foundation
 
 /// A read-only view of an installed destination, built from its receipt and the files on disk.
 /// Independent of any registry clone: `info` reports what a consumer already owns.
+public enum InventoryFileStatus: String, Equatable, Sendable {
+  case missing
+  case upToDate = "up-to-date"
+  case modified
+}
 public struct InstalledInventory: Sendable {
   public struct File: Sendable, Equatable {
     public var target: String
-    public var status: String
+    public var status: InventoryFileStatus
   }
   public struct Item: Sendable, Equatable {
     public var name: String
@@ -37,21 +42,21 @@ public func inventory(destination: String) throws -> InstalledInventory {
   do { receipt = try JSON.read(fs.read(path)) } catch {
     throw RegistryError("Cannot read \(path): \(error)")
   }
-  var status: [String: String] = [:]
+  var status: [String: InventoryFileStatus] = [:]
   var upToDate = 0
   var modified = 0
   var missing = 0
   for (key, record) in receipt["files"].object ?? [:] {
     let target = destination + "/" + key
-    let state: String
+    let state: InventoryFileStatus
     if !fs.isFile(target) {
-      state = "missing"
+      state = .missing
       missing += 1
     } else if try Installer.digest(fs.read(target)) == record["installedDigest"].text {
-      state = "up-to-date"
+      state = .upToDate
       upToDate += 1
     } else {
-      state = "modified"
+      state = .modified
       modified += 1
     }
     status[key] = state
@@ -63,7 +68,7 @@ public func inventory(destination: String) throws -> InstalledInventory {
     name -> InstalledInventory.Item in
     let record = receipt["items"][name]
     let files = (filesByItem[name] ?? []).sorted().map {
-      InstalledInventory.File(target: $0, status: status[$0] ?? "missing")
+      InstalledInventory.File(target: $0, status: status[$0] ?? .missing)
     }
     return InstalledInventory.Item(
       name: name, version: record["version"].text,

@@ -391,7 +391,7 @@ extension Commands {
         let local = try fileData(target) + Data("// local edit\n".utf8)
         try local.write(to: URL(fileURLWithPath: target))
         #expect(
-          try installer.update("badge", destination: destination).map(\.status)
+          try installer.update("badge", destination: destination).map(\.status.rawValue)
             == ["locally-modified"])
         func record() throws -> JSON {
           try JSON.read(fileData(destination + "/.swiftui-registry/receipt.json"))["files"][
@@ -442,7 +442,7 @@ extension Commands {
       let installer = try Installer(root: "/registry")
       _ = try installer.install("example", destination: "/app")
       func statuses() throws -> [String] {
-        try installer.inspectPlan("example", destination: "/app").map(\.status)
+        try installer.inspectPlan("example", destination: "/app").map(\.status.rawValue)
       }
       #expect(try statuses() == ["up-to-date"])
       try fs.put("/app/Example.swift", "consumer\n")
@@ -450,7 +450,8 @@ extension Commands {
       try fs.put("/app/Example.swift", "base\n")
       try fs.put("/registry/Registry/sources/Example.swift", "registry\n")
       #expect(try statuses() == ["would-merge"])
-      #expect(try installer.update("example", destination: "/app").map(\.status) == ["updated"])
+      #expect(
+        try installer.update("example", destination: "/app").map(\.status.rawValue) == ["updated"])
       #expect(try fs.read("/app/Example.swift") == Data("registry\n".utf8))
       #expect(try statuses() == ["up-to-date"])
     }

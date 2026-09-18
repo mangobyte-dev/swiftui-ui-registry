@@ -113,4 +113,17 @@ final class DesignSurfaceState {
         if let index = screens.lastIndex(of: name) { screens.remove(at: index) }
     }
 }
+
+extension Binding where Value == DesignSurfaceState.Guides {
+    /// A per-flag toggle binding, the one place this derivation constructs a
+    /// `Binding` directly: everywhere else derives one from this subscript.
+    subscript(contains member: DesignSurfaceState.Guides) -> Binding<Bool> {
+        Binding<Bool>(
+            get: { wrappedValue.contains(member) },
+            set: { isOn in
+                if isOn { wrappedValue.insert(member) } else { wrappedValue.remove(member) }
+            }
+        )
+    }
+}
 #endif

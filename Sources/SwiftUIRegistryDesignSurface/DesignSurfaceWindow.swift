@@ -292,20 +292,10 @@ private struct GuideOverlay: View {
 /// after a drag and remembers its place. A hold offers the outlines and the
 /// guides.
 private struct FloatingTuneButton: View {
-    private let state = DesignSurfaceState.shared
+    @Bindable private var state = DesignSurfaceState.shared
     @AppStorage("designSurface.button.y") private var restingY = 0.72
     @AppStorage("designSurface.button.trailing") private var restingTrailing = true
     @State private var drag: CGSize = .zero
-
-    private var outlines: Binding<Bool> {
-        Binding(get: { state.showsOutlines }, set: { state.showsOutlines = $0 })
-    }
-
-    private func guide(_ guide: DesignSurfaceState.Guides) -> Binding<Bool> {
-        Binding(
-            get: { state.guides.contains(guide) },
-            set: { if $0 { state.guides.insert(guide) } else { state.guides.remove(guide) } })
-    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -324,10 +314,10 @@ private struct FloatingTuneButton: View {
             .buttonStyle(.borderedProminent)
             .clipShape(Circle())
             .contextMenu {
-                Toggle("Outline the pieces", systemImage: "rectangle.dashed", isOn: outlines)
-                Toggle("8 pt grid", systemImage: "grid", isOn: guide(.grid))
-                Toggle("24 pt lines", systemImage: "text.justify", isOn: guide(.lines))
-                Toggle("Margins", systemImage: "arrow.left.and.right", isOn: guide(.margins))
+                Toggle("Outline the pieces", systemImage: "rectangle.dashed", isOn: $state.showsOutlines)
+                Toggle("8 pt grid", systemImage: "grid", isOn: $state.guides[contains: .grid])
+                Toggle("24 pt lines", systemImage: "text.justify", isOn: $state.guides[contains: .lines])
+                Toggle("Margins", systemImage: "arrow.left.and.right", isOn: $state.guides[contains: .margins])
             }
             .accessibilityLabel("Tune")
             .accessibilityHint("Opens the design surface panel. Hold for outlines and guides.")

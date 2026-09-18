@@ -1,8 +1,8 @@
 # Point-Free audit
 
 A disciplined pass applying Point-Free's functional-programming, modularization, ergonomics, and
-testability ideas to the registry, where they actually apply. Not a rewrite: two passes, 11 small
-commits in all, each one principle, each proven by build + `swift test` + `validate` before moving on.
+testability ideas to the registry, where they actually apply. Not a rewrite: two passes of small
+commits, each one principle, each proven by build + `swift test` + `validate` before moving on.
 
 ## Scope note (Rule 0: cite, don't assume)
 
@@ -129,8 +129,8 @@ file and line it was read at.
 
 | # | Idea | Source | Current state | Proposed change | Why not now | Priority |
 |---|---|---|---|---|---|---|
-| R1 | A protocol with one or two conformances is a struct of closures in disguise; a witness struct gets `unimplemented` for free | Ep 34: "Pretty much any protocol can be turned into an explicit struct." Ep 110: "A protocol that only has two conformances is not a strong form of abstraction." | `FileSystem` (12 requirements, 2 conformances) and `RegistrySource` (1 requirement, 3 conformances) are the two protocol dependencies; the other six are structs of closures (`Console.swift:6`, `RegistryInput.swift:5`, `ReleaseSnapshot.swift:19,46,78`, `SourceComparison.swift:12`) | Rewrite both as `public struct`s of closures; `LocalFileSystem`, `InMemoryFileSystem`, and the three sources become factory values; both become eligible for `@DependencyClient` | **Public API of `RegistryKit`: stop and ask.** V1 already closes the test leak without it, so what remains is house-style conformance | 3/4 |
-| R2 | Phantom-typed identifiers so an item name cannot be passed where a path belongs | Ep 12 (Tagged) | Item names, receipt keys, and paths are `String` throughout `Installer.swift:40-136`, `Registry.swift:34`, `MCPServer.swift:164`. The name is always the sole unlabeled first argument and `destination:` is labeled, so no silent swap compiles. The only unlabeled same-type pairs are path-to-path (`FileSystem.replace`, `safeJoin`) which `Tagged` would not separate | A five-line `ItemName` newtype, no dependency | **Public API: stop and ask.** No mix-up site found, so the gain is documentation | 1/4 |
+| R1 | A protocol with one or two conformances is a struct of closures in disguise; a witness struct gets `unimplemented` for free | Ep 34: "Pretty much any protocol can be turned into an explicit struct." Ep 110: "A protocol that only has two conformances is not a strong form of abstraction." | `FileSystem` (12 requirements, 2 conformances) and `RegistrySource` (1 requirement, 3 conformances) were the two protocol dependencies; the other six are structs of closures (`Console.swift:6`, `RegistryInput.swift:5`, `ReleaseSnapshot.swift:19,46,78`, `SourceComparison.swift:12`) | **Applied as V6 after the owner's yes**: both are `public struct`s of closures with `.local` and `.unimplemented` values; `write(_:to:)` and `repositoryRoot(override:refresh:)` stay as methods over the closures so no `@Dependency` call site moved; the test doubles became values (`InMemoryFileSystem.fileSystem`, `RegistrySource.inMemory`, an inline source over the repository root) | Public API change, approved 2026-09-18 | 3/4 |
+| R2 | Phantom-typed identifiers so an item name cannot be passed where a path belongs | Ep 12 (Tagged) | Item names, receipt keys, and paths are `String` throughout `Installer.swift:40-136`, `Registry.swift:34`, `MCPServer.swift:164`. The name is always the sole unlabeled first argument and `destination:` is labeled, so no silent swap compiles. The only unlabeled same-type pairs are path-to-path (`FileSystem.replace`, `safeJoin`) which `Tagged` would not separate | A five-line `ItemName` newtype, no dependency | **Declined by the owner 2026-09-18.** No mix-up site found | 1/4 |
 | R3 | Build a value in one expression, not a `var` mutated by a run of statements | Ep 7: "We don't have to create lots of temporary, throwaway variables that we must mutate in statements to get the final value" | `ThemeTuning.exactTheme` (`ThemeTuning.swift:344-370`) assigns seven fields after `RegistryTheme(...)` although the initializer accepts each | Move the seven assignments into the initializer call | `exactSwiftSource` (`:444-475`) deliberately emits the same statement shape so the runtime theme mirrors the Swift a consumer pastes; collapsing one side alone makes them diverge | 1/3 |
 | R4 | Enable a library's deprecations trait before its next major | Blog 2026-03-16: enable the `ComposableArchitecture2Deprecations` trait | `Examples/TodoCounter/TodoCounterPackage/Package.swift:19` pins TCA `from: "1.26.2"` with no `traits:` | Add the trait to the example's dependency and fix what it flags | The example is not in the verification list, and the registry itself is unaffected; do it when TodoCounter is next touched | 1/2 |
 | R5 | Assert on one subject as image plus separate semantic checks; per-item dark and Dynamic Type image snapshots | Ep 38: "It captured the removal of the view! This is state that the image-based snapshot would not have accounted for." | Already the shape of the Showcase UI tests: committed PNGs compared at 1.5 percent (`SwiftUIRegistryShowcaseUITests.swift:1044-1091`) beside semantic `XCTAssert`s; the 33 `assertInlineSnapshot` sites in `Tests/RegistryKitTests` are all `.lines` text | Per-item `.image` snapshots for dark and accessibility sizes | Unchanged from the first pass: a second golden corpus and Liquid Glass flakiness; needs a named defect | 1/3 |
@@ -172,7 +172,7 @@ file and line it was read at.
 | `UIKitNavigation`'s `observe` and transactions | Ep 371 | The design surface's UIKit is window chrome (`DesignSurfaceWindow.swift:19,90`), a pasteboard, and a dynamic color; observation is SwiftUI's |
 | Key-path synthesis for setter-only framework APIs | Ep 17 | SwiftUI modifiers already return values |
 
-## Phase 3: what changed (11 commits, one principle each)
+## Phase 3: what changed (one principle per commit)
 
 First pass:
 
@@ -195,8 +195,10 @@ Second pass:
 | `306fb80` | V3: keep the import draft and its failure inside the import sheet | DesignSurface | low |
 | `d94e427` | V4: diff multi-field test values with `expectNoDifference` | tests, Package.swift | low |
 | `2907402` | V5: record that the skeleton gates appearance and interaction, not effects | copy-owned source, Showcase, generated | none |
+| `4a7b803` | Dogfood F2: declare the state the `field` usage snippet reads | metadata, generated | none |
+| `0f686bc` | V6: `FileSystem` and `RegistrySource` as structs of closures | RegistryKit, tests | low, **public API change, approved before implementing** |
 
-No second-pass commit changes public API. V5 is the one edit to `Registry/sources/`: a doc comment,
+V6 is the one second-pass commit that changes public API, and it followed the owner's answer. V5 is the one edit to `Registry/sources/`: a doc comment,
 with the item's patch version bumped and the Showcase copy reinstalled. Two manifest lines were
 added, both for packages already in `Package.resolved` (no resolution change): `IssueReporting` for
 the engine's test default and `CustomDump` for the test target only.
@@ -224,15 +226,14 @@ that type-checks every installable item's snippet inside a `View` body is the hi
 follow-up from the exercise. Missing components a shop wanted: a price display, a quantity stepper,
 a rating, a product tile with an image; each was composed from badge, button, metric-card, and item.
 
-## Open questions for the owner
+## Owner decisions, 2026-09-18
 
-1. **R1**, rewrite `FileSystem` and `RegistrySource` as structs of closures: a `RegistryKit` public
-   API change. V1 already stops the test leak; this would align the last two dependencies with the
-   house style and unlock `@DependencyClient`. Yes or no?
-2. **R2**, an `ItemName` newtype in `Installer` and `Registry`: public API, no mix-up site found.
-   Recommend no until one appears.
-3. **R4**, `ComposableArchitecture2Deprecations` on `Examples/TodoCounter`: cheap, example only,
-   deferred until that app is next opened.
+1. **R1**, `FileSystem` and `RegistrySource` as structs of closures: yes, applied as V6.
+2. **R2**, an `ItemName` newtype: no.
+3. Dogfood proposals (shop-vocabulary aliases, a snippet compile gate): no for now; they stay
+   recorded under Phase 5.
+4. **R4**, `ComposableArchitecture2Deprecations` on `Examples/TodoCounter`: deferred until that app
+   is next opened.
 
 ## Deliberately not applied, and why
 

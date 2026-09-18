@@ -11,6 +11,12 @@ hardening, no new items, no schema change.
   (`PlanFileStatus`, `UpdateFileStatus`, `InventoryFileStatus`) instead of `String`. JSON and CLI
   text output are byte-identical; Swift code that links `RegistryKit` directly and compares
   `.status` against a string literal needs to compare against the matching case instead.
+- `RegistryKit`'s `FileSystem` and `RegistrySource` are structs of closures, the shape of its
+  other six dependencies, instead of protocols. `LocalFileSystem()` and `LocalRegistrySource()`
+  are `FileSystem.local` and `RegistrySource.local`; `.unimplemented` is each one's test default.
+  `write(_:to:)` and `repositoryRoot(override:refresh:)` stay as methods, so call sites through
+  `@Dependency` do not change; a type that conformed to either protocol now builds a value instead.
+  The CLI and MCP output are unchanged.
 - `skeleton` 0.2.2: the doc comment names what redaction does not cover. An effect the wrapped
   content starts itself (`task`, `onAppear`, a request) still runs; gate it on the same flag. No
   visible change, no recapture.

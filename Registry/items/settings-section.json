@@ -44,10 +44,7 @@
   ],
   "aliases": [
     "preferences",
-    "settings-list",
-    "notifications",
-    "notification-settings",
-    "account-settings"
+    "settings-list"
   ],
   "accessibility": [
     "Section title: header trait; rotor jumps sections.",

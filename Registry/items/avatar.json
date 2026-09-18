@@ -42,8 +42,7 @@
   "aliases": [
     "profile-image",
     "initials",
-    "monogram",
-    "profile-header"
+    "monogram"
   ],
   "accessibility": [
     "MUST supply label; none from face/monogram.",

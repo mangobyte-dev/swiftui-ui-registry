@@ -46,10 +46,7 @@
     "expandable",
     "faq",
     "product-details",
-    "specifications",
-    "filter",
-    "filters",
-    "filter-panel"
+    "specifications"
   ],
   "accessibility": [
     "Header: plain Button bound to isExpanded.",

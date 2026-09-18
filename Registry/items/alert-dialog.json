@@ -38,11 +38,7 @@
   "aliases": [
     "confirm",
     "confirmation",
-    "modal",
-    "sign-out",
-    "signout",
-    "logout",
-    "log-out"
+    "modal"
   ],
   "accessibility": [
     "Alerts move VoiceOver focus, restore on dismiss.",

@@ -1,4 +1,5 @@
 import Dependencies
+import DependenciesTestSupport
 import Foundation
 import InlineSnapshotTesting
 import Testing
@@ -19,7 +20,7 @@ private func recipeFixture() throws -> InMemoryFileSystem {
   return fs
 }
 
-@Suite(.serialized) struct DescribeAndInfo {
+@Suite(.serialized, .dependencies) struct DescribeAndInfo {
   // describe hands an agent the closure, usage, and file targets without touching the destination.
   @Test func describeTextReportsClosureUsageAndFileTargets() throws {
     try withFixture(try fixture()) {

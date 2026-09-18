@@ -1,11 +1,17 @@
 import Dependencies
+import DependenciesTestSupport
 import Foundation
 import InlineSnapshotTesting
 import Testing
 
 @testable import RegistryKit
 
-@Suite(.serialized) struct Commands {
+/// Base suite for the command/CLI/snapshot surface: every file that extends `Commands`
+/// (Snapshot, Generator, InstallerSafety, MCP, Preset, RegistryContract, Validation tests)
+/// inherits `.serialized` and `.dependencies`, so their fixtures run isolated and in the
+/// `.test` `DependencyContext` — an un-overridden effectful dependency fails loudly instead
+/// of silently reaching its live implementation.
+@Suite(.serialized, .dependencies) struct Commands {
   @Test func validateAndSearch() throws {
     let fs = try fixture()
     try withFixture(fs) {

@@ -43,7 +43,12 @@ let package = Package(
         ),
         .testTarget(
             name: "RegistryKitTests",
-            dependencies: ["RegistryKit", "SwiftUIRegistryCLI", .product(name: "InlineSnapshotTesting", package: "swift-snapshot-testing")],
+            dependencies: [
+                "RegistryKit",
+                "SwiftUIRegistryCLI",
+                .product(name: "InlineSnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
+            ],
             resources: [.copy("Fixtures")],
             swiftSettings: [.enableUpcomingFeature("NonisolatedNonsendingByDefault")]
         ),

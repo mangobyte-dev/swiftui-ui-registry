@@ -39,7 +39,12 @@ import Testing
         try command([
           "search", "test", "--platform", "iOS", "--target-version", "26", "--format", "names",
         ]).stdout == "example\n")
-      #expect(try command(["search", "absent", "--format", "names"]).stdout.isEmpty)
+      // Zero matches say so on stderr, so an empty names list is never mistaken for a failure.
+      let absent = try command(["search", "absent", "--format", "names"])
+      #expect(absent.code == 0)
+      #expect(absent.stdout.isEmpty)
+      #expect(absent.stderr == "No item matches absent; try fewer or broader terms\n")
+      #expect(found.stderr.isEmpty)
       #expect(
         try command(["search", "--platform", "iOS", "--target-version", "26.beta"]).code == 2)
     }

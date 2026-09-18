@@ -72,6 +72,12 @@ struct Search: ParsableCommand {
         targetVersion: targetVersion)
       if format == .names {
         for item in result { print(item["name"].text) }
+        // Every term must match a name, alias, tag, or description word; say so instead of
+        // printing nothing.
+        if result.isEmpty {
+          let terms = query.joined(separator: " ")
+          writeError("No item matches \(terms); try fewer or broader terms\n")
+        }
       } else {
         print(JSON.array(result).rendered())
       }

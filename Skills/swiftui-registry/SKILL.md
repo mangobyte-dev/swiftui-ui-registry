@@ -51,6 +51,7 @@ JSON fields: `name`, `kind`, `version`, `registryDependencies`, `packageDependen
 
 - **DO** pass every known term; each MUST match metadata (name, alias, tag, description).
 - **DO** filter with `--kind component|block|flow|recipe`, `--platform iOS`, `--target-version X.Y`.
+- **DO** retry with one broader term when `--format names` prints `No item matches ...` on stderr (exit 0); domain words such as `product`, `cart`, `price`, `checkout`, `rating` are aliases, so try the noun before the feature.
 - **DO NOT** browse source; `references/catalog.md` is index.
 
 ## Reading an item
@@ -59,7 +60,7 @@ JSON fields: `name`, `kind`, `version`, `registryDependencies`, `packageDependen
 swiftui-registry describe badge
 ```
 
-Output: name, kind, version, description, `Usage:`, accessibility notes, install order, requirements, file targets:
+Output: name, kind, version, description, `Usage:`, `Signatures:`, accessibility notes, install order, requirements, file targets:
 
 ```text
 badge (component 0.3.2)
@@ -71,12 +72,15 @@ Usage:
 
   Label("Completed", systemImage: "checkmark.circle.fill")
       .registryBadge(.positive)
+Signatures:
+  func registryBadge(_ variant: RegistryBadgeVariant = .primary) -> some View
 ```
 
-`--source` prints each file's content; `--format json` returns MCP `describe_item` payload.
+`Signatures:` lists every public initializer, function, and static member of the item's sources, one line each, with labels, types, and defaults; the JSON payload carries them as `signatures`. `--source` prints each file's content; `--format json` returns MCP `describe_item` payload.
 
 - **DO** `describe` a `recipe` too; reports native guidance (`docs/registry-spec.md`).
-- **DO NOT** guess signature; `Usage:` carries real API.
+- **DO** compose past the snippet from `Signatures:`; read installed source only for behavior.
+- **DO NOT** guess signature; `Usage:` carries real calls and `Signatures:` the exact API.
 
 ## Planning and installing
 

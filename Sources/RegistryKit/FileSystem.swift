@@ -1,5 +1,6 @@
 import Dependencies
 import Foundation
+import IssueReporting
 
 public protocol FileSystem: Sendable {
   var currentDirectory: String { get }
@@ -76,8 +77,51 @@ public struct LocalFileSystem: FileSystem {
   }
 }
 
+/// The test default: a test that forgets its override fails at the boundary instead of
+/// reaching the disk. The members that can throw do; the queries cannot, so each reports
+/// an issue and answers as an empty file system would.
+struct UnimplementedFileSystem: FileSystem {
+  private func report(_ member: StaticString) {
+    reportIssue("Unimplemented: @Dependency(\\.registryFileSystem).\(member)")
+  }
+  private func unimplemented(_ member: StaticString) -> RegistryError {
+    RegistryError("no file system in tests: \(member)")
+  }
+  var currentDirectory: String {
+    report("currentDirectory")
+    return "/"
+  }
+  func resolve(_ path: String) -> String {
+    report("resolve")
+    return path
+  }
+  func expandUser(_ path: String) -> String {
+    report("expandUser")
+    return path
+  }
+  func exists(_ path: String) -> Bool {
+    report("exists")
+    return false
+  }
+  func isFile(_ path: String) -> Bool {
+    report("isFile")
+    return false
+  }
+  func isDirectory(_ path: String) -> Bool {
+    report("isDirectory")
+    return false
+  }
+  func read(_ path: String) throws -> Data { throw unimplemented("read") }
+  func write(_ data: Data, to path: String) throws { throw unimplemented("write") }
+  func createDirectory(_ path: String) throws { throw unimplemented("createDirectory") }
+  func remove(_ path: String) throws { throw unimplemented("remove") }
+  func replace(_ source: String, _ target: String) throws { throw unimplemented("replace") }
+  func children(_ path: String) throws -> [String] { throw unimplemented("children") }
+}
+
 private enum FileSystemKey: DependencyKey {
   static let liveValue: any FileSystem = LocalFileSystem()
+  static let testValue: any FileSystem = UnimplementedFileSystem()
 }
 extension DependencyValues {
   public var registryFileSystem: any FileSystem {
@@ -111,8 +155,14 @@ public struct LocalRegistrySource: RegistrySource {
     return try ReleaseSnapshot().root(refresh: refresh)
   }
 }
+struct UnimplementedRegistrySource: RegistrySource {
+  func repositoryRoot(override: String?, refresh: Bool) throws -> String {
+    throw RegistryError("no registry source in tests")
+  }
+}
 private enum RegistrySourceKey: DependencyKey {
   static let liveValue: any RegistrySource = LocalRegistrySource()
+  static let testValue: any RegistrySource = UnimplementedRegistrySource()
 }
 extension DependencyValues {
   public var registrySource: any RegistrySource {

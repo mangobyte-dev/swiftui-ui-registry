@@ -131,7 +131,7 @@
         },
         {
           "name": "skeleton",
-          "version": "0.2.1"
+          "version": "0.2.2"
         },
         {
           "name": "empty",
@@ -2915,7 +2915,7 @@
         },
         {
           "name": "skeleton",
-          "version": "0.2.1"
+          "version": "0.2.2"
         },
         {
           "name": "button-group",
@@ -3060,7 +3060,7 @@
         },
         {
           "name": "skeleton",
-          "version": "0.2.1"
+          "version": "0.2.2"
         },
         {
           "name": "checkbox",
@@ -3700,7 +3700,7 @@
     {
       "name": "skeleton",
       "kind": "component",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "description": "Turns any view into loading placeholder with native redaction.",
       "usage": "@State private var isLoading = true\n\nActivityRows()\n    .registrySkeleton(isLoading)\n\n// Pass false to render the real content unchanged.",
       "docs": null,
@@ -3724,7 +3724,7 @@
       "installOrder": [
         {
           "name": "skeleton",
-          "version": "0.2.1"
+          "version": "0.2.2"
         }
       ],
       "accessibility": [
@@ -3735,7 +3735,7 @@
       ],
       "sourcePath": "Registry/sources/components/RegistrySkeletonModifier.swift",
       "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry/blob/main/Registry/sources/components/RegistrySkeletonModifier.swift",
-      "source": "import Foundation\nimport SwiftUI\nimport SwiftUIRegistryFoundations\n\npublic extension View {\n    /// Turns the receiver into a loading placeholder: native redaction, no\n    /// interaction, one accessibility element with a loading label, and a\n    /// gentle pulse that stops under Reduce Motion. Pass `false` to render the\n    /// real content unchanged, so the same view tree serves both states.\n    func registrySkeleton(\n        _ isActive: Bool = true,\n        accessibilityLabel: LocalizedStringResource = \"Loading\"\n    ) -> some View {\n        modifier(\n            RegistrySkeletonModifier(\n                isActive: isActive,\n                accessibilityLabel: accessibilityLabel\n            )\n        )\n    }\n}\n\nprivate struct RegistrySkeletonModifier: ViewModifier {\n    @Environment(\\.accessibilityReduceMotion) private var reduceMotion\n    @State private var isDimmed = false\n\n    let isActive: Bool\n    let accessibilityLabel: LocalizedStringResource\n\n    // Every modifier applies in both states so the content keeps one\n    // structural identity: flipping isActive never resets the state, focus,\n    // or scroll position of the view it wraps.\n    func body(content: Content) -> some View {\n        content\n            .redacted(reason: isActive ? .placeholder : [])\n            .opacity(opacity)\n            .animation(pulse, value: isDimmed)\n            .disabled(isActive)\n            .allowsHitTesting(!isActive)\n            .accessibilityHidden(isActive)\n            .overlay {\n                if isActive {\n                    Color.clear\n                        .accessibilityElement()\n                        .accessibilityLabel(Text(accessibilityLabel))\n                }\n            }\n            .task(id: isActive) {\n                isDimmed = isActive && !reduceMotion\n            }\n            .registryItem(\"skeleton\")\n    }\n\n    private var opacity: Double {\n        guard isActive else { return 1 }\n        if reduceMotion { return 0.7 }\n        return isDimmed ? 0.45 : 1\n    }\n\n    private var pulse: Animation? {\n        guard isActive, !reduceMotion else { return nil }\n        return .easeInOut(duration: 0.9).repeatForever(autoreverses: true)\n    }\n}\n\nprivate struct RegistrySkeletonModifierPreview: View {\n    @Environment(\\.registryTheme) private var theme\n    var isLoading = true\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {\n            ForEach(0..<3, id: \\.self) { index in\n                HStack(spacing: theme.metrics.standardSpacing) {\n                    Circle()\n                        .fill(theme.surface)\n                        .frame(width: 40, height: 40)\n                    VStack(alignment: .leading, spacing: 6) {\n                        Text(\"Mishmash Bakery order \\(index + 1)\")\n                            .font(.body.weight(.medium))\n                        Text(\"Placeholder detail text\")\n                            .font(.footnote)\n                            .foregroundStyle(.secondary)\n                    }\n                    Spacer()\n                    Button(\"Open\") {}\n                        .buttonStyle(.bordered)\n                }\n            }\n        }\n        .registrySkeleton(isLoading)\n        .padding()\n    }\n}\n\n#Preview(\"Skeleton\") {\n    RegistrySkeletonModifierPreview()\n}\n\n#Preview(\"Skeleton Loaded\") {\n    RegistrySkeletonModifierPreview(isLoading: false)\n}\n\n#Preview(\"Skeleton Dark\") {\n    RegistrySkeletonModifierPreview().preferredColorScheme(.dark)\n}\n\n#Preview(\"Skeleton Accessibility Size\") {\n    RegistrySkeletonModifierPreview().dynamicTypeSize(.accessibility3)\n}\n",
+      "source": "import Foundation\nimport SwiftUI\nimport SwiftUIRegistryFoundations\n\npublic extension View {\n    /// Turns the receiver into a loading placeholder: native redaction, no\n    /// interaction, one accessibility element with a loading label, and a\n    /// gentle pulse that stops under Reduce Motion. Pass `false` to render the\n    /// real content unchanged, so the same view tree serves both states.\n    /// Redaction covers appearance and interaction only: an effect the content\n    /// starts itself (`task`, `onAppear`, a request) still runs, so gate it on\n    /// the same flag.\n    func registrySkeleton(\n        _ isActive: Bool = true,\n        accessibilityLabel: LocalizedStringResource = \"Loading\"\n    ) -> some View {\n        modifier(\n            RegistrySkeletonModifier(\n                isActive: isActive,\n                accessibilityLabel: accessibilityLabel\n            )\n        )\n    }\n}\n\nprivate struct RegistrySkeletonModifier: ViewModifier {\n    @Environment(\\.accessibilityReduceMotion) private var reduceMotion\n    @State private var isDimmed = false\n\n    let isActive: Bool\n    let accessibilityLabel: LocalizedStringResource\n\n    // Every modifier applies in both states so the content keeps one\n    // structural identity: flipping isActive never resets the state, focus,\n    // or scroll position of the view it wraps.\n    func body(content: Content) -> some View {\n        content\n            .redacted(reason: isActive ? .placeholder : [])\n            .opacity(opacity)\n            .animation(pulse, value: isDimmed)\n            .disabled(isActive)\n            .allowsHitTesting(!isActive)\n            .accessibilityHidden(isActive)\n            .overlay {\n                if isActive {\n                    Color.clear\n                        .accessibilityElement()\n                        .accessibilityLabel(Text(accessibilityLabel))\n                }\n            }\n            .task(id: isActive) {\n                isDimmed = isActive && !reduceMotion\n            }\n            .registryItem(\"skeleton\")\n    }\n\n    private var opacity: Double {\n        guard isActive else { return 1 }\n        if reduceMotion { return 0.7 }\n        return isDimmed ? 0.45 : 1\n    }\n\n    private var pulse: Animation? {\n        guard isActive, !reduceMotion else { return nil }\n        return .easeInOut(duration: 0.9).repeatForever(autoreverses: true)\n    }\n}\n\nprivate struct RegistrySkeletonModifierPreview: View {\n    @Environment(\\.registryTheme) private var theme\n    var isLoading = true\n\n    var body: some View {\n        VStack(alignment: .leading, spacing: theme.metrics.standardSpacing) {\n            ForEach(0..<3, id: \\.self) { index in\n                HStack(spacing: theme.metrics.standardSpacing) {\n                    Circle()\n                        .fill(theme.surface)\n                        .frame(width: 40, height: 40)\n                    VStack(alignment: .leading, spacing: 6) {\n                        Text(\"Mishmash Bakery order \\(index + 1)\")\n                            .font(.body.weight(.medium))\n                        Text(\"Placeholder detail text\")\n                            .font(.footnote)\n                            .foregroundStyle(.secondary)\n                    }\n                    Spacer()\n                    Button(\"Open\") {}\n                        .buttonStyle(.bordered)\n                }\n            }\n        }\n        .registrySkeleton(isLoading)\n        .padding()\n    }\n}\n\n#Preview(\"Skeleton\") {\n    RegistrySkeletonModifierPreview()\n}\n\n#Preview(\"Skeleton Loaded\") {\n    RegistrySkeletonModifierPreview(isLoading: false)\n}\n\n#Preview(\"Skeleton Dark\") {\n    RegistrySkeletonModifierPreview().preferredColorScheme(.dark)\n}\n\n#Preview(\"Skeleton Accessibility Size\") {\n    RegistrySkeletonModifierPreview().dynamicTypeSize(.accessibility3)\n}\n",
       "previewName": "Skeleton",
       "screenshots": {
         "light": "/images/items/skeleton-light.png",

@@ -751,10 +751,10 @@
     },
     "RegistrySkeletonModifier.swift": {
       "base": "bases/fbcf3e3bd66128acb7b24ae44ee3aa58843ac5c47a53574c6f2d9735a9e5eb62.base",
-      "installedDigest": "sha256:89a8d8926c23764feb94ab81009bd72ee0d5b5462fa03da9bc25dc39567e3cfc",
+      "installedDigest": "sha256:f6da0b113385248a0be9972a2a7ca88483d15b53ce83e98d5d5bf9ab04c38fba",
       "item": "skeleton",
-      "sourceDigest": "sha256:89a8d8926c23764feb94ab81009bd72ee0d5b5462fa03da9bc25dc39567e3cfc",
-      "version": "0.2.1"
+      "sourceDigest": "sha256:f6da0b113385248a0be9972a2a7ca88483d15b53ce83e98d5d5bf9ab04c38fba",
+      "version": "0.2.2"
     },
     "RegistrySpinnerStyle.swift": {
       "base": "bases/93bb6a5df1f063298fae71049dc4a862310b163cd2563b177eabc9f7c71d55ed.base",
@@ -1591,12 +1591,12 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.2.1"
+            "minimumVersion": "0.3.0"
           }
         }
       ],
       "registryDependencies": [],
-      "version": "0.2.1"
+      "version": "0.2.2"
     },
     "spinner": {
       "packageDependencies": [

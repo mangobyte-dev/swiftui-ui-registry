@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.1",
+  "version": "0.2.2",
   "name": "skeleton",
   "kind": "component",
   "description": "Turns any view into loading placeholder with native redaction.",

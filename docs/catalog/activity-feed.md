@@ -61,7 +61,7 @@ ActivityFeed(
 - Kind: block
 - Version: 0.2.2
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.2, [alert](alert.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [skeleton](skeleton.md) 0.2.1, [empty](empty.md) 0.1.1, [accordion](accordion.md) 0.2.2, [activity-feed](activity-feed.md) 0.2.2
+- Installs in order: [button](button.md) 0.5.2, [alert](alert.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [skeleton](skeleton.md) 0.2.2, [empty](empty.md) 0.1.1, [accordion](accordion.md) 0.2.2, [activity-feed](activity-feed.md) 0.2.2
 - Accessibility contract:
   - No color-alone feedback. Unread: heavier title, dot, value. Avatar: sender-name. Notice: symbol, color; symbol, dot-decorative.
   - Loading: 1 disabled element, label Loading activity, no selection.

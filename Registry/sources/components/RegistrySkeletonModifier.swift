@@ -7,6 +7,9 @@ public extension View {
     /// interaction, one accessibility element with a loading label, and a
     /// gentle pulse that stops under Reduce Motion. Pass `false` to render the
     /// real content unchanged, so the same view tree serves both states.
+    /// Redaction covers appearance and interaction only: an effect the content
+    /// starts itself (`task`, `onAppear`, a request) still runs, so gate it on
+    /// the same flag.
     func registrySkeleton(
         _ isActive: Bool = true,
         accessibilityLabel: LocalizedStringResource = "Loading"

@@ -46,7 +46,7 @@ ActivityRows()
 ## Details
 
 - Kind: component
-- Version: 0.2.1
+- Version: 0.2.2
 - Platforms: iOS 26.0+
 - Registry dependencies: none
 - Accessibility contract:

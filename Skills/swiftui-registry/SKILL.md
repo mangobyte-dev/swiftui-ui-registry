@@ -73,10 +73,11 @@ Usage:
   Label("Completed", systemImage: "checkmark.circle.fill")
       .registryBadge(.positive)
 Signatures:
-  func registryBadge(_ variant: RegistryBadgeVariant = .primary) -> some View
+  RegistryBadgeVariant: enum { case primary; case secondary; case outline; case positive; case destructive }
+  View: func registryBadge(_ variant: RegistryBadgeVariant = .primary) -> some View
 ```
 
-`Signatures:` lists every public initializer, function, and static member of the item's sources, one line each, with labels, types, and defaults; the JSON payload carries them as `signatures`. `--source` prints each file's content; `--format json` returns MCP `describe_item` payload.
+`Signatures:` lists every public initializer, function, static member, and enum of the item's sources, one line each, prefixed with the owning type (`FieldGroup: init(...)`, `RegistryToast.Action: init(...)`, `ButtonStyle: static var registry`), with labels, types, defaults, and enum cases; the JSON payload carries them as `signatures`. `--source` prints each file's content; `--format json` returns MCP `describe_item` payload.
 
 - **DO** `describe` a `recipe` too; reports native guidance (`docs/registry-spec.md`).
 - **DO** compose past the snippet from `Signatures:`; read installed source only for behavior.

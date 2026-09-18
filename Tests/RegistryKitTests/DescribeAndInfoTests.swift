@@ -263,8 +263,9 @@ private func recipeFixture() throws -> InMemoryFileSystem {
 }
 
 extension DescribeAndInfo {
-  // A composer needs labels and types; the snippet alone shows neither. Private members, the
-  // body, and default values must not leak into or cut off a signature.
+  // A composer needs labels, types, the owning type, and enum cases; the snippet alone shows
+  // none. Private members, switch cases, the body, and default values must not leak into or cut
+  // off a signature.
   @Test func describeListsThePublicSignaturesOfTheSource() throws {
     let source = """
       import SwiftUI
@@ -280,6 +281,21 @@ extension DescribeAndInfo {
           public static var registry: Example { Example("x", value: Text("")) }
           public static let shared = Example("x", value: Text(""))
           private func hidden(_ secret: Int = 1) {}
+          public enum Tone: Sendable {
+              case neutral
+              case positive(Double)
+              var label: String {
+                  switch self {
+                  case .neutral: "n"
+                  case .positive: "p"
+                  }
+              }
+          }
+          enum Hidden { case secret }
+      }
+
+      public extension View where Self == Example {
+          func registryExample(_ tone: Example.Tone = .neutral) -> some View { self }
       }
       """
     try withFixture(try fixture(source)) {
@@ -288,17 +304,20 @@ extension DescribeAndInfo {
       expectNoDifference(
         decoded["signatures"].strings,
         [
-          "public init(_ title: LocalizedStringResource, value: Text, detail: Text? = nil)",
-          "public func registryVariant(_ variant: Int) -> Example where Int == Int",
-          "public static var registry: Example",
-          "public static let shared",
+          "Example: init(_ title: LocalizedStringResource, value: Text, detail: Text? = nil)",
+          "Example: func registryVariant(_ variant: Int) -> Example where Int == Int",
+          "Example: static var registry: Example",
+          "Example: static let shared",
+          "Example.Tone: enum { case neutral; case positive(Double) }",
+          "View: func registryExample(_ tone: Example.Tone = .neutral) -> some View",
         ])
       let text = try command(["describe", "example"])
       #expect(
         text.stdout.contains(
-          "Signatures:\n  public init(_ title: LocalizedStringResource, value: Text, detail: Text? = nil)\n"
+          "Signatures:\n  Example: init(_ title: LocalizedStringResource, value: Text, detail: Text? = nil)\n"
         ))
       #expect(!text.stdout.contains("hidden"))
+      #expect(!text.stdout.contains("secret"))
     }
   }
 

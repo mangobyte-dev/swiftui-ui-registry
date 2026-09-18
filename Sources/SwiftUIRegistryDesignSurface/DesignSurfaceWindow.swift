@@ -123,7 +123,7 @@ extension View {
 private struct DesignSurfaceOverlayRoot: View {
     @Shared(.designTokens) private var tuning
     @Environment(\.layoutDirection) private var direction
-    private let state = DesignSurfaceState.shared
+    @Bindable private var state = DesignSurfaceState.shared
 
     var body: some View {
         ZStack {
@@ -143,7 +143,7 @@ private struct DesignSurfaceOverlayRoot: View {
             // the screen is tappable; it returns with the scope once picked.
             if state.isPresented && !state.selection.isSelecting {
                 FloatingPanel(contentDirection: direction) {
-                    TuningPanel(tuning: Binding($tuning), selection: selectionBinding, showsScreen: true) {
+                    TuningPanel(tuning: Binding($tuning), selection: $state.selection, showsScreen: true) {
                         if let footer = state.presetsFooter { footer }
                     }
                 }
@@ -182,10 +182,6 @@ private struct DesignSurfaceOverlayRoot: View {
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
             state.keyboardFrame = .zero
         }
-    }
-
-    private var selectionBinding: Binding<ItemSelection> {
-        Binding(get: { state.selection }, set: { state.selection = $0 })
     }
 }
 

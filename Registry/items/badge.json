@@ -44,7 +44,11 @@
     "pill",
     "price",
     "price-tag",
-    "discount"
+    "discount",
+    "unread",
+    "unread-count",
+    "counter",
+    "verified"
   ],
   "accessibility": [
     "One line, intrinsic width.",

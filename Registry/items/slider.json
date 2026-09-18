@@ -34,6 +34,11 @@
     "control",
     "guidance"
   ],
+  "aliases": [
+    "range",
+    "amount-range",
+    "price-range"
+  ],
   "accessibility": [
     "Retains Slider semantics, gestures; caller-owned value, bounds, step, callbacks.",
     "Needs meaningful label; supports min/max labels; inherits size, enabled, direction (overridable)."

@@ -41,7 +41,9 @@
   "aliases": [
     "check",
     "consent",
-    "terms"
+    "terms",
+    "filter",
+    "filters"
   ],
   "accessibility": [
     "Toggle: accessibility representation.",

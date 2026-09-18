@@ -46,7 +46,10 @@
     "searchbar",
     "input-addon",
     "prefix",
-    "suffix"
+    "suffix",
+    "composer",
+    "message-composer",
+    "chat-input"
   ],
   "accessibility": [
     "TextField/SecureField; MUST have accessibilityLabel (placeholder).",

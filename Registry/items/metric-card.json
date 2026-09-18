@@ -53,6 +53,8 @@
     "rating",
     "stat",
     "kpi",
-    "price"
+    "price",
+    "total",
+    "order-total"
   ]
 }

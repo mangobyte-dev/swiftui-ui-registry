@@ -34,7 +34,11 @@ let package = Package(
         ),
         .executableTarget(
             name: "SwiftUIRegistryCLI",
-            dependencies: ["RegistryKit", .product(name: "ArgumentParser", package: "swift-argument-parser")],
+            dependencies: [
+                "RegistryKit",
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
             swiftSettings: [.enableUpcomingFeature("NonisolatedNonsendingByDefault")]
         ),
         .testTarget(

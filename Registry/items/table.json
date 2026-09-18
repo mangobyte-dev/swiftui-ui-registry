@@ -47,7 +47,9 @@
     "spreadsheet",
     "invoice",
     "order-summary",
-    "pricing"
+    "pricing",
+    "total",
+    "order-total"
   ],
   "accessibility": [
     "Row combines into one element; header row carries trait.",

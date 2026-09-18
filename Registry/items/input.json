@@ -43,7 +43,12 @@
     "textfield",
     "secure-field",
     "address",
-    "promo-code"
+    "promo-code",
+    "email",
+    "phone",
+    "password",
+    "email-field",
+    "phone-field"
   ],
   "accessibility": [
     "MUST have accessibilityLabel = title (placeholder-only; iOS 27: title-only/label+prompt initializers expose none). Showcase audit rejects unlabeled, typed-but-unnamed fields.",

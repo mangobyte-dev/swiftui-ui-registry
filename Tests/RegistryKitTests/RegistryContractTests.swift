@@ -1,3 +1,4 @@
+import CustomDump
 import Dependencies
 import Foundation
 import Testing
@@ -49,7 +50,7 @@ extension Commands {
           ["public struct RegistryCardStyle: GroupBoxStyle"], "struct RegistryCard: View"
         ),
       ] {
-        #expect(try installer.registry.resolve(name) == closure)
+        expectNoDifference(try installer.registry.resolve(name), closure)
         try withTemporaryDirectory { destination in
           let installed = try installer.install(name, destination: destination)
           #expect(installed.count == closure.count, "\(name)")
@@ -257,19 +258,17 @@ extension Commands {
   @Test func blocksResolveTheirComponentsFirstAndKeepTheirContracts() throws {
     try withRepository {
       let registry = try Registry(root: repositoryRoot)
-      #expect(
-        try registry.resolve("finance-overview") == [
-          "metric-card", "transaction-row", "empty", "finance-overview",
-        ])
-      #expect(
-        try registry.resolve("nutrition-overview") == [
-          "metric-card", "macro-progress", "nutrition-overview",
-        ])
-      #expect(try registry.resolve("auth-form") == ["input", "button", "card", "auth-form"])
-      #expect(
-        try registry.resolve("settings-section") == [
-          "select", "separator", "button", "settings-section",
-        ])
+      expectNoDifference(
+        try registry.resolve("finance-overview"),
+        ["metric-card", "transaction-row", "empty", "finance-overview"])
+      expectNoDifference(
+        try registry.resolve("nutrition-overview"),
+        ["metric-card", "macro-progress", "nutrition-overview"])
+      expectNoDifference(
+        try registry.resolve("auth-form"), ["input", "button", "card", "auth-form"])
+      expectNoDifference(
+        try registry.resolve("settings-section"),
+        ["select", "separator", "button", "settings-section"])
       // A copy that drops autofill content types, the error announcement, or the submit
       // guard would still render but silently lose what the block standardizes.
       let auth = try previewSource(registry, "auth-form")
@@ -403,7 +402,7 @@ extension Commands {
         for _ in 0..<2 {
           #expect(try installer.install("badge", destination: destination) == [])
           #expect(try fileData(target) == local)
-          #expect(try record() == afterUpdate)
+          expectNoDifference(try record(), afterUpdate)
         }
       }
     }
@@ -483,7 +482,8 @@ extension Commands {
       #expect(result.code == 0)
       let matches = try #require(JSON.read(Data(result.stdout.utf8)).array)
       #expect(matches.map { $0["name"].text } == ["finance-overview"])
-      #expect(matches[0]["registryDependencies"] == ["metric-card", "transaction-row", "empty"])
+      expectNoDifference(
+        matches[0]["registryDependencies"], ["metric-card", "transaction-row", "empty"])
       #expect(!matches[0]["accessibility"].strings.isEmpty)
     }
   }

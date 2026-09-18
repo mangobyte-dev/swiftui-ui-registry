@@ -1,3 +1,4 @@
+import CustomDump
 import Foundation
 import InlineSnapshotTesting
 import Testing
@@ -23,12 +24,12 @@ extension Commands {
     let fs = try fixture()
     try withFixture(fs) {
       #expect(try Preset.encode(vector.tuning) == vector.code)
-      #expect(Preset.decode(vector.code) == vector.tuning)
+      expectNoDifference(Preset.decode(vector.code), vector.tuning)
       #expect(
         try Preset.encode(Preset.parseSwift(Preset.swiftSource(vector.tuning))) == vector.code)
       let description = try command(["preset", "decode", vector.code, "--json"])
       #expect(description.code == 0)
-      #expect(try JSON.read(Data(description.stdout.utf8))["tuning"] == vector.tuning)
+      expectNoDifference(try JSON.read(Data(description.stdout.utf8))["tuning"], vector.tuning)
       let applied = try command(["preset", "apply", vector.code, "--destination", "/app"])
       #expect(applied.code == 0)
       #expect(

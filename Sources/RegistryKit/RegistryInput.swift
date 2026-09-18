@@ -29,6 +29,9 @@ private enum RegistryInputKey: DependencyKey {
       }
     }
   }()
+  static let testValue = RegistryInput {
+    throw RegistryError("no stdin in tests")
+  }
 }
 extension DependencyValues {
   public var registryInput: RegistryInput {

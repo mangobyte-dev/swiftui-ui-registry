@@ -59,6 +59,9 @@ extension SourceMerger {
 }
 private enum SourceMergerKey: DependencyKey {
   static let liveValue = SourceMerger.git
+  static let testValue = SourceMerger { _, _, _, target in
+    throw RegistryError("no source merge in tests: \(target)")
+  }
 }
 extension DependencyValues {
   public var registrySourceMerger: SourceMerger {

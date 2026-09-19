@@ -164,7 +164,7 @@ public struct ValidatedInput: View {
 
     @ViewBuilder
     private var field: some View {
-        let shape = RoundedRectangle(cornerRadius: 24, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: 16, style: .continuous)
         // The label line above the text is always reserved by a hidden copy of
         // the label, so the field keeps one height; the label rises into that
         // line inside the field and never crosses the border.

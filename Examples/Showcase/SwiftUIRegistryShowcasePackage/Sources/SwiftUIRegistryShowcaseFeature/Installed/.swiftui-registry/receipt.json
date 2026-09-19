@@ -814,9 +814,9 @@
     },
     "ValidatedInput.swift": {
       "base": "bases/101f086c577da42b472d22bddd2460910bb92a66b2012ef004f46cc0c33bcc03.base",
-      "installedDigest": "sha256:3dea68342a8d60c76c64360aee48987eadab37e18fe55151d437038244b37480",
+      "installedDigest": "sha256:e5d722359aa008a7017d55674b8420abec430794311ddea985701d4c74c3d560",
       "item": "validated-input",
-      "sourceDigest": "sha256:3dea68342a8d60c76c64360aee48987eadab37e18fe55151d437038244b37480",
+      "sourceDigest": "sha256:e5d722359aa008a7017d55674b8420abec430794311ddea985701d4c74c3d560",
       "version": "0.1.0"
     }
   },

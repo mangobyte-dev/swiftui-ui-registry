@@ -75,8 +75,8 @@ times each, changed the registry one thing at a time, and kept only what lowered
   `No item matches ...` on stderr and still exits 0.
 - In a test, an un-overridden `registryFileSystem` or `registrySource` reached the real disk and the
   release snapshot. Both now fail at the boundary: the file system's throwing members throw, its
-  queries report an issue, and the source throws. `RegistryKit` declares `IssueReporting`, already
-  resolved through swift-dependencies; `RegistryKitTests` declares `CustomDump` for line diffs on
+  queries report an issue, and the source throws. `RegistryKit` declares `IssueReporting` through
+  `xctest-dynamic-overlay`, the identity swift-sharing already resolves; `RegistryKitTests` declares `CustomDump` for line diffs on
   multi-field assertions and generated text. Neither changes `Package.resolved`.
 
 ### Known limitations

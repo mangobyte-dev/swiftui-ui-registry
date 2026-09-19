@@ -30,6 +30,7 @@ public struct SignUpForm: View {
     private let formError: LocalizedStringResource?
     private let submitTitle: LocalizedStringResource
     private let isSubmitting: Bool
+    private let isSubmitEnabled: Bool
     private let secondaryActionTitle: LocalizedStringResource?
     private let onSecondaryAction: (() -> Void)?
     private let onSubmit: () -> Void
@@ -68,6 +69,7 @@ public struct SignUpForm: View {
         formError: LocalizedStringResource? = nil,
         submitTitle: LocalizedStringResource = "Create account",
         isSubmitting: Bool = false,
+        isSubmitEnabled: Bool = true,
         secondaryActionTitle: LocalizedStringResource? = nil,
         onSecondaryAction: (() -> Void)? = nil,
         onSubmit: @escaping () -> Void
@@ -91,6 +93,7 @@ public struct SignUpForm: View {
         self.formError = formError
         self.submitTitle = submitTitle
         self.isSubmitting = isSubmitting
+        self.isSubmitEnabled = isSubmitEnabled
         self.secondaryActionTitle = secondaryActionTitle
         self.onSecondaryAction = onSecondaryAction
         self.onSubmit = onSubmit
@@ -160,7 +163,7 @@ public struct SignUpForm: View {
                     .submitLabel(.go)
                     .focused($focusedField, equals: .confirmation)
                     .onSubmit {
-                        if !isSubmitting {
+                        if !isSubmitting, isSubmitEnabled {
                             onSubmit()
                         }
                     }
@@ -196,6 +199,7 @@ public struct SignUpForm: View {
                 }
                 .buttonStyle(.registry)
                 .controlSize(.large)
+                .disabled(!isSubmitEnabled)
                 .accessibilityLabel(Text(submitTitle))
 
                 if let secondaryActionTitle, let onSecondaryAction {

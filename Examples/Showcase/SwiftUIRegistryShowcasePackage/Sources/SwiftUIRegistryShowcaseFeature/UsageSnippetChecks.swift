@@ -684,6 +684,7 @@ private struct UsageSnippet_SignupForm: View {
             termsError: termsError,
             formError: formError,
             isSubmitting: isSubmitting,
+            isSubmitEnabled: !name.isEmpty && emailError == nil && passwordError == nil && confirmationError == nil && acceptsTerms,
             secondaryActionTitle: "Already have an account?",
             onSecondaryAction: { },
             onSubmit: { }

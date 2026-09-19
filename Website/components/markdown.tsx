@@ -3,6 +3,11 @@ import remarkGfm from "remark-gfm"
 
 import { CodeBlock } from "@/components/code-block"
 import { asset, registry } from "@/lib/registry"
+import {
+  HIGHLIGHT_CSS,
+  HIGHLIGHT_STYLE_HREF,
+  highlightSwift,
+} from "@/lib/swift-highlight"
 
 /** Repository paths the documents link to, and the site page for each. */
 const DOC_ROUTES: Record<string, string> = {
@@ -69,7 +74,7 @@ const SECTION_TONES: Record<string, string> = {
 
 const VERSION_HEADING = /^(\d+\.\d+\.\d+)(.*)$/
 
-function slugify(text: string): string {
+export function slugify(text: string): string {
   return text
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, "")
@@ -81,7 +86,9 @@ function textOf(children: React.ReactNode): string {
   if (typeof children === "string") return children
   if (Array.isArray(children)) return children.map(textOf).join("")
   if (children && typeof children === "object" && "props" in children) {
-    return textOf((children as { props: { children?: React.ReactNode } }).props.children)
+    return textOf(
+      (children as { props: { children?: React.ReactNode } }).props.children
+    )
   }
   return ""
 }
@@ -90,6 +97,9 @@ function textOf(children: React.ReactNode): string {
 export function DocMarkdown({ source }: { source: string }) {
   return (
     <div className="markdown">
+      <style href={HIGHLIGHT_STYLE_HREF} precedence="pfe-highlight">
+        {HIGHLIGHT_CSS}
+      </style>
       <Markdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -98,9 +108,14 @@ export function DocMarkdown({ source }: { source: string }) {
             const version = VERSION_HEADING.exec(text)
             if (!version) return <h2 id={slugify(text)}>{children}</h2>
             return (
-              <h2 id={slugify(text)} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h2
+                id={slugify(text)}
+                className="flex flex-wrap items-baseline gap-x-3 gap-y-1"
+              >
                 <span className="version-tag">{version[1]}</span>
-                <span className="text-base font-medium text-muted-foreground">{version[2].trim()}</span>
+                <span className="text-base font-medium text-muted-foreground">
+                  {version[2].trim()}
+                </span>
               </h2>
             )
           },
@@ -108,8 +123,16 @@ export function DocMarkdown({ source }: { source: string }) {
             const text = textOf(children)
             const tone = SECTION_TONES[text]
             return (
-              <h3 id={slugify(text)} className={tone ? "flex items-center gap-2" : undefined}>
-                {tone ? <span aria-hidden className={`inline-block size-2.5 rounded-full ${tone}`} /> : null}
+              <h3
+                id={slugify(text)}
+                className={tone ? "flex items-center gap-2" : undefined}
+              >
+                {tone ? (
+                  <span
+                    aria-hidden
+                    className={`inline-block size-2.5 rounded-full ${tone}`}
+                  />
+                ) : null}
                 {children}
               </h3>
             )
@@ -123,15 +146,34 @@ export function DocMarkdown({ source }: { source: string }) {
               </a>
             )
           },
-          // eslint-disable-next-line @next/next/no-img-element
-          img: ({ src, alt }) => <img src={resolveDocImage(String(src ?? ""))} alt={alt ?? ""} loading="lazy" />,
+          img: ({ src, alt }) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={resolveDocImage(String(src ?? ""))}
+              alt={alt ?? ""}
+              loading="lazy"
+            />
+          ),
+          table: ({ children }) => (
+            <div className="table-wrap">
+              <table>{children}</table>
+            </div>
+          ),
           pre: ({ children }) => <>{children}</>,
           code: ({ className, children }) => {
             const match = /language-([\w-]+)/.exec(className ?? "")
             const text = textOf(children).replace(/\n$/, "")
-            if (!match && !text.includes("\n")) return <code>{text}</code>
+            // Inline code rides the muted chip and is tokenized as Swift.
+            if (!match && !text.includes("\n"))
+              return <code className="ic">{highlightSwift(text)}</code>
             const language = SHIKI_LANGUAGES[match?.[1] ?? "text"] ?? "text"
-            return <CodeBlock code={text} language={language} className="not-markdown my-4" />
+            return (
+              <CodeBlock
+                code={text}
+                language={language}
+                className="not-markdown my-4"
+              />
+            )
           },
         }}
       >

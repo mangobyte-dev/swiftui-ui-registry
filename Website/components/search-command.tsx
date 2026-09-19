@@ -46,8 +46,7 @@ export function SearchCommand() {
     <>
       <Button
         variant="outline"
-        size="sm"
-        className="min-w-0 flex-1 justify-start text-muted-foreground sm:w-56 sm:flex-none"
+        className="h-[38px] w-full justify-start rounded-[10px] px-3.5 text-[15px] font-normal text-muted-foreground hover:bg-accent focus-visible:border-primary focus-visible:ring-[3px] focus-visible:ring-accent-soft"
         onClick={() => setOpen(true)}
       >
         <SearchIcon data-icon="inline-start" />
@@ -79,9 +78,15 @@ export function SearchCommand() {
                   {registry.items
                     .filter((item) => item.kind === kind)
                     .map((item) => (
-                      <CommandItem key={item.name} value={item.name} onSelect={() => openItem(item)}>
+                      <CommandItem
+                        key={item.name}
+                        value={item.name}
+                        onSelect={() => openItem(item)}
+                      >
                         <span className="font-medium">{item.name}</span>
-                        <span className="truncate text-muted-foreground">{item.description}</span>
+                        <span className="truncate text-muted-foreground">
+                          {item.description}
+                        </span>
                       </CommandItem>
                     ))}
                 </CommandGroup>
@@ -89,10 +94,18 @@ export function SearchCommand() {
             ) : (
               <CommandGroup heading="Results">
                 {results.map((item) => (
-                  <CommandItem key={item.name} value={item.name} onSelect={() => openItem(item)}>
+                  <CommandItem
+                    key={item.name}
+                    value={item.name}
+                    onSelect={() => openItem(item)}
+                  >
                     <span className="font-medium">{item.name}</span>
-                    <span className="shrink-0 text-xs text-muted-foreground">{item.kind}</span>
-                    <span className="truncate text-muted-foreground">{item.description}</span>
+                    <span className="shrink-0 text-xs text-muted-foreground">
+                      {item.kind}
+                    </span>
+                    <span className="truncate text-muted-foreground">
+                      {item.description}
+                    </span>
                   </CommandItem>
                 ))}
               </CommandGroup>

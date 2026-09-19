@@ -69,9 +69,15 @@ import {
   type PresetTuning,
 } from "@/lib/preset"
 import { asset, registry } from "@/lib/registry"
+import { HIGHLIGHT_CSS, HIGHLIGHT_STYLE_HREF, highlightSwift } from "@/lib/swift-highlight"
 import { cn } from "@/lib/utils"
 
 type Appearance = "light" | "dark"
+
+/** The Point-Free Evolution code box, dark in both color modes. */
+const CODE_BOX = "bg-[#1f1f24] text-[#dfdfe0] font-mono text-[13.5px] leading-[1.6]"
+/** The copy button that reads on that box. */
+const DARK_COPY = "border-white/15 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white"
 
 const SHOWCASE_DEFAULT: PresetTuning = { ...DEFAULT_TUNING, accent: "indigo" }
 
@@ -117,6 +123,9 @@ export function CreateStudio() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_336px]">
+      <style href={HIGHLIGHT_STYLE_HREF} precedence="pfe-highlight">
+        {HIGHLIGHT_CSS}
+      </style>
       <div className="flex min-w-0 flex-col gap-4">
         <PreviewPanel
           tuning={tuning}
@@ -232,10 +241,10 @@ function PreviewPanel({
       </TabsContent>
       <TabsContent value="swift" className="relative">
         <div className="absolute top-2 right-2">
-          <CopyButton text={swift} label="Copy Swift" />
+          <CopyButton text={swift} label="Copy Swift" className={DARK_COPY} />
         </div>
-        <pre className="max-h-[560px] overflow-auto p-4 pr-14 font-mono text-[12.5px] leading-relaxed sm:text-[13px]">
-          {swift}
+        <pre className={cn("max-h-[560px] overflow-auto px-5 py-[18px] pr-14", CODE_BOX)}>
+          {highlightSwift(swift)}
         </pre>
       </TabsContent>
       <TabsContent value="apply" className="flex flex-col gap-4 p-4">
@@ -337,15 +346,16 @@ function SurfacePreview({
 }
 
 function PackageFile({ name, text }: { name: string; text: string }) {
+  const isSwift = name.endsWith(".swift")
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex items-center justify-between gap-2">
         <code className="font-mono text-xs font-semibold">{name}</code>
         <CopyButton text={text} label={`Copy ${name}`} />
       </div>
-      <div className="rounded-lg border bg-card">
-        <pre className="max-h-[360px] overflow-auto p-3 font-mono text-[12px] leading-relaxed">
-          {text}
+      <div className="overflow-hidden rounded-[12px]">
+        <pre className={cn("max-h-[360px] overflow-auto px-5 py-[18px]", CODE_BOX)}>
+          {isSwift ? highlightSwift(text) : text}
         </pre>
       </div>
     </div>
@@ -374,11 +384,11 @@ function ApplyStep({
 
 function Command({ text }: { text: string }) {
   return (
-    <div className="relative rounded-lg border bg-card">
+    <div className="relative overflow-hidden rounded-[12px]">
       <div className="absolute top-1.5 right-1.5">
-        <CopyButton text={text} />
+        <CopyButton text={text} className={DARK_COPY} />
       </div>
-      <pre className="overflow-x-auto p-3 pr-12 font-mono text-[12.5px] leading-relaxed">
+      <pre className={cn("overflow-x-auto px-5 py-[18px] pr-12", CODE_BOX)}>
         {text}
       </pre>
     </div>

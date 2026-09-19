@@ -43,7 +43,7 @@ PreviewWall()
 - Kind: block
 - Version: 0.3.1
 - Platforms: iOS 26.0+
-- Installs in order: [card](card.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.2, [button](button.md) 0.5.2, [alert](alert.md) 0.2.1, [chart](chart.md) 0.1.3, [empty](empty.md) 0.1.1, [input-group](input-group.md) 0.2.1, [combobox](combobox.md) 0.1.1, [input](input.md) 0.5.1, [field](field.md) 0.1.2, [spinner](spinner.md) 0.2.1, [checkbox](checkbox.md) 0.3.2, [textarea](textarea.md) 0.4.1, [table](table.md) 0.1.1, [kbd](kbd.md) 0.1.2, [progress](progress.md) 0.2.1, [select](select.md) 0.2.1, [skeleton](skeleton.md) 0.2.2, [button-group](button-group.md) 0.3.2, [preview](preview.md) 0.3.1
+- Installs in order: [card](card.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [button](button.md) 0.5.2, [alert](alert.md) 0.2.1, [chart](chart.md) 0.1.3, [empty](empty.md) 0.1.1, [input-group](input-group.md) 0.2.1, [combobox](combobox.md) 0.1.1, [input](input.md) 0.5.1, [field](field.md) 0.1.2, [spinner](spinner.md) 0.2.1, [checkbox](checkbox.md) 0.3.2, [textarea](textarea.md) 0.4.1, [table](table.md) 0.1.1, [kbd](kbd.md) 0.1.2, [progress](progress.md) 0.2.1, [select](select.md) 0.2.1, [skeleton](skeleton.md) 0.2.2, [button-group](button-group.md) 0.3.2, [preview](preview.md) 0.3.1
 - Accessibility contract:
   - 33 cards, one wall; regular: adaptive grid; compact: plain-non-lazy-VStack, all off-screen too (capture-route audit).
   - Controls: accessibility label; SF Symbol hidden; no unlabeled button, image, switch, field, slider.

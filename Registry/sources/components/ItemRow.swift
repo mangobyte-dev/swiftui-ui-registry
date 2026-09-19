@@ -51,6 +51,9 @@ public struct ItemRow<Media: View, Accessory: View>: View {
 }
 
 public extension ItemRow where Media == EmptyView {
+    /// A bare trailing closure resolves to the media initializer; name the
+    /// `accessory:` closure to reach this one.
+    @_disfavoredOverload
     init(
         title: Text,
         description: Text? = nil,

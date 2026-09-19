@@ -64,9 +64,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "attachment",
             kind: "component",
-            version: "0.1.1",
+            version: "0.1.2",
             description: "Row: square media, name, detail, caller actions. States: idle, uploading, processing, failed, completed.",
-            usage: "AttachmentRow(\n    name: Text(\"Statement-Aug-2026.pdf\"),\n    detail: Text(\"PDF document, 1.2 MB\"),\n    state: .uploading(progress: 0.68)\n) {\n    Image(systemName: \"doc.fill\")\n} actions: {\n    Button(\"Cancel\", systemImage: \"xmark\") {}\n        .labelStyle(.iconOnly)\n        .buttonStyle(.registryGhost)\n        .accessibilityLabel(\"Cancel upload\")\n}",
+            usage: "AttachmentRow(\n    name: Text(\"Statement-Aug-2026.pdf\"),\n    detail: Text(\"PDF document, 1.2 MB\"),\n    state: .uploading(progress: 0.68)\n) {\n    Image(systemName: \"doc.fill\")\n} actions: {\n    Button(\"Cancel\", systemImage: \"xmark\") {}\n        .labelStyle(.iconOnly)\n        .buttonStyle(.registryGhost)\n        .accessibilityLabel(\"Cancel upload\")\n}\n\n// A completed attachment with a thumbnail and no actions: the bare trailing closure is the thumbnail.\nAttachmentRow(\n    name: Text(\"Receipt.jpg\"),\n    detail: Text(\"Image, 240 KB\"),\n    state: .completed\n) {\n    Image(systemName: \"photo\")\n}",
             dependencies: ["item", "progress", "button", "separator"],
             tags: ["attachment", "file", "upload", "row", "media", "shadcn"]
         ),
@@ -343,9 +343,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "item",
             kind: "component",
-            version: "0.2.1",
+            version: "0.2.2",
             description: "Composes content row: media, title, description, accessory; selection at call site.",
-            usage: "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
+            usage: "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}\n\n// Media only: the bare trailing closure is the media; name accessory: to add a trailing accessory.\nItemRow(title: Text(\"Mishmash Bakery\"), description: Text(\"Card payment\")) {\n    Avatar(initials: \"MB\", accessibilityLabel: Text(\"Mishmash Bakery\"))\n}",
             dependencies: ["avatar", "separator", "badge"],
             tags: ["item", "row", "list", "cell", "media", "shadcn"]
         ),

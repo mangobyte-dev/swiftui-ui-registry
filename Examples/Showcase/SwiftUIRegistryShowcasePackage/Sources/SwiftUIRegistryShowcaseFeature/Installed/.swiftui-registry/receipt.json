@@ -9,10 +9,10 @@
     },
     "AttachmentRow.swift": {
       "base": "bases/38be4e5a3a371e7653353805fc188336435291c35197d664ade59881838570e4.base",
-      "installedDigest": "sha256:7d600d1145146338abbb4cb4bdd6c1d168191f34434916333c244376f13fe951",
+      "installedDigest": "sha256:32d3399c9c3bba28aab8f1803bf6c8835dbcbda70a10156b5e01a6a1999486c0",
       "item": "attachment",
-      "sourceDigest": "sha256:7d600d1145146338abbb4cb4bdd6c1d168191f34434916333c244376f13fe951",
-      "version": "0.1.1"
+      "sourceDigest": "sha256:32d3399c9c3bba28aab8f1803bf6c8835dbcbda70a10156b5e01a6a1999486c0",
+      "version": "0.1.2"
     },
     "AuthForm.swift": {
       "base": "bases/b808915e7c307350d015763d2cb828270f25868f16345bd7122b187337a9d83f.base",
@@ -100,10 +100,10 @@
     },
     "ItemRow.swift": {
       "base": "bases/bc855952cda7fd950cb49608a75fbc629e03015cdf44548d2113a3abc74b87ba.base",
-      "installedDigest": "sha256:517bdea69db7abf6ee1f8c17ed1effcf231bb83b80c3e0f3cf5c503aa1485842",
+      "installedDigest": "sha256:0990ad966f040364e03d8f620477f7c72397bb00d480a7b09eab86e870d799be",
       "item": "item",
-      "sourceDigest": "sha256:517bdea69db7abf6ee1f8c17ed1effcf231bb83b80c3e0f3cf5c503aa1485842",
-      "version": "0.2.1"
+      "sourceDigest": "sha256:0990ad966f040364e03d8f620477f7c72397bb00d480a7b09eab86e870d799be",
+      "version": "0.2.2"
     },
     "MacroProgress.swift": {
       "base": "bases/061c048d9552b3eb5f519bbb2c6158fd60f407fa4a68b22ce277c9fad95ac8a9.base",
@@ -884,7 +884,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.2.1"
+            "minimumVersion": "0.3.0"
           }
         }
       ],
@@ -894,7 +894,7 @@
         "button",
         "separator"
       ],
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     "auth-form": {
       "packageDependencies": [
@@ -925,7 +925,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.2.1"
+            "minimumVersion": "0.3.0"
           }
         }
       ],
@@ -941,7 +941,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.2.1"
+            "minimumVersion": "0.3.0"
           }
         }
       ],
@@ -989,7 +989,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.2.1"
+            "minimumVersion": "0.3.0"
           }
         }
       ],
@@ -1243,7 +1243,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.2.1"
+            "minimumVersion": "0.3.0"
           }
         }
       ],
@@ -1252,7 +1252,7 @@
         "separator",
         "badge"
       ],
-      "version": "0.2.1"
+      "version": "0.2.2"
     },
     "kbd": {
       "packageDependencies": [
@@ -1479,7 +1479,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.2.1"
+            "minimumVersion": "0.3.0"
           }
         }
       ],
@@ -1534,7 +1534,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.2.1"
+            "minimumVersion": "0.3.0"
           }
         }
       ],

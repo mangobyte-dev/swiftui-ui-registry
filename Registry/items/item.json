@@ -1,11 +1,11 @@
 {
   "$schema": "../schema.json",
   "schemaVersion": 1,
-  "version": "0.2.1",
+  "version": "0.2.2",
   "name": "item",
   "kind": "component",
   "description": "Composes content row: media, title, description, accessory; selection at call site.",
-  "usage": "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}",
+  "usage": "ItemRow(\n    title: Text(\"Statement ready\"),\n    description: Text(\"August 2026\")\n) {\n    Avatar(initials: \"ST\", accessibilityLabel: Text(\"Statements\"))\n} accessory: {\n    Text(\"New\").registryBadge()\n}\n\n// Media only: the bare trailing closure is the media; name accessory: to add a trailing accessory.\nItemRow(title: Text(\"Mishmash Bakery\"), description: Text(\"Card payment\")) {\n    Avatar(initials: \"MB\", accessibilityLabel: Text(\"Mishmash Bakery\"))\n}",
   "files": [
     {
       "source": "sources/components/ItemRow.swift",

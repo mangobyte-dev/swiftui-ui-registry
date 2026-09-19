@@ -55,7 +55,7 @@ CommandSearch(
 - Kind: block
 - Version: 0.2.1
 - Platforms: iOS 26.0+
-- Installs in order: [button](button.md) 0.5.2, [input-group](input-group.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [kbd](kbd.md) 0.1.2, [empty](empty.md) 0.1.1, [command](command.md) 0.2.1, [command-search](command-search.md) 0.2.1
+- Installs in order: [button](button.md) 0.5.2, [input-group](input-group.md) 0.2.1, [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.2, [kbd](kbd.md) 0.1.2, [empty](empty.md) 0.1.1, [command](command.md) 0.2.1, [command-search](command-search.md) 0.2.1
 - Accessibility contract:
   - Field: prompt. Commands: Buttons, combined-label. Titles headers.
   - No results: ContentUnavailableView, copy, never blank.

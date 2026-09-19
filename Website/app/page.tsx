@@ -73,7 +73,7 @@ export default function HomePage() {
       <section className="flex flex-col gap-6 pt-6">
         <div className="flex flex-wrap gap-2">
           <Link href={docHref("changelog")}>
-            <Badge>0.3.0 public beta</Badge>
+            <Badge>0.4.0</Badge>
           </Link>
           <Badge variant="secondary">iOS 26+</Badge>
           <Badge variant="secondary">MIT</Badge>
@@ -166,7 +166,7 @@ export default function HomePage() {
         <div className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">Tune device</h2>
           <p className="max-w-[70ch] text-muted-foreground">
-            New in 0.3.0: the design surface floats a panel over your running app. Select an item, it scopes
+            Since 0.3.0: the design surface floats a panel over your running app. Select an item, it scopes
             to that item&apos;s tokens; move a knob and the app changes live. Export a preset or Swift code;
             release unchanged.
           </p>

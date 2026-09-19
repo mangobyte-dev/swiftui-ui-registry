@@ -70,6 +70,7 @@ SignUpForm(
     termsError: termsError,
     formError: formError,
     isSubmitting: isSubmitting,
+    isSubmitEnabled: !name.isEmpty && emailError == nil && passwordError == nil && confirmationError == nil && acceptsTerms,
     secondaryActionTitle: "Already have an account?",
     onSecondaryAction: { },
     onSubmit: { }
@@ -79,9 +80,9 @@ SignUpForm(
 ## Details
 
 - Kind: block
-- Version: 0.1.1
+- Version: 0.1.2
 - Platforms: iOS 26.0+
-- Installs in order: [input](input.md) 0.5.1, [button](button.md) 0.5.2, [card](card.md) 0.2.1, [checkbox](checkbox.md) 0.3.2, [signup-form](signup-form.md) 0.1.1
+- Installs in order: [input](input.md) 0.5.1, [button](button.md) 0.5.2, [card](card.md) 0.2.1, [checkbox](checkbox.md) 0.3.2, [signup-form](signup-form.md) 0.1.2
 - Accessibility contract:
   - Fields: explicit accessibilityLabel = title. iOS 27: label+prompt initializer shows placeholder only; unlabeled = unnamed.
   - Focus: name, email, password, confirmation; Next advances, confirmation Go submits.

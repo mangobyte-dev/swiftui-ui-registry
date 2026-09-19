@@ -107,6 +107,9 @@ public struct AttachmentRow<Thumbnail: View, Actions: View>: View {
 }
 
 public extension AttachmentRow where Thumbnail == EmptyView {
+    /// A bare trailing closure resolves to the thumbnail initializer; name the
+    /// `actions:` closure to reach this one.
+    @_disfavoredOverload
     init(
         name: Text,
         detail: Text? = nil,

@@ -43,14 +43,19 @@ ItemRow(
 } accessory: {
     Text("New").registryBadge()
 }
+
+// Media only: the bare trailing closure is the media; name accessory: to add a trailing accessory.
+ItemRow(title: Text("Mishmash Bakery"), description: Text("Card payment")) {
+    Avatar(initials: "MB", accessibilityLabel: Text("Mishmash Bakery"))
+}
 ```
 
 ## Details
 
 - Kind: component
-- Version: 0.2.1
+- Version: 0.2.2
 - Platforms: iOS 26.0+
-- Installs in order: [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1
+- Installs in order: [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.2
 - Accessibility contract:
   - Title+description: one element; media/accessory separate, activatable.
   - Selection: Button/NavigationLink, call site, combines row, label.

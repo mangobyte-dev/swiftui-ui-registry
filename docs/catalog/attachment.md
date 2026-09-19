@@ -47,14 +47,23 @@ AttachmentRow(
         .buttonStyle(.registryGhost)
         .accessibilityLabel("Cancel upload")
 }
+
+// A completed attachment with a thumbnail and no actions: the bare trailing closure is the thumbnail.
+AttachmentRow(
+    name: Text("Receipt.jpg"),
+    detail: Text("Image, 240 KB"),
+    state: .completed
+) {
+    Image(systemName: "photo")
+}
 ```
 
 ## Details
 
 - Kind: component
-- Version: 0.1.1
+- Version: 0.1.2
 - Platforms: iOS 26.0+
-- Installs in order: [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.1, [progress](progress.md) 0.2.1, [button](button.md) 0.5.2, [attachment](attachment.md) 0.1.1
+- Installs in order: [avatar](avatar.md) 0.2.1, [separator](separator.md) 0.2.1, [badge](badge.md) 0.3.2, [item](item.md) 0.2.2, [progress](progress.md) 0.2.1, [button](button.md) 0.5.2, [attachment](attachment.md) 0.1.2
 - Accessibility contract:
   - State text: percent, Processing, failure, Uploaded; MUST NOT rely on color/bar.
   - VoiceOver skips percent; bar reports it.

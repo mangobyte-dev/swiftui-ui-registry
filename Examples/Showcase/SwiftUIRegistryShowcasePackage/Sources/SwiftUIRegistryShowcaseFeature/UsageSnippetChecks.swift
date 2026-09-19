@@ -78,6 +78,14 @@ private struct UsageSnippet_Attachment: View {
                 .buttonStyle(.registryGhost)
                 .accessibilityLabel("Cancel upload")
         }
+        // A completed attachment with a thumbnail and no actions: the bare trailing closure is the thumbnail.
+        AttachmentRow(
+            name: Text("Receipt.jpg"),
+            detail: Text("Image, 240 KB"),
+            state: .completed
+        ) {
+            Image(systemName: "photo")
+        }
     }
 }
 
@@ -412,6 +420,10 @@ private struct UsageSnippet_Item: View {
             Avatar(initials: "ST", accessibilityLabel: Text("Statements"))
         } accessory: {
             Text("New").registryBadge()
+        }
+        // Media only: the bare trailing closure is the media; name accessory: to add a trailing accessory.
+        ItemRow(title: Text("Mishmash Bakery"), description: Text("Card payment")) {
+            Avatar(initials: "MB", accessibilityLabel: Text("Mishmash Bakery"))
         }
     }
 }

@@ -24,7 +24,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
         .package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "1.3.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
-        .package(url: "https://github.com/pointfreeco/swift-issue-reporting", from: "2.1.0"),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.4.3"),
         .package(url: "https://github.com/pointfreeco/swift-sharing", "2.9.1"..<"2.10.0", traits: []),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.9"),
     ],
@@ -33,7 +33,7 @@ let package = Package(
             name: "RegistryKit",
             dependencies: [
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "IssueReporting", package: "swift-issue-reporting"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ],
             swiftSettings: [.enableUpcomingFeature("NonisolatedNonsendingByDefault")]
         ),

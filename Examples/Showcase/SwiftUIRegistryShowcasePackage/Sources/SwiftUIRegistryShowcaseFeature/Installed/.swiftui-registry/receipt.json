@@ -800,10 +800,10 @@
     },
     "SignUpForm.swift": {
       "base": "bases/19e1f1284a2c6fa9fc87143ab4ab4c48922c83a66c50ca0cadfac3015210b13f.base",
-      "installedDigest": "sha256:85dc1cb02940269773e1e29196504199d2961f0ff92bb5d0b5838ed8dc865958",
+      "installedDigest": "sha256:f2d196fa205d2bdf753ddf451a6177910d7f3b085678266a346c03601c6841ac",
       "item": "signup-form",
-      "sourceDigest": "sha256:85dc1cb02940269773e1e29196504199d2961f0ff92bb5d0b5838ed8dc865958",
-      "version": "0.1.2"
+      "sourceDigest": "sha256:f2d196fa205d2bdf753ddf451a6177910d7f3b085678266a346c03601c6841ac",
+      "version": "0.1.1"
     },
     "TransactionRow.swift": {
       "base": "bases/bb175adeaac2e6443042b5ae547edcdaea4daec1487cb932a128b37b41cb221d.base",
@@ -989,7 +989,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.3.0"
+            "minimumVersion": "0.2.1"
           }
         }
       ],
@@ -1023,7 +1023,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.3.0"
+            "minimumVersion": "0.2.1"
           }
         }
       ],
@@ -1055,7 +1055,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.3.0"
+            "minimumVersion": "0.2.1"
           }
         }
       ],
@@ -1570,7 +1570,7 @@
           "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
           "swiftPM": {
             "kind": "upToNextMinor",
-            "minimumVersion": "0.3.0"
+            "minimumVersion": "0.2.1"
           }
         }
       ],
@@ -1580,7 +1580,7 @@
         "card",
         "checkbox"
       ],
-      "version": "0.1.2"
+      "version": "0.1.1"
     },
     "skeleton": {
       "packageDependencies": [

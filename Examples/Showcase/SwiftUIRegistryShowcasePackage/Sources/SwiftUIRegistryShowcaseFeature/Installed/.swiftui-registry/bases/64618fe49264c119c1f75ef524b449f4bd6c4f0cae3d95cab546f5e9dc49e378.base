@@ -14,7 +14,7 @@ public struct Field<Content: View>: View {
 
     private let label: LocalizedStringResource
     private let description: LocalizedStringResource?
-    private let error: LocalizedStringResource?
+    private let error: String?
     private let content: (Bool) -> Content
 
     /// - Parameters:
@@ -32,6 +32,23 @@ public struct Field<Content: View>: View {
         _ label: LocalizedStringResource,
         description: LocalizedStringResource? = nil,
         error: LocalizedStringResource? = nil,
+        @ViewBuilder content: @escaping (Bool) -> Content
+    ) {
+        self.label = label
+        self.description = description
+        self.error = error.map { String(localized: $0) }
+        self.content = content
+    }
+
+    /// The same field with a validation message computed at runtime, such as
+    /// a `String?` produced by a validator. A literal or `nil` still resolves to
+    /// the localized initializer above; this one is chosen only when the
+    /// argument is a `String`.
+    @_disfavoredOverload
+    public init(
+        _ label: LocalizedStringResource,
+        description: LocalizedStringResource? = nil,
+        error: String?,
         @ViewBuilder content: @escaping (Bool) -> Content
     ) {
         self.label = label
@@ -55,7 +72,7 @@ public struct Field<Content: View>: View {
             }
 
             if let error {
-                Text(error)
+                Text(verbatim: error)
                     .font(.footnote)
                     .foregroundStyle(theme.negative)
             }
@@ -69,7 +86,7 @@ public struct Field<Content: View>: View {
     /// focused control then re-reads the most urgent message.
     private var hint: Text? {
         if let error {
-            return Text(error)
+            return Text(verbatim: error)
         }
         if let description {
             return Text(description)
@@ -77,9 +94,9 @@ public struct Field<Content: View>: View {
         return nil
     }
 
-    private func announce(_ message: LocalizedStringResource?) {
+    private func announce(_ message: String?) {
         guard let message else { return }
-        AccessibilityNotification.Announcement(String(localized: message)).post()
+        AccessibilityNotification.Announcement(message).post()
     }
 }
 

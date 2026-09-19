@@ -37,7 +37,9 @@ Verify the install by building the consuming target for an iOS Simulator destina
 ```swift
 @State private var name = ""
 @State private var email = ""
+@State private var phone = ""
 @State private var showErrors = false
+@State private var phoneError: String? = nil
 
 FieldGroup {
     Field("Full name", description: "As it appears on your card.") { _ in
@@ -50,15 +52,20 @@ FieldGroup {
             .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))
             .accessibilityLabel("Email")
     }
+    Field("Phone", error: phoneError) { isInvalid in
+        TextField("Phone", text: $phone)
+            .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))
+            .accessibilityLabel("Phone")
+    }
 }
 ```
 
 ## Details
 
 - Kind: component
-- Version: 0.1.1
+- Version: 0.1.2
 - Platforms: iOS 26.0+
-- Installs in order: [input](input.md) 0.5.1, [field](field.md) 0.1.1
+- Installs in order: [input](input.md) 0.5.1, [field](field.md) 0.1.2
 - Accessibility contract:
   - Builder gets invalid state, e.g. RegistryInputStyle(isInvalid:); MUST NOT fake it otherwise.
   - Label doesn't auto-associate; MUST have accessibilityLabel matching visible label.

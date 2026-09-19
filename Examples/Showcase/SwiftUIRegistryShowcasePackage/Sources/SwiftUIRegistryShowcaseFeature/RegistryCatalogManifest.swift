@@ -298,9 +298,9 @@ enum RegistryCatalogManifest {
         CatalogEntry(
             name: "field",
             kind: "component",
-            version: "0.1.1",
+            version: "0.1.2",
             description: "Labeled form field, native control; optional description; error drives invalid state.",
-            usage: "@State private var name = \"\"\n@State private var email = \"\"\n@State private var showErrors = false\n\nFieldGroup {\n    Field(\"Full name\", description: \"As it appears on your card.\") { _ in\n        TextField(\"Full name\", text: $name)\n            .textFieldStyle(.registryInput)\n            .accessibilityLabel(\"Full name\")\n    }\n    Field(\"Email\", error: showErrors ? \"Enter a valid email address.\" : nil) { isInvalid in\n        TextField(\"you@example.com\", text: $email)\n            .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))\n            .accessibilityLabel(\"Email\")\n    }\n}",
+            usage: "@State private var name = \"\"\n@State private var email = \"\"\n@State private var phone = \"\"\n@State private var showErrors = false\n@State private var phoneError: String? = nil\n\nFieldGroup {\n    Field(\"Full name\", description: \"As it appears on your card.\") { _ in\n        TextField(\"Full name\", text: $name)\n            .textFieldStyle(.registryInput)\n            .accessibilityLabel(\"Full name\")\n    }\n    Field(\"Email\", error: showErrors ? \"Enter a valid email address.\" : nil) { isInvalid in\n        TextField(\"you@example.com\", text: $email)\n            .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))\n            .accessibilityLabel(\"Email\")\n    }\n    Field(\"Phone\", error: phoneError) { isInvalid in\n        TextField(\"Phone\", text: $phone)\n            .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))\n            .accessibilityLabel(\"Phone\")\n    }\n}",
             dependencies: ["input"],
             tags: ["field", "form", "label", "validation", "error", "shadcn"]
         ),

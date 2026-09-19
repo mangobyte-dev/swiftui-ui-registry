@@ -312,7 +312,9 @@ private struct UsageSnippet_Empty: View {
 private struct UsageSnippet_Field: View {
     @State private var name = ""
     @State private var email = ""
+    @State private var phone = ""
     @State private var showErrors = false
+    @State private var phoneError: String? = nil
     var body: some View {
         FieldGroup {
             Field("Full name", description: "As it appears on your card.") { _ in
@@ -324,6 +326,11 @@ private struct UsageSnippet_Field: View {
                 TextField("you@example.com", text: $email)
                     .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))
                     .accessibilityLabel("Email")
+            }
+            Field("Phone", error: phoneError) { isInvalid in
+                TextField("Phone", text: $phone)
+                    .textFieldStyle(RegistryInputStyle(isInvalid: isInvalid))
+                    .accessibilityLabel("Phone")
             }
         }
     }

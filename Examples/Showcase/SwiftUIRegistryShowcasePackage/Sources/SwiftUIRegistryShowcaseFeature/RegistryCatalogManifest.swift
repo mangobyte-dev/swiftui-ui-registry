@@ -673,6 +673,15 @@ enum RegistryCatalogManifest {
             dependencies: [],
             tags: ["typography", "text-styles", "font", "type-scale", "guidance"]
         ),
+        CatalogEntry(
+            name: "validated-input",
+            kind: "component",
+            version: "0.1.0",
+            description: "Text field with floating label, rounded border by focus and validity, rules checked while typing and on blur.",
+            usage: "@State private var email = \"\"\n@State private var password = \"\"\n@State private var confirmation = \"\"\n@State private var phone = \"\"\n@State private var emailValidity: InputValidity = .empty\n\nValidatedInput(\"Email\", text: $email, validations: [.required, .email], validity: $emailValidity)\n    .keyboardType(.emailAddress)\n    .textInputAutocapitalization(.never)\n\nValidatedInput(\"Password\", text: $password, validations: [.required, .password()], isSecure: true)\n\nValidatedInput(\"Confirm password\", text: $confirmation, validations: [.required, .matching(password)], isSecure: true)\n\nValidatedInput(\"Phone\", text: $phone, validations: [.required, .internationalPhone])\n    .keyboardType(.phonePad)",
+            dependencies: [],
+            tags: ["input", "validation", "text-field", "form", "floating-label"]
+        ),
     ]
 
     static func entry(named name: String) -> CatalogEntry? {

@@ -802,3 +802,21 @@ private struct UsageSnippet_TransactionRow: View {
         .registryTone(.negative)
     }
 }
+
+// MARK: validated-input
+private struct UsageSnippet_ValidatedInput: View {
+    @State private var email = ""
+    @State private var password = ""
+    @State private var confirmation = ""
+    @State private var phone = ""
+    @State private var emailValidity: InputValidity = .empty
+    var body: some View {
+        ValidatedInput("Email", text: $email, validations: [.required, .email], validity: $emailValidity)
+            .keyboardType(.emailAddress)
+            .textInputAutocapitalization(.never)
+        ValidatedInput("Password", text: $password, validations: [.required, .password()], isSecure: true)
+        ValidatedInput("Confirm password", text: $confirmation, validations: [.required, .matching(password)], isSecure: true)
+        ValidatedInput("Phone", text: $phone, validations: [.required, .internationalPhone])
+            .keyboardType(.phonePad)
+    }
+}

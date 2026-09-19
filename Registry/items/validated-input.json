@@ -1,0 +1,69 @@
+{
+  "$schema": "../schema.json",
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "name": "validated-input",
+  "kind": "component",
+  "description": "Text field with floating label, rounded border by focus and validity, rules checked while typing and on blur.",
+  "usage": "@State private var email = \"\"\n@State private var password = \"\"\n@State private var confirmation = \"\"\n@State private var phone = \"\"\n@State private var emailValidity: InputValidity = .empty\n\nValidatedInput(\"Email\", text: $email, validations: [.required, .email], validity: $emailValidity)\n    .keyboardType(.emailAddress)\n    .textInputAutocapitalization(.never)\n\nValidatedInput(\"Password\", text: $password, validations: [.required, .password()], isSecure: true)\n\nValidatedInput(\"Confirm password\", text: $confirmation, validations: [.required, .matching(password)], isSecure: true)\n\nValidatedInput(\"Phone\", text: $phone, validations: [.required, .internationalPhone])\n    .keyboardType(.phonePad)",
+  "files": [
+    {
+      "source": "sources/components/ValidatedInput.swift",
+      "target": "ValidatedInput.swift"
+    }
+  ],
+  "registryDependencies": [],
+  "packageDependencies": [
+    {
+      "package": "SwiftUIRegistry",
+      "product": "SwiftUIRegistryFoundations",
+      "requirement": "0.x",
+      "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+      "swiftPM": {
+        "kind": "upToNextMinor",
+        "minimumVersion": "0.3.0"
+      }
+    }
+  ],
+  "platforms": [
+    {
+      "name": "iOS",
+      "minimumVersion": "26.0"
+    }
+  ],
+  "tags": [
+    "input",
+    "validation",
+    "text-field",
+    "form",
+    "floating-label"
+  ],
+  "aliases": [
+    "validated-field",
+    "validation",
+    "validator",
+    "floating-label",
+    "email-field",
+    "password-field",
+    "password-rules",
+    "confirm-password",
+    "phone-field",
+    "form-validation"
+  ],
+  "accessibility": [
+    "Label is the field's accessibilityLabel; the floating label is hidden from VoiceOver.",
+    "Error becomes the hint and is announced when it appears.",
+    "Focus and error change the border; error pairs color with the message text, never color alone.",
+    "The label rises inside the field and a field with rules reserves its message line, so focus and errors never move neighboring views.",
+    "Grows with Dynamic Type; no fixed heights; Reduce Motion drops the label animation.",
+    "Inherits layout direction and tint; disabled state dims to the theme's disabledOpacity."
+  ],
+  "preview": {
+    "source": "sources/components/ValidatedInput.swift",
+    "name": "Validated Input",
+    "screenshots": [
+      "docs/images/items/validated-input-light.png",
+      "docs/images/items/validated-input-dark.png"
+    ]
+  }
+}

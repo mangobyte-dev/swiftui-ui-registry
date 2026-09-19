@@ -2,7 +2,7 @@
 
 # SwiftUIRegistry catalog
 
-73 items you copy into your app and own. Install the `swiftui-registry` tool with `brew install mangobyte-dev/tap/swiftui-registry`; it fetches the pinned registry snapshot on first use, and `--registry <path to a clone>` points it at a checkout instead. Components and blocks install with one command:
+74 items you copy into your app and own. Install the `swiftui-registry` tool with `brew install mangobyte-dev/tap/swiftui-registry`; it fetches the pinned registry snapshot on first use, and `--registry <path to a clone>` points it at a checkout instead. Components and blocks install with one command:
 
 ```sh
 swiftui-registry install <name> --destination Sources/YourFeature/Components
@@ -26,7 +26,7 @@ Compositions of components. Installing one installs its whole closure
 - [settings-section](settings-section.md): Composes select, separator, button; structure, separators, messages, caller-owned toggle/picker/action rows.
 - [signup-form](signup-form.md): Composes input, button, card, checkbox; caller owns fields, validation, terms, submission state.
 
-## Components (37)
+## Components (38)
 
 One installable style, modifier, or view each
 
@@ -67,6 +67,7 @@ One installable style, modifier, or view each
 - [toggle](toggle.md): Button treatment, Toggle.
 - [toggle-group](toggle-group.md): Toggle treatment, ControlGroup.
 - [transaction-row](transaction-row.md): Transaction content; caller Button selects.
+- [validated-input](validated-input.md): Text field with floating label, rounded border by focus and validity, rules checked while typing and on blur.
 
 ## Recipes (25)
 

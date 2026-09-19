@@ -811,6 +811,13 @@
       "item": "transaction-row",
       "sourceDigest": "sha256:52f4f489e270af20de1191e9bed020c756e4b3d1174eda6e5b2959072a36d87b",
       "version": "0.5.1"
+    },
+    "ValidatedInput.swift": {
+      "base": "bases/101f086c577da42b472d22bddd2460910bb92a66b2012ef004f46cc0c33bcc03.base",
+      "installedDigest": "sha256:3dea68342a8d60c76c64360aee48987eadab37e18fe55151d437038244b37480",
+      "item": "validated-input",
+      "sourceDigest": "sha256:3dea68342a8d60c76c64360aee48987eadab37e18fe55151d437038244b37480",
+      "version": "0.1.0"
     }
   },
   "items": {
@@ -1718,6 +1725,22 @@
       ],
       "registryDependencies": [],
       "version": "0.5.1"
+    },
+    "validated-input": {
+      "packageDependencies": [
+        {
+          "package": "SwiftUIRegistry",
+          "product": "SwiftUIRegistryFoundations",
+          "requirement": "0.x",
+          "sourceURL": "https://github.com/mangobyte-dev/swiftui-ui-registry.git",
+          "swiftPM": {
+            "kind": "upToNextMinor",
+            "minimumVersion": "0.3.0"
+          }
+        }
+      ],
+      "registryDependencies": [],
+      "version": "0.1.0"
     }
   },
   "registry": "SwiftUIRegistry",

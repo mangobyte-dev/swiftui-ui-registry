@@ -61,6 +61,7 @@
     "items/command.json",
     "items/command-search.json",
     "items/field.json",
+    "items/validated-input.json",
     "items/table.json",
     "items/breadcrumb.json",
     "items/combobox.json",

@@ -83,6 +83,7 @@ public enum RegistryItemTokens {
             "tooltip": ["border", "borderWidth", "controlRadius", "disabledOpacity", "negative", "onAccent", "surface"],
             "transaction-row": ["compactSpacing", "negative", "positive", "standardSpacing"],
             "typography": [],
+            "validated-input": ["border", "borderWidth", "compactSpacing", "controlHorizontalPadding", "disabledOpacity", "emphasizedBorderWidth", "negative", "surface"],
     ]
 
     /// The tokens an item reads, or `nil` for a name the registry does not know.

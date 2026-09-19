@@ -35,6 +35,7 @@ enum ItemDemos {
         case "kbd": AnyView(KeycapDemo())
         case "command": AnyView(CommandPaletteDemo())
         case "field": AnyView(FieldDemo())
+        case "validated-input": AnyView(ValidatedInputDemo())
         case "table": AnyView(TableDemo())
         case "breadcrumb": AnyView(BreadcrumbDemo())
         case "combobox": AnyView(ComboboxDemo())

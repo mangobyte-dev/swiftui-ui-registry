@@ -125,7 +125,7 @@ extension Commands {
       let registry = try Registry(root: repositoryRoot)
       let kinds = registry.items.mapValues { $0["kind"].text }
       #expect(Set(kinds.filter { $0.value == "recipe" }.keys) == recipeNames)
-      #expect(kinds.values.filter { $0 == "component" }.count == 37)
+      #expect(kinds.values.filter { $0 == "component" }.count == 38)
       #expect(kinds.values.filter { $0 == "block" }.count == 11)
     }
   }

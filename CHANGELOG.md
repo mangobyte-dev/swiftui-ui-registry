@@ -3,24 +3,43 @@
 ## Unreleased
 
 A Point-Free audit in two passes (`docs/point-free-audit.md`): small, independently reviewed
-hardening, no new items, no schema change. A stranger's build of a shop front from the released
-tool then drove the discovery and documentation fixes below.
+hardening, no schema change. A stranger's build of a shop front from the released tool, then a
+scored friction climb over five app briefs, drove the discovery and documentation fixes below.
 
 ### Added
 
+- `validated-input` 0.1.0: a text field with a floating label, a rounded border that follows
+  focus and validity, and rules checked while typing and again on blur. Rules are `required`,
+  `email`, `phone`, `custom`, and the statics `password`, `matching`, `numberRange`,
+  `internationalPhone`, and `pattern`; the first failing rule's message shows under the field, is
+  the accessibility hint, and is announced. A `validity` binding reports every change so a form can
+  gate its submit. Based on the owner's earlier enum-driven text field.
 - A fifth generator, `swiftui-registry generate usage-checks`, writes `UsageSnippetChecks.swift`:
   one `View` per installable item that compiles the item's `usage` snippet, so a snippet naming an
   undeclared symbol fails the Showcase build instead of shipping. Symbols a snippet leaves to the
   adopter are stand-ins in the hand-written `UsageSnippetPlaceholders.swift`.
-- `describe` lists `Signatures:`: every public initializer, function, and static member of the
-  item's sources, one line each with labels, types, and defaults. The JSON and MCP `describe_item`
-  payloads carry them as `signatures`.
+- `describe` lists `Signatures:`: every public initializer, function, static member, and enum of
+  the item's sources, one line each, prefixed with the owning type, with labels, types, defaults,
+  and enum cases. The JSON and MCP `describe_item` payloads carry them as `signatures`.
 
 ### Changed
 
 - Thirteen items gained the words a shop developer searches first: `product`, `cart`, `price`,
   `checkout`, `rating`, and their neighbors now resolve to `item`, `badge`, `button`, `field`,
   `empty`, `metric-card`, and the rest. Search itself is unchanged: every term must still match.
+- Fourteen more items gained the words a chat, settings, or finance developer searches first:
+  `unread` and `counter` reach `badge`; `send`, `submit`, and `refresh-button` reach `button`;
+  `composer` reaches `input-group`; `email`, `phone`, and `password` reach `input` and `field`;
+  `sign-out` and `logout` reach `alert-dialog`; `notifications` reaches `settings-section`;
+  `filter` reaches `accordion` and `checkbox`; `range` reaches `slider`; `total` reaches `table` and
+  `metric-card`; `profile-header` reaches `avatar`; `refreshed` reaches `toast`.
+- `field` 0.1.2: `Field` also takes its error as a `String?`, so a message computed at runtime no
+  longer needs wrapping in a `LocalizedStringResource`. The resource initializer stays preferred.
+- `attachment` 0.1.2 and `item` 0.2.2: a bare trailing closure on `AttachmentRow` or `ItemRow` now
+  resolves to the content initializer instead of an ambiguity error; the actions-only and
+  accessory-only initializers are disfavored.
+- `signup-form` 0.1.2: `SignUpForm` takes `isSubmitEnabled` (default `true`) and disables its
+  submit button and return-key submit while it is `false`.
 
 - `Installer.FileStatus.status` and `InstalledInventory.File.status` are now enums
   (`PlanFileStatus`, `UpdateFileStatus`, `InventoryFileStatus`) instead of `String`. JSON and CLI

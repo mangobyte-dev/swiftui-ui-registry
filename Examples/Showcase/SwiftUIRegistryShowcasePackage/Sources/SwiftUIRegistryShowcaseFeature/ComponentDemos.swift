@@ -714,6 +714,30 @@ enum DemoCommands {
     }
 }
 
+struct ValidatedInputDemo: View {
+    @State private var email = "maya@example"
+    @State private var password = ""
+    @State private var confirmation = ""
+    @State private var phone = "+96599123456"
+
+    var body: some View {
+        DemoSurface {
+            VStack(spacing: 24) {
+                ValidatedInput("Email", text: $email, validations: [.required, .email])
+                    .keyboardType(.emailAddress)
+                    .textInputAutocapitalization(.never)
+                ValidatedInput(
+                    "Password", text: $password, validations: [.required, .password()], isSecure: true)
+                ValidatedInput(
+                    "Confirm password", text: $confirmation,
+                    validations: [.required, .matching(password)], isSecure: true)
+                ValidatedInput("Phone", text: $phone, validations: [.required, .internationalPhone])
+                    .keyboardType(.phonePad)
+            }
+        }
+    }
+}
+
 struct FieldDemo: View {
     @State private var name = "Maya Khalid"
     @State private var email = "not-an-email"

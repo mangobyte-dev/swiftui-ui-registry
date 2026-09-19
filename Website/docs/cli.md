@@ -35,7 +35,7 @@ swiftui-registry search activity --kind block --format names
 
 ## describe
 
-Prints item: name, kind, version, description, usage, accessibility notes; installables: closure, requirement, targets. `--source`: content; `--format json`: MCP `describe_item` payload; recipes: native guidance.
+Prints item: name, kind, version, description, usage, signatures (every public initializer, function, static member, and enum, prefixed with its owning type), accessibility notes; installables: closure, requirement, targets. `--source`: content; `--format json`: MCP `describe_item` payload; recipes: native guidance.
 
 ```sh
 swiftui-registry describe activity-feed
@@ -83,7 +83,7 @@ Theme file: not registry item, no receipt; apply via `.registryTheme(.app)`.
 
 `validate`: structural check over catalog, exits 0/1 with report; scopes to items, closures.
 
-`generate catalog`/`showcase-manifest`/`site-data`/`item-tokens`: files committed, synced with metadata: site, catalog, Showcase manifest, token map.
+`generate catalog`/`showcase-manifest`/`site-data`/`item-tokens`/`usage-checks`: files committed, synced with metadata: site, catalog, Showcase manifest, token map, one compiled `View` per usage snippet.
 
 ## mcp
 

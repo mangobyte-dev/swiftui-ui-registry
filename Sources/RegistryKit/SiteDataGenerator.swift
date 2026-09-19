@@ -18,6 +18,7 @@ public struct SiteDataGenerator {
     ("docs/registry-spec.md", "registry-spec"),
     ("docs/mango.md", "mango"),
     ("docs/visual-testing.md", "visual-testing"),
+    ("docs/case-studies.md", "case-studies"),
   ]
   static let repositoryURL = "https://github.com/mangobyte-dev/swiftui-ui-registry"
   public init(root: String) throws {
@@ -122,7 +123,7 @@ public struct SiteDataGenerator {
     try fs.write(Data(text.utf8), to: output)
     try copyDocs(beside: output)
     var count = 0
-    for folder in ["items", "themes", "ipad", "comparison", "design-surface"] {
+    for folder in ["items", "themes", "ipad", "comparison", "design-surface", "case-studies"] {
       let source = root + "/docs/images/" + folder
       let target = images + "/" + folder
       try fs.remove(target)

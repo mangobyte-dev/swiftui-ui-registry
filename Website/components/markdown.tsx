@@ -17,6 +17,16 @@ const DOC_ROUTES: Record<string, string> = {
   "Website/": "/",
 }
 
+/**
+ * An image in a repository document. A document under `docs/` names its image
+ * as `images/<folder>/<file>.png`; the site serves that folder at `/images/`.
+ */
+export function resolveDocImage(raw: string): string {
+  if (/^(https?:|data:)/.test(raw)) return raw
+  const clean = raw.replace(/^\.\//, "")
+  return asset(clean.startsWith("/") ? clean : `/${clean}`)
+}
+
 /** A link in a repository document: a site page, an absolute URL, or the file on GitHub. */
 export function resolveDocLink(raw: string): string {
   if (/^(https?:|mailto:|#)/.test(raw)) return raw
@@ -114,7 +124,7 @@ export function DocMarkdown({ source }: { source: string }) {
             )
           },
           // eslint-disable-next-line @next/next/no-img-element
-          img: ({ src, alt }) => <img src={asset(String(src ?? ""))} alt={alt ?? ""} loading="lazy" />,
+          img: ({ src, alt }) => <img src={resolveDocImage(String(src ?? ""))} alt={alt ?? ""} loading="lazy" />,
           pre: ({ children }) => <>{children}</>,
           code: ({ className, children }) => {
             const match = /language-([\w-]+)/.exec(className ?? "")

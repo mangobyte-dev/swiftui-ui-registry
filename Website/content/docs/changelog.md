@@ -1,13 +1,21 @@
 # Changelog
 
-## Unreleased
+## 0.4.0 (2026-09-19)
 
-A Point-Free audit in two passes (`docs/point-free-audit.md`): small, independently reviewed
-hardening, no schema change. A stranger's build of a shop front from the released tool, then a
-scored friction climb over five app briefs, drove the discovery and documentation fixes below.
+A minor release, source compatible with 0.3.x. `brew upgrade swiftui-registry` installs the tool.
+A package pinned `.upToNextMinor(from: "0.3.0")` resolves it, and every item keeps the `0.3.0`
+floor, since none needs anything newer.
+
+Three things drove it. A Point-Free audit in two passes (`docs/point-free-audit.md`) hardened the
+engine with no schema change. A build of a shop front from the released tool, read by hand, found
+seven problems an agent meets. A measured study then had an agent build four small apps five
+times each, changed the registry one thing at a time, and kept only what lowered the count
+(`docs/case-studies.md`).
 
 ### Added
 
+- Case studies (`docs/case-studies.md`, also on the website): the four apps, their screenshots,
+  the items they used, and what the measurement found.
 - `validated-input` 0.1.0: a text field with a floating label, a rounded border that follows
   focus and validity, and rules checked while typing and again on blur. Rules are `required`,
   `email`, `phone`, `custom`, and the statics `password`, `matching`, `numberRange`,
@@ -70,6 +78,14 @@ scored friction climb over five app briefs, drove the discovery and documentatio
   queries report an issue, and the source throws. `RegistryKit` declares `IssueReporting`, already
   resolved through swift-dependencies; `RegistryKitTests` declares `CustomDump` for line diffs on
   multi-field assertions and generated text. Neither changes `Package.resolved`.
+
+### Known limitations
+
+- Unchanged from 0.3.1: `toggle-group`'s toggles report no frame inside a native `ControlGroup`,
+  and the same six Showcase visual references fail on the pinned simulator by 4.1 to 5.5 percent
+  (`activity`, `auth`, `command`, `finance`, `nutrition`, `settings`), on an unchanged tree.
+- A search for `quantity` matches nothing. The native `Stepper` is the answer, and an item that
+  only renames it is out of scope by the value gate.
 
 ## 0.3.1
 

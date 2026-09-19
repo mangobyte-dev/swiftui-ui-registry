@@ -58,6 +58,13 @@ export const DOCS: DocPage[] = [
     file: "content/docs/mango.md",
   },
   {
+    slug: "case-studies",
+    title: "Case studies",
+    description: "Four small apps an agent built from the registry, with screenshots and what got in its way.",
+    group: "Guides",
+    file: "content/docs/case-studies.md",
+  },
+  {
     slug: "architecture",
     title: "Architecture",
     description: "Hybrid: small foundations package you depend on, plus item source you copy and own.",

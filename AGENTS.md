@@ -20,6 +20,7 @@ Contracts:
 | `docs/registry-spec.md` | data and installer contract; "Agent usage" covers a consuming app |
 | `docs/visual-testing.md` | visual evidence rules |
 | `docs/mango.md` | the design system template |
+| `docs/case-studies.md` | four apps an agent built from the registry and what the friction study found |
 
 State: `CHANGELOG.md` alone holds what shipped and the known limitations. A status claim elsewhere is a pointer.
 
@@ -35,6 +36,8 @@ Generated, MUST NOT hand edit:
 | `Examples/Showcase/.../UsageSnippetChecks.swift` | one `View` per installable item that compiles its `usage` snippet |
 | `Sources/SwiftUIRegistryDesignSurface/RegistryItemTokens.swift` | item to token map that scopes the design surface's panel |
 | `docs/images/items/`, `docs/images/themes/` | captures |
+
+`docs/images/case-studies/` holds the study apps' screens, captured once from the agents' builds. Those apps are not in the repository, so the folder is hand made and never regenerated.
 
 Counts and per item pages live there, not in prose. `Website/` is Next.js with shadcn/ui; its hand written docs pages sit in `Website/docs/`.
 
@@ -113,7 +116,7 @@ Conflicts: state beats archives, the later archive wins, contracts govern rules.
 | toolchain | Xcode 27.0, Swift 6.4 |
 | CI | GitHub `macos-26` image, default Xcode 26.6, Swift tools 6.2 (`.github/workflows/ci.yml`) |
 | package identity | `swiftui-ui-registry` at `github.com/mangobyte-dev/swiftui-ui-registry` |
-| published tags | `0.1.0` (2026-09-06), `0.2.0` (2026-09-07), each with a GitHub release and the Homebrew tap |
+| published tags | `0.1.0` (2026-09-06), `0.2.0` (2026-09-07), `0.3.0` (2026-09-09), `0.3.1` (2026-09-13), `0.4.0` (2026-09-19), each with a GitHub release and the Homebrew tap |
 
 The launch arguments keep dates, currency, and the calendar in an image independent of the region; the iPad's status bar date comes from the device, hence its pin. No iOS 26 runtime is installed. A floor 26 claim rests on compilation plus iOS 27 runtime evidence. CI runs the registry gate, the website build, and a secret scan on every push and pull request. `0.3.0` adds the design surface's foundations API and the second product. Every installable item therefore declares the `0.3.0` floor (`docs/registry-spec.md`).
 
